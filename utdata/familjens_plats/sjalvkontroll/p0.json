@@ -1,0 +1,26 @@
+{
+ "villkor": "82 mot 55 %, OR 2,4, p 0,0002 (avrundat som i resultat.md)",
+ "reproducerar": true,
+ "stenar_csv_identisk": true,
+ "publicerat": {
+  "n": 657,
+  "events": 412,
+  "share_grupp": 0.816216216216216,
+  "share_ensam": 0.552966101694915,
+  "or": 2.38127601769013,
+  "lo": 1.50170318390602,
+  "hi": 3.77602946654007,
+  "p": 0.000225514396982187
+ },
+ "omkort": {
+  "n": 657,
+  "events": 412,
+  "share_grupp": 0.816216216216216,
+  "share_ensam": 0.552966101694915,
+  "or": 2.38127601769013,
+  "lo": 1.50170318390602,
+  "hi": 3.77602946654007,
+  "p": 0.000225514396982187
+ },
+ "identiskt_utfall": true
+}

@@ -1,0 +1,76 @@
+grupp,nyckel,antal
+totalt,gravfält i lamningar.csv,18633
+totalt,med detaljer ur K-samsök,18633
+totalt,utan detaljer,0
+totalt,med ingående lämningar,17777
+klass,V granskat gravfält,10789
+klass,V utan grav markerad av sten/block,9969
+klass,Y yngre järnålderns former,2550
+antikvarisk bedömning,Fornlämning,17289
+antikvarisk bedömning,Ingen antikvarisk bedömning,1009
+antikvarisk bedömning,Möjlig fornlämning,272
+antikvarisk bedömning,Övrig kulturhistorisk lämning,63
+aktualitetsstatus,Bekräftad i fält,18326
+aktualitetsstatus,"Uppgift om lämning, ej bekräftad i fält",292
+aktualitetsstatus,Överförd till annan lämning,9
+aktualitetsstatus,Utgår på grund av felregistrering,6
+ingående form (antal gravfält),Stensättning – Rund,16010
+ingående form (antal gravfält),Hög – Rund,7020
+ingående form (antal gravfält),Grav markerad av sten/block – (ingen form),2835
+ingående form (antal gravfält),Stensättning – Rektangulär,1972
+ingående form (antal gravfält),Stensättning – Kvadratisk,1820
+ingående form (antal gravfält),Röse – Rund,1632
+ingående form (antal gravfält),Stenkrets/stenrad – Domarring,1104
+ingående form (antal gravfält),Stensättning – Treudd,854
+ingående form (antal gravfält),Stensättning – Oval,633
+ingående form (antal gravfält),Stensättning – Triangulär,420
+ingående form (antal gravfält),Stensättning – Oregelbunden,405
+ingående form (antal gravfält),Stensättning – (ingen form),358
+ingående form (antal gravfält),Stensättning – Skeppsformig,353
+ingående form (antal gravfält),Stenkrets/stenrad – Skeppssättning,234
+ingående form (antal gravfält),Hög – Oval,227
+ingående form (antal gravfält),Stenkrets/stenrad – Kvadratisk,179
+ingående form (antal gravfält),Hög – Långhög,106
+ingående form (antal gravfält),Stenkammargrav – (ingen form),74
+ingående form (antal gravfält),Stenkrets/stenrad – Rektangulär,62
+ingående form (antal gravfält),Stensättning – Övrig,58
+ingående form (antal gravfält),Röse – Kvadratisk,44
+ingående form (antal gravfält),Röse – Långröse,42
+ingående form (antal gravfält),Röse – Oval,38
+ingående form (antal gravfält),Hög – Övrig,22
+ingående form (antal gravfält),Röse – Rektangulär,20
+ingående form (antal gravfält),Stenkrets/stenrad – Rund,19
+ingående form (antal gravfält),Hög – Kvadratisk,14
+ingående form (antal gravfält),Stenkrets/stenrad – Oval,13
+ingående form (antal gravfält),Gravhägnad – (ingen form),13
+ingående form (antal gravfält),Röse – Oregelbunden,13
+ingående form (antal gravfält),Stenkrets/stenrad – Övrig,7
+ingående form (antal gravfält),Röse – Övrig,7
+ingående form (antal gravfält),Hög – Oregelbunden,7
+ingående form (antal gravfält),Hög – Rektangulär,5
+ingående form (antal gravfält),Stenkrets/stenrad – (ingen form),4
+ingående form (antal gravfält),Stenkrets/stenrad – Oregelbunden,4
+ingående form (antal gravfält),Stenkrets/stenrad – Triangulär,4
+ingående form (antal gravfält),Röse – Skeppsformig,1
+ingående form (antal gravfält),Stenkrets/stenrad – Stenrad,1
+län: alla / V / Y,Blekinge,106 / 63 / 18
+län: alla / V / Y,Dalarna,57 / 14 / 1
+län: alla / V / Y,Gotland,1084 / 224 / 4
+län: alla / V / Y,Gävleborg,293 / 178 / 6
+län: alla / V / Y,Halland,216 / 129 / 25
+län: alla / V / Y,Jämtland,40 / 18 / 0
+län: alla / V / Y,Jönköping,728 / 608 / 197
+län: alla / V / Y,Kalmar,910 / 464 / 111
+län: alla / V / Y,Kronoberg,451 / 311 / 67
+län: alla / V / Y,Norrbotten,12 / 1 / 0
+län: alla / V / Y,Skåne,363 / 149 / 24
+län: alla / V / Y,Stockholm,3578 / 2377 / 656
+län: alla / V / Y,Södermanland,2340 / 1237 / 247
+län: alla / V / Y,Uppsala,2774 / 1727 / 426
+län: alla / V / Y,Värmland,219 / 141 / 17
+län: alla / V / Y,Västerbotten,43 / 9 / 4
+län: alla / V / Y,Västernorrland,238 / 158 / 8
+län: alla / V / Y,Västmanland,955 / 470 / 67
+län: alla / V / Y,Västra Götaland,2084 / 1321 / 136
+län: alla / V / Y,Örebro,257 / 159 / 45
+län: alla / V / Y,Östergötland,1885 / 1031 / 491

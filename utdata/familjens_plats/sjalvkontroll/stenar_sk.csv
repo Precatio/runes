@@ -1,0 +1,837 @@
+signum,province,parish,style_from,style_to,grupp,lt,y1_gravfalt,y_alla,y_V,y_Y,y_V250,y_V_utan_block,gfdens,lan,lan_hur
+Öl 1,Öl,Vickleby sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,2.6390573296152584,Kalmar,egen KMR-post
+Öl 11,Öl,Smedby sn,,,0.0,1.3862943611198906,1,1,1,0,0,1,2.4849066497880004,Kalmar,egen KMR-post
+Öl 18,Öl,Segerstads sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,2.5649493574615367,Kalmar,egen KMR-post
+Öl 25,Öl,Sandby sn (nu Gårdby sn),980.0,1015.0,0.0,1.9459101490553132,0,0,0,0,0,0,2.70805020110221,Kalmar,egen KMR-post
+Öl 36,Öl,Runstens sn,,,,1.9459101490553132,0,0,0,0,0,0,2.8903717578961645,Kalmar,egen KMR-post
+Öl 37,Öl,Runstens sn,1050.0,1080.0,1.0,1.9459101490553132,0,0,0,0,0,0,2.8903717578961645,Kalmar,egen KMR-post
+Öl 38,Öl,Runstens sn,,,1.0,1.9459101490553132,0,0,0,0,0,0,2.9444389791664403,Kalmar,egen KMR-post
+Öl 39,Öl,Gärdslösa sn,1020.0,1050.0,1.0,2.0794415416798357,0,0,0,0,0,0,2.5649493574615367,Kalmar,egen KMR-post
+Öl 40,Öl,Gärdslösa sn,1020.0,1050.0,1.0,2.0794415416798357,0,0,0,0,0,0,2.5649493574615367,Kalmar,egen KMR-post
+Öl 46,Öl,Köpings sn,,,,4.343805421853684,1,1,1,0,0,1,3.7376696182833684,Kalmar,egen KMR-post
+Öl ATA4703/43,Öl,Köpings sn,,,,4.343805421853684,1,1,1,0,1,1,3.5263605246161616,Kalmar,egen KMR-post
+Ög 10,Ög,Askeby sn,980.0,1015.0,0.0,1.0986122886681098,1,1,1,1,1,1,4.605170185988092,Östergötland,egen KMR-post
+Ög 20,Ög,Kuddby sn,980.0,1015.0,0.0,2.6390573296152584,0,0,0,0,0,0,4.330733340286331,Östergötland,egen KMR-post
+Ög 21,Ög,Kuddby sn,,,0.0,2.6390573296152584,1,1,1,0,0,0,4.30406509320417,Östergötland,egen KMR-post
+Ög 22,Ög,Kuddby sn,980.0,1015.0,0.0,2.4849066497880004,1,1,0,0,0,0,4.248495242049359,Östergötland,egen KMR-post
+Ög 24,Ög,Kuddby sn,,,0.0,2.70805020110221,0,0,0,0,0,0,4.77912349311153,Östergötland,egen KMR-post
+Ög 26,Ög,Östra Ny sn,,,0.0,1.9459101490553132,1,1,0,0,0,0,4.143134726391533,Östergötland,egen KMR-post
+Ög 29,Ög,Tåby sn (eg. Furingstads sn),,,,2.3978952727983707,1,1,1,0,1,1,4.394449154672439,Östergötland,egen KMR-post
+Ög 30,Ög,Tåby sn (eg. Furingstads sn),1010.0,1050.0,,2.3978952727983707,1,1,1,0,1,1,4.394449154672439,Östergötland,egen KMR-post
+Ög 34,Ög,Å sn,980.0,1015.0,0.0,2.4849066497880004,1,1,0,0,0,0,4.189654742026425,Östergötland,egen KMR-post
+Ög 38,Ög,Fornåsa sn,,,0.0,1.791759469228055,0,0,0,0,0,0,2.70805020110221,Östergötland,egen KMR-post
+Ög 42,Ög,Älvestads sn,980.0,1015.0,0.0,2.0794415416798357,0,0,0,0,0,0,2.772588722239781,Östergötland,egen KMR-post
+Ög 46,Ög,Kvillinge sn,,,1.0,1.3862943611198906,1,1,1,1,1,1,3.7376696182833684,Östergötland,egen KMR-post
+Ög 47,Ög,Kvillinge sn,980.0,1015.0,,1.3862943611198906,1,1,1,1,0,1,3.7376696182833684,Östergötland,egen KMR-post
+Ög 48,Ög,Kvillinge sn,,,1.0,1.3862943611198906,1,1,1,1,0,1,3.7376696182833684,Östergötland,egen KMR-post
+Ög 63,Ög,Allhelgona sn,,,0.0,2.8903717578961645,0,0,0,0,0,0,2.5649493574615367,Östergötland,egen KMR-post
+Ög 77,Ög,Hovs sn,,,0.0,2.0794415416798357,0,0,0,0,0,0,1.791759469228055,Östergötland,egen KMR-post
+Ög 88,Ög,Högby sn,980.0,1015.0,0.0,2.3978952727983707,0,0,0,0,0,0,2.9444389791664403,Östergötland,egen KMR-post
+Ög 90,Ög,Högby sn,,,0.0,2.302585092994046,1,1,1,0,0,1,3.295836866004329,Östergötland,egen KMR-post
+Ög 93,Ög,Väderstads sn,1010.0,1050.0,0.0,2.302585092994046,1,1,1,0,1,1,2.9444389791664403,Östergötland,egen KMR-post
+Ög 96,Ög,Väderstads sn,980.0,1015.0,,2.4849066497880004,0,0,0,0,0,0,2.833213344056216,Östergötland,egen KMR-post
+Ög 97,Ög,Åsbo sn,980.0,1015.0,0.0,2.0794415416798357,0,0,0,0,0,0,2.995732273553991,Östergötland,egen KMR-post
+Ög 98,Ög,Åsbo sn,980.0,1015.0,0.0,2.0794415416798357,1,1,0,0,0,0,2.9444389791664403,Östergötland,egen KMR-post
+Ög 99,Ög,Mogata sn,1020.0,1050.0,0.0,2.1972245773362196,1,1,1,1,1,1,3.713572066704308,Östergötland,egen KMR-post
+Ög 104,Ög,Kaga sn,1010.0,1050.0,0.0,2.3978952727983707,0,0,0,0,0,0,2.8903717578961645,Östergötland,egen KMR-post
+Ög 110,Ög,Kärna sn,,,0.0,2.4849066497880004,0,0,0,0,0,0,3.784189633918261,Östergötland,egen KMR-post
+Ög 113,Ög,Sankt Lars sn (nu Linköping),,,0.0,1.791759469228055,1,1,0,0,0,0,3.9318256327243257,Östergötland,egen KMR-post
+Ög 115,Ög,Skeda sn,1010.0,1050.0,1.0,2.302585092994046,1,1,1,1,1,1,3.9512437185814275,Östergötland,egen KMR-post
+Ög 116,Ög,Skeda sn,,,1.0,2.302585092994046,1,1,1,1,1,1,3.912023005428146,Östergötland,egen KMR-post
+Ög 133,Ög,Heda sn,980.0,1015.0,0.0,1.9459101490553132,1,1,1,1,1,1,3.091042453358316,Östergötland,egen KMR-post
+Ög 134,Ög,Kumla sn,980.0,1015.0,,2.5649493574615367,0,0,0,0,0,0,2.772588722239781,Östergötland,egen KMR-post
+Ög 135,Ög,Kumla sn,,,,2.5649493574615367,0,0,0,0,0,0,2.772588722239781,Östergötland,egen KMR-post
+Ög 152,Ög,Furingstads sn,,,0.0,2.70805020110221,0,0,0,0,0,0,4.672828834461906,Östergötland,egen KMR-post
+Ög 155,Ög,Styrstads sn,,,0.0,1.6094379124341005,1,1,0,0,0,0,4.394449154672439,Östergötland,egen KMR-post
+Ög 162,Ög,Kullerstads sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,3.7376696182833684,Östergötland,egen KMR-post
+Ög 163,Ög,Kullerstads sn,,,0.0,1.3862943611198906,1,1,1,0,0,1,4.276666119016055,Östergötland,egen KMR-post
+Ög 166,Ög,Skänninge,,,,2.70805020110221,1,1,0,0,0,0,2.3978952727983707,Östergötland,egen KMR-post
+Ög 176,Ög,Skärkinds sn,980.0,1015.0,0.0,1.791759469228055,0,0,0,0,0,0,3.5553480614894135,Östergötland,egen KMR-post
+Ög 183,Ög,Ledbergs sn,,,0.0,1.6094379124341005,1,1,1,1,1,1,3.6109179126442243,Östergötland,egen KMR-post
+Ög 189,Ög,Vikingstads sn,1010.0,1050.0,0.0,2.302585092994046,0,0,0,0,0,0,3.8918202981106265,Östergötland,egen KMR-post
+Ög 190,Ög,Vikingstads sn,,,0.0,1.9459101490553132,1,1,0,0,0,0,3.8918202981106265,Östergötland,egen KMR-post
+Ög 207,Ög,Viby sn,980.0,1015.0,,2.833213344056216,1,1,1,1,1,1,3.332204510175204,Östergötland,egen KMR-post
+Ög 208,Ög,Viby sn (eg. Sjögestads sn),980.0,1015.0,,2.772588722239781,1,1,1,1,1,1,3.332204510175204,Östergötland,egen KMR-post
+Ög 209,Ög,Viby sn,,,,2.833213344056216,1,1,1,1,1,1,3.332204510175204,Östergötland,egen KMR-post
+Ög 210,Ög,Viby sn,,,,2.772588722239781,1,1,1,0,1,1,3.367295829986474,Östergötland,egen KMR-post
+Ög 211,Ög,Viby sn,980.0,1015.0,0.0,2.833213344056216,0,0,0,0,0,0,3.332204510175204,Östergötland,egen KMR-post
+Ög 214,Ög,Västerlösa sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,3.091042453358316,Östergötland,egen KMR-post
+Ög 216,Ög,Sunds sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,2.772588722239781,Östergötland,egen KMR-post
+Ög 217,Ög,Sunds sn,980.0,1015.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.302585092994046,Östergötland,egen KMR-post
+Ög 219,Ög,Lillkyrka sn,980.0,1015.0,0.0,1.0986122886681098,1,1,1,0,1,1,3.871201010907891,Östergötland,egen KMR-post
+Ög 224,Ög,Törnevalla sn,,,0.0,1.9459101490553132,1,1,1,1,1,1,4.68213122712422,Östergötland,egen KMR-post
+Ög 225,Ög,Östra Husby sn,1010.0,1050.0,0.0,1.791759469228055,0,0,0,0,0,0,4.0943445622221,Östergötland,egen KMR-post
+Ög 228,Ög,Östra Husby sn,1020.0,1050.0,0.0,1.6094379124341005,1,1,0,0,0,0,4.804021044733257,Östergötland,egen KMR-post
+Ög 229,Ög,Östra Husby sn,1010.0,1050.0,0.0,1.791759469228055,1,1,1,1,1,1,4.6913478822291435,Östergötland,egen KMR-post
+Ög 230,Ög,Häradshammars sn,,,0.0,1.0986122886681098,1,1,0,0,0,0,4.477336814478207,Östergötland,egen KMR-post
+Ög 237,Ög,Östra Stenby sn,980.0,1015.0,0.0,2.1972245773362196,0,0,0,0,0,0,4.276666119016055,Östergötland,egen KMR-post
+Ög 238,Ög,Vikingstads sn,980.0,1015.0,0.0,2.302585092994046,0,0,0,0,0,0,3.8918202981106265,Östergötland,egen KMR-post
+Ög ATA6488/60,Ög,Skänninge,980.0,1015.0,,2.70805020110221,1,1,0,0,0,0,2.3978952727983707,Östergötland,egen KMR-post
+Ög N272,Ög,Skänninge,,,,2.70805020110221,1,1,0,0,0,0,2.3978952727983707,Östergötland,egen KMR-post
+Ög NOR1994;27,Ög,Skärkinds sn,,,0.0,2.0794415416798357,1,1,1,1,1,1,4.1588830833596715,Östergötland,egen KMR-post
+Sö 3,Sö,Björnlunda sn,1010.0,1050.0,0.0,1.791759469228055,1,1,0,0,0,0,3.58351893845611,Södermanland,egen KMR-post
+Sö 7,Sö,Björnlunda sn,,,0.0,2.302585092994046,0,0,0,0,0,0,4.07753744390572,Södermanland,egen KMR-post
+Sö 8,Sö,Dillnäs sn (nu Gåsinge-Dillnäs),1010.0,1050.0,,1.9459101490553132,0,0,0,0,0,0,3.912023005428146,Södermanland,egen KMR-post
+Sö 9,Sö,Dillnäs sn (nu Gåsinge-Dillnäs),1010.0,1050.0,,1.9459101490553132,1,1,0,0,0,0,3.871201010907891,Södermanland,egen KMR-post
+Sö 17,Sö,Kattnäs sn,,,0.0,2.1972245773362196,1,1,1,0,1,1,4.23410650459726,Södermanland,närmaste gravfält i landskapet
+Sö 19,Sö,Hölö sn,1050.0,1080.0,0.0,1.791759469228055,1,1,1,1,1,1,3.5553480614894135,Stockholm,egen KMR-post
+Sö 20,Sö,Hölö sn,,,0.0,1.9459101490553132,1,1,1,1,0,1,4.07753744390572,Stockholm,egen KMR-post
+Sö 22,Sö,Mörkö sn,,,0.0,1.0986122886681098,1,1,1,0,0,1,3.091042453358316,Stockholm,egen KMR-post
+Sö 25,Sö,Trosa sn (nu Trosa-Vagnhärad),,,0.0,2.4849066497880004,1,1,1,0,0,0,4.31748811353631,Södermanland,egen KMR-post
+Sö 26,Sö,Trosa sn (nu Trosa-Vagnhärad),,,0.0,2.0794415416798357,1,1,1,0,0,0,4.143134726391533,Södermanland,egen KMR-post
+Sö 30,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),1010.0,1050.0,0.0,2.302585092994046,0,0,0,0,0,0,3.6375861597263857,Södermanland,egen KMR-post
+Sö 34,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),,,,2.3978952727983707,0,0,0,0,0,0,3.6109179126442243,Södermanland,egen KMR-post
+Sö 35,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),1020.0,1050.0,,2.3978952727983707,0,0,0,0,0,0,3.6109179126442243,Södermanland,egen KMR-post
+Sö 36,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),,,0.0,2.5649493574615367,1,1,1,0,1,1,4.219507705176107,Södermanland,egen KMR-post
+Sö 37,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),1020.0,1050.0,0.0,0.6931471805599453,1,1,0,0,0,0,4.110873864173311,Södermanland,egen KMR-post
+Sö 42,Sö,Västerljungs sn,,,0.0,2.0794415416798357,1,1,0,0,0,0,4.189654742026425,Södermanland,egen KMR-post
+Sö 43,Sö,Västerljungs sn,,,0.0,2.0794415416798357,1,1,1,0,1,1,4.174387269895637,Södermanland,egen KMR-post
+Sö 45,Sö,Sankt Nicolai (Nikolai) sn (nu Nyköping),1010.0,1050.0,,1.791759469228055,1,1,1,0,1,1,4.0943445622221,Södermanland,egen KMR-post
+Sö 47,Sö,Nykyrka sn,,,0.0,1.6094379124341005,1,1,0,0,0,0,4.1588830833596715,Södermanland,egen KMR-post
+Sö 49,Sö,Stigtomta sn,1010.0,1050.0,0.0,0.6931471805599453,1,1,1,0,0,1,3.784189633918261,Södermanland,egen KMR-post
+Sö 50,Sö,Tuna sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,3.4011973816621555,Södermanland,egen KMR-post
+Sö 52,Sö,Bettna sn,1010.0,1050.0,0.0,1.6094379124341005,0,0,0,0,0,0,4.143134726391533,Södermanland,egen KMR-post
+Sö 54,Sö,Blacksta sn,1020.0,1050.0,1.0,1.791759469228055,1,1,1,1,1,1,4.02535169073515,Södermanland,egen KMR-post
+Sö 55,Sö,Blacksta sn,1020.0,1050.0,1.0,1.791759469228055,1,1,1,1,1,1,3.9889840465642745,Södermanland,egen KMR-post
+Sö 59,Sö,Husby-Oppunda sn,1010.0,1050.0,0.0,1.791759469228055,1,1,1,0,1,1,4.04305126783455,Södermanland,egen KMR-post
+Sö 61,Sö,Husby-Oppunda sn,1020.0,1050.0,0.0,1.3862943611198906,1,1,1,0,0,1,4.007333185232471,Södermanland,egen KMR-post
+Sö 62,Sö,Lerbo sn,1010.0,1050.0,0.0,1.0986122886681098,1,1,0,0,0,0,4.0943445622221,Södermanland,egen KMR-post
+Sö 70,Sö,Vadsbro sn,,,0.0,1.791759469228055,1,1,0,0,0,0,3.6888794541139363,Södermanland,egen KMR-post
+Sö 71,Sö,Västra Vingåkers sn,980.0,1015.0,0.0,0.6931471805599453,0,0,0,0,0,0,1.0986122886681098,Södermanland,egen KMR-post
+Sö 73,Sö,Västra Vingåkers sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.791759469228055,Södermanland,egen KMR-post
+Sö 74,Sö,Västra Vingåkers sn,1010.0,1050.0,0.0,0.0,0,0,0,0,0,0,0.0,Södermanland,egen KMR-post
+Sö 85,Sö,Tumbo sn,,,0.0,2.0794415416798357,1,1,0,0,0,0,3.58351893845611,Södermanland,egen KMR-post
+Sö 93,Sö,Husby-Rekarne sn,,,,1.3862943611198906,1,1,1,0,1,1,3.2188758248682006,Södermanland,egen KMR-post
+Sö 95,Sö,Husby-Rekarne sn,,,,1.3862943611198906,1,1,1,0,1,1,3.258096538021482,Södermanland,egen KMR-post
+Sö 103,Sö,Jäders sn,,,0.0,2.0794415416798357,0,0,0,0,0,0,3.912023005428146,Södermanland,egen KMR-post
+Sö 104,Sö,Kjula sn,,,0.0,2.302585092994046,1,1,1,0,1,1,3.6635616461296463,Södermanland,egen KMR-post
+Sö 105,Sö,Kjula sn,1010.0,1050.0,0.0,2.1972245773362196,1,1,1,0,0,1,3.5263605246161616,Södermanland,egen KMR-post
+Sö 106,Sö,Kjula sn,1010.0,1050.0,0.0,2.1972245773362196,1,1,1,0,1,1,3.5553480614894135,Södermanland,egen KMR-post
+Sö 109,Sö,Klosters sn (Eskilstuna),1020.0,1050.0,0.0,2.3978952727983707,0,0,0,0,0,0,4.406719247264253,Södermanland,egen KMR-post
+Sö 112,Sö,Stenkvista sn,1010.0,1050.0,1.0,2.0794415416798357,1,1,1,0,1,0,3.1780538303479458,Södermanland,egen KMR-post
+Sö 113,Sö,Stenkvista sn,980.0,1015.0,1.0,2.0794415416798357,1,1,1,0,1,0,3.1780538303479458,Södermanland,egen KMR-post
+Sö 115,Sö,Stenkvista sn,1010.0,1050.0,1.0,2.0794415416798357,1,1,1,0,0,0,3.2188758248682006,Södermanland,egen KMR-post
+Sö 122,Sö,Allhelgona sn (nu Helgona),1020.0,1050.0,,2.302585092994046,1,1,1,0,1,1,4.30406509320417,Södermanland,egen KMR-post
+Sö 123,Sö,Allhelgona sn (nu Helgona),980.0,1015.0,,2.302585092994046,1,1,1,0,1,1,4.30406509320417,Södermanland,egen KMR-post
+Sö 130,Sö,Lids sn,,,0.0,2.4849066497880004,1,1,0,0,0,0,3.7376696182833684,Södermanland,egen KMR-post
+Sö 131,Sö,Lids sn,980.0,1015.0,,2.302585092994046,1,1,1,1,0,1,3.367295829986474,Södermanland,egen KMR-post
+Sö 132,Sö,Lids sn,,,0.0,3.258096538021482,1,1,0,0,0,0,4.189654742026425,Södermanland,egen KMR-post
+Sö 133,Sö,Lids sn,,,,2.4849066497880004,1,1,1,1,1,1,3.5553480614894135,Södermanland,egen KMR-post
+Sö 137,Sö,Ludgo sn,980.0,1015.0,1.0,3.367295829986474,1,1,1,0,0,1,4.110873864173311,Södermanland,egen KMR-post
+Sö 138,Sö,Ludgo sn,1010.0,1050.0,1.0,3.367295829986474,1,1,1,0,0,1,4.110873864173311,Södermanland,egen KMR-post
+Sö 139,Sö,Ludgo sn,,,1.0,3.4011973816621555,1,1,1,0,0,1,4.04305126783455,Södermanland,egen KMR-post
+Sö 140,Sö,Ludgo sn,1010.0,1050.0,1.0,3.4011973816621555,1,1,1,0,0,1,4.04305126783455,Södermanland,egen KMR-post
+Sö 141,Sö,Ludgo sn,,,1.0,3.258096538021482,1,1,1,0,0,1,4.0943445622221,Södermanland,egen KMR-post
+Sö 148,Sö,Runtuna sn,,,0.0,3.49650756146648,0,0,0,0,0,0,4.430816798843313,Södermanland,egen KMR-post
+Sö 150,Sö,Runtuna sn,,,0.0,3.58351893845611,1,1,1,0,1,1,4.59511985013459,Södermanland,egen KMR-post
+Sö 151,Sö,Runtuna sn,1010.0,1050.0,0.0,2.5649493574615367,1,1,1,0,1,1,4.204692619390966,Södermanland,egen KMR-post
+Sö 155,Sö,Runtuna sn,,,,2.4849066497880004,1,1,1,0,0,1,4.04305126783455,Södermanland,egen KMR-post
+Sö 158,Sö,Runtuna sn,1010.0,1050.0,0.0,2.8903717578961645,0,0,0,0,0,0,4.127134385045092,Södermanland,egen KMR-post
+Sö 159,Sö,Runtuna sn,,,0.0,2.995732273553991,1,1,1,0,1,1,4.143134726391533,Södermanland,egen KMR-post
+Sö 164,Sö,Råby-Rönö sn,980.0,1015.0,0.0,1.9459101490553132,1,1,1,0,1,1,3.6375861597263857,Södermanland,egen KMR-post
+Sö 165,Sö,Spelviks sn,,,,3.4339872044851463,1,1,1,1,0,1,4.442651256490317,Södermanland,egen KMR-post
+Sö 166,Sö,Spelviks sn,980.0,1015.0,,3.4339872044851463,1,1,1,1,0,1,4.442651256490317,Södermanland,egen KMR-post
+Sö 167,Sö,Spelviks sn,1010.0,1050.0,,3.49650756146648,1,1,1,1,1,1,4.442651256490317,Södermanland,egen KMR-post
+Sö 168,Sö,Spelviks sn,,,,3.49650756146648,1,1,1,1,1,1,4.442651256490317,Södermanland,egen KMR-post
+Sö 170,Sö,Svärta sn,,,0.0,0.6931471805599453,1,1,1,1,1,1,3.6888794541139363,Södermanland,egen KMR-post
+Sö 173,Sö,Tystberga sn,,,1.0,1.3862943611198906,0,0,0,0,0,0,4.553876891600541,Södermanland,egen KMR-post
+Sö 178,Sö,Kärnbo sn,1070.0,1100.0,1.0,2.3978952727983707,0,0,0,0,0,0,3.871201010907891,Södermanland,egen KMR-post
+Sö 179,Sö,Kärnbo sn,1010.0,1050.0,1.0,2.3978952727983707,0,0,0,0,0,0,3.8918202981106265,Södermanland,egen KMR-post
+Sö 183,Sö,Kärnbo sn,1010.0,1050.0,0.0,2.4849066497880004,1,1,1,1,1,1,3.6888794541139363,Södermanland,egen KMR-post
+Sö 184,Sö,Kärnbo sn,,,0.0,2.5649493574615367,1,1,1,1,1,1,4.007333185232471,Södermanland,egen KMR-post
+Sö 187,Sö,Toresunds sn,,,0.0,1.9459101490553132,1,1,1,1,1,1,4.127134385045092,Södermanland,egen KMR-post
+Sö 189,Sö,Toresunds sn,,,0.0,2.4849066497880004,1,1,1,1,1,1,4.584967478670572,Södermanland,egen KMR-post
+Sö 192,Sö,Ytterselö sn,1050.0,1080.0,,2.6390573296152584,1,1,1,1,1,1,4.844187086458591,Södermanland,egen KMR-post
+Sö 194,Sö,Ytterselö sn,1010.0,1050.0,0.0,2.302585092994046,1,1,0,0,0,0,4.836281906951478,Södermanland,egen KMR-post
+Sö 196,Sö,Ytterselö sn,1010.0,1050.0,0.0,2.3978952727983707,0,0,0,0,0,0,4.68213122712422,Södermanland,egen KMR-post
+Sö 198,Sö,Ytterselö sn,1010.0,1050.0,,2.772588722239781,1,1,1,1,1,1,4.795790545596741,Södermanland,egen KMR-post
+Sö 200,Sö,Ytterselö sn,1010.0,1050.0,,2.995732273553991,1,1,1,1,1,1,4.804021044733257,Södermanland,egen KMR-post
+Sö 202,Sö,Ytterselö sn,1010.0,1050.0,1.0,2.6390573296152584,1,1,1,0,1,1,4.709530201312334,Södermanland,egen KMR-post
+Sö 203,Sö,Ytterselö sn,1050.0,1080.0,1.0,2.5649493574615367,1,1,1,0,1,1,4.700480365792417,Södermanland,egen KMR-post
+Sö 209,Sö,Överselö sn,1010.0,1050.0,,2.9444389791664403,1,1,1,1,1,1,4.770684624465665,Södermanland,egen KMR-post
+Sö 210,Sö,Överselö sn,1010.0,1050.0,1.0,2.772588722239781,1,1,1,1,1,1,4.499809670330265,Södermanland,egen KMR-post
+Sö 211,Sö,Överselö sn,1010.0,1050.0,,2.9444389791664403,1,1,1,1,1,1,4.795790545596741,Södermanland,egen KMR-post
+Sö 212,Sö,Överselö sn,1010.0,1050.0,,2.995732273553991,1,1,0,0,0,0,4.736198448394496,Södermanland,egen KMR-post
+Sö 213,Sö,Överselö sn,,,0.0,2.4849066497880004,1,1,1,0,0,1,4.110873864173311,Södermanland,egen KMR-post
+Sö 214,Sö,Överselö sn,1010.0,1050.0,1.0,2.8903717578961645,1,1,1,1,1,1,4.465908118654584,Södermanland,egen KMR-post
+Sö 217,Sö,Sorunda sn,1010.0,1050.0,0.0,2.5649493574615367,1,1,1,0,1,1,4.330733340286331,Stockholm,egen KMR-post
+Sö 224,Sö,Sorunda sn,1010.0,1050.0,,2.1972245773362196,1,1,1,1,1,1,3.367295829986474,Stockholm,egen KMR-post
+Sö 226,Sö,Sorunda sn,1010.0,1050.0,0.0,1.6094379124341005,1,1,1,0,1,1,3.6109179126442243,Stockholm,egen KMR-post
+Sö 229,Sö,Sorunda sn,1010.0,1050.0,1.0,2.0794415416798357,1,1,1,0,1,1,4.330733340286331,Stockholm,egen KMR-post
+Sö 230,Sö,Sorunda sn,1010.0,1050.0,1.0,2.0794415416798357,1,1,1,0,1,1,4.31748811353631,Stockholm,egen KMR-post
+Sö 232,Sö,Sorunda sn,,,,1.9459101490553132,1,1,1,1,0,1,3.332204510175204,Stockholm,egen KMR-post
+Sö 233,Sö,Sorunda sn,1010.0,1050.0,,1.9459101490553132,1,1,1,1,0,1,3.332204510175204,Stockholm,egen KMR-post
+Sö 234,Sö,Sorunda sn,,,,1.9459101490553132,1,1,1,1,0,1,3.295836866004329,Stockholm,egen KMR-post
+Sö 235,Sö,Sorunda sn,1050.0,1080.0,0.0,2.0794415416798357,0,0,0,0,0,0,2.70805020110221,Stockholm,egen KMR-post
+Sö 237,Sö,Västerhaninge sn,,,0.0,2.772588722239781,1,1,1,1,1,1,4.6443908991413725,Stockholm,egen KMR-post
+Sö 239,Sö,Västerhaninge sn,1050.0,1080.0,0.0,0.6931471805599453,0,0,0,0,0,0,3.713572066704308,Stockholm,egen KMR-post
+Sö 240,Sö,Västerhaninge sn,1010.0,1050.0,0.0,2.9444389791664403,1,1,0,0,0,0,4.6443908991413725,Stockholm,egen KMR-post
+Sö 241,Sö,Västerhaninge sn,1010.0,1050.0,0.0,2.302585092994046,1,1,0,0,0,0,4.0943445622221,Stockholm,egen KMR-post
+Sö 242,Sö,Västerhaninge sn,,,1.0,2.302585092994046,1,1,1,0,1,1,4.553876891600541,Stockholm,egen KMR-post
+Sö 243,Sö,Västerhaninge sn,1050.0,1080.0,1.0,2.302585092994046,1,1,1,0,1,1,4.584967478670572,Stockholm,egen KMR-post
+Sö 244,Sö,Västerhaninge sn,1020.0,1050.0,0.0,2.3978952727983707,1,1,1,1,1,1,4.23410650459726,Stockholm,egen KMR-post
+Sö 245,Sö,Västerhaninge sn,,,0.0,2.302585092994046,1,1,1,0,1,1,4.290459441148391,Stockholm,egen KMR-post
+Sö 250,Sö,Ösmo sn,1010.0,1050.0,0.0,1.0986122886681098,1,1,1,0,1,1,3.7376696182833684,Stockholm,egen KMR-post
+Sö 251,Sö,Ösmo sn,1020.0,1050.0,,2.1972245773362196,1,1,1,1,1,1,4.430816798843313,Stockholm,egen KMR-post
+Sö 252,Sö,Ösmo sn,,,,2.1972245773362196,1,1,1,1,1,1,4.418840607796598,Stockholm,egen KMR-post
+Sö 254,Sö,Ösmo sn,1010.0,1050.0,,2.4849066497880004,1,1,1,0,1,1,4.454347296253507,Stockholm,egen KMR-post
+Sö 256,Sö,Ösmo sn,1010.0,1050.0,1.0,2.1972245773362196,1,1,1,0,1,1,4.442651256490317,Stockholm,egen KMR-post
+Sö 258,Sö,Ösmo sn,1010.0,1050.0,1.0,2.1972245773362196,1,1,1,0,1,1,4.442651256490317,Stockholm,egen KMR-post
+Sö 260,Sö,Österhaninge sn,,,1.0,2.5649493574615367,1,1,1,1,1,1,4.430816798843313,Stockholm,egen KMR-post
+Sö 261,Sö,Österhaninge sn,1010.0,1050.0,1.0,2.5649493574615367,1,1,1,1,1,1,4.430816798843313,Stockholm,egen KMR-post
+Sö 264,Sö,Österhaninge sn,,,,2.6390573296152584,1,1,1,0,0,1,4.394449154672439,Stockholm,egen KMR-post
+Sö 265,Sö,Österhaninge sn,1010.0,1050.0,0.0,2.5649493574615367,1,1,1,0,1,1,4.143134726391533,Stockholm,egen KMR-post
+Sö 266,Sö,Österhaninge sn,1010.0,1050.0,1.0,2.70805020110221,0,0,0,0,0,0,4.330733340286331,Stockholm,egen KMR-post
+Sö 268,Sö,Österhaninge sn,1010.0,1050.0,,1.3862943611198906,1,1,1,1,0,1,2.833213344056216,Stockholm,egen KMR-post
+Sö 269,Sö,Österhaninge sn,,,0.0,2.3978952727983707,0,0,0,0,0,0,3.4965075614664802,Stockholm,egen KMR-post
+Sö 272,Sö,Österhaninge sn,,,,1.3862943611198906,1,1,1,1,0,1,2.6390573296152584,Stockholm,egen KMR-post
+Sö 273,Sö,Österhaninge sn,1010.0,1050.0,1.0,2.6390573296152584,1,1,1,0,0,1,4.276666119016055,Stockholm,egen KMR-post
+Sö 288,Sö,Botkyrka sn,1020.0,1050.0,0.0,2.1972245773362196,1,1,1,1,1,1,4.110873864173311,Stockholm,egen KMR-post
+Sö 289,Sö,Botkyrka sn,1020.0,1050.0,0.0,2.0794415416798357,1,1,1,0,1,1,3.9512437185814275,Stockholm,egen KMR-post
+Sö 290,Sö,Brännkyrka sn,1020.0,1050.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.1972245773362196,Stockholm,egen KMR-post
+Sö 292,Sö,Grödinge sn,1050.0,1080.0,0.0,1.6094379124341005,0,0,0,0,0,0,2.70805020110221,Stockholm,egen KMR-post
+Sö 296,Sö,Grödinge sn,1010.0,1050.0,,2.0794415416798357,1,1,1,0,0,1,4.356708826689592,Stockholm,egen KMR-post
+Sö 298,Sö,Grödinge sn,1050.0,1080.0,0.0,1.6094379124341005,0,0,0,0,0,0,2.995732273553991,Stockholm,egen KMR-post
+Sö 301,Sö,Huddinge sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,2.70805020110221,Stockholm,egen KMR-post
+Sö 302,Sö,Salems sn,,,,2.3978952727983707,1,1,1,1,1,1,4.007333185232471,Stockholm,egen KMR-post
+Sö 303,Sö,Salems sn,,,0.0,2.772588722239781,0,0,0,0,0,0,4.290459441148391,Stockholm,egen KMR-post
+Sö 304,Sö,Salems sn,1010.0,1050.0,,1.791759469228055,1,1,1,1,0,1,3.9318256327243257,Stockholm,egen KMR-post
+Sö 305,Sö,Botkyrka sn,1050.0,1080.0,0.0,2.3978952727983707,0,0,0,0,0,0,4.406719247264253,Stockholm,egen KMR-post
+Sö 306,Sö,Salems sn,,,0.0,2.3978952727983707,1,1,1,1,0,1,4.418840607796598,Stockholm,egen KMR-post
+Sö 315,Sö,Dunkers sn,,,0.0,0.0,1,1,1,1,0,1,2.3978952727983707,Södermanland,egen KMR-post
+Sö 318,Sö,Helgesta sn,1020.0,1050.0,0.0,0.0,1,1,1,1,1,1,3.1780538303479458,Södermanland,egen KMR-post
+Sö 319,Sö,Årdala sn,980.0,1015.0,,1.0986122886681098,1,1,0,0,0,0,3.295836866004329,Södermanland,egen KMR-post
+Sö 320,Sö,Årdala sn,1010.0,1050.0,,1.0986122886681098,1,1,0,0,0,0,3.295836866004329,Södermanland,egen KMR-post
+Sö 321,Sö,Fogdö sn,1010.0,1050.0,0.0,0.0,1,1,1,1,1,1,4.330733340286331,Södermanland,egen KMR-post
+Sö 347,Sö,Ytterjärna sn,1050.0,1080.0,0.0,2.0794415416798357,1,1,1,1,0,1,3.784189633918261,Stockholm,egen KMR-post
+Sö 348,Sö,Ytterjärna sn,,,,2.302585092994046,1,1,0,0,0,0,4.060443010546419,Stockholm,egen KMR-post
+Sö 349,Sö,Ytterjärna sn,,,,2.302585092994046,1,1,1,1,1,1,3.9512437185814275,Stockholm,egen KMR-post
+Sö 350,Sö,Ytterjärna sn,1010.0,1050.0,0.0,1.791759469228055,1,1,0,0,0,0,3.8066624897703196,Stockholm,egen KMR-post
+Sö 353,Sö,Överjärna sn,1010.0,1050.0,0.0,2.1972245773362196,0,0,0,0,0,0,3.6888794541139363,Stockholm,egen KMR-post
+Sö 360,Sö,Blacksta sn,980.0,1015.0,,1.9459101490553132,0,0,0,0,0,0,4.127134385045092,Södermanland,egen KMR-post
+Sö 367,Sö,Sankt Nicolai sn (nu Nyköping),980.0,1015.0,,1.791759469228055,1,1,1,0,1,1,4.0943445622221,Södermanland,egen KMR-post
+Sö 374,Sö,Tystberga sn,,,1.0,1.3862943611198906,0,0,0,0,0,0,4.543294782270004,Södermanland,egen KMR-post
+Sö 378,Sö,Huddinge sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,2.6390573296152584,Stockholm,egen KMR-post
+Sö 381,Sö,Salems sn,,,0.0,1.9459101490553132,1,1,1,0,1,1,3.8066624897703196,Stockholm,egen KMR-post
+Sö ATA6058/54,Sö,Årdala sn,,,,1.0986122886681098,1,1,0,0,0,0,3.295836866004329,Södermanland,egen KMR-post
+Sö ATA6491/60,Sö,Helgarö sn,,,0.0,0.6931471805599453,1,1,1,1,0,1,4.219507705176107,Södermanland,egen KMR-post
+Sö ATA6163/61,Sö,Runtuna sn,,,,2.4849066497880004,1,1,1,0,0,1,4.04305126783455,Södermanland,egen KMR-post
+Sö ATA4207/71,Sö,Grödinge sn,,,,1.9459101490553132,1,1,1,1,1,1,4.406719247264253,Stockholm,egen KMR-post
+Sö ATA322-4237-2011,Sö,Österhaninge sn,,,0.0,1.791759469228055,1,1,1,1,1,1,3.6109179126442243,Stockholm,egen KMR-post
+Sö Fv1948;289,Sö,Ludgo sn,1010.0,1050.0,1.0,3.258096538021482,1,1,1,0,0,1,4.0943445622221,Södermanland,egen KMR-post
+Sö Fv1948;291,Sö,Lunda sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,3.4339872044851463,Södermanland,egen KMR-post
+Sö Fv1948;298,Sö,Ösmo sn,1010.0,1050.0,0.0,1.3862943611198906,1,1,0,0,0,0,3.6109179126442243,Stockholm,egen KMR-post
+Sö Fv1954;20,Sö,Grödinge sn,980.0,1015.0,0.0,1.791759469228055,1,1,0,0,0,0,3.9889840465642745,Stockholm,egen KMR-post
+Sö Fv1959;262,Sö,Österhaninge sn,1020.0,1050.0,,2.70805020110221,1,1,0,0,0,0,4.553876891600541,Stockholm,egen KMR-post
+Sö Fv1971;207,Sö,Tyresö sn,,,0.0,0.0,0,0,0,0,0,0,2.302585092994046,Stockholm,egen KMR-post
+Sö Fv1971;208,Sö,Ösmo sn,,,,2.302585092994046,1,1,1,1,1,1,4.418840607796598,Stockholm,egen KMR-post
+Sö Fv1973;189,Sö,Julita sn,980.0,1015.0,0.0,0.0,1,1,0,0,0,0,2.9444389791664403,Södermanland,egen KMR-post
+Sö Fv1982;235,Sö,Spelviks sn,,,,3.367295829986474,1,1,1,1,1,1,4.290459441148391,Södermanland,egen KMR-post
+Sö Fv1984;253,Sö,Bettna sn,,,0.0,1.0986122886681098,1,1,1,1,0,1,4.127134385045092,Södermanland,egen KMR-post
+Sö Fv1986;218,Sö,Kjula sn,1010.0,1050.0,0.0,2.1972245773362196,0,0,0,0,0,0,3.871201010907891,Södermanland,egen KMR-post
+Sö Fv1990;31,Sö,Stenkvista sn,,,1.0,1.9459101490553132,1,1,1,0,0,0,2.8903717578961645,Södermanland,egen KMR-post
+Sö Fv1993;229,Sö,Klosters sn (Eskilstuna),,,0.0,2.3978952727983707,1,1,1,1,0,1,4.61512051684126,Södermanland,egen KMR-post
+Sö Fv1993;230,Sö,Vadsbro sn,,,0.0,1.791759469228055,0,0,0,0,0,0,3.5553480614894135,Södermanland,egen KMR-post
+Sö NOR1997;26,Sö,Ludgo sn,,,1.0,3.4657359027997265,1,1,1,0,1,1,3.9889840465642745,Södermanland,egen KMR-post
+Sö NOR1998;22,Sö,Stenkvista sn,,,1.0,2.0794415416798357,1,1,1,0,1,0,3.1780538303479458,Södermanland,egen KMR-post
+Sö NOR2003;22,Sö,Runtuna sn,,,,2.4849066497880004,1,1,1,0,0,1,4.04305126783455,Södermanland,närmaste gravfält i landskapet
+Sö Sb1965;20,Sö,Grödinge sn,,,0.0,1.9459101490553132,1,1,1,1,0,1,3.871201010907891,Stockholm,egen KMR-post
+Sö Sb1965;22,Sö,Sköldinge sn,,,0.0,1.791759469228055,0,0,0,0,0,0,3.8066624897703196,Södermanland,egen KMR-post
+Sm 5,Sm,Hjortsberga sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,2.3978952727983707,Kronoberg,egen KMR-post
+Sm 7,Sm,Skatelövs sn,980.0,1015.0,0.0,0.0,1,1,1,1,1,1,2.0794415416798357,Kronoberg,egen KMR-post
+Sm 8,Sm,Dänningelanda sn,,,0.0,0.0,0,0,0,0,0,0,2.302585092994046,Kronoberg,egen KMR-post
+Sm 11,Sm,Furuby sn,980.0,1015.0,0.0,0.0,1,1,1,1,1,1,2.3978952727983707,Kronoberg,egen KMR-post
+Sm 13,Sm,Uråsa sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.791759469228055,Kronoberg,egen KMR-post
+Sm 15,Sm,Östra Torsås sn,,,0.0,0.6931471805599453,1,1,1,0,0,1,1.9459101490553132,Kronoberg,egen KMR-post
+Sm 16,Sm,Östra Torsås sn,980.0,1015.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.6390573296152584,Kronoberg,egen KMR-post
+Sm 19,Sm,Gårdsby sn,980.0,1015.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.772588722239781,Kronoberg,egen KMR-post
+Sm 21,Sm,Tolgs sn,,,0.0,0.0,0,0,0,0,0,0,1.0986122886681098,Kronoberg,egen KMR-post
+Sm 29,Sm,Berga sn (nu Vittaryds sn),980.0,1015.0,0.0,1.3862943611198906,1,1,1,0,1,1,2.9444389791664403,Kronoberg,egen KMR-post
+Sm 30,Sm,Berga sn,,,0.0,1.3862943611198906,0,0,0,0,0,0,3.1780538303479458,Kronoberg,egen KMR-post
+Sm 31,Sm,Dörarps sn,,,0.0,0.0,0,0,0,0,0,0,1.6094379124341003,Kronoberg,egen KMR-post
+Sm 35,Sm,Ljungby sn,980.0,1015.0,0.0,1.0986122886681098,1,1,1,0,1,1,3.4011973816621555,Kronoberg,egen KMR-post
+Sm 36,Sm,Nöttja sn,980.0,1015.0,0.0,0.6931471805599453,1,1,1,0,0,1,2.302585092994046,Kronoberg,egen KMR-post
+Sm 37,Sm,Nöttja sn,980.0,1015.0,0.0,0.6931471805599453,1,1,0,0,0,0,2.1972245773362196,Kronoberg,egen KMR-post
+Sm 42,Sm,Ryssby sn,980.0,1015.0,0.0,1.0986122886681098,1,1,1,0,1,1,0.6931471805599453,Kronoberg,egen KMR-post
+Sm 44,Sm,Södra Ljunga sn,980.0,1015.0,0.0,1.3862943611198906,1,1,1,0,1,1,2.4849066497880004,Kronoberg,egen KMR-post
+Sm 45,Sm,Tutaryds sn (nu Södra Ljunga sn),980.0,1015.0,0.0,0.0,1,1,1,0,1,1,2.302585092994046,Kronoberg,egen KMR-post
+Sm 47,Sm,Bolmsö sn,,,0.0,0.0,0,0,0,0,0,0,2.772588722239781,Kronoberg,närmaste gravfält i landskapet
+Sm 48,Sm,Bredaryds sn (nu Forsheda sn),,,0.0,1.0986122886681098,0,0,0,0,0,0,2.3978952727983707,Jönköping,egen KMR-post
+Sm 52,Sm,Forsheda sn,980.0,1015.0,0.0,1.0986122886681098,0,0,0,0,0,0,2.302585092994046,Jönköping,egen KMR-post
+Sm 53,Sm,Reftele sn,,,0.0,0.0,0,0,0,0,0,0,2.833213344056216,Jönköping,egen KMR-post
+Sm 55,Sm,Byarums sn,,,0.0,0.0,0,0,0,0,0,0,2.833213344056216,Jönköping,egen KMR-post
+Sm 60,Sm,Rydaholms sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.0986122886681098,Jönköping,egen KMR-post
+Sm 61,Sm,Tånnö sn,980.0,1015.0,0.0,0.0,1,1,1,0,1,1,2.1972245773362196,Jönköping,egen KMR-post
+Sm 62,Sm,Voxtorps sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,0.0,Jönköping,egen KMR-post
+Sm 64,Sm,Värnamo,980.0,1015.0,0.0,0.6931471805599453,1,1,1,0,0,1,3.1354942159291497,Jönköping,egen KMR-post
+Sm 75,Sm,Svenarums sn,,,0.0,0.0,0,0,0,0,0,0,2.5649493574615367,Jönköping,egen KMR-post
+Sm 76,Sm,Sävsjö (f.d. Norra Ljunga sn),,,,0.6931471805599453,0,0,0,0,0,0,2.6390573296152584,Jönköping,egen KMR-post
+Sm 77,Sm,Sävsjö (f.d. Norra Ljunga sn),,,,1.0986122886681098,1,1,1,1,1,1,2.8903717578961645,Jönköping,egen KMR-post
+Sm 78,Sm,Sävsjö (Vallsjö sn),,,0.0,1.0986122886681098,1,1,0,0,0,0,2.6390573296152584,Jönköping,egen KMR-post
+Sm 89,Sm,Alseda sn,,,0.0,1.3862943611198906,1,1,1,0,1,1,1.0986122886681098,Jönköping,egen KMR-post
+Sm 90,Sm,Alseda sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,1.0986122886681098,Jönköping,egen KMR-post
+Sm 93,Sm,Björkö sn,,,0.0,0.6931471805599453,1,1,1,0,0,1,0.0,Jönköping,egen KMR-post
+Sm 96,Sm,Lannaskede sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,1.791759469228055,Jönköping,egen KMR-post
+Sm 99,Sm,Myresjö sn,,,1.0,1.3862943611198906,0,0,0,0,0,0,2.4849066497880004,Jönköping,egen KMR-post
+Sm 100,Sm,Nävelsjö sn,,,1.0,1.6094379124341005,0,0,0,0,0,0,2.3978952727983707,Jönköping,egen KMR-post
+Sm 101,Sm,Nävelsjö sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,2.1972245773362196,Jönköping,egen KMR-post
+Sm 111,Sm,Vetlanda landsförsamling,,,0.0,1.3862943611198906,0,0,0,0,0,0,0.6931471805599453,Jönköping,egen KMR-post
+Sm 113,Sm,Vetlanda landsförsamling,,,0.0,2.0794415416798357,0,0,0,0,0,0,2.0794415416798357,Jönköping,egen KMR-post
+Sm 122,Sm,Gränna landsförsamling,,,0.0,0.0,0,0,0,0,0,0,0.0,Jönköping,egen KMR-post
+Sm 127,Sm,Bredestads sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,2.3978952727983707,Jönköping,egen KMR-post
+Sm 128,Sm,Linderås sn,,,0.0,0.6931471805599453,1,1,0,0,0,0,2.6390573296152584,Jönköping,egen KMR-post
+Sm 131,Sm,Flisby sn,1010.0,1050.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.4849066497880004,Jönköping,egen KMR-post
+Sm 132,Sm,Flisby sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,0.0,Jönköping,egen KMR-post
+Sm 133,Sm,Flisby sn,,,0.0,1.3862943611198906,0,0,0,0,0,0,2.3978952727983707,Jönköping,egen KMR-post
+Sm 134,Sm,Hults sn,,,0.0,1.6094379124341005,0,0,0,0,0,0,2.4849066497880004,Jönköping,egen KMR-post
+Sm 141,Sm,Mellby sn,,,0.0,1.791759469228055,1,1,1,0,1,1,1.6094379124341003,Jönköping,egen KMR-post
+Sm 142,Sm,Mellby sn,,,1.0,1.6094379124341005,0,0,0,0,0,0,1.0986122886681098,Jönköping,egen KMR-post
+Sm 143,Sm,Mellby sn,,,1.0,1.6094379124341005,0,0,0,0,0,0,1.0986122886681098,Jönköping,egen KMR-post
+Sm 155,Sm,Långemåla sn,,,0.0,0.0,0,0,0,0,0,0,1.791759469228055,Kalmar,egen KMR-post
+Sm NOR2001;25,Sm,Visingsö sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,1.791759469228055,Jönköping,egen KMR-post
+Vg 2,Vg,Berga sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,2.0794415416798357,Västra Götaland,egen KMR-post
+Vg 3,Vg,Bällefors sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.0986122886681098,Västra Götaland,egen KMR-post
+Vg 4,Vg,Eks sn,980.0,1015.0,0.0,1.0986122886681098,0,0,0,0,0,0,2.0794415416798357,Västra Götaland,egen KMR-post
+Vg 6,Vg,Fägre sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,0.0,Västra Götaland,egen KMR-post
+Vg 7,Vg,Götlunda sn,,,0.0,0.0,1,1,1,1,1,1,2.833213344056216,Västra Götaland,egen KMR-post
+Vg 11,Vg,Leksbergs sn,,,,1.791759469228055,0,0,0,0,0,0,2.1972245773362196,Västra Götaland,egen KMR-post
+Vg 12,Vg,Leksbergs sn,980.0,1015.0,,1.791759469228055,1,1,0,0,0,0,2.0794415416798357,Västra Götaland,egen KMR-post
+Vg 13,Vg,Leksbergs sn,1010.0,1050.0,,1.9459101490553132,0,0,0,0,0,0,2.1972245773362196,Västra Götaland,egen KMR-post
+Vg 14,Vg,Lyrestads sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.0986122886681098,Västra Götaland,egen KMR-post
+Vg 15,Vg,Mariestads sn,1010.0,1050.0,0.0,1.791759469228055,1,1,0,0,0,0,2.1972245773362196,Västra Götaland,egen KMR-post
+Vg 16,Vg,Tidavads sn (nu Ekby sn),980.0,1015.0,0.0,0.0,0,0,0,0,0,0,2.1972245773362196,Västra Götaland,egen KMR-post
+Vg 20,Vg,Gösslunda sn,980.0,1015.0,0.0,2.3978952727983707,0,0,0,0,0,0,3.332204510175204,Västra Götaland,egen KMR-post
+Vg 33,Vg,Mellby sn,980.0,1015.0,1.0,1.0986122886681098,0,0,0,0,0,0,2.0794415416798357,Västra Götaland,egen KMR-post
+Vg 34,Vg,Mellby sn,,,1.0,1.0986122886681098,0,0,0,0,0,0,2.1972245773362196,Västra Götaland,egen KMR-post
+Vg 35,Vg,Otterstads sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,2.833213344056216,Västra Götaland,egen KMR-post
+Vg 39,Vg,Rackeby sn,,,0.0,2.3978952727983707,1,1,1,1,1,1,2.9444389791664403,Västra Götaland,egen KMR-post
+Vg 55,Vg,Källby sn,,,,1.0986122886681098,1,1,1,0,1,1,1.0986122886681098,Västra Götaland,egen KMR-post
+Vg 56,Vg,Källby sn,980.0,1015.0,,1.0986122886681098,1,1,1,0,1,1,1.0986122886681098,Västra Götaland,egen KMR-post
+Vg 61,Vg,Edsvära sn,980.0,1015.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.6390573296152584,Västra Götaland,egen KMR-post
+Vg 66,Vg,Norra Vånga sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,2.0794415416798357,Västra Götaland,egen KMR-post
+Vg 85,Vg,Dala sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,2.1972245773362196,Västra Götaland,egen KMR-post
+Vg 90,Vg,Håkantorps sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,3.295836866004329,Västra Götaland,egen KMR-post
+Vg 101,Vg,Flo sn,980.0,1015.0,0.0,0.6931471805599453,0,0,0,0,0,0,1.3862943611198906,Västra Götaland,egen KMR-post
+Vg 106,Vg,Leksbergs sn,980.0,1015.0,,1.9459101490553132,0,0,0,0,0,0,1.791759469228055,Västra Götaland,egen KMR-post
+Vg 110,Vg,Vänersnäs sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.3862943611198906,Västra Götaland,egen KMR-post
+Vg 113,Vg,Bjärby sn,980.0,1015.0,,1.6094379124341005,0,0,0,0,0,0,1.9459101490553132,Västra Götaland,egen KMR-post
+Vg 114,Vg,Bjärby sn,,,0.0,1.6094379124341005,1,1,0,0,0,0,2.1972245773362196,Västra Götaland,egen KMR-post
+Vg 115,Vg,Grästorps köping (Tengene sn),,,,1.6094379124341005,1,1,0,0,0,0,2.0794415416798357,Västra Götaland,egen KMR-post
+Vg 123,Vg,Barne-Åsaka sn,980.0,1015.0,0.0,0.0,1,1,1,0,1,0,2.302585092994046,Västra Götaland,egen KMR-post
+Vg 127,Vg,Larvs sn,1010.0,1050.0,0.0,0.6931471805599453,1,1,1,0,0,1,2.5649493574615367,Västra Götaland,egen KMR-post
+Vg 128,Vg,Österbitterna sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,2.0794415416798357,Västra Götaland,egen KMR-post
+Vg 130,Vg,Grolanda sn,1010.0,1050.0,0.0,1.0986122886681098,0,0,0,0,0,0,1.0986122886681098,Västra Götaland,egen KMR-post
+Vg 133,Vg,Marka sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.791759469228055,Västra Götaland,egen KMR-post
+Vg 136,Vg,Kinneve sn (nu Kinneved),,,0.0,1.6094379124341005,0,0,0,0,0,0,0.0,Västra Götaland,egen KMR-post
+Vg 140,Vg,Velinga sn (SRI anger Baltaks sn),,,0.0,0.0,0,0,0,0,0,0,2.3978952727983707,Västra Götaland,egen KMR-post
+Vg 149,Vg,Vartofta-Åsaka sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.3862943611198906,Västra Götaland,egen KMR-post
+Vg 150,Vg,Väne-Åsaka sn,,,0.0,0.0,0,0,0,0,0,0,0.6931471805599453,Västra Götaland,egen KMR-post
+Vg 152,Vg,Eggvena sn,980.0,1015.0,0.0,1.791759469228055,0,0,0,0,0,0,2.6390573296152584,Västra Götaland,egen KMR-post
+Vg 157,Vg,Hovs sn,1010.0,1050.0,0.0,0.0,1,1,1,0,1,1,3.258096538021482,Västra Götaland,egen KMR-post
+Vg 160,Vg,Hällstads sn,980.0,1015.0,0.0,1.6094379124341005,0,0,0,0,0,0,2.8903717578961645,Västra Götaland,egen KMR-post
+Vg 161,Vg,Härna sn,980.0,1015.0,0.0,1.6094379124341005,1,1,1,0,1,1,2.302585092994046,Västra Götaland,egen KMR-post
+Vg 162,Vg,Möne sn,1010.0,1050.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.302585092994046,Västra Götaland,egen KMR-post
+Vg 168,Vg,Södra Vings sn,,,0.0,1.6094379124341005,1,1,1,1,1,1,2.833213344056216,Västra Götaland,egen KMR-post
+Vg 169,Vg,Södra Vings sn,,,0.0,1.6094379124341005,1,1,1,1,1,1,2.833213344056216,Västra Götaland,egen KMR-post
+Vg 172,Vg,Blidsbergs sn,980.0,1015.0,0.0,1.9459101490553132,1,1,1,0,1,1,2.772588722239781,Västra Götaland,egen KMR-post
+Vg 174,Vg,Dalums sn,980.0,1015.0,,2.1972245773362196,0,0,0,0,0,0,3.091042453358316,Västra Götaland,egen KMR-post
+Vg 175,Vg,Dalums sn,980.0,1015.0,,2.1972245773362196,1,1,1,0,1,1,3.044522437723423,Västra Götaland,egen KMR-post
+Vg 179,Vg,Kölaby sn,1010.0,1050.0,0.0,1.6094379124341005,1,1,1,0,1,1,3.58351893845611,Västra Götaland,egen KMR-post
+Vg 181,Vg,Norra Åsarps sn,1010.0,1050.0,0.0,1.9459101490553132,0,0,0,0,0,0,3.4657359027997265,Västra Götaland,egen KMR-post
+Vg 182,Vg,Norra Åsarps sn,1010.0,1050.0,0.0,1.9459101490553132,0,0,0,0,0,0,2.833213344056216,Västra Götaland,egen KMR-post
+Vg 189,Vg,Länghems sn,1010.0,1050.0,0.0,0.0,0,0,0,0,0,0,1.0986122886681098,Västra Götaland,egen KMR-post
+Vg 190,Vg,Månstads sn,,,0.0,0.0,1,1,1,0,1,1,1.9459101490553132,Västra Götaland,egen KMR-post
+Vg 192,Vg,Nittorps sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,2.833213344056216,Västra Götaland,egen KMR-post
+Vg 194,Vg,Svenljunga sn,1010.0,1050.0,0.0,0.6931471805599453,1,1,0,0,0,0,1.6094379124341003,Västra Götaland,egen KMR-post
+Vg 195,Vg,Tranemo sn,980.0,1015.0,0.0,0.0,1,1,1,1,1,1,1.9459101490553132,Västra Götaland,egen KMR-post
+Vg Fv1980;238,Vg,Remmene sn,,,0.0,1.791759469228055,0,0,0,0,0,0,3.258096538021482,Västra Götaland,egen KMR-post
+U 13,U,Munsö sn,,,0.0,2.70805020110221,0,0,0,0,0,0,3.912023005428146,Stockholm,egen KMR-post
+U 14,U,Munsö sn,1010.0,1050.0,0.0,2.70805020110221,1,1,1,1,0,1,3.7612001156935624,Stockholm,egen KMR-post
+U 17,U,Ekerö sn,1020.0,1050.0,0.0,2.4849066497880004,1,1,1,0,1,1,3.828641396489095,Stockholm,egen KMR-post
+U 18,U,Ekerö sn,,,0.0,2.4849066497880004,1,1,1,0,0,1,3.4657359027997265,Stockholm,egen KMR-post
+U 19,U,Ekerö sn,980.0,1015.0,,2.772588722239781,1,1,1,0,0,1,3.912023005428146,Stockholm,egen KMR-post
+U 22,U,Färentuna sn,,,0.0,2.6390573296152584,1,1,1,1,1,1,3.6635616461296463,Stockholm,egen KMR-post
+U 30,U,Hilleshögs sn,1020.0,1050.0,0.0,2.833213344056216,1,1,1,0,1,1,3.784189633918261,Stockholm,egen KMR-post
+U 31,U,Hilleshögs sn,,,0.0,2.4849066497880004,0,0,0,0,0,0,3.258096538021482,Stockholm,egen KMR-post
+U 32,U,Sånga sn,1010.0,1050.0,0.0,2.6390573296152584,1,1,1,0,1,1,4.02535169073515,Stockholm,egen KMR-post
+U 34,U,Sånga sn,1010.0,1050.0,1.0,2.995732273553991,0,0,0,0,0,0,4.07753744390572,Stockholm,egen KMR-post
+U 35,U,Sånga sn,1020.0,1050.0,0.0,2.833213344056216,0,0,0,0,0,0,4.0943445622221,Stockholm,egen KMR-post
+U 36,U,Sånga sn,1070.0,1100.0,1.0,2.995732273553991,0,0,0,0,0,0,4.110873864173311,Stockholm,egen KMR-post
+U 37,U,Sånga sn,1020.0,1050.0,,2.9444389791664403,0,0,0,0,0,0,3.871201010907891,Stockholm,egen KMR-post
+U 38,U,Sånga sn,,,,2.9444389791664403,0,0,0,0,0,0,3.871201010907891,Stockholm,egen KMR-post
+U 40,U,Skå sn,1050.0,1080.0,0.0,2.4849066497880004,1,1,1,0,1,1,4.07753744390572,Stockholm,egen KMR-post
+U 42,U,Skå sn,1070.0,1100.0,0.0,2.772588722239781,1,1,0,0,0,0,4.04305126783455,Stockholm,egen KMR-post
+U 43,U,Skå sn,1050.0,1080.0,1.0,2.5649493574615367,1,1,1,0,0,1,4.060443010546419,Stockholm,egen KMR-post
+U 44,U,Skå sn,1070.0,1100.0,1.0,2.5649493574615367,1,1,1,0,1,1,4.060443010546419,Stockholm,egen KMR-post
+U 53,U,Stockholm,1070.0,1100.0,0.0,2.302585092994046,0,0,0,0,0,0,3.367295829986474,Stockholm,egen KMR-post
+U 69,U,Spånga sn,980.0,1015.0,0.0,3.6375861597263857,1,1,1,0,0,1,5.075173815233827,Stockholm,egen KMR-post
+U 73,U,Spånga sn,1050.0,1080.0,0.0,3.58351893845611,1,1,1,0,1,1,4.927253685157205,Stockholm,egen KMR-post
+U 74,U,Spånga sn,1050.0,1080.0,0.0,3.610917912644224,1,1,1,0,1,1,5.0238805208462765,Stockholm,egen KMR-post
+U 75,U,Spånga sn,1070.0,1100.0,0.0,3.49650756146648,0,0,0,0,0,0,4.976733742420574,Stockholm,egen KMR-post
+U 77,U,Spånga sn (nu Sundbyberg),1070.0,1100.0,0.0,3.713572066704308,1,1,0,0,0,0,4.477336814478207,Stockholm,egen KMR-post
+U 88,U,Järfälla sn,,,,3.58351893845611,1,1,1,0,1,1,4.61512051684126,Stockholm,egen KMR-post
+U 89,U,Järfälla sn,1020.0,1050.0,,3.58351893845611,1,1,1,0,1,1,4.605170185988092,Stockholm,egen KMR-post
+U 96,U,Sollentuna sn,,,0.0,2.833213344056216,1,1,1,0,0,1,4.394449154672439,Stockholm,egen KMR-post
+U 100,U,Sollentuna sn,1070.0,1100.0,0.0,2.833213344056216,0,0,0,0,0,0,4.61512051684126,Stockholm,egen KMR-post
+U 107,U,Eds sn,,,1.0,3.9889840465642745,1,1,1,0,0,1,4.356708826689592,Stockholm,egen KMR-post
+U 110,U,Eds sn,,,1.0,3.6375861597263857,1,1,1,0,0,1,4.2626798770413155,Stockholm,egen KMR-post
+U 115,U,Eds sn,1100.0,1130.0,,4.174387269895637,1,1,1,0,1,1,4.3694478524670215,Stockholm,egen KMR-post
+U 117,U,Eds sn,1070.0,1100.0,1.0,4.189654742026425,1,1,1,0,1,1,4.5217885770490405,Stockholm,egen KMR-post
+U 118,U,Eds sn,1070.0,1100.0,1.0,4.1588830833596715,1,1,1,0,0,1,4.418840607796598,Stockholm,egen KMR-post
+U 121,U,Solna sn,1070.0,1100.0,0.0,2.70805020110221,0,0,0,0,0,0,3.7376696182833684,Stockholm,egen KMR-post
+U 125,U,Solna sn,,,0.0,2.6390573296152584,0,0,0,0,0,0,3.4965075614664802,Stockholm,egen KMR-post
+U 131,U,Danderyds sn,1050.0,1080.0,0.0,2.4849066497880004,0,0,0,0,0,0,3.912023005428146,Stockholm,egen KMR-post
+U 135,U,Täby sn,1020.0,1050.0,1.0,3.5263605246161616,1,1,1,0,1,1,4.672828834461906,Stockholm,egen KMR-post
+U 136,U,Täby sn,1020.0,1050.0,1.0,3.5263605246161616,1,1,1,0,1,1,4.672828834461906,Stockholm,egen KMR-post
+U 137,U,Täby sn,1020.0,1050.0,1.0,3.5263605246161616,1,1,1,0,1,1,4.672828834461906,Stockholm,egen KMR-post
+U 139,U,Täby sn,,,1.0,3.5263605246161616,1,1,1,0,0,1,4.672828834461906,Stockholm,egen KMR-post
+U 140,U,Täby sn,1020.0,1050.0,1.0,3.5263605246161616,1,1,1,0,0,1,4.672828834461906,Stockholm,egen KMR-post
+U 142,U,Täby sn,1070.0,1100.0,,3.4657359027997265,1,1,1,1,1,1,4.672828834461906,Stockholm,egen KMR-post
+U 147,U,Täby sn,1070.0,1100.0,0.0,3.295836866004329,0,0,0,0,0,0,4.48863636973214,Stockholm,egen KMR-post
+U 150,U,Täby sn,,,1.0,3.5263605246161616,1,1,1,0,0,1,4.6913478822291435,Stockholm,egen KMR-post
+U 151,U,Täby sn,,,1.0,3.5263605246161616,1,1,1,0,0,1,4.663439094112067,Stockholm,egen KMR-post
+U 152,U,Täby sn,1070.0,1100.0,1.0,3.49650756146648,1,1,1,0,0,1,4.5217885770490405,Stockholm,egen KMR-post
+U 153,U,Täby sn,1050.0,1080.0,1.0,3.49650756146648,1,1,0,0,0,0,4.51085950651685,Stockholm,egen KMR-post
+U 154,U,Täby sn,1050.0,1080.0,1.0,3.49650756146648,1,1,1,0,0,1,4.5217885770490405,Stockholm,egen KMR-post
+U 155,U,Täby sn,,,1.0,3.49650756146648,1,1,0,0,0,0,4.499809670330265,Stockholm,egen KMR-post
+U 160,U,Täby sn,1010.0,1050.0,1.0,4.204692619390966,0,0,0,0,0,0,4.962844630259907,Stockholm,egen KMR-post
+U 161,U,Täby sn,1010.0,1050.0,1.0,4.189654742026425,0,0,0,0,0,0,4.962844630259907,Stockholm,egen KMR-post
+U 164,U,Täby sn,,,,3.80666248977032,0,0,0,0,0,0,4.804021044733257,Stockholm,egen KMR-post
+U 165,U,Täby sn,1020.0,1050.0,,3.80666248977032,0,0,0,0,0,0,4.804021044733257,Stockholm,egen KMR-post
+U 169,U,Östra Ryds sn,980.0,1015.0,0.0,1.3862943611198906,1,1,0,0,0,0,3.6888794541139363,Stockholm,egen KMR-post
+U 170,U,Östra Ryds sn,,,0.0,0.0,1,1,1,0,1,1,2.3978952727983707,Stockholm,egen KMR-post
+U 172,U,Lidingö,1050.0,1080.0,0.0,0.0,1,1,1,0,0,1,2.5649493574615367,Stockholm,egen KMR-post
+U 173,U,Värmdö sn,1100.0,1130.0,0.0,0.0,1,1,1,0,1,1,3.713572066704308,Stockholm,egen KMR-post
+U 177,U,Roslagskulla sn (Roslags-Kulla),1070.0,1100.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.5649493574615367,Stockholm,egen KMR-post
+U 186,U,Össeby-Garns sn,1020.0,1050.0,1.0,3.4339872044851463,1,1,1,0,1,1,4.406719247264253,Stockholm,egen KMR-post
+U 188,U,Össeby-Garns sn,1020.0,1050.0,1.0,3.4011973816621555,1,1,1,0,1,1,4.330733340286331,Stockholm,egen KMR-post
+U 192,U,Össeby-Garns sn,,,,3.218875824868201,1,1,1,0,1,1,4.553876891600541,Stockholm,egen KMR-post
+U 193,U,Össeby-Garns sn,1070.0,1100.0,,3.1354942159291497,1,1,1,0,0,1,4.564348191467836,Stockholm,egen KMR-post
+U 194,U,Össeby-Garns sn,1050.0,1080.0,,3.4657359027997265,1,1,1,1,0,1,4.605170185988092,Stockholm,egen KMR-post
+U 200,U,Vada sn,980.0,1015.0,0.0,2.995732273553991,1,1,0,0,0,0,4.219507705176107,Stockholm,egen KMR-post
+U 207,U,Angarns sn,1050.0,1080.0,,2.8903717578961645,1,1,0,0,0,0,4.48863636973214,Stockholm,egen KMR-post
+U 208,U,Angarns sn,1050.0,1080.0,,2.8903717578961645,1,1,0,0,0,0,4.48863636973214,Stockholm,egen KMR-post
+U 211,U,Angarns sn,1070.0,1100.0,0.0,3.5263605246161616,1,1,1,0,1,1,4.844187086458591,Stockholm,egen KMR-post
+U 225,U,Vallentuna sn,980.0,1015.0,,3.784189633918261,1,1,1,0,0,1,4.875197323201151,Stockholm,egen KMR-post
+U 226,U,Vallentuna sn,1010.0,1050.0,,3.784189633918261,1,1,1,0,0,1,4.875197323201151,Stockholm,egen KMR-post
+U 227,U,Vallentuna sn,1070.0,1100.0,0.0,4.477336814478207,1,1,1,1,1,1,4.762173934797756,Stockholm,egen KMR-post
+U 229,U,Vallentuna sn,1070.0,1100.0,1.0,4.174387269895637,1,1,1,1,0,1,4.852030263919617,Stockholm,egen KMR-post
+U 231,U,Vallentuna sn,1100.0,1130.0,1.0,4.189654742026425,1,1,1,1,0,1,4.852030263919617,Stockholm,egen KMR-post
+U 232,U,Vallentuna sn,1100.0,1130.0,1.0,4.189654742026425,1,1,1,1,0,1,4.844187086458591,Stockholm,egen KMR-post
+U 233,U,Vallentuna sn,1070.0,1100.0,0.0,3.5553480614894135,1,1,0,0,0,0,4.927253685157205,Stockholm,egen KMR-post
+U 236,U,Vallentuna sn,1050.0,1080.0,1.0,3.610917912644224,1,1,0,0,0,0,4.7535901911063645,Stockholm,egen KMR-post
+U 237,U,Vallentuna sn,,,1.0,3.58351893845611,0,0,0,0,0,0,4.74493212836325,Stockholm,egen KMR-post
+U 239,U,Vallentuna sn,,,1.0,3.5553480614894135,0,0,0,0,0,0,4.787491742782046,Stockholm,egen KMR-post
+U 240,U,Vallentuna sn,1050.0,1080.0,1.0,3.4011973816621555,1,1,1,0,1,1,4.770684624465665,Stockholm,egen KMR-post
+U 241,U,Vallentuna sn,1050.0,1080.0,1.0,3.4011973816621555,1,1,1,0,1,1,4.7535901911063645,Stockholm,egen KMR-post
+U 242,U,Vallentuna sn,,,1.0,3.4011973816621555,1,1,1,0,1,1,4.7535901911063645,Stockholm,egen KMR-post
+U 246,U,Vallentuna sn,,,,4.276666119016055,1,1,1,1,1,1,4.624972813284271,Stockholm,egen KMR-post
+U 247,U,Vallentuna sn,,,,4.04305126783455,1,1,0,0,0,0,4.59511985013459,Stockholm,egen KMR-post
+U 267,U,Fresta sn,1070.0,1100.0,1.0,4.1588830833596715,1,1,1,1,1,1,4.912654885736052,Stockholm,egen KMR-post
+U 268,U,Fresta sn,,,1.0,4.1588830833596715,1,1,1,1,1,1,4.919980925828125,Stockholm,egen KMR-post
+U 269,U,Fresta sn,1070.0,1100.0,1.0,4.382026634673881,1,1,1,1,1,1,4.941642422609304,Stockholm,egen KMR-post
+U 275,U,Hammarby sn,1070.0,1100.0,1.0,4.394449154672439,1,1,1,0,1,1,4.804021044733257,Stockholm,egen KMR-post
+U 277,U,Hammarby sn,,,,4.3694478524670215,1,1,1,0,0,1,4.6913478822291435,Stockholm,egen KMR-post
+U 278,U,Hammarby sn,,,0.0,4.5217885770490405,1,1,0,0,0,0,4.718498871295094,Stockholm,egen KMR-post
+U 279,U,Hammarby sn,1070.0,1100.0,1.0,4.418840607796598,1,1,1,0,1,1,4.74493212836325,Stockholm,egen KMR-post
+U 281,U,Hammarby sn,1070.0,1100.0,,4.189654742026425,1,1,1,0,1,1,4.454347296253507,Stockholm,egen KMR-post
+U 287,U,Hammarby sn,1070.0,1100.0,1.0,4.532599493153256,1,1,1,0,0,1,4.770684624465665,Stockholm,egen KMR-post
+U 288,U,Hammarby sn,1100.0,1130.0,1.0,4.330733340286331,1,1,1,0,0,1,4.736198448394496,Stockholm,egen KMR-post
+U 289,U,Hammarby sn,1050.0,1080.0,1.0,4.3694478524670215,1,1,1,0,1,1,4.74493212836325,Stockholm,egen KMR-post
+U 291,U,Hammarby sn,,,1.0,4.31748811353631,1,1,0,0,0,0,4.762173934797756,Stockholm,egen KMR-post
+U 292,U,Hammarby sn,1100.0,1130.0,,4.23410650459726,0,0,0,0,0,0,4.61512051684126,Stockholm,egen KMR-post
+U 293,U,Hammarby sn,,,1.0,4.204692619390966,1,1,1,0,1,1,4.48863636973214,Stockholm,egen KMR-post
+U 294,U,Hammarby sn,,,1.0,4.189654742026425,1,1,1,0,1,1,4.442651256490317,Stockholm,egen KMR-post
+U 304,U,Skånela sn,,,0.0,3.688879454113936,0,0,0,0,0,0,4.204692619390966,Stockholm,egen KMR-post
+U 312,U,Skånela sn,1070.0,1100.0,1.0,4.127134385045092,1,1,1,1,1,1,4.477336814478207,Stockholm,egen KMR-post
+U 313,U,Skånela sn,1050.0,1080.0,1.0,4.1588830833596715,1,1,1,0,0,1,4.532599493153256,Stockholm,egen KMR-post
+U 319,U,Skånela sn,980.0,1015.0,1.0,3.5263605246161616,1,1,1,0,1,1,4.007333185232471,Stockholm,egen KMR-post
+U 321,U,Skånela sn,1070.0,1100.0,0.0,3.8918202981106265,1,1,1,0,0,1,4.23410650459726,Stockholm,egen KMR-post
+U 322,U,Skånela sn,,,0.0,3.737669618283368,1,1,1,1,1,1,4.04305126783455,Stockholm,egen KMR-post
+U 324,U,Skånela sn,1010.0,1050.0,1.0,3.5263605246161616,1,1,1,0,1,1,4.04305126783455,Stockholm,egen KMR-post
+U 326,U,Markims sn,1010.0,1050.0,0.0,3.1780538303479458,1,1,1,1,0,1,4.5217885770490405,Stockholm,egen KMR-post
+U 328,U,Markims sn,1010.0,1050.0,0.0,3.8918202981106265,1,1,1,0,1,1,4.7535901911063645,Stockholm,egen KMR-post
+U 329,U,Markims sn,1050.0,1080.0,1.0,3.218875824868201,1,1,1,0,0,1,4.465908118654584,Stockholm,egen KMR-post
+U 330,U,Markims sn,1050.0,1080.0,1.0,3.218875824868201,1,1,1,0,0,1,4.465908118654584,Stockholm,egen KMR-post
+U 338,U,Orkesta sn,980.0,1015.0,,2.995732273553991,1,1,1,0,1,1,4.61512051684126,Stockholm,egen KMR-post
+U 340,U,Orkesta sn,,,0.0,3.044522437723423,1,1,1,1,1,1,4.5217885770490405,Stockholm,egen KMR-post
+U 341,U,Orkesta sn,980.0,1015.0,1.0,3.091042453358316,1,1,1,1,1,1,4.605170185988092,Stockholm,egen KMR-post
+U 342,U,Orkesta sn,,,1.0,3.091042453358316,1,1,1,1,1,1,4.605170185988092,Stockholm,egen KMR-post
+U 352,U,Frösunda sn,1070.0,1100.0,0.0,2.4849066497880004,1,1,1,0,0,1,4.3694478524670215,Stockholm,egen KMR-post
+U 356,U,Lunda sn,1050.0,1080.0,0.0,2.1972245773362196,1,1,1,1,1,1,4.51085950651685,Stockholm,egen KMR-post
+U 364,U,Skepptuna sn,,,0.0,3.218875824868201,1,1,1,0,0,1,4.672828834461906,Stockholm,egen KMR-post
+U 371,U,Skepptuna sn,980.0,1015.0,0.0,2.8903717578961645,1,1,1,1,1,1,4.68213122712422,Stockholm,egen KMR-post
+U 372,U,Skepptuna sn,1020.0,1050.0,0.0,3.1780538303479458,1,1,1,1,1,1,4.983606621708336,Stockholm,egen KMR-post
+U 373,U,Skepptuna sn,1050.0,1080.0,1.0,3.1780538303479458,1,1,1,0,0,1,4.787491742782046,Stockholm,egen KMR-post
+U 374,U,Skepptuna sn,,,1.0,3.1780538303479458,1,1,1,0,0,1,4.77912349311153,Stockholm,egen KMR-post
+U 378,U,Vidbo sn,1070.0,1100.0,0.0,1.9459101490553132,1,1,1,1,1,1,4.31748811353631,Stockholm,egen KMR-post
+U 393,U,Sigtuna,,,1.0,3.912023005428146,1,1,1,1,0,1,3.828641396489095,Stockholm,egen KMR-post
+U 394,U,Sigtuna,,,1.0,3.912023005428146,1,1,1,1,1,1,3.8066624897703196,Stockholm,egen KMR-post
+U 407,U,Sankt Pers sn,,,1.0,2.995732273553991,1,1,1,1,1,1,3.9512437185814275,Stockholm,egen KMR-post
+U 408,U,Sankt Pers sn,,,1.0,2.995732273553991,1,1,1,1,1,1,3.9318256327243257,Stockholm,egen KMR-post
+U 409,U,Sankt Olovs sn (Sankt Olof) (nu Odensala sn),1050.0,1080.0,0.0,4.1588830833596715,0,0,0,0,0,0,4.382026634673881,Stockholm,egen KMR-post
+U 410,U,Sankt Olovs sn (Sankt Olof),1050.0,1080.0,1.0,3.9318256327243257,1,1,1,1,1,1,3.8066624897703196,Stockholm,egen KMR-post
+U 411,U,Sankt Olovs sn (Sankt Olof),1070.0,1100.0,1.0,3.9318256327243257,1,1,1,1,1,1,3.784189633918261,Stockholm,egen KMR-post
+U 418,U,Norrsunda sn,1050.0,1080.0,0.0,3.4657359027997265,1,1,1,1,1,1,4.465908118654584,Stockholm,egen KMR-post
+U 420,U,Norrsunda sn,,,1.0,3.091042453358316,0,0,0,0,0,0,3.6635616461296463,Stockholm,egen KMR-post
+U 421,U,Norrsunda sn,,,,2.995732273553991,0,0,0,0,0,0,3.6635616461296463,Stockholm,egen KMR-post
+U 422,U,Norrsunda sn,,,1.0,3.044522437723423,1,1,0,0,0,0,3.6635616461296463,Stockholm,egen KMR-post
+U 423,U,Norrsunda sn,1050.0,1080.0,1.0,3.218875824868201,0,0,0,0,0,0,3.6375861597263857,Stockholm,egen KMR-post
+U 426,U,Norrsunda sn,1010.0,1050.0,0.0,4.290459441148391,0,0,0,0,0,0,4.2626798770413155,Stockholm,egen KMR-post
+U 427,U,Norrsunda sn,1020.0,1050.0,0.0,3.9318256327243257,1,1,1,0,1,1,3.9318256327243257,Stockholm,egen KMR-post
+U 428,U,Norrsunda sn,1050.0,1080.0,0.0,3.8501476017100584,1,1,0,0,0,0,3.8501476017100584,Stockholm,egen KMR-post
+U 429,U,Norrsunda sn,,,0.0,3.871201010907891,0,0,0,0,0,0,4.2626798770413155,Stockholm,egen KMR-post
+U 437,U,Husby-Ärlinghundra sn,,,0.0,3.367295829986474,0,0,0,0,0,0,4.543294782270004,Stockholm,egen KMR-post
+U 444,U,Odensala sn,1010.0,1050.0,,3.295836866004329,1,1,1,1,1,1,4.605170185988092,Stockholm,egen KMR-post
+U 445,U,Odensala sn,1070.0,1100.0,,3.295836866004329,1,1,1,1,1,1,4.605170185988092,Stockholm,egen KMR-post
+U 448,U,Odensala sn,,,1.0,2.833213344056216,1,1,1,1,1,1,4.330733340286331,Stockholm,egen KMR-post
+U 449,U,Odensala sn,,,1.0,2.8903717578961645,1,1,1,1,1,1,4.343805421853684,Stockholm,egen KMR-post
+U 453,U,Odensala sn,1050.0,1080.0,,3.1354942159291497,1,1,1,1,0,1,4.59511985013459,Stockholm,egen KMR-post
+U 454,U,Odensala sn,1050.0,1080.0,,3.1354942159291497,1,1,1,1,0,1,4.59511985013459,Stockholm,egen KMR-post
+U 455,U,Odensala sn,1070.0,1100.0,0.0,4.07753744390572,0,0,0,0,0,0,4.48863636973214,Stockholm,egen KMR-post
+U 456,U,Odensala sn,,,0.0,3.1780538303479458,1,1,1,1,1,1,4.553876891600541,Stockholm,egen KMR-post
+U 457,U,Haga sn,1010.0,1050.0,,2.995732273553991,1,1,0,0,0,0,4.02535169073515,Stockholm,egen KMR-post
+U 458,U,Haga sn,,,,3.258096538021482,1,1,1,1,0,1,4.02535169073515,Stockholm,egen KMR-post
+U 459,U,Haga sn,1020.0,1050.0,1.0,2.995732273553991,1,1,1,1,1,1,4.02535169073515,Stockholm,egen KMR-post
+U 460,U,Haga sn,1070.0,1100.0,1.0,2.995732273553991,1,1,1,1,1,1,4.060443010546419,Stockholm,egen KMR-post
+U 461,U,Haga sn,1020.0,1050.0,,3.332204510175204,1,1,1,1,1,1,4.04305126783455,Stockholm,egen KMR-post
+U 463,U,Vassunda sn,1070.0,1100.0,,2.995732273553991,1,1,1,1,1,1,4.02535169073515,Uppsala,egen KMR-post
+U 464,U,Vassunda sn,,,0.0,3.258096538021482,0,0,0,0,0,0,4.02535169073515,Uppsala,egen KMR-post
+U 466,U,Vassunda sn,1020.0,1050.0,1.0,3.1780538303479458,1,1,1,0,1,1,4.3694478524670215,Uppsala,egen KMR-post
+U 467,U,Vassunda sn,,,1.0,3.1780538303479458,1,1,1,0,1,1,4.3694478524670215,Uppsala,egen KMR-post
+U 468,U,Vassunda sn,1010.0,1050.0,,3.091042453358316,1,1,1,0,0,1,4.1588830833596715,Uppsala,egen KMR-post
+U 471,U,Knivsta sn,1050.0,1080.0,,2.833213344056216,1,1,1,0,1,1,4.1588830833596715,Uppsala,egen KMR-post
+U 472,U,Knivsta sn,,,,3.1780538303479458,0,0,0,0,0,0,4.394449154672439,Uppsala,egen KMR-post
+U 474,U,Knivsta sn,1010.0,1050.0,0.0,3.258096538021482,0,0,0,0,0,0,4.454347296253507,Uppsala,egen KMR-post
+U 478,U,Knivsta sn,1010.0,1050.0,,2.833213344056216,1,1,0,0,0,0,4.189654742026425,Uppsala,egen KMR-post
+U 480,U,Alsike sn,1050.0,1080.0,0.0,2.4849066497880004,1,1,1,0,0,1,4.07753744390572,Uppsala,egen KMR-post
+U 482,U,Lagga sn,,,1.0,2.6390573296152584,1,1,1,1,1,1,3.5553480614894135,Uppsala,egen KMR-post
+U 483,U,Lagga sn,1020.0,1050.0,1.0,2.6390573296152584,1,1,1,1,1,1,3.5553480614894135,Uppsala,egen KMR-post
+U 484,U,Lagga sn,1020.0,1050.0,1.0,2.70805020110221,1,1,1,1,1,1,3.5263605246161616,Uppsala,egen KMR-post
+U 485,U,Lagga sn,1100.0,1130.0,,2.4849066497880004,1,1,1,1,1,1,4.060443010546419,Uppsala,egen KMR-post
+U 488,U,Lagga sn,,,0.0,2.995732273553991,1,1,1,0,1,1,3.912023005428146,Uppsala,egen KMR-post
+U 490,U,Lagga sn,980.0,1015.0,,2.4849066497880004,0,0,0,0,0,0,4.174387269895637,Uppsala,egen KMR-post
+U 492,U,Lagga sn,1070.0,1100.0,0.0,2.3978952727983707,0,0,0,0,0,0,3.8066624897703196,Uppsala,egen KMR-post
+U 496,U,Husby-Långhundra sn,1070.0,1100.0,0.0,2.302585092994046,1,1,1,1,1,1,4.574710978503383,Uppsala,egen KMR-post
+U 500,U,Gottröra sn,1100.0,1130.0,0.0,1.6094379124341005,1,1,0,0,0,0,4.143134726391533,Stockholm,egen KMR-post
+U 502,U,Närtuna sn,980.0,1015.0,0.0,2.70805020110221,1,1,1,0,0,1,4.624972813284271,Stockholm,egen KMR-post
+U 503,U,Närtuna sn,,,1.0,2.0794415416798357,1,1,1,1,1,1,4.04305126783455,Stockholm,egen KMR-post
+U 504,U,Närtuna sn,980.0,1015.0,1.0,1.9459101490553132,1,1,1,1,1,1,3.9889840465642745,Stockholm,egen KMR-post
+U 508,U,Kårsta sn,980.0,1015.0,0.0,2.1972245773362196,1,1,1,0,1,1,4.290459441148391,Stockholm,egen KMR-post
+U 510,U,Kårsta sn,1070.0,1100.0,1.0,2.1972245773362196,1,1,1,0,1,1,4.110873864173311,Stockholm,egen KMR-post
+U 511,U,Kårsta sn,1070.0,1100.0,1.0,2.302585092994046,1,1,1,0,0,1,4.127134385045092,Stockholm,egen KMR-post
+U 512,U,Fasterna sn,980.0,1015.0,0.0,0.6931471805599453,0,0,0,0,0,0,3.4965075614664802,Stockholm,egen KMR-post
+U 518,U,Skederids sn,980.0,1015.0,0.0,1.6094379124341005,1,1,1,0,1,1,3.784189633918261,Stockholm,egen KMR-post
+U 519,U,Skederids sn,1010.0,1050.0,0.0,3.4657359027997265,1,1,1,0,1,1,4.0943445622221,Stockholm,egen KMR-post
+U 524,U,Länna sn,1020.0,1050.0,0.0,1.6094379124341005,1,1,1,0,0,1,3.1354942159291497,Stockholm,egen KMR-post
+U 525,U,Länna sn,1050.0,1080.0,,1.3862943611198906,0,0,0,0,0,0,3.5553480614894135,Stockholm,egen KMR-post
+U 537,U,Roslags-Bro sn,1020.0,1050.0,0.0,1.3862943611198906,1,1,1,0,1,1,3.5263605246161616,Stockholm,egen KMR-post
+U 538,U,Roslags-Bro sn,,,0.0,2.302585092994046,1,1,0,0,0,0,4.174387269895637,Stockholm,egen KMR-post
+U 570,U,Lohärads sn,1050.0,1080.0,,2.3978952727983707,1,1,1,0,0,1,4.23410650459726,Stockholm,egen KMR-post
+U 571,U,Lohärads sn,,,,2.3978952727983707,1,1,1,0,0,1,4.23410650459726,Stockholm,egen KMR-post
+U 572,U,Lohärads sn,1070.0,1100.0,1.0,2.0794415416798357,1,1,1,0,0,1,4.204692619390966,Stockholm,egen KMR-post
+U 573,U,Lohärads sn,1050.0,1080.0,1.0,3.367295829986474,1,1,0,0,0,0,4.189654742026425,Stockholm,egen KMR-post
+U 579,U,Estuna sn,1020.0,1050.0,0.0,1.3862943611198906,1,1,1,0,1,1,3.912023005428146,Stockholm,egen KMR-post
+U 581,U,Estuna sn,,,0.0,2.70805020110221,1,1,1,0,1,1,4.3694478524670215,Stockholm,egen KMR-post
+U 583,U,Söderby-Karls sn,,,0.0,2.6390573296152584,1,1,1,0,0,1,3.9512437185814275,Stockholm,egen KMR-post
+U 586,U,Edsbro sn,980.0,1015.0,0.0,1.3862943611198906,1,1,1,1,1,1,3.258096538021482,Stockholm,egen KMR-post
+U 590,U,Knutby sn,,,0.0,0.6931471805599453,1,1,0,0,0,0,2.70805020110221,Uppsala,egen KMR-post
+U 592,U,Knutby sn,,,0.0,0.6931471805599453,1,1,1,1,1,1,3.4965075614664802,Uppsala,egen KMR-post
+U 593,U,Väddö sn,1050.0,1080.0,0.0,0.6931471805599453,1,1,1,0,1,1,3.332204510175204,Stockholm,egen KMR-post
+U 599,U,Hökhuvuds sn,,,0.0,0.6931471805599453,1,1,1,0,1,1,3.4011973816621555,Uppsala,egen KMR-post
+U 600,U,Börstils sn,1070.0,1100.0,0.0,0.0,1,1,1,1,0,1,2.3978952727983707,Uppsala,egen KMR-post
+U 604,U,Stockholms-Näs sn (nu Kungsängen),1070.0,1100.0,0.0,0.0,0,0,0,0,0,0,3.4339872044851463,Stockholm,egen KMR-post
+U 611,U,Västra Ryds sn,1010.0,1050.0,,2.0794415416798357,1,1,1,0,1,1,3.044522437723423,Stockholm,egen KMR-post
+U 616,U,Västra Ryds sn,1010.0,1050.0,,2.0794415416798357,1,1,1,0,1,1,3.091042453358316,Stockholm,egen KMR-post
+U 620,U,Bro sn,,,0.0,2.3978952727983707,1,1,1,1,1,1,3.6635616461296463,Stockholm,egen KMR-post
+U 621,U,Bro sn,1020.0,1050.0,0.0,2.3978952727983707,1,1,1,0,1,1,3.6888794541139363,Stockholm,egen KMR-post
+U 623,U,Bro sn,1020.0,1050.0,0.0,2.5649493574615367,1,1,1,0,0,1,3.8066624897703196,Stockholm,egen KMR-post
+U 624,U,Bro sn,1070.0,1100.0,0.0,2.70805020110221,1,1,1,0,1,1,3.970291913552122,Stockholm,egen KMR-post
+U 626,U,Håbo-Tibble sn,,,,3.784189633918261,0,0,0,0,0,0,4.007333185232471,Stockholm,egen KMR-post
+U 629,U,Håbo-Tibble sn,1050.0,1080.0,0.0,3.9318256327243257,1,1,1,1,1,1,4.143134726391533,Stockholm,egen KMR-post
+U 630,U,Håbo-Tibble sn,1020.0,1050.0,,2.5649493574615367,1,1,1,1,1,1,3.912023005428146,Stockholm,egen KMR-post
+U 633,U,Kalmar sn,,,1.0,2.3978952727983707,1,1,1,1,0,1,2.5649493574615367,Uppsala,egen KMR-post
+U 635,U,Kalmar sn,1070.0,1100.0,1.0,2.3978952727983707,1,1,1,1,1,1,2.833213344056216,Uppsala,egen KMR-post
+U 636,U,Kalmar sn,1010.0,1050.0,1.0,2.3978952727983707,1,1,1,1,1,1,2.833213344056216,Uppsala,egen KMR-post
+U 637,U,Kalmar sn,1020.0,1050.0,1.0,2.3978952727983707,1,1,1,1,1,1,2.833213344056216,Uppsala,egen KMR-post
+U 640,U,Kalmar sn,1050.0,1080.0,0.0,2.5649493574615367,1,1,1,1,0,1,2.9444389791664403,Uppsala,egen KMR-post
+U 641,U,Yttergrans sn (nu Övergrans sn),1050.0,1080.0,,2.833213344056216,0,0,0,0,0,0,3.5553480614894135,Uppsala,egen KMR-post
+U 644,U,Yttergrans sn,1010.0,1050.0,,2.995732273553991,1,1,0,0,0,0,3.8501476017100584,Uppsala,egen KMR-post
+U 645,U,Yttergrans sn,1050.0,1080.0,,3.044522437723423,1,1,0,0,0,0,3.5263605246161616,Uppsala,egen KMR-post
+U 646,U,Yttergrans sn,,,0.0,3.044522437723423,0,0,0,0,0,0,3.7612001156935624,Uppsala,egen KMR-post
+U 652,U,Övergrans sn,1020.0,1050.0,1.0,3.218875824868201,1,1,0,0,0,0,3.8066624897703196,Uppsala,egen KMR-post
+U 653,U,Övergrans sn,,,1.0,3.1780538303479458,1,1,0,0,0,0,3.713572066704308,Uppsala,egen KMR-post
+U 654,U,Övergrans sn,1010.0,1050.0,1.0,3.218875824868201,0,0,0,0,0,0,4.204692619390966,Uppsala,egen KMR-post
+U 656,U,Håtuna sn,1020.0,1050.0,0.0,3.218875824868201,1,1,0,0,0,0,4.290459441148391,Stockholm,egen KMR-post
+U 659,U,Håtuna sn,1020.0,1050.0,0.0,3.58351893845611,1,1,1,0,1,1,4.204692619390966,Stockholm,egen KMR-post
+U 661,U,Håtuna sn,1010.0,1050.0,0.0,3.091042453358316,1,1,0,0,0,0,4.2626798770413155,Stockholm,egen KMR-post
+U 662,U,Håtuna sn,1020.0,1050.0,1.0,4.060443010546419,1,1,1,1,1,1,4.2626798770413155,Stockholm,egen KMR-post
+U 663,U,Håtuna sn,,,1.0,4.07753744390572,1,1,1,1,1,1,4.31748811353631,Stockholm,egen KMR-post
+U 665,U,Häggeby sn,1020.0,1050.0,0.0,3.218875824868201,1,1,1,0,0,1,4.1588830833596715,Uppsala,egen KMR-post
+U 667,U,Häggeby sn,1020.0,1050.0,0.0,3.332204510175204,1,1,1,1,0,1,3.9318256327243257,Uppsala,egen KMR-post
+U 668,U,Häggeby sn,1050.0,1080.0,,3.332204510175204,1,1,1,1,1,1,3.970291913552122,Uppsala,egen KMR-post
+U 670,U,Häggeby sn,,,1.0,3.218875824868201,1,1,1,0,0,1,4.04305126783455,Uppsala,egen KMR-post
+U 671,U,Häggeby sn,1010.0,1050.0,1.0,3.332204510175204,0,0,0,0,0,0,4.204692619390966,Uppsala,egen KMR-post
+U 672,U,Häggeby sn,,,1.0,3.332204510175204,1,1,1,0,0,1,4.02535169073515,Uppsala,egen KMR-post
+U 674,U,Häggeby sn,,,1.0,3.091042453358316,0,0,0,0,0,0,4.07753744390572,Uppsala,egen KMR-post
+U 676,U,Häggeby sn,1020.0,1050.0,1.0,3.1354942159291497,1,1,1,0,1,1,4.04305126783455,Uppsala,egen KMR-post
+U 677,U,Häggeby sn,,,1.0,3.1354942159291497,1,1,1,0,0,1,4.07753744390572,Uppsala,egen KMR-post
+U 683,U,Skoklosters sn,1020.0,1050.0,1.0,3.091042453358316,1,1,1,1,1,1,3.4965075614664802,Uppsala,egen KMR-post
+U 684,U,Skoklosters sn,1070.0,1100.0,1.0,3.044522437723423,1,1,1,1,1,1,3.4965075614664802,Uppsala,egen KMR-post
+U 685,U,Skoklosters sn,1020.0,1050.0,1.0,3.295836866004329,1,1,1,1,1,1,4.007333185232471,Uppsala,egen KMR-post
+U 686,U,Skoklosters sn,1020.0,1050.0,1.0,3.258096538021482,1,1,1,1,1,1,3.784189633918261,Uppsala,egen KMR-post
+U 688,U,Skoklosters sn,,,0.0,2.833213344056216,0,0,0,0,0,0,3.9889840465642745,Uppsala,egen KMR-post
+U 689,U,Skoklosters sn,1020.0,1050.0,1.0,3.295836866004329,1,1,1,1,1,1,3.912023005428146,Uppsala,egen KMR-post
+U 690,U,Arnö sn (nu Kungs-Husby sn),1050.0,1080.0,0.0,1.6094379124341005,0,0,0,0,0,0,3.332204510175204,Uppsala,egen KMR-post
+U 692,U,Arnö sn (nu Aspö sn),1070.0,1100.0,0.0,1.6094379124341005,1,1,1,0,1,1,3.2188758248682006,Södermanland,egen KMR-post
+U 700,U,Veckholms sn,1010.0,1050.0,0.0,2.8903717578961645,1,1,1,1,0,1,4.174387269895637,Uppsala,egen KMR-post
+U 703,U,Veckholms sn,1050.0,1080.0,0.0,3.1780538303479458,0,0,0,0,0,0,4.406719247264253,Uppsala,egen KMR-post
+U 706,U,Veckholms sn,,,0.0,2.995732273553991,0,0,0,0,0,0,4.143134726391533,Uppsala,egen KMR-post
+U 712,U,Kungs-Husby sn,,,0.0,2.6390573296152584,1,1,0,0,0,0,4.189654742026425,Uppsala,egen KMR-post
+U 716,U,Lillkyrka sn,1070.0,1100.0,0.0,2.6390573296152584,0,0,0,0,0,0,3.9889840465642745,Uppsala,egen KMR-post
+U 719,U,Vallby sn,1070.0,1100.0,0.0,1.9459101490553132,1,1,1,0,0,1,3.9889840465642745,Uppsala,egen KMR-post
+U 720,U,Vallby sn,,,0.0,1.9459101490553132,1,1,0,0,0,0,3.8918202981106265,Uppsala,egen KMR-post
+U 723,U,Löts sn,1050.0,1080.0,,2.833213344056216,1,1,0,0,0,0,3.784189633918261,Uppsala,egen KMR-post
+U 724,U,Löts sn,1050.0,1080.0,,2.833213344056216,1,1,0,0,0,0,3.7612001156935624,Uppsala,egen KMR-post
+U 726,U,Löts sn,1010.0,1050.0,0.0,3.218875824868201,0,0,0,0,0,0,4.0943445622221,Uppsala,egen KMR-post
+U 729,U,Löts sn,1050.0,1080.0,,2.70805020110221,1,1,1,1,0,1,3.58351893845611,Uppsala,egen KMR-post
+U 732,U,Villberga sn,1010.0,1050.0,0.0,2.4849066497880004,0,0,0,0,0,0,3.8501476017100584,Uppsala,egen KMR-post
+U 734,U,Villberga sn,,,0.0,2.6390573296152584,1,1,1,0,1,1,3.4339872044851463,Uppsala,egen KMR-post
+U 735,U,Villberga sn,1050.0,1080.0,0.0,2.772588722239781,0,0,0,0,0,0,3.9512437185814275,Uppsala,egen KMR-post
+U 737,U,Villberga sn,,,0.0,2.8903717578961645,0,0,0,0,0,0,3.8501476017100584,Uppsala,egen KMR-post
+U 738,U,Villberga sn,,,0.0,2.833213344056216,1,1,0,0,0,0,3.9889840465642745,Uppsala,egen KMR-post
+U 739,U,Boglösa sn,1050.0,1080.0,0.0,2.6390573296152584,1,1,1,0,1,1,3.6888794541139363,Uppsala,egen KMR-post
+U 740,U,Boglösa sn,1050.0,1080.0,0.0,2.3978952727983707,0,0,0,0,0,0,3.871201010907891,Uppsala,egen KMR-post
+U 742,U,Boglösa sn,1070.0,1100.0,0.0,2.4849066497880004,0,0,0,0,0,0,3.5263605246161616,Uppsala,egen KMR-post
+U 746,U,Husby-Sjutolfts sn,1070.0,1100.0,0.0,2.70805020110221,1,1,1,1,0,1,4.290459441148391,Uppsala,egen KMR-post
+U 747,U,Husby-Sjutolfts sn,,,1.0,2.772588722239781,1,1,1,1,1,1,4.127134385045092,Uppsala,egen KMR-post
+U 749,U,Husby-Sjutolfts sn,1050.0,1080.0,,2.8903717578961645,1,1,1,1,0,1,4.248495242049359,Uppsala,egen KMR-post
+U 750,U,Husby-Sjutolfts sn,1050.0,1080.0,1.0,2.772588722239781,1,1,1,1,1,1,4.1588830833596715,Uppsala,egen KMR-post
+U 751,U,Husby-Sjutolfts sn,1050.0,1080.0,1.0,2.772588722239781,1,1,1,1,1,1,4.143134726391533,Uppsala,egen KMR-post
+U 754,U,Litslena sn,,,0.0,2.5649493574615367,1,1,1,0,0,1,4.343805421853684,Uppsala,egen KMR-post
+U 755,U,Litslena sn,1010.0,1050.0,0.0,1.791759469228055,1,1,1,1,1,1,4.290459441148391,Uppsala,egen KMR-post
+U 757,U,Litslena sn,,,0.0,2.5649493574615367,1,1,1,1,1,1,4.219507705176107,Uppsala,egen KMR-post
+U 762,U,Vårfrukyrka sn,1010.0,1050.0,0.0,2.995732273553991,0,0,0,0,0,0,3.6888794541139363,Uppsala,egen KMR-post
+U 763,U,Vårfrukyrka sn,1070.0,1100.0,,2.4849066497880004,0,0,0,0,0,0,2.9444389791664403,Uppsala,egen KMR-post
+U 764,U,Vårfrukyrka sn,1070.0,1100.0,,2.4849066497880004,0,0,0,0,0,0,2.9444389791664403,Uppsala,egen KMR-post
+U 766,U,Vårfrukyrka sn,1070.0,1100.0,1.0,2.302585092994046,1,1,1,1,0,1,3.713572066704308,Uppsala,egen KMR-post
+U 767,U,Vårfrukyrka sn,1070.0,1100.0,1.0,2.302585092994046,1,1,1,1,0,1,3.713572066704308,Uppsala,egen KMR-post
+U 768,U,Vårfrukyrka sn,1010.0,1050.0,1.0,2.302585092994046,1,1,1,1,1,1,3.6375861597263857,Uppsala,egen KMR-post
+U 770,U,Vårfrukyrka sn,1050.0,1080.0,0.0,2.4849066497880004,0,0,0,0,0,0,3.8066624897703196,Uppsala,egen KMR-post
+U 774,U,Enköpings-Näs sn,1010.0,1050.0,0.0,1.3862943611198906,0,0,0,0,0,0,3.4339872044851463,Uppsala,egen KMR-post
+U 786,U,Tillinge sn,1010.0,1050.0,0.0,2.70805020110221,1,1,1,1,1,1,3.6109179126442243,Uppsala,egen KMR-post
+U 788,U,Tillinge sn,,,0.0,2.3978952727983707,1,1,1,1,0,1,3.6635616461296463,Uppsala,egen KMR-post
+U 789,U,Tillinge sn,1070.0,1100.0,0.0,2.302585092994046,1,1,1,0,1,1,3.7612001156935624,Uppsala,egen KMR-post
+U 792,U,Tillinge sn,1010.0,1050.0,1.0,2.6390573296152584,1,1,1,0,0,0,3.58351893845611,Uppsala,egen KMR-post
+U 793,U,Tillinge sn,1010.0,1050.0,1.0,2.70805020110221,1,1,0,0,0,0,3.6109179126442243,Uppsala,egen KMR-post
+U 797,U,Sparrsätra sn,1070.0,1100.0,0.0,2.3978952727983707,0,0,0,0,0,0,3.332204510175204,Uppsala,egen KMR-post
+U 803,U,Långtora sn,1070.0,1100.0,0.0,2.302585092994046,0,0,0,0,0,0,3.6375861597263857,Uppsala,egen KMR-post
+U 804,U,Långtora sn,,,0.0,2.302585092994046,0,0,0,0,0,0,3.332204510175204,Uppsala,egen KMR-post
+U 808,U,Fröslunda sn,1050.0,1080.0,0.0,2.302585092994046,1,1,1,0,1,0,3.9889840465642745,Uppsala,egen KMR-post
+U 809,U,Fröslunda sn,1010.0,1050.0,0.0,2.3978952727983707,0,0,0,0,0,0,4.51085950651685,Uppsala,egen KMR-post
+U 810,U,Fröslunda sn,1050.0,1080.0,0.0,2.3978952727983707,1,1,1,0,1,1,4.31748811353631,Uppsala,egen KMR-post
+U 813,U,Hjälsta sn,,,0.0,2.9444389791664403,0,0,0,0,0,0,3.8066624897703196,Uppsala,egen KMR-post
+U 814,U,Hjälsta sn,1050.0,1080.0,,2.8903717578961645,1,1,1,0,1,1,3.713572066704308,Uppsala,egen KMR-post
+U 815,U,Hjälsta sn,1050.0,1080.0,,3.1354942159291497,1,1,1,0,0,1,3.6888794541139363,Uppsala,egen KMR-post
+U 818,U,Kulla sn,,,0.0,2.772588722239781,1,1,1,0,1,1,3.58351893845611,Uppsala,egen KMR-post
+U 825,U,Holms sn,1070.0,1100.0,0.0,3.044522437723423,0,0,0,0,0,0,4.0943445622221,Uppsala,egen KMR-post
+U 828,U,Fittja sn,1070.0,1100.0,0.0,3.044522437723423,0,0,0,0,0,0,4.007333185232471,Uppsala,egen KMR-post
+U 836,U,Nysätra sn,1070.0,1100.0,1.0,2.302585092994046,1,1,0,0,0,0,3.6375861597263857,Uppsala,egen KMR-post
+U 837,U,Nysätra sn,,,1.0,2.3978952727983707,1,1,0,0,0,0,3.6375861597263857,Uppsala,egen KMR-post
+U 838,U,Nysätra sn,1050.0,1080.0,,2.302585092994046,1,1,0,0,0,0,3.2188758248682006,Uppsala,egen KMR-post
+U 839,U,Nysätra sn,1070.0,1100.0,,2.302585092994046,1,1,0,0,0,0,2.995732273553991,Uppsala,egen KMR-post
+U 842,U,Dalby sn,1100.0,1130.0,0.0,2.833213344056216,1,1,1,0,0,1,4.290459441148391,Uppsala,egen KMR-post
+U 844,U,Dalby sn,1070.0,1100.0,1.0,2.4849066497880004,1,1,1,0,1,1,4.0943445622221,Uppsala,egen KMR-post
+U 845,U,Dalby sn,1020.0,1050.0,1.0,2.4849066497880004,1,1,1,0,1,1,4.07753744390572,Uppsala,egen KMR-post
+U 856,U,Balingsta sn,1070.0,1100.0,1.0,3.1780538303479458,0,0,0,0,0,0,3.8501476017100584,Uppsala,egen KMR-post
+U 857,U,Balingsta sn,1010.0,1050.0,1.0,3.1354942159291497,0,0,0,0,0,0,3.8501476017100584,Uppsala,egen KMR-post
+U 859,U,Balingsta sn,1050.0,1080.0,0.0,3.091042453358316,0,0,0,0,0,0,3.828641396489095,Uppsala,egen KMR-post
+U 861,U,Balingsta sn,,,,3.295836866004329,1,1,1,0,0,1,4.02535169073515,Uppsala,egen KMR-post
+U 862,U,Balingsta sn,,,,3.1780538303479458,1,1,0,0,0,0,3.58351893845611,Uppsala,egen KMR-post
+U 865,U,Balingsta sn,,,,3.295836866004329,1,1,1,0,1,1,3.9889840465642745,Uppsala,egen KMR-post
+U 866,U,Gryta sn,,,0.0,2.9444389791664403,0,0,0,0,0,0,3.7612001156935624,Uppsala,egen KMR-post
+U 867,U,Gryta sn,,,0.0,2.70805020110221,1,1,1,0,0,1,3.6888794541139363,Uppsala,egen KMR-post
+U 868,U,Gryta sn,1070.0,1100.0,,3.295836866004329,1,1,1,0,1,1,3.4011973816621555,Uppsala,egen KMR-post
+U 873,U,Gryta sn,1050.0,1080.0,0.0,2.5649493574615367,1,1,1,0,1,1,3.8501476017100584,Uppsala,egen KMR-post
+U 875,U,Hagby sn,1050.0,1080.0,1.0,2.8903717578961645,1,1,1,0,1,1,3.7612001156935624,Uppsala,egen KMR-post
+U 876,U,Hagby sn,1010.0,1050.0,1.0,2.833213344056216,1,1,1,0,1,1,3.7612001156935624,Uppsala,egen KMR-post
+U 885,U,Skogstibble sn (nu Skogs-Tibble),1070.0,1100.0,0.0,2.3978952727983707,1,1,1,0,0,1,3.1780538303479458,Uppsala,egen KMR-post
+U 887,U,Skogstibble sn (nu Skogs-Tibble),1070.0,1100.0,,2.6390573296152584,1,1,1,0,1,1,3.332204510175204,Uppsala,egen KMR-post
+U 888,U,Skogstibble sn (nu Skogs-Tibble),,,,2.6390573296152584,1,1,1,0,0,1,3.58351893845611,Uppsala,egen KMR-post
+U 889,U,Ålands sn,1070.0,1100.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.1972245773362196,Uppsala,egen KMR-post
+U 890,U,Ålands sn,1070.0,1100.0,0.0,1.6094379124341005,1,1,0,0,0,0,2.1972245773362196,Uppsala,egen KMR-post
+U 893,U,Uppsala-Näs sn,,,0.0,2.302585092994046,1,1,1,1,0,1,3.7376696182833684,Uppsala,egen KMR-post
+U 894,U,Uppsala-Näs sn,1070.0,1100.0,0.0,2.1972245773362196,0,0,0,0,0,0,3.6888794541139363,Uppsala,egen KMR-post
+U 899,U,Bondkyrka sn (nu Uppsala),1070.0,1100.0,0.0,2.1972245773362196,0,0,0,0,0,0,3.6888794541139363,Uppsala,egen KMR-post
+U 902,U,Läby sn,,,0.0,3.58351893845611,1,1,1,1,1,1,4.02535169073515,Uppsala,egen KMR-post
+U 903,U,Läby sn,,,1.0,2.5649493574615367,1,1,0,0,0,0,4.110873864173311,Uppsala,egen KMR-post
+U 904,U,Läby sn,1050.0,1080.0,1.0,2.5649493574615367,0,0,0,0,0,0,4.0943445622221,Uppsala,egen KMR-post
+U 906,U,Vänge sn,1100.0,1130.0,0.0,2.5649493574615367,1,1,1,1,0,1,3.1354942159291497,Uppsala,egen KMR-post
+U 907,U,Vänge sn,1070.0,1100.0,0.0,1.9459101490553132,1,1,1,1,0,1,2.833213344056216,Uppsala,egen KMR-post
+U 908,U,Vänge sn,1070.0,1100.0,0.0,1.6094379124341005,0,0,0,0,0,0,2.5649493574615367,Uppsala,egen KMR-post
+U 911,U,Vänge sn,,,0.0,2.70805020110221,0,0,0,0,0,0,3.332204510175204,Uppsala,egen KMR-post
+U 913,U,Börje sn,1070.0,1100.0,0.0,2.5649493574615367,0,0,0,0,0,0,4.189654742026425,Uppsala,egen KMR-post
+U 914,U,Börje sn,1100.0,1130.0,0.0,3.688879454113936,1,1,1,0,1,1,4.2626798770413155,Uppsala,egen KMR-post
+U 918,U,Jumkils sn,1100.0,1130.0,1.0,1.9459101490553132,0,0,0,0,0,0,2.70805020110221,Uppsala,egen KMR-post
+U 919,U,Jumkils sn,1070.0,1100.0,1.0,1.9459101490553132,0,0,0,0,0,0,2.70805020110221,Uppsala,egen KMR-post
+U 920,U,Jumkils sn,,,,1.9459101490553132,0,0,0,0,0,0,2.995732273553991,Uppsala,egen KMR-post
+U 921,U,Jumkils sn,,,0.0,3.49650756146648,1,1,0,0,0,0,3.828641396489095,Uppsala,egen KMR-post
+U 947,U,Danmarks sn,,,1.0,2.8903717578961645,1,1,1,0,0,1,4.189654742026425,Uppsala,egen KMR-post
+U 948,U,Danmarks sn,1070.0,1100.0,1.0,2.8903717578961645,1,1,1,0,1,1,4.204692619390966,Uppsala,egen KMR-post
+U 949,U,Danmarks sn,,,0.0,3.4657359027997265,1,1,1,1,0,1,4.442651256490317,Uppsala,egen KMR-post
+U 950,U,Danmarks sn,1070.0,1100.0,,3.332204510175204,0,0,0,0,0,0,4.406719247264253,Uppsala,egen KMR-post
+U 951,U,Danmarks sn,,,,3.9889840465642745,1,1,1,1,1,1,4.31748811353631,Uppsala,egen KMR-post
+U 957,U,Danmarks sn,,,,3.258096538021482,1,1,1,0,1,1,4.574710978503383,Uppsala,egen KMR-post
+U 958,U,Danmarks sn,,,,2.9444389791664403,1,1,1,0,1,1,4.204692619390966,Uppsala,egen KMR-post
+U 968,U,Vaksala sn (nu Uppsala),,,1.0,4.174387269895637,1,1,0,0,0,0,4.31748811353631,Uppsala,egen KMR-post
+U 969,U,Vaksala sn (nu Uppsala),,,1.0,4.174387269895637,1,1,0,0,0,0,4.343805421853684,Uppsala,egen KMR-post
+U 970,U,Vaksala sn (nu Uppsala),1100.0,1130.0,1.0,4.174387269895637,1,1,0,0,0,0,4.343805421853684,Uppsala,egen KMR-post
+U 971,U,Vaksala sn,1010.0,1050.0,0.0,4.1588830833596715,0,0,0,0,0,0,4.2626798770413155,Uppsala,egen KMR-post
+U 974,U,Vaksala sn,1100.0,1130.0,,3.091042453358316,1,1,1,0,0,1,4.07753744390572,Uppsala,egen KMR-post
+U 975,U,Vaksala sn,,,,3.1780538303479458,1,1,1,0,1,1,4.060443010546419,Uppsala,egen KMR-post
+U 985,U,Gamla Uppsala sn (nu Uppsala),,,0.0,3.1780538303479458,1,1,1,0,1,1,4.3694478524670215,Uppsala,egen KMR-post
+U 990,U,Funbo sn,1010.0,1050.0,1.0,2.8903717578961645,1,1,1,1,0,1,3.6375861597263857,Uppsala,egen KMR-post
+U 991,U,Funbo sn,,,1.0,2.8903717578961645,1,1,1,1,0,1,3.6375861597263857,Uppsala,egen KMR-post
+U 992,U,Funbo sn,1010.0,1050.0,1.0,2.8903717578961645,1,1,1,1,1,1,3.713572066704308,Uppsala,egen KMR-post
+U 993,U,Funbo sn,1070.0,1100.0,,3.044522437723423,1,1,1,1,1,1,4.02535169073515,Uppsala,egen KMR-post
+U 996,U,Funbo sn,1070.0,1100.0,0.0,2.6390573296152584,1,1,1,1,1,1,3.7376696182833684,Uppsala,egen KMR-post
+U 997,U,Funbo sn,1070.0,1100.0,0.0,3.4339872044851463,0,0,0,0,0,0,4.477336814478207,Uppsala,egen KMR-post
+U 999,U,Funbo sn,1010.0,1050.0,0.0,2.995732273553991,0,0,0,0,0,0,4.23410650459726,Uppsala,egen KMR-post
+U 1003,U,Rasbo sn,,,0.0,2.0794415416798357,0,0,0,0,0,0,4.574710978503383,Uppsala,egen KMR-post
+U 1005,U,Rasbo sn,,,0.0,1.9459101490553132,1,1,1,1,0,1,4.04305126783455,Uppsala,egen KMR-post
+U 1006,U,Rasbo sn,1070.0,1100.0,0.0,1.9459101490553132,1,1,1,0,1,1,4.605170185988092,Uppsala,egen KMR-post
+U 1007,U,Rasbo sn,1070.0,1100.0,0.0,1.0986122886681098,1,1,1,0,1,1,4.219507705176107,Uppsala,egen KMR-post
+U 1009,U,Rasbo sn,1050.0,1080.0,0.0,1.9459101490553132,1,1,1,0,1,1,4.442651256490317,Uppsala,egen KMR-post
+U 1010,U,Rasbo sn,1070.0,1100.0,0.0,2.1972245773362196,1,1,1,0,1,1,4.624972813284271,Uppsala,egen KMR-post
+U 1016,U,Ärentuna sn,,,,3.295836866004329,0,0,0,0,0,0,4.672828834461906,Uppsala,egen KMR-post
+U 1018,U,Ärentuna sn,1070.0,1100.0,0.0,3.4657359027997265,1,1,0,0,0,0,4.605170185988092,Uppsala,egen KMR-post
+U 1019,U,Ärentuna sn,1070.0,1100.0,,3.295836866004329,0,0,0,0,0,0,4.6913478822291435,Uppsala,egen KMR-post
+U 1020,U,Ärentuna sn,1070.0,1100.0,0.0,3.1780538303479458,1,1,0,0,0,0,4.553876891600541,Uppsala,egen KMR-post
+U 1022,U,Ärentuna sn,1070.0,1100.0,0.0,2.3978952727983707,1,1,1,0,1,1,4.204692619390966,Uppsala,egen KMR-post
+U 1024,U,Ärentuna sn,1070.0,1100.0,0.0,3.1354942159291497,1,1,1,0,0,1,4.499809670330265,Uppsala,egen KMR-post
+U 1031,U,Lena sn,,,0.0,2.833213344056216,0,0,0,0,0,0,4.174387269895637,Uppsala,egen KMR-post
+U 1032,U,Lena sn,1070.0,1100.0,0.0,2.3978952727983707,1,1,1,0,0,1,4.330733340286331,Uppsala,egen KMR-post
+U 1033,U,Lena sn,,,0.0,2.4849066497880004,1,1,1,0,1,1,4.276666119016055,Uppsala,egen KMR-post
+U 1039,U,Tensta sn,1070.0,1100.0,0.0,2.995732273553991,1,1,1,1,0,1,3.970291913552122,Uppsala,egen KMR-post
+U 1040,U,Tensta sn,1070.0,1100.0,0.0,3.1354942159291497,1,1,1,1,0,1,3.784189633918261,Uppsala,egen KMR-post
+U 1041,U,Tensta sn,,,0.0,2.6390573296152584,1,1,1,0,0,1,3.828641396489095,Uppsala,egen KMR-post
+U 1042,U,Tensta sn,1070.0,1100.0,0.0,3.258096538021482,0,0,0,0,0,0,4.0943445622221,Uppsala,egen KMR-post
+U 1043,U,Tensta sn,,,0.0,3.258096538021482,0,0,0,0,0,0,4.07753744390572,Uppsala,egen KMR-post
+U 1052,U,Björklinge sn,1070.0,1100.0,1.0,2.8903717578961645,1,1,1,1,1,1,3.5553480614894135,Uppsala,egen KMR-post
+U 1053,U,Björklinge sn,,,1.0,3.044522437723423,1,1,0,0,0,0,3.6375861597263857,Uppsala,egen KMR-post
+U 1054,U,Björklinge sn,,,,3.4339872044851463,1,1,1,0,0,1,4.204692619390966,Uppsala,egen KMR-post
+U 1056,U,Björklinge sn,1070.0,1100.0,0.0,3.044522437723423,0,0,0,0,0,0,3.7376696182833684,Uppsala,egen KMR-post
+U 1057,U,Björklinge sn,1070.0,1100.0,0.0,3.49650756146648,0,0,0,0,0,0,4.290459441148391,Uppsala,egen KMR-post
+U 1059,U,Björklinge sn,,,0.0,2.70805020110221,0,0,0,0,0,0,3.5263605246161616,Uppsala,egen KMR-post
+U 1060,U,Björklinge sn,,,,3.367295829986474,1,1,1,0,0,1,4.0943445622221,Uppsala,egen KMR-post
+U 1062,U,Viksta sn,1070.0,1100.0,0.0,1.0986122886681098,0,0,0,0,0,0,3.4657359027997265,Uppsala,egen KMR-post
+U 1063,U,Viksta sn,1070.0,1100.0,0.0,0.0,0,0,0,0,0,0,2.3978952727983707,Uppsala,egen KMR-post
+U 1065,U,Viksta sn,1070.0,1100.0,0.0,2.6390573296152584,1,1,1,0,1,1,3.784189633918261,Uppsala,egen KMR-post
+U 1069,U,Åkerby sn,1070.0,1100.0,,3.6375861597263857,1,1,1,0,1,1,3.970291913552122,Uppsala,egen KMR-post
+U 1070,U,Åkerby sn,1070.0,1100.0,0.0,3.6375861597263857,0,0,0,0,0,0,3.912023005428146,Uppsala,egen KMR-post
+U 1071,U,Åkerby sn,1050.0,1080.0,,3.713572066704308,1,1,1,0,0,1,4.0943445622221,Uppsala,egen KMR-post
+U 1079,U,Bälinge sn,,,,3.9318256327243257,1,1,1,0,0,1,4.430816798843313,Uppsala,egen KMR-post
+U 1081,U,Bälinge sn,,,,3.970291913552122,1,1,1,0,0,1,4.356708826689592,Uppsala,egen KMR-post
+U 1084,U,Bälinge sn,1100.0,1130.0,0.0,4.007333185232471,1,1,1,0,0,1,4.343805421853684,Uppsala,egen KMR-post
+U 1085,U,Bälinge sn,1070.0,1100.0,0.0,3.9318256327243257,1,1,1,0,0,1,4.418840607796598,Uppsala,egen KMR-post
+U 1089,U,Bälinge sn,1070.0,1100.0,0.0,3.8918202981106265,1,1,1,0,1,1,4.219507705176107,Uppsala,egen KMR-post
+U 1092,U,Bälinge sn,1070.0,1100.0,0.0,3.9889840465642745,0,0,0,0,0,0,4.406719247264253,Uppsala,egen KMR-post
+U 1095,U,Bälinge sn,1070.0,1100.0,,3.970291913552122,1,1,1,0,1,1,4.3694478524670215,Uppsala,egen KMR-post
+U 1096,U,Bälinge sn,1100.0,1130.0,,3.970291913552122,1,1,1,0,1,1,4.3694478524670215,Uppsala,egen KMR-post
+U 1097,U,Bälinge sn,1070.0,1100.0,1.0,3.80666248977032,0,0,0,0,0,0,4.418840607796598,Uppsala,egen KMR-post
+U 1098,U,Bälinge sn,,,1.0,3.784189633918261,0,0,0,0,0,0,4.418840607796598,Uppsala,egen KMR-post
+U 1100,U,Bälinge sn,1070.0,1100.0,1.0,3.784189633918261,0,0,0,0,0,0,4.394449154672439,Uppsala,egen KMR-post
+U 1104,U,Bälinge sn,1070.0,1100.0,,3.713572066704308,1,1,1,0,0,1,3.970291913552122,Uppsala,egen KMR-post
+U 1106,U,Bälinge sn,1070.0,1100.0,,3.6375861597263857,1,1,1,0,0,0,4.060443010546419,Uppsala,egen KMR-post
+U 1107,U,Bälinge sn,1070.0,1100.0,,3.6375861597263857,1,1,1,0,0,0,4.07753744390572,Uppsala,egen KMR-post
+U 1110,U,Skuttunge sn,1070.0,1100.0,0.0,1.6094379124341005,1,1,0,0,0,0,2.3978952727983707,Uppsala,egen KMR-post
+U 1111,U,Skuttunge sn,1070.0,1100.0,0.0,3.6635616461296463,1,1,1,0,0,1,4.1588830833596715,Uppsala,egen KMR-post
+U 1113,U,Skuttunge sn,,,,3.295836866004329,1,1,1,0,1,1,4.007333185232471,Uppsala,egen KMR-post
+U 1117,U,Skuttunge sn,1070.0,1100.0,0.0,3.1780538303479458,1,1,1,1,1,1,3.7376696182833684,Uppsala,egen KMR-post
+U 1118,U,Skuttunge sn,1070.0,1100.0,,3.295836866004329,1,1,1,0,1,1,4.1588830833596715,Uppsala,egen KMR-post
+U 1121,U,Skuttunge sn,,,,3.295836866004329,1,1,1,0,1,1,4.1588830833596715,Uppsala,egen KMR-post
+U 1132,U,Skäfthammars sn,1070.0,1100.0,0.0,0.6931471805599453,0,0,0,0,0,0,3.784189633918261,Uppsala,egen KMR-post
+U 1134,U,Morkarla sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,1.3862943611198906,Uppsala,egen KMR-post
+U 1135,U,Dannemora sn,,,0.0,0.0,1,1,1,1,0,1,1.791759469228055,Uppsala,egen KMR-post
+U 1136,U,Films sn,1070.0,1100.0,0.0,0.6931471805599453,0,0,0,0,0,0,2.0794415416798357,Uppsala,egen KMR-post
+U 1138,U,Hållnäs sn,,,0.0,0.0,0,0,0,0,0,0,1.6094379124341003,Uppsala,egen KMR-post
+U 1139,U,Hållnäs sn,,,0.0,0.0,1,1,1,0,1,1,2.1972245773362196,Uppsala,egen KMR-post
+U 1140,U,Vendels sn,1070.0,1100.0,0.0,1.791759469228055,1,1,1,0,1,1,3.7612001156935624,Uppsala,egen KMR-post
+U 1142,U,Vendels sn,,,0.0,2.0794415416798357,1,1,0,0,0,0,3.784189633918261,Uppsala,egen KMR-post
+U 1145,U,Tierps sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,3.1780538303479458,Uppsala,egen KMR-post
+U 1146,U,Tolfta sn,1010.0,1050.0,0.0,0.0,1,1,0,0,0,0,3.2188758248682006,Uppsala,egen KMR-post
+U 1149,U,Älvkarleby sn,1020.0,1050.0,0.0,0.0,0,0,0,0,0,0,0.0,Uppsala,egen KMR-post
+U 1150,U,Älvkarleby sn,,,0.0,0.0,0,0,0,0,0,0,1.791759469228055,Uppsala,egen KMR-post
+U 1151,U,Frösthults sn,1010.0,1050.0,,2.302585092994046,1,1,0,0,0,0,3.8066624897703196,Uppsala,egen KMR-post
+U 1152,U,Frösthults sn,1070.0,1100.0,,2.1972245773362196,1,1,0,0,0,0,3.8066624897703196,Uppsala,egen KMR-post
+U 1154,U,Simtuna sn,1010.0,1050.0,,1.9459101490553132,1,1,0,0,0,0,3.6109179126442243,Uppsala,egen KMR-post
+U 1155,U,Simtuna sn,1010.0,1050.0,,1.9459101490553132,1,1,1,1,1,1,3.828641396489095,Uppsala,egen KMR-post
+U 1156,U,Simtuna sn,1010.0,1050.0,,1.9459101490553132,1,1,1,1,1,1,3.828641396489095,Uppsala,egen KMR-post
+U 1157,U,Simtuna sn,1010.0,1050.0,0.0,0.6931471805599453,0,0,0,0,0,0,3.044522437723423,Uppsala,egen KMR-post
+U 1158,U,Simtuna sn,,,,1.9459101490553132,1,1,0,0,0,0,3.6375861597263857,Uppsala,egen KMR-post
+U 1162,U,Altuna sn,1070.0,1100.0,0.0,0.6931471805599453,0,0,0,0,0,0,1.6094379124341003,Uppsala,egen KMR-post
+U 1164,U,Västerlövsta sn,,,0.0,0.0,0,0,0,0,0,0,1.3862943611198906,Uppsala,egen KMR-post
+U 1165,U,Härnevi sn,1010.0,1050.0,1.0,2.302585092994046,1,1,1,1,0,1,3.6888794541139363,Uppsala,egen KMR-post
+U 1167,U,Torstuna sn,1070.0,1100.0,0.0,1.3862943611198906,1,1,1,0,1,0,3.091042453358316,Uppsala,egen KMR-post
+U 1172,U,Vittinge sn,1010.0,1050.0,0.0,1.6094379124341005,0,0,0,0,0,0,1.9459101490553132,Uppsala,egen KMR-post
+U 1174,U,Vittinge sn,1070.0,1100.0,,1.6094379124341005,1,1,1,0,1,1,1.0986122886681098,Uppsala,egen KMR-post
+U 1175,U,Vittinge sn,1020.0,1050.0,,1.6094379124341005,1,1,1,0,1,1,1.0986122886681098,Uppsala,egen KMR-post
+U 1176,U,Huddunge sn,1070.0,1100.0,0.0,0.0,0,0,0,0,0,0,0.0,Uppsala,egen KMR-post
+U 1177,U,Harbo sn,1070.0,1100.0,0.0,0.0,1,1,0,0,0,0,1.9459101490553132,Uppsala,egen KMR-post
+U 1180,U,Östervåla sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,1.0986122886681098,Uppsala,egen KMR-post
+U 1181,U,Nora sn,1010.0,1050.0,0.0,0.0,0,0,0,0,0,0,0.0,Uppsala,egen KMR-post
+U ATA4822/64,U,Össeby-Garns sn,980.0,1015.0,,3.7612001156935624,1,1,1,1,1,1,4.770684624465665,Stockholm,egen KMR-post
+U ATA3019/65,U,Skepptuna sn,,,1.0,2.833213344056216,1,1,1,0,1,1,4.736198448394496,Stockholm,egen KMR-post
+U ATA3599/65,U,Sankt Pers sn,,,1.0,2.9444389791664403,1,1,1,1,1,1,4.02535169073515,Stockholm,egen KMR-post
+U ATA3600/65,U,Håtuna sn,,,1.0,4.060443010546419,1,1,1,1,1,1,4.2626798770413155,Stockholm,egen KMR-post
+U ATA2336/69,U,Boo sn,,,0.0,0.0,1,1,1,0,0,1,2.3978952727983707,Stockholm,egen KMR-post
+U Fv1955;216,U,Sankt Pers sn,1020.0,1050.0,0.0,4.04305126783455,1,1,1,0,0,1,4.204692619390966,Stockholm,egen KMR-post
+U Fv1959;260,U,Länna sn,,,,1.3862943611198906,0,0,0,0,0,0,3.5553480614894135,Stockholm,egen KMR-post
+U Fv1971;209,U,Lunda sn,,,0.0,3.044522437723423,1,1,1,0,0,1,4.634728988229636,Stockholm,egen KMR-post
+U Fv1972;172,U,Hammarby sn,1070.0,1100.0,1.0,4.204692619390966,1,1,1,0,1,1,4.454347296253507,Stockholm,egen KMR-post
+U Fv1973;146,U,Tillinge sn,1070.0,1100.0,0.0,2.772588722239781,0,0,0,0,0,0,3.8501476017100584,Uppsala,egen KMR-post
+U Fv1974;203,U,Björklinge sn,,,,3.4011973816621555,1,1,1,0,1,1,4.0943445622221,Uppsala,egen KMR-post
+U Fv1975;169,U,Orkesta sn,1070.0,1100.0,0.0,3.044522437723423,1,1,1,0,0,1,4.442651256490317,Stockholm,egen KMR-post
+U Fv1976;108,U,Vassunda sn,980.0,1015.0,,3.1780538303479458,1,1,1,0,1,1,4.3694478524670215,Uppsala,egen KMR-post
+U Fv1978;226,U,Lunda sn,1010.0,1050.0,0.0,2.70805020110221,1,1,1,0,0,1,4.276666119016055,Stockholm,egen KMR-post
+U Fv1979;244B,U,Skepptuna sn,980.0,1015.0,1.0,2.772588722239781,1,1,1,0,0,1,4.727387818712341,Stockholm,egen KMR-post
+U Fv1980;237,U,Östuna sn,,,0.0,1.3862943611198906,0,0,0,0,0,0,4.110873864173311,Uppsala,egen KMR-post
+U Fv1983;228,U,Sankt Pers sn,1050.0,1080.0,1.0,2.9444389791664403,1,1,1,1,0,1,3.9318256327243257,Stockholm,egen KMR-post
+U Fv1986;220A,U,Ekerö sn,,,,2.772588722239781,0,0,0,0,0,0,4.060443010546419,Stockholm,egen KMR-post
+U Fv1990;32B,U,Funbo sn,,,,2.8903717578961645,1,1,1,1,1,1,3.8918202981106265,Uppsala,egen KMR-post
+U Fv1992;169,U,Ununge sn,980.0,1015.0,0.0,0.0,1,1,1,0,0,1,3.044522437723423,Stockholm,egen KMR-post
+U Fv1993;235,U,Torsvi sn,,,0.0,2.6390573296152584,1,1,0,0,0,0,3.7376696182833684,Uppsala,egen KMR-post
+U NOR1997;27A,U,Gamla Uppsala sn (nu Uppsala),,,0.0,3.7612001156935624,0,0,0,0,0,0,4.356708826689592,Uppsala,egen KMR-post
+U NOR2003;23,U,Vada sn,,,,3.713572066704308,1,1,1,1,1,1,4.709530201312334,Stockholm,egen KMR-post
+Vs 4,Vs,Dingtuna sn,,,1.0,1.0986122886681098,1,1,1,1,1,1,4.59511985013459,Västmanland,egen KMR-post
+Vs 5,Vs,Dingtuna sn,,,1.0,1.0986122886681098,1,1,1,1,1,1,4.605170185988092,Västmanland,egen KMR-post
+Vs 9,Vs,Västerås (f.d. Lundby sn),1050.0,1080.0,0.0,0.6931471805599453,0,0,0,0,0,0,3.970291913552122,Västmanland,egen KMR-post
+Vs 13,Vs,Västerås (f.d. Badelunda sn),,,0.0,0.6931471805599453,1,1,1,0,1,1,4.6913478822291435,Västmanland,egen KMR-post
+Vs 17,Vs,Tortuna sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,4.30406509320417,Västmanland,egen KMR-post
+Vs 23,Vs,Fläckebo sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,0.6931471805599453,Västmanland,egen KMR-post
+Vs 27,Vs,Kila sn,,,0.0,0.6931471805599453,0,0,0,0,0,0,1.0986122886681098,Västmanland,egen KMR-post
+Vs Fv1988;36,Vs,Hubbo sn,1010.0,1050.0,0.0,0.6931471805599453,1,1,0,0,0,0,4.48863636973214,Västmanland,egen KMR-post
+Nä 3,Nä,Edsbergs sn,,,0.0,0.0,1,1,1,0,0,1,3.258096538021482,Örebro,egen KMR-post
+Nä 9,Nä,Kumla sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,2.5649493574615367,Örebro,egen KMR-post
+Nä 14,Nä,Stora Mellösa sn,,,0.0,0.6931471805599453,1,1,1,1,1,1,2.3978952727983707,Örebro,egen KMR-post
+Nä 29,Nä,Glanshammars sn,1010.0,1050.0,0.0,1.9459101490553132,0,0,0,0,0,0,2.772588722239781,Örebro,egen KMR-post
+Nä 30,Nä,Glanshammars sn,,,0.0,1.9459101490553132,0,0,0,0,0,0,3.2188758248682006,Örebro,egen KMR-post
+Nä 31,Nä,Götlunda sn,1010.0,1050.0,0.0,0.0,1,1,1,1,1,1,0.6931471805599453,Västmanland,egen KMR-post
+Nä 32,Nä,Götlunda sn,,,0.0,0.0,1,1,1,0,0,1,2.1972245773362196,Västmanland,egen KMR-post
+Nä 34,Nä,Rinkaby sn,,,0.0,1.9459101490553132,1,1,0,0,0,0,3.1354942159291497,Örebro,egen KMR-post
+Vr 2,Vr,Väse sn,980.0,1015.0,0.0,0.0,0,0,0,0,0,0,1.9459101490553132,Värmland,egen KMR-post
+Vr 3,Vr,Hammarö sn,980.0,1015.0,0.0,0.0,1,1,1,0,0,1,1.6094379124341003,Värmland,egen KMR-post
+Gs 3,Gs,Österfärnebo sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,2.3978952727983707,Gävleborg,egen KMR-post
+Gs 6,Gs,Hedesunda sn,,,0.0,0.0,0,0,0,0,0,0,0.6931471805599453,Gävleborg,egen KMR-post
+Gs 11,Gs,Valbo sn (nu Gävle),1020.0,1050.0,0.0,0.6931471805599453,1,1,1,0,0,1,1.6094379124341003,Gävleborg,egen KMR-post
+Hs 4,Hs,Norrala sn,,,0.0,1.0986122886681098,1,1,0,0,0,0,1.9459101490553132,Gävleborg,närmaste gravfält
+M 1,M,Njurunda sn,1010.0,1050.0,0.0,1.0986122886681098,0,0,0,0,0,0,2.8903717578961645,Västernorrland,egen KMR-post
+M 3,M,Njurunda sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,3.295836866004329,Västernorrland,egen KMR-post
+M 6,M,Tuna sn,,,0.0,1.3862943611198906,0,0,0,0,0,0,2.772588722239781,Västernorrland,egen KMR-post
+M 11,M,Selångers sn,,,0.0,1.3862943611198906,1,1,1,0,1,1,2.8903717578961645,Västernorrland,egen KMR-post
+M 13,M,Selångers sn,,,0.0,1.6094379124341005,0,0,0,0,0,0,2.8903717578961645,Västernorrland,egen KMR-post
+M 14,M,Sättna sn,,,0.0,1.0986122886681098,0,0,0,0,0,0,1.0986122886681098,Västernorrland,egen KMR-post
+J RS1928;66,J,Frösö sn,1050.0,1080.0,0.0,0.0,0,0,0,0,0,0,0.6931471805599453,Jämtland,egen KMR-post
+Bo KJ80,Bo,Valla sn,,,0.0,0.0,0,0,0,0,0,0,2.0794415416798357,Västra Götaland,egen KMR-post
+Bo Peterson1992,Bo,Stala sn,,,0.0,0.0,1,1,1,0,1,1,1.9459101490553132,Västra Götaland,egen KMR-post
+G 228,G,Ekeby sn (?),,,0.0,0.6931471805599453,0,0,0,0,0,0,3.091042453358316,Gotland,närmaste gravfält
