@@ -56,7 +56,7 @@ Datumen är förslag. Viktor publicerar artiklarna; allt annat följer Vitkis re
   **I appen:** Luckor i texten – modellen som föreslår förlorade runor, och hur säker den är.
 - **Nr 3, juni 2027 – *Människorna och tron*.** Hushållet som stenarna glömde; Kvinnorna som flyttade?; Var korset en
   bekännelse? Verkstaden: läsarkontrollen. Metodhörnan: slumpen inom bygden.
-  **I appen:** Människorna och Namn och släkt – släktnätverket över stenarna.
+  **I appen:** Ristarna, en i taget – varje känd ristares fingeravtryck och modellens förslag (Människorna förklarades redan i nr 1).
 - **Nr 4, september 2027 – *Landskapet och ekonomin*.** Stod runstenarna vid tinget?; Silvret och stenarna; Vad kostade
   en runsten? Verkstaden: nya data (skatter, berggrund). Metodhörnan: odds och oddskvoter.
   **I appen:** Kartan med de gamla landen, strandlinjen och jordarterna.
@@ -64,7 +64,7 @@ Datumen är förslag. Viktor publicerar artiklarna; allt annat följer Vitkis re
   Hundra år av antaganden – vad höll? Verkstaden: huvudrapporten. Metodhörnan: varför vi låser planen.
   **I appen:** Pröva en egen fråga – så testar läsaren själv ett påstående mot hela korpusen, med kontrollerna i R.
 
-Fler funktioner att förklara i senare nummer: 3D-huggspårsanalysen, Ristarna, Runbiblioteket, Stenanalys (allt i ett),
+Nr 1 förklarade Människorna. Fler funktioner att förklara i senare nummer: 3D-huggspårsanalysen, Namn och släkt, Runbiblioteket, Stenanalys (allt i ett),
 Jämför stenar och Forskningsrapporterna.
 
 Varje nummer byggs med `utdata/tidskrift/bygg_tidskrift.py` (sv + en) och läggs upp på /tidskrift.
