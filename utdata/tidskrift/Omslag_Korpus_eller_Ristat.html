@@ -1,4 +1,4 @@
-<!doctype html><html lang="sv"><head><meta charset="utf-8"><title>Namnförslag</title><style>/* Runmått – provnummer, version 2: tidskrift i stil med populärhistoriska magasin men mer återhållsam.
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><title>Omslag</title><style>/* Runmått – provnummer, version 2: tidskrift i stil med populärhistoriska magasin men mer återhållsam.
    Ljust papper, rost som enda accentfärg (Vitkis regel: ingen lila), Charter (rubriker i Black) + Avenir Next. */
 :root {
   --ink: #1d2226; --mute: #5f6a73; --line: #d8dcdf; --paper: #ffffff;
@@ -156,4 +156,90 @@ figcaption b { color: var(--ink); }
 .ompuff .ptitel, .omband .pt, .ttitle { hyphens: none; }
 .opentext .flik { align-self: flex-start; }
 blockquote.pull { hyphens: none; }
-</style></head><body><section class="vanlig namnsida"><div class="flik">Namnförslag</div><h2>Sex namn på tidskriften</h2><p class="deck">Samma typsnitt och färg som provnumret, så att namnen går att jämföra som de skulle se ut på omslaget.</p><div class="namngrid"><div class="namnkort"><div class="nkmast">Runmått</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Kort och stramt som Futhark och Fornvännen. Säger vad som är nytt: vi mäter runorna.</p></div><div class="namnkort"><div class="nkmast">Stenarnas tal</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Dubbel betydelse: siffrorna i stenarna och det stenarna säger. Varmast för en bred publik.</p></div><div class="namnkort"><div class="nkmast">Mätstav</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Runstav och måttstock i ett ord – ristningen och mätningen.</p></div><div class="namnkort"><div class="nkmast">Ristat &amp; räknat</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Från ristning till siffra. Lätt att minnas, lite lekfullt.</p></div><div class="namnkort"><div class="nkmast">Korpus</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Fackordet för hela samlingen. Akademiskt och sakligt, minst populärt.</p></div><div class="namnkort"><div class="nkmast">Hela stenen</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Folkligt och tydligt: hela korpusen, inte bara de berömda stenarna.</p></div></div></section></body></html>
+/* v3: Korpus – Ristat & räknat; Vitkis bindruna; längre titel på omslaget */
+.bindruna { display: block; height: 21mm; width: auto; }
+.bakmast .bindruna { height: 13mm; display: inline-block; }
+.omslag h1.lang { font-size: 60pt; letter-spacing: -.025em; }
+.baktext { column-count: 2; column-gap: 9mm; }
+.baktext p { break-inside: avoid; }
+/* v3.1: baslinjeraster – all brödtext linjerar mellan spalterna (Viktor 2026-11-10). Radavstånd 13,5 pt = 18 px;
+   rubriker, listor och stycken tar hela rader; bilder, rutor, diagram och citat rundas upp till hela rader med skript. */
+:root { --lh: 13.5pt; }
+@media screen { body { width: 180mm; } }
+.text { line-height: var(--lh); }
+.text p { margin: 0; text-indent: 1.1em; line-height: var(--lh); orphans: 2; widows: 2; }
+.text p.forsta, .text h3 + p, .text figure + p, .text aside + p, .text blockquote + p, .text figure.chart + p,
+.text ul + p, .text p.runcitat, .text p.runcitat + p, .text p.slut, .text p.webb { text-indent: 0; }
+.text h3 { line-height: var(--lh); margin: var(--lh) 0 0; font-size: 9.4pt; }
+.text ul { margin: 0; line-height: var(--lh); }
+.text li { margin: 0; line-height: var(--lh); }
+.text .snap { margin-top: 0 !important; margin-bottom: 0 !important; }
+.text p.slut { margin-top: 0; }
+.text p.webb { line-height: var(--lh); padding: 0; margin: 0; }
+.sources, .sources p, .sources li { line-height: 11.25pt; }
+.sources p { text-indent: 0; }
+/* v3.2: stående bild på öppningssidan visas hel (Tor); lika luft runt texten i alla inforutor */
+.hero.staende { background: var(--rust-soft); }
+.hero.staende img { object-fit: contain; object-position: right center; }
+.hero.staende figcaption { transform: none; left: 15mm; right: 100mm; bottom: 6mm; color: #5f6a73; }
+.box { padding: 4mm; }
+.box > :last-child, .box ul > li:last-child, .box p:last-child { margin-bottom: 0; }
+.text .box p { text-indent: 0; margin: 0 0 1.5mm; }
+.box ul { margin: 0; }
+.boxh { margin-top: 0; }
+.siffran, .trettio { padding: 5mm; }
+.trettio ul { margin: 0; }
+.trettio li:last-child { margin-bottom: 0; }
+.siffran p:last-child { margin-bottom: 0; }
+.chart { padding: 4.5mm; }
+.csrc { margin-bottom: 0; }
+.metod { padding: 6mm; }
+.metod > :last-child { margin-bottom: 0; }
+.lasband { padding: 5mm; }
+.bakblock { break-inside: avoid; }
+</style></head><body>
+<section class="omslag">
+  <img class="bg" src="https://upload.wikimedia.org/wikipedia/commons/9/9d/U_489%2C_Morby.jpg" alt="">
+  <div class="omtopp">
+    <div class="mastrad"><span>Nr 1 · November 2026</span><span>En tidskrift från Vitki</span></div>
+    <h1 class="">Korpus</h1>
+    <div class="undertitel">Ristat & räknat – digital runforskning</div>
+  </div>
+  <div class="ompuff">
+    <div class="ptema">Människorna</div>
+    <div class="pnum">14 <i>mot</i> 268</div>
+    <div class="ptitel">Döttrarna som runstenarna glömde</div>
+  </div>
+  <div class="omband"><div><div class="ptema">Resorna</div><div class="pt">Färderna var de ungas</div><p>Söner och bröder dog borta tre till fyra gånger så ofta som fäder.</p></div><div><div class="ptema">Språket</div><div class="pt">Tor föll, hjälten blev dräng</div><p>Vilka vikinganamn lever kvar – och vilka maktord bytte språk?</p></div><div><div class="ptema">Verkstaden</div><div class="pt">Hundra års runforskning – lästa på en gång</div><p>1 081 texter i Fornvännen och Futhark.</p></div><div class="omruna"><img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"><span>Provnummer<br>vitkirunor.se</span></div></div>
+  <div class="omkredit">Omslag: U 489 vid Morby, Uppland – Gullaugs bro för dottern Gillaugs själ. Foto: Christine Jewell, CC BY-SA 2.0, via Wikimedia Commons.</div>
+</section>
+<section class="omslag">
+  <img class="bg" src="https://upload.wikimedia.org/wikipedia/commons/9/9d/U_489%2C_Morby.jpg" alt="">
+  <div class="omtopp">
+    <div class="mastrad"><span>Nr 1 · November 2026</span><span>En tidskrift från Vitki</span></div>
+    <h1 class="lang">Ristat &amp; räknat</h1>
+    <div class="undertitel">Digital runforskning</div>
+  </div>
+  <div class="ompuff">
+    <div class="ptema">Människorna</div>
+    <div class="pnum">14 <i>mot</i> 268</div>
+    <div class="ptitel">Döttrarna som runstenarna glömde</div>
+  </div>
+  <div class="omband"><div><div class="ptema">Resorna</div><div class="pt">Färderna var de ungas</div><p>Söner och bröder dog borta tre till fyra gånger så ofta som fäder.</p></div><div><div class="ptema">Språket</div><div class="pt">Tor föll, hjälten blev dräng</div><p>Vilka vikinganamn lever kvar – och vilka maktord bytte språk?</p></div><div><div class="ptema">Verkstaden</div><div class="pt">Hundra års runforskning – lästa på en gång</div><p>1 081 texter i Fornvännen och Futhark.</p></div><div class="omruna"><img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"><span>Provnummer<br>vitkirunor.se</span></div></div>
+  <div class="omkredit">Omslag: U 489 vid Morby, Uppland – Gullaugs bro för dottern Gillaugs själ. Foto: Christine Jewell, CC BY-SA 2.0, via Wikimedia Commons.</div>
+</section>
+<section class="omslag">
+  <img class="bg" src="https://upload.wikimedia.org/wikipedia/commons/9/9d/U_489%2C_Morby.jpg" alt="">
+  <div class="omtopp">
+    <div class="mastrad"><span>No. 1 · November 2026</span><span>A journal from Vitki</span></div>
+    <h1 class="">Korpus</h1>
+    <div class="undertitel">Carved & counted – digital runic research</div>
+  </div>
+  <div class="ompuff">
+    <div class="ptema">People</div>
+    <div class="pnum">14 <i>to</i> 268</div>
+    <div class="ptitel">The daughters the runestones forgot</div>
+  </div>
+  <div class="omband"><div><div class="ptema">Journeys</div><div class="pt">The journeys belonged to the young</div><p>Sons and brothers died abroad three to four times as often as fathers.</p></div><div><div class="ptema">Language</div><div class="pt">Thor fell, the hero became a farmhand</div><p>Which Viking names live on – and which words of power changed language?</p></div><div><div class="ptema">Workshop</div><div class="pt">A century of runic research – read at once</div><p>1,081 texts in Fornvännen and Futhark.</p></div><div class="omruna"><img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"><span>Sample issue<br>vitkirunor.se</span></div></div>
+  <div class="omkredit">Cover: U 489 at Morby, Uppland – Gullaug's bridge for the soul of her daughter Gillaug. Photo: Christine Jewell, CC BY-SA 2.0, via Wikimedia Commons.</div>
+</section></body></html>

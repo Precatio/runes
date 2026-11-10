@@ -156,3 +156,44 @@ figcaption b { color: var(--ink); }
 .ompuff .ptitel, .omband .pt, .ttitle { hyphens: none; }
 .opentext .flik { align-self: flex-start; }
 blockquote.pull { hyphens: none; }
+/* v3: Korpus – Ristat & räknat; Vitkis bindruna; längre titel på omslaget */
+.bindruna { display: block; height: 21mm; width: auto; }
+.bakmast .bindruna { height: 13mm; display: inline-block; }
+.omslag h1.lang { font-size: 60pt; letter-spacing: -.025em; }
+.baktext { column-count: 2; column-gap: 9mm; }
+.baktext p { break-inside: avoid; }
+/* v3.1: baslinjeraster – all brödtext linjerar mellan spalterna (Viktor 2026-11-10). Radavstånd 13,5 pt = 18 px;
+   rubriker, listor och stycken tar hela rader; bilder, rutor, diagram och citat rundas upp till hela rader med skript. */
+:root { --lh: 13.5pt; }
+@media screen { body { width: 180mm; } }
+.text { line-height: var(--lh); }
+.text p { margin: 0; text-indent: 1.1em; line-height: var(--lh); orphans: 2; widows: 2; }
+.text p.forsta, .text h3 + p, .text figure + p, .text aside + p, .text blockquote + p, .text figure.chart + p,
+.text ul + p, .text p.runcitat, .text p.runcitat + p, .text p.slut, .text p.webb { text-indent: 0; }
+.text h3 { line-height: var(--lh); margin: var(--lh) 0 0; font-size: 9.4pt; }
+.text ul { margin: 0; line-height: var(--lh); }
+.text li { margin: 0; line-height: var(--lh); }
+.text .snap { margin-top: 0 !important; margin-bottom: 0 !important; }
+.text p.slut { margin-top: 0; }
+.text p.webb { line-height: var(--lh); padding: 0; margin: 0; }
+.sources, .sources p, .sources li { line-height: 11.25pt; }
+.sources p { text-indent: 0; }
+/* v3.2: stående bild på öppningssidan visas hel (Tor); lika luft runt texten i alla inforutor */
+.hero.staende { background: var(--rust-soft); }
+.hero.staende img { object-fit: contain; object-position: right center; }
+.hero.staende figcaption { transform: none; left: 15mm; right: 100mm; bottom: 6mm; color: #5f6a73; }
+.box { padding: 4mm; }
+.box > :last-child, .box ul > li:last-child, .box p:last-child { margin-bottom: 0; }
+.text .box p { text-indent: 0; margin: 0 0 1.5mm; }
+.box ul { margin: 0; }
+.boxh { margin-top: 0; }
+.siffran, .trettio { padding: 5mm; }
+.trettio ul { margin: 0; }
+.trettio li:last-child { margin-bottom: 0; }
+.siffran p:last-child { margin-bottom: 0; }
+.chart { padding: 4.5mm; }
+.csrc { margin-bottom: 0; }
+.metod { padding: 6mm; }
+.metod > :last-child { margin-bottom: 0; }
+.lasband { padding: 5mm; }
+.bakblock { break-inside: avoid; }

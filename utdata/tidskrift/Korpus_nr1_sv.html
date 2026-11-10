@@ -1,4 +1,4 @@
-<!doctype html><html lang="sv"><head><meta charset="utf-8"><title>Runmått nr 1 – förslag</title>
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><title>Korpus 1/2026</title>
 <style>/* Runmått – provnummer, version 2: tidskrift i stil med populärhistoriska magasin men mer återhållsam.
    Ljust papper, rost som enda accentfärg (Vitkis regel: ingen lila), Charter (rubriker i Black) + Avenir Next. */
 :root {
@@ -157,58 +157,95 @@ figcaption b { color: var(--ink); }
 .ompuff .ptitel, .omband .pt, .ttitle { hyphens: none; }
 .opentext .flik { align-self: flex-start; }
 blockquote.pull { hyphens: none; }
+/* v3: Korpus – Ristat & räknat; Vitkis bindruna; längre titel på omslaget */
+.bindruna { display: block; height: 21mm; width: auto; }
+.bakmast .bindruna { height: 13mm; display: inline-block; }
+.omslag h1.lang { font-size: 60pt; letter-spacing: -.025em; }
+.baktext { column-count: 2; column-gap: 9mm; }
+.baktext p { break-inside: avoid; }
+/* v3.1: baslinjeraster – all brödtext linjerar mellan spalterna (Viktor 2026-11-10). Radavstånd 13,5 pt = 18 px;
+   rubriker, listor och stycken tar hela rader; bilder, rutor, diagram och citat rundas upp till hela rader med skript. */
+:root { --lh: 13.5pt; }
+@media screen { body { width: 180mm; } }
+.text { line-height: var(--lh); }
+.text p { margin: 0; text-indent: 1.1em; line-height: var(--lh); orphans: 2; widows: 2; }
+.text p.forsta, .text h3 + p, .text figure + p, .text aside + p, .text blockquote + p, .text figure.chart + p,
+.text ul + p, .text p.runcitat, .text p.runcitat + p, .text p.slut, .text p.webb { text-indent: 0; }
+.text h3 { line-height: var(--lh); margin: var(--lh) 0 0; font-size: 9.4pt; }
+.text ul { margin: 0; line-height: var(--lh); }
+.text li { margin: 0; line-height: var(--lh); }
+.text .snap { margin-top: 0 !important; margin-bottom: 0 !important; }
+.text p.slut { margin-top: 0; }
+.text p.webb { line-height: var(--lh); padding: 0; margin: 0; }
+.sources, .sources p, .sources li { line-height: 11.25pt; }
+.sources p { text-indent: 0; }
+/* v3.2: stående bild på öppningssidan visas hel (Tor); lika luft runt texten i alla inforutor */
+.hero.staende { background: var(--rust-soft); }
+.hero.staende img { object-fit: contain; object-position: right center; }
+.hero.staende figcaption { transform: none; left: 15mm; right: 100mm; bottom: 6mm; color: #5f6a73; }
+.box { padding: 4mm; }
+.box > :last-child, .box ul > li:last-child, .box p:last-child { margin-bottom: 0; }
+.text .box p { text-indent: 0; margin: 0 0 1.5mm; }
+.box ul { margin: 0; }
+.boxh { margin-top: 0; }
+.siffran, .trettio { padding: 5mm; }
+.trettio ul { margin: 0; }
+.trettio li:last-child { margin-bottom: 0; }
+.siffran p:last-child { margin-bottom: 0; }
+.chart { padding: 4.5mm; }
+.csrc { margin-bottom: 0; }
+.metod { padding: 6mm; }
+.metod > :last-child { margin-bottom: 0; }
+.lasband { padding: 5mm; }
+.bakblock { break-inside: avoid; }
 
-@page b1 { @top-left { content: "Runmått · Människorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
-@page b2 { @top-left { content: "Runmått · Resorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
-@page b3 { @top-left { content: "Runmått · Språket"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }</style></head><body>
+@page { @bottom-right { content: "Korpus nr 1 · 2026"; } }
+@page b1 { @top-left { content: "Korpus · Människorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
+@page b2 { @top-left { content: "Korpus · Resorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
+@page b3 { @top-left { content: "Korpus · Språket"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }</style><script>
+// Baslinjeraster: varje element i brödtexten som inte är vanlig text får en höjd (med marginaler) som är ett helt antal rader.
+window.addEventListener('load', () => {
+  const LH = 18;  // 13,5 pt
+  document.querySelectorAll('.text > figure, .text > aside, .text > blockquote, .text > .sources').forEach(el => {
+    el.classList.add('snap');
+    const h = el.getBoundingClientRect().height;
+    const top = el.previousElementSibling ? LH * 0.5 : 0;
+    const total = Math.ceil((h + top) / LH + 0.5) * LH;
+    el.style.setProperty('margin-top', top + 'px', 'important');
+    el.style.setProperty('margin-bottom', (total - h - top) + 'px', 'important');
+  });
+  document.body.dataset.snapped = '1';
+});
+</script></head><body>
 
 <section class="omslag">
   <img class="bg" src="https://upload.wikimedia.org/wikipedia/commons/9/9d/U_489%2C_Morby.jpg" alt="">
   <div class="omtopp">
     <div class="mastrad"><span>Nr 1 · November 2026</span><span>En tidskrift från Vitki</span></div>
-    <h1>Runmått</h1>
-    <div class="undertitel">Digital runforskning – hela korpusen, mätt</div>
+    <h1 class="">Korpus</h1>
+    <div class="undertitel">Ristat & räknat – digital runforskning</div>
   </div>
   <div class="ompuff">
     <div class="ptema">Människorna</div>
     <div class="pnum">14 <i>mot</i> 268</div>
     <div class="ptitel">Döttrarna som runstenarna glömde</div>
   </div>
-  <div class="omband">
-    <div><div class="ptema">Resorna</div><div class="pt">Färderna var de ungas</div><p>Söner och bröder dog borta tre till fyra gånger så ofta som fäder.</p></div>
-    <div><div class="ptema">Språket</div><div class="pt">Tor föll, hjälten blev dräng</div><p>Vilka vikinganamn lever kvar – och vilka maktord bytte språk?</p></div>
-    <div><div class="ptema">Verkstaden</div><div class="pt">Hundra års runforskning – lästa på en gång</div><p>Drygt 1 000 texter i Fornvännen och Futhark.</p></div>
-    <div class="omruna"><svg class="runor" viewBox="0 0 204 60" width="112" height="33"><g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(0,0)" d="M6 2V58M6 22L22 8M6 36L22 22"/><path transform="translate(34,0)" d="M6 58V2L22 18V58"/><path transform="translate(68,0)" d="M6 2V58M6 18L20 30L6 42"/><path transform="translate(102,0)" d="M14 2V58M4 18L24 34"/><path transform="translate(136,0)" d="M6 58V2L20 14L6 28L22 58"/><path transform="translate(170,0)" d="M6 58V2M6 24L22 8"/></g></svg><span>Provnummer<br>vitkirunor.se</span></div>
-  </div>
+  <div class="omband"><div><div class="ptema">Resorna</div><div class="pt">Färderna var de ungas</div><p>Söner och bröder dog borta tre till fyra gånger så ofta som fäder.</p></div><div><div class="ptema">Språket</div><div class="pt">Tor föll, hjälten blev dräng</div><p>Vilka vikinganamn lever kvar – och vilka maktord bytte språk?</p></div><div><div class="ptema">Verkstaden</div><div class="pt">Hundra års runforskning – lästa på en gång</div><p>1 081 texter i Fornvännen och Futhark.</p></div><div class="omruna"><img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"><span>Provnummer<br>vitkirunor.se</span></div></div>
   <div class="omkredit">Omslag: U 489 vid Morby, Uppland – Gullaugs bro för dottern Gillaugs själ. Foto: Christine Jewell, CC BY-SA 2.0, via Wikimedia Commons.</div>
 </section>
-
 <section class="vanlig ledsida">
   <div class="ledgrid">
     <div class="ledare">
       <div class="slab">Ledare</div>
       <h2>Alla stenar på en gång</h2>
       <p class="ingress">Runforskningen har länge handlat om den enskilda stenen: en läsning, en ristare, ett ord. Det har gett oss ett rikt material. Men det har också gjort att vissa frågor aldrig ställts – frågor som bara går att svara på om man räknar alla stenar på en gång.</p>
-      <p class="forsta">Runmått är Vitkis tidskrift för just de frågorna. Vi mäter hela korpusen – drygt 2 300 svenska runstenar – mot jordarter, strandlinjer, ortnamn, gravfält och vägar, och vi prövar varje mönster mot slumpen innan vi kallar det ett fynd. Analysplanen låses innan vi räknar, och när ett resultat inte håller säger vi det.</p>
-      <p>I det här numret möter du döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som fortfarande bärs av svenskar i dag. Bakom varje artikel ligger tusentals stenar – men varje artikel börjar med en.</p>
-      <p>Tidskriften är skriven för den som är nyfiken men har ont om tid. Varje artikel kan läsas på trettio sekunder, på fem minuter eller på djupet. Siffrorna förklaras i ord, och alla data finns öppet på vitkirunor.se.</p>
+      <p class=forsta>Korpus är Vitkis tidskrift för just de frågorna. Vi mäter hela korpusen – drygt 2 300 svenska runstenar – mot jordarter, strandlinjer, ortnamn, gravfält och vägar, och vi prövar varje mönster mot slumpen innan vi kallar det ett fynd. Analysplanen låses innan vi räknar, och när ett resultat inte håller säger vi det.</p><p>I det här numret möter du döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som fortfarande bärs av svenskar i dag. Bakom varje artikel ligger tusentals stenar – men varje artikel börjar med en.</p><p>Tidskriften är skriven för den som är nyfiken men har ont om tid. Varje artikel kan läsas på trettio sekunder, på fem minuter eller på djupet. Siffrorna förklaras i ord, och alla data finns öppet på vitkirunor.se.</p>
       <p class="sign">Viktor Kvant<br><span>Redaktör</span></p>
     </div>
-    <div class="innehallsspalt">
-      <div class="slab">I detta nummer</div>
-      <ol class="innehall"><li><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/U29%2C_Hillersjoh%C3%A4llen.jpg" alt=""><div><span class="ttema">Människorna</span><span class="ttitle">Döttrarna som runstenarna glömde</span><span class="tdeck">Så många stenar är resta efter en dotter för varje sten efter en son.</span></div><span class="tsida">3</span></li><li><img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Vg_61%2C_H%C3%A4rlingstorp.JPG" alt=""><div><span class="ttema">Resorna</span><span class="ttitle">Färderna var de ungas</span><span class="tdeck">Så mycket oftare dog söner och bröder utanför Norden än fäder och makar.</span></div><span class="tsida">7</span></li><li><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Lorenz_Fr%C3%B8lich_-_%C3%86sir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg" alt=""><div><span class="ttema">Språket</span><span class="ttitle">Tor föll, hjälten blev dräng – vilka vikinganamn lever kvar?</span><span class="tdeck">Så stor del av namnen på runstenarna bärs fortfarande av svenskar i dag.</span></div><span class="tsida">10</span></li>
-        <li class="kort"><div><span class="ttema">Verkstaden</span><span class="ttitle">Hundra års runforskning – lästa på en gång</span></div><span class="tsida"></span></li>
-        <li class="kort"><div><span class="ttema">Metodhörnan</span><span class="ttitle">Vad betyder p = 0,003?</span></div><span class="tsida"></span></li>
-      </ol>
-    </div>
+    <div class="innehallsspalt"><div class="slab">I detta nummer</div><ol class="innehall"><li><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/U29%2C_Hillersjoh%C3%A4llen.jpg" alt=""><div><span class="ttema">Människorna</span><span class="ttitle">Döttrarna som runstenarna glömde</span><span class="tdeck">Så många stenar är resta efter en dotter för varje sten efter en son.</span></div><span class="tsida">3</span></li><li><img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Vg_61%2C_H%C3%A4rlingstorp.JPG" alt=""><div><span class="ttema">Resorna</span><span class="ttitle">Färderna var de ungas</span><span class="tdeck">Så mycket oftare dog söner och bröder utanför Norden än fäder och makar.</span></div><span class="tsida">7</span></li><li><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Lorenz_Fr%C3%B8lich_-_%C3%86sir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg" alt=""><div><span class="ttema">Språket</span><span class="ttitle">Tor föll, hjälten blev dräng – vilka vikinganamn lever kvar?</span><span class="tdeck">Så stor del av namnen på runstenarna bärs fortfarande av svenskar i dag.</span></div><span class="tsida">10</span></li><li class="kort"><div><span class="ttema">Verkstaden</span><span class="ttitle">Hundra års runforskning – lästa på en gång</span></div><span class="tsida"></span></li><li class="kort"><div><span class="ttema">Metodhörnan</span><span class="ttitle">Vad betyder p = 0,003?</span></div><span class="tsida"></span></li></ol></div>
   </div>
-  <div class="lasband">
-    <div><b>30 sek</b><span>Rubriken, <i>Siffran</i> och <i>På 30 sekunder</i> ger fyndet och hur säkert det är.</span></div>
-    <div><b>5 min</b><span>Artikeln: hur vi kom fram till det, med diagram i procent och stenarna som exempel.</span></div>
-    <div><b>På djupet</b><span><i>Så säkra är vi</i>, källorna och öppna data på vitkirunor.se.</span></div>
-  </div>
+  <div class="lasband"><div><b>30 sek</b><span>Rubriken, <i>Siffran</i> och <i>På 30 sekunder</i> ger fyndet och hur säkert det är.</span></div><div><b>5 min</b><span>Artikeln: hur vi kom fram till det, med diagram i procent och stenarna som exempel.</span></div><div><b>På djupet</b><span><i>Så säkra är vi</i>, källorna och öppna data på vitkirunor.se.</span></div></div>
 </section>
-
 
 <section class="opener">
   <figure class="hero"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/U29%2C_Hillersjoh%C3%A4llen.jpg" alt=""><figcaption><b>U 29, Hillersjöhällen i Uppland:</b> en släkts historia i en enda ristning, där bara en dotter, Inga, överlevde. Foto: Bengt A. Lundberg, <a href="https://creativecommons.org/licenses/by/2.5/se/deed.en">CC BY 2.5 se</a>, via <a href="https://commons.wikimedia.org/wiki/File:U29,_Hillersjoh%C3%A4llen.jpg">Wikimedia Commons</a>.</figcaption></figure>
@@ -224,8 +261,8 @@ blockquote.pull { hyphens: none; }
   </div>
 </section>
 <section class="brodtext b1">
-  <div class="text"><p class=runcitat><em>Gullaug lät göra bron för Gillaugs, sin dotters, själ, och henne hade Ulv till hustru. Öpir ristade.</em></p>
-<p class="forsta">Så står det på en runsten vid Morby i Lagga socken i Uppland. Gillaug var vuxen och gift när hon dog, och det var hennes mor som byggde bron efter henne. Det är en av mycket få runstenar som minns en dotter. De flesta döttrar på vikingatiden fick aldrig någon sten, och de flesta nämns inte ens på stenen efter sin far. Den här artikeln handlar om dem – om varför de är så få, och om vad de få stenarna efter dem har gemensamt.</p>
+  <div class="text"><p class="runcitat"><em>Gullaug lät göra bron för Gillaugs, sin dotters, själ, och henne hade Ulv till hustru. Öpir ristade.</em></p>
+<p class=forsta>Så står det på en runsten vid Morby i Lagga socken i Uppland. Gillaug var vuxen och gift när hon dog, och det var hennes mor som byggde bron efter henne. Det är en av mycket få runstenar som minns en dotter. De flesta döttrar på vikingatiden fick aldrig någon sten, och de flesta nämns inte ens på stenen efter sin far. Den här artikeln handlar om dem – om varför de är så få, och om vad de få stenarna efter dem har gemensamt.</p>
 <figure class="img"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/U_489%2C_Morby.jpg/1280px-U_489%2C_Morby.jpg" alt="Runstenen U 489"><figcaption><b>U 489 vid Morby i Lagga socken, Uppland:</b> Gullaugs bro för dottern Gillaugs själ, ristad av Öpir. Foto: Christine Jewell from Canada, <a href="https://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:U_489,_Morby.jpg">Wikimedia Commons</a>.</figcaption></figure>
 <h3>Döttrarna som saknas</h3>
 <p>Vi gick för hand igenom alla vikingatida svenska runinskrifter där Rundatas översättning talar om en dotter eller en mö – ett femtiotal. Arton av dem är minnesinskrifter efter en dotter. Fjorton står på runstenar, och det är dem vi räknar med. De andra fyra är ristade i en berghäll (U 311), på ett jordfast block (Sö 331) och på gravhällar (Ög 239, Sm 94). Efter en son är 268 runstenar resta.</p>
@@ -301,8 +338,8 @@ blockquote.pull { hyphens: none; }
   </div>
 </section>
 <section class="brodtext b2">
-  <div class="text"><p class=runcitat><em>Tola satti stæin þ[annsi æft]iR GæiR, sun sinn, harða goðan dræng. Sa varð dauðr a vestrvegum i vikingu.</em></p>
-<p class="forsta">Tola satte denna sten efter Geir, sin son, en mycket god <em>drengr</em>. Han dog i västerled, i viking.</p>
+  <div class="text"><p class="runcitat"><em>Tola satti stæin þ[annsi æft]iR GæiR, sun sinn, harða goðan dræng. Sa varð dauðr a vestrvegum i vikingu.</em></p>
+<p class=forsta>Tola satte denna sten efter Geir, sin son, en mycket god <em>drengr</em>. Han dog i västerled, i viking.</p>
 <p>På stenarna efter män som dog i öster och väster står ofta en mor eller en far, sällan en änka: av 69 sådana stenar är bara 4 resta efter en make. Tola i Härlingstorp i Västergötland (Vg 61) är en av dem. Hennes son for västerut och kom inte tillbaka. Vi ville veta om hon är ett undantag eller en regel: var det de unga som for, och de unga som inte kom hem?</p>
 <h3>Vem dog borta?</h3>
 <p>En runsten säger nästan alltid vem som reste den och vem den döde var för dem: <em>sun sinn</em>, sin son; <em>faður sinn</em>, sin far; <em>broður sinn</em>, sin bror. Vi läste de relationerna på alla läsbara svenska runstenar med en regel i Rundatas översättning och kontrollerade den mot vår egen läsning av hundra stenar. Sedan delade vi de döda männen i två grupper: söner och bröder – de som oftast var unga när de dog – och fäder och makar, som hade hunnit få familj.</p>
@@ -347,7 +384,7 @@ blockquote.pull { hyphens: none; }
   <p class="webb">Hela artikeln med alla bilder, interaktiva diagram och data: <b>vitkirunor.se/artiklar/fardena-var-de-ungas</b></p></div>
 </section>
 <section class="opener">
-  <figure class="hero"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Lorenz_Fr%C3%B8lich_-_%C3%86sir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg" alt=""><figcaption>Tor med hammaren, omgiven av slingrande ormdjur som på en runsten. Akvarell av Lorenz Frølich (1820–1908), Nationalmuseum (NMH 425/1925). Fri från upphovsrätt, via <a href="https://commons.wikimedia.org/wiki/File:Lorenz_Frølich_-_Æsir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg">Wikimedia Commons</a>.</figcaption></figure>
+  <figure class="hero staende"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Lorenz_Fr%C3%B8lich_-_%C3%86sir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg" alt=""><figcaption>Tor med hammaren, omgiven av slingrande ormdjur som på en runsten. Akvarell av Lorenz Frølich (1820–1908), Nationalmuseum (NMH 425/1925). Fri från upphovsrätt, via <a href="https://commons.wikimedia.org/wiki/File:Lorenz_Frølich_-_Æsir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg">Wikimedia Commons</a>.</figcaption></figure>
   <div class="opentext">
     <div class="flik">03 · Språket</div>
     <h2>Tor föll, hjälten blev dräng – vilka vikinganamn lever kvar?</h2>
@@ -360,7 +397,7 @@ blockquote.pull { hyphens: none; }
   </div>
 </section>
 <section class="brodtext b3">
-  <div class="text"><p class="forsta">Nästan tusen år efter att de sista runstenarna restes heter 3 540 svenskar Torsten, 11 220 Torbjörn och 40 300 Ingrid. Tor föll när kristendomen kom. Hans namn gjorde det inte.</p>
+  <div class="text"><p class=forsta>Nästan tusen år efter att de sista runstenarna restes heter 3 540 svenskar Torsten, 11 220 Torbjörn och 40 300 Ingrid. Tor föll när kristendomen kom. Hans namn gjorde det inte.</p>
 <p>Det är en av få saker som har överlevt från vikingatiden i vardagen: namnen. Vi ville veta hur många – och om det är slump vilka. Vår hypotes var att det som hörde makten till inte överlevde. Den gamla eliten, dess titlar, dess lag och dess gudar borde ha ersatts av kyrkans och kungamaktens ord, medan familjens vardag levde vidare. Halva hypotesen höll. Den andra halvan föll – åt ett håll vi inte väntade oss.</p>
 <h3>Vart femte namn lever</h3>
 <p>Runstenarna är fulla av namn: de som reste stenen, de döda, ibland ristaren. Vi tog alla personnamn som står på minst tre svenska runstenar – 391 namn – och översatte dem till nutida form: Þorsteinn blir Torsten, Ásbjôrn Esbjörn, Sveinn Sven. Sedan jämförde vi med Statistiska centralbyråns lista över förnamn som minst tio svenskar bär.</p>
@@ -424,41 +461,19 @@ blockquote.pull { hyphens: none; }
 </div><p class="slut">■</p>
   <p class="webb">Hela artikeln med alla bilder, interaktiva diagram och data: <b>vitkirunor.se/artiklar/tor-foll-hjalten-blev-drang</b></p></div>
 </section>
-
 <section class="vanlig verkstad">
   <div class="flik">04 · Verkstaden</div>
   <h2>Hundra års runforskning – lästa på en gång</h2>
   <p class="deck">Vi har läst varje text om runor och vikingatid i Fornvännen sedan 1906 och i Futhark sedan starten, och ställt samma fråga till alla: vad har den svenska runforskningen missat?</p>
-  <div class="tal">
-    <div><b>1 000+</b><span>texter lästa, 1906–2023</span></div>
-    <div><b>3 000+</b><span>påståenden som går att mäta mot data</span></div>
-    <div><b>1</b><span>fråga ställd till alla: vad har fältet missat?</span></div>
-  </div>
+  <div class="tal"><div><b>1 081</b><span>texter lästa, 1906–2023</span></div><div><b>3 794</b><span>påståenden som går att mäta mot data</span></div><div><b>1</b><span>fråga ställd till alla: vad har fältet missat?</span></div></div>
   <div class="tvaspalt">
     <div><h3>Det som återkommer</h3><p class="forsta">Samma blinda fläckar dyker upp i text efter text, oberoende av varandra. Stilgrupperna och språket daterar varandra, med få fasta punkter utanför. Placeringar som ”vid vägen” eller ”vid gravfältet” prövas sällan mot slumpvis valda platser i samma bygd. Och de stenar vi känner är de som överlevde plogen, kyrkbyggena och 1600-talets inventerare.</p></div>
-    <div><h3>Det vi gör nu</h3><p>Varje återkommande fråga blir en låst analysplan som prövas på hela korpusen. Resultaten kommer här i Runmått – också de som inte håller. Läsningen själv, med citat och källa för varje påstående, publiceras öppet så att andra kan granska den.</p></div>
+    <div><h3>Det vi gör nu</h3><p>Varje återkommande fråga blir en låst analysplan som prövas på hela korpusen. Resultaten kommer här i Korpus – också de som inte håller. Läsningen själv, med citat och källa för varje påstående, publiceras öppet så att andra kan granska den.</p></div>
   </div>
-  <div class="metod">
-    <div class="flik">05 · Metodhörnan</div>
-    <h3>Vad betyder p = 0,003?</h3>
-    <p>Det betyder: om det inte fanns något verkligt mönster alls, skulle en lika stor skillnad som den vi ser dyka upp av ren slump ungefär tre gånger på tusen försök. Det är ungefär lika sällsynt som att få krona åtta gånger i rad med ett mynt. Det bevisar inget ensamt – men det säger att slumpen är en dålig förklaring, och att mönstret är värt att ta på allvar.</p>
-  </div>
+  <div class="metod"><div class="flik">05 · Metodhörnan</div><h3>Vad betyder p = 0,003?</h3><p>Det betyder: om det inte fanns något verkligt mönster alls, skulle en lika stor skillnad som den vi ser dyka upp av ren slump ungefär tre gånger på tusen försök. Det är ungefär lika sällsynt som att få krona åtta gånger i rad med ett mynt. Det bevisar inget ensamt – men det säger att slumpen är en dålig förklaring, och att mönstret är värt att ta på allvar.</p></div>
 </section>
-
 <section class="vanlig baksida">
-  <div class="tvaspalt">
-    <div>
-      <div class="slab">Om Runmått</div>
-      <p>Runmått är en öppen tidskrift för digital och kvantitativ runforskning, utgiven av Vitki. Den samlar Vitkis artiklar, rapporter och metodnotiser i en form som går att läsa på en kaffepaus.</p>
-      <div class="slab">Om Vitki</div>
-      <p>Vitki är en öppen forskningsplattform för Nordens runinskrifter. Analyserna förregistreras, och kod, data och rapporter publiceras öppet på Zenodo.</p>
-    </div>
-    <div>
-      <div class="slab">Redaktion</div><p>Viktor Kvant, redaktör<br>vitkirunor.se/kontakt</p>
-      <div class="slab">Licens</div><p>Texterna får spridas fritt under CC BY 4.0. Bilder från Wikimedia Commons har egna licenser, angivna vid varje bild.</p>
-      <div class="slab">Data</div><p>Samnordisk runtextdatabas, Riksantikvarieämbetets Runor, SGU, ISOF och Kulturmiljöregistret. Bearbetning: Vitki.</p>
-    </div>
-  </div>
-  <div class="bakmast">Runmått <svg class="runor" viewBox="0 0 204 60" width="102" height="30"><g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(0,0)" d="M6 2V58M6 22L22 8M6 36L22 22"/><path transform="translate(34,0)" d="M6 58V2L22 18V58"/><path transform="translate(68,0)" d="M6 2V58M6 18L20 30L6 42"/><path transform="translate(102,0)" d="M14 2V58M4 18L24 34"/><path transform="translate(136,0)" d="M6 58V2L20 14L6 28L22 58"/><path transform="translate(170,0)" d="M6 58V2M6 24L22 8"/></g></svg><span>Nr 1 · 2026 · Provnummer · ISSN ansöks</span></div>
+  <div class="baktext"><div class="bakblock"><div class="slab">Om Korpus</div><p>Korpus är en öppen tidskrift för digital och kvantitativ runforskning, utgiven av Vitki. Den samlar Vitkis artiklar, rapporter och metodnotiser i en form som går att läsa på en kaffepaus. Den kommer ut på svenska och engelska.</p></div><div class="bakblock"><div class="slab">Om Vitki</div><p>Vitki är en öppen forskningsplattform för Nordens runinskrifter. Analyserna förregistreras, och kod, data och rapporter publiceras öppet på Zenodo.</p></div><div class="bakblock"><div class="slab">Redaktion</div><p>Viktor Kvant, redaktör<br>vitkirunor.se/kontakt</p></div><div class="bakblock"><div class="slab">Licens</div><p>Texterna får spridas fritt under CC BY 4.0. Bilder från Wikimedia Commons har egna licenser, angivna vid varje bild.</p></div><div class="bakblock"><div class="slab">Data</div><p>Samnordisk runtextdatabas, Riksantikvarieämbetets Runor, SGU, ISOF och Kulturmiljöregistret. Bearbetning: Vitki.</p></div></div>
+  <div class="bakmast">Korpus <img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"><span>Nr 1 · 2026 · Provnummer</span></div>
 </section>
 </body></html>
