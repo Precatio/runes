@@ -149,7 +149,7 @@ frågor som har dykt upp; det är gamla frågor som aldrig har prövats på hela
 | 64 % inom 500 m från vattnet 1050 | Mot äldre fornlämningar vid sin tids strand; strandlinjen ±1–3 m; stenens egen datering; sjösänkningar | Stenberger 1942, Calissendorff 1991, Lindqvist 1928, Edberg |
 | Stenar och gravfält vid lerans kant | Bortfall åt båda hållen (lera/sand, åsar); åsvägar; hävd och äng; flyttade gårdar; Malmers dos–respons (dyrare stenar på bättre jord) | Söderberg, Lovén, Myrdal 1982, Göransson, Malmer 1988, Arrhenius 1950 |
 | Gravfält 82 mot 55 % | Bara daterade och verifierade gravar; gravfältets ålder; KMR:s inventeringsår per län; boplatser i stället för gravar | Häggström 2002, Ambrosiani 1968, Holmqvist 1957 |
-| Texten vänder sig mot vägen | Bara vägar som fanns före 1100; återresta stenar bort; jämförelse inom län (vägarna inventerades efter 1943 års lag) | Skoglund & Lagerås 2002, 1941 års restaureringar, 1944_111 |
+| Texten vänder sig mot vägen | **Körd 2026-11-10:** håller inom län (49 %, p 0,0001) och utan flyttade/återresta (75 stenar, 45 %); faller mot troligen gamla vägar (40 stenar, 28 %, p 0,16) → ”vetter mot vägen som den går i dag”. `utdata/riktning/sjalvkontroll_resultat.md` | Skoglund & Lagerås 2002, 1941 års restaureringar, 1944_111 |
 | Kultnamn och bön; avstånd till kyrkor | Träkyrkor syns inte; stenkyrkor dendrodaterade till omkring 1190–1225 | Frödin 1932, 2016_097 |
 | Allt som bygger på ”1314 års sexårsgärd” | Kontrollera listan: för Strängnäs stift kan den vara 1279–82 | Gillingstam 1980 |
 | Alla regionala jämförelser | Hur Rundatas fält är fyllda per landskap och dokumentationsår; om 3D-skanningarna är representativa | fvn_050 |

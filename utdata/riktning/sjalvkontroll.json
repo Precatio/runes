@@ -1,0 +1,177 @@
+{
+ "plan": "analysplaner/2026-11-10-sjalvkontroll-riktning.md",
+ "info": {
+  "stenar": 214,
+  "med_vag": 120,
+  "med_textvag": 68,
+  "utan_lan": 4,
+  "lan": {
+   "Stockholm": 66,
+   "Uppsala": 48,
+   "Södermanland": 41,
+   "Östergötland": 21,
+   "Västra Götaland": 16,
+   "Jönköping": 8,
+   "Kalmar": 4,
+   "Örebro": 3,
+   "Västmanland": 2,
+   "Jämtland": 1
+  },
+  "flyttade": 91,
+  "flyttade_med_vag": 45,
+  "flyttregler": {
+   "r1_runor_original_false": 26,
+   "r2_runor_current": 22,
+   "r3_korpus": 0,
+   "r4_text": 66
+  },
+  "flyttregler_med_vag": {
+   "r1_runor_original_false": 10,
+   "r2_runor_current": 13,
+   "r3_korpus": 0,
+   "r4_text": 34
+  },
+  "saknas_i_korpus": 0,
+  "gamla_vagar": 6258,
+  "med_gammal_vag_500": 40,
+  "gammal_och_textvag_samma_sten": 11,
+  "S1_typer": {
+   "färdväg": 5411,
+   "färdvägssystem": 716,
+   "bro": 131
+  }
+ },
+ "prov": {
+  "S0": {
+   "n": 120,
+   "medel_cos": 0.35175892876365966,
+   "vantat": 0.012800690838324903,
+   "andel_inom_45": 0.48333333333333334,
+   "p": 0.0001,
+   "haller": true
+  },
+  "S1": {
+   "n": 40,
+   "medel_cos": 0.0653371253027758,
+   "vantat": -0.032579764731675814,
+   "andel_inom_45": 0.275,
+   "p": 0.1587,
+   "haller": false
+  },
+  "S2": {
+   "n": 118,
+   "medel_cos": 0.3637133748544551,
+   "vantat": 0.01692412818989938,
+   "andel_inom_45": 0.4915254237288136,
+   "p": 0.0001,
+   "haller": true
+  },
+  "S3": {
+   "n": 75,
+   "medel_cos": 0.34170479897883566,
+   "vantat": 0.00263816404389908,
+   "andel_inom_45": 0.4533333333333333,
+   "p": 0.0001,
+   "haller": true
+  }
+ },
+ "beskrivande": {
+  "S1_S3_inom_lan": {
+   "n": 26,
+   "medel_cos": 0.1035277208934377,
+   "vantat": 0.046205118976266744,
+   "andel_inom_45": 0.2692307692307692,
+   "p": 0.2981
+  },
+  "S1_300m": {
+   "n": 26,
+   "medel_cos": 0.115050238060219,
+   "vantat": 0.012811995433327356,
+   "andel_inom_45": 0.3076923076923077,
+   "p": 0.2116
+  },
+  "S1_1km": {
+   "n": 65,
+   "medel_cos": -0.0016360019306172677,
+   "vantat": -0.00045616739165731156,
+   "andel_inom_45": 0.2153846153846154,
+   "p": 0.5067
+  },
+  "S1_utan_runstensvagar": {
+   "n": 32,
+   "medel_cos": 0.046845167332833657,
+   "vantat": -0.044631167288348386,
+   "andel_inom_45": 0.25,
+   "p": 0.1842
+  },
+  "S1_halvag_vagbank": {
+   "n": 39,
+   "medel_cos": 0.09099196775307475,
+   "vantat": -0.035136246513798555,
+   "andel_inom_45": 0.28205128205128205,
+   "p": 0.0915
+  },
+  "halvor": {
+   "A": {
+    "S0": {
+     "n": 69,
+     "medel_cos": 0.42949373352658654,
+     "vantat": 0.03852835853447891,
+     "andel_inom_45": 0.5362318840579711,
+     "p": 0.0001
+    },
+    "S1": {
+     "n": 20,
+     "medel_cos": 0.17522488540282363,
+     "vantat": 0.07372235165041204,
+     "andel_inom_45": 0.3,
+     "p": 0.2221
+    },
+    "S2": {
+     "n": 69,
+     "medel_cos": 0.42949373352658654,
+     "vantat": 0.03907706477690013,
+     "andel_inom_45": 0.5362318840579711,
+     "p": 0.0001
+    },
+    "S3": {
+     "n": 41,
+     "medel_cos": 0.3482212497561888,
+     "vantat": 0.03249833762751262,
+     "andel_inom_45": 0.4146341463414634,
+     "p": 0.001
+    }
+   },
+   "B": {
+    "S0": {
+     "n": 51,
+     "medel_cos": 0.24658831055499383,
+     "vantat": 0.05180333964107677,
+     "andel_inom_45": 0.4117647058823529,
+     "p": 0.0217
+    },
+    "S1": {
+     "n": 20,
+     "medel_cos": -0.044550634797272046,
+     "vantat": -0.06311603745675878,
+     "andel_inom_45": 0.25,
+     "p": 0.4421
+    },
+    "S2": {
+     "n": 49,
+     "medel_cos": 0.27108389019369866,
+     "vantat": 0.045890554121239664,
+     "andel_inom_45": 0.42857142857142855,
+     "p": 0.0107
+    },
+    "S3": {
+     "n": 34,
+     "medel_cos": 0.33384672598261567,
+     "vantat": -0.004661547491457273,
+     "andel_inom_45": 0.5,
+     "p": 0.0028
+    }
+   }
+  }
+ }
+}
