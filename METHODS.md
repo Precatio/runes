@@ -566,6 +566,7 @@ motsäger, med belägg, nyhet och relevans):
   föremål visas i fliken Luckor i texten med egna tal). Belägget är den kalibrerade sannolikheten. Raderna är
   kandidater att granska mot foto eller skanning, inte färdiga fynd, och får därför bedömningen "Kandidat att granska mot
   foto eller skanning" i stället för tumregelns etiketter.
+* **Runor 2020:s dateringsgräns är inte en oberoende datering (2026-11-10).** Fältet tpq (*terminus post quem*) i vår skörd av Runor 2020 (`data/raa/runor_2020.json`) är för de flesta svenska vikingatida runstenar schablonvärdet 725, och de andra vanliga värdena (980, 1010) är stildateringar. Fältet kan därför inte användas för att pröva stilgruppernas datering – det vore cirkulärt. Många texter i litteraturgenomgången föreslog just det; dateringsprövningen bygger i stället på historiskt daterade stenar (Ingvarståget, Knut, danagäld, kända personer) och språkdrag som oberoende klocka (`PUBLICERINGSPLAN.md`, februari 2027).
 * **Runor 2020:** stenar som Riksantikvarieämbetets nyare utgåva anger som inte stående på ursprunglig plats men som
   appens flyttregel (`src/r_bridge.is_moved`; Rundata har ingen flyttflagga, regeln läser Rundatas plats och placering)
   räknar som stående på plats: 154 runstenar, alla *motsäger*, med bedömningen "Uppgift i nyare källa – kontrollera

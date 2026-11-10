@@ -86,7 +86,7 @@ Varje nummer byggs med `utdata/tidskrift/bygg_tidskrift.py` (sv + en) och läggs
 | D9 | Isotoper och aDNA | Publicerade tabeller (Birka, Sigtuna) | Rörlighet (valfritt) | 2028 | Medel |
 | D10 | Runor 2020:s fält | Har (runor_2020.json). Kontrollera korstypologi, profilstil, fyndomständigheter, litteraturhänvisningar och första dokumentation; tpq är oftast schablon | A, C, E | dec 2026 | Litet |
 | D11 | Landskapslagarnas priser | Utgåvor av landskapslagarna (öre för sten och arbete) | Vad kostade en runsten (sep) | aug 2027 | Litet |
-| D12 | 1314 års sexårsgärd | SDHK 2593: kontrollera om Strängnäs stifts lista egentligen är 1279–82 (Gillingstam 1980) | Allt som använder 1314 | dec 2026 | Litet |
+| D12 | 1314 års sexårsgärd | **Kontrollerad 10 nov 2026:** SDHK 2593 är daterad 1314 i själva brevet och gäller Uppsala ärkestift (Tiunda, Attunda …). Ljungs omdatering till 1279–82 gäller Strängnäs stifts lista, som vi inte använder. Inget publicerat påverkas. | – | klar | – |
 
 ## 4. Utkast som väntar
 
