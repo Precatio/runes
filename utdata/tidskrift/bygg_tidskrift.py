@@ -302,7 +302,7 @@ def bygg(L, namn, arts, sidor):
 </section>
 <section class="brodtext b{n}">
   <div class="text">{a["body"]}<p class="slut">■</p>
-  <p class="webb">{L["webb"]} <b>vitkirunor.se/artiklar/{a["slug"]}</b></p></div>
+  <p class="webb">{L["webb"]} <b>vitkirunor.se{"/en" if L["lang"] == "en" else ""}/artiklar/{a["slug"]}</b></p></div>
 </section>""")
     led = "".join(f'<p{" class=forsta" if i == 1 else ""}>{t.format(namn=namn)}</p>' for i, t in enumerate(L["ledtext"]) if i)
     bak = "".join(f'<div class="bakblock"><div class="slab">{h.format(namn=namn)}</div><p>{t.format(namn=namn)}</p></div>' for h, t in L["bak"])

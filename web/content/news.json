@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "korpus-nr1",
+   "date": "2026-11-10",
+   "status": "nytt",
+   "title": "Korpus nr 1 – Vitkis tidskrift, på svenska och engelska",
+   "text": "Korpus – Ristat & räknat är Vitkis nya tidskrift för digital runforskning, skriven för den som är nyfiken men har ont om tid: varje artikel går att läsa på trettio sekunder, på fem minuter eller på djupet. Första numret har tre artiklar – döttrarna som runstenarna glömde, de unga som dog på färderna och vikinganamnen som lever kvar – och en notis om genomgången av hundra års runforskning i Fornvännen och Futhark. Läs det som PDF på svenska (vitkirunor.se/korpus/korpus-nr1-sv.pdf) eller engelska (vitkirunor.se/korpus/korpus-nr1-en.pdf)."
+  },
+  {
    "id": "rapport-ristarforslag-v4",
    "date": "2026-11-08",
    "status": "nytt",
