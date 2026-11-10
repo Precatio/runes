@@ -1,0 +1,126 @@
+/* Runmått – provnummer. Ljust, rost som enda accentfärg (Vitkis regel: ingen lila), Charter + Avenir Next. */
+:root {
+  --ink: #1f2429; --mute: #5f6a73; --line: #d9dde0; --paper: #ffffff;
+  --rust: #b7410e; --rust-soft: #f7ebe3; --stone: #f2f3f1; --stone2: #e7e9e6;
+  --serif: "Charter", "Iowan Old Style", Georgia, serif;
+  --sans: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+}
+@page { size: A4; margin: 18mm 17mm 20mm 17mm;
+  @top-left { content: "Runmått · Nr 1 · 2026"; font: 600 7.5pt var(--sans); color: #8a949b; letter-spacing: .08em; text-transform: uppercase; }
+  @top-right { content: "Vitki"; font: 600 7.5pt var(--sans); color: #b7410e; letter-spacing: .08em; text-transform: uppercase; }
+  @bottom-center { content: counter(page); font: 600 8pt var(--sans); color: #8a949b; }
+}
+@page omslag { margin: 0; @top-left { content: none } @top-right { content: none } @bottom-center { content: none } }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; color: var(--ink); background: var(--paper); font: 10pt/1.5 var(--serif); hyphens: auto; }
+a { color: inherit; text-decoration: none; }
+.slab { font: 700 7.5pt var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--rust); margin-bottom: 2.5mm; }
+.kicker { display: flex; justify-content: space-between; font: 600 8pt var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); border-top: 2.2pt solid var(--rust); padding-top: 2mm; }
+.kicker span:first-child { color: var(--rust); }
+.tvaspalt { display: grid; grid-template-columns: 1fr 1fr; gap: 9mm; }
+
+/* Omslag */
+.omslag { page: omslag; height: 297mm; padding: 20mm 18mm 16mm; display: flex; flex-direction: column; break-after: page;
+  background: linear-gradient(180deg, #fbf8f5 0%, #ffffff 55%); }
+.mastrad { display: flex; justify-content: space-between; font: 700 8pt var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); border-bottom: .6pt solid var(--line); padding-bottom: 3mm; }
+.mastrad span:first-child { color: var(--rust); }
+.omslag h1 { font: 700 76pt/1 var(--serif); letter-spacing: -.02em; margin: 9mm 0 0; color: var(--ink); }
+.undertitel { font: 500 15pt var(--sans); color: var(--mute); margin-top: 3mm; letter-spacing: .01em; }
+.omslagsrunor { color: var(--rust); margin: 12mm 0 8mm; opacity: .9; }
+.huvudpuff { display: grid; grid-template-columns: 78mm 1fr; gap: 8mm; align-items: end; border-top: .6pt solid var(--line); padding-top: 8mm; }
+.pnum { font: 700 52pt/1 var(--sans); color: var(--rust); letter-spacing: -.02em; }
+.pnum span { font-size: 20pt; color: var(--mute); font-weight: 500; }
+.ptema { font: 700 7.5pt var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--rust); margin-bottom: 1.5mm; }
+.ptitel { font: 700 19pt/1.15 var(--serif); }
+.huvudpuff p, .puffar p { font: 400 10pt/1.45 var(--sans); color: var(--mute); margin: 2mm 0 0; }
+.puffar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7mm; margin-top: auto; border-top: .6pt solid var(--line); padding-top: 7mm; }
+.puffar .ptitel { font-size: 13pt; }
+.omslagsfot { margin-top: 10mm; font: 600 8pt var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); display: flex; justify-content: space-between; }
+
+/* Ledarsida */
+.sida { break-after: page; }
+.lh { font: 700 24pt/1.1 var(--serif); margin: 0 0 4mm; }
+.ingress { font-size: 12pt; line-height: 1.45; }
+.sign { font-style: italic; margin-top: 6mm; }
+.sign span { font: 600 8pt var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); font-style: normal; }
+.lasdjup { list-style: none; padding: 0; margin: 0 0 9mm; counter-reset: d; }
+.lasdjup li { display: grid; grid-template-columns: 9mm 1fr; column-gap: 3mm; padding: 3mm 0; border-bottom: .6pt solid var(--line); counter-increment: d; }
+.lasdjup li::before { content: counter(d); grid-row: span 2; font: 700 20pt/1 var(--sans); color: var(--rust); }
+.lasdjup b { font: 700 11pt var(--sans); }
+.lasdjup span { font: 400 9.5pt/1.45 var(--sans); color: var(--mute); }
+.innehall { list-style: none; padding: 0; margin: 0; }
+.innehall li { display: grid; grid-template-columns: 9mm 1fr auto; column-gap: 3mm; padding: 3mm 0; border-bottom: .6pt solid var(--line); }
+.tnum { font: 700 10pt var(--sans); color: var(--rust); grid-row: span 2; }
+.ttema { font: 700 7pt var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.ttitle { font: 700 11pt/1.25 var(--serif); grid-column: 2; }
+.tmin { font: 600 8pt var(--sans); color: var(--mute); grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+.innehallsrubrik { margin-top: 2mm; }
+
+/* Artikel */
+.artikel { break-before: page; }
+.opener h2 { font: 700 27pt/1.08 var(--serif); letter-spacing: -.01em; margin: 6mm 0 4mm; }
+.deck { font: 400 12pt/1.45 var(--serif); color: #3a4249; margin: 0 0 3mm; }
+.byline { font: 600 8.5pt var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); margin: 0 0 6mm; }
+.snabb { display: grid; grid-template-columns: 52mm 1fr; gap: 0; margin: 0 0 7mm; break-inside: avoid; }
+.siffran { background: var(--rust); color: #fff; padding: 5mm; }
+.siffran .slab { color: #ffe3d4; }
+.snum { font: 700 30pt/1 var(--sans); letter-spacing: -.01em; margin: 1mm 0 3mm; }
+.siffran p { font: 500 9pt/1.4 var(--sans); margin: 0; }
+.trettio { background: var(--rust-soft); padding: 5mm 6mm; }
+.trettio ul { margin: 0; padding-left: 4mm; font: 400 9.2pt/1.45 var(--sans); }
+.trettio li { margin-bottom: 1.6mm; }
+.trettio li::marker { color: var(--rust); }
+.text { column-count: 2; column-gap: 8mm; column-fill: auto; }
+.text p { margin: 0 0 2.6mm; text-align: justify; text-justify: inter-word; orphans: 3; widows: 3; }
+.text h3 { font: 700 10.5pt/1.25 var(--sans); margin: 5mm 0 2mm; break-after: avoid; color: var(--ink); }
+.text h3::before { content: ""; display: block; width: 8mm; border-top: 1.6pt solid var(--rust); margin-bottom: 2mm; }
+.text ul { padding-left: 4.5mm; margin: 0 0 3mm; }
+.text li { margin-bottom: 1.2mm; }
+.text li::marker { color: var(--rust); }
+blockquote { margin: 3mm 0; padding: 1mm 0 1mm 4mm; border-left: 2pt solid var(--rust); font-style: italic; color: #3a4249; }
+figure.img { margin: 1mm 0 4mm; break-inside: avoid; }
+figure.img img { width: 100%; max-height: 82mm; object-fit: cover; display: block; border-radius: 1.2mm; background: var(--stone); }
+figure.img figcaption { font: 400 7.3pt/1.4 var(--sans); color: var(--mute); margin-top: 1.5mm; }
+.box { background: var(--stone); border-top: 2.2pt solid var(--ink); padding: 3.5mm 4mm; margin: 2mm 0 4mm; break-inside: avoid; font: 400 8.8pt/1.45 var(--sans); }
+.box p { text-align: left !important; }
+.boxh { font: 700 8pt var(--sans); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2mm; }
+.chart { column-span: all; margin: 2mm 0 5mm; padding: 4mm 5mm; border: .6pt solid var(--line); border-radius: 1.2mm; break-inside: avoid; background: #fff; }
+.ctitle { font: 700 9.5pt var(--sans); margin-bottom: 3mm; }
+.cgroup { font: 700 7.5pt var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin: 2.5mm 0 1mm; }
+.crow { display: grid; grid-template-columns: 38mm 1fr 14mm 46mm; align-items: center; column-gap: 3mm; font: 500 8.5pt var(--sans); padding: 1mm 0; }
+.cbar { height: 4.2mm; background: var(--stone); border-radius: .8mm; overflow: hidden; }
+.cbar span { display: block; height: 100%; background: #9aa3a9; }
+.crow.hi .cbar span { background: var(--rust); }
+.crow.hi .clab, .crow.hi .cval { font-weight: 700; color: var(--rust); }
+.cval { text-align: right; font-weight: 700; }
+.cnote { color: var(--mute); font-size: 7.8pt; }
+.csrc { font: 400 7pt/1.4 var(--sans); color: var(--mute); margin-top: 2.5mm; }
+.sources { font: 400 7.6pt/1.4 var(--sans); color: var(--mute); }
+.sources p { text-align: left !important; margin-bottom: 1.5mm; }
+.sources h3 { font-size: 8.5pt; color: var(--mute); }
+.webb { column-span: all; margin-top: 5mm; padding: 3mm 4mm; background: var(--stone); font: 400 8.5pt var(--sans); border-left: 2.2pt solid var(--rust); break-inside: avoid; }
+
+/* Verkstaden + metod */
+.verkstad { break-before: page; }
+.verkstad h2 { font: 700 24pt/1.1 var(--serif); margin: 6mm 0 3mm; }
+.verkstad h3 { font: 700 11pt var(--sans); margin: 0 0 2mm; }
+.tal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin: 6mm 0 8mm; }
+.tal div { border-top: 2.2pt solid var(--rust); padding-top: 3mm; }
+.tal b { display: block; font: 700 26pt/1 var(--sans); color: var(--rust); }
+.tal span { font: 500 9pt/1.4 var(--sans); color: var(--mute); }
+.metod { margin-top: 10mm; background: var(--rust-soft); padding: 5mm 6mm; }
+.metod .kicker { border-top: none; padding-top: 0; margin-bottom: 2mm; }
+.metod h3 { font: 700 15pt var(--serif); margin: 0 0 2mm; }
+
+/* Baksida */
+.baksida { break-before: page; padding-top: 10mm; display: flex; flex-direction: column; min-height: 255mm; }
+.baksida p { font: 400 9.5pt/1.5 var(--sans); color: #3a4249; margin: 0 0 6mm; }
+.bakmast { margin-top: auto; border-top: .6pt solid var(--line); padding-top: 6mm; display: flex; align-items: center; gap: 6mm; font: 700 26pt var(--serif); color: var(--ink); }
+.bakmast svg { color: var(--rust); }
+.bakmast span { margin-left: auto; font: 600 8pt var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.omslagsbild { margin: 8mm 0 0; }
+.omslagsbild img { width: 100%; height: 72mm; object-fit: cover; object-position: center 40%; display: block; border-radius: 1.5mm; }
+.omslagsbild figcaption { font: 400 7pt/1.4 var(--sans); color: var(--mute); margin-top: 1.5mm; }
+.puffar { margin-top: 8mm; }
+.omslagsrunor { margin: 9mm 0 7mm; }
