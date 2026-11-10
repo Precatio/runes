@@ -154,9 +154,9 @@ Namnen ur myterna går åt andra hållet. Tillsammans växte de med {RISE} proce
 
 {pic(ASK, 'Oden, Lodur och Höne skapar Ask och Embla', 'Oden, Lodur och Höne skapar de första människorna, Ask och Embla, ur två trästycken på stranden. Teckning av Lorenz Frølich (1820–1908).', 'sv')}
 
-Det märkliga är att de här namnen nästan inte fanns som människonamn förut. På de svenska runstenarna heter ingen person Freyja, Óðinn eller Þórr. Gudarna finns där ändå, i namnen: Þorsteinn, Ásbjôrn, Ingiríðr. Vikingarna bar en gud i namnet men gav inte barnet gudens eget namn. Det närmaste vi kommer är en sten vid U 440 i Uppland, där namnet kan läsas Þórðr, Þórr eller Þórn – ingen vet säkert.
+Det märkliga är att de här namnen nästan inte fanns som människonamn förut. På de svenska runstenarna heter ingen person Freyja, Óðinn eller Þórr. Gudarna finns där ändå, i namnen: Þorsteinn, Ásbjôrn, Ingiríðr. Också Oden. Vid Hassmyra i Västmanland lät Holmgautr resa en sten efter sin hustru Óðindísa, och skrev att det aldrig skulle komma en bättre husfru till gården (Vs 24). Vikingarna bar en gud i namnet men gav inte barnet gudens eget namn. Judith Jesch har gått igenom de vikingatida runinskrifterna: utom på en skalle från Ribe, där det är guden själv som nämns, står Óðinn aldrig ensamt – bara som en del av ett namn, som Óðindísa eller det danska Óðinkárr (Futhark 9–10, 2020). Det närmaste vi kommer är en sten vid U 440 i Uppland, där namnet kan läsas Þórðr, Þórr eller Þórn – ingen vet säkert.
 
-I dag är det tvärtom. Svenskar heter Tor ({sp(N('Tor', 2020))}), Freja ({sp(N('Freja', 2020))}), Loke ({sp(N('Loke', 2020))}), Frej ({N('Frej', 2020)}), Tyr ({N('Tyr', 2020)}) och Balder ({N('Balder', 2020)}). Varför vikingarna inte gjorde så vet vi inte. Kanske var gudens namn för heligt för en människa, kanske var det bara inte sed. Men skillnaden är tydlig: förr bar man guden som en del av sitt namn. Nu bär man guden hela.
+I dag är det tvärtom. Svenskar heter Tor ({sp(N('Tor', 2020))}), Freja ({sp(N('Freja', 2020))}), Loke ({sp(N('Loke', 2020))}), Frej ({N('Frej', 2020)}), Tyr ({N('Tyr', 2020)}) och Balder ({N('Balder', 2020)}). Varför vikingarna inte gjorde så vet vi inte. Kanske var gudens namn för heligt för en människa, kanske var det bara inte sed. Samma tystnad finns några hundra år tidigare, på guldbrakteaterna med sina runor och gudabilder: där står inte ett enda nordiskt gudanamn. Heinrich Beck har förklarat det med tabu – man skrev ett binamn i stället för guden. Henrik Williams kallar iakttagelsen störande och påpekar att förklaringen är svår att pröva (Futhark 3, 2013). Men skillnaden är tydlig: förr bar man guden som en del av sitt namn. Nu bär man guden hela.
 
 ## Ur böckerna, inte ur stenarna
 
@@ -178,9 +178,9 @@ Här tänker vi högt. Det här avsnittet är vår tolkning och inte en prövnin
 
 Nästan allt från vikingatiden har bytts ut. Maktens titlar försvann – jarlen blev hertig, tegnen och huskarlen finns inte längre. Kulten byttes mot kyrkan. Lagen skrevs om. Men vart femte namn på runstenarna lever, och gudanamnen klarade sig dubbelt så bra som de andra. Varför?
 
-**Ett namn påstår ingenting.** En titel säger vem som har makt. Ett ord för kult säger vad man tror på. När makten och tron byttes, måste de orden bort. Ett namn säger bara vem någon är. Det hotar ingen, och därför fanns det ingen anledning att ta bort det. Kyrkan döpte barnen – och i de medeltida breven heter de fortfarande Torsten.
+**Ett namn påstår ingenting.** En titel säger vem som har makt. Ett ord för kult säger vad man tror på. När makten och tron byttes, måste de orden bort. Ett namn säger bara vem någon är. Det hotar sällan någon, och därför fanns det sällan anledning att ta bort det. Helt utan förluster gick det inte. Elisabeth Svärdström noterade att namn med hedniska förleder som Ás- och Þór- blev ovanligare med kristendomen, och att en del försvann helt (Fornvännen 1969). Torhild, vars hedniska förled var ”uppenbar för envar”, försvann snabbt ur namnförrådet (Svärdström och Gustavson 1972). Men Tora finns ett femtontal gånger i det medeltida svenska namnmaterialet (Svärdström och Gustavson 1975). Kyrkan döpte barnen – och i de medeltida breven heter de fortfarande Torsten.
 
-**Ett namn tappar sin betydelse.** Ingen som heter Torsten hör längre att det betyder Tors sten. Ingrid är inte längre Ing den vackra. Ett namn blir ett ljud som pekar på en människa, och det är just därför det kan överleva en ny tro. Betydelsen nöts bort, men ljudet går vidare.
+**Ett namn tappar sin betydelse.** Ingen som heter Torsten i dag hör att det betyder Tors sten, och Ingrid är inte längre Ing den vackra. På medeltiden hördes det ännu – det var därför Torhild försvann. Men med tiden blir ett namn ett ljud som pekar på en människa, och det är just därför det kan överleva en ny tro. Betydelsen nöts bort, men ljudet går vidare.
 
 **Ett namn är ett arv.** Runstenarna själva är byggda för att hålla namn vid liv. Vid Nöbbele i Småland står det: *Þy mun goðs manns um gætit verða, meðan stæinn lifiR ok stafiR runa.* – därför ska den gode mannen minnas, så länge stenen lever och runornas stavar. Stenen skulle bära namnet. Men det som bar namnen längst var familjerna, som gav barnen namn efter de döda. Av de runstensnamn som också finns i de medeltida breven lever tre av fyra i dag. Namnet gick från generation till generation, långt efter att stenen slutat läsas.
 
@@ -209,6 +209,11 @@ Två sätt att leva vidare, alltså. Stenarnas namn levde av arv. Myternas namn 
 - Statistiska centralbyrån, Tilltalsnamn med minst 10 bärare bland folkbokförda 31 december (BE0001TNamn10), 1999 och 2020.
 - Wiktionary (svenska och engelska), uppslagen för svenska förnamn med etymologi; Wikipedia (svenska), namnartiklarna.
 - Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.
+- Jesch, Judith 2020. ”Further Thoughts on E18 Saltfleetby.” *Futhark* 9–10, s. 201–213. [doi:10.33063/diva-401054](https://doi.org/10.33063/diva-401054)
+- Svärdström, Elisabeth 1969. ”Runfynd 1968.” *Fornvännen* 64. [Fri fulltext](https://pub.raa.se/dokumentation/9883174e-a397-429f-9f8f-cc35002ac3bc)
+- Svärdström, Elisabeth & Gustavson, Helmer 1972. ”Runfynd 1971.” *Fornvännen* 67. [Fri fulltext](https://pub.raa.se/dokumentation/860f4567-1524-46f1-b89d-7f7d21b4438a)
+- Svärdström, Elisabeth & Gustavson, Helmer 1975. ”Runfynd 1974.” *Fornvännen* 70. [Fri fulltext](https://pub.raa.se/dokumentation/2b49a955-dfec-41b6-8a9c-ec57016e1578)
+- Wicker, Nancy L. & Williams, Henrik 2013. ”Bracteates and Runes.” *Futhark* 3, s. 151–213. [Fri fulltext](https://uu.diva-portal.org/smash/get/diva2:616881/FULLTEXT01.pdf)
 - Den låsta analysplanen, alla 1 166 namn med etymologi och grupp, och Vitkis räkning ligger öppet på [GitHub](https://github.com/Precatio/runes).
 - Bilder: Wikimedia Commons, med upphovsperson i bildtexterna."""
 
@@ -255,9 +260,9 @@ The names from the myths go the other way. Together they grew by {RISE} per cent
 
 {pic(ASK, 'Odin, Lodur and Hœnir create Ask and Embla', 'Odin, Lóðurr and Hœnir create the first humans, Askr and Embla, from two pieces of wood on the shore. Drawing by Lorenz Frølich (1820–1908).', 'en')}
 
-What is striking is that these names hardly existed as human names before. On the Swedish runestones no person is called Freyja, Óðinn or Þórr. The gods are there all the same, inside the names: Þorsteinn, Ásbjôrn, Ingiríðr. The Vikings carried a god in their name but did not give a child the god's own name. The closest we come is the stone U 440 in Uppland, where the name can be read Þórðr, Þórr or Þórn – no one knows for certain.
+What is striking is that these names hardly existed as human names before. On the Swedish runestones no person is called Freyja, Óðinn or Þórr. The gods are there all the same, inside the names: Þorsteinn, Ásbjôrn, Ingiríðr. Odin too. At Hassmyra in Västmanland, Holmgautr raised a stone for his wife Óðindísa and wrote that no better mistress of the house would ever come to the farm (Vs 24). The Vikings carried a god in their name but did not give a child the god's own name. Judith Jesch has gone through the Viking-age runic inscriptions: except on a skull from Ribe, where it is the god himself who is named, Óðinn never stands alone – only as part of a name, such as Óðindísa or the Danish Óðinkárr (Futhark 9–10, 2020). The closest we come is the stone U 440 in Uppland, where the name can be read Þórðr, Þórr or Þórn – no one knows for certain.
 
-Today it is the other way round. Swedes are called Tor ({en(N('Tor', 2020))}), Freja ({en(N('Freja', 2020))}), Loke ({en(N('Loke', 2020))}), Frej ({N('Frej', 2020)}), Tyr ({N('Tyr', 2020)}) and Balder ({N('Balder', 2020)}). Why the Vikings did not do so, we do not know. Perhaps the god's name was too holy for a person, perhaps it simply was not the custom. But the difference is clear: then one carried the god as part of one's name. Now one carries the whole god.
+Today it is the other way round. Swedes are called Tor ({en(N('Tor', 2020))}), Freja ({en(N('Freja', 2020))}), Loke ({en(N('Loke', 2020))}), Frej ({N('Frej', 2020)}), Tyr ({N('Tyr', 2020)}) and Balder ({N('Balder', 2020)}). Why the Vikings did not do so, we do not know. Perhaps the god's name was too holy for a person, perhaps it simply was not the custom. The same silence is found a few hundred years earlier, on the gold bracteates with their runes and images of gods: not a single Scandinavian god's name stands on them. Heinrich Beck has explained this as taboo – a byname was written instead of the god. Henrik Williams calls the observation disturbing and points out that the explanation is hard to test (Futhark 3, 2013). But the difference is clear: then one carried the god as part of one's name. Now one carries the whole god.
 
 ## From the books, not the stones
 
@@ -279,9 +284,9 @@ Here we are thinking aloud. This section is our interpretation, not a test – b
 
 Nearly everything from the Viking Age has been replaced. The titles of power vanished – the jarl became a duke, the thegn and the housecarl are gone. The cult was exchanged for the church. The law was rewritten. Yet one name in five on the runestones lives on, and the names with a god in them fared twice as well as the others. Why?
 
-**A name claims nothing.** A title says who holds power. A word for cult says what one believes. When power and faith changed, those words had to go. A name only says who someone is. It threatens no one, and so there was no reason to remove it. The church baptised the children – and in the medieval charters they are still called Torsten.
+**A name claims nothing.** A title says who holds power. A word for cult says what one believes. When power and faith changed, those words had to go. A name only says who someone is. It seldom threatens anyone, and so there was seldom any reason to remove it. It did not happen without losses. Elisabeth Svärdström noted that names with pagan first elements such as Ás- and Þór- became rarer with Christianity, and that some disappeared altogether (Fornvännen 1969). Torhild, whose pagan first element was “obvious to everyone”, quickly vanished from the stock of names (Svärdström and Gustavson 1972). But Tora occurs some fifteen times in the medieval Swedish name material (Svärdström and Gustavson 1975). The church baptised the children – and in the medieval charters they are still called Torsten.
 
-**A name loses its meaning.** No one called Torsten still hears that it means Thor's stone. Ingrid is no longer Ing the beautiful. A name becomes a sound pointing at a person, and that is exactly why it can survive a new faith. The meaning wears away, but the sound goes on.
+**A name loses its meaning.** No one called Torsten today hears that it means Thor's stone, and Ingrid is no longer Ing the beautiful. In the Middle Ages it could still be heard – that is why Torhild disappeared. But in time a name becomes a sound pointing at a person, and that is exactly why it can survive a new faith. The meaning wears away, but the sound goes on.
 
 **A name is an inheritance.** The runestones themselves were built to keep names alive. At Nöbbele in Småland it says: *Þy mun goðs manns um gætit verða, meðan stæinn lifiR ok stafiR runa* – so the good man shall be remembered while the stone lives and the staves of the runes. The stone was to carry the name. But what carried the names longest were the families, who named their children after the dead. Of the runestone names that also appear in the medieval charters, three in four live today. The name passed from generation to generation, long after the stone was no longer read.
 
@@ -310,6 +315,11 @@ Two ways of living on, then. The stones' names lived by inheritance. The myths' 
 - Statistics Sweden, First names with at least 10 bearers among the registered population on 31 December (BE0001TNamn10), 1999 and 2020.
 - Wiktionary (Swedish and English), the entries for Swedish first names with etymology; Wikipedia (Swedish), the name articles.
 - Scandinavian Runic-text Data Base (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.
+- Jesch, Judith 2020. “Further Thoughts on E18 Saltfleetby.” *Futhark* 9–10, pp. 201–213. [doi:10.33063/diva-401054](https://doi.org/10.33063/diva-401054)
+- Svärdström, Elisabeth 1969. “Runfynd 1968.” *Fornvännen* 64. [Free full text](https://pub.raa.se/dokumentation/9883174e-a397-429f-9f8f-cc35002ac3bc)
+- Svärdström, Elisabeth & Gustavson, Helmer 1972. “Runfynd 1971.” *Fornvännen* 67. [Free full text](https://pub.raa.se/dokumentation/860f4567-1524-46f1-b89d-7f7d21b4438a)
+- Svärdström, Elisabeth & Gustavson, Helmer 1975. “Runfynd 1974.” *Fornvännen* 70. [Free full text](https://pub.raa.se/dokumentation/2b49a955-dfec-41b6-8a9c-ec57016e1578)
+- Wicker, Nancy L. & Williams, Henrik 2013. “Bracteates and Runes.” *Futhark* 3, pp. 151–213. [Free full text](https://uu.diva-portal.org/smash/get/diva2:616881/FULLTEXT01.pdf)
 - The locked analysis plan, all 1,166 names with etymology and group, and Vitki's count are open on [GitHub](https://github.com/Precatio/runes).
 - Images: Wikimedia Commons, with the artist in the captions."""
 
