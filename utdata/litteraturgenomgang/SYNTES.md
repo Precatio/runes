@@ -107,7 +107,7 @@ frågor som har dykt upp; det är gamla frågor som aldrig har prövats på hela
 1. **Placeringar utan slumpjämförelse.** Påståenden som ”vid vägen”, ”vid gravfältet”, ”vid bron”, ”vid tinget”, ”vid
    leran”, ”vid vattnet” och ”vid kyrkan” bygger nästan alltid på exempel. Ett test mot slumpvis valda platser i samma bygd
    görs nästan aldrig. Det är Vitkis starkaste metodbidrag och kan göras för alla påståendena på en gång.
-2. **Cirkulär datering.** Stilgrupperna daterar stenarna, stenarna daterar metallföremålen, och metallföremålen daterar
+2. **Cirkulär datering.** *(Obs. Många läsare föreslog Runor 2020:s termini som oberoende datering, men i vår skörd är tpq oftast schablonvärdet 725 eller en stildatering – fältet är inte oberoende. Dateringsplanen bygger därför på historiskt daterade ankarstenar och språkdrag.)* Stilgrupperna daterar stenarna, stenarna daterar metallföremålen, och metallföremålen daterar
    stilgrupperna.
    - Fasta punkter som hänger på en enda saga: Ingvar 1041, som Thulin 1985 kallar ”den fastaste punkten” i Upplands
      runstenskronologi.
