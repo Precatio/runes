@@ -46,7 +46,7 @@ T = {
         puffar=[("Resorna", None, "Söner och bröder dog borta tre till fyra gånger så ofta som fäder."),
                 ("Språket", "Tor föll, hjälten blev dräng", "Vilka vikinganamn lever kvar – och vilka maktord bytte språk?"),
                 ("Verkstaden", "Hundra års runforskning – lästa på en gång", "1 081 texter i Fornvännen och Futhark.")],
-        provnummer="Provnummer<br>vitkirunor.se",
+        provnummer="vitkirunor.se",
         omkredit="Omslag: U 489 vid Morby, Uppland – Gullaugs bro för dottern Gillaugs själ. Foto: Christine Jewell, CC BY-SA 2.0, via Wikimedia Commons.",
         innehall="I detta nummer",
         extra=[("Verkstaden", "Hundra års runforskning – lästa på en gång"), ("Metodhörnan", "Vad betyder p = 0,003?")],
@@ -65,7 +65,7 @@ T = {
              ("Redaktion", "Viktor Kvant, redaktör<br>vitkirunor.se/kontakt"),
              ("Licens", "Texterna får spridas fritt under CC BY 4.0. Bilder från Wikimedia Commons har egna licenser, angivna vid varje bild."),
              ("Data", "Samnordisk runtextdatabas, Riksantikvarieämbetets Runor, SGU, ISOF och Kulturmiljöregistret. Bearbetning: Vitki.")],
-        bakrad="Nr 1 · 2026 · Provnummer",
+        bakrad="Nr 1 · November 2026",
     ),
     "en": dict(
         lang="en", nr="No. 1 · November 2026", fran="Journal", undertitel="Digital runic research from Vitki",
@@ -75,7 +75,7 @@ T = {
         puffar=[("Journeys", None, "Sons and brothers died abroad three to four times as often as fathers."),
                 ("Language", "Thor fell, the hero became a farmhand", "Which Viking names live on – and which words of power changed language?"),
                 ("Workshop", "A century of runic research – read at once", "1,081 texts in Fornvännen and Futhark.")],
-        provnummer="Sample issue<br>vitkirunor.se",
+        provnummer="vitkirunor.se",
         omkredit="Cover: U 489 at Morby, Uppland – Gullaug's bridge for the soul of her daughter Gillaug. Photo: Christine Jewell, CC BY-SA 2.0, via Wikimedia Commons.",
         innehall="In this issue",
         extra=[("Workshop", "A century of runic research – read at once"), ("Method corner", "What does p = 0.003 mean?")],
@@ -94,7 +94,7 @@ T = {
              ("Editors", "Viktor Kvant, editor<br>vitkirunor.se/kontakt"),
              ("Licence", "Texts may be shared freely under CC BY 4.0. Images from Wikimedia Commons carry their own licences, given with each image."),
              ("Data", "Scandinavian Runic-text Database, the Swedish National Heritage Board's Runor, SGU, ISOF and the Swedish register of ancient monuments. Processing: Vitki.")],
-        bakrad="No. 1 · 2026 · Sample issue",
+        bakrad="No. 1 · November 2026",
     ),
 }
 
