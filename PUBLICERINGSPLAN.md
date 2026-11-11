@@ -53,7 +53,7 @@ artiklar, Verkstaden, Metodhörnan, ”Ett påstående från förr, prövat” o
   `.venv/bin/python scripts/publiceringsschema_sync.py --skriv`, så att /redaktion ser samma plan. GitHub Actions
   publicerar artiklarna och postar Bluesky-kön, så datorn behöver inte vara igång.
 - **Närmast:** mån 16 nov – Freja (tis 17) och De gamla landen: Skåne (fre 20); mån 23 nov – lerkanten (tis 24) och
-  Fyra stenar för två barn (fre 27); mån 7 dec – första stora genomgången (på dagordningen: **byt nyckeln för tjänstekontot vitki-publicera**, som hamnade i chatten 11 nov – Google Cloud → Keys → ny JSON-nyckel → uppdatera GitHub-hemligheten FIREBASE_SERVICE_ACCOUNT → radera filerna).
+  Fyra stenar för två barn (fre 27); mån 7 dec – första stora genomgången (på dagordningen: **byt nyckeln för tjänstekontot vitki-publicera**, som hamnade i chatten 11 nov – Google Cloud → Keys → ny JSON-nyckel → uppdatera GitHub-hemligheten FIREBASE_SERVICE_ACCOUNT → radera filerna). Också: ska den publicerade ”Döttrarna som runstenarna glömde” få en not om att U 169 kan vara en femtonde dotter (Stroh-Wollin 2012, Owe 2016; se utkastet ”Mö, dotter eller flicka?”)?
 
 **Genomgång med Viktor första måndagen i varje månad, ungefär 45 minuter.**
 - Viktor godkänner allt som är klart på en gång: artiklar att publicera, rapporter, Zenodo och licensfrågor.
