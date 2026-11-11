@@ -136,9 +136,9 @@ def rapport(here, icc=None, sprak_lista=("sv",)):
         op = len(re.findall(rb"/OP\s+true|/op\s+true", raw))
         md.append(f"- Övertryck: {op} ställen med /OP true (ska vara 0)." if op else "- Övertryck: inget (/OP true saknas i filen).")
         cs = sorted({m.decode() for m in re.findall(rb"/(DeviceRGB|DeviceCMYK|DeviceGray|ICCBased)", raw)})
-        md.append(f"- Färgrymder i filen: {', '.join(cs)}." + (" Filen är **RGB** (se nedan)." if not icc else ""))
+        md.append(f"- Färgrymder i filen: {', '.join(cs)}." + (" Filen är **RGB** (se nedan). **Viktor 2026-11-11: RGB går bra – filen laddas upp som den är, ingen CMYK-konvertering.**" if not icc else ""))
         md += ["", "### Bilder: effektiv upplösning i tryckt storlek", "",
-               "Under 300 dpi markeras; under 200 dpi är ett verkligt problem i tryck.", ""]
+               "Under 300 dpi markeras; under 200 dpi är ett verkligt problem i tryck. **Viktor godkände upplösningen som den är (2026-11-11), även s. 5.**", ""]
         for b in bilder(pdf):
             ppi = min(b["xppi"], b["yppi"])
             flagga = "**PROBLEM < 200 dpi**" if ppi < 200 else "under 300 dpi" if ppi < 300 else "ok"

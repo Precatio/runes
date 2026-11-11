@@ -9,11 +9,11 @@ Skrivs av `utdata/tidskrift/tryckkontroll.py` (anropas av `bygg_tidskrift.py --t
 - Typsnitt: 72 delmängder (AvenirNext-Bold, AvenirNext-DemiBold, AvenirNext-Italic, AvenirNext-Medium, AvenirNext-Regular, Charter-Black, Charter-Bold, Charter-BoldItalic, Charter-Italic, Charter-Roman, TimesNewRomanPSMT); inbäddade: alla.
 - Text närmast skärkanten: 6.1 mm (s. 1, ”Omslag: U 489 vid Morby, Uppland – Gulla”). Kravet är minst 4 mm (Helloprint) / 5 mm (vår regel).
 - Övertryck: inget (/OP true saknas i filen).
-- Färgrymder i filen: DeviceGray, DeviceRGB, ICCBased. Filen är **RGB** (se nedan).
+- Färgrymder i filen: DeviceGray, DeviceRGB, ICCBased. Filen är **RGB** (se nedan). **Viktor 2026-11-11: RGB går bra – filen laddas upp som den är, ingen CMYK-konvertering.**
 
 ### Bilder: effektiv upplösning i tryckt storlek
 
-Under 300 dpi markeras; under 200 dpi är ett verkligt problem i tryck.
+Under 300 dpi markeras; under 200 dpi är ett verkligt problem i tryck. **Viktor godkände upplösningen som den är (2026-11-11), även s. 5.**
 
 - s.  1 bild 0: 2472 × 3296 px, icc, 276 dpi – under 300 dpi
 - s.  1 bild 1: 396 × 275 px, gray, 300 dpi – ok
