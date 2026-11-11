@@ -312,7 +312,7 @@ def chart(lang):
 
 
 # ---- texten -------------------------------------------------------------------------------------------------------------------
-title = "Var det bara Ingvar? Ett enda tåg bar halva österns övervikt"
+title = "Vikingarnas österled – eller bara Ingvars?"
 summary = (f"Runstenarna ser mot öster, skrev vi i en tidigare artikel. Men {N_ING} av stenarna minns samma färd: Ingvars "
            "tåg mot Serkland. Vi räknade bort dem efter en plan som låstes i förväg. Ungefär halva österns övervikt "
            "försvann – och det visade sig att samma tåg också är ett av ankarna för när runstenarna restes.")
@@ -446,7 +446,7 @@ Nästa gång du läser att ”runstenarna visar” något, också hos oss, fråg
 - Vitkis självkontroll: [den låsta analysplanen]({PLAN}) och [resultaten]({RES}) (10 november 2026). Den tidigare artikeln, [Vikingarnas värld – vilka platser nämner de?](/artiklar/vikingarnas-varld), har fått ett tillägg med de nya siffrorna.
 - Foto: Wikimedia Commons, med fotograf och licens i bildtexterna. Diagrammen: Vitki."""
 
-title_en = "Was it just Ingvarr? One expedition carried half of the east's lead"
+title_en = "The Vikings' road east – or just Ingvarr's?"
 summary_en = (f"The runestones look east, we wrote in an earlier article. But {N_ING} of the stones remember the same "
               "journey: Ingvarr's expedition to Serkland. We took them out, following a plan locked in advance. About half "
               "of the east's lead disappeared – and the same expedition turned out to be one of the anchors for when the "
@@ -600,7 +600,7 @@ assert body_en.index(":::box The essentials in brief") < body_en.index("## Sourc
 assert not re.search(r"\bjag\b", body.replace(THULIN, "").replace(WESTIN, ""), re.I), "vi-form"
 
 labels = ["Forskning", "Geografi", "Datering och stil"]
-out = {"slug": "var-det-bara-ingvar", "title": title, "summary": summary, "body": body,
+out = {"slug": "osterled-eller-bara-ingvars", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en, "labels": labels}
 assert blog_labels.check(out["labels"]) is None
 path = os.path.join(ROOT, "utdata", "blogg", "ingvar.json")
