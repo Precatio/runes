@@ -45,10 +45,13 @@ artiklar, Verkstaden, Metodhörnan, ”Ett påstående från förr, prövat” o
 
 **Veckorutin (Viktor 11 nov: ”när varje vecka ska jag godkänna?”):**
 - **Varje måndag, ungefär 20 minuter:** veckans två artiklar ligger färdiga senast söndag kväll, genomlästa och
-  kontrollerade, med engelska Bluesky-inlägg. Viktor läser dem och klickar *Godkänn veckans publiceringar* överst under
-  Artiklar i Admin. Det schemalägger dem (tisdag och fredag kl. 07.00) och lägger inläggen i Bluesky-kön samma dag.
-  Planen står i `data/publiceringsschema.json`, och nya veckor fylls i där. Appen publicerar själv när tiden kommer, så
-  länge den är igång.
+  kontrollerade, med engelska Bluesky-inlägg. Viktor läser dem och klickar *Godkänn veckans publiceringar*, antingen
+  från mobilen på vitkirunor.se/redaktion (fliken Veckan) eller överst under Artiklar i den lokala Admin. Det
+  schemalägger dem (tisdag och fredag kl. 07.00) och lägger inläggen i Bluesky-kön samma dag kl. 18. Från webben går
+  inlägget via en förfrågan som GitHub Actions lägger i kön inom ungefär en halvtimme. Planen står i
+  `data/publiceringsschema.json`, och nya veckor fylls i där. Efter varje ändring körs
+  `.venv/bin/python scripts/publiceringsschema_sync.py --skriv`, så att /redaktion ser samma plan. GitHub Actions
+  publicerar artiklarna och postar Bluesky-kön, så datorn behöver inte vara igång.
 - **Närmast:** mån 16 nov – Freja (tis 17) och De gamla landen: Skåne (fre 20); mån 23 nov – lerkanten (tis 24) och
   Fyra stenar för två barn (fre 27); mån 7 dec – första stora genomgången (på dagordningen: **byt nyckeln för tjänstekontot vitki-publicera**, som hamnade i chatten 11 nov – Google Cloud → Keys → ny JSON-nyckel → uppdatera GitHub-hemligheten FIREBASE_SERVICE_ACCOUNT → radera filerna).
 

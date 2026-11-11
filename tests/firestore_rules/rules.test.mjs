@@ -1,6 +1,6 @@
-// web/firestore.rules in the Firestore emulator: the web admin's access to the articles (/redaktion), and that the
-// rules the app and the public website already rely on still hold. Run with `npm test` in this folder (the emulator
-// needs Java 11+); nothing is deployed. The editor's uid is read from the rules file itself, so it is not repeated here.
+// web/firestore.rules in the Firestore emulator: the web admin's access to the articles, the weekly plan and the Bluesky
+// requests (/redaktion), and that the rules the app and the public website already rely on still hold. Run with
+// `npm test` in this folder (the emulator needs Java 11+); nothing is deployed. The editor's uid is read from the rules file itself, so it is not repeated here.
 import { readFileSync } from "node:fs";
 import { after, before, beforeEach, describe, test } from "node:test";
 import { assertFails, assertSucceeds, initializeTestEnvironment } from "@firebase/rules-unit-testing";
@@ -36,6 +36,14 @@ beforeEach(async () => {
       slug: "publicerad", title: "Publicerad", body: "Text", published: true, month: "2026-10",
       publishedAt: Timestamp.fromDate(new Date("2026-10-20T08:00:00Z")),
       updatedAt: Timestamp.fromDate(new Date("2026-10-20T08:00:00Z")), labels: ["Artikel"],
+    });
+    await setDoc(doc(fs, "publiceringsschema", "2026-11-17_p1"), {
+      datum: "2026-11-17", tid: "07:00", id: "p1", titel: "Ett utkast", spar: "P", godkand: null,
+      bluesky: { text: "Hello.", tags: ["runestones", "VikingAge"] },
+    });
+    await setDoc(doc(fs, "bluesky_forfragningar", "redan-dar"), {
+      slug: "redan-dar", datum: "2026-11-20", text: "Hello.", tags: [], en: true,
+      created: Timestamp.fromDate(new Date("2026-11-16T07:00:00Z")), by: EDITOR,
     });
     await setDoc(doc(fs, "messages", "m1"), { to: "all", text: "Hej" });
     await setDoc(doc(fs, "banned", "x"), { at: 1 });
@@ -82,6 +90,62 @@ describe("posts: publishing from /redaktion", () => {
   test("the editor may not create an article", () =>
     assertFails(addDoc(collection(db(EDITOR), "posts"), { title: "Ny", published: false })));
   test("the editor may not delete an article", () => assertFails(deleteDoc(post(EDITOR))));
+});
+
+describe("publiceringsschema: the weekly plan", () => {
+  const row = (uid) => doc(db(uid), "publiceringsschema", "2026-11-17_p1");
+  test("the editor may read the plan", () => assertSucceeds(getDocs(collection(db(EDITOR), "publiceringsschema"))));
+  test("another account may not read it", () => assertFails(getDoc(row(OTHER))));
+  test("signed out may not read it", () => assertFails(getDocs(collection(db(null), "publiceringsschema"))));
+  test("the editor may not change a row", () => assertFails(updateDoc(row(EDITOR), { tid: "08:00" })));
+  test("the editor may not add a row", () =>
+    assertFails(setDoc(doc(db(EDITOR), "publiceringsschema", "2026-11-18_x"), { datum: "2026-11-18", id: "x" })));
+  test("the editor may not delete a row", () => assertFails(deleteDoc(row(EDITOR))));
+});
+
+describe("bluesky_forfragningar: Bluesky requests from /redaktion", () => {
+  const request = (over = {}) => ({
+    slug: "ny-artikel", datum: "2026-11-17", text: "No one on Sweden's runestones was called Freja.",
+    tags: ["OldNorse", "Skystorians", "runestones", "VikingAge", "Vikings"], en: true, created: serverTimestamp(),
+    by: EDITOR, ...over,
+  });
+  const req = (uid, id = "ny-artikel") => doc(db(uid), "bluesky_forfragningar", id);
+
+  test("the editor may create a request", () => assertSucceeds(setDoc(req(EDITOR), request())));
+  test("a request without tags", () => assertSucceeds(setDoc(req(EDITOR), request({ tags: [] }))));
+  test("the editor may read requests", () => assertSucceeds(getDocs(collection(db(EDITOR), "bluesky_forfragningar"))));
+  test("another account may not read requests", () => assertFails(getDoc(req(OTHER, "redan-dar"))));
+  test("another account may not create one", () => assertFails(setDoc(req(OTHER), request({ by: OTHER }))));
+  test("signed out may not create one", () => assertFails(setDoc(req(null), request())));
+  test("the document id must be the slug", () => assertFails(setDoc(req(EDITOR, "annan"), request())));
+  test("the slug must be an article address", () =>
+    assertFails(setDoc(req(EDITOR, "Inte OK"), request({ slug: "Inte OK" }))));
+  test("text of 400 characters is allowed", () => assertSucceeds(setDoc(req(EDITOR), request({ text: "x".repeat(400) }))));
+  test("text of 401 characters is refused", () => assertFails(setDoc(req(EDITOR), request({ text: "x".repeat(401) }))));
+  test("empty text is refused", () => assertFails(setDoc(req(EDITOR), request({ text: "" }))));
+  test("at most 8 tags", () =>
+    assertFails(setDoc(req(EDITOR), request({ tags: ["a", "b", "c", "d", "e", "f", "g", "h", "i"] }))));
+  test("8 tags are allowed", () =>
+    assertSucceeds(setDoc(req(EDITOR), request({ tags: ["a", "b", "c", "d", "e", "f", "g", "h"] }))));
+  test("tags must be strings", () => assertFails(setDoc(req(EDITOR), request({ tags: ["a", 5] }))));
+  test("tags must be a list", () => assertFails(setDoc(req(EDITOR), request({ tags: "VikingAge" }))));
+  test("datum must be a date string", () => assertFails(setDoc(req(EDITOR), request({ datum: "17 nov" }))));
+  test("datum may not be a timestamp", () =>
+    assertFails(setDoc(req(EDITOR), request({ datum: Timestamp.fromDate(new Date("2026-11-17T06:00:00Z")) }))));
+  test("en must be true", () => assertFails(setDoc(req(EDITOR), request({ en: false }))));
+  test("created must be the server's time", () =>
+    assertFails(setDoc(req(EDITOR), request({ created: Timestamp.fromDate(new Date()) }))));
+  test("by must be the editor's own uid", () => assertFails(setDoc(req(EDITOR), request({ by: OTHER }))));
+  test("no other fields", () => assertFails(setDoc(req(EDITOR), request({ posted: "https://bsky.app/x" }))));
+  test("no missing fields", () => {
+    const { tags, ...rest } = request();  // eslint-disable-line no-unused-vars
+    return assertFails(setDoc(req(EDITOR), rest));
+  });
+  test("an existing request cannot be overwritten", () =>
+    assertFails(setDoc(req(EDITOR, "redan-dar"), request({ slug: "redan-dar" }))));
+  test("an existing request cannot be changed", () =>
+    assertFails(updateDoc(req(EDITOR, "redan-dar"), { text: "Changed" })));
+  test("a request cannot be deleted", () => assertFails(deleteDoc(req(EDITOR, "redan-dar"))));
 });
 
 describe("the rules the app and the website already use", () => {

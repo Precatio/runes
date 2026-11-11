@@ -1,7 +1,9 @@
 # Webbplatsens artiklar ur Firestore, utan Viktors dator: var 30:e minut exporteras de artiklar som har gått live
 # (scripts/ci_publicera.py → src/site_export.py, med samma kontroller som den lokala appen) och committas och pushas när
 # något har ändrats. Pushen görs med GITHUB_TOKEN, som inte startar andra arbetsflöden, så webbplatsen byggs genom att
-# site.yml startas uttryckligen (workflow_dispatch) efteråt.
+# site.yml startas uttryckligen (workflow_dispatch) efteråt. Samma körning slår in Bluesky-förfrågningarna från
+# /redaktion (Firestore bluesky_forfragningar) i data/bluesky/ko.json och committar dem med exporten; en ändring som bara
+# rör kön bygger inte om webbplatsen.
 #
 # Ofarligt innan hemligheten FIREBASE_SERVICE_ACCOUNT finns: då skrivs en notis och jobbet slutar grönt. Nya R-figurer
 # kommer fortfarande från den lokala appen (se ADMIN_PA_WEBBEN.md). Actions är låsta till commits (versionen i kommentaren).
@@ -69,8 +71,9 @@ jobs:
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
           printf '%s' "$SA" > "$GOOGLE_APPLICATION_CREDENTIALS"
           unset SA
-          paths=(web/content/articles.json web/public/artiklar-sok.json web/public/figurer
-                 ':(exclude)web/public/figurer/*.tmp' ':(exclude)web/public/figurer/*.part' ':(exclude)web/public/figurer/.*')
+          site_paths=(web/content/articles.json web/public/artiklar-sok.json web/public/figurer
+                      ':(exclude)web/public/figurer/*.tmp' ':(exclude)web/public/figurer/*.part' ':(exclude)web/public/figurer/.*')
+          paths=("${site_paths[@]}" data/bluesky/ko.json data/bluesky/webbforfragningar.json)
           before=$(git rev-parse HEAD)
           for i in 1 2 3; do
             # the export's own check (src/site_export.check) stops a run that looks wrong: the job fails and says why
@@ -81,10 +84,13 @@ jobs:
               echo "pushed=false" >> "$GITHUB_OUTPUT"
               exit 0
             fi
+            site=true
+            git diff --cached --quiet -- "${site_paths[@]}" && site=false
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               commit -q -F "$RUNNER_TEMP/publicera-commit.txt" -- "${paths[@]}"
             if git push origin HEAD:main; then
               echo "pushed=true" >> "$GITHUB_OUTPUT"
+              echo "site=$site" >> "$GITHUB_OUTPUT"
               echo "before=$before" >> "$GITHUB_OUTPUT"
               exit 0
             fi
@@ -98,7 +104,7 @@ jobs:
           echo "::error::Exporten kunde inte pushas (main ändrades under tre försök)"
           exit 1
       - name: Bygg webbplatsen
-        if: steps.push.outputs.pushed == 'true'
+        if: steps.push.outputs.pushed == 'true' && steps.push.outputs.site == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           BEFORE: ${{ steps.push.outputs.before }}

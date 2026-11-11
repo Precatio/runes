@@ -4,10 +4,11 @@
 // straight in Firestore – from any device, without the local app. The Firestore rules (web/firestore.rules) let only
 // the editor read the articles and change their publication fields; the fields and their meaning are those of the local
 // app's save (lib/redaktion.ts). Texts are written and deleted only in the local app. The public website follows within
-// about half an hour (.github/workflows/publicera.yml).
+// about half an hour (.github/workflows/publicera.yml). "Veckan" approves the week's planned articles (RedaktionWeek).
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { User } from "firebase/auth";
 import BlogBody from "@/components/BlogBody";
+import RedaktionWeek from "@/components/RedaktionWeek";
 import { FIREBASE_CONFIGURED, firebaseAuth, firestoreLib } from "@/firebase/config";
 import { postPath } from "@/lib/blogSeo";
 import { reportPath } from "@/lib/report";
@@ -38,6 +39,16 @@ const toDate = (v: unknown): Date | null =>
 
 const codeOf = (e: unknown) => (e && typeof e === "object" && "code" in e ? String((e as { code: unknown }).code) : undefined);
 
+/** Writes one publication change: exactly the fields lib/redaktion.ts gives, plus the server's time. "Schemalägg",
+ *  "Publicera nu", "Avpublicera" and the week's approval all write through here. */
+async function savePublication(id: string, fields: PublicationFields): Promise<void> {
+  const { db, doc, updateDoc, serverTimestamp, Timestamp } = await firestoreLib();
+  const data: Record<string, unknown> = { published: fields.published, by: fields.by, updatedAt: serverTimestamp() };
+  if (fields.publishedAt) data.publishedAt = Timestamp.fromDate(fields.publishedAt);
+  if (fields.month) data.month = fields.month;
+  await updateDoc(doc(db, "posts", id), data);
+}
+
 function problemOf(e: unknown): Problem {
   return explainError(codeOf(e)) ?? { notActive: false, text: `Något gick fel: ${e instanceof Error ? e.message : String(e)}` };
 }
@@ -48,7 +59,7 @@ export default function Redaktion() {
   const [posts, setPosts] = useState<AdminPost[] | null>(null);
   const [problem, setProblem] = useState<Problem | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
-  const [tab, setTab] = useState<"oversikt" | "innehall">("oversikt");
+  const [tab, setTab] = useState<"oversikt" | "veckan" | "innehall">("oversikt");
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -77,6 +88,7 @@ export default function Redaktion() {
           id: d.id, slug: String(x.slug ?? ""), title: String(x.title ?? "(utan titel)"), summary: x.summary ?? "",
           body: x.body ?? "", published: !!x.published, publishedAt: toDate(x.publishedAt), updatedAt: toDate(x.updatedAt),
           month: x.month, labels: Array.isArray(x.labels) ? x.labels : [], featured: !!x.featured,
+          titleEn: !!x.title_en, bodyEn: !!x.body_en,
         };
       }));
       setNow(new Date());
@@ -105,16 +117,12 @@ export default function Redaktion() {
     setPosts(null);
   };
 
-  /** Writes one publication change: exactly the fields lib/redaktion.ts gives, plus the server's time. */
+  /** One publication change from the Innehåll list, with a notice and the list read again. */
   const write = async (p: AdminPost, fields: PublicationFields, done: string) => {
     setProblem(null);
     setNotice(null);
     try {
-      const { db, doc, updateDoc, serverTimestamp, Timestamp } = await firestoreLib();
-      const data: Record<string, unknown> = { published: fields.published, by: fields.by, updatedAt: serverTimestamp() };
-      if (fields.publishedAt) data.publishedAt = Timestamp.fromDate(fields.publishedAt);
-      if (fields.month) data.month = fields.month;
-      await updateDoc(doc(db, "posts", p.id), data);
+      await savePublication(p.id, fields);
       setNotice(`${done} Webbplatsen följer efter inom ungefär en halvtimme (eller direkt, om den lokala appen är igång).`);
       await load();
     } catch (e) {
@@ -160,17 +168,17 @@ export default function Redaktion() {
         {phase === "inloggad" && posts && (
           <>
             <nav className="flex gap-1 mb-6 border-b border-slate-200" aria-label="Vyer">
-              {([["oversikt", "Översikt"], ["innehall", "Innehåll"]] as const).map(([k, label]) => (
+              {([["oversikt", "Översikt"], ["veckan", "Veckan"], ["innehall", "Innehåll"]] as const).map(([k, label]) => (
                 <button key={k} onClick={() => setTab(k)} aria-current={tab === k ? "page" : undefined}
-                        className={`px-4 py-2 -mb-px border-b-2 font-medium ${tab === k ? "border-[#b7410e] text-[#9a350b]" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
+                        className={`px-3 sm:px-4 py-2 -mb-px border-b-2 font-medium ${tab === k ? "border-[#b7410e] text-[#9a350b]" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
                   {label}
                 </button>
               ))}
-              <button onClick={load} className="ml-auto px-3 py-2 text-sm text-slate-500 hover:text-slate-800">Uppdatera</button>
+              <button onClick={load} className="ml-auto px-2 sm:px-3 py-2 text-sm text-slate-500 hover:text-slate-800">Uppdatera</button>
             </nav>
-            {tab === "oversikt" ? <Overview posts={posts} now={now} /> : (
-              <Content posts={posts} now={now} uid={user!.uid} write={write} />
-            )}
+            {tab === "oversikt" && <Overview posts={posts} now={now} />}
+            {tab === "veckan" && <RedaktionWeek posts={posts} now={now} uid={user!.uid} save={savePublication} reload={load} />}
+            {tab === "innehall" && <Content posts={posts} now={now} uid={user!.uid} write={write} />}
           </>
         )}
       </main>

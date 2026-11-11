@@ -19,6 +19,9 @@ export interface AdminPost {
   month?: string;
   labels?: string[];
   featured?: boolean;
+  /** Whether the article has an English title and text (the Bluesky post links to the English edition). */
+  titleEn?: boolean;
+  bodyEn?: boolean;
 }
 
 /** The fields one publication change writes, apart from updatedAt (serverTimestamp() in the page). */
@@ -168,4 +171,102 @@ export function explainError(code: string | undefined): { notActive: boolean; te
     default:
       return null;
   }
+}
+
+// ---- Veckans publiceringar (the weekly plan, as api/routers/blog_week.py) -------------------------------------------
+// The plan is data/publiceringsschema.json, copied to Firestore (publiceringsschema) by scripts/publiceringsschema_sync.py.
+// Approving a row schedules the article with schedule() above – the same fields as "Schemalägg" – and asks for its English
+// Bluesky post in bluesky_forfragningar, which the export in GitHub Actions puts into data/bluesky/ko.json.
+
+export interface PlanRow {
+  datum: string;
+  tid: string;
+  id: string;
+  titel: string;
+  spar: string;
+  bluesky: { text: string; tags: string[] } | null;
+  godkand?: string | null;
+}
+export type WeekState = Status | "saknas";
+
+/** Bluesky's limit, as LIMIT in src/bluesky_queue.py and scripts/bluesky_post.py. */
+export const BLUESKY_LIMIT = 300;
+export const DEFAULT_TIME = "07:00";
+
+/** The post's length with its tags, as scripts/bluesky_post.compose counts it. */
+export function composedLength(b: PlanRow["bluesky"]): number | null {
+  if (!b) return null;
+  const tags = b.tags ?? [];
+  return ((b.text ?? "").trim() + (tags.length ? "\n\n" + tags.map(t => `#${t}`).join(" ") : "")).length;
+}
+
+/** Today's date in Sweden, "2026-11-16". */
+export function todayStockholm(now: Date): string {
+  return toStockholmInput(now).slice(0, 10);
+}
+
+/** "2026-11-16" moved a number of days, without the browser's time zone getting in the way. */
+export function shiftDay(day: string, days: number): string {
+  const d = new Date(`${day}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+/** Monday 0 … Sunday 6, as Python's weekday(). */
+const weekday = (day: string) => (new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7;
+
+/** Monday and Sunday of the week to show, as week_of in blog_week.py: the week of the given day, or by default the
+ *  coming week (on a Monday, the week that starts today). */
+export function weekOf(start: string | null, today: string): { from: string; to: string } {
+  const from = start ? shiftDay(start, -weekday(start)) : shiftDay(today, (7 - weekday(today)) % 7);
+  return { from, to: shiftDay(from, 6) };
+}
+
+/** The ISO week number of a day. */
+export function isoWeek(day: string): number {
+  const thursday = shiftDay(day, 3 - weekday(day));
+  const jan1 = Date.UTC(Number(thursday.slice(0, 4)), 0, 1);
+  return 1 + Math.floor((new Date(`${thursday}T00:00:00Z`).getTime() - jan1) / (7 * 86_400_000));
+}
+
+/** The plan's rows in the week, by date and time. */
+export function inWeek(rows: PlanRow[], from: string, to: string): PlanRow[] {
+  return rows.filter(r => from <= String(r.datum ?? "") && String(r.datum ?? "") <= to)
+    .sort((a, b) => (a.datum + (a.tid ?? "")).localeCompare(b.datum + (b.tid ?? "")));
+}
+
+/** The row's publication time, read as Swedish time; an invalid Date when the date or time cannot be read. */
+export function planTime(r: Pick<PlanRow, "datum" | "tid">): Date {
+  const tid = r.tid || DEFAULT_TIME;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(r.datum)) || !/^\d{2}:\d{2}$/.test(tid)) return new Date(NaN);
+  const [h, m] = tid.split(":").map(Number);
+  const d = new Date(`${r.datum}T00:00:00Z`);
+  if (h > 23 || m > 59 || Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== r.datum) return new Date(NaN);
+  return fromStockholm(`${r.datum}T${tid}`);
+}
+
+export function weekState(post: Pick<AdminPost, "published" | "publishedAt"> | null, now: Date): WeekState {
+  return post ? status(post, now) : "saknas";
+}
+
+/** Why a row cannot be approved, or null – the same refusals, in the same order, as refusal() in blog_week.py.
+ *  labelsProblem is checkLabels(post.labels) from lib/labels.ts. */
+export function weekRefusal(row: PlanRow, post: Pick<AdminPost, "published" | "publishedAt"> | null, now: Date,
+  labelsProblem: string | null): string | null {
+  if (!post) return "Artikeln finns inte (fel id i publiceringsschemat?).";
+  if (post.published) return (status(post, now) === "schemalagd" ? "Redan schemalagd" : "Redan publicerad") + " – rörs inte.";
+  const when = planTime(row);
+  if (Number.isNaN(when.getTime())) return "Datum eller tid i publiceringsschemat kan inte läsas (ÅÅÅÅ-MM-DD och TT:MM).";
+  if (when.getTime() <= now.getTime()) return "Publiceringstiden har passerat.";
+  if (labelsProblem) return `Etiketterna: ${labelsProblem}`;
+  const n = composedLength(row.bluesky);
+  if (n && n > BLUESKY_LIMIT) return `Bluesky-texten har ${n} tecken; högst ${BLUESKY_LIMIT}.`;
+  return null;
+}
+
+/** The request for the article's Bluesky post (bluesky_forfragningar/<slug>), apart from created (the server's time).
+ *  The rules check the same fields. */
+export function blueskyRequest(row: PlanRow, slug: string, uid: string) {
+  if (!row.bluesky) throw new Error("Raden har inget Bluesky-inlägg.");
+  return { slug, datum: row.datum, text: row.bluesky.text, tags: [...(row.bluesky.tags ?? [])], en: true as const, by: uid };
 }

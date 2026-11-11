@@ -11,6 +11,8 @@ att det är **avstängt tills du har gjort stegen nedan**. Innan dess gör arbet
 |---|---|---|
 | Webbplatsen vitkirunor.se | GitHub Pages, `.github/workflows/site.yml` | Vid push till `web/**`, och när `publicera.yml` startar den |
 | Export av artiklarna ur Firestore | GitHub Actions, `.github/workflows/publicera.yml` → `scripts/ci_publicera.py` → `src/site_export.py` | Var 30:e minut (:07 och :37) och för hand |
+| Bluesky-förfrågningar från /redaktion in i kön | Samma körning: `scripts/ci_publicera.py` läser `bluesky_forfragningar` och lägger nya i `data/bluesky/ko.json` (`src/bluesky_queue.py`) | Var 30:e minut, med exporten |
+| Veckoplanen till Firestore | `scripts/publiceringsschema_sync.py` på datorn | När du har ändrat `data/publiceringsschema.json` |
 | Bluesky-kön (`data/bluesky/ko.json`) | GitHub Actions, `.github/workflows/bluesky.yml` → `scripts/ci_bluesky.py` → `scripts/bluesky_post.py`, **eller** den lokala appens tråd i `api/main.py` | Från kl. 18 svensk tid. Filen `data/bluesky/postning.json` avgör vem som postar |
 | Webbadmin `/redaktion` | Den statiska webbplatsen. Google-inloggning (Firebase Auth) och Firestore direkt från webbläsaren, skyddat av `web/firestore.rules` | När du vill |
 | Skriva och ändra text, R-figurer, ta bort, veckans artikel, redigera Bluesky-kön | Den lokala appen, som förut | – |
@@ -23,12 +25,54 @@ läses en gång om dygnet, kl. 05:07.
 
 - **Översikt**: vad som är schemalagt de närmaste fyra veckorna, antal utkast, det senast publicerade och de senaste
   körningarna i GitHub Actions.
+- **Veckan**: *Veckans publiceringar (vecka N)*, samma som i den lokala Admin. Se måndagsrutinen nedan.
 - **Innehåll**: sök och filter (Utkast, Schemalagda, Publicerade, Rapporter). På varje rad finns Förhandsgranska,
   Schemalägg (svensk tid), Publicera nu och Avpublicera.
 
 Sidan ändrar bara fälten `published`, `publishedAt`, `month`, `updatedAt` och `by`, med samma betydelse som när den
-lokala appen sparar. Den redigerar aldrig text och tar aldrig bort något, och reglerna tillåter inget annat. En ändring
+lokala appen sparar. Den redigerar aldrig text och tar aldrig bort något, och reglerna tillåter inget annat. Den enda
+andra skrivningen är en Bluesky-förfrågan när du godkänner veckan. Den kan bara skapas, aldrig ändras eller tas bort. En ändring
 syns på webbplatsen inom ungefär en halvtimme, eller direkt om den lokala appen är igång.
+
+## Måndagsrutinen på webben
+
+Allt går från mobilen, och datorn behöver inte vara igång.
+
+1. Öppna https://vitkirunor.se/redaktion/, logga in och välj fliken **Veckan**. Den visar den kommande veckan (på en
+   måndag den vecka som börjar i dag). Med pilarna byter du vecka.
+2. Varje rad visar veckodag, datum och tid, rubrik, spår och lägeschips. Chipsen säger om raden är utkast, schemalagd
+   eller publicerad, om den är godkänd, om engelskan finns, om etiketterna är rätt och hur långt Bluesky-inlägget är.
+   Tryck på *Bluesky-inlägget* för att läsa det. En rad som inte kan godkännas har ingen bock och säger varför: den
+   saknas, är redan live eller schemalagd, tiden har passerat, etiketterna är fel eller Bluesky-texten är för lång.
+3. Tryck på **Godkänn veckans publiceringar** och läs listan. Tryck sedan på **Ja, schemalägg**. Sidan kontrollerar
+   varje rad på nytt mot Firestore. Därefter schemaläggs artikeln till sin tid i svensk tid, på samma sätt som
+   *Schemalägg*. Om artikeln har en engelsk utgåva skapas en Bluesky-förfrågan. Under knappen står resultatet för
+   varje rad.
+4. GitHub Actions lägger förfrågan i `data/bluesky/ko.json` vid nästa körning av "Publicera artiklarna", alltså inom
+   ungefär en halvtimme. Inlägget hamnar före köns andra inlägg samma dag och postas kl. 18 på publiceringsdagen.
+   Commiten heter "Bluesky-kön: inlägg från /redaktion" eller ingår i exportens commit.
+
+"Godkänd" betyder att artikeln är schemalagd eller publicerad. Det läses ur artikeln själv. Om du avpublicerar en
+artikel är den alltså inte godkänd längre. En redan skickad Bluesky-förfrågan ligger dock kvar (se nedan).
+
+**Planen.** Veckoplanen redigerar du som förut i `data/publiceringsschema.json`. /redaktion läser en kopia i Firestore
+(samlingen `publiceringsschema`), så efter varje ändring kör du:
+
+```
+.venv/bin/python scripts/publiceringsschema_sync.py            # visar vad som skulle skrivas
+.venv/bin/python scripts/publiceringsschema_sync.py --skriv    # skriver och läser tillbaka
+```
+
+Skriptet lägger till och uppdaterar rader, men tar aldrig bort något utan `--rensa`. Med `--rensa` tar det bara bort
+rader som inte står i filen och vars artikel inte är schemalagd eller publicerad. Den lokala Admin läser filen
+direkt, som förut. Fältet `godkand` fylls bara i av den lokala Admin.
+
+**Bluesky-förfrågningarna.** En förfrågan finns per artikeladress (`bluesky_forfragningar/<adress>`). När den
+hanterats står utfallet i `data/bluesky/webbforfragningar.json`, och den läggs aldrig in igen, inte heller om du
+stryker inlägget ur `ko.json`. Om du vill att en förfrågan prövas på nytt tar du bort dess rad i den filen. Om
+adressen redan står i kön, postad eller väntande, läggs den inte in en gång till. Det gäller också när du har godkänt
+veckan i den lokala Admin. En förfrågan för en artikel som inte är schemalagd eller publicerad väntar, till exempel om
+du avpublicerade artikeln innan exporten hann köras. Den läggs in om artikeln schemaläggs igen.
 
 ## Det här behöver du göra (i ordning)
 
@@ -99,12 +143,22 @@ aktiverad än – Firestore nekade åtkomst". Det är väntat tills steg 6 är g
 
 ### 6. Driftsätt säkerhetsreglerna
 
-Reglerna ligger i `web/firestore.rules`. Den driftsatta versionen (från 2026-10-22) är identisk med den committade före
-den här ändringen. Det enda som är nytt är att ditt konto (uid i `ADMIN_UIDS`) får läsa artiklarna och ändra deras
-publiceringsfält. Allt annat är oförändrat, och emulatortestet visar det.
+Reglerna ligger i `web/firestore.rules`. Ditt konto (uid i `ADMIN_UIDS`) får läsa artiklarna och ändra deras
+publiceringsfält. Det är driftsatt sedan november 2026. Fliken **Veckan** behöver två regler till, som tillkom
+2026-11-11 och ännu inte är driftsatta:
+
+- **`publiceringsschema`**: ditt konto får läsa planen. Ingen får skriva i den från en webbläsare, och bara
+  synkskriptet skriver.
+- **`bluesky_forfragningar`**: ditt konto får läsa och skapa förfrågningar. Skapandet kontrolleras: exakt fälten
+  `slug`, `datum`, `text`, `tags`, `en`, `created` och `by`, där dokumentets id är adressen. Texten får vara högst 400
+  tecken och taggarna högst 8. `datum` är en datumsträng, `en` är true, `created` är serverns tid och `by` är ditt uid.
+  Ingen får ändra eller ta bort en förfrågan.
+
+Allt annat är oförändrat, och emulatortestet visar det. Innan reglerna är driftsatta säger fliken Veckan
+"Publiceringsschemat kunde inte läsas … Firestore nekade åtkomst". Resten av /redaktion fungerar som förut.
 
 ```
-cd tests/firestore_rules && npm ci && npm test        # 29 kontroller i emulatorn (kräver Java 21)
+cd tests/firestore_rules && npm ci && npm test        # 60 kontroller i emulatorn (kräver Java 21)
 cd ../../web && npx firebase-tools@14 login            # om du inte redan är inloggad
 # OBS: "--only firestore:rules" hoppar tyst över databasen vitki (säger ändå Deploy complete) – använd "--only firestore"
 npx firebase-tools@14 deploy --only firestore --project runes-1656b
@@ -117,6 +171,10 @@ npx firebase-tools@14 deploy --only firestore --project runes-1656b
 3. På /redaktion: Schemalägg testutkastet till en tid långt fram. Kontrollera att den lokala Admin visar det som
    schemalagt. Avpublicera det sedan.
 4. Ta bort testutkastet i den lokala appen.
+5. Öppna fliken **Veckan**. Vecka 47 ska visa Freja (tis 17 nov) och De gamla landen: Skåne (fre 20 nov) som utkast med
+   bock, och med pilen ska vecka 48 visa lerkanten och Fyra stenar för två barn. Godkänn inget som ett test. Det
+   schemalägger artiklarna på riktigt och skickar Bluesky-förfrågan, och förfrågan kan inte tas bort från webben. Gör
+   det först på måndagen, när veckan ska ut.
 
 ## Rulla tillbaka
 
@@ -131,6 +189,10 @@ npx firebase-tools@14 deploy --only firestore --project runes-1656b
   → historiken. Det går också från terminalen:
   `git show 5502d71:web/firestore.rules > web/firestore.rules && cd web && npx firebase-tools@14 deploy --only firestore --project runes-1656b`.
   Utan de nya reglerna visar /redaktion "inte aktiverad", och allt annat fungerar som förut.
+- **Veckan på /redaktion:** schemaläggningen gör du om på /redaktion (Avpublicera) eller i den lokala appen. Bluesky-
+  inlägget stryker du ur `data/bluesky/ko.json` (committa och pusha). Det kommer inte tillbaka, eftersom förfrågan
+  står som hanterad i `data/bluesky/webbforfragningar.json`. Om exporten inte har hunnit hantera förfrågan än tar du
+  bort dokumentet i Firebase Console → Firestore → vitki → `bluesky_forfragningar`.
 - **/redaktion:** ta bort variablerna `FIREBASE_WEB_API_KEY` och `FIREBASE_WEB_APP_ID` och bygg om webbplatsen. Då
   säger sidan "inte aktiverad".
 - **En ändring gjord på /redaktion:** gör om den åt andra hållet, på /redaktion eller i den lokala appen. Bara
@@ -156,12 +218,22 @@ npx firebase-tools@14 deploy --only firestore --project runes-1656b
 - **Förstagångspublicering på /redaktion** sparar inte `snapshot`, det vill säga mönstrens läge som utkastet till
   månadens fynd jämförs med. Publicera en sådan artikel i den lokala appen om jämförelsen spelar roll.
 - **Kostnad:** exporten läser cirka 70 artiklar var 30:e minut, alltså cirka 3 400 läsningar om dygnet, plus
-  sidvisningarna en gång om dygnet. Firestores gratiskvot är 50 000 läsningar om dygnet.
+  sidvisningarna en gång om dygnet. Dessutom läses alla Bluesky-förfrågningar i varje körning. Med två om veckan blir
+  det cirka 100 om året, alltså upp till cirka 4 800 läsningar om dygnet efter ett år. Firestores gratiskvot är
+  50 000 läsningar om dygnet.
+- **Bluesky-kön och två som committar:** "Bluesky-kön" (kl. 18) och "Publicera artiklarna" kan båda ändra `ko.json`. Om
+  en förfrågan läggs in i samma minut som kvällens inlägg markeras som postat kan Bluesky-jobbets `git pull --rebase`
+  få en konflikt. Jobbet blir då rött med instruktionen att fylla i `posted` för hand. Det är osannolikt, eftersom
+  exporten körs :07 och :37, men godkänn helst inte veckan precis kring kl. 18.
+- **Om exportens kontroll stoppar** (till exempel "Figurer saknas") väntar också Bluesky-förfrågningarna, eftersom
+  körningen avbryts före commiten. De läggs in vid nästa körning som går igenom.
 - **Schemalagda arbetsflöden** stängs av av GitHub efter 60 dagar utan aktivitet i repot. Om det händer slår du på dem
   igen under Actions.
 - **Tester:**
-  - `tests/test_ci_publicera.py` testar exporten, Bluesky-logiken och att `requirements-publicera.txt` är kopierad ur
-    `requirements.lock`.
-  - `web/scripts/redaktion.test.mjs` testar fälten /redaktion skriver, svensk tid och säkerhetspolicyn.
+  - `tests/test_ci_publicera.py` testar exporten, Bluesky-logiken, att förfrågningarna från /redaktion slås in i kön
+    (mot en falsk Firestore), synkskriptet och att `requirements-publicera.txt` är kopierad ur `requirements.lock`.
+  - `tests/test_blog_week.py` testar den lokala Veckans publiceringar och samma insättning i kön.
+  - `web/scripts/redaktion.test.mjs` testar fälten /redaktion skriver, svensk tid, veckans fönster och avvisningar
+    (samma som `blog_week.py`), etiketterna, Bluesky-förfrågans fält och säkerhetspolicyn.
   - `tests/firestore_rules` testar reglerna i emulatorn.
-  - Alla tre körs i `.github/workflows/ci.yml`.
+  - Alla körs i `.github/workflows/ci.yml`.

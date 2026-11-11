@@ -5,6 +5,10 @@ spår och ett engelskt Bluesky-inlägg. Godkännandet går samma väg som Schema
 säkerhetskopia, publiceringstiden som datum), lägger Bluesky-inlägget i kön (data/bluesky/ko.json) med
 publiceringsdagen som datum och skriver in godkand i planen. En artikel som redan är publicerad eller schemalagd, eller
 vars tid har passerat, rörs aldrig.
+
+Samma plan finns i Firestore (samlingen publiceringsschema, skickad med scripts/publiceringsschema_sync.py), så att
+webbadmin /redaktion kan visa och godkänna veckan från mobilen. Där läggs Bluesky-inlägget i kön via en förfrågan som
+GitHub Actions slår in (src/bluesky_queue.py, samma regel som här).
 """
 from __future__ import annotations
 
@@ -18,13 +22,13 @@ from pydantic import BaseModel, Field, ValidationError
 
 from api.auth import require_admin
 from api.routers import blog
+from src.bluesky_queue import LIMIT, composed_length, queue_bluesky  # noqa: F401 - shared with scripts/ci_publicera.py
 
 router = APIRouter()
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SCHEMA = os.path.join(ROOT, "data", "publiceringsschema.json")
 KO = os.path.join(ROOT, "data", "bluesky", "ko.json")
 TZ = ZoneInfo("Europe/Stockholm")
-LIMIT = 300  # Bluesky's limit, as in scripts/bluesky_post.py
 # The article's own fields that a scheduling writes back unchanged (blog.PostRequest)
 FIELDS = ("slug", "title", "summary", "body", "title_en", "summary_en", "body_en", "month", "author", "topic", "featured",
           "labels")
@@ -41,14 +45,6 @@ def week_of(start: dt.date | None, today: dt.date) -> tuple[dt.date, dt.date]:
     the week that starts today)."""
     monday = start - dt.timedelta(days=start.weekday()) if start else today + dt.timedelta(days=(7 - today.weekday()) % 7)
     return monday, monday + dt.timedelta(days=6)
-
-
-def composed_length(b: dict | None) -> int | None:
-    """The Bluesky post's length with its tags, counted as scripts/bluesky_post.compose counts it."""
-    if not b:
-        return None
-    tags = b.get("tags") or []
-    return len((b.get("text") or "").strip() + ("\n\n" + " ".join(f"#{t}" for t in tags) if tags else ""))
 
 
 def load_schema() -> dict:
@@ -126,21 +122,6 @@ def _parse_from(value: str | None) -> dt.date | None:
 
 def _today() -> dt.date:
     return dt.datetime.now(TZ).date()
-
-
-def queue_bluesky(ko: dict, slug: str, datum: str, b: dict) -> bool:
-    """Puts the post in the Bluesky queue with the publication day as its date, unless the slug is already there (posted
-    or waiting; a removed row does not count). It goes before the waiting posts of the same or a later date, since the
-    queue sends one post a day in list order: so it goes out at 18:00 on the publication day and the rest of the queue
-    moves on a day. Returns whether it was added."""
-    items = ko.setdefault("items", [])
-    if any(i.get("slug") == slug and not i.get("removed") for i in items):
-        return False
-    item = {"date": datum, "slug": slug, "en": True, "text": b["text"].strip(), "tags": list(b.get("tags") or [])}
-    at = next((n for n, i in enumerate(items)
-               if not i.get("posted") and not i.get("removed") and str(i.get("date", "")) >= datum), len(items))
-    items.insert(at, item)
-    return True
 
 
 @router.get("/admin/blog/week")

@@ -36,3 +36,14 @@ export const typeOf = (labels: string[] | undefined) => (labels ?? []).find(isTy
 /** The address of the list filtered on a label. */
 export const labelPath = (label: string, lang: string) =>
   `${lang === "en" ? "/en/artiklar/" : "/artiklar/"}?etikett=${encodeURIComponent(label)}`;
+
+/** Why the labels break the list (unknown, more than one type, too many, twice), or null – as check() in
+ *  src/blog_labels.py, which refuses the same when Admin saves. */
+export function checkLabels(labels: string[]): string | null {
+  const unknown = labels.filter(x => !ENGLISH.has(x));
+  if (unknown.length) return "Okänd etikett: " + unknown.join(", ");
+  if (labels.filter(isType).length > 1) return "Bara en typ per artikel (" + TYPES.map(([sv]) => sv).join(", ") + ").";
+  if (labels.length > MAX_LABELS) return `Högst ${MAX_LABELS} etiketter.`;
+  if (new Set(labels).size !== labels.length) return "Samma etikett två gånger.";
+  return null;
+}
