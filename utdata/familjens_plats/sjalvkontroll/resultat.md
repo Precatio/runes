@@ -17,7 +17,7 @@ form och län i `klasser.csv`. Stenarnas län: 653 av 657 ur stenens egen KMR-po
 ## Proven (657 stenar: 185 i grupp, 472 ensamma; Holm över de fyra)
 - **K1 (a) bara granskade gravfält – står sig.** 73 mot 43 %; oddskvot 2,60 [1,7–3,9], p 6,5·10⁻⁶, Holm 2,6·10⁻⁵.
   Halva A 2,3 (p 0,004), halva B 3,2 (p 0,0004).
-- **K2 (b) bara gravfält med yngre järnålderns former – står sig.** 33 mot 16 %; oddskvot 2,56 [1,6–4,0],
+- **K2 (b) bara gravfält med yngre järnålderns former – står sig.** 33 mot 15 %; oddskvot 2,56 [1,6–4,0],
   p 5,8·10⁻⁵, Holm 0,0002. Halva A 2,3 (p 0,01), halva B 3,0 (p 0,002).
 - **K3a (c) län i stället för landskap – står sig.** 82 mot 55 %; oddskvot 2,33 [1,5–3,7], p 0,0004, Holm 0,0004.
   Halva A 2,4 (p 0,006), halva B 2,3 (p 0,02).

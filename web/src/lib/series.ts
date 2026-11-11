@@ -12,6 +12,9 @@ export const SERIES: Series[] = [
   { key: "tyde-den-som-kan", sv: "Tyde den som kan", en: "Read it who can", match: /^Tyde den som kan/,
     about: "De olästa runinskrifterna, prövade med kryptologins metoder.",
     aboutEn: "The unread runic inscriptions, tested with the methods of cryptology." },
+  { key: "hundra-ar-av-runfragor", sv: "Hundra år av runfrågor", en: "A hundred years of runic questions", match: /^Hundra år av runfrågor/,
+    about: "Vad Fornvännen och Futhark har frågat om runorna och runstenarna, årtionde för årtionde sedan 1906.",
+    aboutEn: "What Fornvännen and Futhark have asked about runes and runestones, decade by decade since 1906." },
 ];
 export const MIN_PARTS = 2;
 
