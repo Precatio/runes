@@ -50,7 +50,7 @@ artiklar, Verkstaden, Metodhörnan, ”Ett påstående från förr, prövat” o
   Planen står i `data/publiceringsschema.json`, och nya veckor fylls i där. Appen publicerar själv när tiden kommer, så
   länge den är igång.
 - **Närmast:** mån 16 nov – Freja (tis 17) och De gamla landen: Skåne (fre 20); mån 23 nov – lerkanten (tis 24) och
-  Fyra stenar för två barn (fre 27); mån 7 dec – första stora genomgången.
+  Fyra stenar för två barn (fre 27); mån 7 dec – första stora genomgången (på dagordningen: **byt nyckeln för tjänstekontot vitki-publicera**, som hamnade i chatten 11 nov – Google Cloud → Keys → ny JSON-nyckel → uppdatera GitHub-hemligheten FIREBASE_SERVICE_ACCOUNT → radera filerna).
 
 **Genomgång med Viktor första måndagen i varje månad, ungefär 45 minuter.**
 - Viktor godkänner allt som är klart på en gång: artiklar att publicera, rapporter, Zenodo och licensfrågor.
