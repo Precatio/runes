@@ -24,11 +24,13 @@ SEA <- "#e4e9ec"; LAND <- "#fbfaf7"; INK <- "#1d2226"; RUST <- "#b7410e"
 p <- ggplot() +
   geom_sf(data = land, fill = LAND, colour = "#b9c2c8", linewidth = 0.2) +
   geom_sf(data = lakes, fill = SEA, colour = "#c9d2d8", linewidth = 0.12) +
-  geom_sf(data = pts[!pts$lost, ], colour = INK, size = 1.05, alpha = 0.7, stroke = 0) +
-  geom_sf(data = pts[pts$lost, ], colour = RUST, size = 1.25, alpha = 0.95, stroke = 0) +
+  geom_sf(data = pts[!pts$lost & !pts$dk, ], colour = INK, size = 1.05, alpha = 0.7, stroke = 0) +
+  geom_sf(data = pts[pts$lost & !pts$dk, ], colour = RUST, size = 1.25, alpha = 0.95, stroke = 0) +
+  # Stenar i dagens Sverige med danska signum (Skåne, Blekinge): ringar, räknas inte i korpusen.
+  geom_sf(data = pts[pts$dk, ], shape = 21, fill = NA, colour = INK, size = 1.5, stroke = 0.45) +
   coord_sf(xlim = c(x0, x1), ylim = c(y0, y1), expand = FALSE, datum = NA) +
   theme_void() + theme(plot.background = element_rect(fill = SEA, colour = NA),
                        panel.background = element_rect(fill = SEA, colour = NA), plot.margin = margin(0, 0, 0, 0))
 ggsave(file.path(here, "bilder", "karta_alla.png"), p, width = 216, height = 303, units = "mm", dpi = 320, bg = SEA,
        device = ragg::agg_png)
-cat("karta_alla.png:", nrow(pts), "stenar,", sum(pts$lost), "försvunna\n")
+cat("karta_alla.png:", sum(!pts$dk), "svenska stenar,", sum(pts$lost & !pts$dk), "försvunna,", sum(pts$dk), "danska ringar\n")

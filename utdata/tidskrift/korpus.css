@@ -257,6 +257,7 @@ blockquote.pull { hyphens: none; }
 .kartleg li { display: grid; grid-template-columns: 4mm 1fr; align-items: start; margin-bottom: 1.6mm; }
 .prick { display: block; width: 2.3mm; height: 2.3mm; border-radius: 50%; background: #1d2226; margin-top: 1mm; }
 .prick.rost { background: var(--rust); }
+.prick.ring { background: none; border: .45mm solid #1d2226; width: 2.3mm; height: 2.3mm; box-sizing: border-box; }
 .kartpanel .knot { font-size: 7.4pt; color: var(--mute); margin: 0; }
 .kartkredit { position: absolute; right: calc(12mm + var(--b)); bottom: calc(9mm + var(--b)); width: 60mm; font: 400 6.6pt/1.4 var(--sans); color: #3a4249; }
 /* Runstenarna i siffror */
@@ -316,3 +317,5 @@ blockquote.pull { hyphens: none; }
 .innehall .ttitle { font-size: 10pt; }
 .tsida { font-size: 13pt; }
 .innehallsspalt .kolofon { margin-top: 5mm; }
+
+.nohy { hyphens: none; -webkit-hyphens: none; white-space: nowrap; }

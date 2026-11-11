@@ -145,20 +145,20 @@ APP = {
 # läggs in med "portratt": "bilder/<fil>.jpg" (tomt = inget porträtt).
 REDAKTOR_SV = dict(
     rubrik="Alla stenar på en gång",
-    text=["Mitt intresse för historia började i vår egen. Som ung läste jag Eddan och förundrades över Tor som slogs med jättarna, och över Oden som offrade sig själv för att vinna visdom. Som vuxen kom jag att arbeta med dataanalys, att leta efter mönster i stora mängder data. Korpus är platsen där de två möts.",
-          "Runforskningen har länge handlat om den enskilda stenen: en läsning, en ristare, ett ord. Det har gett oss ett rikt material, insamlat och digitaliserat av generationer av forskare – utan deras idoga arbete hade inget av detta varit möjligt. Men vissa frågor har sällan kunnat prövas: de som bara går att besvara om man räknar alla stenar på en gång.",
-          "Korpus är Vitkis tidskrift för just de frågorna. Vi mäter hela korpusen – drygt 2 300 svenska runstenar – mot jordarter, strandlinjer, ortnamn, gravfält och vägar, och vi prövar varje mönster mot slumpen innan vi kallar det ett fynd. Analysplanen låses innan vi räknar, och när ett resultat inte håller säger vi det.",
-          "Det som berör mig mest är ofta det som inte står på stenarna. Döttrarna, som så sällan fick samma röst som sönerna. Den gamla tron, som rymde många gudar och till och med gav plats åt den vite Krist, men som till slut fick ge vika för en lära med en enda gud. Jag vill se vilka spår som ändå finns kvar, och lära mig mer om vårt arv: hur de tänkte, och vilken visdom de ville föra vidare.",
-          "I det här numret möter du döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som fortfarande bärs av svenskar i dag. Varje artikel kan läsas på trettio sekunder, på fem minuter eller på djupet, och alla data finns öppet på vitkirunor.se. Jag hoppas att du hittar hit i bruset av allt som pockar på uppmärksamhet, och att vi, på vårt sätt, kan bidra med något till runforskningen."],
+    text=["Mitt intresse för historia började med vår egen. Som ung läste jag Eddan och fängslades av Tor i striden mot jättarna och av Oden, som offrade sig själv för att vinna visdom. I yrkeslivet blev dataanalys mitt fält: att söka mönster i stora mängder data. Korpus är platsen där de två intressena möts.",
+          "Runforskningen har länge utgått från den enskilda stenen – en läsning, en ristare, ett ord. Det arbetet har gett oss ett rikt och väldokumenterat material, insamlat och digitaliserat av generationer av forskare. Utan deras idoga insatser hade inget av det som följer varit möjligt. Men vissa frågor har sällan kunnat prövas: de som bara går att besvara när man räknar alla stenar på en gång.",
+          "Det är de frågorna Korpus är till för. Vi ställer hela korpusen – drygt 2 300 svenska runstenar – mot jordarter, strandlinjer, ortnamn, gravfält och vägar, och vi prövar varje mönster mot slumpen innan vi kallar det ett fynd. Analysplanen låses innan vi räknar, och när ett resultat inte håller redovisar vi det lika öppet som när det gör det.",
+          "Det som berör mig mest är ofta det som stenarna förtiger. Döttrarna, som så sällan fick samma röst som sönerna. Den gamla tron, som rymde många gudar och till och med gav plats åt den vite Krist, men som till sist fick ge vika för en lära med en enda gud. Jag vill veta vilka spår som ändå finns kvar och förstå mer av vårt arv: hur människorna tänkte, och vilken visdom de ville föra vidare.",
+          "I det här numret möter du döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som svenskar fortfarande bär i dag. Varje artikel kan läsas på trettio sekunder, på fem minuter eller på djupet, och alla data finns öppet tillgängliga på vitkirunor.se. Min förhoppning är att Korpus ska nå fram genom bruset av allt som tävlar om vår uppmärksamhet – och att vi på vårt sätt kan bidra till runforskningen."],
     portratt="",
 )
 REDAKTOR_EN = dict(
     rubrik="Every stone at once",
-    text=["My interest in history began with our own. As a young man I read the Edda and marvelled at Thor fighting the giants, and at Odin sacrificing himself to win wisdom. As an adult I came to work in data analysis, looking for patterns in large amounts of data. Korpus is where the two meet.",
-          "Runic research has long been about the single stone: one reading, one carver, one word. That has given us a rich body of material, gathered and digitised by generations of scholars – without their patient work none of this would be possible. But some questions have seldom been tested: those that can only be answered by counting every stone at once.",
-          "Korpus is Vitki's journal for exactly those questions. We measure the whole corpus – more than 2,300 Swedish runestones – against soils, shorelines, place names, grave fields and roads, and we test every pattern against chance before we call it a finding. The analysis plan is locked before we count, and when a result does not hold, we say so.",
-          "What moves me most is often what the stones do not say. The daughters, who so seldom got the same voice as the sons. The old faith, which held many gods and even made room for the White Christ, but in the end had to give way to a teaching with a single god. I want to see what traces remain, and to learn more about our heritage: how they thought, and what wisdom they wanted to pass on.",
-          "In this issue you will meet the daughters who almost never got a stone, the young men who did not come home from their journeys, and the names that Swedes still carry today. Every article can be read in thirty seconds, in five minutes or in depth, and all data are openly available at vitkirunor.se. I hope you find us in the noise of everything that competes for attention, and that we, in our way, can add something to runic research."],
+    text=["My interest in history began with our own. As a young man I read the Edda and was captivated by Thor in his battles with the giants, and by Odin, who sacrificed himself to win wisdom. In my working life, data analysis became my field: searching for patterns in large amounts of data. Korpus is where those two interests meet.",
+          "Runic research has long started from the single stone – one reading, one carver, one word. That work has given us a rich and well-documented body of material, gathered and digitised by generations of scholars. Without their patient efforts, none of what follows would be possible. Yet some questions have seldom been tested: those that can only be answered by counting every stone at once.",
+          "Those are the questions Korpus exists for. We set the whole corpus – more than 2,300 Swedish runestones – against soils, shorelines, place names, grave fields and roads, and we test every pattern against chance before we call it a finding. The analysis plan is locked before we count, and when a result does not hold, we report it as openly as when it does.",
+          "What moves me most is often what the stones leave unsaid. The daughters, who so seldom got the same voice as the sons. The old faith, which held many gods and even made room for the White Christ, but in the end had to give way to a teaching with a single god. I want to know what traces remain, and to understand more of our heritage: how people thought, and what wisdom they wished to pass on.",
+          "In this issue you will meet the daughters who almost never got a stone, the young men who did not come home from their journeys, and the names that Swedes still carry today. Every article can be read in thirty seconds, in five minutes or in depth, and all data are openly available at vitkirunor.se. My hope is that Korpus will reach you through the noise of everything competing for our attention – and that we, in our way, can contribute to runic research."],
     portratt="",
 )
 REDAKTOR = {"sv": REDAKTOR_SV, "en": REDAKTOR_EN}
@@ -173,8 +173,9 @@ NY = {
                  ("Utgivare", "Vitki · vitkirunor.se"), ("Licens", "Texterna: CC BY 4.0. Bilderna har egna licenser, angivna vid varje bild.")],
         kflik="Kartan", krubrik="Var stenarna står",
         ktext="Varje prick är en vikingatida runsten eller ett fragment av en, där Samnordisk runtextdatabas placerar den. Tätast står de runt Mälaren; Uppland ensamt har hälften av alla.",
-        kleg=[("finns kvar", "{bev}"), ("försvunna enligt databasen, kända från äldre avbildningar", "{lostk}")],
-        knot="{Nk} av korpusens {N} stenar har en plats i databasen. Skåne, Blekinge och Halland hörde till Danmark; deras stenar har danska signum och är inte med.",
+        kleg=[("finns kvar", "{bev}"), ("försvunna enligt databasen, kända från äldre avbildningar", "{lostk}"),
+              ("i Skåne och Blekinge, som då hörde till Danmark", "{dk}")],
+        knot="{Nk} av korpusens {N} stenar har en plats i databasen. Ringarna är vikingatida runstenar i dagens Sverige som har danska signum; de räknas inte i korpusens siffror på nästa sida.",
         kkredit="Karta: Vitki, efter Samnordisk runtextdatabas (ODbL). Kustlinjer och sjöar: Natural Earth.",
         sflik="I siffror", srubrik="Runstenarna i siffror",
         sdeck="Det här är korpusen som {namn} räknar på: alla vikingatida runstenar och fragment av runstenar från Sverige i Samnordisk runtextdatabas. Varje tal är räknat ur databasen för det här numret.",
@@ -208,8 +209,9 @@ NY = {
                  ("Publisher", "Vitki · vitkirunor.se"), ("Licence", "Texts: CC BY 4.0. Images carry their own licences, given with each image.")],
         kflik="The map", krubrik="Where the stones stand",
         ktext="Every dot is a Viking-age runestone or a fragment of one, where the Scandinavian Runic-text Database places it. They stand densest around Lake Mälaren; Uppland alone has half of them.",
-        kleg=[("still exists", "{bev}"), ("lost according to the database, known from older drawings", "{lostk}")],
-        knot="{Nk} of the corpus's {N} stones have a location in the database. Skåne, Blekinge and Halland belonged to Denmark; their stones have Danish signa and are not included.",
+        kleg=[("still exists", "{bev}"), ("lost according to the database, known from older drawings", "{lostk}"),
+              ("in Skåne and Blekinge, which then belonged to Denmark", "{dk}")],
+        knot="{Nk} of the corpus's {N} stones have a location in the database. The rings are Viking-age runestones in present-day Sweden with Danish signa; they are not counted in the corpus figures on the next page.",
         kkredit="Map: Vitki, after the Scandinavian Runic-text Database (ODbL). Coastlines and lakes: Natural Earth.",
         sflik="In numbers", srubrik="The runestones in numbers",
         sdeck="This is the corpus {namn} counts: every Viking-age runestone and fragment of a runestone from Sweden in the Scandinavian Runic-text Database. Every number is counted from the database for this issue.",
@@ -271,7 +273,15 @@ def korpusfakta():
     k["prov"].append(("*", ovr, round(100 * ovr / k["N"])))
     k["ristare"] = [(re.sub(r"\s+\d+$", "", r), n) for r, n in ristare.most_common(5)]
     assert k["ristare"] == [("Öpir", 111), ("Balle", 76), ("Fot", 68), ("Åsmund", 67), ("Gunnar", 42)], k["ristare"]
-    punkter = [dict(signum=r["signum"], lat=r["lat"], lon=r["lon"], lost=r["flags"]["lost"]) for r in st if r["lat"] is not None]
+    punkter = [dict(signum=r["signum"], lat=r["lat"], lon=r["lon"], lost=r["flags"]["lost"], dk=False) for r in st if r["lat"] is not None]
+    # Viktor 2026-11-11: kartan visar också stenarna i dagens Sverige som då var danska (Skåne, Blekinge, Halland; DR-signum).
+    # De ritas som ringar och räknas bara här, aldrig i korpusens tal (Sverige-fokus: separata tal).
+    dk = [r for r in json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["inscriptions"]
+          if r["signum"].startswith("DR ") and r["period"] == "V" and "runsten" in (r.get("object") or "").lower()
+          and (r.get("district") or "").split(", ")[-1] in ("Skåne", "Blekinge", "Halland") and r["lat"] is not None]
+    k["dk"] = len(dk)
+    assert k["dk"] == 61, k["dk"]
+    punkter += [dict(signum=r["signum"], lat=r["lat"], lon=r["lon"], lost=r["flags"]["lost"], dk=True) for r in dk]
     return k, punkter
 
 
@@ -296,7 +306,7 @@ def fyll(s, k, sprak, namn="Korpus"):
 
 
 def kartsida(N, k, sprak):
-    leg = "".join(f'<li><i class="prick{" rost" if i else ""}"></i><span><b>{fyll(v, k, sprak)}</b> {t}</span></li>' for i, (t, v) in enumerate(N["kleg"]))
+    leg = "".join(f'<li><i class="prick{["", " rost", " ring"][i]}"></i><span><b>{fyll(v, k, sprak)}</b> {t}</span></li>' for i, (t, v) in enumerate(N["kleg"]))
     return f"""
 <section class="kartsida">
   <img class="bg" src="bilder/karta_alla.png" alt="">
@@ -637,7 +647,10 @@ def bygg(L, namn, arts, sidor, k, tryck=False):
   <p class="webb">{L["webb"]} <b>vitkirunor.se{"/en" if sprak == "en" else ""}/artiklar/{a["slug"]}</b></p></div>
 </section>""")
     R = REDAKTOR[sprak]
-    led = "".join(f'<p{" class=forsta" if i == 0 else ""}>{t}</p>' for i, t in enumerate(R["text"]))
+    # Typografi: hårt mellanrum i tusental (2 300) och ingen avstavning av webbadressen.
+    def _typo(t):
+        return re.sub(r"(\d) (\d{3})", "\\1\u00a0\\2", t).replace("vitkirunor.se", '<span class="nohy">vitkirunor.se</span>')
+    led = "".join(f'<p{" class=forsta" if i == 0 else ""}>{_typo(t)}</p>' for i, t in enumerate(R["text"]))
     portratt = f'<img class="portratt" src="{R["portratt"]}" alt="Viktor Kvant">' if R.get("portratt") else ""
     kolofon = "".join(f'<div><b>{h.format(namn=namn)}</b> {t}</div>' for h, t in N["kolofon"])
     bak = "".join(f'<div class="bakblock"><div class="slab">{h.format(namn=namn)}</div><p>{t.format(namn=namn)}</p></div>' for h, t in L["bak"])
