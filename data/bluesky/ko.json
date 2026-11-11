@@ -451,6 +451,19 @@
   },
   {
    "date": "2026-11-17",
+   "slug": "ingen-pa-runstenarna-hette-freja",
+   "en": true,
+   "text": "No one on Sweden's runestones was called Freja. Today 7,000 Swedes are. We counted every Old Norse first name in use now: the stones' names are ageing with their bearers, while the gods' names (Freja, Idun, Embla, Loke) grow.",
+   "tags": [
+    "OldNorse",
+    "Skystorians",
+    "runestones",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2026-11-17",
    "slug": "runorna-som-fattas",
    "en": true,
    "text": "Many runestones have places where runes have been lost. We are building a model that suggests what stood there and how sure it is. Here is how it is tested: six trials with known answers and calibrated percentages.",
@@ -486,6 +499,20 @@
     "OldNorse",
     "Skystorians",
     "MedievalSky",
+    "EarlyMedieval",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2026-11-20",
+   "slug": "de-gamla-landen-skane",
+   "en": true,
+   "text": "New in the series The old lands: Skåne around AD 1000, a Danish land in change. Uppåkra fades, the king builds ring forts and a church in Lund. From the shore at Trelleborg to the land assembly east of Lund.",
+   "tags": [
+    "runestones",
+    "MedievalSky",
+    "archaeology",
     "EarlyMedieval",
     "VikingAge",
     "Vikings"
