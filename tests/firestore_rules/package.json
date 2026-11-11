@@ -1,0 +1,14 @@
+{
+  "name": "vitki-firestore-rules-test",
+  "private": true,
+  "description": "Testar web/firestore.rules i Firebase-emulatorn (kräver Java 11+). Driftsätter ingenting.",
+  "type": "module",
+  "scripts": {
+    "test": "firebase emulators:exec --only firestore --project demo-vitki \"node --test rules.test.mjs\""
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "5.0.2",
+    "firebase": "12.19.0",
+    "firebase-tools": "14.27.0"
+  }
+}

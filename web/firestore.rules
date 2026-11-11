@@ -174,10 +174,42 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
-    // Blog posts (Månadens fynd): written and read only by the server (api/routers/blog.py), which serves the
-    // published ones at /api/blog/posts. Closed to browsers, as by the default rule below.
+    // The editor: the founder's account, the same uid as ADMIN_UIDS for the local server (api/auth.py). A uid only names
+    // the account and gives no access by itself, so it can stand in this public file. To let someone else use the web
+    // admin, add their uid here and deploy the rules.
+    function isEditor() {
+      return request.auth != null && request.auth.uid in ['tOK1WNJre6M3MlWS5NKyOy5P7Eg1'];
+    }
+
+    // "YYYY-MM" of a time in UTC, as the server writes month (api/routers/blog.py: publishedAt.strftime("%Y-%m"))
+    function monthOf(t) {
+      return string(t.year()) + '-' + (t.month() < 10 ? '0' : '') + string(t.month());
+    }
+
+    // A change of publication from the web admin (/redaktion, web/src/lib/redaktion.ts): only the publication fields
+    // change, with the same meaning as the server's save – published, publishedAt and month (when published), who made
+    // the change (by: the editor's own uid) and when (updatedAt: the server's time). Unpublishing keeps date and month.
+    function validPublication() {
+      let d = request.resource.data;
+      let changed = d.diff(resource.data).affectedKeys();
+      return changed.hasOnly(['published', 'publishedAt', 'month', 'updatedAt', 'by'])
+        && changed.hasAll(['updatedAt'])
+        && d.published is bool
+        && d.by == request.auth.uid
+        && d.updatedAt == request.time
+        && (d.published
+          ? d.publishedAt is timestamp && d.month == monthOf(d.publishedAt)
+          : !changed.hasAny(['publishedAt', 'month']));
+    }
+
+    // Articles and research reports. Written and read by the server (api/routers/blog.py; the Admin SDK is not bound by
+    // these rules), which serves the published ones; the public website is built from their export (src/site_export.py).
+    // From a browser only the editor may read them (drafts too) and change their publication; nobody may create,
+    // delete or edit their text from a browser – that stays with the local app.
     match /posts/{postId} {
-      allow read, write: if false;
+      allow read: if isEditor();
+      allow update: if isEditor() && validPublication();
+      allow create, delete: if false;
     }
 
     // Votes from the public website (web/src/components/SiteVote.tsx): anyone may cast one, with exactly these fields

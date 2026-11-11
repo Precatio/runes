@@ -14,6 +14,10 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:123:web:456",
 };
 
+// Whether the build has the Firebase web app's real config (the public website gets it only from the repository
+// variables in site.yml; without it /redaktion says it is not activated instead of failing)
+export const FIREBASE_CONFIGURED = !!process.env.NEXT_PUBLIC_FIREBASE_API_KEY && !!process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
+
 // Initialize Firebase only once (important for Next.js, which may evaluate the module again)
 async function app() {
   const { initializeApp, getApps, getApp } = await import("firebase/app");

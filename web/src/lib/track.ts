@@ -43,9 +43,10 @@ export const isBot = () => {
 };
 
 // Counting happens only on the public website, never on a developer's machine, for robots or in a browser the
-// founder has switched off
+// founder has switched off – and never on the web admin (/redaktion), which only the founder uses
 export const counting = () => {
   if (!PUBLIC_SITE || !SITE_PROJECT || typeof window === "undefined") return false;
+  if (window.location.pathname.startsWith("/redaktion")) return false;
   const host = window.location.hostname;
   return host !== "localhost" && host !== "127.0.0.1" && !isBot() && counted();
 };

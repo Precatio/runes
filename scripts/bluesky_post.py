@@ -9,7 +9,11 @@ vanliga lösenordet. Det ligger i .env som BLUESKY_HANDLE och BLUESKY_APP_PASSWO
     .venv/bin/python -m scripts.bluesky_post --nu SLUG [--posta]        # ett visst inlägg ur kön nu, före sitt datum
 Ett inlägg i kön kan ha "credit": en text som postas som svar direkt under inlägget (t.ex. de öppna skanningarnas
 skannare, institution, projekt, licens och DOI); svarets adress skrivs i "credit_reply".
-Kön körs dagligen kl. 18 av analysmotorn (api/main.py, tråden bluesky; BLUESKY_AUTOPOST=0 stänger av).
+Kön körs dagligen kl. 18 – antingen av analysmotorn (api/main.py, tråden bluesky; BLUESKY_AUTOPOST=0 eller
+BLUESKY_LOCAL=0 stänger av) eller av GitHub Actions (.github/workflows/bluesky.yml, scripts/ci_bluesky.py). Vilken av
+dem som postar står i data/bluesky/postning.json ("postar": "lokal" eller "ci"; posting_place()), så att inget inlägg
+går ut två gånger. BLUESKY_ARTICLES=site läser artiklarna ur webbplatsens export (web/content/articles.json) i stället
+för ur Firestore – så gör GitHub Actions, som inte behöver någon databasbehörighet för att posta.
 """
 from __future__ import annotations
 
@@ -52,7 +56,34 @@ def thumbnail(url: str) -> tuple[bytes, str] | None:
     return None
 
 
+SITE_ARTICLES = os.path.join(ROOT, "web", "content", "articles.json")
+SWITCH = os.path.join(ROOT, "data", "bluesky", "postning.json")
+
+
+def posting_place() -> str:
+    """Where the daily queue is posted from: "lokal" (the analysis engine's thread, the default – also when the switch
+    file is missing or unreadable) or "ci" (GitHub Actions)."""
+    try:
+        with open(SWITCH, encoding="utf-8") as fh:
+            return "ci" if json.load(fh).get("postar") == "ci" else "lokal"
+    except (OSError, ValueError, AttributeError):
+        return "lokal"
+
+
+def local_posting() -> bool:
+    """May the local app's thread post the queue? Not when the switch says GitHub Actions posts, nor with
+    BLUESKY_LOCAL=0."""
+    return posting_place() == "lokal" and os.environ.get("BLUESKY_LOCAL", "1") not in ("0", "false")
+
+
 def article(slug: str) -> dict:
+    if os.environ.get("BLUESKY_ARTICLES") == "site":
+        # The website's export holds only articles that have gone live, which is what a post may link to
+        with open(SITE_ARTICLES, encoding="utf-8") as fh:
+            hits = [p for p in json.load(fh).get("posts", []) if p.get("slug") == slug]
+        if not hits:
+            sys.exit(f"Ingen publicerad artikel med adressen {slug} på webbplatsen")
+        return {**hits[0], "published": True}
     from api.routers import blog
     hits = [p for p in blog._all() if p.get("slug") == slug]
     if not hits:

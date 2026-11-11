@@ -1,0 +1,4 @@
+{
+ "_om": "Var Bluesky-kön (ko.json) postas kl. 18: \"lokal\" = analysmotorns tråd på Viktors dator (api/main.py), \"ci\" = GitHub Actions (.github/workflows/bluesky.yml). Bara en av dem postar. Byt här, committa och pusha från datorn (se ADMIN_PA_WEBBEN.md).",
+ "postar": "lokal"
+}

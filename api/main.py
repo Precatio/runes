@@ -119,7 +119,8 @@ def _warm_caches():
     # Bluesky: the approved queue (data/bluesky/ko.json) posts one item a day from 18:00, through the analysis engine,
     # which can reach the project disk (a launchd job cannot: macOS keeps it off the external volume). At most one post
     # a day, also when the server restarts in between; nothing when no app password is set. BLUESKY_AUTOPOST=0 turns it
-    # off (the tests do).
+    # off (the tests do). When GitHub Actions posts the queue instead (data/bluesky/postning.json "postar": "ci", or
+    # BLUESKY_LOCAL=0; scripts/bluesky_post.local_posting), this thread posts nothing, so that no post goes out twice.
     def bluesky():
         import datetime as dt
         import json
@@ -133,7 +134,8 @@ def _warm_caches():
                 posted_today = any(i.get("posted_at") and dt.datetime.fromisoformat(i["posted_at"]).astimezone().date().isoformat() == today
                                    for i in q["items"])
                 due = any(not i.get("posted") and i["date"] <= today for i in q["items"])
-                if now.hour >= 18 and due and not posted_today and os.environ.get("BLUESKY_APP_PASSWORD"):
+                if (now.hour >= 18 and due and not posted_today and os.environ.get("BLUESKY_APP_PASSWORD")
+                        and bp.local_posting()):
                     bp.queue(True)
                     from api.errors import logger
                     logger.info("Bluesky: dagens inlägg ur kön postat")

@@ -19,9 +19,12 @@ cd "$B/web"
 npm run --silent i18n:public
 # The vote on the start page writes to this Firebase project (public; as in site.yml)
 NEXT_PUBLIC_SITE_MODE=public NEXT_PUBLIC_SITE_URL="${SITE_URL:-https://vitkirunor.se}" \
-  NEXT_PUBLIC_FIREBASE_PROJECT_ID="${NEXT_PUBLIC_FIREBASE_PROJECT_ID:-runes-1656b}" NEXT_TELEMETRY_DISABLED=1 npx next build
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID="${NEXT_PUBLIC_FIREBASE_PROJECT_ID:-runes-1656b}" NEXT_TELEMETRY_DISABLED=1 \
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=runes-1656b.firebaseapp.com npx next build
 # The English editions of the articles declare English as the page's language (perl: sed -i differs on macOS)
 find out/en -name '*.html' -exec perl -pi -e 's/<html lang="sv"/<html lang="en"/' {} +
+# The web admin's own, wider security policy on /redaktion only (scripts/redaktion_csp.mjs, as in site.yml)
+node scripts/redaktion_csp.mjs out
 # The security policy (lib/site.ts SITE_CSP, set in app/layout.tsx) first in <head>, right after the character set, so
 # that it covers every script and stylesheet the page loads: React renders it after Next's own tags (as in site.yml)
 find out -name '*.html' -exec perl -0pi -e 's{(<meta charSet="utf-8"/>)(.*?)(<meta http-equiv="Content-Security-Policy"[^>]*>)}{$1$3$2}s' {} +
