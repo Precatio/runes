@@ -13,7 +13,7 @@ Skrivs av `utdata/tidskrift/tryckkontroll.py` (anropas av `bygg_tidskrift.py --t
 
 ### Bilder: effektiv upplösning i tryckt storlek
 
-Under 300 dpi markeras; under 200 dpi är ett verkligt problem i tryck.
+Under 300 dpi markeras; under 200 dpi är ett verkligt problem i tryck. **Viktor godkände upplösningen som den är (2026-11-11), även s. 5.**
 
 - s.  1 bild 0: 2472 × 3296 px, icc, 276 dpi – under 300 dpi
 - s.  1 bild 1: 396 × 275 px, gray, 300 dpi – ok
