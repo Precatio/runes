@@ -1,4 +1,4 @@
-"""Vitkis tidskrift Korpus – Ristat & räknat (Viktor 2026-11-10: en egen tidskrift likt Futhark och Fornvännen, men för
+"""Vitkis tidskrift Korpus – digital runforskning från Vitki (Viktor 2026-11-11: underrubriken Ristat & räknat struken; tidigare Viktor 2026-11-10: en egen tidskrift likt Futhark och Fornvännen, men för
 digital forskning som Vitkis, för den som inte kan lägga all sin tid på att läsa; ljus, fräsch, professionell, PDF; "tänk
 Populär Historia fast lite mer återhållsam"; namnet mellan Korpus och Ristat & räknat; en engelsk utgåva).
 Bygger provnumret på svenska och engelska av tre publicerade artiklar (utdata/blogg/*.json, body och body_en) som HTML
@@ -38,7 +38,7 @@ ARTIKLAR = [  # per artikel: fil, öppningsbild i Commons, antal bilder i brödt
 
 T = {
     "sv": dict(
-        lang="sv", nr="Nr 1 · November 2026", fran="En tidskrift från Vitki", undertitel="Ristat & räknat – digital runforskning",
+        lang="sv", nr="Nr 1 · November 2026", fran="Tidskrift", undertitel="Digital runforskning från Vitki",
         fot="nr 1 · 2026", lastid="Text: Viktor Kvant · Lästid {m} minuter", siffran="Siffran", trettio="På 30 sekunder",
         webb="Hela artikeln med alla bilder, interaktiva diagram och data:",
         omtema="Människorna", omnum="14 <i>mot</i> 268",
@@ -72,7 +72,7 @@ T = {
         bakrad="Nr 1 · 2026 · Provnummer",
     ),
     "en": dict(
-        lang="en", nr="No. 1 · November 2026", fran="A journal from Vitki", undertitel="Carved & counted – digital runic research",
+        lang="en", nr="No. 1 · November 2026", fran="Journal", undertitel="Digital runic research from Vitki",
         fot="No. 1 · 2026", lastid="Text: Viktor Kvant · Reading time {m} minutes", siffran="The number", trettio="In 30 seconds",
         webb="The full article with all images, interactive charts and data:",
         omtema="People", omnum="14 <i>to</i> 268",
@@ -331,7 +331,7 @@ def omslag(L, namn, arts):
   <div class="omtopp">
     <div class="mastrad"><span>{L["nr"]}</span><span>{L["fran"]}</span></div>
     <h1 class="{lang}">{html.escape(namn)}</h1>
-    <div class="undertitel">{L["undertitel"] if namn == "Korpus" else L["undertitel"].split(" – ", 1)[1].capitalize()}</div>
+    <div class="undertitel">{L["undertitel"]}</div>
   </div>
   <div class="ompuff">
     <div class="ptema">{L["omtema"]}</div>
@@ -466,4 +466,3 @@ def jamforelse():
 if __name__ == "__main__":
     print(utgava("sv"))
     print(utgava("en"))
-    print(jamforelse())

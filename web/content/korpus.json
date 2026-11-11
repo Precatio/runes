@@ -1,5 +1,5 @@
 {
-  "_om": "Tidskriften Korpus – Ristat & räknat (sidan /tidskrift och /en/tidskrift). Ett nummer per post, nyast först sorteras automatiskt efter datum. PDF:erna och omslagen ligger i web/public/korpus/; numren byggs med utdata/tidskrift/bygg_tidskrift.py. Artiklar med slug länkas till artikeln på webbplatsen.",
+  "_om": "Tidskriften Korpus (sidan /tidskrift och /en/tidskrift). Ett nummer per post, nyast först sorteras automatiskt efter datum. PDF:erna och omslagen ligger i web/public/korpus/; numren byggs med utdata/tidskrift/bygg_tidskrift.py. Artiklar med slug länkas till artikeln på webbplatsen.",
   "issues": [
     {
       "nr": 1,

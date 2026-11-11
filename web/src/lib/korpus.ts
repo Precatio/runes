@@ -1,7 +1,7 @@
 import data from "../../content/korpus.json";
 import { PUBLIC_SITE, SITE_URL } from "@/lib/site";
 
-// Vitki's journal Korpus – Ristat & räknat (web/content/korpus.json): one entry per issue, the PDFs and covers in
+// Vitki's journal Korpus – digital runforskning från Vitki (web/content/korpus.json): one entry per issue, the PDFs and covers in
 // web/public/korpus/ (built by utdata/tidskrift/bygg_tidskrift.py). Shown at /tidskrift and /en/tidskrift (the app
 // already has /korpus, the shared measurement corpus).
 export interface KorpusItem { theme_sv: string; theme_en: string; title_sv: string; title_en: string; slug?: string }
@@ -19,7 +19,7 @@ export const KORPUS_PATH = `/tidskrift${SLASH}`;
 export const EN_KORPUS_PATH = `/en/tidskrift${SLASH}`;
 export const korpusAlternates = { sv: KORPUS_PATH, en: EN_KORPUS_PATH, "x-default": KORPUS_PATH };
 
-export const KORPUS_TITLE = { sv: "Korpus – Ristat & räknat · Vitkis tidskrift", en: "Korpus – Carved & counted · Vitki's journal" };
+export const KORPUS_TITLE = { sv: "Korpus · Vitkis tidskrift för digital runforskning", en: "Korpus · Vitki's journal of digital runic research" };
 export const KORPUS_DESCRIPTION = {
   sv: "Korpus är Vitkis tidskrift för digital runforskning: hela runstenskorpusen mätt mot jord, vatten, ortnamn och slumpen. Fri som PDF på svenska och engelska.",
   en: "Korpus is Vitki's journal of digital runic research: the whole runestone corpus measured against soil, water, place names and chance. Free as a PDF in Swedish and English.",
@@ -33,7 +33,7 @@ export function korpusJsonLd(lang: "sv" | "en") {
     "@type": "Periodical",
     "@id": `${SITE_URL}/tidskrift/#korpus`,
     name: "Korpus",
-    alternateName: lang === "en" ? "Korpus – Carved & counted" : "Korpus – Ristat & räknat",
+    alternateName: lang === "en" ? "Korpus – digital runic research from Vitki" : "Korpus – digital runforskning från Vitki",
     description: KORPUS_DESCRIPTION[lang],
     url,
     inLanguage: ["sv", "en"],

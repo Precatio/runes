@@ -510,7 +510,7 @@ andel <- tapply(stenar$bon,
 
           <div className="mt-6 border-t border-slate-900/10 pt-8 flex flex-col md:flex-row md:items-baseline md:justify-between gap-3">
             <p className="text-slate-700 leading-relaxed max-w-3xl">
-              <span className="font-bold text-slate-900">Tidskriften Korpus.</span> Ristat &amp; räknat: Vitkis tidskrift för digital
+              <span className="font-bold text-slate-900">Tidskriften Korpus.</span> Vitkis tidskrift för digital
               runforskning, skriven för den som har ont om tid – varje artikel går att läsa på trettio sekunder, fem minuter eller på djupet. Fri som PDF på svenska och engelska.
             </p>
             <Link href={KORPUS_PATH} prefetch={false} className="tap shrink-0 text-sm font-bold text-[#b7410e] hover:underline">Läs Korpus →</Link>

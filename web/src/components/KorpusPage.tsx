@@ -7,7 +7,7 @@ import { CONTACT_PATH, EN_CONTACT_PATH } from "@/lib/site";
 // journal, what it is, and every issue. Rendered in the reader's language; the two routes are each other's editions.
 const T = {
   sv: {
-    kicker: "Tidskrift", sub: "Ristat & räknat – digital runforskning från Vitki",
+    kicker: "Tidskrift", sub: "Digital runforskning från Vitki",
     intro: "Korpus mäter hela runstenskorpusen på en gång – mot jordarter, strandlinjer, ortnamn, gravfält och vägar – och prövar varje mönster mot slumpen innan vi kallar det ett fynd. Tidskriften är skriven för den som är nyfiken men har ont om tid, och den är fri: läs den som PDF på svenska eller engelska.",
     latest: "Senaste numret", contents: "I numret", read: "Läs", pdfSv: "Läs nr {n} som PDF", pdfEn: "Read No. {n} in English (PDF)", pages: "sidor",
     online: "Läs artikeln på webbplatsen", how: "Så läser du Korpus",
@@ -20,7 +20,7 @@ const T = {
     editor: "Redaktör: Viktor Kvant.", contact: "Hör av dig", all: "Alla nummer",
   },
   en: {
-    kicker: "Journal", sub: "Carved & counted – digital runic research from Vitki",
+    kicker: "Journal", sub: "Digital runic research from Vitki",
     intro: "Korpus measures the whole runestone corpus at once – against soils, shorelines, place names, grave fields and roads – and tests every pattern against chance before we call it a finding. The journal is written for the curious reader with little time, and it is free: read it as a PDF in English or Swedish.",
     latest: "Latest issue", contents: "In this issue", read: "Read", pdfSv: "Läs nr {n} på svenska (PDF)", pdfEn: "Read No. {n} as a PDF", pages: "pages",
     online: "Read the article on the website", how: "How to read Korpus",
