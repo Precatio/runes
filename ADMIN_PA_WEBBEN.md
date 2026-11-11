@@ -106,7 +106,8 @@ publiceringsfält. Allt annat är oförändrat, och emulatortestet visar det.
 ```
 cd tests/firestore_rules && npm ci && npm test        # 29 kontroller i emulatorn (kräver Java 21)
 cd ../../web && npx firebase-tools@14 login            # om du inte redan är inloggad
-npx firebase-tools@14 deploy --only firestore:rules --project runes-1656b
+# OBS: "--only firestore:rules" hoppar tyst över databasen vitki (säger ändå Deploy complete) – använd "--only firestore"
+npx firebase-tools@14 deploy --only firestore --project runes-1656b
 ```
 
 **Testa:**
@@ -128,7 +129,7 @@ npx firebase-tools@14 deploy --only firestore:rules --project runes-1656b
   igen. Du kan också ta bort hemligheterna eller återkalla applösenordet i Bluesky.
 - **Säkerhetsreglerna:** återställ den föregående versionen under Firebase Console → Firestore → databasen vitki → Rules
   → historiken. Det går också från terminalen:
-  `git show 5502d71:web/firestore.rules > web/firestore.rules && cd web && npx firebase-tools@14 deploy --only firestore:rules --project runes-1656b`.
+  `git show 5502d71:web/firestore.rules > web/firestore.rules && cd web && npx firebase-tools@14 deploy --only firestore --project runes-1656b`.
   Utan de nya reglerna visar /redaktion "inte aktiverad", och allt annat fungerar som förut.
 - **/redaktion:** ta bort variablerna `FIREBASE_WEB_API_KEY` och `FIREBASE_WEB_APP_ID` och bygg om webbplatsen. Då
   säger sidan "inte aktiverad".
