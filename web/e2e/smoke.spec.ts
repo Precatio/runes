@@ -34,8 +34,8 @@ test("en artikel på svenska", async ({ page }) => {
   const p = posts.find((x) => x.body?.includes("Det viktigaste i korthet")) ?? posts[0];
   await page.goto(`/artiklar/${p.slug}/`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(p.title);
-  // The summary box is shown at the top as "Huvudpunkter" (the article page lifts it out of the body)
-  await expect(page.getByRole("heading", { name: "Huvudpunkter" })).toBeVisible();
+  // The summary box "Det viktigaste i korthet" is rendered in the article (only research reports lift it out as "Huvudpunkter")
+  await expect(page.getByText("Det viktigaste i korthet", { exact: true }).first()).toBeVisible();
   expect(errors).toEqual([]);
 });
 
