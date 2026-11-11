@@ -49,38 +49,38 @@ DUBBLETTER = [
     ["Gravhällarna: Östergötlands", "Gravhällarna – kyrkans äldsta"],
 ]
 
-# Studierna i PUBLICERINGSPLAN.md (omskriven 2026-11-10) och vilka frågor som hör till dem (titlarnas början)
+# Studierna i PUBLICERINGSPLAN.md (omskriven 2026-11-11, flerårsplan 2026–2029) och vilka frågor som hör till dem (titlarnas början)
 STUDIER = [
     ("dec 2026 – B. Självkontroller", ["Var det bara Ingvar", "Österut eller västerut? Färdernas", "Stod stenarna verkligen vid gravfälten", "Vid vägen – men vilken väg"]),
-    ("jan 2027 – A1. Flyttade och försvunna stenar", ["Hur många runstenar står egentligen", "Hur långt flyttades runstenarna", "Hur många runstenar odlade",
+    ("jan–feb 2027 – A1. Flyttade och försvunna stenar", ["Hur många runstenar står egentligen", "Hur långt flyttades runstenarna", "Hur många runstenar odlade",
                                                      "Hur många runstenar restes egentligen", "När hittades stenarna",
                                                      "Flyttades stenarna till kyrkan", "Hur många runstenar är bara spöken"]),
-    ("feb 2027 – A2. Registret och nämnaren", ["Fornminnesregistret ser ojämnt", "Bara där någon letade", "Tomma platser på kartan", "Saknas stenarna i Dalarna", "Hundaret, socknen och byn",
+    ("mar–apr 2027 – A2. Registret och nämnaren", ["Fornminnesregistret ser ojämnt", "Bara där någon letade", "Tomma platser på kartan", "Saknas stenarna i Dalarna", "Hundaret, socknen och byn",
                                                "Var är databasen tom", "Befolkning eller minne", "Uppland som norm",
                                                "Vem skrev av stenarna", "Gravar men inga stenar", "Tre databaser, en sten",
                                                "Varför har Västmanland"]),
-    ("mar 2027 – C. Dateringen", ["Hur gamla är runstenarna egentligen", "Ingvars år", "Stil, språk och cirkelresonemang", "Prickarna",
+    ("aug–sep 2027 – C. Dateringen", ["Hur gamla är runstenarna egentligen", "Ingvars år", "Stil, språk och cirkelresonemang", "Prickarna",
                                   "Är stilgrupperna tid eller trakt", "Kom stilen senare till periferin", "Slutar stilen vid en linje",
                                   "Finns stilgrupperna på riktigt", "När slutade runstenarna", "Kyrkan som daterar stenen"]),
-    ("apr 2027 – D. Platserna mot slumpen", ["Gravar, vägar eller gränser", "Stod stenarna vid bron", "Gudarnas platser",
+    ("maj–jun 2027 – D. Platserna mot slumpen", ["Gravar, vägar eller gränser", "Stod stenarna vid bron", "Gudarnas platser",
                                              "Stod runstenarna vid tinget", "Husby, Tuna och Hov", "Stod stenarna vid gränsen",
                                              "Stod stenarna där äldre generationer", "Byggdes kyrkan på hednisk mark",
                                              "Handelsplatser eller spannmålsbygder"]),
-    ("maj 2027 – E. Korset och bönen", ["Var korset en bekännelse", "När nådde korset", "Kom kristendomen österifrån, västerifrån",
+    ("jan–feb 2028 – E. Korset och bönen", ["Var korset en bekännelse", "När nådde korset", "Kom kristendomen österifrån, västerifrån",
                                         "Hedniskt och kristet", "Kristnades Sverige uppifrån", "Gudarna som tystnade",
                                         "Tog kvinnorna kristendomen"]),
-    ("jun 2027 – F. Människorna", ["Lagarna som facit", "Hur stor del av de döda", "Var det de rika", "Hur många av runstenarna reste kvinnor",
+    ("okt–nov 2027 – F. Människorna", ["Lagarna som facit", "Hur stor del av de döda", "Var det de rika", "Hur många av runstenarna reste kvinnor",
                                    "Fanns trälarna", "Kvinnorna som flyttade", "Hade svearna mildare lag", "Stenar över tomma gravar",
                                    "Rik sten, fattig sten", "Skeppssättningar, storhögar", "Var bodde de som for"]),
-    ("jul 2027 – Gränserna", ["Götar och svear", "Kolmården", "Svear, götar och danskt", "Gamla folkland och hundare",
+    ("jan–feb 2029 – G. Gränserna", ["Götar och svear", "Kolmården", "Svear, götar och danskt", "Gamla folkland och hundare",
                               "Samma karta eller olika"]),
-    ("aug 2027 – R. Ristarna", ["Kännarskap mot slumpen", "Åsmund Kåreson", "Öpir", "Vad är en ristares fingeravtryck",
+    ("mar–apr 2028 – R. Ristarna", ["Kännarskap mot slumpen", "Åsmund Kåreson", "Öpir", "Vad är en ristares fingeravtryck",
                                 "Spreds ristandet som ett mode", "Hur långt reste ristarna", "Samma man på två stenar"]),
-    ("sep 2027 – V. Vattnet och landhöjningen", ["Vilket vatten stod stenarna vid", "Hur högt över vattnet", "Ortnamnens åldersskikt",
+    ("maj–jun 2028 – V. Vattnet och landhöjningen", ["Vilket vatten stod stenarna vid", "Hur högt över vattnet", "Ortnamnens åldersskikt",
                                                  "Lera, ås eller kärr"]),
-    ("okt 2027 – S. Stenen och silvret", ["Silvret och stenarna", "Var kom stenen ifrån", "Följer stenvågorna odlingen"]),
-    ("dec 2027 – K. Kyrkorna", ["Gravhällarna: Östergötlands"]),
-    ("2028 – Språkets klockor", ["Försvann R-runan", "Monoftongeringen", "Skrev de som de talade", "Hur mycket av stavningen",
+    ("aug–sep 2028 – S. Stenen och silvret", ["Silvret och stenarna", "Var kom stenen ifrån", "Följer stenvågorna odlingen"]),
+    ("okt–nov 2028 – K. Kyrkorna", ["Gravhällarna: Östergötlands"]),
+    ("mar–apr 2029 – Språkets klockor", ["Försvann R-runan", "Monoftongeringen", "Skrev de som de talade", "Hur mycket av stavningen",
                                  "Småtecknen som klockor", "Skrev kortkvistristarna", "Hur ofta ristade man fel", "Skrev ristarna vers",
                                  "Namn som bara fanns i en bygd"]),
 ]
@@ -164,7 +164,7 @@ def study(r):
     for label, starts in STUDIER:
         if any(r["titel"].startswith(s) for s in starts):
             return label
-    return {1: "Ej placerad – se planen", 2: "2028", 3: "Reservlista", 4: "Reservlista (låg)"}[r["relevans"]]
+    return {1: "Ej placerad – se planen", 2: "2029 eller spår P", 3: "Spår P – reservlista", 4: "Spår P – reservlista (låg)"}[r["relevans"]]
 
 
 def dec_text(ds):
@@ -244,7 +244,8 @@ def main():
     s.append([])
     s.append(["Studie i planen", "Avgörande", "Betydande", "Användbart", "Begränsat", "Totalt"])
     hdr2 = s.max_row
-    for label in [x for x, _ in STUDIER] + ["2028", "Reservlista", "Reservlista (låg)"]:
+    ORDER = ["dec 2026", "jan–feb 2027", "mar–apr 2027", "maj–jun 2027", "aug–sep 2027", "okt–nov 2027", "jan–feb 2028", "mar–apr 2028", "maj–jun 2028", "aug–sep 2028", "okt–nov 2028", "jan–feb 2029", "mar–apr 2029"]
+    for label in sorted([x for x, _ in STUDIER], key=lambda x: ORDER.index(x.split(" – ")[0])) + ["2029 eller spår P", "Spår P – reservlista", "Spår P – reservlista (låg)"]:
         r2 = s.max_row + 1
         s.append([label] + [f"=COUNTIFS('Alla frågor'!$I$2:$I${last},$A{r2},'Alla frågor'!$B$2:$B${last},{lv})" for lv in (1, 2, 3, 4)]
                  + [f"=SUM(B{r2}:E{r2})"])
@@ -312,8 +313,8 @@ def main():
          "valdes den lägre nivån."),
         ("Färgerna", "Raden färgas efter kolumn B. Ändrar du relevansen (1–4) ändras färgen och sammanfattningen."),
         (None, None),
-        ("Studie i planen", "Den låsta studie i PUBLICERINGSPLAN.md (omskriven 10 nov 2026) som frågan hör till. Alla avgörande frågor "
-         "ligger i 2027. Betydande som inte har en studie ligger i 2028; användbara och begränsade är reservlistan för fria luckor."),
+        ("Studie i planen", "Den låsta studie i PUBLICERINGSPLAN.md (flerårsplan, omskriven 11 nov 2026) som frågan hör till. Avgörande frågor ligger i "
+         "2027–2028. Betydande utan egen studie ligger 2029 eller i spår P; användbara och begränsade är spår P:s reservlista (populärvetenskap, två artiklar i veckan)."),
         ("Viktigt om källorna", "Källor och motiveringar är skrivna av läsare (AI) ur påståendena och sökindexet. Läsarkontrollen visade att "
          "76 % av påståendena var rätt återgivna, och några motiveringar nämner litteratur ur minnet. Kontrollera varje källa mot "
          "originaltexten innan något citeras eller byggs på."),
