@@ -40,7 +40,7 @@ MALL_SHA = open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).rea
 assert MALL_SHA.startswith("611a4d5f")  # mallens version 4
 assert hashlib.sha256(open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md"), "rb").read()).hexdigest() == MALL_SHA
 REPORT_VERSION = 1
-TODAY = "2026-11-11"  # rapportversionens datum, fast i byggaren
+TODAY = "2026-12-15"  # rapportversionens datum, fast i byggaren
 
 # ---- the five locked plans: checksum file, the file itself unchanged, the lock commit -----------------------------------
 PLANS = {  # plan file: (sha256 prefix, lock commit)

@@ -74,6 +74,96 @@
     ]
    },
    "godkand": null
+  },
+  {
+   "datum": "2026-12-01",
+   "tid": "07:00",
+   "id": "huv62lUJokN4dgHRDHvW",
+   "titel": "De gamla landen: Gotland – ett eget land mitt i havet",
+   "spar": "P",
+   "bluesky": {
+    "text": "New in the series The old lands: Gotland around AD 1000. A land of its own in the sea: farms that moved about their land, harbours along the whole coast, more silver in the ground than anywhere else, one assembly for the island.",
+    "tags": [
+     "runestones",
+     "MedievalSky",
+     "archaeology",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
+  },
+  {
+   "datum": "2026-12-08",
+   "tid": "07:00",
+   "id": "heW9W2pFX8bBiB0GCgPD",
+   "titel": "Vikingarnas österled – eller bara Ingvars?",
+   "spar": "P",
+   "bluesky": {
+    "text": "25 Swedish runestones remember one journey: Ingvarr's expedition to Serkland. We took them out, under a plan locked in advance. About half of the stones' eastward lead vanished – yet they still look east more than the Icelanders' sagas.",
+    "tags": [
+     "runestones",
+     "Skystorians",
+     "OldNorse",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
+  },
+  {
+   "datum": "2026-12-11",
+   "tid": "07:00",
+   "id": "vrcJRTfxrl9nHFGJ0lP4",
+   "titel": "De gamla landen: Värend – sjöbygden mitt i skogen",
+   "spar": "P",
+   "bluesky": {
+    "text": "New in the series The old lands: Värend, the largest of Småland's small lands. A lake country ringed by forest around AD 1000: large villages, a great mound at Ingelstad and perhaps an assembly by Helgasjön.",
+    "tags": [
+     "runestones",
+     "MedievalSky",
+     "archaeology",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
+  },
+  {
+   "datum": "2026-12-15",
+   "tid": "09:00",
+   "id": "wgzazW4ZpKk7OVtuT32w",
+   "titel": "Fyra runstensfynd prövade mot hundra års invändningar – två står, ett försvagas, ett väntar på kartorna",
+   "spar": "F",
+   "bluesky": {
+    "text": "Research report: we tested four of our own runestone findings against a century of objections, under plans locked in advance. Two stand, one weakens (the east share without Ingvarr's 25 stones), one awaits the old maps.",
+    "tags": [
+     "runology",
+     "Skystorians",
+     "OpenScience",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
+  },
+  {
+   "datum": "2026-12-18",
+   "tid": "07:00",
+   "id": "71Vv1GCp3TriruXWktTq",
+   "titel": "De gamla landen: Möre – kusten vid sundet",
+   "spar": "P",
+   "bluesky": {
+    "text": "New in the series The old lands: Möre, the coast by the Kalmar Sound around AD 1000. Fertile clay between forest and sea, villages by the rivers, ships offshore – a land that followed Östergötland's law, not Småland's.",
+    "tags": [
+     "runestones",
+     "MedievalSky",
+     "archaeology",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
   }
  ]
 }
