@@ -10,6 +10,13 @@ on:
     branches: [main]
     paths: ["web/**", "CITATION.cff", ".github/workflows/site.yml"]
   workflow_dispatch:
+    inputs:
+      before:
+        # Set by publicera.yml, which starts this build after pushing an export: the commit before it, so that IndexNow
+        # hears about the articles that changed (a push gives that as github.event.before)
+        description: "Commit före ändringen (för IndexNow)"
+        type: string
+        default: ""
 
 # Only the deploy job may publish to Pages: the build job runs the dependencies' code (npm ci, next build) and can
 # only read the repository. The actions are pinned to commits (the version in the comment), since a tag can be moved.
@@ -52,11 +59,22 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://vitkirunor.se
           # The vote on the start page writes to this Firebase project (public; it is also in web/.firebaserc)
           NEXT_PUBLIC_FIREBASE_PROJECT_ID: runes-1656b
+          # Sign-in on /redaktion (the web admin, ADMIN_PA_WEBBEN.md): the Firebase web app's public config, kept as
+          # repository variables (Settings → Secrets and variables → Actions → Variables) rather than in the code. Without
+          # them /redaktion says that it is not activated yet; no other page uses them.
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.FIREBASE_WEB_API_KEY }}
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.FIREBASE_WEB_APP_ID }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: runes-1656b.firebaseapp.com
           NEXT_TELEMETRY_DISABLED: "1"
       - name: Engelska sidor på engelska
         # The English editions of the articles (/en/…) declare English as the page's language; the root layout is shared
         # with the Swedish pages and says Swedish
         run: find web/out/en -name '*.html' -exec sed -i 's/<html lang="sv"/<html lang="en"/' {} +
+      - name: Redaktionens säkerhetspolicy
+        # /redaktion (the web admin) signs in with Google through Firebase Auth and reads and writes Firestore, which the
+        # rest of the site never does: only its own pages get the wider policy (lib/site.ts REDAKTION_CSP, written by
+        # scripts/redaktion_csp.mjs), every other page keeps SITE_CSP
+        run: node web/scripts/redaktion_csp.mjs web/out
       - name: Säkerhetspolicyn först
         # The security policy (web/src/lib/site.ts SITE_CSP, set in app/layout.tsx) first in <head>, right after the
         # character set, so that it covers every script and stylesheet the page loads: React renders it after Next's tags
@@ -91,12 +109,12 @@ jobs:
           persist-credentials: false
       - name: Förra versionen av artiklarna
         env:
-          BEFORE: ${{ github.event.before }}
+          BEFORE: ${{ github.event.before || inputs.before }}
         run: |
           if [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
             git fetch --depth=1 origin "$BEFORE" || echo "::warning::Förra versionen kunde inte hämtas"
           fi
       - name: Pinga IndexNow
         env:
-          BEFORE: ${{ github.event.before }}
+          BEFORE: ${{ github.event.before || inputs.before }}
         run: python3 scripts/indexnow_ping.py

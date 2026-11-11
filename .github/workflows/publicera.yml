@@ -1,0 +1,108 @@
+# Webbplatsens artiklar ur Firestore, utan Viktors dator: var 30:e minut exporteras de artiklar som har gått live
+# (scripts/ci_publicera.py → src/site_export.py, med samma kontroller som den lokala appen) och committas och pushas när
+# något har ändrats. Pushen görs med GITHUB_TOKEN, som inte startar andra arbetsflöden, så webbplatsen byggs genom att
+# site.yml startas uttryckligen (workflow_dispatch) efteråt.
+#
+# Ofarligt innan hemligheten FIREBASE_SERVICE_ACCOUNT finns: då skrivs en notis och jobbet slutar grönt. Nya R-figurer
+# kommer fortfarande från den lokala appen (se ADMIN_PA_WEBBEN.md). Actions är låsta till commits (versionen i kommentaren).
+name: Publicera artiklarna
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Publicera också när kontrollen stoppar (t.ex. en avsiktlig borttagning av flera artiklar)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publicera
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write   # commit and push the export
+      actions: write    # start site.yml (a push with GITHUB_TOKEN does not start it)
+    steps:
+      - name: Behörighet finns?
+        id: guard
+        env:
+          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$SA" ]; then
+            echo "::notice::Webbplatsens CI-export är inte aktiverad än: hemligheten FIREBASE_SERVICE_ACCOUNT saknas (se ADMIN_PA_WEBBEN.md)."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        if: steps.guard.outputs.enabled == 'true'
+        with:
+          ref: main
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        if: steps.guard.outputs.enabled == 'true'
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-publicera.txt
+      - name: Installera (bara det exporten behöver)
+        if: steps.guard.outputs.enabled == 'true'
+        run: python -m pip install --require-hashes -r requirements-publicera.txt
+      - name: Exportera, committa och pusha
+        id: push
+        if: steps.guard.outputs.enabled == 'true'
+        env:
+          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FORCE: ${{ inputs.force && '--force' || '' }}
+          FIREBASE_PROJECT_ID: runes-1656b
+          FIRESTORE_DATABASE: vitki
+        run: |
+          umask 077
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          printf '%s' "$SA" > "$GOOGLE_APPLICATION_CREDENTIALS"
+          unset SA
+          paths=(web/content/articles.json web/public/artiklar-sok.json web/public/figurer
+                 ':(exclude)web/public/figurer/*.tmp' ':(exclude)web/public/figurer/*.part' ':(exclude)web/public/figurer/.*')
+          before=$(git rev-parse HEAD)
+          for i in 1 2 3; do
+            # the export's own check (src/site_export.check) stops a run that looks wrong: the job fails and says why
+            python scripts/ci_publicera.py $FORCE
+            git add -A -- "${paths[@]}"
+            if git diff --cached --quiet -- "${paths[@]}"; then
+              echo "Inget nytt att publicera."
+              echo "pushed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -F "$RUNNER_TEMP/publicera-commit.txt" -- "${paths[@]}"
+            if git push origin HEAD:main; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              echo "before=$before" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            # Someone pushed meanwhile (the local app, a code commit): start again from the new main and export again,
+            # so that the commit is always made on top of what is there
+            git fetch -q --depth=1 origin main
+            git reset -q --hard origin/main
+            before=$(git rev-parse HEAD)
+            sleep 5
+          done
+          echo "::error::Exporten kunde inte pushas (main ändrades under tre försök)"
+          exit 1
+      - name: Bygg webbplatsen
+        if: steps.push.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BEFORE: ${{ steps.push.outputs.before }}
+        run: gh workflow run site.yml --repo "$GITHUB_REPOSITORY" --ref main -f before="$BEFORE"
+      - name: Ta bort behörighetsfilen
+        if: always()
+        run: rm -f "$RUNNER_TEMP/sa.json"

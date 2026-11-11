@@ -50,6 +50,39 @@ jobs:
         run: npx tsc --noEmit -p .
       - name: Lint
         run: npx eslint src
+      - name: Redaktionens hjälpfunktioner
+        # src/lib/redaktion.ts (the fields /redaktion writes, Swedish time) and scripts/redaktion_csp.mjs, with Node's
+        # own test runner (type stripping)
+        run: node --test scripts/redaktion.test.mjs
+
+  rules:
+    name: Firestore-reglerna (emulatorn)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # not yet verified on GitHub's runners (2026-11-11): report but don't block until it has passed once
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: tests/firestore_rules
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tests/firestore_rules/package-lock.json
+      - name: Java 21 för emulatorn
+        # the runner image has it installed; the emulator needs a recent Java
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME_21_X64" >> "$GITHUB_ENV"
+          echo "$JAVA_HOME_21_X64/bin" >> "$GITHUB_PATH"
+      - name: Installera
+        run: npm ci --no-audit --no-fund
+      - name: Testa web/firestore.rules
+        # Only the emulator (project demo-vitki); nothing is deployed
+        run: npm test
 
   e2e:
     name: Webbappen i webbläsaren (röktester)
