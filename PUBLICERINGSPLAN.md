@@ -43,7 +43,14 @@ jul och nyår, och en artikel i veckan i juli. Artiklarna bildar läsaren även 
 **Korpus**, fyra nummer om året (mars, juni, september, december), väljer det bästa ur båda spåren. Varje nummer har tre
 artiklar, Verkstaden, Metodhörnan, ”Ett påstående från förr, prövat” och **I appen**.
 
-**Genomgång med Viktor första måndagen i varje månad.**
+**Veckorutin (Viktor 11 nov: ”när varje vecka ska jag godkänna?”):**
+- **Varje måndag, ungefär 20 minuter:** veckans två artiklar ligger färdiga senast söndag kväll, genomlästa och
+  kontrollerade, med engelska Bluesky-inlägg. Viktor läser och schemalägger dem i Admin (tisdag och fredag kl. 07.00);
+  appen publicerar själv när tiden kommer, så länge den är igång. Därefter läggs inläggen i Bluesky-kön.
+- **Närmast:** mån 16 nov – Freja (tis 17) och De gamla landen: Skåne (fre 20); mån 23 nov – lerkanten (tis 24) och
+  Fyra stenar för två barn (fre 27); mån 7 dec – första stora genomgången.
+
+**Genomgång med Viktor första måndagen i varje månad, ungefär 45 minuter.**
 - Viktor godkänner allt som är klart på en gång: artiklar att publicera, rapporter, Zenodo och licensfrågor.
 - Utkasten ska ligga minst fyra veckor före publiceringen.
 - Blir takten för hög sänks spår P till tre artiklar på två veckor.
