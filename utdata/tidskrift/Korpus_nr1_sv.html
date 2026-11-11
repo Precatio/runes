@@ -321,6 +321,20 @@ blockquote.pull { hyphens: none; }
 
 .nohy { hyphens: none; -webkit-hyphens: none; white-space: nowrap; }
 
+/* 2026-11-11 (Viktor): slutruta på sista artikelsidan, bild på baksidan, större bindruna på omslaget */
+.slutruta { display: grid; grid-template-columns: auto 1fr; gap: 7mm; margin-top: calc(2 * var(--lh)); padding-top: 5mm; border-top: 1.4pt solid var(--rust); break-inside: avoid; }
+.slutruta img { height: var(--sh); width: auto; max-width: 62mm; object-fit: cover; object-position: center top; display: block; }
+.slutruta h3 { font: 900 15pt/1.15 var(--serif); margin: 1.5mm 0 3mm; hyphens: none; }
+.slutruta p { font: 400 9pt/1.5 var(--sans); color: #3a4249; margin: 0 0 3mm; max-width: 100mm; }
+.slutruta p.kredit { font-size: 6.6pt; color: var(--mute); }
+.bakbild { margin: 2mm 0 6mm; break-inside: avoid; }
+.bakbild img { width: 100%; height: 132mm; object-fit: cover; object-position: center 62%; display: block; }
+.bakbild figcaption { font: 400 7.2pt/1.45 var(--sans); color: var(--mute); margin-top: 2mm; }
+.text p.webb { text-align: left; hyphens: none; }
+.omruna { display: flex; flex-direction: column; padding-bottom: 6mm; overflow: visible; }
+.omruna .bindruna { height: 32mm; width: auto; max-width: none; margin-left: -6mm; }
+.omruna span { margin-top: auto; line-height: 1; position: relative; top: -0.75pt; }  /* baslinje i jämnhöjd med omslagskrediten */
+
 @page { @bottom-right { content: "Korpus nr 1 · 2026"; } }
 @page b1 { @top-left { content: "Korpus · Människorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
 @page b2 { @top-left { content: "Korpus · Resorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
@@ -501,6 +515,7 @@ window.addEventListener('load', () => {
 <ul><li>Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.</li><li>Sawyer, B. 2000. <em>The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia</em>. Oxford: Oxford University Press.</li><li>Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. I: M. Stoklund m.fl. (red.), <em>Runes and their Secrets: Studies in Runology</em>. Köpenhamn: Museum Tusculanum Press, s. 117–139.</li><li>Wessén, E. &amp; Jansson, S. B. F. 1940–1958. <em>Upplands runinskrifter</em> (Sveriges runinskrifter 6–9). Stockholm: Kungl. Vitterhets Historie och Antikvitets Akademien.</li><li>Foton: Wikimedia Commons, med fotograf och licens i bildtexterna.</li></ul>
 </div><p class="slut">■</p>
   <p class="webb">Hela artikeln med alla bilder, interaktiva diagram och data: <b>vitkirunor.se/artiklar/dottrarna-som-runstenarna-glomde</b></p></div>
+  
 </section>
 <section class="opener">
   <figure class="hero"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Vg_61%2C_H%C3%A4rlingstorp.JPG" alt=""><figcaption><b>Vg 61 vid Härlingstorp:</b> Tolas sten efter sonen Geir, ”en mycket god drengr” som dog i viking i västerled. Foto: Berig, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Vg_61,_Härlingstorp.JPG">Wikimedia Commons</a>.</figcaption></figure>
@@ -559,6 +574,7 @@ window.addEventListener('load', () => {
 <ul><li>Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.</li><li>Goetting, Lauren 2006. ”Þegn and drengr in the Viking Age”. <em>Scandinavian Studies</em> 78 (4).</li><li>Sukhino-Khomenko, Denis 2024. <em>Thegns Around the North Sea</em>. Göteborgs universitet.</li><li>Vitkis människomodul (r/people.R) och den låsta analysplanen ligger öppet på <a href="https://github.com/Precatio/runes">GitHub</a>. Om dygderna på stenarna: <a href="/artiklar/mild-i-ord-och-god-pa-mat">Mild i ord och god på mat</a>.</li><li>Foton: Wikimedia Commons, med fotograf och licens i bildtexterna.</li></ul>
 </div><p class="slut">■</p>
   <p class="webb">Hela artikeln med alla bilder, interaktiva diagram och data: <b>vitkirunor.se/artiklar/fardena-var-de-ungas</b></p></div>
+  
 </section>
 <section class="opener">
   <figure class="hero staende"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Lorenz_Fr%C3%B8lich_-_%C3%86sir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg" alt=""><figcaption>Tor med hammaren, omgiven av slingrande ormdjur som på en runsten. Akvarell av Lorenz Frølich (1820–1908), Nationalmuseum (NMH 425/1925). Fri från upphovsrätt, via <a href="https://commons.wikimedia.org/wiki/File:Lorenz_Frølich_-_Æsir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg">Wikimedia Commons</a>.</figcaption></figure>
@@ -636,6 +652,8 @@ window.addEventListener('load', () => {
 <ul><li>Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.</li><li>Statistiska centralbyrån, Tilltalsnamn med minst 10 bärare bland folkbokförda 31 december (BE0001TNamn10), 2020.</li><li>Svenskt diplomatariums huvudkartotek (SDHK), Riksarkivet: personnamn i breven 1350–1450.</li><li>Wiktionary (svenska och engelska), uppslagen för ordens nutida betydelse och ursprung.</li><li>Wikipedia (svenska): artiklarna Jarl, Stallare, Bryte, Hundare, Härad, Häradshövding, Tingsrätt, Frälse, Svitjod, Gårdarike, Langbardaland, Särkland och Uppland.</li><li>Vitkis räkning, den låsta analysplanen, genomgången av titlarna och områdena och alla matchningar ligger öppet på <a href="https://github.com/Precatio/runes">GitHub</a>.</li><li>Bilder: Wikimedia Commons, med upphovsperson och licens i bildtexterna.</li></ul>
 </div><p class="slut">■</p>
   <p class="webb">Hela artikeln med alla bilder, interaktiva diagram och data: <b>vitkirunor.se/artiklar/tor-foll-hjalten-blev-drang</b></p></div>
+  <div class="slutruta" style="--sh:165mm"><img src="bilder/cache/U1161_Altunastenen_Tors_fiskaf_C3_A4nge_2.jpg" alt="">
+    <div><div class="flik">Bilden</div><h3>Tor fiskar efter Midgårdsormen</h3><p>Altunastenen vid Altuna kyrka i Uppland (U 1161) är en av de runstenar som bär en bild ur gudasagorna. Tor sitter i båten med hammaren i handen, och Midgårdsormen har nappat på kroken. Berättelsen finns i Eddan. Véfast, Folkad och Gudvar lät resa stenen efter sin far Holmfast och efter Arnfast, och inskriften säger att både far och son brändes. Den är signerad av Balle och Frösten; Balle är en av de fem ristare som har flest stenar i databasen (s. 4).</p><p class="kredit">Foto: Gunnar Creutz, CC0, via Wikimedia Commons.</p></div></div>
 </section>
 <section class="vanlig verkstad">
   <div class="flik">04 · Verkstaden</div>
@@ -678,6 +696,7 @@ window.addEventListener('load', () => {
 </section>
 <section class="vanlig baksida">
   <div class="baktext"><div class="bakblock"><div class="slab">Om Korpus</div><p>Korpus är en öppen tidskrift för digital och kvantitativ runforskning, utgiven av Vitki. Den samlar Vitkis artiklar, rapporter och metodnotiser i en form som går att läsa på en kaffepaus. Den kommer ut på svenska och engelska.</p></div><div class="bakblock"><div class="slab">Om Vitki</div><p>Vitki är en öppen forskningsplattform för Nordens runinskrifter. Analyserna förregistreras, och kod, data och rapporter publiceras öppet på Zenodo.</p></div><div class="bakblock"><div class="slab">Redaktion</div><p>Viktor Kvant, redaktör<br>vitkirunor.se/kontakt</p></div><div class="bakblock"><div class="slab">Licens</div><p>Texterna får spridas fritt under CC BY 4.0. Bilder från Wikimedia Commons har egna licenser, angivna vid varje bild.</p></div><div class="bakblock"><div class="slab">Data</div><p>Samnordisk runtextdatabas, Riksantikvarieämbetets Runor, SGU, ISOF och Kulturmiljöregistret. Bearbetning: Vitki.</p></div></div>
+  <figure class="bakbild"><img src="bilder/cache/Jarlabanke_27s_causeway.JPG" alt=""><figcaption>Jarlabankes bro i Täby, Uppland. Jarlabanke lät resa stenarna (U 164 och U 165) efter sig själv medan han levde och lät göra bron för sin själ; han ensam ägde hela Täby. Foto: Berig, CC BY 2.5, via Wikimedia Commons.</figcaption></figure>
   <div class="bakmast">Korpus <img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"><span>Nr 1 · November 2026</span></div>
 </section>
 </body></html>

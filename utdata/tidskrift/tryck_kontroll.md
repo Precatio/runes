@@ -6,8 +6,8 @@ Skrivs av `utdata/tidskrift/tryckkontroll.py` (anropas av `bygg_tidskrift.py --t
 
 - Sidor: **20** (delbart med 4: ja).
 - Sidformat: 216.0 × 303.0 mm = A4 + 3 mm utfall på alla kanter. TrimBox [3.0, 3.0, 213.0, 300.0] mm, BleedBox [0.0, 0.0, 216.0, 303.0] mm. Inga skärmärken (Helloprint kräver inga; de ska inte ligga i utfallet).
-- Typsnitt: 72 delmängder (AvenirNext-Bold, AvenirNext-DemiBold, AvenirNext-Italic, AvenirNext-Medium, AvenirNext-Regular, Charter-Black, Charter-Bold, Charter-BoldItalic, Charter-Italic, Charter-Roman, TimesNewRomanPSMT); inbäddade: alla.
-- Text närmast skärkanten: 6.1 mm (s. 1, ”Omslag: U 489 vid Morby, Uppland – Gulla”). Kravet är minst 4 mm (Helloprint) / 5 mm (vår regel).
+- Typsnitt: 73 delmängder (AvenirNext-Bold, AvenirNext-DemiBold, AvenirNext-Italic, AvenirNext-Medium, AvenirNext-Regular, Charter-Black, Charter-Bold, Charter-BoldItalic, Charter-Italic, Charter-Roman, TimesNewRomanPSMT); inbäddade: alla.
+- Text närmast skärkanten: 6.0 mm (s. 1, ”VITKIRUNOR.SE”). Kravet är minst 4 mm (Helloprint) / 5 mm (vår regel).
 - Övertryck: inget (/OP true saknas i filen).
 - Färgrymder i filen: DeviceGray, DeviceRGB, ICCBased. Filen är **RGB** (se nedan). **Viktor 2026-11-11: RGB går bra – filen laddas upp som den är, ingen CMYK-konvertering.**
 
@@ -29,7 +29,9 @@ Under 300 dpi markeras; under 200 dpi är ett verkligt problem i tryck. **Viktor
 - s. 12 bild 11: 757 × 1000 px, icc, 235 dpi – under 300 dpi
 - s. 14 bild 12: 529 × 767 px, icc, 238 dpi – under 300 dpi
 - s. 15 bild 13: 1280 × 948 px, icc, 576 dpi – ok
-- s. 18 bild 14: 2000 × 685 px, icc, 292 dpi – under 300 dpi
+- s. 16 bild 14: 939 × 2400 px, icc, 369 dpi – ok
+- s. 18 bild 15: 2000 × 685 px, icc, 292 dpi – under 300 dpi
+- s. 20 bild 16: 1600 × 1200 px, icc, 225 dpi – under 300 dpi
 
 ## Färg: RGB tills tryckeriets profil finns
 
@@ -51,7 +53,7 @@ Varje brödtextsida i tre spalter: alla rader på samma raster (13,5 pt) och spa
 - sv s.  7: spalternas sista baslinje [277.5, 277.5, 277.5] mm från sidans överkant; raster ett – ok
 - sv s.  8: spalternas sista baslinje [255.6, 258.5, 163.2] mm från sidans överkant; raster FLERA: [3.7, 9.0] (artikelns sista sida: kortare sista spalt och källor på trekvartsrader godtas) – ok
 - sv s. 10: spalternas sista baslinje [277.5, 277.5, 277.5] mm från sidans överkant; raster ett – ok
-- sv s. 11: spalternas sista baslinje [239.4, 250.0, 182.3] mm från sidans överkant; raster FLERA: [3.7, 3.8, 6.7] (artikelns sista sida: kortare sista spalt och källor på trekvartsrader godtas) – ok
+- sv s. 11: spalternas sista baslinje [239.4, 258.5, 172.8] mm från sidans överkant; raster ett (artikelns sista sida: kortare sista spalt och källor på trekvartsrader godtas) – ok
 - sv s. 13: spalternas sista baslinje [277.5, 277.5, 277.5] mm från sidans överkant; raster ett – ok
 - sv s. 14: spalternas sista baslinje [277.5, 277.5, 277.5] mm från sidans överkant; raster ett – ok
 - sv s. 15: spalternas sista baslinje [268.0, 277.5, 277.5] mm från sidans överkant; raster ett – AVVIKER

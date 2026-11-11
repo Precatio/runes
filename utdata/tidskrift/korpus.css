@@ -319,3 +319,17 @@ blockquote.pull { hyphens: none; }
 .innehallsspalt .kolofon { margin-top: 5mm; }
 
 .nohy { hyphens: none; -webkit-hyphens: none; white-space: nowrap; }
+
+/* 2026-11-11 (Viktor): slutruta på sista artikelsidan, bild på baksidan, större bindruna på omslaget */
+.slutruta { display: grid; grid-template-columns: auto 1fr; gap: 7mm; margin-top: calc(2 * var(--lh)); padding-top: 5mm; border-top: 1.4pt solid var(--rust); break-inside: avoid; }
+.slutruta img { height: var(--sh); width: auto; max-width: 62mm; object-fit: cover; object-position: center top; display: block; }
+.slutruta h3 { font: 900 15pt/1.15 var(--serif); margin: 1.5mm 0 3mm; hyphens: none; }
+.slutruta p { font: 400 9pt/1.5 var(--sans); color: #3a4249; margin: 0 0 3mm; max-width: 100mm; }
+.slutruta p.kredit { font-size: 6.6pt; color: var(--mute); }
+.bakbild { margin: 2mm 0 6mm; break-inside: avoid; }
+.bakbild img { width: 100%; height: 132mm; object-fit: cover; object-position: center 62%; display: block; }
+.bakbild figcaption { font: 400 7.2pt/1.45 var(--sans); color: var(--mute); margin-top: 2mm; }
+.text p.webb { text-align: left; hyphens: none; }
+.omruna { display: flex; flex-direction: column; padding-bottom: 6mm; overflow: visible; }
+.omruna .bindruna { height: 32mm; width: auto; max-width: none; margin-left: -6mm; }
+.omruna span { margin-top: auto; line-height: 1; position: relative; top: -0.75pt; }  /* baslinje i jämnhöjd med omslagskrediten */

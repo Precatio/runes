@@ -17,3 +17,5 @@
 .hero.staende img { width: calc(100% - 3mm); height: calc(100% - 3mm); margin-top: 3mm; }
 .hero.staende figcaption { left: 18mm; right: 103mm; }
 .kartsida { --b: 3mm; width: 216mm; height: 303mm; }
+
+.omruna { padding-bottom: 9mm; }

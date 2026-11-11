@@ -645,6 +645,7 @@ def bygg(L, namn, arts, sidor, k, tryck=False):
 <section class="brodtext b{n}">
   <div class="text">{a["body"]}<p class="slut">■</p>
   <p class="webb">{L["webb"]} <b>vitkirunor.se{"/en" if sprak == "en" else ""}/artiklar/{a["slug"]}</b></p></div>
+  {slutruta(n, sprak)}
 </section>""")
     R = REDAKTOR[sprak]
     # Typografi: hårt mellanrum i tusental (2 300) och ingen avstavning av webbadressen.
@@ -688,6 +689,7 @@ def bygg(L, namn, arts, sidor, k, tryck=False):
 {nastasida(N, namn)}
 <section class="vanlig baksida">
   <div class="baktext">{bak}</div>
+  <figure class="bakbild"><img src="{lokal_tumnagel(BAKBILD["bild"])}" alt=""><figcaption>{BAKBILD[sprak]}</figcaption></figure>
   <div class="bakmast">{html.escape(namn)} <img class="bindruna" src="{LOGO}" alt="Vitki"><span>{L["bakrad"]}</span></div>
 </section>
 </body></html>"""
@@ -733,6 +735,33 @@ def artiklar(sprak, placering=None):
         arts.append(dict(L, bild=a["bild"], staende=a.get("staende", False), hero_cap=caption(cap), title=d["title" + suf], summary=d["summary" + suf],
                          kort=kort, body=html_body, slug=d["slug"], minuter=max(1, round(len(body.split()) / 220))))
     return arts
+
+
+# Viktor 2026-11-11: "sidan 16 har en stor tom yta i nedre hälft. Fyll ut med illustration eller annat. samma med sidan 20".
+# Tor-artikelns sista sida får en bildruta (Altunastenen), baksidan en bild (Jarlabankes bro). Uppgifterna om stenarna är
+# Rundatas (inskrift, ristare); bildhöjden i mm per språk är satt efter hur mycket plats sista sidan har kvar.
+SLUTRUTA = dict(
+    artikel=3, bild=WM + "9/9d/U1161_Altunastenen_Tors_fiskaf%C3%A4nge_2.jpg", hojd={"sv": 165, "en": 85},
+    sv=dict(flik="Bilden", rubrik="Tor fiskar efter Midgårdsormen",
+            text="Altunastenen vid Altuna kyrka i Uppland (U 1161) är en av de runstenar som bär en bild ur gudasagorna. Tor sitter i båten med hammaren i handen, och Midgårdsormen har nappat på kroken. Berättelsen finns i Eddan. Véfast, Folkad och Gudvar lät resa stenen efter sin far Holmfast och efter Arnfast, och inskriften säger att både far och son brändes. Den är signerad av Balle och Frösten; Balle är en av de fem ristare som har flest stenar i databasen (s. 4).",
+            kredit="Foto: Gunnar Creutz, CC0, via Wikimedia Commons."),
+    en=dict(flik="The picture", rubrik="Thor fishing for the Midgard Serpent",
+            text="The Altuna stone at Altuna church in Uppland (U 1161) is one of the runestones that carry a picture from the myths. Thor sits in the boat with his hammer in his hand, and the Midgard Serpent has taken the hook. The story is told in the Edda. Véfastr, Folkaðr and Guðvarr had the stone raised in memory of their father Holmfastr and of Arnfastr, and the inscription says that both father and son were burned. It is signed by Balle and Frösten; Balle is one of the five carvers with the most stones in the database (p. 4).",
+            kredit="Photo: Gunnar Creutz, CC0, via Wikimedia Commons."),
+)
+BAKBILD = dict(
+    bild=WM + "9/96/Jarlabanke%27s_causeway.JPG",
+    sv="Jarlabankes bro i Täby, Uppland. Jarlabanke lät resa stenarna (U 164 och U 165) efter sig själv medan han levde och lät göra bron för sin själ; han ensam ägde hela Täby. Foto: Berig, CC BY 2.5, via Wikimedia Commons.",
+    en="Jarlabanke's bridge at Täby, Uppland. Jarlabanki had the stones (U 164 and U 165) raised in memory of himself while alive, and made the bridge for his spirit; he alone owned all of Täby. Photo: Berig, CC BY 2.5, via Wikimedia Commons.",
+)
+
+
+def slutruta(n, sprak):
+    if n != SLUTRUTA["artikel"]:
+        return ""
+    R = SLUTRUTA[sprak]
+    return f"""<div class="slutruta" style="--sh:{SLUTRUTA["hojd"][sprak]}mm"><img src="{lokal_tumnagel(SLUTRUTA["bild"])}" alt="">
+    <div><div class="flik">{R["flik"]}</div><h3>{R["rubrik"]}</h3><p>{R["text"]}</p><p class="kredit">{R["kredit"]}</p></div></div>"""
 
 
 SIDOR = 20  # tryckeriet häftar i ark om fyra sidor

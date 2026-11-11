@@ -321,6 +321,20 @@ blockquote.pull { hyphens: none; }
 
 .nohy { hyphens: none; -webkit-hyphens: none; white-space: nowrap; }
 
+/* 2026-11-11 (Viktor): slutruta på sista artikelsidan, bild på baksidan, större bindruna på omslaget */
+.slutruta { display: grid; grid-template-columns: auto 1fr; gap: 7mm; margin-top: calc(2 * var(--lh)); padding-top: 5mm; border-top: 1.4pt solid var(--rust); break-inside: avoid; }
+.slutruta img { height: var(--sh); width: auto; max-width: 62mm; object-fit: cover; object-position: center top; display: block; }
+.slutruta h3 { font: 900 15pt/1.15 var(--serif); margin: 1.5mm 0 3mm; hyphens: none; }
+.slutruta p { font: 400 9pt/1.5 var(--sans); color: #3a4249; margin: 0 0 3mm; max-width: 100mm; }
+.slutruta p.kredit { font-size: 6.6pt; color: var(--mute); }
+.bakbild { margin: 2mm 0 6mm; break-inside: avoid; }
+.bakbild img { width: 100%; height: 132mm; object-fit: cover; object-position: center 62%; display: block; }
+.bakbild figcaption { font: 400 7.2pt/1.45 var(--sans); color: var(--mute); margin-top: 2mm; }
+.text p.webb { text-align: left; hyphens: none; }
+.omruna { display: flex; flex-direction: column; padding-bottom: 6mm; overflow: visible; }
+.omruna .bindruna { height: 32mm; width: auto; max-width: none; margin-left: -6mm; }
+.omruna span { margin-top: auto; line-height: 1; position: relative; top: -0.75pt; }  /* baslinje i jämnhöjd med omslagskrediten */
+
 @page { @bottom-right { content: "Korpus No. 1 · 2026"; } }
 @page b1 { @top-left { content: "Korpus · People"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
 @page b2 { @top-left { content: "Korpus · Journeys"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
@@ -500,6 +514,7 @@ window.addEventListener('load', () => {
 <ul><li>Scandinavian Runic-text Data Base (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.</li><li>Sawyer, B. 2000. <em>The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia</em>. Oxford: Oxford University Press.</li><li>Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. In: M. Stoklund et al. (eds), <em>Runes and their Secrets: Studies in Runology</em>. Copenhagen: Museum Tusculanum Press, pp. 117–139.</li><li>Wessén, E. &amp; Jansson, S. B. F. 1940–1958. <em>Upplands runinskrifter</em> (Sveriges runinskrifter 6–9). Stockholm: Royal Swedish Academy of Letters, History and Antiquities.</li><li>Photos: Wikimedia Commons, with photographer and licence in the captions.</li></ul>
 </div><p class="slut">■</p>
   <p class="webb">The full article with all images, interactive charts and data: <b>vitkirunor.se/en/artiklar/dottrarna-som-runstenarna-glomde</b></p></div>
+  
 </section>
 <section class="opener">
   <figure class="hero"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Vg_61%2C_H%C3%A4rlingstorp.JPG" alt=""><figcaption><b>Vg 61 at Härlingstorp:</b> Tóla’s stone for her son Geirr, “a very good drengr” who died on a viking raid in the west. Photo: Berig, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Vg_61,_Härlingstorp.JPG">Wikimedia Commons</a>.</figcaption></figure>
@@ -557,6 +572,7 @@ window.addEventListener('load', () => {
 <ul><li>Scandinavian Runic-text Data Base (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.</li><li>Goetting, Lauren 2006. “Þegn and drengr in the Viking Age”. <em>Scandinavian Studies</em> 78 (4).</li><li>Sukhino-Khomenko, Denis 2024. <em>Thegns Around the North Sea</em>. University of Gothenburg.</li><li>Vitki's people module (r/people.R) and the locked analysis plan are open on <a href="https://github.com/Precatio/runes">GitHub</a>. On the virtues on the stones: <a href="/en/artiklar/mild-i-ord-och-god-pa-mat">Gentle in speech and free with food</a>.</li><li>Photos: Wikimedia Commons, with photographer and licence in the captions.</li></ul>
 </div><p class="slut">■</p>
   <p class="webb">The full article with all images, interactive charts and data: <b>vitkirunor.se/en/artiklar/fardena-var-de-ungas</b></p></div>
+  
 </section>
 <section class="opener">
   <figure class="hero staende"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Lorenz_Fr%C3%B8lich_-_%C3%86sir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg" alt=""><figcaption>Thor with his hammer, framed by intertwined serpents as on a runestone. Watercolour by Lorenz Frølich (1820–1908), Nationalmuseum, Stockholm (NMH 425/1925). Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Lorenz_Frølich_-_Æsir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg">Wikimedia Commons</a>.</figcaption></figure>
@@ -634,6 +650,8 @@ window.addEventListener('load', () => {
 <ul><li>Scandinavian Runic-text Data Base (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.</li><li>Statistics Sweden, First names with at least 10 bearers among the registered population on 31 December (BE0001TNamn10), 2020.</li><li>Svenskt diplomatariums huvudkartotek (SDHK), Swedish National Archives: personal names in the charters 1350–1450.</li><li>Wiktionary (Swedish and English), the entries for the words' present meaning and origin.</li><li>Wikipedia (Swedish): the articles Jarl, Stallare, Bryte, Hundare, Härad, Häradshövding, Tingsrätt, Frälse, Svitjod, Gårdarike, Langbardaland, Särkland and Uppland.</li><li>Vitki's count, the locked analysis plan, the review of the titles and areas and all matches are open on <a href="https://github.com/Precatio/runes">GitHub</a>.</li><li>Images: Wikimedia Commons, with creator and licence in the captions.</li></ul>
 </div><p class="slut">■</p>
   <p class="webb">The full article with all images, interactive charts and data: <b>vitkirunor.se/en/artiklar/tor-foll-hjalten-blev-drang</b></p></div>
+  <div class="slutruta" style="--sh:85mm"><img src="bilder/cache/U1161_Altunastenen_Tors_fiskaf_C3_A4nge_2.jpg" alt="">
+    <div><div class="flik">The picture</div><h3>Thor fishing for the Midgard Serpent</h3><p>The Altuna stone at Altuna church in Uppland (U 1161) is one of the runestones that carry a picture from the myths. Thor sits in the boat with his hammer in his hand, and the Midgard Serpent has taken the hook. The story is told in the Edda. Véfastr, Folkaðr and Guðvarr had the stone raised in memory of their father Holmfastr and of Arnfastr, and the inscription says that both father and son were burned. It is signed by Balle and Frösten; Balle is one of the five carvers with the most stones in the database (p. 4).</p><p class="kredit">Photo: Gunnar Creutz, CC0, via Wikimedia Commons.</p></div></div>
 </section>
 <section class="vanlig verkstad">
   <div class="flik">04 · Workshop</div>
@@ -676,6 +694,7 @@ window.addEventListener('load', () => {
 </section>
 <section class="vanlig baksida">
   <div class="baktext"><div class="bakblock"><div class="slab">About Korpus</div><p>Korpus is an open journal for digital and quantitative runic research, published by Vitki. It gathers Vitki's articles, reports and method notes in a form that can be read over a coffee break. It appears in Swedish and English.</p></div><div class="bakblock"><div class="slab">About Vitki</div><p>Vitki is an open research platform for the runic inscriptions of the Nordic countries. Analyses are pre-registered, and code, data and reports are published openly on Zenodo.</p></div><div class="bakblock"><div class="slab">Editors</div><p>Viktor Kvant, editor<br>vitkirunor.se/kontakt</p></div><div class="bakblock"><div class="slab">Licence</div><p>Texts may be shared freely under CC BY 4.0. Images from Wikimedia Commons carry their own licences, given with each image.</p></div><div class="bakblock"><div class="slab">Data</div><p>Scandinavian Runic-text Database, the Swedish National Heritage Board's Runor, SGU, ISOF and the Swedish register of ancient monuments. Processing: Vitki.</p></div></div>
+  <figure class="bakbild"><img src="bilder/cache/Jarlabanke_27s_causeway.JPG" alt=""><figcaption>Jarlabanke's bridge at Täby, Uppland. Jarlabanki had the stones (U 164 and U 165) raised in memory of himself while alive, and made the bridge for his spirit; he alone owned all of Täby. Photo: Berig, CC BY 2.5, via Wikimedia Commons.</figcaption></figure>
   <div class="bakmast">Korpus <img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"><span>No. 1 · November 2026</span></div>
 </section>
 </body></html>
