@@ -339,7 +339,9 @@
     "EarlyMedieval",
     "Vikings"
    ],
-   "repost": true
+   "repost": true,
+   "posted": "https://bsky.app/profile/vitkirunor.bsky.social/post/3mzvfrkuedk2t",
+   "posted_at": "2026-11-09T17:02:59+00:00"
   },
   {
    "date": "2026-11-10",
@@ -355,7 +357,9 @@
     "archaeology",
     "VikingAge"
    ],
-   "note": "postat direkt 2026-11-04 (3mzi6a2winy2z); 2026-11-08: borttaget på Bluesky av Viktor (bilden hade svensk text); ompubliceras med den engelska bilden"
+   "note": "postat direkt 2026-11-04 (3mzi6a2winy2z); 2026-11-08: borttaget på Bluesky av Viktor (bilden hade svensk text); ompubliceras med den engelska bilden",
+   "posted": "https://bsky.app/profile/vitkirunor.bsky.social/post/3mzxw7ns6pa2w",
+   "posted_at": "2026-11-10T17:02:31+00:00"
   },
   {
    "date": "2026-11-11",
@@ -750,6 +754,18 @@
     "MedievalSky",
     "Skystorians",
     "VikingAge"
+   ]
+  },
+  {
+   "date": "2026-12-09",
+   "slug": "varfor-har-norge-bara-66-runstenar",
+   "en": true,
+   "text": "Why does Viking-age Norway have only 66 runestones, and Sweden more than 2,300? Norwegians almost never wrote that they had a stone raised; around Lake Mälaren professional carvers worked for patrons. And the Norwegian stones remember women more often.",
+   "tags": [
+    "runestones",
+    "MedievalSky",
+    "VikingAge",
+    "Vikings"
    ]
   }
  ]

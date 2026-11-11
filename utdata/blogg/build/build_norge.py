@@ -7,12 +7,13 @@ import datetime as dt
 import json
 import os
 import re
+import sqlite3
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from src import blog_labels, commons  # noqa: E402
-from utdata.norge.citat import check  # noqa: E402
+from utdata.norge.citat import check, letters  # noqa: E402
 
 R = json.load(open(os.path.join(ROOT, "utdata", "norge", "resultat.json"), encoding="utf-8"))
 assert R["plan_sha"].startswith("e275168c")
@@ -117,6 +118,41 @@ check(KLE, "beviste at steinens bergart forefinnes nettopp på Ulvøya", 63)    
 check(SHE, "Ringerikstilen, best representert ved steinmonumenter", 64)          # s. 60
 check(SHE, "en framstilling av Jesusbarnet og de hellige tre konger", 64)
 check(KNI, "vart ein av trestokkane i fundamentet årringsdatert til 1034", 2)    # s. 94
+check(KNI, "ved å gå ut frå, klokt nok, at brulegginga og reising av runesteinen skjedde samtidig", 2)
+check(KNI, "vart vedteke kristne lover på moster-tinget tidleg på 1020-talet", 2)
+# Palm s. 223: his own impression of the link, and the bedrock carvings
+Q_PALM["s223a"], Q_PALM["s223b"] = "många gånger tycks osäkra", "ett samband mellan kända ristare och förekomsten av hjälpverb"
+check(PALM, "Även om attribueringarna många gånger tycks osäkra, kan man ändå se ett samband mellan kända ristare och förekomsten av hjälpverb", 228)
+check(PALM, "Hjälpverb är dessutom synnerligen vanligt i ristningar på fast berg", 228)
+
+# ---- the literature review 2026-11 (Fornvännen 1906–2023, Futhark 1–15): text layers in sok.sqlite, page = pdf page ----
+# The Fornvännen OCR runs two columns together, so long sentences are checked line by line.
+SOK = sqlite3.connect("/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite")
+
+
+def jcheck(key, page, *frags):
+    text = letters(SOK.execute("select text from pages where key=? and page=?", (key, page)).fetchone()[0])
+    for f in frags:
+        assert letters(f) in text, (key, page, f)
+
+
+Q_GRA = "de är ju något typiskt för Norge som varken finns i Sverige eller i Danmark vid denna tid"
+jcheck("futhark_7_181_1087624", 6, Q_GRA,  # Gräslund 2016, s. 182 (review of Imer & Fortuna)
+       "Imer uppger att det finns ca 2300 vikingatida runstenar i Sverige", "ca 260 i Danmark och ca 50 i Norge",
+       "politiska, geografiska och demografiska förhållanden tillsammans med tradition och mode",
+       "Norge var glest befolkat och att storbönderna uppenbarligen fann andra sätt att uttrycka makt och status")
+Q_BAR = "surprise and even astonishment"
+jcheck("futhark_3_59_616873", 4, "Over thirty stone inscriptions from that period, complete or fragmentary",  # Barnes 2013, s. 60
+       "approximately fifty rune-stones known from Viking Age Norway has over the years caused surprise and even "
+       "astonishment in runological circles", "only some 570 km2 in area")
+jcheck("2003_litt_d", 3, "runinskrifterna, som uppgår till mer än 1 400", "vilket är ungefär dubbelt så",  # Källström 2003, s. 318
+       "från svenskt område under samma pe", "Mellan 800 och 900 av dessa utgörs dess", "som Bergen, Oslo, Trondheim")
+jcheck("2014_243", 8, "skilt på Södertörn (fig. 2), hör let hagg(v)a kon",  # Kitzler Åhfeldt 2014, s. 249
+       "sekvent samman med ristning i fast block medan", "hio/hiogg hör ihop med resta stenar")
+jcheck("2014_243", 9, "Palm (1992, s. 223)")
+Q_HAU = "den norske Urnesstilen"
+jcheck("1975_245", 4, "med den norske Urnesstilen eller de tusen")  # Hauglid 1975, s. 247
+jcheck("futhark_9-10_159_1385974", 2, "Most of these runestones are from the end of the period, dating to the 1000s")  # s. 160
 
 # ---- pictures --------------------------------------------------------------------------------------------------------
 for s in ("N 68", "N 251", "N 84", "N 61"):
@@ -181,13 +217,15 @@ På de norska stenarna står det nästan aldrig. Av de {N_NO} stenarna har en en
 
 {C1_SV}
 
-Av de svenska stenarna har {pc(H1['sverige'])} procent *lät*, och bland dem som Rundata daterar till 1050 eller tidigare, de som är samtida med de norska, {pc(H1['sverige_tidig'])} procent. En så stor skillnad skulle slumpen ge i färre än ett fall på hundra miljoner – ungefär tjugo gånger osannolikare än högsta vinsten på Lotto med en enda rad. Men diagrammet visar också att Norge inte är ensamt. Västergötland ligger lika lågt, {D1['Vg']['k']} stenar av {D1['Vg']['n']}. Skillnaden går inte mellan rikena utan mellan väst och öst, från Norge och Västergötland till Uppland, där fyra stenar av tio har *lät*.
+Av de svenska stenarna har {pc(H1['sverige'])} procent *lät*, och bland dem som Rundata daterar till 1050 eller tidigare, de som ungefär är samtida med de norska, {pc(H1['sverige_tidig'])} procent. En så stor skillnad skulle slumpen ge i färre än ett fall på hundra miljoner – ungefär tjugo gånger osannolikare än högsta vinsten på Lotto med en enda rad. Men diagrammet visar också att Norge inte är ensamt. Västergötland ligger lika lågt, {D1['Vg']['k']} stenar av {D1['Vg']['n']}. Skillnaden går inte mellan rikena utan mellan väst och öst, från Norge och Västergötland till Uppland, där fyra stenar av tio har *lät*.
 
 ## Palms förklaring, prövad
 
 Palm hade en förklaring. ”{Q_PALM['s221a']}”, skrev han. ”{Q_PALM['s221b']}.” (s. 221) I väster, menade han, hade beställaren själv ansvaret för stenen: ”{Q_PALM['s227']}” (s. 227).
 
-Det är en hypotes som går att pröva, och så vitt vi vet har ingen gjort det. Vi räknade de ristare som Rundata knyter till minst tio svenska runstenar. De är {H4['pro_carvers']}, med Öpir ({TOP['Öpir 1']} stenar), Balle ({TOP['Balle']}), Åsmund ({TOP['Åsmund']}) och Fot ({TOP['Fot 2']}) främst, och tillsammans gjorde de ungefär var fjärde svensk runsten. Bland stenar där någon *lät* resa stenen är {round(100 * H4['pro_share_had']['share'])} procent gjorda av en av dem, bland de andra {round(100 * H4['pro_share_not_had']['share'])} procent.
+Han hade också sett ett spår av det i Södermanland. Fast attribueringarna där ”{Q_PALM['s223a']}”, tyckte han sig se ”{Q_PALM['s223b']}”, och han noterade att hjälpverbet är särskilt vanligt i ristningar på fast berg (s. 223). Laila Kitzler Åhfeldt har senare visat att *lét haggva*, ’lät hugga’, i Södermanland hör ihop med ristningar i fast block, medan *hjó*, ’högg’, hör ihop med resta stenar (Fornvännen 2014, s. 249). Vi räknade bara det som Rundata kallar runstenar, inte ristningar i berg och jordfasta block.
+
+Det är en hypotes som går att pröva på hela materialet, och så vitt vi vet har ingen gjort det. Vi räknade de ristare som Rundata knyter till minst tio svenska runstenar. De är {H4['pro_carvers']}, med Öpir ({TOP['Öpir 1']} stenar), Balle ({TOP['Balle']}), Åsmund ({TOP['Åsmund']}) och Fot ({TOP['Fot 2']}) främst, och tillsammans gjorde de ungefär var fjärde svensk runsten. Bland stenar där någon *lät* resa stenen är {round(100 * H4['pro_share_had']['share'])} procent gjorda av en av dem, bland de andra {round(100 * H4['pro_share_not_had']['share'])} procent.
 
 Uppland har både många *lät* och många yrkesristare, och de yngre stenarna har mer av båda. Därför jämförde vi bara stenar i samma landskap och samma stilgrupp, alltså ungefär samma trakt och samma tid, och vägde ihop jämförelserna ({H4['strata_used']} sådana grupper). Sambandet står kvar. När texten säger *lät* är oddsen att stenen gjordes av en yrkesristare 1,6 gånger så höga. Slumpen skulle ge ett så tydligt samband ungefär en gång på 2 600. Palms gissning håller.
 
@@ -199,7 +237,13 @@ Att verkstäderna fanns i Mälardalen förklarar inte ensamt varför Norge har s
 
 Sawyer sa samma sak från andra hållet: ”{Q_SAW['s189a']}”, vilket tyder på att stenresandet fyllt funktioner ”{Q_SAW['s189b']}” (1989, s. 189).
 
-De norska stenarna bär kungarnas och missionens tid på ytan. Kulistenen på Nordmøre säger *Tolf vetr hafði kristindómr verit í Nóregi*, ’tolv vintrar hade kristendomen varit i Norge’, och en av stockarna i grunden till bron vid stenen har årringsdaterats till 1034, skriver James Knirk (2017, s. 94). Galtelandstenen i Agder minns en son som dog i kungens här: *Sá varð dauðr í liði, þá's Knútr sótti England*, ’han dog i hären när Knut anföll England’, alltså 1015–16.
+Senare forskare har lagt till fler skäl. Lisbeth Imer räknar i *Danmarks runesten* (2016) med omkring 2 300 vikingatida runstenar i Sverige, 260 i Danmark och 50 i Norge, och förklarar skillnaden med politik, geografi, folkmängd, tradition och mode: Norge var glest befolkat, och storbönderna fann andra sätt att visa makt och status. Det skriver Anne-Sofie Gräslund i sin recension av boken, och hon saknar en sak, stenkorsen: ”{Q_GRA}” (Futhark 7, 2016, s. 182).
+
+Folkmängden förklarar ändå inte allt. Isle of Man är en ö på 570 kvadratkilometer, och där finns över trettio runristade stenar från vikingatiden, hela eller i fragment. Jämförelsen med Norges femtio har enligt Michael Barnes väckt ”{Q_BAR}”, förvåning och till och med häpnad, bland runologerna (Futhark 3, 2013, s. 60).
+
+Norrmännen saknade inte heller runor. Terje Spurkland räknar med mer än 1 400 medeltida runinskrifter i Norge, ungefär dubbelt så många som från Sverige under samma tid, och 800–900 av dem kommer från utgrävningar i städer som Bergen, Oslo och Trondheim (enligt Magnus Källströms recension i Fornvännen 2003, s. 318). Att stenarna är få betyder alltså inte att runorna var det.
+
+De norska stenarna bär kungarnas och missionens tid på ytan. Kulistenen på Nordmøre säger *Tolf vetr hafði kristindómr verit í Nóregi*, ’tolv vintrar hade kristendomen varit i Norge’, och en av stockarna i grunden till bron vid stenen har årringsdaterats till 1034, skriver James Knirk (2017, s. 94). Bron och stenen antas vara samtida, och tolv vintrar före 1034 hamnar man vid tinget på Moster, där kristna lagar enligt Snorre antogs i början av 1020-talet. Galtelandstenen i Agder minns en son som dog i kungens här: *Sá varð dauðr í liði, þá's Knútr sótti England*, ’han dog i hären när Knut anföll England’, alltså 1015–16.
 
 Vårt eget bidrag till frågan är ett samband, inte ett bevis. Där stenarna var många, i Mälardalen, gjordes de ofta av yrkesristare åt beställare som *lät* resa dem. I Norge fanns varken beställarformeln eller yrket. Om det berodde på att efterfrågan saknades, eller på att jorden, kungamakten och kyrkan fyllde samma behov på andra sätt, kan siffrorna inte avgöra.
 
@@ -225,7 +269,7 @@ Stilen har bokstavligen fått namn efter en sten. De norska ornerade stenarna fr
 
 {PIC("N 61", "sv")}
 
-Någon norsk runsten i den senare Urnesstilen, som är så vanlig på upplandsstenarna, har vi inte hittat.
+Någon norsk runsten i den senare Urnesstilen, som är så vanlig på upplandsstenarna, har vi inte hittat – fast stilen har fått sitt namn efter stavkyrkan i Urnes i Sogn. Roar Hauglid skiljer just mellan ”{Q_HAU}” och de tusentals svenska runstenarna i samma stil (Fornvännen 1975, s. 247).
 
 ## Det som inte höll
 
@@ -233,7 +277,7 @@ Vi trodde också att de norska stenarna oftare skulle tala om jord. Tre gör det
 
 ## Svagheterna
 
-De norska stenarna är få, och många är fragment; när mönstret om kvinnorna vilar på fyra stenar kan några nyfynd ändra det. De norska stenarna saknar de svenska stilgrupperna, så vi har inte kunnat hålla tiden konstant som vi brukar; i stället jämförde vi med de svenska stenar som Rundata daterar till 1050 eller tidigare, och båda fynden höll där. Dragen är räknade ur Rundatas engelska översättningar, som är gjorda på samma sätt i alla länder; de norska träffarna har vi läst en och en, de svenska inte. Det var Palm som först såg att norrmännen inte lät resa sina stenar – vårt bidrag är att pröva hans förklaring och fyndet om kvinnorna. Och sambandet mellan *lät* och yrkesristarna visar att de följs åt, inte att det ena orsakade det andra.
+De norska stenarna är få, och många är fragment; när mönstret om kvinnorna vilar på fyra stenar kan några nyfynd ändra det. De flesta norska runstenar är från 1000-talet (Haukur Þorgeirsson, Futhark 9–10, 2020, s. 160), men de saknar de svenska stilgrupperna, så vi har inte kunnat hålla tiden konstant som vi brukar; i stället jämförde vi med de svenska stenar som Rundata daterar till 1050 eller tidigare, och båda fynden höll där. Dragen är räknade ur Rundatas engelska översättningar, som är gjorda på samma sätt i alla länder; de norska träffarna har vi läst en och en, de svenska inte. Det var Palm som först såg att norrmännen inte lät resa sina stenar – vårt bidrag är att pröva hans förklaring och fyndet om kvinnorna. Och sambandet mellan *lät* och yrkesristarna visar att de följs åt, inte att det ena orsakade det andra.
 
 Nästa gång du står vid en runsten i Uppland, läs verbet. Står det *litu risa*, ’lät resa’, har någon betalat en ristare. Står det bara att någon reste stenen, gjorde man som man nästan alltid gjorde i Norge – där en änka på Toten fraktade sin sten hela vägen från Ringerike.
 
@@ -253,6 +297,12 @@ Nästa gång du står vid en runsten i Uppland, läs verbet. Står det *litu ris
 - Shetelig, Haakon 1950. Religionshistoriske drag fra vikingetidens stilhistorie. *Viking* 14.
 - Kleiber, Boris 1965. Alstadsteinen i lyset av nye utgravninger ved Kiev. *Viking* 29.
 - Knirk, James E. 2017. Kuli-steinen og landsnamnet Noreg. *Namn og nemne* 34, s. 93 ff.
+- Barnes, Michael P. 2013. The Manx Runes and the Supposed Jæren Connection. *Futhark* 3, s. 59–80. [Fri fulltext](https://uu.diva-portal.org/smash/get/diva2:616873/FULLTEXT01.pdf).
+- Gräslund, Anne-Sofie 2016. Recension av Lisbeth M. Imer och Roberto Fortuna, *Danmarks runesten: En fortælling* (2016). *Futhark* 7, s. 181–185. [Fri fulltext](https://uu.diva-portal.org/smash/get/diva2:1087624/FULLTEXT01.pdf).
+- Hauglid, Roar 1975. Kritikk av Kritikken. *Fornvännen* 70, s. 245–247. [Fri fulltext](https://pub.raa.se/dokumentation/2244ae3f-48da-4cfb-9adb-d4d8080e0a77).
+- Kitzler Åhfeldt, Laila 2014. Setu stain, kiarþu merki, risti runaR: tekniska termer i runstensinskrifter från vikingatiden. *Fornvännen* 109, s. 243–258. [Fri fulltext](https://pub.raa.se/dokumentation/2712b668-38f1-4e7c-b57c-2f231df0ac18).
+- Källström, Magnus 2003. Recension av Terje Spurkland, *I begynnelsen var fuþark: Norske runer og runeinnskrifter* (2001). *Fornvännen* 98, s. 317–319. [Fri fulltext](https://pub.raa.se/dokumentation/3f802992-ace6-48b9-81fe-e98cc7646a01).
+- Þorgeirsson, Haukur 2020. Runic and Skaldic Evidence of Palatal r in West Norse. *Futhark* 9–10, s. 159–177. [doi:10.33063/diva-401047](https://doi.org/10.33063/diva-401047).
 - Analysplanen (låst före körningen) och koden finns öppet på [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-07-norska-runstenar.md). Om formlerna inom Sverige: [Västgöten reste själv – upplänningen lät resa](/artiklar/reste-sjalv-eller-lat-resa). Om kvinnorna som resare: [Hon ärvde efter sitt barn](/artiklar/hon-arvde-efter-sitt-barn-kvinnorna-pa-runstenarna).
 - Foton: Wikimedia Commons, med fotograf och licens i bildtexterna."""
 
@@ -274,13 +324,15 @@ On the Norwegian stones it is almost never there. Of the {N_NO} stones, a single
 
 {C1_EN}
 
-Of the Swedish stones {pc(H1['sverige'])} per cent have *lét*, and among those Rundata dates to 1050 or earlier, the ones contemporary with the Norwegian stones, {pc(H1['sverige_tidig'])} per cent. A difference this large would arise by chance in fewer than one case in a hundred million – about twenty times less likely than the top prize on the Swedish Lotto with a single row. But the chart also shows that Norway is not alone. Västergötland is just as low, {D1['Vg']['k']} stones of {D1['Vg']['n']}. The difference does not run between the realms but between west and east, from Norway and Västergötland to Uppland, where four stones in ten have *lét*.
+Of the Swedish stones {pc(H1['sverige'])} per cent have *lét*, and among those Rundata dates to 1050 or earlier, the ones roughly contemporary with the Norwegian stones, {pc(H1['sverige_tidig'])} per cent. A difference this large would arise by chance in fewer than one case in a hundred million – about twenty times less likely than the top prize on the Swedish Lotto with a single row. But the chart also shows that Norway is not alone. Västergötland is just as low, {D1['Vg']['k']} stones of {D1['Vg']['n']}. The difference does not run between the realms but between west and east, from Norway and Västergötland to Uppland, where four stones in ten have *lét*.
 
 ## Palm's explanation, tested
 
 Palm had an explanation. It is “tempting”, he wrote, to link the auxiliary verb to the fact that it is in Uppland's runestone districts that the professional carvers seem to have had a quite special status; there one could entrust the making of the memorial to the professionals (p. 221, our translation). In the west, he thought, the patron himself was responsible for the stone: “In Denmark and Norway and in the more southerly provinces of Sweden, carvers are conspicuously absent from the inscriptions” (p. 227, our translation).
 
-That is a hypothesis that can be tested, and as far as we know nobody has. We counted the carvers whom Rundata links to at least ten Swedish runestones. There are {H4['pro_carvers']}, with Öpir ({TOP['Öpir 1']} stones), Balle ({TOP['Balle']}), Åsmund ({TOP['Åsmund']}) and Fot ({TOP['Fot 2']}) at the top, and together they made about one Swedish runestone in four. Among stones where someone *had* the stone raised, {round(100 * H4['pro_share_had']['share'])} per cent were made by one of them; among the others, {round(100 * H4['pro_share_not_had']['share'])} per cent.
+He had also seen a trace of it in Södermanland. Although the attributions there “often seem uncertain”, he thought he could see “a link between known carvers and the occurrence of the auxiliary verb”, and he noted that the auxiliary verb is especially common in carvings on bedrock (p. 223, our translation). Laila Kitzler Åhfeldt later showed that in Södermanland *lét haggva*, ‘had cut’, goes with carvings on fixed blocks, while *hjó*, ‘cut’, goes with raised stones (Fornvännen 2014, p. 249). We counted only what Rundata calls runestones, not carvings on bedrock and earth-fast boulders.
+
+That is a hypothesis that can be tested on the whole material, and as far as we know nobody has. We counted the carvers whom Rundata links to at least ten Swedish runestones. There are {H4['pro_carvers']}, with Öpir ({TOP['Öpir 1']} stones), Balle ({TOP['Balle']}), Åsmund ({TOP['Åsmund']}) and Fot ({TOP['Fot 2']}) at the top, and together they made about one Swedish runestone in four. Among stones where someone *had* the stone raised, {round(100 * H4['pro_share_had']['share'])} per cent were made by one of them; among the others, {round(100 * H4['pro_share_not_had']['share'])} per cent.
 
 Uppland has both many *lét* and many professional carvers, and the younger stones have more of both. So we compared only stones in the same province and the same style group – roughly the same district and the same time – and pooled the comparisons ({H4['strata_used']} such groups). The link remains. When the text says *lét*, the odds that a professional carver made the stone are 1.6 times as high. Chance would give a link this clear about once in 2,600. Palm's guess holds.
 
@@ -292,7 +344,13 @@ That the workshops were in the Mälaren valley does not on its own explain why N
 
 Sawyer put the same thing from the other side: in Norway “this fashion never caught on as it did in Denmark and Sweden”, which suggests that raising stones filled functions that “in areas poor in runestones were unnecessary or were met in other ways” (1989, p. 189, our translation).
 
-The Norwegian stones wear the time of kings and mission on their surface. The Kuli stone in Nordmøre says *Tolf vetr hafði kristindómr verit í Nóregi*, ‘Christianity had been twelve winters in Norway’, and one of the logs in the foundation of the bridge by the stone has been tree-ring dated to 1034, writes James Knirk (2017, p. 94). The Galteland stone in Agder remembers a son who died in the king's host: *Sá varð dauðr í liði, þá's Knútr sótti England*, ‘he died in the host when Knut attacked England’ – that is, in 1015–16.
+Later scholars have added more reasons. In *Danmarks runesten* (2016) Lisbeth Imer counts about 2,300 Viking-age runestones in Sweden, 260 in Denmark and 50 in Norway, and explains the difference by politics, geography, population, tradition and fashion: Norway was thinly populated, and its big farmers found other ways to show power and status. So writes Anne-Sofie Gräslund in her review of the book, and she misses one thing, the stone crosses, “which are something typical of Norway, found neither in Sweden nor in Denmark at this time” (Futhark 7, 2016, p. 182, our translation).
+
+Population does not explain everything, though. The Isle of Man is an island of 570 square kilometres, and it has over thirty rune-inscribed stones from the Viking Age, complete or fragmentary. The comparison with Norway's fifty has, in Michael Barnes's words, caused “{Q_BAR}” in runological circles (Futhark 3, 2013, p. 60).
+
+Nor did the Norwegians lack runes. Terje Spurkland counts more than 1,400 medieval runic inscriptions in Norway, about twice as many as are known from Sweden in the same period, and 800–900 of them come from excavations in towns such as Bergen, Oslo and Trondheim (according to Magnus Källström's review in Fornvännen 2003, p. 318). That the stones are few does not mean that the runes were.
+
+The Norwegian stones wear the time of kings and mission on their surface. The Kuli stone in Nordmøre says *Tolf vetr hafði kristindómr verit í Nóregi*, ‘Christianity had been twelve winters in Norway’, and one of the logs in the foundation of the bridge by the stone has been tree-ring dated to 1034, writes James Knirk (2017, p. 94). Bridge and stone are assumed to be contemporary, and twelve winters before 1034 brings us to the assembly at Moster, where according to Snorri Christian laws were adopted early in the 1020s. The Galteland stone in Agder remembers a son who died in the king's host: *Sá varð dauðr í liði, þá's Knútr sótti England*, ‘he died in the host when Knut attacked England’ – that is, in 1015–16.
 
 Our own contribution to the question is a link, not a proof. Where the stones were many, in the Mälaren valley, they were often made by professional carvers for patrons who *had* them raised. In Norway there was neither the patron's formula nor the trade. Whether that was because there was no demand, or because land, kingship and church met the same needs in other ways, the numbers cannot tell.
 
@@ -318,7 +376,7 @@ The style is quite literally named after a stone. According to Almgren, the orna
 
 {PIC("N 61", "en")}
 
-A Norwegian runestone in the later Urnes style, so common on the Uppland stones, we have not found.
+A Norwegian runestone in the later Urnes style, so common on the Uppland stones, we have not found – although the style is named after the stave church at Urnes in Sogn. Roar Hauglid distinguishes precisely between “the Norwegian Urnes style” (“{Q_HAU}”) and the thousands of Swedish runestones in the same style (Fornvännen 1975, p. 247).
 
 ## What did not hold
 
@@ -326,7 +384,7 @@ We also expected the Norwegian stones to speak of land more often. Three do. At 
 
 ## The weaknesses
 
-The Norwegian stones are few, and many are fragments; when the pattern about women rests on four stones, a few new finds could change it. The Norwegian stones lack the Swedish style groups, so we could not hold time constant as we usually do; instead we compared with the Swedish stones Rundata dates to 1050 or earlier, and both findings held there. The features are counted from Rundata's English translations, which are made the same way in every country; the Norwegian hits we read one by one, the Swedish ones not. It was Palm who first saw that Norwegians did not have their stones raised – our contribution is to test his explanation and the finding about women. And the link between *lét* and the professional carvers shows that they go together, not that one caused the other.
+The Norwegian stones are few, and many are fragments; when the pattern about women rests on four stones, a few new finds could change it. Most Norwegian runestones date from the eleventh century (Haukur Þorgeirsson, Futhark 9–10, 2020, p. 160), but they lack the Swedish style groups, so we could not hold time constant as we usually do; instead we compared with the Swedish stones Rundata dates to 1050 or earlier, and both findings held there. The features are counted from Rundata's English translations, which are made the same way in every country; the Norwegian hits we read one by one, the Swedish ones not. It was Palm who first saw that Norwegians did not have their stones raised – our contribution is to test his explanation and the finding about women. And the link between *lét* and the professional carvers shows that they go together, not that one caused the other.
 
 Next time you stand by a runestone in Uppland, read the verb. If it says *litu risa*, ‘had raised’, someone paid a carver. If it simply says that someone raised the stone, they did as people nearly always did in Norway – where a widow at Toten carried her stone all the way from Ringerike.
 
@@ -346,6 +404,12 @@ Next time you stand by a runestone in Uppland, read the verb. If it says *litu r
 - Shetelig, Haakon 1950. Religionshistoriske drag fra vikingetidens stilhistorie. *Viking* 14.
 - Kleiber, Boris 1965. Alstadsteinen i lyset av nye utgravninger ved Kiev. *Viking* 29.
 - Knirk, James E. 2017. Kuli-steinen og landsnamnet Noreg. *Namn og nemne* 34, pp. 93 ff.
+- Barnes, Michael P. 2013. The Manx Runes and the Supposed Jæren Connection. *Futhark* 3, pp. 59–80. [Free full text](https://uu.diva-portal.org/smash/get/diva2:616873/FULLTEXT01.pdf).
+- Gräslund, Anne-Sofie 2016. Review of Lisbeth M. Imer and Roberto Fortuna, *Danmarks runesten: En fortælling* (2016). *Futhark* 7, pp. 181–185. [Free full text](https://uu.diva-portal.org/smash/get/diva2:1087624/FULLTEXT01.pdf).
+- Hauglid, Roar 1975. Kritikk av Kritikken. *Fornvännen* 70, pp. 245–247. [Free full text](https://pub.raa.se/dokumentation/2244ae3f-48da-4cfb-9adb-d4d8080e0a77).
+- Kitzler Åhfeldt, Laila 2014. Setu stain, kiarþu merki, risti runaR: tekniska termer i runstensinskrifter från vikingatiden. *Fornvännen* 109, pp. 243–258. [Free full text](https://pub.raa.se/dokumentation/2712b668-38f1-4e7c-b57c-2f231df0ac18).
+- Källström, Magnus 2003. Review of Terje Spurkland, *I begynnelsen var fuþark: Norske runer og runeinnskrifter* (2001). *Fornvännen* 98, pp. 317–319. [Free full text](https://pub.raa.se/dokumentation/3f802992-ace6-48b9-81fe-e98cc7646a01).
+- Þorgeirsson, Haukur 2020. Runic and Skaldic Evidence of Palatal r in West Norse. *Futhark* 9–10, pp. 159–177. [doi:10.33063/diva-401047](https://doi.org/10.33063/diva-401047).
 - The analysis plan (locked before the run) and the code are open on [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-07-norska-runstenar.md). On the formulas within Sweden: [The man from Västergötland raised it himself](/en/artiklar/reste-sjalv-eller-lat-resa). On women as raisers: [She inherited from her child](/en/artiklar/hon-arvde-efter-sitt-barn-kvinnorna-pa-runstenarna).
 - Photos: Wikimedia Commons, with photographer and licence in the captions."""
 
