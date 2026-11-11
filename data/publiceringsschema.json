@@ -1,0 +1,79 @@
+{
+ "_om": "Veckans publiceringar (Admin → Artiklar → Veckans publiceringar; api/routers/blog_week.py). En rad per planerad publicering ur PUBLICERINGSPLAN.md avsnitt 2 (spår P tisdag och fredag kl. 07.00) och avsnitt 1 (spår F). Fält: datum (ÅÅÅÅ-MM-DD) och tid (TT:MM) i svensk tid, Europe/Stockholm, sommar- och vintertid sköts av sig själv; id = artikelns Firestore-id (samlingen posts, syns i Admin); titel = arbetsrubrik för listan (artikelns egen rubrik gäller); spar = \"P\" (populärspåret) eller \"F\" (forskningsspåret); bluesky = {\"text\": engelsk text, \"tags\": [utan #]} eller null för inget inlägg – texten med taggarna högst 300 tecken (scripts/bluesky_post.compose), länken går till den engelska utgåvan; taggmönster: ämnestagg + #MedievalSky/#Skystorians varannan gång + fler forskartaggar + #VikingAge + #Vikings; godkand = null tills Viktor godkänner, sedan tiden (ISO) då veckan godkändes. Vid godkännandet schemaläggs artikeln (samma väg som Schemalägg i Admin, med säkerhetskopia), Bluesky-inlägget läggs i data/bluesky/ko.json med publiceringsdagen som datum (före andra inlägg samma dag, så att det går ut kl. 18 samma dag; resten av kön skjuts en dag) och godkand fylls i. En artikel som redan är publicerad eller schemalagd, eller vars tid har passerat, rörs inte. Lägg till nya veckor här, i datumordning.",
+ "poster": [
+  {
+   "datum": "2026-11-17",
+   "tid": "07:00",
+   "id": "Ji9gaIAEvK5GNB13yJHv",
+   "titel": "Ingen på runstenarna hette Freja – i dag heter 7 000 svenskar det",
+   "spar": "P",
+   "bluesky": {
+    "text": "No one on Sweden's runestones was called Freja. Today 7,000 Swedes are. We counted every Old Norse first name in use now: the stones' names are ageing with their bearers, while the gods' names (Freja, Idun, Embla, Loke) grow.",
+    "tags": [
+     "OldNorse",
+     "Skystorians",
+     "runestones",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
+  },
+  {
+   "datum": "2026-11-20",
+   "tid": "07:00",
+   "id": "z2hK3b4qnE5ZzG2gw6g7",
+   "titel": "De gamla landen: Skåne – slätten där kungen byggde nytt",
+   "spar": "P",
+   "bluesky": {
+    "text": "New in the series The old lands: Skåne around AD 1000, a Danish land in change. Uppåkra fades, the king builds ring forts and a church in Lund. From the shore at Trelleborg to the land assembly east of Lund.",
+    "tags": [
+     "runestones",
+     "MedievalSky",
+     "archaeology",
+     "EarlyMedieval",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
+  },
+  {
+   "datum": "2026-11-24",
+   "tid": "07:00",
+   "id": "V4a68EesKrJqKGlGqP2I",
+   "titel": "Varför står runstenarna vid lerans kant?",
+   "spar": "P",
+   "bluesky": {
+    "text": "We laid the soil map over every runestone still in place. The stones stand not on the clay but at its edge, on dry ground by farms and graves. And half of the Mälaren valley's lead is explained by neither soil, settlement nor water.",
+    "tags": [
+     "runestones",
+     "Skystorians",
+     "archaeology",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
+  },
+  {
+   "datum": "2026-11-27",
+   "tid": "07:00",
+   "id": "pdDPnhikksrBXhNYMVMM",
+   "titel": "Fyra stenar för två barn – släkterna som går att följa över runstenarna",
+   "spar": "P",
+   "bluesky": {
+    "text": "Four stones for two children. Testing names against chance, we linked 42 families across 95 runestones. Nine in ten links are already in the runologists' list; three are not, and one of those is probably wrong.",
+    "tags": [
+     "runology",
+     "MedievalSky",
+     "runestones",
+     "DigitalHumanities",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": null
+  }
+ ]
+}

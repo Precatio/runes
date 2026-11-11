@@ -173,6 +173,19 @@ def admin_posts(_: dict = Depends(require_admin)):
 def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
     """Sparar ett utkast, publicerar nu eller schemalägger (publish_at): artikeln får publiceringstiden som datum och
     syns först när tiden är nådd. Första gången sparas mönstrens läge, som nästa utkast jämförs med."""
+    post_id, data, old = store_post(req, admin)
+    # The public website: published or changed articles go out within half a minute, scheduled ones at their time
+    from src import site_export
+    if req.published or old.get("published"):
+        site_export.publish_soon()
+    site_export.schedule(_all())
+    return {"post": {"id": post_id, **_iso({k: v for k, v in data.items() if k != "snapshot"})}}
+
+
+def store_post(req: PostRequest, admin: dict) -> tuple[str, dict, dict]:
+    """The save itself, shared by save_post and the week's approval (api/routers/blog_week.py): checks, backs up the
+    previous version and writes. Returns the article's id, what was written and the version before; the website export
+    is left to the caller."""
     if not SLUG.match(req.slug):
         raise HTTPException(status_code=422, detail="Adressen får bara innehålla små bokstäver a–z, siffror och bindestreck.")
     if req.month and not MONTH.match(req.month):
@@ -213,12 +226,7 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         raise
     except Exception as e:
         raise server_error(e, "Artikeln kunde inte sparas.", status_code=503) from e
-    # The public website: published or changed articles go out within half a minute, scheduled ones at their time
-    from src import site_export
-    if req.published or old.get("published"):
-        site_export.publish_soon()
-    site_export.schedule(_all())
-    return {"post": {"id": ref.id, **_iso({k: v for k, v in data.items() if k != "snapshot"})}}
+    return ref.id, data, old
 
 
 class FeaturedRequest(BaseModel):

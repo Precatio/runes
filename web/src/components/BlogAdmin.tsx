@@ -8,6 +8,7 @@ import { useSettings } from "@/components/SettingsContext";
 import { useAuth } from "@/components/AuthContext";
 import { metaDescription, postUrl, seoChecks } from "@/lib/blogSeo";
 import ReportPaper from "@/components/ReportPaper";
+import WeekApproval from "@/components/WeekApproval";
 import { isReport, REPORT_LABEL, reportUrl } from "@/lib/report";
 import { API_URL } from "@/lib/api";
 
@@ -339,6 +340,10 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   return (
     <>
     <section className="liquid-glass-island rounded-[24px] p-4 sm:p-6 space-y-4">
+      {/* Every Monday: the week's planned articles approved and scheduled at once (api/routers/blog_week.py) */}
+      <WeekApproval call={call}
+        onEdit={id => { const p = posts.find(x => x.id === id); if (p) edit(p); else setError("Artikeln finns inte i listan; ladda om sidan."); }}
+        onChanged={() => { load(); refreshBlog(); siteSoon(); }} />
       <div className="flex flex-wrap items-center gap-3 justify-between">
         <div>
           <h3 className="text-lg font-bold text-slate-900">Artiklar</h3>

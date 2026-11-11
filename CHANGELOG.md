@@ -5,6 +5,18 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Admin: Godkänn veckans publiceringar
+- Överst under Artiklar i Admin står kortet *Veckans publiceringar (vecka N)*: veckans planerade artiklar ur
+  `data/publiceringsschema.json` (datum och tid i svensk tid, Firestore-id, spår P/F, engelskt Bluesky-inlägg, godkand;
+  formatet står i filens `_om`), med föregående och nästa vecka. Varje rad visar veckodag, tid, rubrik (öppnar artikeln i
+  redigeraren), spår, läge (utkast, schemalagd, publicerad, saknas), engelsk utgåva, etiketter och Bluesky-textens längd.
+- Knappen *Godkänn veckans publiceringar* listar först vad som schemaläggs. Sedan schemaläggs de valda utkasten till sin
+  tid, samma väg som Schemalägg (med säkerhetskopia, texten oförändrad), och deras inlägg läggs i Bluesky-kön med
+  publiceringsdagen som datum, före köns övriga inlägg den dagen, så att de går ut kl. 18 samma dag. Resten av kön flyttas
+  då en dag. En adress som redan står i kön läggs inte in igen. En artikel som redan är publicerad eller schemalagd,
+  eller vars tid har passerat, rörs inte (`GET /api/admin/blog/week?from=…`, `POST /api/admin/blog/week/approve`,
+  `api/routers/blog_week.py`, `tests/test_blog_week.py`).
+
 ### Ristarförslagen: ärligare ord och en ny sorts belägg
 - Stenöversikt: *nytt förslag* heter *förslag bland kända* och *möjligt förslag* *svagt förslag* – förslagen kan bara
   gälla namngivna ristare och är prövade mot Rundatas tillskrivningar, inte som samma hand (de gav inte oftare samma
