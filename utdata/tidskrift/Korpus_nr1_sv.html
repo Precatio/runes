@@ -44,7 +44,7 @@ a { color: inherit; text-decoration: none; }
 .omband p { font: 400 8.8pt/1.4 var(--sans); color: var(--mute); margin: 1.6mm 0 0; }
 .omruna { color: var(--rust); border-left: .6pt solid var(--line); padding-left: 5mm; }
 .omruna span { display: block; margin-top: 3mm; font: 700 6.8pt/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
-.omkredit { position: absolute; left: 14mm; right: 14mm; bottom: 4.5mm; z-index: 4; font: 400 6pt var(--sans); color: #9aa2a8; }
+.omkredit { position: absolute; left: 14mm; right: 14mm; bottom: 6mm; z-index: 4; font: 400 6pt var(--sans); color: #9aa2a8; }
 
 /* ---------- Ledare + innehåll ---------- */
 .vanlig { break-before: page; }
@@ -218,25 +218,155 @@ blockquote.pull { hyphens: none; }
 .appsida p { margin-bottom: 2.4mm; }
 .appfot { margin-top: 3mm; padding-top: 2mm; }
 .appbild img { max-height: 60mm; object-fit: contain; object-position: left top; }
+/* v4 (2026-11-11): Nr 1 i 20 sidor för tryck i ark om fyra sidor; Viktors typografi: alla spalter slutar på samma
+   baslinje, rutor och källor ligger på rastret även när de bryts mellan spalter, luft efter ingressen. */
+/* Rutor: radavstånd = rastret, luft runt texten = en rad på alla sidor, rubriken med linje tar exakt två rader. */
+.box { padding: var(--lh); font: 400 8.4pt/13.5pt var(--sans); }
+.box p, .box li, .text .box p { line-height: var(--lh); margin: 0; text-indent: 0; }
+.box ul { margin: 0; padding-left: 3.5mm; }
+.box li { margin: 0; }
+.boxh { font: 900 11pt/13.5pt var(--serif); margin: 0 0 6.75pt; padding: 0 0 6.15pt; border-bottom: .6pt solid #e3c9b8; }
+/* Källorna: tre fjärdedels rad, så att var fjärde källrad landar på rastret igen. */
+.sources, .sources p, .sources li { line-height: 10.125pt; }
+.text .sources h3 { line-height: var(--lh); margin-top: var(--lh); }
+.text .sources > h3:first-child { margin-top: 0; }
+/* Ingress och rubriker på de vanliga sidorna: avstånd i hela rader. */
+.vanlig h2 { margin-bottom: var(--lh); }
+.vanlig .deck { margin: 0 0 calc(2 * var(--lh)); line-height: 1.45; }
+.ledare .ingress { margin: 0 0 calc(2 * var(--lh)); line-height: 1.42; }
+.ledare p { font-size: 9.9pt; line-height: var(--lh); margin: 0; text-indent: 1.1em; }
+.ledare p.forsta, .ledare p.ingress, .ledare p.sign { text-indent: 0; }
+.ledare p.sign { margin-top: var(--lh); line-height: 1.4; }
+.verkstad p, .appsida p, .nastagrid p { line-height: var(--lh); }
+.verkstad h3, .appsida h3, .nastagrid h3 { line-height: var(--lh); margin: var(--lh) 0 0; }
+.tvaspalt > div > h3:first-child, .nastagrid h3 { margin-top: 0; }
+.appsida p { margin: 0 0 var(--lh); }
+.appsida .deck { margin-bottom: calc(2 * var(--lh)); }
+.verkstad .tal { margin-top: 0; }
+/* Till läsaren: innehållet är längre (nio poster) och får en kolofon. */
+.innehall li { padding: 2.6mm 0; }
+.innehall img { height: 17mm; }
+.kolofon { margin-top: 5mm; padding-top: 3mm; border-top: 1.4pt solid var(--rust); font: 400 7.4pt/1.45 var(--sans); color: var(--mute); }
+.kolofon div { margin-bottom: 1.2mm; } .kolofon b { color: var(--ink); font-weight: 700; }
+/* Kartan: helsida med utfall; --b är utfallet (0 på skärm, 3 mm i tryck). */
+.kartsida { page: opener; --b: 0mm; position: relative; width: 210mm; height: 297mm; overflow: hidden; break-before: page; break-after: page; background: #e4e9ec; }
+.kartsida img.bg { position: absolute; left: calc(var(--b) - 3mm); top: calc(var(--b) - 3mm); width: 216mm; height: 303mm; display: block; }
+.kartpanel { position: absolute; top: calc(14mm + var(--b)); right: calc(12mm + var(--b)); width: 60mm; background: rgba(255,255,255,.95); padding: 5.5mm; }
+.kartpanel h2 { font: 900 23pt/1.04 var(--serif); letter-spacing: -.015em; margin: 3.5mm 0 3mm; hyphens: none; }
+.kartpanel p { font: 400 8.6pt/1.45 var(--sans); margin: 0 0 3mm; }
+.kartleg { list-style: none; margin: 0 0 3mm; padding: 0; font: 400 8.2pt/1.4 var(--sans); }
+.kartleg li { display: grid; grid-template-columns: 4mm 1fr; align-items: start; margin-bottom: 1.6mm; }
+.prick { display: block; width: 2.3mm; height: 2.3mm; border-radius: 50%; background: #1d2226; margin-top: 1mm; }
+.prick.rost { background: var(--rust); }
+.kartpanel .knot { font-size: 7.4pt; color: var(--mute); margin: 0; }
+.kartkredit { position: absolute; right: calc(12mm + var(--b)); bottom: calc(9mm + var(--b)); width: 60mm; font: 400 6.6pt/1.4 var(--sans); color: #3a4249; }
+/* Runstenarna i siffror */
+.siffersida { display: flex; flex-direction: column; min-height: 258mm; }
+.siffersida h2, .nastasida h2 { font: 900 30pt/1.02 var(--serif); letter-spacing: -.015em; margin: 5mm 0 var(--lh); }
+.rutor { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9mm 6mm; }
+.rutor div { border-top: 2pt solid var(--rust); padding-top: 3mm; }
+.rutor b { display: block; font: 900 27pt/1 var(--serif); color: var(--rust); margin-bottom: 2.2mm; letter-spacing: -.01em; }
+.rutor span { font: 500 8.6pt/1.42 var(--sans); color: var(--mute); display: block; hyphens: auto; }
+.sifferbotten { margin-top: auto; align-items: start; }
+.sifferchart { margin: 0; }
+.sifferchart .crow { grid-template-columns: 25mm 1fr 10mm 17mm; font-size: 8pt; }
+.siffersida .box { margin: 0; }
+/* Nästa nummer */
+.nastasida { display: flex; flex-direction: column; min-height: 258mm; }
+.nastagrid { display: grid; grid-template-columns: 1fr 1fr; gap: calc(2 * var(--lh)) 9mm; }
+.nastagrid h3 { font: 700 10pt/13.5pt var(--sans); color: var(--rust-dark); }
+.nastagrid p { font-size: 10pt; margin: 0; }
+.nplan { font: italic 400 10pt/13.5pt var(--serif); color: #2d3439; margin: calc(2 * var(--lh)) 0 0; padding-top: var(--lh); border-top: .6pt solid var(--line); }
+.lasfritt { margin-top: auto; background: var(--rust-soft); padding: 6mm; display: grid; grid-template-columns: 1fr 22mm; column-gap: 8mm; align-items: center; }
+.lasfritt .slab { grid-column: 1; }
+.lasfritt p { grid-column: 1; font: 400 9.2pt/1.5 var(--sans); margin: 0; }
+.lasfritt .bindruna { grid-column: 2; grid-row: 1 / span 2; height: 20mm; justify-self: end; }
+/* v4.1: kolofonen i vänsterspalten; kartpanelen kortare så att den inte täcker Uppland; siffersidan med två diagram */
+.ledare .kolofon { margin-top: calc(2 * var(--lh)); }
+.ledare .kolofon div { margin-bottom: 0; }
+.kartpanel h2 { font-size: 21pt; margin: 3mm 0 2.5mm; }
+.kartpanel p { margin-bottom: 2.5mm; }
+.kartleg { margin: 0; } .kartleg li:last-child { margin-bottom: 0; }
+.kartkredit { width: 74mm; }
+.sifferbotten { gap: 6mm; }
+.sifferbotten .chart { padding: 4.5mm; }
+.sifferbox { margin-top: 6mm !important; }
+.siffersida .rutor { margin-top: 2mm; }
+.siffersida .flik, .nastasida .flik { align-self: flex-start; }
+/* v4.2: tomma rader i stället för marginaler runt bilder, rutor och citat (se SNAP_JS); rutornas text står på samma
+   baslinjer som brödtexten (Avenir 8,4 pt sitter 0,7 pt högre i raden än Charter 9,4 pt) */
+.text div.rad { margin: 0; padding: 0; }
+.text div.rad + p { text-indent: 0; }
+.box p, .box li { position: relative; top: .7pt; }
+.text .snapwrap { break-inside: avoid; margin: 0; }
+.text .snapwrap.delbar { break-inside: auto; }
+.text .snapwrap + p { text-indent: 0; }
+.box .boxh { break-after: avoid; }
+.box p { orphans: 3; widows: 2; }
+/* v4.3: s. 2 = "Från redaktören" (Viktor 2026-11-11): stående spalt, 250–400 ord, bredvid innehållet; innehållet utan
+   miniatyrer i en smalare spalt; kolofonen under innehållet. Redaktörens text på rastret (13,5 pt). */
+.ledgrid { grid-template-columns: 1fr 62mm; gap: 8mm; }
+.ledare h2 { font-size: 26pt; margin-bottom: var(--lh); }
+.redtext p { font: 400 9.6pt/13.5pt var(--serif); margin: 0; text-indent: 1.1em; text-align: justify; hyphens: auto; }
+.redtext p.forsta { text-indent: 0; }
+.ledare .sign { display: flex; align-items: center; gap: 3mm; margin-top: var(--lh); font: italic 400 9.6pt/13.5pt var(--serif); }
+.ledare .portratt { width: 16mm; height: 16mm; border-radius: 50%; object-fit: cover; }
+.innehallsspalt { padding-left: 6mm; }
+.innehall li.kort { padding: 2.2mm 0; }
+.innehall .tdeck { display: none; }
+.innehall .ttitle { font-size: 10pt; }
+.tsida { font-size: 13pt; }
+.innehallsspalt .kolofon { margin-top: 5mm; }
 
 @page { @bottom-right { content: "Korpus nr 1 · 2026"; } }
 @page b1 { @top-left { content: "Korpus · Människorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
 @page b2 { @top-left { content: "Korpus · Resorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
 @page b3 { @top-left { content: "Korpus · Språket"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }</style><script>
-// Baslinjeraster: varje element i brödtexten som inte är vanlig text får en höjd (med marginaler) som är ett helt antal rader.
+// Baslinjeraster: varje element i brödtexten som inte är vanlig text tar, med luften runt sig, ett helt antal rader.
+// v4 (Viktor 2026-11-11, "inte all brödtext linjerar i nederkant"): luften kring bilder, citat, rutor och källor ligger
+// som utfyllnad i ett omslag (div.snapwrap) i stället för som marginaler. Chrome stryker marginaler i slutet av en spalt,
+// och då kom spaltraden före ett diagram över alla spalter – och all text efter det – bredvid rastret; tomma rader som
+// egna element kunde i stället hamna överst i nästa spalt. Omslaget hålls ihop (break-inside: avoid) utom kring rutor
+// och källor, som får brytas: en ruta har hela rader i sig (radavstånd, luft och rubrik mätta i rader) och får en hel
+// rad före och efter. Diagram över alla spalter bryts aldrig och behåller marginaler: en hel rad ovanför (stryks den
+// överst på en sida flyttas allt en hel rad, inte en halv) och resten under.
 window.addEventListener('load', () => {
   const LH = 18;  // 13,5 pt
+  // Placeringen (placera() i bygg_tidskrift.py): ett diagram, en bild eller ett citat flyttas n stycken framåt i texten,
+  // så att det inte skjuts till nästa spalt eller sida och lämnar en kort spalt efter sig.
+  document.querySelectorAll('.text > [data-flytt]').forEach(el => {
+    let n = +el.dataset.flytt, t = el;
+    while (n > 0 && t.nextElementSibling && !t.nextElementSibling.matches('.sources, .slut, .webb')) {
+      t = t.nextElementSibling;
+      if (t.tagName == 'P' && !t.classList.contains('runcitat')) n--;
+    }
+    if (t !== el) t.after(el);
+  });
+  const hojd = (el) => [...el.getClientRects()].reduce((s, r) => s + r.height, 0);
   document.querySelectorAll('.text > figure, .text > aside, .text > blockquote, .text > .sources').forEach(el => {
+    const forst = !el.previousElementSibling;
     el.classList.add('snap');
-    const h = el.getBoundingClientRect().height;
-    const top = el.previousElementSibling ? LH * 0.5 : 0;
-    const total = Math.ceil((h + top) / LH + 0.5) * LH;
-    el.style.setProperty('margin-top', top + 'px', 'important');
-    el.style.setProperty('margin-bottom', (total - h - top) + 'px', 'important');
+    if (el.classList.contains('chart')) {
+      const h = el.getBoundingClientRect().height, top = forst ? 0 : LH;
+      const total = Math.ceil((h + top) / LH + 0.5) * LH;
+      el.style.setProperty('margin-top', top + 'px', 'important');
+      el.style.setProperty('margin-bottom', (total - h - top) + 'px', 'important');
+      return;
+    }
+    const delbar = el.tagName == 'ASIDE' || el.classList.contains('sources');
+    const w = document.createElement('div');
+    w.className = 'snapwrap' + (delbar ? ' delbar' : '');
+    el.before(w); w.appendChild(el);
+    const h = hojd(el);
+    let top, bottom;
+    if (el.tagName == 'ASIDE' || (el.tagName == 'BLOCKQUOTE' && !el.classList.contains('pull')) || el.classList.contains('sources')) {
+      top = forst ? 0 : LH; bottom = Math.ceil(h / LH - 0.02) * LH - h + LH; }
+    else { top = forst ? 0 : LH * 0.5; bottom = Math.ceil((h + top) / LH + 0.5) * LH - h - top; }
+    w.style.paddingTop = top + 'px'; w.style.paddingBottom = bottom + 'px';
   });
   document.body.dataset.snapped = '1';
 });
-</script></head><body>
+</script></head><body class="skarm">
 
 <section class="omslag">
   <img class="bg" src="https://upload.wikimedia.org/wikipedia/commons/9/9d/U_489%2C_Morby.jpg" alt="">
@@ -256,15 +386,40 @@ window.addEventListener('load', () => {
 <section class="vanlig ledsida">
   <div class="ledgrid">
     <div class="ledare">
-      <div class="slab">Ledare</div>
+      <div class="slab">Från redaktören</div>
       <h2>Alla stenar på en gång</h2>
-      <p class="ingress">Runforskningen har länge handlat om den enskilda stenen: en läsning, en ristare, ett ord. Det har gett oss ett rikt material. Men det har också gjort att vissa frågor aldrig ställts – frågor som bara går att svara på om man räknar alla stenar på en gång.</p>
-      <p class=forsta>Korpus är Vitkis tidskrift för just de frågorna. Vi mäter hela korpusen – drygt 2 300 svenska runstenar – mot jordarter, strandlinjer, ortnamn, gravfält och vägar, och vi prövar varje mönster mot slumpen innan vi kallar det ett fynd. Analysplanen låses innan vi räknar, och när ett resultat inte håller säger vi det.</p><p>I det här numret möter du döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som fortfarande bärs av svenskar i dag. Bakom varje artikel ligger tusentals stenar – men varje artikel börjar med en.</p><p>Tidskriften är skriven för den som är nyfiken men har ont om tid. Varje artikel kan läsas på trettio sekunder, på fem minuter eller på djupet. Siffrorna förklaras i ord, och alla data finns öppet på vitkirunor.se.</p>
-      <p class="sign">Viktor Kvant<br><span>Redaktör</span></p>
+      <div class="redtext"><p class=forsta>Mitt intresse för historia började i vår egen. Som ung läste jag Eddan och förundrades över Tor som slogs med jättarna, och över Oden som offrade sig själv för att vinna visdom. Som vuxen kom jag att arbeta med dataanalys, att leta efter mönster i stora mängder data. Korpus är platsen där de två möts.</p><p>Runforskningen har länge handlat om den enskilda stenen: en läsning, en ristare, ett ord. Det har gett oss ett rikt material, insamlat och digitaliserat av generationer av forskare – utan deras idoga arbete hade inget av detta varit möjligt. Men vissa frågor har sällan kunnat prövas: de som bara går att besvara om man räknar alla stenar på en gång.</p><p>Korpus är Vitkis tidskrift för just de frågorna. Vi mäter hela korpusen – drygt 2 300 svenska runstenar – mot jordarter, strandlinjer, ortnamn, gravfält och vägar, och vi prövar varje mönster mot slumpen innan vi kallar det ett fynd. Analysplanen låses innan vi räknar, och när ett resultat inte håller säger vi det.</p><p>Det som berör mig mest är ofta det som inte står på stenarna. Döttrarna, som så sällan fick samma röst som sönerna. Den gamla tron, som rymde många gudar och till och med gav plats åt den vite Krist, men som till slut fick ge vika för en lära med en enda gud. Jag vill se vilka spår som ändå finns kvar, och lära mig mer om vårt arv: hur de tänkte, och vilken visdom de ville föra vidare.</p><p>I det här numret möter du döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som fortfarande bärs av svenskar i dag. Varje artikel kan läsas på trettio sekunder, på fem minuter eller på djupet, och alla data finns öppet på vitkirunor.se. Jag hoppas att du hittar hit i bruset av allt som pockar på uppmärksamhet, och att vi, på vårt sätt, kan bidra med något till runforskningen.</p></div>
+      <div class="sign"><span>Viktor Kvant, redaktör</span></div>
     </div>
-    <div class="innehallsspalt"><div class="slab">I detta nummer</div><ol class="innehall"><li><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/U29%2C_Hillersjoh%C3%A4llen.jpg" alt=""><div><span class="ttema">Människorna</span><span class="ttitle">Döttrarna som runstenarna glömde</span><span class="tdeck">Så många stenar är resta efter en dotter för varje sten efter en son.</span></div><span class="tsida">3</span></li><li><img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Vg_61%2C_H%C3%A4rlingstorp.JPG" alt=""><div><span class="ttema">Resorna</span><span class="ttitle">Färderna var de ungas</span><span class="tdeck">Så mycket oftare dog söner och bröder utanför Norden än fäder och makar.</span></div><span class="tsida">7</span></li><li><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Lorenz_Fr%C3%B8lich_-_%C3%86sir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg" alt=""><div><span class="ttema">Språket</span><span class="ttitle">Tor föll, hjälten blev dräng – vilka vikinganamn lever kvar?</span><span class="tdeck">Så stor del av namnen på runstenarna bärs fortfarande av svenskar i dag.</span></div><span class="tsida">10</span></li><li class="kort"><div><span class="ttema">Verkstaden</span><span class="ttitle">Hundra års runforskning – lästa på en gång</span></div><span class="tsida">15</span></li><li class="kort"><div><span class="ttema">Metodhörnan</span><span class="ttitle">Vad betyder p = 0,003?</span></div><span class="tsida">15</span></li><li class="kort"><div><span class="ttema">I appen</span><span class="ttitle">Människorna: vem reste stenen, och efter vem?</span></div><span class="tsida">16</span></li></ol></div>
+    <div class="innehallsspalt"><div class="slab">I detta nummer</div><ol class="innehall"><li class="kort"><div><span class="ttema">Kartan</span><span class="ttitle">Var stenarna står</span></div><span class="tsida">3</span></li><li class="kort"><div><span class="ttema">I siffror</span><span class="ttitle">Runstenarna i siffror</span></div><span class="tsida">4</span></li><li class="kort"><div><span class="ttema">Människorna</span><span class="ttitle">Döttrarna som runstenarna glömde</span><span class="tdeck">Så många stenar är resta efter en dotter för varje sten efter en son.</span></div><span class="tsida">5</span></li><li class="kort"><div><span class="ttema">Resorna</span><span class="ttitle">Färderna var de ungas</span><span class="tdeck">Så mycket oftare dog söner och bröder utanför Norden än fäder och makar.</span></div><span class="tsida">9</span></li><li class="kort"><div><span class="ttema">Språket</span><span class="ttitle">Tor föll, hjälten blev dräng – vilka vikinganamn lever kvar?</span><span class="tdeck">Så stor del av namnen på runstenarna bärs fortfarande av svenskar i dag.</span></div><span class="tsida">12</span></li><li class="kort"><div><span class="ttema">Verkstaden</span><span class="ttitle">Hundra års runforskning – lästa på en gång</span></div><span class="tsida">17</span></li><li class="kort"><div><span class="ttema">Metodhörnan</span><span class="ttitle">Vad betyder p = 0,003?</span></div><span class="tsida">17</span></li><li class="kort"><div><span class="ttema">I appen</span><span class="ttitle">Människorna: vem reste stenen, och efter vem?</span></div><span class="tsida">18</span></li><li class="kort"><div><span class="ttema">Nästa nummer</span><span class="ttitle">Det vi inte ser</span></div><span class="tsida">19</span></li></ol>
+      <div class="kolofon"><div><b>Korpus</b> Digital runforskning från Vitki<br>Nr 1 · November 2026</div><div><b>Redaktion</b> Viktor Kvant</div><div><b>Utgivare</b> Vitki · vitkirunor.se</div><div><b>Licens</b> Texterna: CC BY 4.0. Bilderna har egna licenser, angivna vid varje bild.</div></div></div>
   </div>
   <div class="lasband"><div><b>30 sek</b><span>Rubriken, <i>Siffran</i> och <i>På 30 sekunder</i> ger fyndet och hur säkert det är.</span></div><div><b>5 min</b><span>Artikeln: hur vi kom fram till det, med diagram i procent och stenarna som exempel.</span></div><div><b>På djupet</b><span><i>Så säkra är vi</i>, källorna och öppna data på vitkirunor.se.</span></div></div>
+</section>
+
+<section class="kartsida">
+  <img class="bg" src="bilder/karta_alla.png" alt="">
+  <div class="kartpanel">
+    <div class="flik">Kartan</div>
+    <h2>Var stenarna står</h2>
+    <p>Varje prick är en vikingatida runsten eller ett fragment av en, där Samnordisk runtextdatabas placerar den. Tätast står de runt Mälaren; Uppland ensamt har hälften av alla.</p>
+    <ul class="kartleg"><li><i class="prick"></i><span><b>1 904</b> finns kvar</span></li><li><i class="prick rost"></i><span><b>414</b> försvunna enligt databasen, kända från äldre avbildningar</span></li></ul>
+  </div>
+  <div class="kartkredit">2 318 av korpusens 2 321 stenar har en plats i databasen. Skåne, Blekinge och Halland hörde till Danmark; deras stenar har danska signum och är inte med.<br>Karta: Vitki, efter Samnordisk runtextdatabas (ODbL). Kustlinjer och sjöar: Natural Earth.</div>
+</section>
+
+<section class="vanlig siffersida">
+  <div class="flik">I siffror</div>
+  <h2>Runstenarna i siffror</h2>
+  <p class="deck">Det här är korpusen som Korpus räknar på: alla vikingatida runstenar och fragment av runstenar från Sverige i Samnordisk runtextdatabas. Varje tal är räknat ur databasen för det här numret.</p>
+  <div class="rutor"><div><b>2 321</b><span>runstenar och fragment från vikingatiden. Det är underlaget för varje artikel i numret.</span></div><div><b>51 %</b><span>kommer från Uppland, 1 178 stenar. Varannan svensk runsten är uppländsk.</span></div><div><b>31 %</b><span>är fragment: 725 stenar är bara delar av en sten. Nästan var tredje.</span></div><div><b>18 %</b><span>är försvunna enligt databasen, 415 stenar. De är kända från äldre avbildningar men finns inte kvar. Nästan var femte.</span></div><div><b>11 %</b><span>är signerade: på 248 stenar har ristaren skrivit in sitt namn. Ungefär en av tio.</span></div><div><b>111</b><span>stenar knyts säkert till Öpir, den ristare som har flest stenar i databasen. Alla utom 3 står i Uppland.</span></div><div><b>41 %</b><span>har ett kors i ristningen, 959 stenar. Fyra av tio.</span></div><div><b>45 %</b><span>har en säker stilgrupp, 1 038 stenar. Stilgruppen bygger på ornamentiken och är det vanligaste sättet att datera en runsten.</span></div></div>
+  <div class="tvaspalt sifferbotten">
+    <figure class="chart sifferchart"><figcaption class="ctitle">Var stenarna kommer ifrån</figcaption>
+      <div class="cgroup">Andel av alla 2 321 stenar</div><div class="crow hi"><div class="clab">Uppland</div><div class="cbar"><span style="width:51%"></span></div><div class="cval">51 %</div><div class="cnote">1 178 stenar</div></div><div class="crow"><div class="clab">Södermanland</div><div class="cbar"><span style="width:16%"></span></div><div class="cval">16 %</div><div class="cnote">363 stenar</div></div><div class="crow"><div class="clab">Östergötland</div><div class="cbar"><span style="width:10%"></span></div><div class="cval">10 %</div><div class="cnote">222 stenar</div></div><div class="crow"><div class="clab">Öland</div><div class="cbar"><span style="width:7%"></span></div><div class="cval">7 %</div><div class="cnote">154 stenar</div></div><div class="crow"><div class="clab">Västergötland</div><div class="cbar"><span style="width:6%"></span></div><div class="cval">6 %</div><div class="cnote">131 stenar</div></div><div class="crow"><div class="clab">Småland</div><div class="cbar"><span style="width:5%"></span></div><div class="cval">5 %</div><div class="cnote">121 stenar</div></div><div class="crow"><div class="clab">Gotland</div><div class="cbar"><span style="width:2%"></span></div><div class="cval">2 %</div><div class="cnote">42 stenar</div></div><div class="crow"><div class="clab">Övriga landskap</div><div class="cbar"><span style="width:5%"></span></div><div class="cval">5 %</div><div class="cnote">110 stenar</div></div><div class="csrc">Diagram: Vitki, efter Samnordisk runtextdatabas (ODbL).</div></figure>
+    <figure class="chart sifferchart"><figcaption class="ctitle">Ristarna med flest stenar</figcaption>
+      <div class="cgroup">Stenar som databasen säkert knyter till ristaren</div><div class="crow hi"><div class="clab">Öpir</div><div class="cbar"><span style="width:100.0%"></span></div><div class="cval">111</div><div class="cnote">stenar</div></div><div class="crow"><div class="clab">Balle</div><div class="cbar"><span style="width:68.5%"></span></div><div class="cval">76</div><div class="cnote">stenar</div></div><div class="crow"><div class="clab">Fot</div><div class="cbar"><span style="width:61.3%"></span></div><div class="cval">68</div><div class="cnote">stenar</div></div><div class="crow"><div class="clab">Åsmund</div><div class="cbar"><span style="width:60.4%"></span></div><div class="cval">67</div><div class="cnote">stenar</div></div><div class="crow"><div class="clab">Gunnar</div><div class="cbar"><span style="width:37.8%"></span></div><div class="cval">42</div><div class="cnote">stenar</div></div><div class="csrc">Diagram: Vitki, efter Samnordisk runtextdatabas (ODbL). Signerade och attribuerade stenar.</div></figure>
+  </div>
+  <aside class="box sifferbox"><div class="boxh">Så räknade vi</div><p>Med runsten menar vi det som Samnordisk runtextdatabas (2014 års version, uppdaterad 2018) kallar runsten eller fragment av runsten, daterat till vikingatiden och med svenskt signum. Stenarna i Skåne, Blekinge och Halland har danska signum och är inte med. Försvunnen, signatur, ristare, kors och stilgrupp är databasens egna uppgifter; vi har inte prövat dem sten för sten. En ristare räknas när databasen anger honom utan frågetecken.</p></aside>
 </section>
 
 <section class="opener">
@@ -283,18 +438,18 @@ window.addEventListener('load', () => {
 <section class="brodtext b1">
   <div class="text"><p class="runcitat"><em>Gullaug lät göra bron för Gillaugs, sin dotters, själ, och henne hade Ulv till hustru. Öpir ristade.</em></p>
 <p class=forsta>Så står det på en runsten vid Morby i Lagga socken i Uppland. Gillaug var vuxen och gift när hon dog, och det var hennes mor som byggde bron efter henne. Det är en av mycket få runstenar som minns en dotter. De flesta döttrar på vikingatiden fick aldrig någon sten, och de flesta nämns inte ens på stenen efter sin far. Den här artikeln handlar om dem – om varför de är så få, och om vad de få stenarna efter dem har gemensamt.</p>
-<figure class="img"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/U_489%2C_Morby.jpg/1280px-U_489%2C_Morby.jpg" alt="Runstenen U 489"><figcaption><b>U 489 vid Morby i Lagga socken, Uppland:</b> Gullaugs bro för dottern Gillaugs själ, ristad av Öpir. Foto: Christine Jewell from Canada, <a href="https://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:U_489,_Morby.jpg">Wikimedia Commons</a>.</figcaption></figure>
+<figure class="img" data-id="b1"><img src="bilder/cache/1280px-U_489_2C_Morby.jpg" alt="Runstenen U 489"><figcaption><b>U 489 vid Morby i Lagga socken, Uppland:</b> Gullaugs bro för dottern Gillaugs själ, ristad av Öpir. Foto: Christine Jewell from Canada, <a href="https://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:U_489,_Morby.jpg">Wikimedia Commons</a>.</figcaption></figure>
 <h3>Döttrarna som saknas</h3>
 <p>Vi gick för hand igenom alla vikingatida svenska runinskrifter där Rundatas översättning talar om en dotter eller en mö – ett femtiotal. Arton av dem är minnesinskrifter efter en dotter. Fjorton står på runstenar, och det är dem vi räknar med. De andra fyra är ristade i en berghäll (U 311), på ett jordfast block (Sö 331) och på gravhällar (Ög 239, Sm 94). Efter en son är 268 runstenar resta.</p>
-<figure class="chart"><figcaption class="ctitle"> Efter vem stenen restes, när den döde var någons barn</figcaption>
+<figure class="chart" data-id="d1"><figcaption class="ctitle"> Efter vem stenen restes, när den döde var någons barn</figcaption>
 <div class="crow"><div class="clab">Son</div><div class="cbar"><span style="width:95.0%"></span></div><div class="cval">95 %</div><div class="cnote">268 stenar</div></div>
 <div class="crow hi"><div class="clab">Dotter</div><div class="cbar"><span style="width:5.0%"></span></div><div class="cval">5 %</div><div class="cnote">14 stenar</div></div>
 <div class="csrc">Källa: Vitkis analys av Samnordisk runtextdatabas; vikingatida svenska runstenar. Stenarna efter döttrar är genomgångna för hand.</div>
 </figure>
 <p>Döttrar föddes lika ofta som söner, och de dog lika lätt. Det vet vi också från stenarna själva. På Hillersjöhällen i Uppland (U 29), den längsta släktberättelse som finns på en runsten, står det om Gerlög och hennes andra man: <em>Då fick de barn. Men en mö levde; hon hette Inga.</em> Av barnen överlevde bara en dotter. Ändå är det nitton gånger så många stenar efter söner som efter döttrar.</p>
-<blockquote class="pull">Ändå är det nitton gånger så många stenar efter söner som efter döttrar.</blockquote>
+<blockquote class="pull" data-id="q">Ändå är det nitton gånger så många stenar efter söner som efter döttrar.</blockquote>
 <p>Döttrarna saknas också bland de levande. På de 403 stenar efter en far där barnens namn går att läsa nämns 846 barn. 775 av dem är söner och 71 döttrar.</p>
-<figure class="chart"><figcaption class="ctitle"> Barnen som reser stenen efter sin far</figcaption>
+<figure class="chart" data-id="d2"><figcaption class="ctitle"> Barnen som reser stenen efter sin far</figcaption>
 <div class="crow"><div class="clab">Söner</div><div class="cbar"><span style="width:92.0%"></span></div><div class="cval">92 %</div><div class="cnote">775 barn</div></div>
 <div class="crow hi"><div class="clab">Döttrar</div><div class="cbar"><span style="width:8.0%"></span></div><div class="cval">8 %</div><div class="cnote">71 barn</div></div>
 <div class="csrc">Källa: som ovan; de 403 stenar efter en far där barnens namn går att läsa. Könet efter namnen.</div>
@@ -309,7 +464,7 @@ window.addEventListener('load', () => {
 <p>De fjorton runstenarna efter döttrar har några drag gemensamt. Det första är vem som reste dem. På sju av de fjorton är modern med. Det stämmer med det som gäller för barnen i stort: i Svealand är modern med på hälften av stenarna efter ett barn, mot knappt var fjärde av de övriga stenarna – ett mönster som håller i båda halvorna av materialet. Mödrarna sörjde sina döttrar som sina söner.</p>
 <p>Det andra är tiden. Alla nio runstenar efter döttrar i Uppland som kan dateras efter sin stil är ristade efter omkring 1050. Av alla daterade uppländska runstenar är 69 procent från den tiden, så att alla nio skulle vara sena av en slump händer i ungefär fyra fall av hundra. Det är en antydan, inte ett fynd.</p>
 <p>Det tredje är broarna. I Uppland bygger fyra av de elva runstenarna efter döttrar en bro – vid Velamby (U 377), Morby (U 489), Norsta (U 861) och Gryta (U 867). Av runstenarna efter söner gör bara var fjortonde det. Därtill kommer ristningen i berghällen vid Hargs bro (U 311), som också gäller en bro efter en dotter. Den räknar vi inte med, eftersom jämförelsen gäller runstenar.</p>
-<figure class="chart"><figcaption class="ctitle"> Andel stenar i Uppland där en bro byggs</figcaption>
+<figure class="chart" data-id="d3"><figcaption class="ctitle"> Andel stenar i Uppland där en bro byggs</figcaption>
 <div class="crow hi"><div class="clab">Efter en dotter</div><div class="cbar"><span style="width:36.0%"></span></div><div class="cval">36 %</div><div class="cnote">11 stenar</div></div>
 <div class="crow"><div class="clab">Efter en son</div><div class="cbar"><span style="width:7.0%"></span></div><div class="cval">7 %</div><div class="cnote">136 stenar</div></div>
 <div class="crow"><div class="clab">Övriga stenar</div><div class="cbar"><span style="width:5.0%"></span></div><div class="cval">5 %</div><div class="cnote">1 167 stenar</div></div>
@@ -363,9 +518,9 @@ window.addEventListener('load', () => {
 <p>På stenarna efter män som dog i öster och väster står ofta en mor eller en far, sällan en änka: av 69 sådana stenar är bara 4 resta efter en make. Tola i Härlingstorp i Västergötland (Vg 61) är en av dem. Hennes son for västerut och kom inte tillbaka. Vi ville veta om hon är ett undantag eller en regel: var det de unga som for, och de unga som inte kom hem?</p>
 <h3>Vem dog borta?</h3>
 <p>En runsten säger nästan alltid vem som reste den och vem den döde var för dem: <em>sun sinn</em>, sin son; <em>faður sinn</em>, sin far; <em>broður sinn</em>, sin bror. Vi läste de relationerna på alla läsbara svenska runstenar med en regel i Rundatas översättning och kontrollerade den mot vår egen läsning av hundra stenar. Sedan delade vi de döda männen i två grupper: söner och bröder – de som oftast var unga när de dog – och fäder och makar, som hade hunnit få familj.</p>
-<blockquote class="pull">Den unge mannen var drengr, en i följet; den äldre var þegn, en man med gård och ansvar.</blockquote>
+<blockquote class="pull" data-id="q">Den unge mannen var drengr, en i följet; den äldre var þegn, en man med gård och ansvar.</blockquote>
 <p>Skillnaden är stor. Av 393 stenar efter söner och bröder säger 41 att den döde dog utanför Norden. Av 552 stenar efter fäder och makar gör 15 det. När vi håller landsdel, tid och ristare konstanta blir det 10 mot 3 procent. En son eller bror som dog hade alltså dött i öster eller väster tre till fyra gånger så ofta som en far eller make (oddskvoten är 4,1, troligen mellan 2,2 och 7,7). En så tydlig skillnad skulle uppstå av en slump i färre än ett fall av tiotusen.</p>
-<figure class="chart"><figcaption class="ctitle"> Vad stenarna säger om den döde, efter hans plats i släkten</figcaption>
+<figure class="chart" data-id="d1"><figcaption class="ctitle"> Vad stenarna säger om den döde, efter hans plats i släkten</figcaption>
 <div class="cgroup">Dog utanför Norden</div>
 <div class="crow hi"><div class="clab">Söner och bröder</div><div class="cbar"><span style="width:10.0%"></span></div><div class="cval">10 %</div><div class="cnote">41 av 393 stenar</div></div>
 <div class="crow"><div class="clab">Fäder och makar</div><div class="cbar"><span style="width:3.0%"></span></div><div class="cval">3 %</div><div class="cnote">15 av 552 stenar</div></div>
@@ -386,7 +541,7 @@ window.addEventListener('load', () => {
 <p>Det är stenar efter unga män som for i följe – med Ingvar, hos grekerna, i viking västerut – och som sörjdes av dem som hade fött och fostrat dem, inte av änkor och barn. Färderna tycks ha hört till livet innan man fick egen gård och egen familj.</p>
 <h3>Två ord för två skeden</h3>
 <p>Samma linje syns i orden. <em>drengr</em> – ordet bakom vårt <em>dräng</em>, men på runstenarna en hedersbeteckning för en duglig ung man, ofta i ett följe – står på 6 procent av stenarna efter söner och bröder och på 1 procent efter fäder och makar (27 mot 4 stenar). <em>þegn</em> – som ofta tolkas som en man med ställning och egen gård – går åt andra hållet: 4 procent efter fäder och makar mot 1 procent efter söner och bröder.</p>
-<figure class="img"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Vg_59%2C_Norra_H%C3%A4rene.JPG/1280px-Vg_59%2C_Norra_H%C3%A4rene.JPG" alt="Runstenen Vg 59"><figcaption><b>Vg 59 vid Norra Härene:</b> fyra söner reste stenen efter fadern Fot, ”en mycket god þegn”, och hans hustru Åsa fick sina egna ord. Foto: Berig, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Vg_59,_Norra_Härene.JPG">Wikimedia Commons</a>.</figcaption></figure>
+<figure class="img" data-id="b1"><img src="bilder/cache/1280px-Vg_59_2C_Norra_H_C3_A4rene.JPG" alt="Runstenen Vg 59"><figcaption><b>Vg 59 vid Norra Härene:</b> fyra söner reste stenen efter fadern Fot, ”en mycket god þegn”, och hans hustru Åsa fick sina egna ord. Foto: Berig, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Vg_59,_Norra_Härene.JPG">Wikimedia Commons</a>.</figcaption></figure>
 <p><em>HræfningR ok Gialli ok BrunulfR ok GefulfR sattu stæin þannsi æftiR Fot, faður sinn, harða goðan þegn. Sva hæfiR Asa es æigi mun sum kvæn æft ver siðan gærva.</em> Hrefning och Gjalle och Brynjulv och Gjavulv satte denna sten efter Fot, sin far, en mycket god <em>þegn</em>. Så har Åsa gjort, som ingen hustru härefter kommer att göra efter sin make (Vg 59, Norra Härene i Västergötland).</p>
 <p>Att <em>drengr</em> och <em>þegn</em> kan höra till olika skeden i livet har forskningen föreslagit tidigare (Goetting 2006; Sukhino-Khomenko 2024). Det vi tillför är mätningen med landsdel, tid och ristare konstanta. Här ska vi vara noga: skillnaden är stor i hela materialet, men orden är för få för att hålla i båda halvorna var för sig. Den ena halvan har för få <em>drengr</em>-stenar för att pröva, och <em>þegn</em> når inte gränsen i någon av halvorna. Det är ett mönster att pröva, inte ett resultat.</p>
 <aside class="box"><div class="boxh">Så säkra är vi</div><ul><li><strong>Planen låstes först.</strong> Vad som skulle prövas och när ett resultat räknas som säkert bestämdes innan något test kördes.</li><li><strong>Samma tid, trakt och ristare.</strong> Varje jämförelse hålls konstant för landsdel, tidsskikt och ristare, så att skillnaden inte bara speglar att vissa trakter eller verkstäder skrev mer om resor.</li><li><strong>Två halvor.</strong> Resultatet om döden borta syns i båda halvorna av materialet; orden <em>drengr</em> och <em>þegn</em> gör det inte, och de redovisas därför som ett mönster att pröva.</li><li><strong>Samma kontroller som allt annat.</strong> I Vitkis robusthetstrappa – ristaren och socknen som slumpeffekter, platsen som yta, utan ett landskap i taget – håller döden borta i alla 8 steg, och den klarar den gemensamma justeringen över alla 48 mönster i statistiken. <em>drengr</em> håller i 6 av 8, <em>þegn</em> i 5 av 8.</li><li><strong>Läsningen är kontrollerad.</strong> Relationen läses ur översättningen med regler som stämde med vår egen läsning i 38 av 40 nya stenar.</li></ul></aside>
@@ -420,12 +575,12 @@ window.addEventListener('load', () => {
 <p>Det är en av få saker som har överlevt från vikingatiden i vardagen: namnen. Vi ville veta hur många – och om det är slump vilka. Vår hypotes var att det som hörde makten till inte överlevde. Den gamla eliten, dess titlar, dess lag och dess gudar borde ha ersatts av kyrkans och kungamaktens ord, medan familjens vardag levde vidare. Halva hypotesen höll. Den andra halvan föll – åt ett håll vi inte väntade oss.</p>
 <h3>Vart femte namn lever</h3>
 <p>Runstenarna är fulla av namn: de som reste stenen, de döda, ibland ristaren. Vi tog alla personnamn som står på minst tre svenska runstenar – 391 namn – och översatte dem till nutida form: Þorsteinn blir Torsten, Ásbjôrn Esbjörn, Sveinn Sven. Sedan jämförde vi med Statistiska centralbyråns lista över förnamn som minst tio svenskar bär.</p>
-<blockquote class="pull">Drengr, hjälten, blev dräng.</blockquote>
+<blockquote class="pull" data-id="q" data-flytt="1">Drengr, hjälten, blev dräng.</blockquote>
 <p>85 av namnen lever i dag – 22 procent. Räknar man efter hur vanliga de var på stenarna blir det 37 procent, eftersom de vanligaste namnen oftare har överlevt. Ulf, som tog tre gälder i England, har 31 585 namnar i dag. Helgi står på 14 runstenar och heter i dag Helge (1 659 bärare); Rúni är Rune (6 603) och Kári är Kåre (577).</p>
 <p>Kunganamnen klarade sig nästan alla: Erik (55 968 bärare), Björn (34 656), Sven (31 115), Håkan (25 508), Knut (4 473) och Harald (2 647). Men de flesta namnen dog. Önund, Ingefast, Freysten, Holmsten, Holmfast, Gudfast och Vebjörn stod på många runstenar och bärs av färre än tio svenskar i dag.</p>
 <h3>Gudarna fick behålla namnen</h3>
 <p>Om makthypotesen stämde borde namnen med en hednisk gud i ha försvunnit först. Det är tvärtom. Namn som börjar på Tor-, Ås-, Frey-, Ingi- eller Gud- lever i 39 procent av fallen, övriga namn i 19 procent. Skillnaden är så stor att den skulle uppstå av en slump i ungefär ett fall av sjuhundra.</p>
-<figure class="chart"><figcaption class="ctitle"> Hur stor del av runstenarnas namn som bärs av minst tio svenskar i dag</figcaption>
+<figure class="chart" data-id="d1"><figcaption class="ctitle"> Hur stor del av runstenarnas namn som bärs av minst tio svenskar i dag</figcaption>
 <div class="crow hi"><div class="clab">Namn med en gud i</div><div class="cbar"><span style="width:39.0%"></span></div><div class="cval">39 %</div><div class="cnote">22 av 56 namn</div></div>
 <div class="crow"><div class="clab">Övriga namn</div><div class="cbar"><span style="width:19.0%"></span></div><div class="cval">19 %</div><div class="cnote">63 av 335 namn</div></div>
 <div class="crow"><div class="clab">Kvinnonamn</div><div class="cbar"><span style="width:33.0%"></span></div><div class="cval">33 %</div><div class="cnote">20 av 61 namn</div></div>
@@ -437,19 +592,19 @@ window.addEventListener('load', () => {
 <p>En del av förklaringen är att många namn har återupplivats. Av de 60 runstensnamn som också finns i de medeltida breven 1350–1450 lever 44 – tre av fyra. Av de 331 som inte finns där lever bara 41. Namn som Åsa, Tora och Runa verkar alltså ha varit borta i medeltiden och kommit tillbaka med 1800- och 1900-talens intresse för fornnordiskt.</p>
 <h3>Hjälten blev dräng</h3>
 <p>Med orden för makt är det annorlunda. Vi tog orden som står på minst tre runstenar och kontrollerade om de finns i dagens svenska med samma betydelse. Av orden för släkt och vardag – sten, bro, väg, far, mor, bror, son – lever 23 av 27. Av orden för makt, lag och tro lever 9 av 17.</p>
-<figure class="chart"><figcaption class="ctitle"> Runstenarnas ord som lever kvar med samma betydelse</figcaption>
+<figure class="chart" data-id="d2" data-flytt="3"><figcaption class="ctitle"> Runstenarnas ord som lever kvar med samma betydelse</figcaption>
 <div class="crow hi"><div class="clab">Rang och följe</div><div class="cbar"><span style="width:22.0%"></span></div><div class="cval">22 %</div><div class="cnote">2 av 9 ord</div></div>
 <div class="crow"><div class="clab">Makt, lag och tro</div><div class="cbar"><span style="width:53.0%"></span></div><div class="cval">53 %</div><div class="cnote">9 av 17</div></div>
 <div class="crow"><div class="clab">Släkt och vardag</div><div class="cbar"><span style="width:85.0%"></span></div><div class="cval">85 %</div><div class="cnote">23 av 27</div></div>
 <div class="csrc">Källa: ord på minst tre runstenar, kodade efter dagens betydelse i svenska Wiktionary; Vitkis räkning.</div>
 </figure>
 <p>Och bland orden för rang och följe lever bara två av nio: <em>kung</em> och <em>styrman</em>. <em>Þegn</em>, mannen med ställning och gård, finns inte i svenskan. Inte heller <em>húskarl</em>, hövdingens livvakt, <em>lið</em>, följet, eller <em>félagi</em>, kamraten som delade skepp och byte. <em>Dróttinn</em>, herren, lever bara i <em>drottning</em> – och på runstenarna används det redan bara om Gud.</p>
-<figure class="img"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/S%C3%96179_Gripsholm_Runestone.jpg" alt="Runstenen Sö 179"><figcaption><em>Tola let ræisa stæin þennsa at sun sinn Harald, broður Ingvars. ÞæiR foru drængila fiarri at gulli ok austarla ærni gafu, dou sunnarla a Særklandi.</em> Tola reste stenen efter sin son Harald, Ingvars bror. De for som drängar, långt efter guld (Sö 179, Gripsholm). <em>Drængila</em> betydde tappert, som en hjälte. Foto: Tåggas, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:SÖ179_Gripsholm_Runestone.jpg">Wikimedia Commons</a>.</figcaption></figure>
+<figure class="img" data-id="b1" data-flytt="4"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/S%C3%96179_Gripsholm_Runestone.jpg" alt="Runstenen Sö 179"><figcaption><em>Tola let ræisa stæin þennsa at sun sinn Harald, broður Ingvars. ÞæiR foru drængila fiarri at gulli ok austarla ærni gafu, dou sunnarla a Særklandi.</em> Tola reste stenen efter sin son Harald, Ingvars bror. De for som drängar, långt efter guld (Sö 179, Gripsholm). <em>Drængila</em> betydde tappert, som en hjälte. Foto: Tåggas, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:SÖ179_Gripsholm_Runestone.jpg">Wikimedia Commons</a>.</figcaption></figure>
 <p>Det tydligaste exemplet är <em>drengr</em>. På runstenarna är det en hedersbeteckning: Ingvars män for <em>drængila</em>, som riktiga drängar – modigt, som hjältar. I dag är en dräng en anställd på bondgården, och i överförd mening en medlöpare. Ordet för hjälten blev ordet för tjänaren.</p>
 <p>Kyrkans ord gick det däremot bra för. Gud, själ, ande och helig står redan på runstenarna och lever alla. Det var inte tron som saknade ord, det var den gamla eliten.</p>
 <h3>Kungens män fick nya titlar</h3>
 <p>Runstenarna handlar inte bara om familjer. De handlar också om makt: vem som var någons man, vem som styrde skeppet, var tinget hölls. Vi gick därför igenom alla titlar och ämbetsord som står på svenska runstenar – 16 stycken – och följde dem fram till dagens svenska. Den genomgången gjorde vi efter den låsta planen, så den beskriver men prövar inget.</p>
-<figure class="chart"><figcaption class="ctitle"> Vad hände med runstenarnas titlar och ämbetsord</figcaption>
+<figure class="chart" data-id="d3" data-flytt="3"><figcaption class="ctitle"> Vad hände med runstenarnas titlar och ämbetsord</figcaption>
 <div class="crow hi"><div class="clab">Lever med samma innebörd</div><div class="cbar"><span style="width:25.0%"></span></div><div class="cval">25 %</div><div class="cnote">4 av 16: kung, styrman, skeppare, ting</div></div>
 <div class="crow"><div class="clab">Sjönk</div><div class="cbar"><span style="width:6.0%"></span></div><div class="cval">6 %</div><div class="cnote">1 av 16: dräng</div></div>
 <div class="crow"><div class="clab">Bara som historisk term</div><div class="cbar"><span style="width:38.0%"></span></div><div class="cval">38 %</div><div class="cnote">6 av 16: jarl, stallare, bryte, huskarl, hundare, drott</div></div>
@@ -468,7 +623,7 @@ window.addEventListener('load', () => {
 <p>Ibland gick staten tillbaka till de gamla orden. När häradsrätterna och rådhusrätterna ersattes 1971 fick de nya domstolarna heta tingsrätter, och deras ordförande fick den fornnordiska titeln lagman. Dittills hade de hetat häradshövdingar. Vikingarnas ting dömer alltså fortfarande.</p>
 <h3>Gårdarike blev Ryssland – och Svitjod blev Sverige</h3>
 <p>Samma mönster syns på kartan. Runstenarna nämner 22 länder, folk och platser utanför den egna bygden, på sammanlagt 91 stenar. Elva har samma namn i dag: England, Danmark, Gotland, Skåne, Estland, Finland, Tavastland och några till. Två finns bara som historiska landskap, Wierland och Livland i Baltikum. Men 9 har bytt namn eller finns inte längre – och de står på 45 stenar, ungefär hälften.</p>
-<figure class="img"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Carta_Marina.jpeg/1280px-Carta_Marina.jpeg" alt="Olaus Magnus Carta marina"><figcaption><b>Norden när de medeltida rikena var färdiga:</b> Olaus Magnus Carta marina, tryckt i Venedig 1539. Fri från upphovsrätt, via <a href="https://commons.wikimedia.org/wiki/File:Carta_Marina.jpeg">Wikimedia Commons</a>.</figcaption></figure>
+<figure class="img" data-id="b2"><img src="bilder/cache/1280px-Carta_Marina.jpeg" alt="Olaus Magnus Carta marina"><figcaption><b>Norden när de medeltida rikena var färdiga:</b> Olaus Magnus Carta marina, tryckt i Venedig 1539. Fri från upphovsrätt, via <a href="https://commons.wikimedia.org/wiki/File:Carta_Marina.jpeg">Wikimedia Commons</a>.</figcaption></figure>
 <p>Det är de stora rikena långt österut och söderut. <em>Garðar</em>, Gårdarike, var Kievriket, som blev grunden till Ryssland, Belarus och Ukraina; <em>Holmgarðr</em> är Novgorod. <em>Grikkland</em>, som står på 24 stenar, är inte dagens Grekland utan det bysantinska kejsardömet. <em>Langbarðaland</em> är Italien – namnet lever bara i Lombardiet. <em>Serkland</em>, landen kring Kaspiska havet och kalifatet, har inget nutida namn alls. Rikena föll eller byggdes om, och deras nordiska namn föll med dem.</p>
 <p>Ett namn bytte kyrkan ut. Östen, som Astrid reste stenen efter i Broby i Täby (U 136), <em>sotti IorsaliR</em> – sökte sig till Jórsalir – och dog i Grikkland. Vikingarna hade ett eget namn på Jerusalem. Det försvann när Bibelns namn tog över.</p>
 <p>Och Sverige självt. <em>Sveþiuð</em>, Svitjod, står på två runstenar, båda i Ludgo socken i Södermanland. På den ena står att ingen ska föda en dugligare son i Svitjod (Sö 140), och på samma sten anropas kanske Tor. På den andra var Astrids söner de duktigaste i Svitjod (Sö Fv1948;289, Aspa bro). Svitjod betyder svearnas folk. Sverige betyder svearnas rike – <em>Swerike</em> på 1200-talet, <em>Svearike</em> på 1300-talet. På isländska heter landet fortfarande Svíþjóð. Landet bytte namn från ett folk till ett rike, och i det bytet ryms hela den politiska förändringen.</p>
@@ -507,6 +662,16 @@ window.addEventListener('load', () => {
   </div>
   <figure class="appbild"><img src="bilder/app_manniskorna_sv.jpg" alt=""><figcaption><b>Så ser det ut i appen:</b> Statistik (R) med de nya mönstren filtrerade på Människorna. De två första korten är fynden i diagrammet ovan. Skärmbild: Vitki.</figcaption></figure>
   <p class="appfot">Vitki är fri programvara och körs på din egen dator: github.com/Precatio/runes. Metoden: METHODS.md, avsnitt 1u.</p>
+</section>
+
+<section class="vanlig nastasida">
+  <div class="flik">Nästa nummer · Nr 2 · Mars 2027</div>
+  <h2>Det vi inte ser</h2>
+  <p class="deck">Runstenarna vi räknar är de som blev kvar, och de som blev kvar står inte alltid där de restes. Nästa nummer handlar om allt vi inte ser i korpusen – och om hur mycket det kan påverka det vi tror oss veta.</p>
+  <div class="nastagrid"><div><h3>Stenarna som flyttades</h3><p>Många runstenar står inte där de en gång restes. De har murats in i kyrkor, flyttats till gårdar och parker eller ställts upp vid en väg i modern tid. Varje karta över var stenarna stod bygger på att vi vet vilka som har flyttats. Vi går igenom hur det går att veta.</p></div><div><h3>Stenarna som försvann</h3><p>Nästan var femte sten i databasen är försvunnen och känd bara från äldre avbildningar och beskrivningar. Vilka stenar försvann, och var? Är de försvunna en slumpmässig del av korpusen, eller saknas vissa slags stenar oftare än andra?</p></div><div><h3>När restes stenen?</h3><p>De flesta runstenar dateras efter ornamentiken eller språket, och de två har till stor del daterat varandra. Vi beskriver vilka stenar som har en datering som inte vilar på stilen, och vad som händer med ett mönster när dateringen är osäker.</p></div><div><h3>Ingvarsstenarna</h3><p>Stenarna efter männen som följde Ingvar österut är en av runforskningens mest kända grupper. De hör till samma färd och därmed till ungefär samma tid. Vi frågar vad en sådan grupp kan lära oss om resten av korpusen.</p></div></div>
+  <p class="nplan">Studierna är inte gjorda än. Planerna låses innan vi räknar, och resultaten – också de som inte håller – kommer i nästa nummer. I appen: Luckor i texten.</p>
+  <div class="lasfritt"><div class="slab">Läs Korpus fritt</div><p>Alla nummer finns som PDF på svenska och engelska på <b>vitkirunor.se/tidskrift</b>, tillsammans med artiklarna i sin helhet, interaktiva diagram och öppna data. Appen Vitki, som analyserna görs i, är fri programvara: <b>github.com/Precatio/runes</b>. Skriv till oss: <b>vitkirunor.se/kontakt</b>.</p>
+    <img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"></div>
 </section>
 <section class="vanlig baksida">
   <div class="baktext"><div class="bakblock"><div class="slab">Om Korpus</div><p>Korpus är en öppen tidskrift för digital och kvantitativ runforskning, utgiven av Vitki. Den samlar Vitkis artiklar, rapporter och metodnotiser i en form som går att läsa på en kaffepaus. Den kommer ut på svenska och engelska.</p></div><div class="bakblock"><div class="slab">Om Vitki</div><p>Vitki är en öppen forskningsplattform för Nordens runinskrifter. Analyserna förregistreras, och kod, data och rapporter publiceras öppet på Zenodo.</p></div><div class="bakblock"><div class="slab">Redaktion</div><p>Viktor Kvant, redaktör<br>vitkirunor.se/kontakt</p></div><div class="bakblock"><div class="slab">Licens</div><p>Texterna får spridas fritt under CC BY 4.0. Bilder från Wikimedia Commons har egna licenser, angivna vid varje bild.</p></div><div class="bakblock"><div class="slab">Data</div><p>Samnordisk runtextdatabas, Riksantikvarieämbetets Runor, SGU, ISOF och Kulturmiljöregistret. Bearbetning: Vitki.</p></div></div>

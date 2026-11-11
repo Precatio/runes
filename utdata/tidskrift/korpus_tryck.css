@@ -1,0 +1,19 @@
+/* Tryckversion (Helloprint, häftad A4): varje sida är A4 med 3 mm utfall på alla kanter, 216 x 303 mm. Marginalerna
+   växer med utfallet så att satsytan står exakt där den står i skärmversionen; helsidesbilder och tonade ytor fylls ut i
+   utfallet; all text står minst 6 mm innanför skärkanten. Läggs efter korpus.css av css_for(tryck=True). */
+@page { size: 216mm 303mm; margin: 20mm 18mm 21mm 18mm;
+  @top-left { padding-top: 3mm; } @bottom-left { padding-bottom: 3mm; } @bottom-right { padding-bottom: 3mm; } }
+@page omslag { margin: 0; } @page opener { margin: 0; }
+.omslag { width: 216mm; height: 303mm; }
+.omtopp { padding: 14mm 17mm 34mm; }
+.ompuff { left: 17mm; right: 73mm; bottom: 86mm; }
+.omslag::after { bottom: 67mm; }
+.omband { height: 67mm; padding: 8mm 17mm 0; }
+.omkredit { left: 17mm; right: 17mm; bottom: 9mm; }
+.opener { height: 303mm; }
+.hero { height: 111mm; }
+.hero figcaption { left: 18mm; right: 18mm; }
+.opentext { padding: 11mm 18mm 15mm; }
+.hero.staende img { width: calc(100% - 3mm); height: calc(100% - 3mm); margin-top: 3mm; }
+.hero.staende figcaption { left: 18mm; right: 103mm; }
+.kartsida { --b: 3mm; width: 216mm; height: 303mm; }

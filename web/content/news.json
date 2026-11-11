@@ -2,6 +2,14 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "korpus-nr1-20-sidor",
+   "date": "2026-11-11",
+   "status": "nytt",
+   "title": "Korpus nr 1 i ny utgåva: 20 sidor med redaktörens spalt",
+   "text": "Första numret av Korpus har byggts om till 20 sidor, samma omfång som den tryckta utgåvan. Nytt är redaktörens spalt Alla stenar på en gång, en helsideskarta över alla svenska runstenar, Runstenarna i siffror och en förhandstitt på nr 2, Det vi inte ser. Läs det som PDF på svenska (vitkirunor.se/korpus/korpus-nr1-sv.pdf) eller engelska (vitkirunor.se/korpus/korpus-nr1-en.pdf).",
+   "kategori": "publicerat"
+  },
+  {
    "id": "tidskrifter-per-sten",
    "date": "2026-11-10",
    "status": "nytt",

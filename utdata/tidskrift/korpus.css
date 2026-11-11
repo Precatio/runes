@@ -43,7 +43,7 @@ a { color: inherit; text-decoration: none; }
 .omband p { font: 400 8.8pt/1.4 var(--sans); color: var(--mute); margin: 1.6mm 0 0; }
 .omruna { color: var(--rust); border-left: .6pt solid var(--line); padding-left: 5mm; }
 .omruna span { display: block; margin-top: 3mm; font: 700 6.8pt/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
-.omkredit { position: absolute; left: 14mm; right: 14mm; bottom: 4.5mm; z-index: 4; font: 400 6pt var(--sans); color: #9aa2a8; }
+.omkredit { position: absolute; left: 14mm; right: 14mm; bottom: 6mm; z-index: 4; font: 400 6pt var(--sans); color: #9aa2a8; }
 
 /* ---------- Ledare + innehåll ---------- */
 .vanlig { break-before: page; }
@@ -217,3 +217,102 @@ blockquote.pull { hyphens: none; }
 .appsida p { margin-bottom: 2.4mm; }
 .appfot { margin-top: 3mm; padding-top: 2mm; }
 .appbild img { max-height: 60mm; object-fit: contain; object-position: left top; }
+/* v4 (2026-11-11): Nr 1 i 20 sidor för tryck i ark om fyra sidor; Viktors typografi: alla spalter slutar på samma
+   baslinje, rutor och källor ligger på rastret även när de bryts mellan spalter, luft efter ingressen. */
+/* Rutor: radavstånd = rastret, luft runt texten = en rad på alla sidor, rubriken med linje tar exakt två rader. */
+.box { padding: var(--lh); font: 400 8.4pt/13.5pt var(--sans); }
+.box p, .box li, .text .box p { line-height: var(--lh); margin: 0; text-indent: 0; }
+.box ul { margin: 0; padding-left: 3.5mm; }
+.box li { margin: 0; }
+.boxh { font: 900 11pt/13.5pt var(--serif); margin: 0 0 6.75pt; padding: 0 0 6.15pt; border-bottom: .6pt solid #e3c9b8; }
+/* Källorna: tre fjärdedels rad, så att var fjärde källrad landar på rastret igen. */
+.sources, .sources p, .sources li { line-height: 10.125pt; }
+.text .sources h3 { line-height: var(--lh); margin-top: var(--lh); }
+.text .sources > h3:first-child { margin-top: 0; }
+/* Ingress och rubriker på de vanliga sidorna: avstånd i hela rader. */
+.vanlig h2 { margin-bottom: var(--lh); }
+.vanlig .deck { margin: 0 0 calc(2 * var(--lh)); line-height: 1.45; }
+.ledare .ingress { margin: 0 0 calc(2 * var(--lh)); line-height: 1.42; }
+.ledare p { font-size: 9.9pt; line-height: var(--lh); margin: 0; text-indent: 1.1em; }
+.ledare p.forsta, .ledare p.ingress, .ledare p.sign { text-indent: 0; }
+.ledare p.sign { margin-top: var(--lh); line-height: 1.4; }
+.verkstad p, .appsida p, .nastagrid p { line-height: var(--lh); }
+.verkstad h3, .appsida h3, .nastagrid h3 { line-height: var(--lh); margin: var(--lh) 0 0; }
+.tvaspalt > div > h3:first-child, .nastagrid h3 { margin-top: 0; }
+.appsida p { margin: 0 0 var(--lh); }
+.appsida .deck { margin-bottom: calc(2 * var(--lh)); }
+.verkstad .tal { margin-top: 0; }
+/* Till läsaren: innehållet är längre (nio poster) och får en kolofon. */
+.innehall li { padding: 2.6mm 0; }
+.innehall img { height: 17mm; }
+.kolofon { margin-top: 5mm; padding-top: 3mm; border-top: 1.4pt solid var(--rust); font: 400 7.4pt/1.45 var(--sans); color: var(--mute); }
+.kolofon div { margin-bottom: 1.2mm; } .kolofon b { color: var(--ink); font-weight: 700; }
+/* Kartan: helsida med utfall; --b är utfallet (0 på skärm, 3 mm i tryck). */
+.kartsida { page: opener; --b: 0mm; position: relative; width: 210mm; height: 297mm; overflow: hidden; break-before: page; break-after: page; background: #e4e9ec; }
+.kartsida img.bg { position: absolute; left: calc(var(--b) - 3mm); top: calc(var(--b) - 3mm); width: 216mm; height: 303mm; display: block; }
+.kartpanel { position: absolute; top: calc(14mm + var(--b)); right: calc(12mm + var(--b)); width: 60mm; background: rgba(255,255,255,.95); padding: 5.5mm; }
+.kartpanel h2 { font: 900 23pt/1.04 var(--serif); letter-spacing: -.015em; margin: 3.5mm 0 3mm; hyphens: none; }
+.kartpanel p { font: 400 8.6pt/1.45 var(--sans); margin: 0 0 3mm; }
+.kartleg { list-style: none; margin: 0 0 3mm; padding: 0; font: 400 8.2pt/1.4 var(--sans); }
+.kartleg li { display: grid; grid-template-columns: 4mm 1fr; align-items: start; margin-bottom: 1.6mm; }
+.prick { display: block; width: 2.3mm; height: 2.3mm; border-radius: 50%; background: #1d2226; margin-top: 1mm; }
+.prick.rost { background: var(--rust); }
+.kartpanel .knot { font-size: 7.4pt; color: var(--mute); margin: 0; }
+.kartkredit { position: absolute; right: calc(12mm + var(--b)); bottom: calc(9mm + var(--b)); width: 60mm; font: 400 6.6pt/1.4 var(--sans); color: #3a4249; }
+/* Runstenarna i siffror */
+.siffersida { display: flex; flex-direction: column; min-height: 258mm; }
+.siffersida h2, .nastasida h2 { font: 900 30pt/1.02 var(--serif); letter-spacing: -.015em; margin: 5mm 0 var(--lh); }
+.rutor { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9mm 6mm; }
+.rutor div { border-top: 2pt solid var(--rust); padding-top: 3mm; }
+.rutor b { display: block; font: 900 27pt/1 var(--serif); color: var(--rust); margin-bottom: 2.2mm; letter-spacing: -.01em; }
+.rutor span { font: 500 8.6pt/1.42 var(--sans); color: var(--mute); display: block; hyphens: auto; }
+.sifferbotten { margin-top: auto; align-items: start; }
+.sifferchart { margin: 0; }
+.sifferchart .crow { grid-template-columns: 25mm 1fr 10mm 17mm; font-size: 8pt; }
+.siffersida .box { margin: 0; }
+/* Nästa nummer */
+.nastasida { display: flex; flex-direction: column; min-height: 258mm; }
+.nastagrid { display: grid; grid-template-columns: 1fr 1fr; gap: calc(2 * var(--lh)) 9mm; }
+.nastagrid h3 { font: 700 10pt/13.5pt var(--sans); color: var(--rust-dark); }
+.nastagrid p { font-size: 10pt; margin: 0; }
+.nplan { font: italic 400 10pt/13.5pt var(--serif); color: #2d3439; margin: calc(2 * var(--lh)) 0 0; padding-top: var(--lh); border-top: .6pt solid var(--line); }
+.lasfritt { margin-top: auto; background: var(--rust-soft); padding: 6mm; display: grid; grid-template-columns: 1fr 22mm; column-gap: 8mm; align-items: center; }
+.lasfritt .slab { grid-column: 1; }
+.lasfritt p { grid-column: 1; font: 400 9.2pt/1.5 var(--sans); margin: 0; }
+.lasfritt .bindruna { grid-column: 2; grid-row: 1 / span 2; height: 20mm; justify-self: end; }
+/* v4.1: kolofonen i vänsterspalten; kartpanelen kortare så att den inte täcker Uppland; siffersidan med två diagram */
+.ledare .kolofon { margin-top: calc(2 * var(--lh)); }
+.ledare .kolofon div { margin-bottom: 0; }
+.kartpanel h2 { font-size: 21pt; margin: 3mm 0 2.5mm; }
+.kartpanel p { margin-bottom: 2.5mm; }
+.kartleg { margin: 0; } .kartleg li:last-child { margin-bottom: 0; }
+.kartkredit { width: 74mm; }
+.sifferbotten { gap: 6mm; }
+.sifferbotten .chart { padding: 4.5mm; }
+.sifferbox { margin-top: 6mm !important; }
+.siffersida .rutor { margin-top: 2mm; }
+.siffersida .flik, .nastasida .flik { align-self: flex-start; }
+/* v4.2: tomma rader i stället för marginaler runt bilder, rutor och citat (se SNAP_JS); rutornas text står på samma
+   baslinjer som brödtexten (Avenir 8,4 pt sitter 0,7 pt högre i raden än Charter 9,4 pt) */
+.text div.rad { margin: 0; padding: 0; }
+.text div.rad + p { text-indent: 0; }
+.box p, .box li { position: relative; top: .7pt; }
+.text .snapwrap { break-inside: avoid; margin: 0; }
+.text .snapwrap.delbar { break-inside: auto; }
+.text .snapwrap + p { text-indent: 0; }
+.box .boxh { break-after: avoid; }
+.box p { orphans: 3; widows: 2; }
+/* v4.3: s. 2 = "Från redaktören" (Viktor 2026-11-11): stående spalt, 250–400 ord, bredvid innehållet; innehållet utan
+   miniatyrer i en smalare spalt; kolofonen under innehållet. Redaktörens text på rastret (13,5 pt). */
+.ledgrid { grid-template-columns: 1fr 62mm; gap: 8mm; }
+.ledare h2 { font-size: 26pt; margin-bottom: var(--lh); }
+.redtext p { font: 400 9.6pt/13.5pt var(--serif); margin: 0; text-indent: 1.1em; text-align: justify; hyphens: auto; }
+.redtext p.forsta { text-indent: 0; }
+.ledare .sign { display: flex; align-items: center; gap: 3mm; margin-top: var(--lh); font: italic 400 9.6pt/13.5pt var(--serif); }
+.ledare .portratt { width: 16mm; height: 16mm; border-radius: 50%; object-fit: cover; }
+.innehallsspalt { padding-left: 6mm; }
+.innehall li.kort { padding: 2.2mm 0; }
+.innehall .tdeck { display: none; }
+.innehall .ttitle { font-size: 10pt; }
+.tsida { font-size: 13pt; }
+.innehallsspalt .kolofon { margin-top: 5mm; }

@@ -44,7 +44,7 @@ a { color: inherit; text-decoration: none; }
 .omband p { font: 400 8.8pt/1.4 var(--sans); color: var(--mute); margin: 1.6mm 0 0; }
 .omruna { color: var(--rust); border-left: .6pt solid var(--line); padding-left: 5mm; }
 .omruna span { display: block; margin-top: 3mm; font: 700 6.8pt/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
-.omkredit { position: absolute; left: 14mm; right: 14mm; bottom: 4.5mm; z-index: 4; font: 400 6pt var(--sans); color: #9aa2a8; }
+.omkredit { position: absolute; left: 14mm; right: 14mm; bottom: 6mm; z-index: 4; font: 400 6pt var(--sans); color: #9aa2a8; }
 
 /* ---------- Ledare + innehåll ---------- */
 .vanlig { break-before: page; }
@@ -218,25 +218,155 @@ blockquote.pull { hyphens: none; }
 .appsida p { margin-bottom: 2.4mm; }
 .appfot { margin-top: 3mm; padding-top: 2mm; }
 .appbild img { max-height: 60mm; object-fit: contain; object-position: left top; }
+/* v4 (2026-11-11): Nr 1 i 20 sidor för tryck i ark om fyra sidor; Viktors typografi: alla spalter slutar på samma
+   baslinje, rutor och källor ligger på rastret även när de bryts mellan spalter, luft efter ingressen. */
+/* Rutor: radavstånd = rastret, luft runt texten = en rad på alla sidor, rubriken med linje tar exakt två rader. */
+.box { padding: var(--lh); font: 400 8.4pt/13.5pt var(--sans); }
+.box p, .box li, .text .box p { line-height: var(--lh); margin: 0; text-indent: 0; }
+.box ul { margin: 0; padding-left: 3.5mm; }
+.box li { margin: 0; }
+.boxh { font: 900 11pt/13.5pt var(--serif); margin: 0 0 6.75pt; padding: 0 0 6.15pt; border-bottom: .6pt solid #e3c9b8; }
+/* Källorna: tre fjärdedels rad, så att var fjärde källrad landar på rastret igen. */
+.sources, .sources p, .sources li { line-height: 10.125pt; }
+.text .sources h3 { line-height: var(--lh); margin-top: var(--lh); }
+.text .sources > h3:first-child { margin-top: 0; }
+/* Ingress och rubriker på de vanliga sidorna: avstånd i hela rader. */
+.vanlig h2 { margin-bottom: var(--lh); }
+.vanlig .deck { margin: 0 0 calc(2 * var(--lh)); line-height: 1.45; }
+.ledare .ingress { margin: 0 0 calc(2 * var(--lh)); line-height: 1.42; }
+.ledare p { font-size: 9.9pt; line-height: var(--lh); margin: 0; text-indent: 1.1em; }
+.ledare p.forsta, .ledare p.ingress, .ledare p.sign { text-indent: 0; }
+.ledare p.sign { margin-top: var(--lh); line-height: 1.4; }
+.verkstad p, .appsida p, .nastagrid p { line-height: var(--lh); }
+.verkstad h3, .appsida h3, .nastagrid h3 { line-height: var(--lh); margin: var(--lh) 0 0; }
+.tvaspalt > div > h3:first-child, .nastagrid h3 { margin-top: 0; }
+.appsida p { margin: 0 0 var(--lh); }
+.appsida .deck { margin-bottom: calc(2 * var(--lh)); }
+.verkstad .tal { margin-top: 0; }
+/* Till läsaren: innehållet är längre (nio poster) och får en kolofon. */
+.innehall li { padding: 2.6mm 0; }
+.innehall img { height: 17mm; }
+.kolofon { margin-top: 5mm; padding-top: 3mm; border-top: 1.4pt solid var(--rust); font: 400 7.4pt/1.45 var(--sans); color: var(--mute); }
+.kolofon div { margin-bottom: 1.2mm; } .kolofon b { color: var(--ink); font-weight: 700; }
+/* Kartan: helsida med utfall; --b är utfallet (0 på skärm, 3 mm i tryck). */
+.kartsida { page: opener; --b: 0mm; position: relative; width: 210mm; height: 297mm; overflow: hidden; break-before: page; break-after: page; background: #e4e9ec; }
+.kartsida img.bg { position: absolute; left: calc(var(--b) - 3mm); top: calc(var(--b) - 3mm); width: 216mm; height: 303mm; display: block; }
+.kartpanel { position: absolute; top: calc(14mm + var(--b)); right: calc(12mm + var(--b)); width: 60mm; background: rgba(255,255,255,.95); padding: 5.5mm; }
+.kartpanel h2 { font: 900 23pt/1.04 var(--serif); letter-spacing: -.015em; margin: 3.5mm 0 3mm; hyphens: none; }
+.kartpanel p { font: 400 8.6pt/1.45 var(--sans); margin: 0 0 3mm; }
+.kartleg { list-style: none; margin: 0 0 3mm; padding: 0; font: 400 8.2pt/1.4 var(--sans); }
+.kartleg li { display: grid; grid-template-columns: 4mm 1fr; align-items: start; margin-bottom: 1.6mm; }
+.prick { display: block; width: 2.3mm; height: 2.3mm; border-radius: 50%; background: #1d2226; margin-top: 1mm; }
+.prick.rost { background: var(--rust); }
+.kartpanel .knot { font-size: 7.4pt; color: var(--mute); margin: 0; }
+.kartkredit { position: absolute; right: calc(12mm + var(--b)); bottom: calc(9mm + var(--b)); width: 60mm; font: 400 6.6pt/1.4 var(--sans); color: #3a4249; }
+/* Runstenarna i siffror */
+.siffersida { display: flex; flex-direction: column; min-height: 258mm; }
+.siffersida h2, .nastasida h2 { font: 900 30pt/1.02 var(--serif); letter-spacing: -.015em; margin: 5mm 0 var(--lh); }
+.rutor { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9mm 6mm; }
+.rutor div { border-top: 2pt solid var(--rust); padding-top: 3mm; }
+.rutor b { display: block; font: 900 27pt/1 var(--serif); color: var(--rust); margin-bottom: 2.2mm; letter-spacing: -.01em; }
+.rutor span { font: 500 8.6pt/1.42 var(--sans); color: var(--mute); display: block; hyphens: auto; }
+.sifferbotten { margin-top: auto; align-items: start; }
+.sifferchart { margin: 0; }
+.sifferchart .crow { grid-template-columns: 25mm 1fr 10mm 17mm; font-size: 8pt; }
+.siffersida .box { margin: 0; }
+/* Nästa nummer */
+.nastasida { display: flex; flex-direction: column; min-height: 258mm; }
+.nastagrid { display: grid; grid-template-columns: 1fr 1fr; gap: calc(2 * var(--lh)) 9mm; }
+.nastagrid h3 { font: 700 10pt/13.5pt var(--sans); color: var(--rust-dark); }
+.nastagrid p { font-size: 10pt; margin: 0; }
+.nplan { font: italic 400 10pt/13.5pt var(--serif); color: #2d3439; margin: calc(2 * var(--lh)) 0 0; padding-top: var(--lh); border-top: .6pt solid var(--line); }
+.lasfritt { margin-top: auto; background: var(--rust-soft); padding: 6mm; display: grid; grid-template-columns: 1fr 22mm; column-gap: 8mm; align-items: center; }
+.lasfritt .slab { grid-column: 1; }
+.lasfritt p { grid-column: 1; font: 400 9.2pt/1.5 var(--sans); margin: 0; }
+.lasfritt .bindruna { grid-column: 2; grid-row: 1 / span 2; height: 20mm; justify-self: end; }
+/* v4.1: kolofonen i vänsterspalten; kartpanelen kortare så att den inte täcker Uppland; siffersidan med två diagram */
+.ledare .kolofon { margin-top: calc(2 * var(--lh)); }
+.ledare .kolofon div { margin-bottom: 0; }
+.kartpanel h2 { font-size: 21pt; margin: 3mm 0 2.5mm; }
+.kartpanel p { margin-bottom: 2.5mm; }
+.kartleg { margin: 0; } .kartleg li:last-child { margin-bottom: 0; }
+.kartkredit { width: 74mm; }
+.sifferbotten { gap: 6mm; }
+.sifferbotten .chart { padding: 4.5mm; }
+.sifferbox { margin-top: 6mm !important; }
+.siffersida .rutor { margin-top: 2mm; }
+.siffersida .flik, .nastasida .flik { align-self: flex-start; }
+/* v4.2: tomma rader i stället för marginaler runt bilder, rutor och citat (se SNAP_JS); rutornas text står på samma
+   baslinjer som brödtexten (Avenir 8,4 pt sitter 0,7 pt högre i raden än Charter 9,4 pt) */
+.text div.rad { margin: 0; padding: 0; }
+.text div.rad + p { text-indent: 0; }
+.box p, .box li { position: relative; top: .7pt; }
+.text .snapwrap { break-inside: avoid; margin: 0; }
+.text .snapwrap.delbar { break-inside: auto; }
+.text .snapwrap + p { text-indent: 0; }
+.box .boxh { break-after: avoid; }
+.box p { orphans: 3; widows: 2; }
+/* v4.3: s. 2 = "Från redaktören" (Viktor 2026-11-11): stående spalt, 250–400 ord, bredvid innehållet; innehållet utan
+   miniatyrer i en smalare spalt; kolofonen under innehållet. Redaktörens text på rastret (13,5 pt). */
+.ledgrid { grid-template-columns: 1fr 62mm; gap: 8mm; }
+.ledare h2 { font-size: 26pt; margin-bottom: var(--lh); }
+.redtext p { font: 400 9.6pt/13.5pt var(--serif); margin: 0; text-indent: 1.1em; text-align: justify; hyphens: auto; }
+.redtext p.forsta { text-indent: 0; }
+.ledare .sign { display: flex; align-items: center; gap: 3mm; margin-top: var(--lh); font: italic 400 9.6pt/13.5pt var(--serif); }
+.ledare .portratt { width: 16mm; height: 16mm; border-radius: 50%; object-fit: cover; }
+.innehallsspalt { padding-left: 6mm; }
+.innehall li.kort { padding: 2.2mm 0; }
+.innehall .tdeck { display: none; }
+.innehall .ttitle { font-size: 10pt; }
+.tsida { font-size: 13pt; }
+.innehallsspalt .kolofon { margin-top: 5mm; }
 
 @page { @bottom-right { content: "Korpus No. 1 · 2026"; } }
 @page b1 { @top-left { content: "Korpus · People"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
 @page b2 { @top-left { content: "Korpus · Journeys"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
 @page b3 { @top-left { content: "Korpus · Language"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }</style><script>
-// Baslinjeraster: varje element i brödtexten som inte är vanlig text får en höjd (med marginaler) som är ett helt antal rader.
+// Baslinjeraster: varje element i brödtexten som inte är vanlig text tar, med luften runt sig, ett helt antal rader.
+// v4 (Viktor 2026-11-11, "inte all brödtext linjerar i nederkant"): luften kring bilder, citat, rutor och källor ligger
+// som utfyllnad i ett omslag (div.snapwrap) i stället för som marginaler. Chrome stryker marginaler i slutet av en spalt,
+// och då kom spaltraden före ett diagram över alla spalter – och all text efter det – bredvid rastret; tomma rader som
+// egna element kunde i stället hamna överst i nästa spalt. Omslaget hålls ihop (break-inside: avoid) utom kring rutor
+// och källor, som får brytas: en ruta har hela rader i sig (radavstånd, luft och rubrik mätta i rader) och får en hel
+// rad före och efter. Diagram över alla spalter bryts aldrig och behåller marginaler: en hel rad ovanför (stryks den
+// överst på en sida flyttas allt en hel rad, inte en halv) och resten under.
 window.addEventListener('load', () => {
   const LH = 18;  // 13,5 pt
+  // Placeringen (placera() i bygg_tidskrift.py): ett diagram, en bild eller ett citat flyttas n stycken framåt i texten,
+  // så att det inte skjuts till nästa spalt eller sida och lämnar en kort spalt efter sig.
+  document.querySelectorAll('.text > [data-flytt]').forEach(el => {
+    let n = +el.dataset.flytt, t = el;
+    while (n > 0 && t.nextElementSibling && !t.nextElementSibling.matches('.sources, .slut, .webb')) {
+      t = t.nextElementSibling;
+      if (t.tagName == 'P' && !t.classList.contains('runcitat')) n--;
+    }
+    if (t !== el) t.after(el);
+  });
+  const hojd = (el) => [...el.getClientRects()].reduce((s, r) => s + r.height, 0);
   document.querySelectorAll('.text > figure, .text > aside, .text > blockquote, .text > .sources').forEach(el => {
+    const forst = !el.previousElementSibling;
     el.classList.add('snap');
-    const h = el.getBoundingClientRect().height;
-    const top = el.previousElementSibling ? LH * 0.5 : 0;
-    const total = Math.ceil((h + top) / LH + 0.5) * LH;
-    el.style.setProperty('margin-top', top + 'px', 'important');
-    el.style.setProperty('margin-bottom', (total - h - top) + 'px', 'important');
+    if (el.classList.contains('chart')) {
+      const h = el.getBoundingClientRect().height, top = forst ? 0 : LH;
+      const total = Math.ceil((h + top) / LH + 0.5) * LH;
+      el.style.setProperty('margin-top', top + 'px', 'important');
+      el.style.setProperty('margin-bottom', (total - h - top) + 'px', 'important');
+      return;
+    }
+    const delbar = el.tagName == 'ASIDE' || el.classList.contains('sources');
+    const w = document.createElement('div');
+    w.className = 'snapwrap' + (delbar ? ' delbar' : '');
+    el.before(w); w.appendChild(el);
+    const h = hojd(el);
+    let top, bottom;
+    if (el.tagName == 'ASIDE' || (el.tagName == 'BLOCKQUOTE' && !el.classList.contains('pull')) || el.classList.contains('sources')) {
+      top = forst ? 0 : LH; bottom = Math.ceil(h / LH - 0.02) * LH - h + LH; }
+    else { top = forst ? 0 : LH * 0.5; bottom = Math.ceil((h + top) / LH + 0.5) * LH - h - top; }
+    w.style.paddingTop = top + 'px'; w.style.paddingBottom = bottom + 'px';
   });
   document.body.dataset.snapped = '1';
 });
-</script></head><body>
+</script></head><body class="skarm">
 
 <section class="omslag">
   <img class="bg" src="https://upload.wikimedia.org/wikipedia/commons/9/9d/U_489%2C_Morby.jpg" alt="">
@@ -256,15 +386,40 @@ window.addEventListener('load', () => {
 <section class="vanlig ledsida">
   <div class="ledgrid">
     <div class="ledare">
-      <div class="slab">Editorial</div>
+      <div class="slab">From the editor</div>
       <h2>Every stone at once</h2>
-      <p class="ingress">Runic research has long been about the single stone: one reading, one carver, one word. That has given us a rich body of knowledge. But it has also left some questions unasked – questions that can only be answered by counting every stone at once.</p>
-      <p class=forsta>Korpus is Vitki's journal for exactly those questions. We measure the whole corpus – more than 2,300 Swedish runestones – against soils, shorelines, place names, grave fields and roads, and we test every pattern against chance before we call it a finding. The analysis plan is locked before we count, and when a result does not hold, we say so.</p><p>In this issue you will meet the daughters who almost never got a stone, the young men who did not come home from their journeys, and the names that Swedes still carry today. Behind every article lie thousands of stones – but every article begins with one.</p><p>The journal is written for the curious reader with little time. Every article can be read in thirty seconds, in five minutes or in depth. The numbers are explained in words, and all data are openly available at vitkirunor.se.</p>
-      <p class="sign">Viktor Kvant<br><span>Editor</span></p>
+      <div class="redtext"><p class=forsta>My interest in history began with our own. As a young man I read the Edda and marvelled at Thor fighting the giants, and at Odin sacrificing himself to win wisdom. As an adult I came to work in data analysis, looking for patterns in large amounts of data. Korpus is where the two meet.</p><p>Runic research has long been about the single stone: one reading, one carver, one word. That has given us a rich body of material, gathered and digitised by generations of scholars – without their patient work none of this would be possible. But some questions have seldom been tested: those that can only be answered by counting every stone at once.</p><p>Korpus is Vitki's journal for exactly those questions. We measure the whole corpus – more than 2,300 Swedish runestones – against soils, shorelines, place names, grave fields and roads, and we test every pattern against chance before we call it a finding. The analysis plan is locked before we count, and when a result does not hold, we say so.</p><p>What moves me most is often what the stones do not say. The daughters, who so seldom got the same voice as the sons. The old faith, which held many gods and even made room for the White Christ, but in the end had to give way to a teaching with a single god. I want to see what traces remain, and to learn more about our heritage: how they thought, and what wisdom they wanted to pass on.</p><p>In this issue you will meet the daughters who almost never got a stone, the young men who did not come home from their journeys, and the names that Swedes still carry today. Every article can be read in thirty seconds, in five minutes or in depth, and all data are openly available at vitkirunor.se. I hope you find us in the noise of everything that competes for attention, and that we, in our way, can add something to runic research.</p></div>
+      <div class="sign"><span>Viktor Kvant, editor</span></div>
     </div>
-    <div class="innehallsspalt"><div class="slab">In this issue</div><ol class="innehall"><li><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/U29%2C_Hillersjoh%C3%A4llen.jpg" alt=""><div><span class="ttema">People</span><span class="ttitle">The daughters the runestones forgot</span><span class="tdeck">That many stones were raised for a daughter for every stone raised for a son.</span></div><span class="tsida">3</span></li><li><img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Vg_61%2C_H%C3%A4rlingstorp.JPG" alt=""><div><span class="ttema">Journeys</span><span class="ttitle">The journeys belonged to the young</span><span class="tdeck">That much more often sons and brothers died outside the Nordic lands than fathers and husbands.</span></div><span class="tsida">7</span></li><li><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Lorenz_Fr%C3%B8lich_-_%C3%86sir-Thor_-_NMH_425-1925_-_Nationalmuseum.jpg" alt=""><div><span class="ttema">Language</span><span class="ttitle">Thor fell, the hero became a farmhand – which Viking names live on?</span><span class="tdeck">The share of the names on the runestones still borne by Swedes today.</span></div><span class="tsida">10</span></li><li class="kort"><div><span class="ttema">Workshop</span><span class="ttitle">A century of runic research – read at once</span></div><span class="tsida">15</span></li><li class="kort"><div><span class="ttema">Method corner</span><span class="ttitle">What does p = 0.003 mean?</span></div><span class="tsida">15</span></li><li class="kort"><div><span class="ttema">In the app</span><span class="ttitle">People: who raised the stone, and for whom?</span></div><span class="tsida">16</span></li></ol></div>
+    <div class="innehallsspalt"><div class="slab">In this issue</div><ol class="innehall"><li class="kort"><div><span class="ttema">The map</span><span class="ttitle">Where the stones stand</span></div><span class="tsida">3</span></li><li class="kort"><div><span class="ttema">In numbers</span><span class="ttitle">The runestones in numbers</span></div><span class="tsida">4</span></li><li class="kort"><div><span class="ttema">People</span><span class="ttitle">The daughters the runestones forgot</span><span class="tdeck">That many stones were raised for a daughter for every stone raised for a son.</span></div><span class="tsida">5</span></li><li class="kort"><div><span class="ttema">Journeys</span><span class="ttitle">The journeys belonged to the young</span><span class="tdeck">That much more often sons and brothers died outside the Nordic lands than fathers and husbands.</span></div><span class="tsida">9</span></li><li class="kort"><div><span class="ttema">Language</span><span class="ttitle">Thor fell, the hero became a farmhand – which Viking names live on?</span><span class="tdeck">The share of the names on the runestones still borne by Swedes today.</span></div><span class="tsida">12</span></li><li class="kort"><div><span class="ttema">Workshop</span><span class="ttitle">A century of runic research – read at once</span></div><span class="tsida">17</span></li><li class="kort"><div><span class="ttema">Method corner</span><span class="ttitle">What does p = 0.003 mean?</span></div><span class="tsida">17</span></li><li class="kort"><div><span class="ttema">In the app</span><span class="ttitle">People: who raised the stone, and for whom?</span></div><span class="tsida">18</span></li><li class="kort"><div><span class="ttema">Next issue</span><span class="ttitle">What we cannot see</span></div><span class="tsida">19</span></li></ol>
+      <div class="kolofon"><div><b>Korpus</b> Digital runic research from Vitki<br>No. 1 · November 2026</div><div><b>Editor</b> Viktor Kvant</div><div><b>Publisher</b> Vitki · vitkirunor.se</div><div><b>Licence</b> Texts: CC BY 4.0. Images carry their own licences, given with each image.</div></div></div>
   </div>
   <div class="lasband"><div><b>30 sec</b><span>The headline, <i>The number</i> and <i>In 30 seconds</i> give you the finding and how certain it is.</span></div><div><b>5 min</b><span>The article: how we got there, with charts in percent and the stones as examples.</span></div><div><b>In depth</b><span><i>How sure we are</i>, the sources and open data at vitkirunor.se.</span></div></div>
+</section>
+
+<section class="kartsida">
+  <img class="bg" src="bilder/karta_alla.png" alt="">
+  <div class="kartpanel">
+    <div class="flik">The map</div>
+    <h2>Where the stones stand</h2>
+    <p>Every dot is a Viking-age runestone or a fragment of one, where the Scandinavian Runic-text Database places it. They stand densest around Lake Mälaren; Uppland alone has half of them.</p>
+    <ul class="kartleg"><li><i class="prick"></i><span><b>1,904</b> still exists</span></li><li><i class="prick rost"></i><span><b>414</b> lost according to the database, known from older drawings</span></li></ul>
+  </div>
+  <div class="kartkredit">2,318 of the corpus's 2,321 stones have a location in the database. Skåne, Blekinge and Halland belonged to Denmark; their stones have Danish signa and are not included.<br>Map: Vitki, after the Scandinavian Runic-text Database (ODbL). Coastlines and lakes: Natural Earth.</div>
+</section>
+
+<section class="vanlig siffersida">
+  <div class="flik">In numbers</div>
+  <h2>The runestones in numbers</h2>
+  <p class="deck">This is the corpus Korpus counts: every Viking-age runestone and fragment of a runestone from Sweden in the Scandinavian Runic-text Database. Every number is counted from the database for this issue.</p>
+  <div class="rutor"><div><b>2,321</b><span>runestones and fragments from the Viking Age. This is the basis for every article in the issue.</span></div><div><b>51 %</b><span>come from Uppland, 1,178 stones. Every second Swedish runestone is from Uppland.</span></div><div><b>31 %</b><span>are fragments: 725 stones are only parts of a stone. Almost one in three.</span></div><div><b>18 %</b><span>are lost according to the database, 415 stones. They are known from older drawings but no longer exist. Almost one in five.</span></div><div><b>11 %</b><span>are signed: on 248 stones the carver wrote his name into the text. About one in ten.</span></div><div><b>111</b><span>stones are firmly tied to Öpir, the carver with the most stones in the database. All but 3 stand in Uppland.</span></div><div><b>41 %</b><span>have a cross in the carving, 959 stones. Four in ten.</span></div><div><b>45 %</b><span>have a certain style group, 1,038 stones. The style group rests on the ornament and is the most common way to date a runestone.</span></div></div>
+  <div class="tvaspalt sifferbotten">
+    <figure class="chart sifferchart"><figcaption class="ctitle">Where the stones come from</figcaption>
+      <div class="cgroup">Share of all 2,321 stones</div><div class="crow hi"><div class="clab">Uppland</div><div class="cbar"><span style="width:51%"></span></div><div class="cval">51 %</div><div class="cnote">1,178 stones</div></div><div class="crow"><div class="clab">Södermanland</div><div class="cbar"><span style="width:16%"></span></div><div class="cval">16 %</div><div class="cnote">363 stones</div></div><div class="crow"><div class="clab">Östergötland</div><div class="cbar"><span style="width:10%"></span></div><div class="cval">10 %</div><div class="cnote">222 stones</div></div><div class="crow"><div class="clab">Öland</div><div class="cbar"><span style="width:7%"></span></div><div class="cval">7 %</div><div class="cnote">154 stones</div></div><div class="crow"><div class="clab">Västergötland</div><div class="cbar"><span style="width:6%"></span></div><div class="cval">6 %</div><div class="cnote">131 stones</div></div><div class="crow"><div class="clab">Småland</div><div class="cbar"><span style="width:5%"></span></div><div class="cval">5 %</div><div class="cnote">121 stones</div></div><div class="crow"><div class="clab">Gotland</div><div class="cbar"><span style="width:2%"></span></div><div class="cval">2 %</div><div class="cnote">42 stones</div></div><div class="crow"><div class="clab">Other provinces</div><div class="cbar"><span style="width:5%"></span></div><div class="cval">5 %</div><div class="cnote">110 stones</div></div><div class="csrc">Chart: Vitki, after the Scandinavian Runic-text Database (ODbL).</div></figure>
+    <figure class="chart sifferchart"><figcaption class="ctitle">The carvers with the most stones</figcaption>
+      <div class="cgroup">Stones the database firmly ties to the carver</div><div class="crow hi"><div class="clab">Öpir</div><div class="cbar"><span style="width:100.0%"></span></div><div class="cval">111</div><div class="cnote">stones</div></div><div class="crow"><div class="clab">Balle</div><div class="cbar"><span style="width:68.5%"></span></div><div class="cval">76</div><div class="cnote">stones</div></div><div class="crow"><div class="clab">Fot</div><div class="cbar"><span style="width:61.3%"></span></div><div class="cval">68</div><div class="cnote">stones</div></div><div class="crow"><div class="clab">Åsmund</div><div class="cbar"><span style="width:60.4%"></span></div><div class="cval">67</div><div class="cnote">stones</div></div><div class="crow"><div class="clab">Gunnar</div><div class="cbar"><span style="width:37.8%"></span></div><div class="cval">42</div><div class="cnote">stones</div></div><div class="csrc">Chart: Vitki, after the Scandinavian Runic-text Database (ODbL). Signed and attributed stones.</div></figure>
+  </div>
+  <aside class="box sifferbox"><div class="boxh">How we counted</div><p>By runestone we mean what the Scandinavian Runic-text Database (the 2014 version, updated 2018) calls a runestone or a fragment of a runestone, dated to the Viking Age and with a Swedish signum. The stones of Skåne, Blekinge and Halland have Danish signa and are not included. Lost, signature, carver, cross and style group are the database's own entries; we have not checked them stone by stone. A carver counts when the database gives him without a question mark.</p></aside>
 </section>
 
 <section class="opener">
@@ -285,15 +440,15 @@ window.addEventListener('load', () => {
 <p class=forsta>So it reads on a runestone at Morby in Lagga parish in Uppland. Gillaug was grown up and married when she died, and it was her mother who built the bridge for her. It is one of very few runestones that remember a daughter. Most daughters of the Viking Age never got a stone, and most are not even named on the stone for their father. This article is about them – about why they are so few, and about what the few stones for them have in common.</p>
 <h3>The missing daughters</h3>
 <p>We read by hand all Swedish Viking-Age runic inscriptions where the Rundata translation speaks of a daughter or a maid – some fifty. Eighteen of them are memorial inscriptions for a daughter. Fourteen stand on runestones, and those are the ones we count. The other four are carved on a rock face (U 311), an earth-fast boulder (Sö 331) and grave slabs (Ög 239, Sm 94). 268 runestones were raised for a son.</p>
-<figure class="chart"><figcaption class="ctitle"> In memory of whom the stone was raised, when the dead was someone's child</figcaption>
+<figure class="chart" data-id="d1" data-flytt="1"><figcaption class="ctitle"> In memory of whom the stone was raised, when the dead was someone's child</figcaption>
 <div class="crow"><div class="clab">Son</div><div class="cbar"><span style="width:95.0%"></span></div><div class="cval">95 %</div><div class="cnote">268 stones</div></div>
 <div class="crow hi"><div class="clab">Daughter</div><div class="cbar"><span style="width:5.0%"></span></div><div class="cval">5 %</div><div class="cnote">14 stones</div></div>
 <div class="csrc">Source: Vitki's analysis of the Scandinavian Runic-text Data Base; Swedish Viking-Age runestones. The stones for daughters were read by hand.</div>
 </figure>
 <p>Daughters were born as often as sons, and died as easily. The stones themselves tell us so. On the Hillersjö rock in Uppland (U 29), the longest family story on any runestone, it says of Geirlaug and her second husband: <em>Then they got children. But one maid lived; she was called Inga.</em> Of the children only one daughter survived. Yet there are nineteen times as many stones for sons as for daughters.</p>
-<blockquote class="pull">Yet there are nineteen times as many stones for sons as for daughters.</blockquote>
+<blockquote class="pull" data-id="q">Yet there are nineteen times as many stones for sons as for daughters.</blockquote>
 <p>The daughters are missing among the living too. The 403 stones for a father where the children's names can be read name 846 children. 775 of them are sons and 71 daughters.</p>
-<figure class="chart"><figcaption class="ctitle"> The children who raise the stone in memory of their father</figcaption>
+<figure class="chart" data-id="d2"><figcaption class="ctitle"> The children who raise the stone in memory of their father</figcaption>
 <div class="crow"><div class="clab">Sons</div><div class="cbar"><span style="width:92.0%"></span></div><div class="cval">92 %</div><div class="cnote">775 children</div></div>
 <div class="crow hi"><div class="clab">Daughters</div><div class="cbar"><span style="width:8.0%"></span></div><div class="cval">8 %</div><div class="cnote">71 children</div></div>
 <div class="csrc">Source: as above; the 403 stones in memory of a father where the children's names can be read. Gender from the names.</div>
@@ -308,7 +463,7 @@ window.addEventListener('load', () => {
 <p>The fourteen runestones for daughters have a few traits in common. The first is who raised them. On seven of the fourteen the mother takes part. That agrees with what holds for children in general: in Svealand the mother takes part in half of the stones for a child, against not quite one in four of the other stones – a pattern that holds in both halves of the material. Mothers mourned their daughters as they mourned their sons.</p>
 <p>The second is time. All nine runestones for daughters in Uppland that can be dated by their style were carved after about 1050. Of all datable Uppland runestones 69 per cent are from that time, so all nine being late by chance happens in about four cases in a hundred. It is a hint, not a finding.</p>
 <p>The third is the bridges. In Uppland four of the eleven runestones for daughters build a bridge – at Velamby (U 377), Morby (U 489), Norsta (U 861) and Gryta (U 867). Of the runestones for sons only one in fourteen does. In addition there is the carving in the rock face at Hargs bro (U 311), which also concerns a bridge for a daughter. We do not count it, since the comparison is between runestones.</p>
-<figure class="chart"><figcaption class="ctitle"> Share of stones in Uppland where a bridge is built</figcaption>
+<figure class="chart" data-id="d3"><figcaption class="ctitle"> Share of stones in Uppland where a bridge is built</figcaption>
 <div class="crow hi"><div class="clab">For a daughter</div><div class="cbar"><span style="width:36.0%"></span></div><div class="cval">36 %</div><div class="cnote">11 stones</div></div>
 <div class="crow"><div class="clab">For a son</div><div class="cbar"><span style="width:7.0%"></span></div><div class="cval">7 %</div><div class="cnote">136 stones</div></div>
 <div class="crow"><div class="clab">Other stones</div><div class="cbar"><span style="width:5.0%"></span></div><div class="cval">5 %</div><div class="cnote">1,167 stones</div></div>
@@ -362,9 +517,9 @@ window.addEventListener('load', () => {
 <p>On the stones for men who died in the east and the west, a mother or a father often stands by the stone, seldom a widow: of 69 such stones only 4 were raised for a husband. Tóla at Härlingstorp in Västergötland (Vg 61) is one of them. Her son went west and did not come back. We wanted to know whether she is an exception or a rule: was it the young who went, and the young who did not come home?</p>
 <h3>Who died abroad?</h3>
 <p>A runestone nearly always says who raised it and who the dead man was to them: <em>sun sinn</em>, his son; <em>faður sinn</em>, his father; <em>broður sinn</em>, his brother. We read those relations on all legible Swedish runestones with a rule in Rundata's translation and checked it against our own reading of a hundred stones. Then we divided the dead men into two groups: sons and brothers – most often young when they died – and fathers and husbands, who had had time to found a family.</p>
-<blockquote class="pull">The young man was a drengr, one of the following; the older man was a þegn, a man with a farm and responsibilities.</blockquote>
+<blockquote class="pull" data-id="q">The young man was a drengr, one of the following; the older man was a þegn, a man with a farm and responsibilities.</blockquote>
 <p>The difference is large. Of 393 stones for sons and brothers, 41 say that the dead man died outside Scandinavia. Of 552 stones for fathers and husbands, 15 do. With region, time and carver held constant that is 10 against 3 per cent. A son or brother who died had thus died in the east or the west three to four times as often as a father or husband (the odds ratio is 4.1, probably between 2.2 and 7.7). A difference this clear would arise by chance in fewer than one case in ten thousand.</p>
-<figure class="chart"><figcaption class="ctitle"> What the stones say about the dead man, by his place in the family</figcaption>
+<figure class="chart" data-id="d1"><figcaption class="ctitle"> What the stones say about the dead man, by his place in the family</figcaption>
 <div class="cgroup">Died outside Scandinavia</div>
 <div class="crow hi"><div class="clab">Sons and brothers</div><div class="cbar"><span style="width:10.0%"></span></div><div class="cval">10 %</div><div class="cnote">41 of 393 stones</div></div>
 <div class="crow"><div class="clab">Fathers and husbands</div><div class="cbar"><span style="width:3.0%"></span></div><div class="cval">3 %</div><div class="cnote">15 of 552 stones</div></div>
@@ -418,12 +573,12 @@ window.addEventListener('load', () => {
 <p>It is one of few things from the Viking Age that have survived in everyday life: the names. We wanted to know how many – and whether it is chance which ones. Our hypothesis was that what belonged to power did not survive. The old elite, its titles, its law and its gods ought to have been replaced by the words of the church and the crown, while the everyday life of the family lived on. Half of the hypothesis held. The other half failed – in a direction we did not expect.</p>
 <h3>One name in five lives on</h3>
 <p>The runestones are full of names: those who raised the stone, the dead, sometimes the carver. We took every personal name that stands on at least three Swedish runestones – 391 names – and translated them into their present form: Þorsteinn becomes Torsten, Ásbjôrn Esbjörn, Sveinn Sven. Then we compared them with Statistics Sweden's list of first names that at least ten Swedes bear.</p>
-<blockquote class="pull">Drengr, the hero, became dräng, the farmhand.</blockquote>
+<blockquote class="pull" data-id="q" data-flytt="1">Drengr, the hero, became dräng, the farmhand.</blockquote>
 <p>85 of the names live on today – 22 per cent. Counting by how common they were on the stones, it is 37 per cent, since the most common names survived more often. Ulfr, who took three payments in England, has 31,585 namesakes today. Helgi stands on 14 runestones and is Helge today (1,659 bearers); Rúni is Rune (6,603) and Kári is Kåre (577).</p>
 <p>The kings' names nearly all made it: Erik (55,968 bearers), Björn (34,656), Sven (31,115), Håkan (25,508), Knut (4,473) and Harald (2,647). But most of the names died. Ônundr, Ingifastr, Freysteinn, Holmsteinn, Holmfastr, Guðfastr and Vébjôrn stood on many runestones and are borne by fewer than ten Swedes today.</p>
 <h3>The gods kept their names</h3>
 <p>If the power hypothesis were right, the names with a pagan god in them ought to have vanished first. It is the other way round. Names beginning with Þór-, Ás-, Frey-, Ingi- or Guð- live on in 39 per cent of cases, other names in 19 per cent. The difference is so large that it would arise by chance in about one case in seven hundred.</p>
-<figure class="chart"><figcaption class="ctitle"> Share of the runestones' names borne by at least ten Swedes today</figcaption>
+<figure class="chart" data-id="d1"><figcaption class="ctitle"> Share of the runestones' names borne by at least ten Swedes today</figcaption>
 <div class="crow hi"><div class="clab">Names with a god in them</div><div class="cbar"><span style="width:39.0%"></span></div><div class="cval">39 %</div><div class="cnote">22 of 56 names</div></div>
 <div class="crow"><div class="clab">Other names</div><div class="cbar"><span style="width:19.0%"></span></div><div class="cval">19 %</div><div class="cnote">63 of 335 names</div></div>
 <div class="crow"><div class="clab">Women’s names</div><div class="cbar"><span style="width:33.0%"></span></div><div class="cval">33 %</div><div class="cnote">20 of 61 names</div></div>
@@ -435,19 +590,19 @@ window.addEventListener('load', () => {
 <p>Part of the explanation is that many names have been revived. Of the 60 runestone names that also appear in the medieval charters of 1350–1450, 44 live on – three in four. Of the 331 that do not appear there, only 41 do. Names like Åsa, Tora and Runa thus seem to have been gone in the Middle Ages and to have come back with the interest in all things Old Norse in the 19th and 20th centuries.</p>
 <h3>The hero became a farmhand</h3>
 <p>The words for power are another matter. We took the words that stand on at least three runestones and checked whether they exist in today's Swedish with the same meaning. Of the words for kin and everyday life – stone, bridge, road, father, mother, brother, son – 23 of 27 live on. Of the words for power, law and faith, 9 of 17 do.</p>
-<figure class="chart"><figcaption class="ctitle"> The runestones' words that live on with the same meaning</figcaption>
+<figure class="chart" data-id="d2" data-flytt="2"><figcaption class="ctitle"> The runestones' words that live on with the same meaning</figcaption>
 <div class="crow hi"><div class="clab">Rank and following</div><div class="cbar"><span style="width:22.0%"></span></div><div class="cval">22 %</div><div class="cnote">2 of 9 words</div></div>
 <div class="crow"><div class="clab">Power, law and faith</div><div class="cbar"><span style="width:53.0%"></span></div><div class="cval">53 %</div><div class="cnote">9 of 17</div></div>
 <div class="crow"><div class="clab">Kin and everyday life</div><div class="cbar"><span style="width:85.0%"></span></div><div class="cval">85 %</div><div class="cnote">23 of 27</div></div>
 <div class="csrc">Source: words on at least three runestones, coded by their present meaning in the Swedish Wiktionary; Vitki's count.</div>
 </figure>
 <p>And among the words for rank and following only two of nine live on: <em>kung</em> and <em>styrman</em>. <em>Þegn</em>, the man of standing with a farm of his own, does not exist in Swedish. Nor does <em>húskarl</em>, the chieftain's bodyguard, <em>lið</em>, the following, or <em>félagi</em>, the comrade who shared ship and spoils. <em>Dróttinn</em>, the lord, lives on only in <em>drottning</em>, queen – and on the runestones it is already used only of God.</p>
-<figure class="img"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/S%C3%96179_Gripsholm_Runestone.jpg" alt="The runestone Sö 179"><figcaption><em>Tola let ræisa stæin þennsa at sun sinn Harald, broður Ingvars. ÞæiR foru drængila fiarri at gulli ok austarla ærni gafu, dou sunnarla a Særklandi.</em> Tóla raised the stone in memory of her son Haraldr, Ingvarr’s brother. They travelled like heroes, far for gold (Sö 179, Gripsholm). <em>Drængila</em> meant valiantly, like a hero. Photo: Tåggas, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:SÖ179_Gripsholm_Runestone.jpg">Wikimedia Commons</a>.</figcaption></figure>
+<figure class="img" data-id="b1" data-flytt="3"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/S%C3%96179_Gripsholm_Runestone.jpg" alt="The runestone Sö 179"><figcaption><em>Tola let ræisa stæin þennsa at sun sinn Harald, broður Ingvars. ÞæiR foru drængila fiarri at gulli ok austarla ærni gafu, dou sunnarla a Særklandi.</em> Tóla raised the stone in memory of her son Haraldr, Ingvarr’s brother. They travelled like heroes, far for gold (Sö 179, Gripsholm). <em>Drængila</em> meant valiantly, like a hero. Photo: Tåggas, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:SÖ179_Gripsholm_Runestone.jpg">Wikimedia Commons</a>.</figcaption></figure>
 <p>The clearest example is <em>drengr</em>. On the runestones it is a title of honour: Ingvarr's men travelled <em>drængila</em>, like true <em>drengir</em> – bravely, like heroes. Today a <em>dräng</em> is a hired hand on the farm, and figuratively a henchman. The word for the hero became the word for the servant.</p>
 <p>The church's words, by contrast, fared well. God, soul, spirit and holy already stand on the runestones and all live on. It was not the faith that lacked words, it was the old elite.</p>
 <h3>The king's men got new titles</h3>
 <p>The runestones are not only about families. They are also about power: who was whose man, who steered the ship, where the thing was held. So we went through every title and word for office that stands on Swedish runestones – 16 of them – and followed them into today's Swedish. We did that review after the locked plan, so it describes but tests nothing.</p>
-<figure class="chart"><figcaption class="ctitle"> What became of the runestones' titles and offices</figcaption>
+<figure class="chart" data-id="d3" data-flytt="2"><figcaption class="ctitle"> What became of the runestones' titles and offices</figcaption>
 <div class="crow hi"><div class="clab">Live on with the same meaning</div><div class="cbar"><span style="width:25.0%"></span></div><div class="cval">25 %</div><div class="cnote">4 of 16: king, helmsman, skipper, thing</div></div>
 <div class="crow"><div class="clab">Sank</div><div class="cbar"><span style="width:6.0%"></span></div><div class="cval">6 %</div><div class="cnote">1 of 16: drengr → dräng, farmhand</div></div>
 <div class="crow"><div class="clab">Only as a historical term</div><div class="cbar"><span style="width:38.0%"></span></div><div class="cval">38 %</div><div class="cnote">6 of 16: jarl, stallare, bryte, huskarl, hundare, drott</div></div>
@@ -466,7 +621,7 @@ window.addEventListener('load', () => {
 <p>Sometimes the state went back to the old words. When the rural and town courts were replaced in 1971, the new courts were named <em>tingsrätter</em>, thing courts, and their presidents got the Old Norse title <em>lagman</em>, lawman. Until then they had been called <em>häradshövding</em>. The Vikings' thing, in other words, still passes judgement.</p>
 <h3>Garðar became Russia – and Svitjod became Sweden</h3>
 <p>The same pattern shows on the map. The runestones name 22 lands, peoples and places beyond the home district, on 91 stones in all. Eleven have the same name today: England, Denmark, Gotland, Skåne, Estonia, Finland, Tavastia and a few more. Two exist only as historical regions, Wierland and Livonia in the Baltic. But 9 have changed their name or no longer exist – and they stand on 45 stones, about half.</p>
-<figure class="img"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Carta_Marina.jpeg/1280px-Carta_Marina.jpeg" alt="Olaus Magnus&#x27; Carta marina"><figcaption><b>The North once the medieval realms were complete:</b> Olaus Magnus' Carta marina, printed in Venice in 1539. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Carta_Marina.jpeg">Wikimedia Commons</a>.</figcaption></figure>
+<figure class="img" data-id="b2" data-flytt="4"><img src="bilder/cache/1280px-Carta_Marina.jpeg" alt="Olaus Magnus&#x27; Carta marina"><figcaption><b>The North once the medieval realms were complete:</b> Olaus Magnus' Carta marina, printed in Venice in 1539. Public domain, via <a href="https://commons.wikimedia.org/wiki/File:Carta_Marina.jpeg">Wikimedia Commons</a>.</figcaption></figure>
 <p>They are the great realms far to the east and south. <em>Garðar</em> was the Kievan realm, which became the foundation of Russia, Belarus and Ukraine; <em>Holmgarðr</em> is Novgorod. <em>Grikkland</em>, on 24 stones, is not today's Greece but the Byzantine Empire. <em>Langbarðaland</em> is Italy – the name lives on only in Lombardy. <em>Serkland</em>, the lands around the Caspian Sea and the caliphate, has no present-day name at all. The realms fell or were rebuilt, and their Norse names fell with them.</p>
 <p>One name was replaced by the church. Øystæinn, in whose memory Æstriðr raised the stone at Broby in Täby (U 136), <em>sotti IorsaliR</em> – made his way to Jórsalir – and died in Grikkland. The Vikings had a name of their own for Jerusalem. It vanished when the Bible's name took over.</p>
 <p>And Sweden itself. <em>Sveþiuð</em>, Svitjod, stands on two runestones, both in Ludgo parish in Södermanland. On one, no one will bear a more able son in Svitjod (Sö 140), and the same stone perhaps calls on Thor. On the other, Ástríðr's sons were the ablest in Svitjod (Sö Fv1948;289, Aspa bridge). Svitjod means the people of the Svear. Sverige means the realm of the Svear – <em>Swerike</em> in the 13th century, <em>Svearike</em> in the 14th. In Icelandic the country is still called Svíþjóð. The country changed its name from a people to a realm, and that change holds the whole political shift.</p>
@@ -505,6 +660,16 @@ window.addEventListener('load', () => {
   </div>
   <figure class="appbild"><img src="bilder/app_manniskorna_en.jpg" alt=""><figcaption><b>What it looks like in the app:</b> Statistics (R) with the new patterns filtered on People. The first two cards are the findings in the chart above. Screenshot: Vitki.</figcaption></figure>
   <p class="appfot">Vitki is free software and runs on your own computer: github.com/Precatio/runes. The method: METHODS.md, section 1u.</p>
+</section>
+
+<section class="vanlig nastasida">
+  <div class="flik">Next issue · No. 2 · March 2027</div>
+  <h2>What we cannot see</h2>
+  <p class="deck">The runestones we count are the ones that survived, and the ones that survived do not always stand where they were raised. The next issue is about everything we cannot see in the corpus – and how much it may change what we think we know.</p>
+  <div class="nastagrid"><div><h3>The stones that were moved</h3><p>Many runestones no longer stand where they were once raised. They have been built into churches, moved to farms and parks or set up by a road in modern times. Every map of where the stones stood depends on knowing which ones have been moved. We look at how that can be known.</p></div><div><h3>The stones that were lost</h3><p>Almost one stone in five in the database is lost and known only from older drawings and descriptions. Which stones were lost, and where? Are the lost stones a random part of the corpus, or are some kinds of stone missing more often than others?</p></div><div><h3>When was the stone raised?</h3><p>Most runestones are dated by their ornament or their language, and the two have largely dated each other. We describe which stones have a date that does not rest on the style, and what happens to a pattern when the date is uncertain.</p></div><div><h3>The Ingvarr stones</h3><p>The stones for the men who followed Ingvarr to the east are among the best-known groups in runic research. They belong to the same expedition and so to roughly the same time. We ask what such a group can teach us about the rest of the corpus.</p></div></div>
+  <p class="nplan">The studies have not been run yet. The plans are locked before we count, and the results – including those that do not hold – will appear in the next issue. In the app: Gaps in the text.</p>
+  <div class="lasfritt"><div class="slab">Read Korpus for free</div><p>Every issue is available as a PDF in Swedish and English at <b>vitkirunor.se/en/tidskrift</b>, together with the full articles, interactive charts and open data. The Vitki app, in which the analyses are made, is free software: <b>github.com/Precatio/runes</b>. Write to us: <b>vitkirunor.se/kontakt</b>.</p>
+    <img class="bindruna" src="../../branding/vitki_logo.svg" alt="Vitki"></div>
 </section>
 <section class="vanlig baksida">
   <div class="baktext"><div class="bakblock"><div class="slab">About Korpus</div><p>Korpus is an open journal for digital and quantitative runic research, published by Vitki. It gathers Vitki's articles, reports and method notes in a form that can be read over a coffee break. It appears in Swedish and English.</p></div><div class="bakblock"><div class="slab">About Vitki</div><p>Vitki is an open research platform for the runic inscriptions of the Nordic countries. Analyses are pre-registered, and code, data and reports are published openly on Zenodo.</p></div><div class="bakblock"><div class="slab">Editors</div><p>Viktor Kvant, editor<br>vitkirunor.se/kontakt</p></div><div class="bakblock"><div class="slab">Licence</div><p>Texts may be shared freely under CC BY 4.0. Images from Wikimedia Commons carry their own licences, given with each image.</p></div><div class="bakblock"><div class="slab">Data</div><p>Scandinavian Runic-text Database, the Swedish National Heritage Board's Runor, SGU, ISOF and the Swedish register of ancient monuments. Processing: Vitki.</p></div></div>

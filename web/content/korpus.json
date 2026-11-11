@@ -6,11 +6,11 @@
       "date": "2026-11-10",
       "label_sv": "Nr 1 · November 2026",
       "label_en": "No. 1 · November 2026",
-      "pages": 17,
+      "pages": 20,
       "pdf_sv": "/korpus/korpus-nr1-sv.pdf",
       "pdf_en": "/korpus/korpus-nr1-en.pdf",
-      "size_sv": "8,6 MB",
-      "size_en": "7.1 MB",
+      "size_sv": "9,6 MB",
+      "size_en": "8.1 MB",
       "cover_sv": "/korpus/korpus-nr1-sv.jpg",
       "cover_en": "/korpus/korpus-nr1-en.jpg",
       "cover_alt_sv": "Omslaget till Korpus nr 1: runstenen U 489 vid Morby i Uppland och rubriken 14 mot 268 – Döttrarna som runstenarna glömde.",
@@ -20,6 +20,18 @@
       "lead_sv": "Döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som svenskar fortfarande bär. Och hundra års runforskning, lästa på en gång.",
       "lead_en": "The daughters who almost never got a stone, the young men who did not come home from their journeys and the names Swedes still carry. And a century of runic research, read at once.",
       "contents": [
+        {
+          "theme_sv": "Kartan",
+          "theme_en": "The map",
+          "title_sv": "Var stenarna står",
+          "title_en": "Where the stones stand"
+        },
+        {
+          "theme_sv": "I siffror",
+          "theme_en": "In numbers",
+          "title_sv": "Runstenarna i siffror",
+          "title_en": "The runestones in numbers"
+        },
         {
           "theme_sv": "Människorna",
           "theme_en": "People",
@@ -58,6 +70,12 @@
           "theme_en": "In the app",
           "title_sv": "Människorna: vem reste stenen, och efter vem?",
           "title_en": "People: who raised the stone, and for whom?"
+        },
+        {
+          "theme_sv": "Nästa nummer",
+          "theme_en": "Next issue",
+          "title_sv": "Det vi inte ser",
+          "title_en": "What we cannot see"
         }
       ]
     }

@@ -13,6 +13,7 @@ import subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BLOGG = os.path.join(HERE, "..", "blogg")
+ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 WM = "https://upload.wikimedia.org/wikipedia/commons/"
 OMSLAG = WM + "9/9d/U_489%2C_Morby.jpg"
@@ -47,12 +48,7 @@ T = {
                 ("Verkstaden", "Hundra års runforskning – lästa på en gång", "1 081 texter i Fornvännen och Futhark.")],
         provnummer="Provnummer<br>vitkirunor.se",
         omkredit="Omslag: U 489 vid Morby, Uppland – Gullaugs bro för dottern Gillaugs själ. Foto: Christine Jewell, CC BY-SA 2.0, via Wikimedia Commons.",
-        ledare="Ledare", ledrubrik="Alla stenar på en gång",
-        ledtext=["Runforskningen har länge handlat om den enskilda stenen: en läsning, en ristare, ett ord. Det har gett oss ett rikt material. Men det har också gjort att vissa frågor aldrig ställts – frågor som bara går att svara på om man räknar alla stenar på en gång.",
-                 "{namn} är Vitkis tidskrift för just de frågorna. Vi mäter hela korpusen – drygt 2 300 svenska runstenar – mot jordarter, strandlinjer, ortnamn, gravfält och vägar, och vi prövar varje mönster mot slumpen innan vi kallar det ett fynd. Analysplanen låses innan vi räknar, och när ett resultat inte håller säger vi det.",
-                 "I det här numret möter du döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som fortfarande bärs av svenskar i dag. Bakom varje artikel ligger tusentals stenar – men varje artikel börjar med en.",
-                 "Tidskriften är skriven för den som är nyfiken men har ont om tid. Varje artikel kan läsas på trettio sekunder, på fem minuter eller på djupet. Siffrorna förklaras i ord, och alla data finns öppet på vitkirunor.se."],
-        sign="Viktor Kvant<br><span>Redaktör</span>", innehall="I detta nummer",
+        innehall="I detta nummer",
         extra=[("Verkstaden", "Hundra års runforskning – lästa på en gång"), ("Metodhörnan", "Vad betyder p = 0,003?")],
         lasband=[("30 sek", "Rubriken, <i>Siffran</i> och <i>På 30 sekunder</i> ger fyndet och hur säkert det är."),
                  ("5 min", "Artikeln: hur vi kom fram till det, med diagram i procent och stenarna som exempel."),
@@ -81,12 +77,7 @@ T = {
                 ("Workshop", "A century of runic research – read at once", "1,081 texts in Fornvännen and Futhark.")],
         provnummer="Sample issue<br>vitkirunor.se",
         omkredit="Cover: U 489 at Morby, Uppland – Gullaug's bridge for the soul of her daughter Gillaug. Photo: Christine Jewell, CC BY-SA 2.0, via Wikimedia Commons.",
-        ledare="Editorial", ledrubrik="Every stone at once",
-        ledtext=["Runic research has long been about the single stone: one reading, one carver, one word. That has given us a rich body of knowledge. But it has also left some questions unasked – questions that can only be answered by counting every stone at once.",
-                 "{namn} is Vitki's journal for exactly those questions. We measure the whole corpus – more than 2,300 Swedish runestones – against soils, shorelines, place names, grave fields and roads, and we test every pattern against chance before we call it a finding. The analysis plan is locked before we count, and when a result does not hold, we say so.",
-                 "In this issue you will meet the daughters who almost never got a stone, the young men who did not come home from their journeys, and the names that Swedes still carry today. Behind every article lie thousands of stones – but every article begins with one.",
-                 "The journal is written for the curious reader with little time. Every article can be read in thirty seconds, in five minutes or in depth. The numbers are explained in words, and all data are openly available at vitkirunor.se."],
-        sign="Viktor Kvant<br><span>Editor</span>", innehall="In this issue",
+        innehall="In this issue",
         extra=[("Workshop", "A century of runic research – read at once"), ("Method corner", "What does p = 0.003 mean?")],
         lasband=[("30 sec", "The headline, <i>The number</i> and <i>In 30 seconds</i> give you the finding and how certain it is."),
                  ("5 min", "The article: how we got there, with charts in percent and the stones as examples."),
@@ -146,6 +137,217 @@ APP = {
         bild="bilder/app_manniskorna_en.jpg",
         bildtext="<b>What it looks like in the app:</b> Statistics (R) with the new patterns filtered on People. The first two cards are the findings in the chart above. Screenshot: Vitki."),
 }
+
+
+# "Från redaktören" (Viktor 2026-11-11): en stående spalt på s. 2 i varje nummer, bredvid innehållet, 250–400 ord,
+# signerad av Viktor. Texten skriver VIKTOR SJÄLV (nr 1: redaktor_nr1.json, godkänd 2026-11-11, ordagrant). Sidan
+# är provad med 400 ords text och håller sig på en sida; under 250 ord blir det luft ovanför läsbandet. Ett porträtt
+# läggs in med "portratt": "bilder/<fil>.jpg" (tomt = inget porträtt).
+REDAKTOR_SV = dict(
+    rubrik="Alla stenar på en gång",
+    text=["Mitt intresse för historia började i vår egen. Som ung läste jag Eddan och förundrades över Tor som slogs med jättarna, och över Oden som offrade sig själv för att vinna visdom. Som vuxen kom jag att arbeta med dataanalys, att leta efter mönster i stora mängder data. Korpus är platsen där de två möts.",
+          "Runforskningen har länge handlat om den enskilda stenen: en läsning, en ristare, ett ord. Det har gett oss ett rikt material, insamlat och digitaliserat av generationer av forskare – utan deras idoga arbete hade inget av detta varit möjligt. Men vissa frågor har sällan kunnat prövas: de som bara går att besvara om man räknar alla stenar på en gång.",
+          "Korpus är Vitkis tidskrift för just de frågorna. Vi mäter hela korpusen – drygt 2 300 svenska runstenar – mot jordarter, strandlinjer, ortnamn, gravfält och vägar, och vi prövar varje mönster mot slumpen innan vi kallar det ett fynd. Analysplanen låses innan vi räknar, och när ett resultat inte håller säger vi det.",
+          "Det som berör mig mest är ofta det som inte står på stenarna. Döttrarna, som så sällan fick samma röst som sönerna. Den gamla tron, som rymde många gudar och till och med gav plats åt den vite Krist, men som till slut fick ge vika för en lära med en enda gud. Jag vill se vilka spår som ändå finns kvar, och lära mig mer om vårt arv: hur de tänkte, och vilken visdom de ville föra vidare.",
+          "I det här numret möter du döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som fortfarande bärs av svenskar i dag. Varje artikel kan läsas på trettio sekunder, på fem minuter eller på djupet, och alla data finns öppet på vitkirunor.se. Jag hoppas att du hittar hit i bruset av allt som pockar på uppmärksamhet, och att vi, på vårt sätt, kan bidra med något till runforskningen."],
+    portratt="",
+)
+REDAKTOR_EN = dict(
+    rubrik="Every stone at once",
+    text=["My interest in history began with our own. As a young man I read the Edda and marvelled at Thor fighting the giants, and at Odin sacrificing himself to win wisdom. As an adult I came to work in data analysis, looking for patterns in large amounts of data. Korpus is where the two meet.",
+          "Runic research has long been about the single stone: one reading, one carver, one word. That has given us a rich body of material, gathered and digitised by generations of scholars – without their patient work none of this would be possible. But some questions have seldom been tested: those that can only be answered by counting every stone at once.",
+          "Korpus is Vitki's journal for exactly those questions. We measure the whole corpus – more than 2,300 Swedish runestones – against soils, shorelines, place names, grave fields and roads, and we test every pattern against chance before we call it a finding. The analysis plan is locked before we count, and when a result does not hold, we say so.",
+          "What moves me most is often what the stones do not say. The daughters, who so seldom got the same voice as the sons. The old faith, which held many gods and even made room for the White Christ, but in the end had to give way to a teaching with a single god. I want to see what traces remain, and to learn more about our heritage: how they thought, and what wisdom they wanted to pass on.",
+          "In this issue you will meet the daughters who almost never got a stone, the young men who did not come home from their journeys, and the names that Swedes still carry today. Every article can be read in thirty seconds, in five minutes or in depth, and all data are openly available at vitkirunor.se. I hope you find us in the noise of everything that competes for attention, and that we, in our way, can add something to runic research."],
+    portratt="",
+)
+REDAKTOR = {"sv": REDAKTOR_SV, "en": REDAKTOR_EN}
+
+# Nr 1 i 20 sidor (Viktor 2026-11-11: tryckeriet häftar i ark om fyra sidor; "om du saknar innehåll så fyll ut med något
+# av vårt material från appen"). Nya sidor: Till läsaren med innehåll och kolofon (s. 2), kartan över alla stenar (s. 3),
+# Runstenarna i siffror (s. 4) och Nästa nummer (s. 19). Alla tal på kartan och siffersidan räknas i korpusfakta().
+NY = {
+    "sv": dict(
+        tillrubrik="Från redaktören",
+        kolofon=[("{namn}", "Digital runforskning från Vitki<br>Nr 1 · November 2026"), ("Redaktion", "Viktor Kvant"),
+                 ("Utgivare", "Vitki · vitkirunor.se"), ("Licens", "Texterna: CC BY 4.0. Bilderna har egna licenser, angivna vid varje bild.")],
+        kflik="Kartan", krubrik="Var stenarna står",
+        ktext="Varje prick är en vikingatida runsten eller ett fragment av en, där Samnordisk runtextdatabas placerar den. Tätast står de runt Mälaren; Uppland ensamt har hälften av alla.",
+        kleg=[("finns kvar", "{bev}"), ("försvunna enligt databasen, kända från äldre avbildningar", "{lostk}")],
+        knot="{Nk} av korpusens {N} stenar har en plats i databasen. Skåne, Blekinge och Halland hörde till Danmark; deras stenar har danska signum och är inte med.",
+        kkredit="Karta: Vitki, efter Samnordisk runtextdatabas (ODbL). Kustlinjer och sjöar: Natural Earth.",
+        sflik="I siffror", srubrik="Runstenarna i siffror",
+        sdeck="Det här är korpusen som {namn} räknar på: alla vikingatida runstenar och fragment av runstenar från Sverige i Samnordisk runtextdatabas. Varje tal är räknat ur databasen för det här numret.",
+        rutor=[("{N}", "runstenar och fragment från vikingatiden. Det är underlaget för varje artikel i numret."),
+               ("{up_p} %", "kommer från Uppland, {up} stenar. Varannan svensk runsten är uppländsk."),
+               ("{frag_p} %", "är fragment: {frag} stenar är bara delar av en sten. Nästan var tredje."),
+               ("{lost_p} %", "är försvunna enligt databasen, {lost} stenar. De är kända från äldre avbildningar men finns inte kvar. Nästan var femte."),
+               ("{sign_p} %", "är signerade: på {sign} stenar har ristaren skrivit in sitt namn. Ungefär en av tio."),
+               ("{opir}", "stenar knyts säkert till Öpir, den ristare som har flest stenar i databasen. Alla utom {opir_ut} står i Uppland."),
+               ("{kors_p} %", "har ett kors i ristningen, {kors} stenar. Fyra av tio."),
+               ("{stil_p} %", "har en säker stilgrupp, {stil} stenar. Stilgruppen bygger på ornamentiken och är det vanligaste sättet att datera en runsten.")],
+        sdiagram="Var stenarna kommer ifrån", sgrupp="Andel av alla {N} stenar", sovriga="Övriga landskap", senhet="stenar",
+        skalla="Diagram: Vitki, efter Samnordisk runtextdatabas (ODbL).",
+        rdiagram="Ristarna med flest stenar", rgrupp="Stenar som databasen säkert knyter till ristaren",
+        rkalla="Diagram: Vitki, efter Samnordisk runtextdatabas (ODbL). Signerade och attribuerade stenar.",
+        sboxh="Så räknade vi",
+        sbox="Med runsten menar vi det som Samnordisk runtextdatabas (2014 års version, uppdaterad 2018) kallar runsten eller fragment av runsten, daterat till vikingatiden och med svenskt signum. Stenarna i Skåne, Blekinge och Halland har danska signum och är inte med. Försvunnen, signatur, ristare, kors och stilgrupp är databasens egna uppgifter; vi har inte prövat dem sten för sten. En ristare räknas när databasen anger honom utan frågetecken.",
+        nflik="Nästa nummer · Nr 2 · Mars 2027", nrubrik="Det vi inte ser",
+        ndeck="Runstenarna vi räknar är de som blev kvar, och de som blev kvar står inte alltid där de restes. Nästa nummer handlar om allt vi inte ser i korpusen – och om hur mycket det kan påverka det vi tror oss veta.",
+        nblock=[("Stenarna som flyttades", "Många runstenar står inte där de en gång restes. De har murats in i kyrkor, flyttats till gårdar och parker eller ställts upp vid en väg i modern tid. Varje karta över var stenarna stod bygger på att vi vet vilka som har flyttats. Vi går igenom hur det går att veta."),
+                ("Stenarna som försvann", "Nästan var femte sten i databasen är försvunnen och känd bara från äldre avbildningar och beskrivningar. Vilka stenar försvann, och var? Är de försvunna en slumpmässig del av korpusen, eller saknas vissa slags stenar oftare än andra?"),
+                ("När restes stenen?", "De flesta runstenar dateras efter ornamentiken eller språket, och de två har till stor del daterat varandra. Vi beskriver vilka stenar som har en datering som inte vilar på stilen, och vad som händer med ett mönster när dateringen är osäker."),
+                ("Ingvarsstenarna", "Stenarna efter männen som följde Ingvar österut är en av runforskningens mest kända grupper. De hör till samma färd och därmed till ungefär samma tid. Vi frågar vad en sådan grupp kan lära oss om resten av korpusen.")],
+        nplan="Studierna är inte gjorda än. Planerna låses innan vi räknar, och resultaten – också de som inte håller – kommer i nästa nummer. I appen: Luckor i texten.",
+        nlas="Läs {namn} fritt", nlastext="Alla nummer finns som PDF på svenska och engelska på <b>vitkirunor.se/tidskrift</b>, tillsammans med artiklarna i sin helhet, interaktiva diagram och öppna data. Appen Vitki, som analyserna görs i, är fri programvara: <b>github.com/Precatio/runes</b>. Skriv till oss: <b>vitkirunor.se/kontakt</b>.",
+        innehall_extra=dict(karta=("Kartan", "Var stenarna står"), siffror=("I siffror", "Runstenarna i siffror"), nasta=("Nästa nummer", "Det vi inte ser")),
+    ),
+    "en": dict(
+        tillrubrik="From the editor",
+        kolofon=[("{namn}", "Digital runic research from Vitki<br>No. 1 · November 2026"), ("Editor", "Viktor Kvant"),
+                 ("Publisher", "Vitki · vitkirunor.se"), ("Licence", "Texts: CC BY 4.0. Images carry their own licences, given with each image.")],
+        kflik="The map", krubrik="Where the stones stand",
+        ktext="Every dot is a Viking-age runestone or a fragment of one, where the Scandinavian Runic-text Database places it. They stand densest around Lake Mälaren; Uppland alone has half of them.",
+        kleg=[("still exists", "{bev}"), ("lost according to the database, known from older drawings", "{lostk}")],
+        knot="{Nk} of the corpus's {N} stones have a location in the database. Skåne, Blekinge and Halland belonged to Denmark; their stones have Danish signa and are not included.",
+        kkredit="Map: Vitki, after the Scandinavian Runic-text Database (ODbL). Coastlines and lakes: Natural Earth.",
+        sflik="In numbers", srubrik="The runestones in numbers",
+        sdeck="This is the corpus {namn} counts: every Viking-age runestone and fragment of a runestone from Sweden in the Scandinavian Runic-text Database. Every number is counted from the database for this issue.",
+        rutor=[("{N}", "runestones and fragments from the Viking Age. This is the basis for every article in the issue."),
+               ("{up_p} %", "come from Uppland, {up} stones. Every second Swedish runestone is from Uppland."),
+               ("{frag_p} %", "are fragments: {frag} stones are only parts of a stone. Almost one in three."),
+               ("{lost_p} %", "are lost according to the database, {lost} stones. They are known from older drawings but no longer exist. Almost one in five."),
+               ("{sign_p} %", "are signed: on {sign} stones the carver wrote his name into the text. About one in ten."),
+               ("{opir}", "stones are firmly tied to Öpir, the carver with the most stones in the database. All but {opir_ut} stand in Uppland."),
+               ("{kors_p} %", "have a cross in the carving, {kors} stones. Four in ten."),
+               ("{stil_p} %", "have a certain style group, {stil} stones. The style group rests on the ornament and is the most common way to date a runestone.")],
+        sdiagram="Where the stones come from", sgrupp="Share of all {N} stones", sovriga="Other provinces", senhet="stones",
+        skalla="Chart: Vitki, after the Scandinavian Runic-text Database (ODbL).",
+        rdiagram="The carvers with the most stones", rgrupp="Stones the database firmly ties to the carver",
+        rkalla="Chart: Vitki, after the Scandinavian Runic-text Database (ODbL). Signed and attributed stones.",
+        sboxh="How we counted",
+        sbox="By runestone we mean what the Scandinavian Runic-text Database (the 2014 version, updated 2018) calls a runestone or a fragment of a runestone, dated to the Viking Age and with a Swedish signum. The stones of Skåne, Blekinge and Halland have Danish signa and are not included. Lost, signature, carver, cross and style group are the database's own entries; we have not checked them stone by stone. A carver counts when the database gives him without a question mark.",
+        nflik="Next issue · No. 2 · March 2027", nrubrik="What we cannot see",
+        ndeck="The runestones we count are the ones that survived, and the ones that survived do not always stand where they were raised. The next issue is about everything we cannot see in the corpus – and how much it may change what we think we know.",
+        nblock=[("The stones that were moved", "Many runestones no longer stand where they were once raised. They have been built into churches, moved to farms and parks or set up by a road in modern times. Every map of where the stones stood depends on knowing which ones have been moved. We look at how that can be known."),
+                ("The stones that were lost", "Almost one stone in five in the database is lost and known only from older drawings and descriptions. Which stones were lost, and where? Are the lost stones a random part of the corpus, or are some kinds of stone missing more often than others?"),
+                ("When was the stone raised?", "Most runestones are dated by their ornament or their language, and the two have largely dated each other. We describe which stones have a date that does not rest on the style, and what happens to a pattern when the date is uncertain."),
+                ("The Ingvarr stones", "The stones for the men who followed Ingvarr to the east are among the best-known groups in runic research. They belong to the same expedition and so to roughly the same time. We ask what such a group can teach us about the rest of the corpus.")],
+        nplan="The studies have not been run yet. The plans are locked before we count, and the results – including those that do not hold – will appear in the next issue. In the app: Gaps in the text.",
+        nlas="Read {namn} for free", nlastext="Every issue is available as a PDF in Swedish and English at <b>vitkirunor.se/en/tidskrift</b>, together with the full articles, interactive charts and open data. The Vitki app, in which the analyses are made, is free software: <b>github.com/Precatio/runes</b>. Write to us: <b>vitkirunor.se/kontakt</b>.",
+        innehall_extra=dict(karta=("The map", "Where the stones stand"), siffror=("In numbers", "The runestones in numbers"), nasta=("Next issue", "What we cannot see")),
+    ),
+}
+
+LANDSKAP = {"sv": {"U": "Uppland", "Sö": "Södermanland", "Ög": "Östergötland", "Öl": "Öland", "Vg": "Västergötland", "Sm": "Småland", "G": "Gotland"},
+            "en": {"U": "Uppland", "Sö": "Södermanland", "Ög": "Östergötland", "Öl": "Öland", "Vg": "Västergötland", "Sm": "Småland", "G": "Gotland"}}
+
+
+def korpusfakta():
+    """Talen på kartan och siffersidan, räknade ur data/rundata.json med samma urval som Vitkis analyser
+    (src/research_gaps.is_runestone: vikingatid, svenskt signum, runsten eller fragment av runsten). Talen är låsta
+    med assert så att en ny version av databasen inte i tysthet ändrar en tryckt siffra."""
+    import collections
+    import sys
+    sys.path.insert(0, ROOT)
+    from src.research_gaps import certain_carvers, has_style, is_runestone
+    st = [r for r in json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["inscriptions"] if is_runestone(r)]
+    prov = collections.Counter(r["signum"].split(" ")[0] for r in st)
+    ristare = collections.Counter(c for r in st for c in set(certain_carvers(r)))
+    topp, opir = ristare.most_common(1)[0]
+    opir_up = sum("Öpir 1" in certain_carvers(r) and r["signum"].startswith("U ") for r in st)
+    k = dict(N=len(st), up=prov["U"], frag=sum("fragment" in (r["object"] or "") for r in st), lost=sum(r["flags"]["lost"] for r in st),
+             sign=sum(any(c["kind"] == "S" for c in r["carvers"]) for r in st), opir=opir, opir_ut=opir - opir_up,
+             kors=sum(bool(r["cross_form"]) for r in st), stil=sum(has_style(r) for r in st),
+             Nk=sum(r["lat"] is not None for r in st), lostk=sum(r["lat"] is not None and r["flags"]["lost"] for r in st))
+    k["bev"] = k["Nk"] - k["lostk"]
+    assert topp == "Öpir 1"
+    assert (k["N"], k["up"], k["frag"], k["lost"], k["sign"], k["opir"], k["opir_ut"], k["kors"], k["stil"], k["Nk"], k["lostk"]) == \
+        (2321, 1178, 725, 415, 248, 111, 3, 959, 1038, 2318, 414), k
+    for n in ("up", "frag", "lost", "sign", "kors", "stil"):
+        k[n + "_p"] = round(100 * k[n] / k["N"])
+    k["prov"] = [(p, prov[p], round(100 * prov[p] / k["N"])) for p in LANDSKAP["sv"]]
+    ovr = k["N"] - sum(n for _, n, _ in k["prov"])
+    k["prov"].append(("*", ovr, round(100 * ovr / k["N"])))
+    k["ristare"] = [(re.sub(r"\s+\d+$", "", r), n) for r, n in ristare.most_common(5)]
+    assert k["ristare"] == [("Öpir", 111), ("Balle", 76), ("Fot", 68), ("Åsmund", 67), ("Gunnar", 42)], k["ristare"]
+    punkter = [dict(signum=r["signum"], lat=r["lat"], lon=r["lon"], lost=r["flags"]["lost"]) for r in st if r["lat"] is not None]
+    return k, punkter
+
+
+def tal(n, sprak):
+    """Tusental med hårt mellanrum på svenska (2 321), med komma på engelska (2,321)."""
+    return f"{n:,}".replace(",", " " if sprak == "sv" else ",") if isinstance(n, int) else n
+
+
+def karta(punkter, tvinga=False):
+    """Helsideskartan ritas av karta_korpus.R ur punkterna (en gång; --karta ritar om)."""
+    png = os.path.join(HERE, "bilder", "karta_alla.png")
+    pj = os.path.join(HERE, "bilder", "karta_punkter.json")
+    ny = json.dumps(punkter, ensure_ascii=False)
+    if tvinga or not os.path.exists(png) or not os.path.exists(pj) or open(pj, encoding="utf-8").read() != ny:
+        open(pj, "w", encoding="utf-8").write(ny)
+        subprocess.run(["Rscript", "--vanilla", os.path.join(HERE, "karta_korpus.R")], check=True)
+    return "bilder/karta_alla.png"
+
+
+def fyll(s, k, sprak, namn="Korpus"):
+    return s.format(namn=namn, **{n: tal(v, sprak) for n, v in k.items() if not isinstance(v, list)})
+
+
+def kartsida(N, k, sprak):
+    leg = "".join(f'<li><i class="prick{" rost" if i else ""}"></i><span><b>{fyll(v, k, sprak)}</b> {t}</span></li>' for i, (t, v) in enumerate(N["kleg"]))
+    return f"""
+<section class="kartsida">
+  <img class="bg" src="bilder/karta_alla.png" alt="">
+  <div class="kartpanel">
+    <div class="flik">{N["kflik"]}</div>
+    <h2>{N["krubrik"]}</h2>
+    <p>{fyll(N["ktext"], k, sprak)}</p>
+    <ul class="kartleg">{leg}</ul>
+  </div>
+  <div class="kartkredit">{fyll(N["knot"], k, sprak)}<br>{N["kkredit"]}</div>
+</section>"""
+
+
+def siffersida(N, k, sprak, namn):
+    rutor = "".join(f'<div><b>{fyll(b, k, sprak)}</b><span>{fyll(t, k, sprak)}</span></div>' for b, t in N["rutor"])
+    rader = "".join(
+        f'<div class="crow{" hi" if p == "U" else ""}"><div class="clab">{N["sovriga"] if p == "*" else LANDSKAP[sprak][p]}</div>'
+        f'<div class="cbar"><span style="width:{max(pc, 0.8)}%"></span></div><div class="cval">{pc} %</div>'
+        f'<div class="cnote">{tal(n, sprak)} {N["senhet"]}</div></div>' for p, n, pc in k["prov"])
+    topp = k["ristare"][0][1]
+    ristrader = "".join(
+        f'<div class="crow{" hi" if i == 0 else ""}"><div class="clab">{r}</div><div class="cbar"><span style="width:{100 * n / topp:.1f}%"></span></div>'
+        f'<div class="cval">{n}</div><div class="cnote">{N["senhet"]}</div></div>' for i, (r, n) in enumerate(k["ristare"]))
+    return f"""
+<section class="vanlig siffersida">
+  <div class="flik">{N["sflik"]}</div>
+  <h2>{N["srubrik"]}</h2>
+  <p class="deck">{fyll(N["sdeck"], k, sprak, namn)}</p>
+  <div class="rutor">{rutor}</div>
+  <div class="tvaspalt sifferbotten">
+    <figure class="chart sifferchart"><figcaption class="ctitle">{N["sdiagram"]}</figcaption>
+      <div class="cgroup">{fyll(N["sgrupp"], k, sprak)}</div>{rader}<div class="csrc">{N["skalla"]}</div></figure>
+    <figure class="chart sifferchart"><figcaption class="ctitle">{N["rdiagram"]}</figcaption>
+      <div class="cgroup">{N["rgrupp"]}</div>{ristrader}<div class="csrc">{N["rkalla"]}</div></figure>
+  </div>
+  <aside class="box sifferbox"><div class="boxh">{N["sboxh"]}</div><p>{N["sbox"]}</p></aside>
+</section>"""
+
+
+def nastasida(N, namn):
+    block = "".join(f'<div><h3>{h}</h3><p>{t}</p></div>' for h, t in N["nblock"])
+    return f"""
+<section class="vanlig nastasida">
+  <div class="flik">{N["nflik"]}</div>
+  <h2>{N["nrubrik"]}</h2>
+  <p class="deck">{N["ndeck"]}</p>
+  <div class="nastagrid">{block}</div>
+  <p class="nplan">{N["nplan"]}</p>
+  <div class="lasfritt"><div class="slab">{N["nlas"].format(namn=namn)}</div><p>{N["nlastext"]}</p>
+    <img class="bindruna" src="{LOGO}" alt="Vitki"></div>
+</section>"""
 
 
 def appsida(A):
@@ -211,14 +413,21 @@ def chart(block):
     return "\n".join(out + ["</figure>"])
 
 
-def body_html(body, skip_img, citat, max_images=2):
+def flyttattr(fid, flytt):
+    """data-id för placeringen (se placera()); data-flytt = antal stycken som elementet flyttas framåt i texten."""
+    n = (flytt or {}).get(fid, 0)
+    return f' data-id="{fid}"' + (f' data-flytt="{n}"' if n else "")
+
+
+def body_html(body, skip_img, citat, max_images=2, flytt=None):
     """BlogBody-markeringen till tidskriftens HTML. Första rutan ('Kort sagt'/'In short') blir 30-sekundersrutan på
     öppningssidan; den avslutande sammanfattningsrutan tas bort (upprepar början); anfang på första stycket; lyftcitat
     efter tredje stycket; källavsnitten i liten stil."""
-    kort, parts, imgs, nparas, tail = None, [], 0, 0, False
+    kort, parts, imgs, nparas, tail, nd = None, [], 0, 0, False, 0
     for b in re.split(r"(:::(?:box|chart)[^\n]*\n.*?\n:::)", body, flags=re.S):
         if b.startswith(":::chart"):
-            parts.append(chart(b[len(":::chart"):].rsplit(":::", 1)[0]))
+            nd += 1
+            parts.append(chart(b[len(":::chart"):].rsplit(":::", 1)[0]).replace('<figure class="chart"', f'<figure class="chart"{flyttattr(f"d{nd}", flytt)}', 1))
             continue
         if b.startswith(":::box"):
             head, inner = b[len(":::box"):].split("\n", 1)
@@ -246,7 +455,7 @@ def body_html(body, skip_img, citat, max_images=2):
                 nxt = lines[i + 1] if i + 1 < len(lines) else ""
                 cap = nxt if nxt.strip() and not nxt.startswith(("!", "#", ":::")) else ""
                 if imgs < max_images and not tail and skip_img not in m.group(2):
-                    parts.append(f'<figure class="img"><img src="{m.group(2)}" alt="{html.escape(m.group(1))}">'
+                    parts.append(f'<figure class="img"{flyttattr(f"b{imgs + 1}", flytt)}><img src="{m.group(2)}" alt="{html.escape(m.group(1))}">'
                                  f'<figcaption>{caption(cap)}</figcaption></figure>')
                     imgs += 1
                 i += 2 if cap else 1
@@ -275,7 +484,7 @@ def body_html(body, skip_img, citat, max_images=2):
                         nparas += 1
                     parts.append(f'<p{" class=forsta" if nparas == 1 and not tail else ""}>{inline(l)}</p>')
                     if nparas == 3 and not tail and citat:
-                        parts.append(f'<blockquote class="pull">{html.escape(citat)}</blockquote>')
+                        parts.append(f'<blockquote class="pull"{flyttattr("q", flytt)}>{html.escape(citat)}</blockquote>')
                         citat = None
             i += 1
     if tail:
@@ -295,28 +504,76 @@ def runrad(scale=1.0):
 
 
 SNAP_JS = """<script>
-// Baslinjeraster: varje element i brödtexten som inte är vanlig text får en höjd (med marginaler) som är ett helt antal rader.
+// Baslinjeraster: varje element i brödtexten som inte är vanlig text tar, med luften runt sig, ett helt antal rader.
+// v4 (Viktor 2026-11-11, "inte all brödtext linjerar i nederkant"): luften kring bilder, citat, rutor och källor ligger
+// som utfyllnad i ett omslag (div.snapwrap) i stället för som marginaler. Chrome stryker marginaler i slutet av en spalt,
+// och då kom spaltraden före ett diagram över alla spalter – och all text efter det – bredvid rastret; tomma rader som
+// egna element kunde i stället hamna överst i nästa spalt. Omslaget hålls ihop (break-inside: avoid) utom kring rutor
+// och källor, som får brytas: en ruta har hela rader i sig (radavstånd, luft och rubrik mätta i rader) och får en hel
+// rad före och efter. Diagram över alla spalter bryts aldrig och behåller marginaler: en hel rad ovanför (stryks den
+// överst på en sida flyttas allt en hel rad, inte en halv) och resten under.
 window.addEventListener('load', () => {
   const LH = 18;  // 13,5 pt
+  // Placeringen (placera() i bygg_tidskrift.py): ett diagram, en bild eller ett citat flyttas n stycken framåt i texten,
+  // så att det inte skjuts till nästa spalt eller sida och lämnar en kort spalt efter sig.
+  document.querySelectorAll('.text > [data-flytt]').forEach(el => {
+    let n = +el.dataset.flytt, t = el;
+    while (n > 0 && t.nextElementSibling && !t.nextElementSibling.matches('.sources, .slut, .webb')) {
+      t = t.nextElementSibling;
+      if (t.tagName == 'P' && !t.classList.contains('runcitat')) n--;
+    }
+    if (t !== el) t.after(el);
+  });
+  const hojd = (el) => [...el.getClientRects()].reduce((s, r) => s + r.height, 0);
   document.querySelectorAll('.text > figure, .text > aside, .text > blockquote, .text > .sources').forEach(el => {
+    const forst = !el.previousElementSibling;
     el.classList.add('snap');
-    const h = el.getBoundingClientRect().height;
-    const top = el.previousElementSibling ? LH * 0.5 : 0;
-    const total = Math.ceil((h + top) / LH + 0.5) * LH;
-    el.style.setProperty('margin-top', top + 'px', 'important');
-    el.style.setProperty('margin-bottom', (total - h - top) + 'px', 'important');
+    if (el.classList.contains('chart')) {
+      const h = el.getBoundingClientRect().height, top = forst ? 0 : LH;
+      const total = Math.ceil((h + top) / LH + 0.5) * LH;
+      el.style.setProperty('margin-top', top + 'px', 'important');
+      el.style.setProperty('margin-bottom', (total - h - top) + 'px', 'important');
+      return;
+    }
+    const delbar = el.tagName == 'ASIDE' || el.classList.contains('sources');
+    const w = document.createElement('div');
+    w.className = 'snapwrap' + (delbar ? ' delbar' : '');
+    el.before(w); w.appendChild(el);
+    const h = hojd(el);
+    let top, bottom;
+    if (el.tagName == 'ASIDE' || (el.tagName == 'BLOCKQUOTE' && !el.classList.contains('pull')) || el.classList.contains('sources')) {
+      top = forst ? 0 : LH; bottom = Math.ceil(h / LH - 0.02) * LH - h + LH; }
+    else { top = forst ? 0 : LH * 0.5; bottom = Math.ceil((h + top) / LH + 0.5) * LH - h - top; }
+    w.style.paddingTop = top + 'px'; w.style.paddingBottom = bottom + 'px';
   });
   document.body.dataset.snapped = '1';
 });
 </script>"""
 
 
-def css_for(L, namn, arts):
+# Tryckversionen (Helloprint, häftad A4): grå och svart text blir neutralt grå, så att den efter rensningen i
+# gratonade() ligger i DeviceGray och hamnar på bara K-plåten; rosten och bilderna förblir RGB tills tryckeriets
+# CMYK-profil (FOGRA39) finns. Varje kall grå ersätts med en neutral grå med samma ljushet.
+GRATT = ["#2d3439", "#3a4249", "#5f6a73", "#8a949b", "#9aa2a8", "#a9b0b5", "#d8dcdf", "#e6e8e6", "#f1f2f0"]
+
+
+def neutral(hexf):
+    r, g, b = (int(hexf[i:i + 2], 16) for i in (1, 3, 5))
+    v = round(0.2126 * r + 0.7152 * g + 0.0722 * b)
+    return f"#{v:02x}{v:02x}{v:02x}"
+
+
+def css_for(L, namn, arts, tryck=False):
     css = open(os.path.join(HERE, "korpus.css"), encoding="utf-8").read()
     css += f'\n@page {{ @bottom-right {{ content: "{namn} {L["fot"]}"; }} }}'
     for n, a in enumerate(arts, 1):  # löpande sidhuvud med artikelns tema
         css += (f'\n@page b{n} {{ @top-left {{ content: "{namn} · {a["tema"]}"; font: 700 7pt var(--sans); color: #b7410e; '
                 f'letter-spacing: .14em; text-transform: uppercase; }} }}')
+    if tryck:
+        css += "\n" + open(os.path.join(HERE, "korpus_tryck.css"), encoding="utf-8").read()
+        css = css.replace("#1d2226", "#000000")  # brödtexten och rubrikerna: 100 % K
+        for f in GRATT:
+            css = re.sub(re.escape(f), neutral(f), css, flags=re.I)
     return css
 
 
@@ -343,20 +600,24 @@ def omslag(L, namn, arts):
 </section>"""
 
 
-def bygg(L, namn, arts, sidor):
+def bygg(L, namn, arts, sidor, k, tryck=False):
+    sprak = L["lang"]
+    N = NY[sprak]
     nr = ["01", "02", "03"]
-    innehall = "".join(
-        f'<li><img src="{WM}{a["bild"]}" alt=""><div><span class="ttema">{a["tema"]}</span>'
+    kort_li = lambda t, r, key: (f'<li class="kort"><div><span class="ttema">{t}</span><span class="ttitle">{html.escape(r)}</span></div>'  # noqa: E731
+                                 f'<span class="tsida">{sidor.get(key, "")}</span></li>')
+    ix = N["innehall_extra"]
+    innehall = kort_li(*ix["karta"], "karta") + kort_li(*ix["siffror"], "siffror")
+    innehall += "".join(
+        f'<li class="kort"><div><span class="ttema">{a["tema"]}</span>'
         f'<span class="ttitle">{html.escape(a["title"])}</span><span class="tdeck">{a["betyder"]}</span></div>'
         f'<span class="tsida">{sidor.get(a["title"], "")}</span></li>' for a in arts)
-    innehall += "".join(f'<li class="kort"><div><span class="ttema">{t}</span><span class="ttitle">{html.escape(r)}</span></div>'
-                        f'<span class="tsida">{sidor.get("verkstad", "")}</span></li>' for t, r in L["extra"])
-    A = APP[L["lang"]]
-    innehall += (f'<li class="kort"><div><span class="ttema">{A["innehall"][0]}</span><span class="ttitle">{html.escape(A["innehall"][1])}</span></div>'
-                 f'<span class="tsida">{sidor.get("app", "")}</span></li>')
+    innehall += "".join(kort_li(t, r, "verkstad") for t, r in L["extra"])
+    A = APP[sprak]
+    innehall += kort_li(*A["innehall"], "app") + kort_li(*ix["nasta"], "nasta")
     art_html = []
     for n, a in enumerate(arts, 1):
-        kort = "".join(f"<li>{k}</li>" for k in a["kort"])
+        kort = "".join(f"<li>{x}</li>" for x in a["kort"])
         art_html.append(f"""
 <section class="opener">
   <figure class="hero{" staende" if a.get("staende") else ""}"><img src="{WM}{a["bild"]}" alt=""><figcaption>{a["hero_cap"]}</figcaption></figure>
@@ -373,26 +634,31 @@ def bygg(L, namn, arts, sidor):
 </section>
 <section class="brodtext b{n}">
   <div class="text">{a["body"]}<p class="slut">■</p>
-  <p class="webb">{L["webb"]} <b>vitkirunor.se{"/en" if L["lang"] == "en" else ""}/artiklar/{a["slug"]}</b></p></div>
+  <p class="webb">{L["webb"]} <b>vitkirunor.se{"/en" if sprak == "en" else ""}/artiklar/{a["slug"]}</b></p></div>
 </section>""")
-    led = "".join(f'<p{" class=forsta" if i == 1 else ""}>{t.format(namn=namn)}</p>' for i, t in enumerate(L["ledtext"]) if i)
+    R = REDAKTOR[sprak]
+    led = "".join(f'<p{" class=forsta" if i == 0 else ""}>{t}</p>' for i, t in enumerate(R["text"]))
+    portratt = f'<img class="portratt" src="{R["portratt"]}" alt="Viktor Kvant">' if R.get("portratt") else ""
+    kolofon = "".join(f'<div><b>{h.format(namn=namn)}</b> {t}</div>' for h, t in N["kolofon"])
     bak = "".join(f'<div class="bakblock"><div class="slab">{h.format(namn=namn)}</div><p>{t.format(namn=namn)}</p></div>' for h, t in L["bak"])
-    return f"""<!doctype html><html lang="{L["lang"]}"><head><meta charset="utf-8"><title>{namn} 1/2026</title>
-<style>{css_for(L, namn, arts)}</style>{SNAP_JS}</head><body>
+    return f"""<!doctype html><html lang="{sprak}"><head><meta charset="utf-8"><title>{namn} 1/2026</title>
+<style>{css_for(L, namn, arts, tryck)}</style>{SNAP_JS}</head><body class="{"tryck" if tryck else "skarm"}">
 {omslag(L, namn, arts)}
 <section class="vanlig ledsida">
   <div class="ledgrid">
     <div class="ledare">
-      <div class="slab">{L["ledare"]}</div>
-      <h2>{L["ledrubrik"]}</h2>
-      <p class="ingress">{L["ledtext"][0]}</p>
-      {led}
-      <p class="sign">{L["sign"]}</p>
+      <div class="slab">{N["tillrubrik"]}</div>
+      <h2>{R["rubrik"]}</h2>
+      <div class="redtext">{led}</div>
+      <div class="sign">{portratt}<span>Viktor Kvant, {"redaktör" if sprak == "sv" else "editor"}</span></div>
     </div>
-    <div class="innehallsspalt"><div class="slab">{L["innehall"]}</div><ol class="innehall">{innehall}</ol></div>
+    <div class="innehallsspalt"><div class="slab">{L["innehall"]}</div><ol class="innehall">{innehall}</ol>
+      <div class="kolofon">{kolofon}</div></div>
   </div>
   <div class="lasband">{"".join(f"<div><b>{b}</b><span>{s}</span></div>" for b, s in L["lasband"])}</div>
 </section>
+{kartsida(N, k, sprak)}
+{siffersida(N, k, sprak, namn)}
 {"".join(art_html)}
 <section class="vanlig verkstad">
   <div class="flik">{L["vflik"]}</div>
@@ -405,7 +671,8 @@ def bygg(L, namn, arts, sidor):
   </div>
   <div class="metod"><div class="flik">{L["mflik"]}</div><h3>{L["mrubrik"]}</h3><p>{L["mtext"]}</p></div>
 </section>
-{appsida(APP[L["lang"]])}
+{appsida(APP[sprak])}
+{nastasida(N, namn)}
 <section class="vanlig baksida">
   <div class="baktext">{bak}</div>
   <div class="bakmast">{html.escape(namn)} <img class="bindruna" src="{LOGO}" alt="Vitki"><span>{L["bakrad"]}</span></div>
@@ -422,15 +689,32 @@ def skriv_pdf(doc, namn):
     return pdf
 
 
-def artiklar(sprak):
+def lokal_tumnagel(url):
+    """Wikimedias tumnaglar levereras som WebP till Chrome, som då bäddar in dem okomprimerat (en enda bild blev 6 MB i
+    PDF:en). Hämtas i stället en gång som JPEG till bilder/cache/ (samma pixelmått, så sidbrytningarna ändras inte)."""
+    import urllib.request
+    namn = re.sub(r"[^\w.,-]", "_", url.split("/")[-1])
+    ut = os.path.join(HERE, "bilder", "cache", namn)
+    if not os.path.exists(ut):
+        os.makedirs(os.path.dirname(ut), exist_ok=True)
+        req = urllib.request.Request(url, headers={"User-Agent": "Korpus-tidskrift/1.0 (build script)", "Accept": "image/jpeg"})
+        data = urllib.request.urlopen(req, timeout=60).read()
+        if data[:3] != b"\xff\xd8\xff":
+            return url  # inte JPEG: behåll länken
+        open(ut, "wb").write(data)
+    return "bilder/cache/" + namn
+
+
+def artiklar(sprak, placering=None):
     arts = []
-    for a in ARTIKLAR:
+    for ai, a in enumerate(ARTIKLAR):
         d = json.load(open(os.path.join(BLOGG, a["fil"]), encoding="utf-8"))
         suf = "_en" if sprak == "en" else ""
         body = d["body" + suf]
         fn = a["bild"].split("/")[-1]
         L = a[sprak]
-        kort, html_body = body_html(body, fn, L["citat"], L.get("bilder", a["bilder"]))
+        kort, html_body = body_html(body, fn, L["citat"], L.get("bilder", a["bilder"]), (placering or {}).get(str(ai)))
+        html_body = re.sub(r'src="(https://thumb\.wikimedia\.org/[^"]+)"', lambda m: f'src="{lokal_tumnagel(m.group(1))}"', html_body)
         bl = body.split("\n")  # öppningsbildens bildtext och fotokredit tas ordagrant från artikeln
         cap = next((bl[j + 1] for j, l in enumerate(bl) if l.startswith("![") and fn in l and j + 1 < len(bl)), "")
         arts.append(dict(L, bild=a["bild"], staende=a.get("staende", False), hero_cap=caption(cap), title=d["title" + suf], summary=d["summary" + suf],
@@ -438,19 +722,212 @@ def artiklar(sprak):
     return arts
 
 
-def utgava(sprak, namn="Korpus"):
-    L, arts = T[sprak], artiklar(sprak)
-    fil = f"Korpus_nr1_{sprak}"
-    pdf = skriv_pdf(bygg(L, namn, arts, {}), fil)  # varv 1: utan sidnummer
-    sidtext = subprocess.run(["pdftotext", pdf, "-"], capture_output=True, text=True).stdout.split("\f")
+SIDOR = 20  # tryckeriet häftar i ark om fyra sidor
+TRYCK_SPRAK = ("sv",)  # Viktor 2026-11-11: bara den svenska utgåvan trycks; den engelska finns som PDF på webben
+PLACERING = os.path.join(HERE, "placering.json")
+
+
+def _rena(t):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", t))).strip()
+
+
+def flyttbara(doc):
+    """(artikel, id) -> de första orden i elementets rubrik eller bildtext, ur den färdiga HTML:en."""
+    ut = {}
+    for ai, sek in enumerate(re.findall(r'<section class="brodtext b\d">(.*?)</section>', doc, re.S)):
+        for fid, inner in re.findall(r'data-id="(\w+)"[^>]*>(.*?)</(?:figure|blockquote)>', sek, re.S):
+            cap = re.search(r"<figcaption[^>]*>(.*?)</figcaption>", inner, re.S)
+            ord_ = _rena(cap.group(1) if cap else inner).split()
+            ut[(str(ai), fid)] = " ".join(ord_[:3])
+    return ut
+
+
+def granska(pdf, doc, sidor, arts):
+    """Spaltbottnar per brödtextsida. Returnerar (brist i mm totalt, korta sidor som [(artikel, sida)], beskrivning,
+    var de flyttbara elementen står som {(artikel, id): sida})."""
+    import tryckkontroll as tk
+    rader = {s["sida"]: s for s in tk.baslinjer(pdf)}
+    linjer = {nr: lines for nr, (W, H, lines) in enumerate(tk._sidor(pdf), 1)}
+    lagen = {}
+    for key, txt in flyttbara(doc).items():
+        for nr, lines in linjer.items():
+            if any(_rena(ln["text"]).startswith(txt) for ln in lines):
+                lagen[key] = nr
+                break
+    oppnare = [sidor[a["title"]] for a in arts]
+    slut = oppnare[1:] + [sidor["verkstad"]]
+    brist, korta, besk = 0.0, [], []
+    for ai, (o, e) in enumerate(zip(oppnare, slut)):
+        for p in range(o + 1, e - 1):  # inte artikelns sista sida
+            r = rader.get(p)
+            if not r:
+                continue
+            b = [x if x is not None else 0 for x in r["botten"]]
+            if any(x < 277.5 - 2 for x in b):
+                brist += sum(max(0, 277.5 - x) for x in b)
+                besk.append(f"s. {p}: {r['botten']}")
+                korta.append((str(ai), p))
+    return brist, korta, besk, lagen
+
+
+def placera(sprak, namn="Korpus", svep=2, max_steg=4):
+    """Flyttar diagram, bilder och lyftcitat stycke för stycke tills inga spalter står korta mitt i en artikel (Viktor
+    2026-11-11: spalterna på en sida ska sluta på samma baslinje). Koordinatsökning: i varje artikel med korta sidor
+    prövas varje flyttbart element 0–max_steg stycken framåt, ett element i taget, och det läge som ger minst brist
+    behålls; två svep. Resultatet sparas i placering.json och används av varje bygge; kör igen (--placera) när en
+    artikel eller layouten ändras."""
+    L = T[sprak]
+    k, _ = korpusfakta()
+    alla = json.load(open(PLACERING, encoding="utf-8")) if os.path.exists(PLACERING) else {}
+    n = [0]
+
+    def prova(plac):
+        n[0] += 1
+        arts = artiklar(sprak, plac)
+        doc = bygg(L, namn, arts, {}, k)
+        pdf = skriv_pdf(doc, f"_placering_{sprak}")
+        sidtext = sidkarta(pdf)
+        brist, korta, besk, lagen = granska(pdf, doc, hitta_sidor(sidtext, L, arts, sprak), arts)
+        return brist + (0 if len(sidtext) == SIDOR else 10000 * abs(len(sidtext) - SIDOR)), korta, besk, lagen
+
+    plac = {a: dict(v) for a, v in alla.get(sprak, {}).items()}
+    kost, korta, besk, lagen = prova(plac)
+    print(f"  placering {sprak}: start {kost:.0f} mm {plac}; {'; '.join(besk)}", flush=True)
+    for sv in range(svep):
+        battre = False
+        for ai in sorted({a for a, p in korta}):
+            for fid in sorted(f for a2, f in lagen if a2 == ai):
+                for val in range(max_steg + 1):
+                    if val == plac.get(ai, {}).get(fid, 0):
+                        continue
+                    ny = json.loads(json.dumps(plac))
+                    ny.setdefault(ai, {})[fid] = val
+                    res = prova(ny)
+                    if res[0] < kost - 0.5:
+                        plac, (kost, korta, besk, lagen) = ny, res
+                        battre = True
+                        print(f"  placering {sprak} svep {sv}: {kost:.0f} mm {plac}; {'; '.join(besk)}", flush=True)
+                if not korta:
+                    break
+        if not battre or not korta:
+            break
+    for f in (f"_placering_{sprak}.pdf", f"_placering_{sprak}.html"):
+        if os.path.exists(os.path.join(HERE, f)):
+            os.remove(os.path.join(HERE, f))
+    alla = json.load(open(PLACERING, encoding="utf-8")) if os.path.exists(PLACERING) else {}
+    alla[sprak] = {a: {f: v for f, v in d.items() if v} for a, d in plac.items() if any(d.values())}
+    json.dump(alla, open(PLACERING, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"  placering {sprak}: klar efter {n[0]} renderingar, brist {kost:.0f} mm, {alla[sprak]}; {'; '.join(besk)}", flush=True)
+    return plac
+
+
+def placering(sprak):
+    return json.load(open(PLACERING, encoding="utf-8")).get(sprak, {}) if os.path.exists(PLACERING) else {}
+
+
+def sidkarta(pdf):
+    """Sidornas text, för innehållsförteckningen och sidkartan."""
+    return subprocess.run(["pdftotext", pdf, "-"], capture_output=True, text=True).stdout.split("\f")[:-1]
+
+
+def hitta_sidor(sidtext, L, arts, sprak):
+    N = NY[sprak]
     sidor = {}
-    for key, needle in [(a["title"], " ".join(a["title"].split()[:2])) for a in arts] + [("verkstad", L["vflik"]), ("app", APP[sprak]["flik"])]:
+    nalar = ([("karta", N["krubrik"]), ("siffror", N["srubrik"])] + [(a["title"], " ".join(a["title"].split()[:2])) for a in arts]
+             + [("verkstad", L["vflik"]), ("app", APP[sprak]["flik"]), ("nasta", N["nflik"])])
+    for key, needle in nalar:
         for p, t in enumerate(sidtext[2:], 3):
             if re.sub(r"\s", "", needle).upper() in re.sub(r"\s", "", t).upper():  # flikarna spärras och sätts i versaler
                 sidor[key] = p
                 break
-    print(sprak, "sidor:", sidor)
-    return skriv_pdf(bygg(L, namn, arts, sidor), fil)  # varv 2: med sidnummer
+    return sidor
+
+
+def utgava(sprak, namn="Korpus", tryck=False):
+    L, arts = T[sprak], artiklar(sprak, placering(sprak))
+    k, punkter = korpusfakta()
+    karta(punkter)
+    fil = f"Korpus_nr1_{sprak}" + ("_tryck" if tryck else "")
+    pdf = skriv_pdf(bygg(L, namn, arts, {}, k, tryck), fil)  # varv 1: utan sidnummer
+    sidor = hitta_sidor(sidkarta(pdf), L, arts, sprak)
+    pdf = skriv_pdf(bygg(L, namn, arts, sidor, k, tryck), fil)  # varv 2: med sidnummer
+    sidtext = sidkarta(pdf)
+    assert hitta_sidor(sidtext, L, arts, sprak) == sidor, "sidnumren flyttade sig mellan varven"
+    print(sprak, "tryck" if tryck else "skärm", "sidor:", sidor)
+    for p, t in enumerate(sidtext, 1):
+        rader = [r for r in t.split("\n") if r.strip()]
+        print(f"  {p:2d} {len(rader):3d} rader  {' '.join(rader[:2])[:80]}")
+    assert len(sidtext) == SIDOR, f"{fil}: {len(sidtext)} sidor, inte {SIDOR}"
+    if tryck:
+        gratonade(pdf)
+    return pdf
+
+
+def gratonade(pdf):
+    """Neutral grå och svart (r = g = b) i sidornas innehåll skrivs om från DeviceRGB till DeviceGray, så att
+    svart text blir 100 % K och grå text en K-ton när tryckeriet eller Ghostscript går över till CMYK."""
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.generic import ContentStream, FloatObject, NameObject
+    r = PdfReader(pdf)
+    w = PdfWriter(clone_from=r)
+    n = 0
+    for page in w.pages:
+        cs = ContentStream(page.get_contents(), w)
+        ops = []
+        for operands, op in cs.operations:
+            if op in (b"rg", b"RG") and len(operands) == 3 and len({round(float(x), 4) for x in operands}) == 1:
+                ops.append(([FloatObject(float(operands[0]))], b"g" if op == b"rg" else b"G"))
+                n += 1
+            else:
+                ops.append((operands, op))
+        cs.operations = ops
+        page[NameObject("/Contents")] = w._add_object(cs)
+    w.write(pdf)
+    print(f"  gråtoner till DeviceGray: {n} färgval")
+
+
+def tryckmatt(pdf):
+    """Sidstorlek och boxar för tryckfilen: A4 med 3 mm utfall (216 x 303 mm); TrimBox = A4, BleedBox = hela sidan."""
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.generic import RectangleObject
+    mm = 72 / 25.4
+    w = PdfWriter(clone_from=PdfReader(pdf))
+    for page in w.pages:
+        if "/Annots" in page:  # länkar är inte tillåtna i PDF/X och behövs inte i tryck
+            del page["/Annots"]
+        W, H = float(page.mediabox.width), float(page.mediabox.height)
+        assert abs(W - 216 * mm) < 1.5 and abs(H - 303 * mm) < 1.5, (W / mm, H / mm)
+        # Chrome avrundar sidbredden till hela pixlar (612 pt i stället för 612,28): boxarna sätts exakt 216 x 303 mm
+        # och 210 x 297 mm, centrerade på sidan; skillnaden (0,05 mm per kant) ligger ytterst i utfallet.
+        x0, y0 = (W - 216 * mm) / 2, (H - 303 * mm) / 2
+        box = [x0, y0, x0 + 216 * mm, y0 + 303 * mm]
+        page.mediabox = RectangleObject(box)
+        page.cropbox = RectangleObject(box)
+        page.bleedbox = RectangleObject(box)
+        page.trimbox = RectangleObject([x0 + 3 * mm, y0 + 3 * mm, x0 + 213 * mm, y0 + 300 * mm])
+    w.write(pdf)
+
+
+def cmyk(pdf, icc, ut=None, villkor="FOGRA39"):
+    """CMYK med tryckeriets profil via Ghostscript, som PDF/X-3 med profilen som OutputIntent (Helloprint: FOGRA39 /
+    ISO Coated v2; för 300 % total färgmängd ISOcoated_v2_300_eci.icc). DeviceGray (svart och grå text efter
+    gratonade()) går till bara K-plåten (-dDeviceGrayToK). Bilderna samplas inte ned."""
+    ut = ut or pdf.replace(".pdf", "_cmyk.pdf")
+    mall = open("/opt/homebrew/share/ghostscript/lib/PDFX_def.ps", encoding="latin-1").read()
+    icc_ps = os.path.abspath(icc).replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+    mall = mall.replace("/ICCProfile (ISO Coated sb.icc) def", f"/ICCProfile ({icc_ps}) def")
+    mall = mall.replace("/Title (Title)", "/Title (Korpus nr 1)")
+    mall = mall.replace("/OutputConditionIdentifier (CGATS TR001)", f"/OutputConditionIdentifier ({villkor})")
+    mall = mall.replace("/OutputCondition (Commercial and specialty printing)", f"/OutputCondition ({villkor})")
+    defps = ut.replace(".pdf", "_PDFX_def.ps")
+    open(defps, "w", encoding="latin-1").write(mall)
+    subprocess.run(["gs", "-q", "-dBATCH", "-dNOPAUSE", "-dSAFER", f"--permit-file-read={os.path.abspath(icc)}", "-sDEVICE=pdfwrite", "-dPDFSETTINGS=/prepress", "-dPDFX=3", "-dCompatibilityLevel=1.4",
+                    "-sColorConversionStrategy=CMYK", "-sProcessColorModel=DeviceCMYK", f"-sOutputICCProfile={icc}",
+                    "-dDeviceGrayToK=true", "-dAutoRotatePages=/None",
+                    "-dDownsampleColorImages=false", "-dDownsampleGrayImages=false", "-dEmbedAllFonts=true",
+                    f"-sOutputFile={ut}", defps, pdf], check=True)
+    os.remove(defps)
+    return ut
 
 
 def jamforelse():
@@ -464,5 +941,28 @@ def jamforelse():
 
 
 if __name__ == "__main__":
-    print(utgava("sv"))
-    print(utgava("en"))
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--tryck", action="store_true", help="skriv också tryckversionerna (A4 + 3 mm utfall) och tryck_kontroll.md")
+    ap.add_argument("--bara-tryck", action="store_true", help="skriv bara tryckversionerna")
+    ap.add_argument("--icc", help="tryckeriets CMYK-profil (FOGRA39 / ISO Coated v2); utan den förblir tryckfilen RGB")
+    ap.add_argument("--karta", action="store_true", help="rita om helsideskartan")
+    ap.add_argument("--placera", action="store_true", help="räkna om var diagram, bilder och citat står (placering.json)")
+    a = ap.parse_args()
+    if a.placera:
+        for sprak in ("sv", "en"):
+            placera(sprak)
+    if a.karta:
+        karta(korpusfakta()[1], tvinga=True)
+    for sprak in ("sv", "en"):
+        if not a.bara_tryck:
+            print(utgava(sprak))
+        if (a.tryck or a.bara_tryck) and sprak in TRYCK_SPRAK:
+            pdf = utgava(sprak, tryck=True)
+            tryckmatt(pdf)
+            print(pdf)
+            if a.icc:
+                print(cmyk(pdf, a.icc))
+    if a.tryck or a.bara_tryck:
+        import tryckkontroll
+        tryckkontroll.rapport(HERE, a.icc, TRYCK_SPRAK)
