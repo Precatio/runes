@@ -4,6 +4,7 @@
                                                                        stryker uppgifter vars citat inte hittas, lottar
                                                                        stickprovet (60 stenar, slumpfrö 2026) och skriver
                                                                        granskningsunderlaget
+    (lägg till 2 sist för runda 2)
     .venv/bin/python scripts/sri_fakta_kontroll.py utfall sri3         räknar träffsäkerheten per fältgrupp ur granskningen
                                                                        (och Viktors kontroll, som går före)
 
@@ -25,6 +26,8 @@ ART = "/Volumes/2TB/Antigrvity/Runes/downloads/sri_artiklar"
 FAKTA = "/Volumes/2TB/Antigrvity/Runes/downloads/sri_fakta"
 UTDATA = os.path.join(ROOT, "utdata", "sri_fakta")
 SEED, N_STICK = 2026, 60
+RUNDOR = {1: {"suffix": "", "delar": "delar", "seed": 2026}, 2: {"suffix": "_r2", "delar": "delar_r2", "seed": 2028}}
+# runda 2 (not 1 till A1-tillägg 1, 2026-11-12): ny instruktion, nytt stickprov bland stenar som inte låg i runda 1
 FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "flyttningar", "forsvunnen", "aterfunnen", "inmurad", "fragment",
         "kallor_i_ordning", "samma_sten_som", "datering_text"]
 GRUPPER = {"läget": ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad"], "flyttningarna": ["flyttningar"],
@@ -76,10 +79,11 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
     return (round(c - h, 4), round(c + h, 4))
 
 
-def sammanstall(verk: str) -> None:
+def sammanstall(verk: str, runda: int = 1) -> None:
+    R = RUNDOR[runda]
     art = {a["signum"]: a for a in map(json.loads, open(os.path.join(ART, f"{verk}.jsonl"), encoding="utf-8"))}
     rader, fel = {}, []
-    for p in sorted(glob.glob(os.path.join(FAKTA, "delar", f"{verk}_*.jsonl"))):
+    for p in sorted(glob.glob(os.path.join(FAKTA, R["delar"], f"{verk}_*.jsonl"))):
         for ln in open(p, encoding="utf-8"):
             if not ln.strip():
                 continue
@@ -121,9 +125,15 @@ def sammanstall(verk: str) -> None:
                 fh.write(json.dumps(rader[sig], ensure_ascii=False) + "\n")
     # stickprovet: lottas bland bandets artiklar som har en utplockning
     pool = sorted(s for s in art if s in rader)
-    stick = sorted(random.Random(SEED).sample(pool, min(N_STICK, len(pool))))
+    if runda > 1:  # stenar som granskades i tidigare rundor lottas inte igen
+        tidigare = set()
+        for r0 in range(1, runda):
+            p0 = os.path.join(FAKTA, "granskning", f"{verk}_stickprov{RUNDOR[r0]['suffix']}.jsonl")
+            tidigare |= {json.loads(x)["signum"] for x in open(p0, encoding="utf-8")}
+        pool = [x for x in pool if x not in tidigare]
+    stick = sorted(random.Random(R["seed"]).sample(pool, min(N_STICK, len(pool))))
     os.makedirs(os.path.join(FAKTA, "granskning"), exist_ok=True)
-    with open(os.path.join(FAKTA, "granskning", f"{verk}_stickprov.jsonl"), "w", encoding="utf-8") as fh:
+    with open(os.path.join(FAKTA, "granskning", f"{verk}_stickprov{R['suffix']}.jsonl"), "w", encoding="utf-8") as fh:
         for s in stick:
             fh.write(json.dumps({"signum": s, "pages": art[s]["pages"], "text": art[s]["text"], "utplockning": rader[s]},
                                 ensure_ascii=False) + "\n")
@@ -132,21 +142,22 @@ def sammanstall(verk: str) -> None:
                "uppgifter_behallna": behallna, "uppgifter_strukna": len(strukna),
                "andel_strukna": round(len(strukna) / max(1, behallna + len(strukna)), 4),
                "strukna_per_falt": dict(sorted({f: sum(1 for x in strukna if x["falt"] == f) for f in FALT}.items())),
-               "stickprov": stick, "slumpfro": SEED}
+               "stickprov": stick, "slumpfro": R["seed"], "runda": runda}
     os.makedirs(UTDATA, exist_ok=True)
-    json.dump(rapport, open(os.path.join(UTDATA, f"{verk}_kontroll.json"), "w", encoding="utf-8"), ensure_ascii=False,
+    json.dump(rapport, open(os.path.join(UTDATA, f"{verk}_kontroll{R['suffix']}.json"), "w", encoding="utf-8"), ensure_ascii=False,
               indent=1)
     json.dump(strukna, open(os.path.join(FAKTA, f"{verk}_strukna.json"), "w", encoding="utf-8"), ensure_ascii=False,
               indent=1)
     print(json.dumps({k: v for k, v in rapport.items() if k not in ("stickprov", "schemafel")}, ensure_ascii=False))
 
 
-def utfall(verk: str) -> None:
+def utfall(verk: str, runda: int = 1) -> None:
+    R = RUNDOR[runda]
     """Granskningen: granskning/<verk>_bedomning.jsonl, en rad per sten:
     {"signum", "bedomning": {fält: "rätt"|"fel"|"saknat"}}; Viktors i <verk>_viktor.jsonl går före."""
-    g = {r["signum"]: r for r in map(json.loads, open(os.path.join(FAKTA, "granskning", f"{verk}_bedomning.jsonl"),
+    g = {r["signum"]: r for r in map(json.loads, open(os.path.join(FAKTA, "granskning", f"{verk}_bedomning{R['suffix']}.jsonl"),
                                                       encoding="utf-8"))}
-    vp = os.path.join(FAKTA, "granskning", f"{verk}_viktor.jsonl")
+    vp = os.path.join(FAKTA, "granskning", f"{verk}_viktor{R['suffix']}.jsonl")
     if os.path.exists(vp):
         for r in map(json.loads, open(vp, encoding="utf-8")):
             g.setdefault(r["signum"], {"bedomning": {}})["bedomning"].update(r["bedomning"])
@@ -162,7 +173,7 @@ def utfall(verk: str) -> None:
         lo, hi = wilson(k, n)
         ut[grupp] = {"ratt": k, "n": n, "andel": round(k / n, 4) if n else None, "wilson95": [lo, hi],
                      "klarar": bool(n) and k / n >= 0.95 and lo >= 0.88}
-    rp = os.path.join(UTDATA, f"{verk}_kontroll.json")
+    rp = os.path.join(UTDATA, f"{verk}_kontroll{R['suffix']}.json")
     rapport = json.load(open(rp, encoding="utf-8"))
     rapport["granskning"] = ut
     rapport["viktor_kontroll"] = os.path.exists(vp)
@@ -171,4 +182,4 @@ def utfall(verk: str) -> None:
 
 
 if __name__ == "__main__":
-    {"sammanstall": sammanstall, "utfall": utfall}[sys.argv[1]](sys.argv[2])
+    {"sammanstall": sammanstall, "utfall": utfall}[sys.argv[1]](sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 1)
