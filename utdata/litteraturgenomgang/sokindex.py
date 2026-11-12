@@ -1,4 +1,4 @@
-"""Sökindex över de hämtade tidskrifterna (Fornvännen, Futhark): SQLite med fulltextsökning per sida (FTS5) och en tabell
+"""Sökindex över de hämtade tidskrifterna (Fornvännen, Futhark, Namn och bygd, Current Swedish Archaeology): SQLite med fulltextsökning per sida (FTS5) och en tabell
 över vilka runsignum varje text nämner. Indexet ligger hos texterna, utanför repot:
 /Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite.
     .venv/bin/python utdata/litteraturgenomgang/sokindex.py bygg
@@ -27,7 +27,7 @@ def build():
         CREATE TABLE signa(key TEXT, signum TEXT, n INTEGER);
         CREATE INDEX signa_s ON signa(signum);""")
     n = 0
-    for journal in ("fornvannen", "futhark"):
+    for journal in ("fornvannen", "futhark", "namnochbygd", "csa"):
         idx = {}
         p = os.path.join(SRC, journal, "index.jsonl")
         if os.path.exists(p):

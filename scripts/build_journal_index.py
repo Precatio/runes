@@ -1,8 +1,9 @@
-"""Litteraturregistrets tidskriftsdel: var Fornvännen (1906–2023) och Futhark nämner en runsten. Läser sökindexet över de
+"""Litteraturregistrets tidskriftsdel: var Fornvännen (1906–2023), Futhark, Namn och bygd (2010–2025) och Current Swedish
+Archaeology (vol. 28–) nämner en runsten. Läser sökindexet över de
 hämtade tidskrifterna (utdata/litteraturgenomgang/sokindex.py → /Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/
 sok.sqlite, text sida för sida) och skriver data/cache/literature/journals.json: per sten artiklarna, pdf-sidorna och ett
-kort utdrag runt varje omnämnande, och per artikel tidskrift, år, författare, titel och länk. Båda tidskrifterna är fria
-under CC BY 4.0. Viktor 2026-11-10: litteraturen per sten i appen, efter litteraturgenomgången.
+kort utdrag runt varje omnämnande, och per artikel tidskrift, år, författare, titel och länk. Alla fyra är fria (CC BY 4.0, Fornvännen delvis CC0; Futhark vol. 1–6
+CC BY-NC-ND). Viktor 2026-11-10: litteraturen per sten i appen, efter litteraturgenomgången.
     .venv/bin/python scripts/build_journal_index.py"""
 import json
 import os
@@ -24,13 +25,19 @@ OUT = os.path.join(ROOT, "data", "cache", "literature", "journals.json")
 def meta() -> dict[str, dict]:
     """Artiklarnas uppgifter ur hämtningarnas index (Arkivsök för Fornvännen, DiVA för Futhark)."""
     out = {}
-    for journal in ("fornvannen", "futhark"):
-        for line in open(os.path.join(SRC, journal, "index.jsonl"), encoding="utf-8"):
+    namn = {"fornvannen": "Fornvännen", "futhark": "Futhark", "namnochbygd": "Namn och bygd",
+            "csa": "Current Swedish Archaeology"}
+    for journal in namn:
+        p = os.path.join(SRC, journal, "index.jsonl")
+        if not os.path.exists(p):
+            continue
+        for line in open(p, encoding="utf-8"):
             d = json.loads(line)
             a = d.get("authors") or []
             a = a if isinstance(a, list) else [x.split("[")[0].strip() for x in a.split(";")]
-            url = d.get("uri") or (f"https://doi.org/{d['doi']}" if d.get("doi") else d.get("fulltext"))
-            out[d["key"]] = {"journal": "Fornvännen" if journal == "fornvannen" else "Futhark", "year": str(d.get("year") or ""),
+            url = d.get("uri") or (f"https://doi.org/{d['doi']}" if d.get("doi") else d.get("fulltext") or d.get("source"))
+            assert out.get(d["key"], {}).get("journal", namn[journal]) == namn[journal], f"samma nyckel i två tidskrifter: {d['key']}"
+            out[d["key"]] = {"journal": namn[journal], "year": str(d.get("year") or ""),
                              "title": d.get("title") or "", "authors": [x for x in a if x], "url": url,
                              "pages": d.get("pages"), "volume": d.get("volume")}
     return out

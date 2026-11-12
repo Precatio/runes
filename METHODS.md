@@ -2881,6 +2881,29 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
 
 ## 17. Datakällor och licenser
 
+**Källor och upphovsrätt (regel från 2026-11-12).** Vad Vitki gör med en källa avgör vad som krävs:
+1. **Läsa och räkna.** Ladda ner, söka, indexera och mäta i text som utgivaren själv lagt ut lagligt och öppet. Det
+   faller under undantaget för text- och datautvinning i upphovsrättslagen (15 a §). Det gäller om utgivaren inte
+   uttryckligen har förbehållit sig det i maskinläsbar form. Det kontrolleras per webbplats (robots.txt, TDM-markering
+   och sidans robots-meta). Litteraturregistret (`src/literature.py`) och tidskriftsarkiven hör hit. Texterna ligger
+   utanför git.
+2. **Citera kort med källa.** Utdrag på stensidan och citat i artiklar och rapporter får bara vara så långa som syftet
+   kräver, och källa och sida anges alltid (citaträtten, 22 §). Fakta som årtal, platser, flyttningar och dateringar är
+   inte skyddade. Det är bara formuleringen som är skyddad.
+3. **Publicera vidare.** Hela texter, längre avsnitt, bilder, översättningar, bearbetningar och dataset med andras
+   text får publiceras bara med CC0, CC BY eller när skyddstiden har gått ut. Skyddstiden är 70 år efter författarens
+   död för texter och 50 år från tagningen för enkla fotografier. Upphovsperson och licens anges alltid.
+
+Licensen står per verk i `data/literature/catalog.json` (`licence`). Exempel:
+- SRI I (Öland) och II (Östergötland) är fria, eftersom upphovsrätten har gått ut.
+- SRI III–XV, Gotlands runinskrifter 3 (preliminär) och Upplandssupplementet har ingen licens. RAÄ:s sidor tillåter
+  indexering och har inget TDM-förbehåll (kontrollerat 2026-11-12). De används i steg 1 och 2.
+- Namn och bygd 2010–2025, Current Swedish Archaeology från vol. 28, Fornvännen och Futhark från vol. 7 har CC BY
+  (Fornvännen delvis CC0).
+- Futhark vol. 1–6 har CC BY-NC-ND.
+
+Bedömningen är Vitkis egen och inte en juridisk prövning.
+
 **Runor 2020 bredvid Rundata 2018 (från 2026-10-20, `src/runor.py`).** Appens beräkningar bygger på Rundata, version 2014 med RUNDATA.xls från 2018.
 Runor (RAÄ, utgåva 2020) är skördad i sin helhet (`scripts/fetch_runor.py` → `data/raa/runor_2020.json`, inte i git).
 När filen finns visar inskriftssidan Runors uppgifter bredvid Rundatas: ursprunglig plats eller flyttad, bevarad,
