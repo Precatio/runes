@@ -18,6 +18,9 @@ const T = {
     aboutText: ["Korpus är Vitkis tidskrift för digital och kvantitativ runforskning. Varje nummer samlar artiklar, en rapport från verkstaden och en metodnotis i en form som går att läsa på en kaffepaus.",
                 "Analyserna förregistreras: planen låses innan vi räknar, och när ett resultat inte håller säger vi det. Texterna får spridas fritt under CC BY 4.0; bilderna har egna licenser, angivna vid varje bild."],
     editor: "Redaktör: Viktor Kvant.", contact: "Hör av dig", all: "Alla nummer",
+    print: "I tryck", printImg: "/korpus/korpus-nr1-tryckt-sv.jpg",
+    printAlt: "Korpus nr 1 som tryckt tidning, uppslagen på ett bord. Text: Korpus nr 1 finns även i tryckta exemplar! Hör gärna av er om ni vill ha den skickad till er. vitkirunor.se/kontakt",
+    printText: "Korpus nr 1 finns även i tryckta exemplar! Hör gärna av er om ni vill ha den skickad till er.", printCta: "Beställ via kontaktsidan",
   },
   en: {
     kicker: "Journal", sub: "Digital runic research from Vitki",
@@ -31,6 +34,9 @@ const T = {
     aboutText: ["Korpus is Vitki's journal of digital and quantitative runic research. Each issue gathers articles, a report from the workshop and a method note in a form that can be read over a coffee break.",
                 "Analyses are pre-registered: the plan is locked before we count, and when a result does not hold, we say so. The texts may be shared freely under CC BY 4.0; the images carry their own licences, given with each image."],
     editor: "Editor: Viktor Kvant.", contact: "Get in touch", all: "All issues",
+    print: "In print", printImg: "/korpus/korpus-nr1-tryckt-en.jpg",
+    printAlt: "Korpus No. 1 as a printed magazine, open on a table. Text: Korpus No. 1 is also available in print! The printed edition is in Swedish. Get in touch if you would like a copy sent to you. vitkirunor.se/kontakt",
+    printText: "Korpus No. 1 is also available in print. The printed edition is in Swedish – get in touch if you would like a copy sent to you.", printCta: "Ask via the contact page",
   },
 };
 
@@ -103,6 +109,21 @@ export default function KorpusPage({ lang }: { lang: "sv" | "en" }) {
           </div>
         </section>
       )}
+
+      {/* Viktor 2026-11-12: nr 1 finns tryckt (bara den svenska utgåvan); beställs via kontaktsidan. */}
+      <section className="max-w-6xl mx-auto px-6 pt-16">
+        <div className={`text-xs font-bold uppercase tracking-[0.2em] ${rust} mb-3`}>{t.print}</div>
+        <Link href={en ? EN_CONTACT_PATH : CONTACT_PATH} prefetch={false} className="block shadow-xl ring-1 ring-slate-900/10 hover:shadow-2xl transition-shadow">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={t.printImg} alt={t.printAlt} width={2000} height={1250} loading="lazy" className="w-full h-auto block" />
+        </Link>
+        <div className="mt-4 flex flex-wrap items-center gap-4">
+          <p className="text-slate-700 leading-relaxed max-w-2xl">{t.printText}</p>
+          <Link href={en ? EN_CONTACT_PATH : CONTACT_PATH} prefetch={false} className="tap inline-flex items-center h-11 px-5 rounded-full bg-[#b7410e] text-white text-sm font-bold hover:bg-[#9a370c]">
+            {t.printCta} →
+          </Link>
+        </div>
+      </section>
 
       <section className="max-w-6xl mx-auto px-6 pt-16">
         <h2 className="text-2xl font-serif font-bold">{t.how}</h2>

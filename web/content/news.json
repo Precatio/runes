@@ -2,6 +2,14 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "korpus-nr1-tryck",
+   "date": "2026-11-12",
+   "status": "nytt",
+   "title": "Korpus nr 1 finns i tryck",
+   "text": "Korpus nr 1 finns även i tryckta exemplar, 20 sidor på svenska. Hör gärna av dig via kontaktsidan (vitkirunor.se/kontakt) om du vill ha den skickad till dig.",
+   "kategori": "publicerat"
+  },
+  {
    "id": "korpus-nr1-20-sidor",
    "date": "2026-11-11",
    "status": "nytt",
