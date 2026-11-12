@@ -1,5 +1,5 @@
 {
- "_om": "Litteraturregistret (src/literature.py): avhandlingar och utgåvor om vikingatida runinskrifter. file = PDF-filens namn i LITERATURE_DIR (standard /Volumes/2TB/litteratur); verk med en fil indexeras per signum (scripts/build_literature_index.py). access: öppen = fri fulltext, sverige = bara inom Sverige, tryck = bara tryckt. Kontrollerad 2026-10-29. entry_prefix = utgåvans landskap: en rubrik som '179. Kölaby sn' är stenens egen artikel (Vg 179). licence = vad verket får användas till enligt Vitkis källregel (METHODS.md, Källor och upphovsrätt): läsa och räkna, citera kort med källa, publicera vidare bara med fri licens.",
+ "_om": "Litteraturregistret (src/literature.py): avhandlingar och utgåvor om vikingatida runinskrifter. file = PDF-filens namn i LITERATURE_DIR (standard /Volumes/2TB/litteratur); verk med en fil indexeras per signum (scripts/build_literature_index.py). access: öppen = fri fulltext, sverige = bara inom Sverige, tryck = bara tryckt. Kontrollerad 2026-10-29. entry_prefix = utgåvans landskap: en rubrik som '179. Kölaby sn' är stenens egen artikel (Vg 179). licence = vad verket får användas till enligt Vitkis källregel (METHODS.md, Källor och upphovsrätt): läsa och räkna, citera kort med källa, publicera vidare bara med fri licens. entry_range = utgåvans första och sista artikelnummer i verket (scripts/sri_artiklar.py).",
  "works": [
   {
    "id": "kallstrom2007",
@@ -386,7 +386,11 @@
     "sri_sodermanland_b03_h04_titel.pdf"
    ],
    "entry_prefix": "Sö",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    383
+   ]
   },
   {
    "id": "sri6",
@@ -412,7 +416,11 @@
     "sri_uppland_b06_titel.pdf"
    ],
    "entry_prefix": "U",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    294
+   ]
   },
   {
    "id": "sri7",
@@ -438,7 +446,11 @@
     "sri_uppland_b07_h03_titel.pdf"
    ],
    "entry_prefix": "U",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    295,
+    603
+   ]
   },
   {
    "id": "sri8",
@@ -467,7 +479,11 @@
     "sri_uppland_b08_titel.pdf"
    ],
    "entry_prefix": "U",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    604,
+    901
+   ]
   },
   {
    "id": "sri9",
@@ -495,7 +511,11 @@
     "sri_uppland_b09_h03_text_titel.pdf"
    ],
    "entry_prefix": "U",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    902,
+    1181
+   ]
   },
   {
    "id": "sri11",

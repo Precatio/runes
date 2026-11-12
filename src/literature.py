@@ -207,4 +207,8 @@ def page_label(p: str) -> str:
 
 
 # SRI's own article for a stone: "179. Kölaby sn, Stommen." or "233. Östra Stenby kyrka, Östkinds hd."
-ENTRY = re.compile(r"^\s*(\d{1,4})\.\s+[A-ZÅÄÖ][^\n]{2,90}?\b(?:sn|socken|kyrka|kyrkogård|hd|stad|landsförs)\b", re.M)
+_ORD = ("sn", "socken", "kyrka", "kyrkan", "kyrkogård", "kyrkogården", "hd", "stad", "staden", "landsförs")
+# Nyckelordet får vara slutled ("Domkyrkan"). OCR:en spärrar ibland rubrikens ord ("Skånela k y r k a ."): bokstäverna får skiljas av ett mellanslag. En rubrik kan
+# gälla flera stenar ("309—311. Harg, Skånela sn."): grupp 2 är då sista numret.
+ENTRY = re.compile(r"^\s*(\d{1,4})(?:\s?[—–-]\s?(\d{1,4}))?\.\s+[A-ZÅÄÖ][^\n]{2,120}?(?i:"
+                   + "|".join(r"\s?".join(w) for w in _ORD) + r")(?![\wåäöÅÄÖ])", re.M)
