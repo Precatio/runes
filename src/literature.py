@@ -207,4 +207,4 @@ def page_label(p: str) -> str:
 
 
 # SRI's own article for a stone: "179. Kölaby sn, Stommen." or "233. Östra Stenby kyrka, Östkinds hd."
-ENTRY = re.compile(r"^\s*(\d{1,3})\.\s+[A-ZÅÄÖ][^\n]{2,90}?\b(?:sn|socken|kyrka|kyrkogård|hd|stad|landsförs)\b", re.M)
+ENTRY = re.compile(r"^\s*(\d{1,4})\.\s+[A-ZÅÄÖ][^\n]{2,90}?\b(?:sn|socken|kyrka|kyrkogård|hd|stad|landsförs)\b", re.M)
