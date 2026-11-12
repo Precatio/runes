@@ -1,0 +1,17 @@
+# Källor i SRI:s litteraturrad -> när stenen senast var dokumenterad (A1, tillägg 1, P3-robusthet). Skriven 2026-11-12, innan något läggts mot stenarna.
+# ar_e = "till": stenen var känd senast detta år (försiktigt). Bara källor vars år är belagda i litteratur Vitki har; övriga räknas inte (planen).
+# monster = Python-regex mot källsträngen i kallor_i_ordning (skiftlägesokänsligt). Ordningen avgör: första träffen gäller.
+monster,kalla,fran,till,ar_e,belagg
+"^\s*D\s?8\s?(vo|to)",Dybeck Svenska run-urkunder (D8vo),1855,1859,1859,"Källström 2022 (Futhark 12), s. 9: D8vo [1855–59]"
+"^\s*D\.?\s?(fol\.?\s?)?\d",Dybeck Sverikes runurkunder (D),1860,1865,1865,"Källström 2022, s. 9: D [1860–65]"
+"Dybeck",Dybeck (övrigt),1850,1877,1877,"Källström 2022, s. 9: resor från 1850-talet; Dybeck 1811–77"
+"^\s*B\.?\s?\d|Bautil|Göransson",Bautil (träsnitt från Antikvitetskollegiet),1666,1720,1720,"Källström 2022, s. 8: tecknade 1666–1720 (Hadorph, Peringskiöld), tryckta 1750"
+"Peringski",Peringskiöld,1666,1720,1720,"Källström 2022, s. 8: fortsatte Hadorphs arbete; Peringskiöld 1654–1720"
+"Hadorph",Hadorph,1666,1693,1693,"Källström 2022, s. 8: Antikvitetskollegiet 1666, Hadorph 1630–93"
+"Ran+sakn",Rannsakningar om antikviteterna,1667,1684,1684,"Fornvännen 1918, s. 105 och 1924, s. 136: 'Ransakningar om antiquiteterna 1667—1684'"
+"Bure",Bureus,1600,1652,1652,"Källström 2022, s. 7–8: Runahäfd 1602; Bureus 1568–1652"
+"^\s*L\.?\s?\d|Liljegren",Liljegren Run-urkunder (L),1833,1833,1833,"Källström 2022, s. 8: Run-urkunder 1833"
+"^\s*S\.?\s?\d|Säve.*(Gutnisk|urkund)",Säve Gutniska urkunder (S),1859,1859,1859,"Källström 2022, s. 10: Gutniska urkunder (1859)"
+"^\s*T\.?\s?\d|Torin",Torin Vestergötlands runinskrifter (T),1871,1893,1893,"Källström 2022, s. 10: 1871–1893"
+"UFT|Upplands fornminnesf",Upplands fornminnesförenings tidskrift (UFT),1871,1890,1890,"Källström 2022, s. 10: 1871–1890"
+"Boije",Boije (SRI-förarbete Södermanland),1880,1885,1885,"Källström 2022, s. 11: Boije i SRI från början av 1880-talet, avgick mitten av 1880-talet"
