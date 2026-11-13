@@ -14,7 +14,7 @@ förbereds bakgrund, metod och källor, men inga slutsatser före körningen (ja
 | Sida | Innehåll | Underlag | Läge |
 |---|---|---|---|
 | 1 | Omslag | bild väljs (förslag: en försvunnen sten i Bautil eller en flyttad sten vid en kyrka) | – |
-| 2 | Innehåll + Från redaktören | Viktors svar på tre frågor (nedan) | frågor skickade 13 nov; Viktor skriver |
+| 2 | Innehåll + Från redaktören | Viktors svar på tre frågor (nedan) | **spalten godkänd 13 nov:** `nr2/redaktor_nr2.json` ("Den tysta historien", sv 375 / en 401 ord) |
 | 3 | Det vi inte ser i siffror | korpusfakta: försvunna 415, flyttade enligt `is_moved` 1 223, odaterade, nummer utan SRI-artikel m.m. | räknas vid bygget |
 | 4–7 | **Stenarna som flyttades** | A1 P1 + SRI:s fyndhistorik (läget) | bakgrund kan skrivas nu; resultat efter A1 |
 | 8–10 | **Stenarna som försvann** | A1 P2–P3 (jordarterna, upptäcktskurvan, fångst–återfångst) | bakgrund nu; resultat efter A1 |
