@@ -21,7 +21,7 @@ förbereds bakgrund, metod och källor, men inga slutsatser före körningen (ja
 | 11–13 | **När restes stenen?** | beskrivande: stilgruppernas sex värden, de fasta punkterna (Ingvars- och Englandsstenarna), vad som händer när dateringen är osäker (`utdata/datering/resultat.md`, MI-försöket, robusthetstrappan) | kan skrivas nu, med data vi har |
 | 14–16 | **Ingvarsstenarna** | utkastet `utdata/blogg/ingvar.json` (publiceras 8 dec) + självkontrollrapporten (15 dec) | finns, kortas till tidskriftsform |
 | 17 | Metodhörnan: vad är fångst–återfångst? | `nr2/innehall_nr2.py` METOD | utkast klart 13 nov |
-| 18 | I appen: Luckor i texten | `nr2/innehall_nr2.py` APP; skärmbilder sv+en tas ur den lokala appen | text klar 13 nov; bilder saknas |
+| 18 | I appen: Luckor i texten | `nr2/innehall_nr2.py` APP; skärmbilder med `nr2/skarmbild.py` | text klar 13 nov; svensk bild klar (`bilder/app_luckor_sv.jpg`). **Engelsk bild väntar:** fliken är bara delvis översatt i appen (kolumnerna Hugget/Ifyllnad/Kalibrerad/Modellens råa, föremålet "fragment av runsten", "alla", "Visa även andra föremål", förklaringstexten, sökfältet "Sök"); rättas i `web/src/app/(app)/luckor/` och tas om |
 | 19 | Nästa nummer: nr 3, juni 2027, *Platserna* | PUBLICERINGSPLAN.md §3: Gravar, vägar eller gränser?; lerans kant; De gamla landen; Norgeartikeln | skrivs när nr 3:s planer är låsta |
 | 20 | Baksida | samma upplägg som nr 1, ny bild | – |
 
