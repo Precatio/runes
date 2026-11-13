@@ -156,7 +156,7 @@ export function TextGapsPanel({ data }: { data: TextGaps | null }) {
         {ot ? (
           <label className="text-sm text-slate-600 flex items-center gap-2">
             <input type="checkbox" checked={others} onChange={e => { setOthers(e.target.checked); setProv(""); }} />
-            Visa även andra föremål ({ot.candidates})
+            {`Visa även andra föremål (${ot.candidates})`}
           </label>
         ) : null}
       </div>

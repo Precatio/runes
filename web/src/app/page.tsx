@@ -429,6 +429,40 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* Korpus No. 1 (Viktor 2026-11-13: a teaser on the start page) – the journal, the PDF and the printed copies */}
+      <section aria-labelledby="korpus-blankare" className="border-t border-slate-900/5">
+        <div className="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-[1.1fr_1fr] gap-10 items-center">
+          <div>
+            <div className="text-xs font-bold uppercase tracking-widest text-[#b7410e]">Nytt · Tidskriften Korpus</div>
+            <h2 id="korpus-blankare" className="mt-2 text-3xl md:text-4xl font-serif font-bold text-slate-900 leading-tight">
+              Korpus nr 1 är här
+            </h2>
+            <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+              Vitkis tidskrift för digital runforskning. Första numret handlar om döttrarna som nästan aldrig fick en sten, de
+              unga männen som inte kom hem från färderna och namnen som svenskar fortfarande bär i dag.
+            </p>
+            <p className="mt-3 text-slate-600 leading-relaxed">
+              Läs den fritt som PDF på svenska eller engelska. Den svenska utgåvan finns också tryckt – hör gärna av dig om du
+              vill ha ett exemplar skickat till dig.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              {/* The journal page, not the PDF: it has both editions, and readers who chose English land on /en/tidskrift */}
+              <Link href={KORPUS_PATH} prefetch={false} className="px-6 py-3 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b] shadow-lg shadow-[#b7410e]/20">
+                Läs Korpus nr 1
+              </Link>
+              <Link href={CONTACT_PATH} prefetch={false} className="px-6 py-3 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">
+                Beställ ett tryckt exemplar
+              </Link>
+            </div>
+          </div>
+          <Link href={KORPUS_PATH} prefetch={false} className="block">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/korpus/korpus-nr1-tryckt-sv.jpg" alt="Korpus nr 1 som tryckt tidning, uppslagen på ett bord."
+                 width={2000} height={1250} loading="lazy" className="w-full h-auto rounded-2xl shadow-xl shadow-slate-900/10" />
+          </Link>
+        </div>
+      </section>
+
       {/* Articles: what the analyses find, told for everyone interested in runestones */}
       <section id="artiklar" className="bg-white border-y border-slate-900/5 scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6 py-20">
