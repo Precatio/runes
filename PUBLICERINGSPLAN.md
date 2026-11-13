@@ -128,6 +128,7 @@ Status per rad: planerad → plan låst → körd → rapport → publicerad.
 | tis 15 dec | Kunde folk läsa runstenarna? (samma dag som självkontrollrapporten) | ny |
 | fre 18 dec | De gamla landen: Möre – kusten vid sundet | utkast |
 | tis 22 dec | Mö, dotter eller flicka? Ordet som kunde betyda ogift | ny |
+| **tors 24 dec** | **Julspecial:** Vikingarnas jul fanns i sagorna – men inte på en enda runsten (Viktor 13 nov) | utkast 2hcHpU4w5Tqh4DDTYgVb |
 | 25 dec – 1 jan | juluppehåll | – |
 | tis 5 jan | De gamla landen: Finnveden – landet längs Lagan | utkast |
 | fre 8 jan | Var ”norr” nordost? Väderstrecken på runstenarna | ny |

@@ -1,0 +1,407 @@
+{
+ "traffar": 81,
+ "episoder": [
+  {
+   "saga": "Haralds_saga_hins_hárfagra",
+   "traffar": [
+    0
+   ],
+   "kategori": "tro och kalender"
+  },
+  {
+   "saga": "Haralds_saga_hins_hárfagra",
+   "traffar": [
+    1,
+    2
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Hákonar_góða",
+   "traffar": [
+    3,
+    4
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Hákonar_góða",
+   "traffar": [
+    5,
+    6,
+    7,
+    8
+   ],
+   "kategori": "tro och kalender"
+  },
+  {
+   "saga": "Saga_Hákonar_góða",
+   "traffar": [
+    9,
+    10
+   ],
+   "kategori": "tro och kalender"
+  },
+  {
+   "saga": "Saga_Hálfdanar_svarta",
+   "traffar": [
+    11
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Hálfdanar_svarta",
+   "traffar": [
+    12,
+    13
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Inga_Haraldssonar_ok_brœðra_hans",
+   "traffar": [
+    14
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Inga_Haraldssonar_ok_brœðra_hans",
+   "traffar": [
+    15
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Magnús_blinda_ok_Haralds_gilla",
+   "traffar": [
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "kategori": "strid och dråp"
+  },
+  {
+   "saga": "Saga_Magnús_konungs_Erlingssonar",
+   "traffar": [
+    21
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Magnús_konungs_Erlingssonar",
+   "traffar": [
+    22,
+    23,
+    24
+   ],
+   "kategori": "strid och dråp"
+  },
+  {
+   "saga": "Saga_Magnús_konungs_Erlingssonar",
+   "traffar": [
+    25
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Magnús_konungs_Erlingssonar",
+   "traffar": [
+    26
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Magnús_konungs_berfœtts",
+   "traffar": [
+    27
+   ],
+   "kategori": "gåvor och skatt"
+  },
+  {
+   "saga": "Saga_Sigurðar_jórsalafara,_Eysteins_ok_Ólafs",
+   "traffar": [
+    28
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Sigurðar_jórsalafara,_Eysteins_ok_Ólafs",
+   "traffar": [
+    29
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Sigurðar_jórsalafara,_Eysteins_ok_Ólafs",
+   "traffar": [
+    30,
+    31,
+    32
+   ],
+   "kategori": "tro och kalender"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    33
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    34
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    35
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    36
+   ],
+   "kategori": "strid och dråp"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    37
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    38
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    39,
+    40
+   ],
+   "kategori": "gåvor och skatt"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    41
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    42
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    43
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    44
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    45,
+    46
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    47
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    48
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    49
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    50,
+    51,
+    52
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    53
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    54,
+    55
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    56,
+    57,
+    58,
+    59
+   ],
+   "kategori": "gåvor och skatt"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    60
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    61
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    62
+   ],
+   "kategori": "strid och dråp"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    63
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    64
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    65
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Saga_Ólafs_hins_helga",
+   "traffar": [
+    66
+   ],
+   "kategori": "gåvor och skatt"
+  },
+  {
+   "saga": "Sagan_af_Haraldi_harðráða",
+   "traffar": [
+    67
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Sagan_af_Hákoni_herðibreið",
+   "traffar": [
+    68,
+    69,
+    70,
+    71,
+    72
+   ],
+   "kategori": "strid och dråp"
+  },
+  {
+   "saga": "Sagan_af_Hákoni_herðibreið",
+   "traffar": [
+    73,
+    74,
+    75
+   ],
+   "kategori": "tro och kalender"
+  },
+  {
+   "saga": "Sagan_af_Hákoni_herðibreið",
+   "traffar": [
+    76
+   ],
+   "kategori": "gästabud och dryck"
+  },
+  {
+   "saga": "Sagan_af_Magnúsi_góða",
+   "traffar": [
+    77
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Sagan_af_Magnúsi_góða",
+   "traffar": [
+    78
+   ],
+   "kategori": "tidsangivelse"
+  },
+  {
+   "saga": "Sagan_af_Magnúsi_góða",
+   "traffar": [
+    79
+   ],
+   "kategori": "strid och dråp"
+  },
+  {
+   "saga": "Sagan_af_Magnúsi_góða",
+   "traffar": [
+    80
+   ],
+   "kategori": "strid och dråp"
+  }
+ ],
+ "kategorier": {
+  "tro och kalender": 5,
+  "gästabud och dryck": 17,
+  "tidsangivelse": 19,
+  "strid och dråp": 7,
+  "gåvor och skatt": 4
+ },
+ "runstenar_sv": 2321,
+ "med_kors": 959
+}
