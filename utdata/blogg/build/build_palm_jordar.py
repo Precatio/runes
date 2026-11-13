@@ -230,8 +230,8 @@ def chart(sv: bool) -> str:
 f1 = lambda x, n=1: f"{x:.{n}f}".replace(".", ",")  # noqa: E731
 GH = "https://github.com/Precatio/runes/blob/main"
 SLUG = "runstenarna-foljde-leran"
-title = "Varför står runstenarna vid lerans kant – och sex gånger tätare i Mälardalen?"
-title_en = "Why do the runestones stand at the edge of the clay – and six times as densely around Lake Mälaren?"
+title = "Runstenarna stod vid lerans kant – men halva gåtan är olöst"  # Viktor 2026-11-13: klickvänligare
+title_en = "The runestones stood at the edge of the clay – but half the riddle is unsolved"
 summary = ("Rune Palm skrev 1992 att runstenarna står vid de bästa jordarna, men att jorden inte kan förklara hela "
            "skillnaden mellan Mälardalen och resten av Norden. Vi lade SGU:s jordartskarta över varje runsten som står kvar på "
            "sin plats. Stenarna följer bygden, leran och vattnet, var för sig. Men de står inte på leran utan vid dess kant, "
