@@ -161,8 +161,8 @@ Kalendern för nästa period skrivs vid månadsgenomgången i februari.
 
 | Nummer | Tema | Innehåll | I appen |
 |---|---|---|---|
-| Nr 2, mars 2027, **24 sidor** | *Det vi inte ser* (utlovat på s. 19 i nr 1, också i de tryckta exemplaren, så innehållet hålls) | Stenarna som flyttades och Stenarna som försvann (A1 med SRI:s fyndhistorik); När restes stenen? (beskrivande: vilka stenar har en datering som inte vilar på stilen, inte studie C); Ingvarsstenarna (självkontrollrapporten). **Också i detta nummer:** Norgeartikeln, efter litteraturtilläggen i `build_norge.py` (Viktor 13 nov). Metodhörnan: vad är fångst–återfångst? | Luckor i texten |
-| Nr 3, juni 2027 | *Platserna* | Gravar, vägar eller gränser?; Varför står runstenarna vid lerans kant?; De gamla landen. Metodhörnan: slumpen inom bygden | Kartan med de gamla landen, strandlinjen och jordarterna |
+| Nr 2, mars 2027, 20 sidor | *Det vi inte ser* (utlovat på s. 19 i nr 1, också i de tryckta exemplaren, så innehållet hålls) | Stenarna som flyttades och Stenarna som försvann (A1 med SRI:s fyndhistorik); När restes stenen? (beskrivande: vilka stenar har en datering som inte vilar på stilen, inte studie C); Ingvarsstenarna (självkontrollrapporten). Metodhörnan: vad är fångst–återfångst? | Luckor i texten |
+| Nr 3, juni 2027 | *Platserna* | Gravar, vägar eller gränser?; Varför står runstenarna vid lerans kant?; De gamla landen. **Också:** Norgeartikeln, efter litteraturtilläggen i `build_norge.py` (Viktor 13 nov: inte i nr 2). Metodhörnan: slumpen inom bygden | Kartan med de gamla landen, strandlinjen och jordarterna |
 | Nr 4, september 2027 | *Hur gamla är runstenarna?* | Dateringens ankare; Prickarna, åsrunan och tiden; Döda i vita kläder. Metodhörnan: varför vi låser planen | Ristarna, en i taget |
 | Nr 5, december 2027 | *Människorna* | Var det de rika?; Hur många stenar reste kvinnor?; Änkorna; Mild i ord och god på mat – den goda människan och eftermälet (Viktor 13 nov). Verkstaden: huvudrapporten | Pröva en egen fråga |
 
