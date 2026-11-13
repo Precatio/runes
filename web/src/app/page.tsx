@@ -7,6 +7,7 @@ import LocalAppLink from "@/components/LocalAppLink";
 import StatsNote from "@/components/StatsNote";
 import SiteVote from "@/components/SiteVote";
 import ZoomImage from "@/components/ZoomImage";
+import ScrollHint from "@/components/ScrollHint";
 import { CONCEPT_DOI, VERSION, VERSION_DOI } from "@/lib/version";
 import ArticleTeasers from "@/components/ArticleTeasers";
 import LandingArticleSearch from "@/components/LandingArticleSearch";
@@ -385,6 +386,7 @@ export default async function LandingPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
       {/* Navigation */}
       <SiteHeader />
+      <ScrollHint target="#korpus" label="Mer nedanför" />
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -430,7 +432,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Korpus No. 1 (Viktor 2026-11-13: a teaser on the start page) – the journal, the PDF and the printed copies */}
-      <section aria-labelledby="korpus-blankare" className="border-t border-slate-900/5">
+      <section id="korpus" aria-labelledby="korpus-blankare" className="border-t border-slate-900/5 scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-[1.1fr_1fr] gap-10 items-center">
           <div>
             <div className="text-xs font-bold uppercase tracking-widest text-[#b7410e]">Nytt · Tidskriften Korpus</div>
