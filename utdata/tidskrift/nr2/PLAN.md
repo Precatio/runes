@@ -14,14 +14,14 @@ förbereds bakgrund, metod och källor, men inga slutsatser före körningen (ja
 | Sida | Innehåll | Underlag | Läge |
 |---|---|---|---|
 | 1 | Omslag | bild väljs (förslag: en försvunnen sten i Bautil eller en flyttad sten vid en kyrka) | – |
-| 2 | Innehåll + Från redaktören | Viktors svar på tre frågor (nedan) | frågor skickade 13 nov |
+| 2 | Innehåll + Från redaktören | Viktors svar på tre frågor (nedan) | frågor skickade 13 nov; Viktor skriver |
 | 3 | Det vi inte ser i siffror | korpusfakta: försvunna 415, flyttade enligt `is_moved` 1 223, odaterade, nummer utan SRI-artikel m.m. | räknas vid bygget |
 | 4–7 | **Stenarna som flyttades** | A1 P1 + SRI:s fyndhistorik (läget) | bakgrund kan skrivas nu; resultat efter A1 |
 | 8–10 | **Stenarna som försvann** | A1 P2–P3 (jordarterna, upptäcktskurvan, fångst–återfångst) | bakgrund nu; resultat efter A1 |
-| 11–13 | **När restes stenen?** | beskrivande: stilgruppernas sex värden, de fasta punkterna (Ingvars- och Englandsstenarna), vad som händer när dateringen är osäker (`utdata/datering/resultat.md`, MI-försöket, robusthetstrappan) | **svenskt utkast klart 13 nov:** `utdata/nar_restes/utkast_sv.md` (beräkning `berakna.py` → `resultat.json`, alla tal kontrollerade; källor von Friesen 1909, Thulin 1985, Krakow 2021, Larsson 2021, Gräslund 1998). Engelska saknas. Viktor läser |
+| 11–13 | **När restes stenen?** | beskrivande: stilgruppernas sex värden, de fasta punkterna (Ingvars- och Englandsstenarna), vad som händer när dateringen är osäker (`utdata/datering/resultat.md`, MI-försöket, robusthetstrappan) | **svenskt utkast klart 13 nov:** `utdata/nar_restes/utkast_sv.md` (beräkning `berakna.py` → `resultat.json`, alla tal kontrollerade; källor von Friesen 1909, Thulin 1985, Krakow 2021, Larsson 2021, Gräslund 1998). Engelska klar (`utkast_en.md`). **Viktor godkände 13 nov** (bönexemplet får stå som tydligt märkt exempel; öppenheten om de misslyckade dateringsförsöken står kvar) |
 | 14–16 | **Ingvarsstenarna** | utkastet `utdata/blogg/ingvar.json` (publiceras 8 dec) + självkontrollrapporten (15 dec) | finns, kortas till tidskriftsform |
-| 17 | Metodhörnan: vad är fångst–återfångst? | `nr2/innehall_nr2.py` METOD | utkast klart 13 nov |
-| 18 | I appen: Luckor i texten | `nr2/innehall_nr2.py` APP; skärmbilder med `nr2/skarmbild.py` | text klar 13 nov; svensk bild klar (`bilder/app_luckor_sv.jpg`). **Engelsk bild väntar:** fliken är bara delvis översatt i appen (kolumnerna Hugget/Ifyllnad/Kalibrerad/Modellens råa, föremålet "fragment av runsten", "alla", "Visa även andra föremål", förklaringstexten, sökfältet "Sök"); rättas i `web/src/app/(app)/luckor/` och tas om |
+| 17 | Metodhörnan: vad är fångst–återfångst? | `nr2/innehall_nr2.py` METOD | **godkänd av Viktor 13 nov** |
+| 18 | I appen: Luckor i texten | `nr2/innehall_nr2.py` APP; skärmbilder med `nr2/skarmbild.py` | text **godkänd av Viktor 13 nov**; svensk bild klar (`bilder/app_luckor_sv.jpg`). **Engelsk bild väntar:** fliken är bara delvis översatt i appen (kolumnerna Hugget/Ifyllnad/Kalibrerad/Modellens råa, föremålet "fragment av runsten", "alla", "Visa även andra föremål", förklaringstexten, sökfältet "Sök"); rättas i `web/src/app/(app)/luckor/` och tas om |
 | 19 | Nästa nummer: nr 3, juni 2027, *Platserna* | PUBLICERINGSPLAN.md §3: Gravar, vägar eller gränser?; lerans kant; De gamla landen; Norgeartikeln | skrivs när nr 3:s planer är låsta |
 | 20 | Baksida | samma upplägg som nr 1, ny bild | – |
 
