@@ -1,0 +1,138 @@
+{
+ "runstenar": 2321,
+ "saker_stilgrupp": 1038,
+ "osaker_stilgrupp": 438,
+ "ingen_stilgrupp": 845,
+ "andel_saker": 44.7,
+ "per_grupp": {
+  "Pr4": 248,
+  "RAK": 228,
+  "Fp": 173,
+  "Pr3": 140,
+  "Pr2": 114,
+  "Pr1": 54,
+  "Pr5": 51,
+  "KB": 30
+ },
+ "grupp_ar": {
+  "RAK": [
+   980,
+   1015
+  ],
+  "Fp": [
+   1010,
+   1050
+  ],
+  "KB": [
+   null,
+   null
+  ],
+  "Pr1": [
+   1010,
+   1050
+  ],
+  "Pr2": [
+   1020,
+   1050
+  ],
+  "Pr3": [
+   1050,
+   1080
+  ],
+  "Pr4": [
+   1070,
+   1100
+  ],
+  "Pr5": [
+   1100,
+   1130
+  ]
+ },
+ "mittar_olika": [
+  997.5,
+  1030.0,
+  1035.0,
+  1065.0,
+  1085.0,
+  1115.0
+ ],
+ "utgivarens_tidsangivelse": 102,
+ "varav_med_saker_stil": 44,
+ "utg_sekel": {
+  "900-talet": 12,
+  "1000-talet": 66,
+  "800-talet": 6,
+  "omkring 1100 eller senare": 18
+ },
+ "ingvar": {
+  "n": 25,
+  "stil": {
+   "Fp": 15,
+   "ingen säker": 7,
+   "Pr2": 2,
+   "RAK": 1
+  }
+ },
+ "england": {
+  "n": 22,
+  "signa": [
+   "Sm 101",
+   "Sm 27",
+   "Sm 5",
+   "Sm 77",
+   "Sö 160",
+   "Sö 166",
+   "Sö 207",
+   "Sö 46",
+   "Sö 55",
+   "Sö 83",
+   "U 194",
+   "U 241",
+   "U 344",
+   "U 539",
+   "U 812",
+   "U 978",
+   "Vg 187",
+   "Vg 20",
+   "Vs 18",
+   "Vs 9",
+   "Ög 104",
+   "Ög Fv1950;341"
+  ],
+  "stil": {
+   "RAK": 7,
+   "Fp": 4,
+   "ingen säker": 4,
+   "Pr3": 4,
+   "Pr2": 3
+  }
+ },
+ "bon": {
+  "tidig": [
+   103,
+   569
+  ],
+  "sen": [
+   49,
+   439
+  ],
+  "utan_saker_stil": [
+   86,
+   1283
+  ],
+  "granser": {
+   "observerat": {
+    "tidig": 18.1,
+    "sen": 11.2
+   },
+   "alla_odaterade_tidiga": {
+    "tidig": 10.2,
+    "sen": 11.2
+   },
+   "alla_odaterade_sena": {
+    "tidig": 18.1,
+    "sen": 7.8
+   }
+  }
+ }
+}
