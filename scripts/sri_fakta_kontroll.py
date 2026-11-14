@@ -182,7 +182,10 @@ def utfall(verk: str, runda: int = 1) -> None:
 
 
 # ---- enheter med flera band (not 2, 2026-11-12): Uppland VI–IX granskas som en enhet med 100 stenar ------------------------
-ENHETER = {"upp": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp", "seed": 2030, "viktor_seed": 2031, "n": 100}}
+ENHETER = {"upp": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp", "seed": 2030, "viktor_seed": 2031, "n": 100},
+           # not 3: Uppland runda 2, nytt stickprov bland stenar som inte låg i runda 1
+           "upp2": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp_r2", "seed": 2040, "viktor_seed": 2041, "n": 100,
+                    "utom": "upp"}}
 VIKTOR_FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "flyttningar"]  # not 2: läget och flyttningarna
 
 
@@ -218,6 +221,9 @@ def sammanstall_enhet(enhet: str) -> None:
             if sig in art:
                 fh.write(json.dumps(rader[sig], ensure_ascii=False) + "\n")
     pool = sorted(s for s in art if s in rader)
+    if E.get("utom"):  # stenarna i en tidigare rundas stickprov lottas inte igen
+        tidigare = {json.loads(x)["signum"] for x in open(os.path.join(FAKTA, "granskning", f"{E['utom']}_stickprov.jsonl"), encoding="utf-8")}
+        pool = [x for x in pool if x not in tidigare]
     stick = sorted(random.Random(E["seed"]).sample(pool, min(E["n"], len(pool))))
     viktor = sorted(random.Random(E["viktor_seed"]).sample(stick, 10))
     os.makedirs(os.path.join(FAKTA, "granskning"), exist_ok=True)
