@@ -382,11 +382,208 @@ def hamta(url: str, mal: str) -> bool:
     return False
 
 
+# ---- grovlayouten för nr 1 (Viktor 2026-11-14: "ja" till en version som lägger ut innehållet) ------------------------------
+def grovlayout_jsx() -> str:
+    """Ett andra InDesign-skript som körs i dokumentet från Korpus_mall.jsx och lägger ut nr 1 enligt sidplanen: bilder i
+    ramar (fyllda proportionellt), artiklarnas taggade text placerad i en kedja från öppningssidans ram till trespaltsramar
+    på de följande sidorna, och de övriga sidornas texter i egna ramar. Allt är en grovlayout att finjustera.
+    Data skrivs med ensure_ascii, så att skriptet fungerar oavsett hur InDesign läser filens teckenkodning."""
+    hero = [bildnamn(B.WM + a["bild"]) for a in B.ARTIKLAR]
+    plan = {
+        "omslag": bildnamn(B.OMSLAG), "karta": "karta_alla.png", "altuna": bildnamn(B.SLUTRUTA["bild"]),
+        "bak": bildnamn(B.BAKBILD["bild"]), "app": "app_manniskorna_sv.jpg",
+        # artikel: öppningssida (1-baserad), brödtextsidor, textfil, öppningsbild
+        "artiklar": [
+            {"oppning": 5, "sidor": [6, 7, 8], "fil": "02_dottrar_sv.txt", "bild": hero[0]},
+            {"oppning": 9, "sidor": [10, 11], "fil": "03_unga_sv.txt", "bild": hero[1]},
+            {"oppning": 12, "sidor": [13, 14, 15, 16], "fil": "04_overlevde_sv.txt", "bild": hero[2]},
+        ],
+    }
+    data = json.dumps(plan, ensure_ascii=True)
+    return """// Korpus nr 1 – grovlayout. Kör EFTER Korpus_mall.jsx, i dokumentet som mallen skapade. Lägger ut bilder och texter
+// enligt sidplanen (nr1/sidplan.pdf) som en grovlayout att finjustera. Filerna läses från paketet: skriptet ska ligga i
+// mappen mall/ bredvid nr1/ (som i zip-filen).
+// Genererat av utdata/tidskrift/indesign/bygg_indesign.py i Vitki (github.com/Precatio/runes).
+#target indesign
+(function () {
+var P = """ + data + """;
+var fel = [];
+function prova(f, vad) { try { f(); } catch (e) { fel.push(vad + ": " + e); } }
+if (app.documents.length === 0) { alert("Inget dokument \\u00e4r \\u00f6ppet. K\\u00f6r f\\u00f6rst Korpus_mall.jsx."); return; }
+var doc = app.activeDocument;
+if (!doc.paragraphStyles.item("Br\\u00f6dtext").isValid) { alert("Dokumentet saknar Korpus format. K\\u00f6r f\\u00f6rst Korpus_mall.jsx."); return; }
+app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+var paket = File($.fileName).parent.parent;  // mall/ -> paketets rot
+if (!Folder(paket.fullName + "/nr1").exists) {
+  paket = Folder.selectDialog("V\u00e4lj mappen korpus_indesign (den som inneh\u00e5ller mappen nr1)");
+  if (!paket) return;
+}
+var NR1 = paket.fullName + "/nr1";
+function fil(rel) { var f = File(NR1 + "/" + rel); if (!f.exists) fel.push("saknas: " + rel); return f; }
+prova(function () { app.taggedTextImportPreferences.styleConflict = StyleConflict.PUBLICATION_DEFINITION; }, "importinst\\u00e4llning");
+function sida(n) { return doc.pages.item(n - 1); }
+function bild(s, gb, rel) {
+  var r = s.rectangles.add({ geometricBounds: gb, strokeWeight: 0 });
+  prova(function () { r.place(fil(rel)); r.fit(FitOptions.FILL_PROPORTIONALLY); r.fit(FitOptions.CENTER_CONTENT); }, "bild " + rel);
+  return r;
+}
+function ram(s, gb, kol) {
+  var t = s.textFrames.add({ geometricBounds: gb });
+  t.textFramePreferences.textColumnCount = kol || 1;
+  t.textFramePreferences.textColumnGutter = 5.5;
+  return t;
+}
+function satsyta(s) { var b = s.bounds; return [b[0] + 17, b[1] + 15, b[2] - 18, b[3] - 15]; }
+function placera(t, rel) { prova(function () { t.place(fil(rel), false); }, "text " + rel); }
+
+// 1 omslaget och 3 kartan: helsida med utfall
+prova(function () {
+  var b = sida(1).bounds; bild(sida(1), [b[0] - 3, b[1] - 3, b[2] + 3, b[3] + 3], "bilder/" + P.omslag);
+  var t = ram(sida(1), [b[0] + 11, b[1] + 14, b[0] + 55, b[3] - 14]);
+  t.contents = "Korpus\\rDigital runforskning fr\\u00e5n Vitki";
+  t.paragraphs.item(0).appliedParagraphStyle = doc.paragraphStyles.item("Omslag titel");
+  t.paragraphs.item(1).appliedParagraphStyle = doc.paragraphStyles.item("Omslag undertitel");
+}, "omslaget");
+prova(function () { var b = sida(3).bounds; bild(sida(3), [b[0] - 3, b[1] - 3, b[2] + 3, b[3] + 3], "grafik/" + P.karta); }, "kartan");
+
+// 2 ledaren (v\\u00e4nster) och inneh\\u00e5llet (h\\u00f6ger spalt, 76 mm)
+prova(function () {
+  var a = satsyta(sida(2));
+  placera(ram(sida(2), [a[0], a[1], a[2] - 40, a[3] - 86]), "texter/01_ledare_sv.txt");
+  var t = ram(sida(2), [a[0], a[3] - 76, a[2] - 40, a[3]]);
+  t.contents = "I detta nummer"; t.paragraphs.item(0).appliedParagraphStyle = doc.paragraphStyles.item("Etikett");
+}, "sida 2");
+
+// 4 siffrorna och 19 n\\u00e4sta nummer: sidans text (r\\u00e4knas fram ur data i Vitki)
+prova(function () { placera(ram(sida(4), satsyta(sida(4)), 3), "sidor/sida-04.txt"); }, "sida 4");
+prova(function () { placera(ram(sida(19), satsyta(sida(19)), 2), "sidor/sida-19.txt"); }, "sida 19");
+
+// artiklarna: \\u00f6ppningsbild, \\u00f6ppningsram och kedja av trespaltsramar
+for (var i = 0; i < P.artiklar.length; i++) {
+  (function (A) { prova(function () {
+    var s = sida(A.oppning), b = s.bounds;
+    bild(s, [b[0] - 3, b[1] - 3, b[0] + 111, b[3] + 3], "bilder/" + A.bild);
+    var forsta = ram(s, [b[0] + 122, b[1] + 18, b[2] - 15, b[3] - 18], 1);
+    var forra = forsta;
+    for (var j = 0; j < A.sidor.length; j++) {
+      var nu = ram(sida(A.sidor[j]), satsyta(sida(A.sidor[j])), 3);
+      forra.nextTextFrame = nu; forra = nu;
+    }
+    placera(forsta, "texter/" + A.fil);
+  }, "artikeln " + A.fil); })(P.artiklar[i]);
+}
+
+// 16 bildrutan Altuna, l\\u00e4ngst ned p\\u00e5 Tor-artikelns sista sida
+prova(function () {
+  var a = satsyta(sida(16));
+  bild(sida(16), [a[2] - 70, a[1], a[2], a[1] + 55], "bilder/" + P.altuna);
+  placera(ram(sida(16), [a[2] - 70, a[1] + 60, a[2], a[3]], 1), "texter/04b_bildruta_altuna_sv.txt");
+}, "sida 16 bildrutan");
+
+// 17 Verkstaden + Metodh\\u00f6rnan, 18 I appen, 20 baksidan
+prova(function () { placera(ram(sida(17), satsyta(sida(17)), 2), "texter/05_verkstaden_metodhornan_sv.txt"); }, "sida 17");
+prova(function () {
+  var a = satsyta(sida(18));
+  placera(ram(sida(18), [a[0], a[1], a[0] + 160, a[3]], 2), "texter/06_i_appen_sv.txt");
+  bild(sida(18), [a[0] + 165, a[1], a[2], a[3]], "grafik/" + P.app);
+}, "sida 18");
+prova(function () {
+  var a = satsyta(sida(20));
+  placera(ram(sida(20), [a[0], a[1], a[0] + 95, a[3]], 2), "texter/08_baksida_sv.txt");
+  bild(sida(20), [a[0] + 100, a[1], a[0] + 232, a[3]], "bilder/" + P.bak);
+}, "sida 20");
+
+alert("Grovlayouten f\\u00f6r Korpus nr 1 \\u00e4r utlagd." + (fel.length ? "\\n\\nDet h\\u00e4r gick inte:\\n" + fel.slice(0, 15).join("\\n") : "") +
+      "\\n\\nText som inte f\\u00e5r plats syns som \\u00f6versatt text (r\\u00f6tt plus) i sista ramen: l\\u00e4gg till en ram eller korta enligt PDF:en.");
+})();
+"""
+
+
+# ---- inga Markdown-filer till formgivaren (Viktor 2026-11-14: "han blev irriterad över md-formatet") ----------------------
+CSS_DOK = ("body{font:10.5pt/1.5 'Avenir Next',Helvetica,sans-serif;color:#1d2226;max-width:170mm;margin:0 auto}"
+           "h1,h2{font-family:Charter,Georgia,serif;color:#1d2226}h1{font-size:22pt}h2{font-size:14pt;margin-top:8mm}"
+           "code{font-size:9pt}table{border-collapse:collapse}td,th{border-bottom:.5pt solid #d8dcdf;padding:3px 6px;text-align:left;vertical-align:top}"
+           "a{color:#b7410e}@page{size:A4;margin:18mm}")
+
+
+def md_till_pdf(md: str, pdf: str):
+    """Markdown → PDF (pandoc → HTML → Chrome), och Markdown-filen tas bort."""
+    tmp = pdf[:-4] + ".tmp.html"
+    subprocess.run(["pandoc", md, "-s", "--metadata", "title= ", "-o", tmp], check=True)
+    t = open(tmp, encoding="utf-8").read().replace("</head>", f"<style>{CSS_DOK}</style></head>")
+    t = re.sub(r'<header id="title-block-header">.*?</header>', "", t, flags=re.S)
+    open(tmp, "w", encoding="utf-8").write(t)
+    subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", f"--print-to-pdf={pdf}", "file://" + tmp],
+                   capture_output=True, timeout=180)
+    os.remove(tmp)
+    os.remove(md)
+
+
+def md_till_docx(md: str, docx: str):
+    subprocess.run(["pandoc", md, "-f", "markdown", "-o", docx], check=True)
+    os.remove(md)
+
+
+def utan_markdown():
+    for rot, _, filer in os.walk(UT):
+        for f in filer:
+            p = os.path.join(rot, f)
+            if not f.endswith(".md"):
+                continue
+            if os.path.basename(rot) == "texter":
+                md_till_docx(p, p[:-3] + ".docx")
+            else:  # KREDITER: ren text
+                t = open(p, encoding="utf-8").read()
+                t = re.sub(r"\*\*(.+?)\*\*", r"\1", t).replace("# ", "").replace("  - ", "    ")
+                open(p[:-3] + ".txt", "w", encoding="utf-8").write(t)
+                os.remove(p)
+
+
+LASMIG = """KORPUS NR 1 – MATERIAL FÖR INDESIGN
+====================================
+
+1. GÖR MALLEN
+   Dubbelklicka mall/Korpus_mall.jsx i InDesigns skriptpanel.
+   (Fönster > Verktyg > Skript. Högerklicka Användare > Visa i Finder
+   och lägg mappen mall där.)
+   Du får ett dokument med Korpus format, färger, styckeformat,
+   mallsidor och 20 tomma sidor. Varje sida har en etikett om vad
+   som ska stå där.
+
+2. LÄGG UT NR 1 (valfritt)
+   Dubbelklicka mall/Korpus_nr1_grovlayout.jsx i samma dokument.
+   Bilder och texter läggs ut ungefär som i PDF:en.
+   Hittar skriptet inte materialet frågar det efter mappen
+   korpus_indesign.
+
+3. FINJUSTERA
+   Jämför med nr1/referens/Korpus_nr1_sv_tryck.pdf (det som trycktes)
+   och nr1/sidplan.pdf.
+
+MAPPARNA
+   nr1/texter   .txt  = text för InDesign (Arkiv > Placera,
+                        behåll formatmallar).
+                .docx = samma text i Word.
+   nr1/bilder   bilderna i full upplösning.
+                KREDITER.txt = fotograf och licens. Krediten ska stå
+                vid bilden.
+   nr1/grafik   karta, skärmbilder och Vitkis bindruna (SVG).
+   nr1/sidor    varje sida som bild och som text.
+
+BRA ATT VETA
+   - Ändra inte i texterna. Be Viktor om ändringar
+     (siffrorna är kontrollerade mot data).
+   - Typsnitt: Charter och Avenir Next.
+   - Skripten är inte provkörda i InDesign. Rutan som kommer upp
+     på slutet listar det som inte gick – skicka den till Viktor.
+"""
+
 # ---- bygget ---------------------------------------------------------------------------------------------------------------
 def main():
     for d in ("mall", "nr1/referens", "nr1/sidor", "nr1/texter", "nr1/bilder", "nr1/grafik"):
         os.makedirs(os.path.join(UT, d), exist_ok=True)
-    open(os.path.join(UT, "mall", "Korpus_mall.jsx"), "w", encoding="utf-8").write(jsx())
+    open(os.path.join(UT, "mall", "Korpus_mall.jsx"), "w", encoding="utf-8-sig").write(jsx())
+    open(os.path.join(UT, "mall", "Korpus_nr1_grovlayout.jsx"), "w", encoding="utf-8-sig").write(grovlayout_jsx())
 
     # referens-PDF:erna och sidorna
     for f in ("Korpus_nr1_sv.pdf", "Korpus_nr1_sv_tryck.pdf", "Korpus_nr1_en.pdf"):
@@ -448,9 +645,13 @@ def main():
     alla_bilder.setdefault(B.OMSLAG, B.T["sv"]["omkredit"])
     alla_bilder.setdefault(B.SLUTRUTA["bild"], B.SLUTRUTA["sv"]["kredit"])
     alla_bilder.setdefault(B.BAKBILD["bild"], B.BAKBILD["sv"])
-    open(os.path.join(NR1, "texter", "LASMIG.txt"), "w", encoding="utf-8").write(
+    open(os.path.join(UT, "LASMIG.txt"), "w", encoding="utf-8").write(LASMIG)
+    for gammal in (os.path.join(UT, "LASMIG.md"), os.path.join(UT, "LASMIG.pdf"), os.path.join(NR1, "texter", "LASMIG.txt")):
+        if os.path.exists(gammal):
+            os.remove(gammal)
+    _ = (
         "Filerna *.txt är InDesign-taggad text (UTF-16): Arkiv > Placera, kryssa i Visa importalternativ och välj att använda\n"
-        "textens formatmallar. Styckeformaten heter som i Korpus_mall.jsx. *.md är samma artiklar som vanlig text (Markdown).\n"
+        "textens formatmallar. Styckeformaten heter som i Korpus_mall.jsx. *.docx är samma artiklar som Word-filer.\n"
         "Sidorna 3, 4 och 19 (kartan, siffrorna, nästa nummer) räknas fram ur data: deras text står i ../sidor/sida-NN.txt.\n")
 
     # bilderna i originalupplösning
@@ -492,6 +693,7 @@ Rost #b7410e är enda accentfärgen. Mallsidorna i Korpus_mall.jsx:</p><ul>{mall
     open(hp, "w", encoding="utf-8").write(sida)
     subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", f"--print-to-pdf={os.path.join(NR1, 'sidplan.pdf')}",
                     "file://" + hp], capture_output=True, timeout=180)
+    utan_markdown()
     print("klart:", UT, "| bilder:", len(krediter), "| misslyckade:", [k[0] for k in krediter if not k[3]])
 
 
