@@ -181,5 +181,92 @@ def utfall(verk: str, runda: int = 1) -> None:
     print(json.dumps(ut, ensure_ascii=False, indent=1))
 
 
+# ---- enheter med flera band (not 2, 2026-11-12): Uppland VI–IX granskas som en enhet med 100 stenar ------------------------
+ENHETER = {"upp": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp", "seed": 2030, "viktor_seed": 2031, "n": 100}}
+VIKTOR_FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "flyttningar"]  # not 2: läget och flyttningarna
+
+
+def sammanstall_enhet(enhet: str) -> None:
+    E = ENHETER[enhet]
+    art, rader, strukna, behallna = {}, {}, [], 0
+    for v in E["verk"]:
+        art.update({a["signum"]: a for a in map(json.loads, open(os.path.join(ART, f"{v}.jsonl"), encoding="utf-8"))})
+        for p in sorted(glob.glob(os.path.join(FAKTA, E["delar"], f"{v}_*.jsonl"))):
+            for ln in open(p, encoding="utf-8"):
+                if ln.strip():
+                    r = json.loads(ln)
+                    rader[r["signum"]] = r
+    for sig, r in rader.items():
+        if sig not in art:
+            continue
+        t = art[sig]["text"]
+        tn, tt = norm(t), alnum(norm(t))
+        for f, i, post in list(poster(r)):
+            if finns(post.get("citat"), tn, tt):
+                behallna += 1
+                continue
+            strukna.append({"signum": sig, "falt": f})
+            if i is None:
+                r[f] = None
+            else:
+                r[f][i] = None
+        for f in FALT:
+            if isinstance(r.get(f), list):
+                r[f] = [x for x in r[f] if x]
+    with open(os.path.join(FAKTA, f"{enhet}.jsonl"), "w", encoding="utf-8") as fh:
+        for sig in sorted(rader, key=lambda s: int(re.sub(r"\D", "", s.split()[-1]) or 0)):
+            if sig in art:
+                fh.write(json.dumps(rader[sig], ensure_ascii=False) + "\n")
+    pool = sorted(s for s in art if s in rader)
+    stick = sorted(random.Random(E["seed"]).sample(pool, min(E["n"], len(pool))))
+    viktor = sorted(random.Random(E["viktor_seed"]).sample(stick, 10))
+    os.makedirs(os.path.join(FAKTA, "granskning"), exist_ok=True)
+    with open(os.path.join(FAKTA, "granskning", f"{enhet}_stickprov.jsonl"), "w", encoding="utf-8") as fh:
+        for s in stick:
+            fh.write(json.dumps({"signum": s, "pages": art[s]["pages"], "omfattar": art[s].get("omfattar"), "text": art[s]["text"],
+                                 "utplockning": rader[s]}, ensure_ascii=False) + "\n")
+    rapport = {"enhet": enhet, "verk": E["verk"], "artiklar": len(art), "utplockade": len(set(rader) & set(art)),
+               "saknas": sorted(set(art) - set(rader)), "uppgifter_behallna": behallna, "uppgifter_strukna": len(strukna),
+               "stickprov": stick, "slumpfro": E["seed"], "viktor": viktor, "viktor_slumpfro": E["viktor_seed"]}
+    os.makedirs(UTDATA, exist_ok=True)
+    json.dump(rapport, open(os.path.join(UTDATA, f"{enhet}_kontroll.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(json.dumps({k: v for k, v in rapport.items() if k not in ("stickprov",)}, ensure_ascii=False))
+
+
+def utfall_enhet(enhet: str) -> None:
+    """Granskarens bedömning (granskning/<enhet>_bedomning.jsonl) och Viktors (<enhet>_viktor.jsonl, går före).
+    Not 2: har Viktor fel/saknat i minst två fält som granskaren bedömt som rätt räknas granskaren som för snäll."""
+    g = {r["signum"]: r for r in map(json.loads, open(os.path.join(FAKTA, "granskning", f"{enhet}_bedomning.jsonl"), encoding="utf-8"))}
+    vp = os.path.join(FAKTA, "granskning", f"{enhet}_viktor.jsonl")
+    for_snall = 0
+    if os.path.exists(vp):
+        for r in map(json.loads, open(vp, encoding="utf-8")):
+            for f, b in r["bedomning"].items():
+                if b in ("fel", "saknat") and g.get(r["signum"], {}).get("bedomning", {}).get(f) == "rätt":
+                    for_snall += 1
+            g.setdefault(r["signum"], {"bedomning": {}})["bedomning"].update(r["bedomning"])
+    ut = {}
+    for grupp, falt in GRUPPER.items():
+        k = n = 0
+        for r in g.values():
+            for f in falt:
+                b = r["bedomning"].get(f)
+                if b in ("rätt", "fel", "saknat"):
+                    n += 1
+                    k += b == "rätt"
+        lo, hi = wilson(k, n)
+        ut[grupp] = {"ratt": k, "n": n, "andel": round(k / n, 4) if n else None, "wilson95": [lo, hi],
+                     "klarar": bool(n) and k / n >= 0.95 and lo >= 0.88}
+    rp = os.path.join(UTDATA, f"{enhet}_kontroll.json")
+    rapport = json.load(open(rp, encoding="utf-8"))
+    rapport.update({"granskning": ut, "viktor_kontroll": os.path.exists(vp), "granskaren_for_snall": for_snall >= 2,
+                    "viktor_avvikelser": for_snall})
+    json.dump(rapport, open(rp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(json.dumps({"granskning": ut, "viktor_avvikelser": for_snall}, ensure_ascii=False, indent=1))
+
+
 if __name__ == "__main__":
-    {"sammanstall": sammanstall, "utfall": utfall}[sys.argv[1]](sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 1)
+    if sys.argv[2] in ENHETER:
+        {"sammanstall": sammanstall_enhet, "utfall": utfall_enhet}[sys.argv[1]](sys.argv[2])
+    else:
+        {"sammanstall": sammanstall, "utfall": utfall}[sys.argv[1]](sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 1)
