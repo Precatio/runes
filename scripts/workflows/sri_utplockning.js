@@ -1,5 +1,5 @@
 // SRI-utplockning för A1, tillägg 1 (instruktionen = Södermanland runda 2 + not 2:s tillägg om artiklar med flera stenar
-// + not 3:s regler 6 och 7, från Uppland runda 2).
+// + not 3:s regler 6 och 7, från Uppland runda 2, + not 4:s regler 8 och 9 och rättelsen av 'inmurad', från de övriga banden).
 // Körs med Workflow({scriptPath: "scripts/workflows/sri_utplockning.js", args: {delar: ["sri6_1", ...], verk: "SRI VI, Upplands runinskrifter 1", ut: "delar_upp"}})
 // Indata: /Volumes/2TB/Antigrvity/Runes/downloads/sri_artiklar/batcher/<del>.jsonl (scripts/sri_artiklar.py + omfördelning ~250k tecken).
 export const meta = {
@@ -30,7 +30,7 @@ Schema per rad:
  "flyttningar": [{"ar": heltal|null, "fran": text|null, "till": text|null, "orsak": "kyrkbygge eller restaurering"|"vägbygge"|"odling, dikning eller annat jordbruk"|"samling eller museum"|"återresning på samma plats eller i närheten"|"annat"|"okänd", "citat", "sida"}],
  "forsvunnen": {"forsvunnen_vid_utgavan": true|false, "forsvann_ar": heltal|null, "citat", "sida"} | null,   // bara om artikeln talar om att stenen försvunnit (nu eller tidigare)
  "aterfunnen": [{"ar": heltal|null, "plats": text|null, "citat", "sida"}],
- "inmurad": {"varde": true, "citat", "sida"} | null,   // satt/sitter inmurad i kyrka, grund, trappa, mur e.d.
+ "inmurad": {"varde": true, "citat", "sida"} | null,   // satt/sitter inmurad i en kyrka eller annan byggnad: vägg, mur, grund, golv eller tröskel i en dörröppning (en trappsten UTANFÖR byggnaden är inte inmurad)
  "fragment": {"varde": true, "citat", "sida"} | null,  // utgivaren kallar den fragment/bit/stycke eller säger att stora delar saknas
  "kallor_i_ordning": {"varde": ["B. 754","L. 980","J. Peringskiöld, Mon.", ...], "citat", "sida"} | null,   // källorna i artikelns litteraturrad (\"L i t t e r a t u r :\" eller liknande, ofta också \"B. 712\" i rubrikraden), i den ordning de står, avskrivna kort
  "samma_sten_som": [{"varde": signum eller ställe, "citat", "sida"}],   // bara där utgivaren säger att det är samma sten eller del av samma sten
@@ -38,7 +38,7 @@ Schema per rad:
 
 Årtal: "ar" fylls bara med ett årtal som står i texten för just den händelsen; annars null.
 
-SJU REGLER SOM ÄR LÄTTA ATT MISSA (följ dem noga):
+NIO REGLER SOM ÄR LÄTTA ATT MISSA (följ dem noga):
 1. HITTAD OCH REST PÅ ANNAN PLATS = FLYTTNING. Om stenen hittades (i jorden, en åker, ett dike, en mur, en grund, en trappa e.d.) och sedan restes, ställdes upp eller fördes till en ANNAN plats än fyndplatsen, så är det en post i "flyttningar" (fran = fyndplatsen, till = den nya platsen, ar = året om det står) och lage_vid_utgavan = "flyttad". Det gäller också när utgivaren bara skriver att stenen "står nu" någon annanstans än där den först omtalas.
 2. ÅTERRESNING. Om stenen restes upp igen på samma plats eller i närheten (efter att ha fallit, legat omkull eller varit nedgrävd), lägg en post i "flyttningar" med orsak "återresning på samma plats eller i närheten" (med år om det står). Säger utgivaren att den står på samma plats som förut är lage_vid_utgavan "ursprunglig plats".
 3. ÅRTAL SOM STÅR I TEXTEN SKA MED. Står ett år eller en period för händelsen ("1846", "år 1907", "vintern 1863—64", "1877 byggdes"), fyll "ar" med det (första året vid ett intervall). Läs hela meningen och meningarna närmast före. Relativa uttryck som "för några år sedan" ger null.
@@ -46,6 +46,8 @@ SJU REGLER SOM ÄR LÄTTA ATT MISSA (följ dem noga):
 5. FYNDPLATS ÄR INTE URSPRUNGLIG PLATS. Fyll ursprunglig_plats_text bara när utgivaren säger att stenen ursprungligen stod, restes eller hörde hemma där, eller att den står kvar på sin gamla plats. En fyndplats (där stenen hittades) hör hemma i flyttningar.fran eller aterfunnen.plats, inte i ursprunglig_plats_text, om inte utgivaren själv säger att den också var den ursprungliga platsen.
 6. EN INMURNING ÄR EN FLYTTNING. Murades stenen in eller lades den in i en kyrka eller annan byggnad (i en vägg eller mur, som tröskel, i en grund eller i ett golv), är det en post i "flyttningar": till = byggnaden och platsen, orsak "kyrkbygge eller restaurering" om det gällde en kyrka eller utgivaren säger att det skedde vid ett bygge, annars "annat". Att stenen senare togs ut ur byggnaden är en egen post.
 7. KÄLLANS ÅR ÄR INTE HÄNDELSENS ÅR. "ar" fylls bara med året då flyttningen skedde. Ett år då någon beskrev, ritade, inventerade eller rapporterade läget (t.ex. "Dybeck 1864", "inventariet 1829") ger ar = null, om inte texten säger att flyttningen skedde just det året. Relativa uttryck ("förlidna sommar", "sedermera", "för fem år sedan") ger null.
+8. ATT LIGGA I EN BYGGNAD ÄR INGEN FLYTTNING. Står det bara att stenen "låg i kyrkdörren" eller "satt i muren", utan att utgivaren säger att den förts eller murats in dit, blir det INGEN post i "flyttningar" (beskriv läget i "inmurad"/"lage_vid_utgavan"). Regel 6 gäller bara när utgivaren säger att stenen murades in eller lades in.
+9. ÅRTAL OCH ORSAKER, FÖRTYDLIGANDEN. Decennier ("på 1850-talet") och osäkra uppgifter ("torde", "omkring", "troligen") ger ar = null; ett spann med säkra årtal ("1863—64") ger första året. Återresning på eller strax intill platsen (inom omkring 100 m, "i omedelbar närhet") = "återresning på samma plats eller i närheten", även om stenen flyttades några meter. Monumenthus, museum, samling eller park som samlar runstenar = "samling eller museum". Kyrkogårdens utvidgning = "kyrkbygge eller restaurering".
 
 När filen är skriven: kontrollera med Python att antalet rader = antalet stenar i indata och att varje rad är giltig JSON. Svara sedan bara med en rad: "${namn}: <antal stenar> stenar skrivna, <antal med flyttningar> med flyttningar, <antal försvunna vid utgåvan> försvunna".`
 
