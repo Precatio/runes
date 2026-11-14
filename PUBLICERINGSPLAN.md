@@ -197,6 +197,8 @@ Numren byggs med `utdata/tidskrift/bygg_tidskrift.py` (sv + en) och läggs upp p
 | D11 | Landskapslagarnas priser | utgåvor av lagarna | S | 2028 | litet |
 | D12 | 1314 års sexårsgärd | kontrollerad 10 nov 2026 | A2 | klar | – |
 | D13 | Häradsekonomiska kartan | Historiska kartor, utan inloggning; 116 blad runt 201 stenar; ej georefererade | vägen (L2), D | när Viktor ritar | medel |
+| D14 | SRI:s fyndhistorik (läget, flyttningar, försvinnanden och återfynd, samma sten, källor, utgivarens datering) | Digitala SRI, RAÄ (källregeln steg 1–2); utplockning med Claude Sonnet, kontroll med Claude Opus och Viktor (A1-tillägg 1, noterna 1–3) | A1, C | Sö och Uppland nov 2026; övriga band före A1 | stort (agenter) |
+| D15 | Fler SRI-fält: **mått** (höjd, bredd, tjocklek, runhöjd, slingans bredd), **utgivarens attribuering** med säkerhetsgrad, **ursprunglig plats i utgivarens ord** (väg, bro, gravfält, hög, gräns), **material och skick** (bergart, vittring, skador, färgspår) | samma väg som D14: ett fältschema och en utplockning per band, citatkontroll och stickprov med krav 95 %; låst plan innan ett fält används i ett prov (Viktor 14 nov 2026) | D (2027), R (2028), S (2028), mått och storlek | feb–apr 2027, efter A1-körningen, ett band i taget | stort (agenter; ungefär som D14) |
 
 ## 5. Utkast som väntar (läge 11 nov 2026, kontrollerat i Firestore)
 
