@@ -101,7 +101,7 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
           <p className="text-xs text-slate-500">
             {week ? `${dayLabel(week.from)} – ${dayLabel(week.to)}. ` : ""}
             Ur publiceringsschemat (data/publiceringsschema.json). Godkända artiklar schemaläggs till sin tid och deras
-            engelska inlägg läggs i Bluesky-kön samma dag kl. 18.
+            engelska inlägg läggs i Bluesky-kön och går ut samma dag kl. 13 (kön postar tisdagar och fredagar).
           </p>
         </div>
         <div className="flex gap-1.5">
@@ -175,7 +175,7 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
             {chosen.map(e => (
               <li key={e.id}>
                 {capital(dayLabel(e.datum))} kl. {e.tid}: <span translate="no">{e.title || e.titel}</span>
-                {e.bluesky ? (e.body_en ? " – och Bluesky-inlägget samma dag kl. 18" : " – inget Bluesky-inlägg (ingen engelsk utgåva)") : ""}
+                {e.bluesky ? (e.body_en ? " – och Bluesky-inlägget samma dag kl. 13" : " – inget Bluesky-inlägg (ingen engelsk utgåva)") : ""}
               </li>
             ))}
           </ul>

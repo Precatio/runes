@@ -1,9 +1,11 @@
-# Bluesky-kön (data/bluesky/ko.json) utan Viktors dator: högst ett inlägg om dagen från kl. 18 svensk tid, exakt som
+# Bluesky-kön (data/bluesky/ko.json) utan Viktors dator: ett inlägg tisdagar och fredagar från kl. 13 svensk tid
+# (Viktor 2026-11-14; samma dagar som artiklarna, så dagens artikel går först), exakt som
 # den lokala appen postar det (scripts/ci_bluesky.py → scripts/bluesky_post.py: länkkortet med den engelska
 # delningsbilden, "credit" som svar), och posted/posted_at committas tillbaka till kön.
 #
-# GitHub-cron går i UTC: 16:07 är 18:07 på sommaren och 17:07 är 18:07 på vintern; skriptet kontrollerar själv att
-# klockan är minst 18 i Stockholm och att inget har postats i dag. 19:37 UTC tar igen en körning som GitHub hoppade över.
+# GitHub-cron går i UTC: 11:07 är 13:07 på sommaren och 12:07 är 13:07 på vintern; skriptet kontrollerar själv att det
+# är tisdag eller fredag, att klockan är minst 13 i Stockholm och att inget har postats i dag. 14:37 UTC tar igen en
+# körning som GitHub hoppade över.
 #
 # Ofarligt innan det är påslaget: utan hemligheterna BLUESKY_HANDLE och BLUESKY_APP_PASSWORD, eller så länge
 # data/bluesky/postning.json säger "postar": "lokal" (den lokala appen postar), skrivs bara en notis.
@@ -11,9 +13,9 @@ name: Bluesky-kön
 
 on:
   schedule:
-    - cron: "7 16 * * *"
-    - cron: "7 17 * * *"
-    - cron: "37 19 * * *"
+    - cron: "7 11 * * 2,5"
+    - cron: "7 12 * * 2,5"
+    - cron: "37 14 * * 2,5"
   workflow_dispatch:
 
 permissions:

@@ -1,13 +1,14 @@
 """Bluesky-kön (data/bluesky/ko.json) postad av GitHub Actions (.github/workflows/bluesky.yml) i stället för av
 analysmotorn på Viktors dator: samma inlägg, på samma sätt (scripts/bluesky_post.py: länkkortet med den engelska
-delningsbilden, svaret med "credit", posted/posted_at tillbaka i kön), högst ett om dagen från kl. 18 svensk tid.
+delningsbilden, svaret med "credit", posted/posted_at tillbaka i kön), ett inlägg tisdagar och fredagar från kl. 13
+svensk tid (Viktor 2026-11-14).
 
 Postar bara när allt detta gäller, annars en kort notis och slut (avslutas med 0):
 * BLUESKY_HANDLE och BLUESKY_APP_PASSWORD finns (GitHub-hemligheterna);
 * data/bluesky/postning.json säger "postar": "ci" (annars postar den lokala appen; bara en av dem får göra det);
-* klockan är 18 eller senare i Stockholm (arbetsflödet körs både 16 och 17 UTC, för sommar- och vintertid, och en gång
-  till på kvällen om en körning uteblir);
-* inget inlägg ur kön har gått ut i dag, och ett inlägg är dags.
+* det är tisdag eller fredag och klockan är 13 eller senare i Stockholm (arbetsflödet körs både 11 och 12 UTC, för
+  sommar- och vintertid, och en gång till på eftermiddagen om en körning uteblir);
+* inget inlägg ur kön har gått ut i dag, och ett inlägg är dags: dagens (artikeln som publicerades i dag) före äldre.
 
 Innan något postas jämförs med kontots egna inlägg de senaste två veckorna (Blueskys öppna API): finns inlägget redan
 där med exakt samma text – postat men inte bokfört, t.ex. för att en push misslyckades – skrivs dess adress in i kön i
@@ -31,7 +32,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, ROOT)
 
 STOCKHOLM = ZoneInfo("Europe/Stockholm")
-HOUR = 18
+from src.bluesky_queue import POST_DAY_NAMES, POST_HOUR as HOUR, pick_due, post_day  # noqa: E402
 PUBLIC_API = "https://public.api.bsky.app/xrpc"
 
 
@@ -57,14 +58,9 @@ def posted_today(items: list[dict], today: dt.date) -> bool:
 
 
 def due_item(items: list[dict], today: dt.date, limit: int) -> dict | None:
-    """The item bluesky_post.queue would send: the earliest unposted one whose date has come and that fits."""
-    iso = today.isoformat()
-    for i in items:
-        if i.get("posted") or i["date"] > iso:
-            continue
-        if len(composed(i)) <= limit:
-            return i
-    return None
+    """The item to send today: one dated today first, otherwise the earliest unposted one whose date has come and that
+    fits (src/bluesky_queue.pick_due, as the local poster picks it)."""
+    return pick_due(items, today.isoformat(), lambda i: len(composed(i)) <= limit)
 
 
 def composed(item: dict) -> str:
@@ -80,6 +76,8 @@ def decide(now: dt.datetime, q: dict, place: str, have_secrets: bool, limit: int
     if place != "ci":
         return "data/bluesky/postning.json säger att den lokala appen postar kön; GitHub Actions gör ingenting.", None
     local = now.astimezone(STOCKHOLM)
+    if not post_day(local.date()):
+        return f"Kön postas {POST_DAY_NAMES}; i dag är det inte dags.", None
     if local.hour < HOUR:
         return f"Klockan är {local:%H:%M} i Stockholm; kön postas från {HOUR}:00.", None
     items = q.get("items", [])

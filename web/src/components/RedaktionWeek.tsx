@@ -133,7 +133,7 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
             res.bluesky = "förfrågan fanns redan (inlägget läggs inte i kön två gånger)";
           } else {
             await setDoc(reqRef, { ...blueskyRequest(fresh, post.slug, uid), created: serverTimestamp() });
-            res.bluesky = `i kön ${fresh.datum} kl. 18 – läggs in vid nästa export, inom ungefär en halvtimme`;
+            res.bluesky = `i kön ${fresh.datum} kl. 13 – läggs in vid nästa export, inom ungefär en halvtimme`;
           }
         } catch (e) {
           res.bluesky = `förfrågan kunde inte skapas (${message(e)}); lägg inlägget i data/bluesky/ko.json för hand`;
@@ -156,7 +156,7 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
           <h2 className="text-lg font-serif font-bold">Veckans publiceringar (vecka {isoWeek(week.from)})</h2>
           <p className="text-sm text-slate-500">
             {capital(dayLabel(week.from))} – {dayLabel(week.to)}. Godkända artiklar schemaläggs till sin tid, och deras
-            engelska inlägg läggs i Bluesky-kön samma dag kl. 18.
+            engelska inlägg läggs i Bluesky-kön och går ut samma dag kl. 13 (kön postar tisdagar och fredagar).
           </p>
         </div>
         <div className="grid grid-cols-2 gap-2">
@@ -234,7 +234,7 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
             {chosen.map(({ row, post }) => (
               <li key={rowKey(row)}>
                 {capital(dayLabel(row.datum))} kl. {row.tid || "07:00"}: <span translate="no">{post?.title || row.titel}</span>
-                {row.bluesky ? (post?.bodyEn ? " – och Bluesky-inlägget samma dag kl. 18" : " – inget Bluesky-inlägg (ingen engelsk utgåva)") : ""}
+                {row.bluesky ? (post?.bodyEn ? " – och Bluesky-inlägget samma dag kl. 13" : " – inget Bluesky-inlägg (ingen engelsk utgåva)") : ""}
               </li>
             ))}
           </ul>

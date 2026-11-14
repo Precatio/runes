@@ -121,35 +121,47 @@ def _queue(*items):
     return {"items": [{"slug": "s", "text": "t", "tags": [], **i} for i in items]}
 
 
-EVENING = dt.datetime(2026, 11, 11, 17, 7, tzinfo=UTC)  # 18:07 in Stockholm (winter)
+EVENING = dt.datetime(2026, 11, 13, 12, 7, tzinfo=UTC)  # 13:07 in Stockholm (winter), a Friday – a posting day
 
 
 def test_bluesky_needs_secrets_and_the_switch():
-    q = _queue({"date": "2026-11-11"})
+    q = _queue({"date": "2026-11-13"})
     assert cb.decide(EVENING, q, "ci", False)[1] is None
     what, item = cb.decide(EVENING, q, "lokal", True)
     assert item is None and "lokala appen" in what
     assert cb.decide(EVENING, q, "ci", True)[0] == "post"
 
 
-def test_bluesky_not_before_six_swedish_time_summer_and_winter():
-    q = _queue({"date": "2026-07-01"})
-    assert cb.decide(dt.datetime(2026, 7, 1, 15, 7, tzinfo=UTC), q, "ci", True)[1] is None  # 17:07 CEST
-    assert cb.decide(dt.datetime(2026, 7, 1, 16, 7, tzinfo=UTC), q, "ci", True)[0] == "post"  # 18:07 CEST
+def test_bluesky_only_on_tuesdays_and_fridays_from_one_swedish_time_summer_and_winter():
+    q = _queue({"date": "2026-07-03"})  # Friday 3 July 2026
+    assert cb.decide(dt.datetime(2026, 7, 3, 10, 7, tzinfo=UTC), q, "ci", True)[1] is None  # 12:07 CEST
+    assert cb.decide(dt.datetime(2026, 7, 3, 11, 7, tzinfo=UTC), q, "ci", True)[0] == "post"  # 13:07 CEST
+    q = _queue({"date": "2026-11-13"})
+    assert cb.decide(dt.datetime(2026, 11, 13, 11, 7, tzinfo=UTC), q, "ci", True)[1] is None  # 12:07 CET
+    # not on the other days, whatever the hour
     q = _queue({"date": "2026-11-11"})
-    assert cb.decide(dt.datetime(2026, 11, 11, 16, 7, tzinfo=UTC), q, "ci", True)[1] is None  # 17:07 CET
+    for day in (9, 11, 12, 14, 15):  # Monday, Wednesday, Thursday, Saturday, Sunday
+        what, item = cb.decide(dt.datetime(2026, 11, day, 12, 7, tzinfo=UTC), q, "ci", True)
+        assert item is None and "tisdagar och fredagar" in what
+    assert cb.decide(dt.datetime(2026, 11, 10, 12, 7, tzinfo=UTC), _queue({"date": "2026-11-10"}), "ci", True)[0] == "post"  # Tuesday
 
 
-def test_bluesky_at_most_one_a_day_and_the_earliest_due():
-    posted = {"date": "2026-11-10", "posted": "https://bsky.app/x", "posted_at": "2026-11-11T17:05:00+00:00"}
-    assert cb.decide(EVENING, _queue(posted, {"date": "2026-11-11"}), "ci", True)[1] is None
-    # yesterday evening in Sweden is not today
+def test_bluesky_at_most_one_a_day_and_todays_article_first():
+    posted = {"date": "2026-11-10", "posted": "https://bsky.app/x", "posted_at": "2026-11-13T12:05:00+00:00"}
+    assert cb.decide(EVENING, _queue(posted, {"date": "2026-11-13"}), "ci", True)[1] is None
+    # Tuesday evening in Sweden is not today
     late = {**posted, "posted_at": "2026-11-10T22:30:00+00:00"}
-    assert cb.decide(EVENING, _queue(late, {"date": "2026-11-11"}), "ci", True)[0] == "post"
-    q = _queue({"date": "2026-11-12", "slug": "later"}, {"date": "2026-11-09", "slug": "first"}, {"date": "2026-11-10", "slug": "second"})
+    assert cb.decide(EVENING, _queue(late, {"date": "2026-11-13"}), "ci", True)[0] == "post"
+    # without a post dated today: the earliest due in list order
+    q = _queue({"date": "2026-11-14", "slug": "later"}, {"date": "2026-11-09", "slug": "first"}, {"date": "2026-11-10", "slug": "second"})
     assert cb.decide(EVENING, q, "ci", True)[1]["slug"] == "first"
+    # the day's article goes before an older backlog
+    q = _queue({"date": "2026-11-09", "slug": "old"}, {"date": "2026-11-13", "slug": "today"})
+    assert cb.decide(EVENING, q, "ci", True)[1]["slug"] == "today"
     too_long = {"date": "2026-11-01", "slug": "long", "text": "x" * 301}
-    assert cb.decide(EVENING, _queue(too_long, {"date": "2026-11-11", "slug": "ok"}), "ci", True)[1]["slug"] == "ok"
+    assert cb.decide(EVENING, _queue(too_long, {"date": "2026-11-12", "slug": "ok"}), "ci", True)[1]["slug"] == "ok"
+    removed = {"date": "2026-11-13", "slug": "gone", "removed": True}
+    assert cb.decide(EVENING, _queue(removed, {"date": "2026-11-12", "slug": "kept"}), "ci", True)[1]["slug"] == "kept"
 
 
 def test_the_switch_file_and_the_local_thread(tmp_path, monkeypatch):
@@ -245,7 +257,7 @@ def test_merge_requests_uses_the_same_insertion_as_the_local_approval():
     assert [i["slug"] for i in ko["items"]] == ["gammal", "ny", "v2", "v3"]       # before the day's other post
     assert ko["items"][1] == {"date": "2026-11-17", "slug": "ny", "en": True, "text": "New article.",
                               "tags": ["runestones", "VikingAge"]}
-    assert handled["ny"]["utfall"] == "i kön 2026-11-17 kl. 18"
+    assert handled["ny"]["utfall"] == "i kön 2026-11-17 kl. 13"
     assert handled["gammal"]["utfall"] == "stod redan i kön"                      # posted counts as queued
     assert "engelsk" in handled["svensk"]["utfall"] and "300" in handled["lang"]["utfall"]
     assert "utkast" not in handled and "saknas" not in handled                    # not scheduled (yet): waits
@@ -264,7 +276,7 @@ def test_ci_merges_the_requests_into_the_queue_files(tmp_path, monkeypatch):
     db = FakeDb({cp.REQUESTS: {"ny": _request("ny", "2026-11-17"), "vantar": _request("vantar", "2026-11-20")}})
     posts = [{"slug": "ny", **LIVE}, {"slug": "vantar", "published": False}]
     now = dt.datetime(2026, 11, 16, 8, 7, tzinfo=UTC)
-    assert cp.merge_bluesky_requests(posts, db, now) == ["ny: i kön 2026-11-17 kl. 18"]
+    assert cp.merge_bluesky_requests(posts, db, now) == ["ny: i kön 2026-11-17 kl. 13"]
     ko = json.loads(ko_path.read_text())
     assert ko["_om"] == "kö" and [i["slug"] for i in ko["items"]] == ["ny", "annan"]
     handled = json.loads(handled_path.read_text())
@@ -275,7 +287,7 @@ def test_ci_merges_the_requests_into_the_queue_files(tmp_path, monkeypatch):
     assert (ko_path.stat().st_mtime_ns, handled_path.stat().st_mtime_ns) == (ko_mtime, h_mtime)
     # once the waiting article is scheduled, its request goes in; the first one is not added twice
     posts[1] = {"slug": "vantar", **LIVE}
-    assert cp.merge_bluesky_requests(posts, db, now) == ["vantar: i kön 2026-11-20 kl. 18"]
+    assert cp.merge_bluesky_requests(posts, db, now) == ["vantar: i kön 2026-11-20 kl. 13"]
     assert [i["slug"] for i in json.loads(ko_path.read_text())["items"]] == ["ny", "annan", "vantar"]
     assert cp.merge_bluesky_requests(posts, FakeDb({}), now) == []                # no requests at all
 

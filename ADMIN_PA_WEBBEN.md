@@ -13,7 +13,7 @@ att det är **avstängt tills du har gjort stegen nedan**. Innan dess gör arbet
 | Export av artiklarna ur Firestore | GitHub Actions, `.github/workflows/publicera.yml` → `scripts/ci_publicera.py` → `src/site_export.py` | Var 30:e minut (:07 och :37) och för hand |
 | Bluesky-förfrågningar från /redaktion in i kön | Samma körning: `scripts/ci_publicera.py` läser `bluesky_forfragningar` och lägger nya i `data/bluesky/ko.json` (`src/bluesky_queue.py`) | Var 30:e minut, med exporten |
 | Veckoplanen till Firestore | `scripts/publiceringsschema_sync.py` på datorn | När du har ändrat `data/publiceringsschema.json` |
-| Bluesky-kön (`data/bluesky/ko.json`) | GitHub Actions, `.github/workflows/bluesky.yml` → `scripts/ci_bluesky.py` → `scripts/bluesky_post.py`, **eller** den lokala appens tråd i `api/main.py` | Från kl. 18 svensk tid. Filen `data/bluesky/postning.json` avgör vem som postar |
+| Bluesky-kön (`data/bluesky/ko.json`) | GitHub Actions, `.github/workflows/bluesky.yml` → `scripts/ci_bluesky.py` → `scripts/bluesky_post.py`, **eller** den lokala appens tråd i `api/main.py` | Tisdagar och fredagar från kl. 13 svensk tid (dagens artikel först). Filen `data/bluesky/postning.json` avgör vem som postar |
 | Webbadmin `/redaktion` | Den statiska webbplatsen. Google-inloggning (Firebase Auth) och Firestore direkt från webbläsaren, skyddat av `web/firestore.rules` | När du vill |
 | Skriva och ändra text, R-figurer, ta bort, veckans artikel, redigera Bluesky-kön | Den lokala appen, som förut | – |
 
@@ -221,7 +221,7 @@ npx firebase-tools@14 deploy --only firestore --project runes-1656b
   sidvisningarna en gång om dygnet. Dessutom läses alla Bluesky-förfrågningar i varje körning. Med två om veckan blir
   det cirka 100 om året, alltså upp till cirka 4 800 läsningar om dygnet efter ett år. Firestores gratiskvot är
   50 000 läsningar om dygnet.
-- **Bluesky-kön och två som committar:** "Bluesky-kön" (kl. 18) och "Publicera artiklarna" kan båda ändra `ko.json`. Om
+- **Bluesky-kön och två som committar:** "Bluesky-kön" (tisdagar och fredagar kl. 13) och "Publicera artiklarna" kan båda ändra `ko.json`. Om
   en förfrågan läggs in i samma minut som kvällens inlägg markeras som postat kan Bluesky-jobbets `git pull --rebase`
   få en konflikt. Jobbet blir då rött med instruktionen att fylla i `posted` för hand. Det är osannolikt, eftersom
   exporten körs :07 och :37, men godkänn helst inte veckan precis kring kl. 18.

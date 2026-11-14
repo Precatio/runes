@@ -9,7 +9,7 @@ vanliga lösenordet. Det ligger i .env som BLUESKY_HANDLE och BLUESKY_APP_PASSWO
     .venv/bin/python -m scripts.bluesky_post --nu SLUG [--posta]        # ett visst inlägg ur kön nu, före sitt datum
 Ett inlägg i kön kan ha "credit": en text som postas som svar direkt under inlägget (t.ex. de öppna skanningarnas
 skannare, institution, projekt, licens och DOI); svarets adress skrivs i "credit_reply".
-Kön körs dagligen kl. 18 – antingen av analysmotorn (api/main.py, tråden bluesky; BLUESKY_AUTOPOST=0 eller
+Kön körs tisdagar och fredagar kl. 13 (src/bluesky_queue.POST_DAYS) – antingen av analysmotorn (api/main.py, tråden bluesky; BLUESKY_AUTOPOST=0 eller
 BLUESKY_LOCAL=0 stänger av) eller av GitHub Actions (.github/workflows/bluesky.yml, scripts/ci_bluesky.py). Vilken av
 dem som postar står i data/bluesky/postning.json ("postar": "lokal" eller "ci"; posting_place()), så att inget inlägg
 går ut två gånger. BLUESKY_ARTICLES=site läser artiklarna ur webbplatsens export (web/content/articles.json) i stället
@@ -233,7 +233,8 @@ def now(slug: str, post: bool) -> None:
 
 def queue(post_due: bool):
     """data/bluesky/ko.json: posts the founder has approved, each with a planned date. At most ONE due post is sent per
-    run (the earliest), so that a missed day does not send several at once; the post's address is written back."""
+    run (one dated today first, otherwise the earliest), so that a missed day does not send several at once; the post's
+    address is written back. The posting days and hour are decided by the caller (src/bluesky_queue.POST_DAYS/POST_HOUR)."""
     q = json.load(open(KO, encoding="utf-8"))
     today = dt.date.today().isoformat()
     bad = []
@@ -245,10 +246,11 @@ def queue(post_due: bool):
         print(f"{item['date']} {item['slug'][:40]:40} {n:3}/{LIMIT}  {state}")
     if bad:
         print("Varning: för långa inlägg i kön (kortas av grundaren eller Claude):", ", ".join(bad), file=sys.stderr)
-    due = [i for i in q["items"] if not i.get("posted") and i["date"] <= today and i["slug"] not in bad]
-    if not post_due or not due:
+    from src.bluesky_queue import pick_due
+    item = pick_due(q["items"], today, lambda i: i["slug"] not in bad)  # today's post first, then the earliest due
+    if not post_due or not item:
         return
-    post_item(q, due[0])
+    post_item(q, item)
 
 
 def main(argv=None):

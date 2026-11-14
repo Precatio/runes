@@ -23,6 +23,7 @@ from pydantic import BaseModel, Field, ValidationError
 from api.auth import require_admin
 from api.routers import blog
 from src.bluesky_queue import LIMIT, composed_length, queue_bluesky  # noqa: F401 - shared with scripts/ci_publicera.py
+from src.bluesky_queue import POST_HOUR
 
 router = APIRouter()
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -196,7 +197,7 @@ def approve(req: ApproveRequest, admin: dict = Depends(require_admin)):
                             ko = json.load(fh)
                     added = queue_bluesky(ko, data["slug"], entry["datum"], entry["bluesky"])
                     ko_changed |= added
-                    out["bluesky"] = f"i kön {entry['datum']} kl. 18" if added else "stod redan i kön"
+                    out["bluesky"] = f"i kön {entry['datum']} kl. {POST_HOUR}" if added else "stod redan i kön"
                 except (OSError, ValueError, KeyError) as e:  # the article is scheduled; the post can be queued by hand
                     out["bluesky"] = f"kön kunde inte läsas ({e}); lägg inlägget i data/bluesky/ko.json för hand"
         entry["godkand"] = dt.datetime.now(TZ).isoformat(timespec="seconds")
