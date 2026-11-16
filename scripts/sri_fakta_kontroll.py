@@ -197,7 +197,11 @@ ENHETER = {"upp": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp
            "sm2": {"verk": ["sri4"], "delar": "delar_sm2", "seed": 2048, "viktor_seed": 2049, "n": 100, "utom": "sm"},
            # not 7: Västergötland och Öland runda 2 (Öland: samma 40 stenar, omlästa)
            "vg2": {"verk": ["sri5"], "delar": "delar_vg2", "seed": 2050, "viktor_seed": 2051, "n": 100, "utom": "vg"},
-           "ol2": {"verk": ["sri1"], "delar": "delar_ol2", "seed": 2052, "viktor_seed": 2053, "n": 100}}
+           "ol2": {"verk": ["sri1"], "delar": "delar_ol2", "seed": 2052, "viktor_seed": 2053, "n": 100},
+           # not 8: Östergötland runda 2 (granskaren för snäll i runda 1), omläst med reglerna 1–13
+           "og2": {"verk": ["sri2"], "delar": "delar_og2", "seed": 2054, "viktor_seed": 2055, "n": 100, "utom": "og"},
+           # not 8: de mellansvenska banden runda 2 = ny granskning av samma 81 stenar (alla låg i runda 1), samma utplockning
+           "msv2": {"verk": ["sri13", "sri14a", "sri14b", "sri15"], "delar": "delar_ovr", "seed": 2056, "viktor_seed": 2057, "n": 100}}
 VIKTOR_FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "forsvunnen", "aterfunnen"]  # not 7: läget, försvunnen och återfunnen
 
 
@@ -256,6 +260,10 @@ def utfall_enhet(enhet: str) -> None:
     Not 2: har Viktor fel/saknat i minst två fält som granskaren bedömt som rätt räknas granskaren som för snäll."""
     g = {r["signum"]: r for r in map(json.loads, open(os.path.join(FAKTA, "granskning", f"{enhet}_bedomning.jsonl"), encoding="utf-8"))}
     vp = os.path.join(FAKTA, "granskning", f"{enhet}_viktor.jsonl")
+    kontrollant = "Viktor"
+    if not os.path.exists(vp):  # not 8: blind Opus-läsning + Claudes utslag där den och granskaren är oense
+        vp = os.path.join(FAKTA, "granskning", f"{enhet}_kontroll3_avgjord.jsonl")
+        kontrollant = "Claude (not 8)"
     for_snall = 0
     if os.path.exists(vp):
         for r in map(json.loads, open(vp, encoding="utf-8")):
@@ -277,7 +285,8 @@ def utfall_enhet(enhet: str) -> None:
                      "klarar": bool(n) and k / n >= 0.95 and lo >= 0.88}
     rp = os.path.join(UTDATA, f"{enhet}_kontroll.json")
     rapport = json.load(open(rp, encoding="utf-8"))
-    rapport.update({"granskning": ut, "viktor_kontroll": os.path.exists(vp), "granskaren_for_snall": for_snall >= 2,
+    rapport.update({"granskning": ut, "viktor_kontroll": os.path.exists(vp),
+                    "kontrollant": kontrollant if os.path.exists(vp) else None, "granskaren_for_snall": for_snall >= 2,
                     "viktor_avvikelser": for_snall})
     json.dump(rapport, open(rp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(json.dumps({"granskning": ut, "viktor_avvikelser": for_snall}, ensure_ascii=False, indent=1))
