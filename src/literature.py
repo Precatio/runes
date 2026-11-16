@@ -207,8 +207,14 @@ def page_label(p: str) -> str:
 
 
 # SRI's own article for a stone: "179. Kölaby sn, Stommen." or "233. Östra Stenby kyrka, Östkinds hd."
+def entry_number(group: str | None) -> int | None:
+    """Rubrikens nummer utan OCR:ens mellanslag ("2 0" -> 20)."""
+    return int(re.sub(r"\s", "", group)) if group else None
+
+
 _ORD = ("sn", "socken", "kyrka", "kyrkan", "kyrkogård", "kyrkogården", "hd", "stad", "staden", "landsförs")
 # Nyckelordet får vara slutled ("Domkyrkan"). OCR:en spärrar ibland rubrikens ord ("Skånela k y r k a ."): bokstäverna får skiljas av ett mellanslag. En rubrik kan
-# gälla flera stenar ("309—311. Harg, Skånela sn."): grupp 2 är då sista numret.
-ENTRY = re.compile(r"^\s*(\d{1,4})(?:\s?[—–-]\s?(\d{1,4}))?\.\s+[A-ZÅÄÖ][^\n]{2,120}?(?i:"
+# gälla flera stenar ("309—311. Harg, Skånela sn."): grupp 2 är då sista numret. OCR:en sätter ibland ett mellanslag
+# före punkten ("4 . Eks sn, Stora Ek.") och mellan siffrorna ("2 0 . Gösslunda sn"): numret läses med entry_number().
+ENTRY = re.compile(r"^\s*(\d(?:\s?\d){0,3})(?:\s?[—–-]\s?(\d(?:\s?\d){0,3}))?\s?\.\s+[A-ZÅÄÖ][^\n]{2,120}?(?i:"
                    + "|".join(r"\s?".join(w) for w in _ORD) + r")(?![\wåäöÅÄÖ])", re.M)

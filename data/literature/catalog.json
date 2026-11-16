@@ -292,7 +292,11 @@
     "sri_ostergotland_b02_h03_text.pdf"
    ],
    "entry_prefix": "Ög",
-   "licence": "fri: upphovsrätten utgången (författarna döda före 1956)"
+   "licence": "fri: upphovsrätten utgången (författarna döda före 1956)",
+   "entry_range": [
+    1,
+    250
+   ]
   },
   {
    "id": "sri4",
@@ -314,7 +318,11 @@
     "sri_smaland_b04_h02_text_3.pdf"
    ],
    "entry_prefix": "Sm",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    170
+   ]
   },
   {
    "id": "sri5",
@@ -337,7 +345,11 @@
     "sri_vastergotland_b05_h05_text_2.pdf"
    ],
    "entry_prefix": "Vg",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    300
+   ]
   },
   {
    "id": "sri1",
@@ -356,7 +368,11 @@
     "sri_oland_b01_h02.pdf"
    ],
    "entry_prefix": "Öl",
-   "licence": "fri: upphovsrätten utgången (författarna döda före 1956)"
+   "licence": "fri: upphovsrätten utgången (författarna döda före 1956)",
+   "entry_range": [
+    1,
+    70
+   ]
   },
   {
    "id": "sri3",
@@ -535,7 +551,11 @@
     "sri_gotland_b11_d01_text_3.pdf"
    ],
    "entry_prefix": "G",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    137
+   ]
   },
   {
    "id": "sri12",
@@ -556,7 +576,11 @@
     "sri_gotland_b12_d02_text_4.pdf"
    ],
    "entry_prefix": "G",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    138,
+    222
+   ]
   },
   {
    "id": "sri13",
@@ -575,7 +599,11 @@
     "sri_vastmanland_b13_text_2.pdf"
    ],
    "entry_prefix": "Vs",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    40
+   ]
   },
   {
    "id": "sri14a",
@@ -594,7 +622,11 @@
     "sri_narke_b14_d01_text_2.pdf"
    ],
    "entry_prefix": "Nä",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    40
+   ]
   },
   {
    "id": "sri14b",
@@ -613,7 +645,11 @@
     "sri_varmland_b14_d02_text_2.pdf"
    ],
    "entry_prefix": "Vr",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    10
+   ]
   },
   {
    "id": "sri15",
@@ -633,7 +669,11 @@
     "sri_gastrikland_b15_d01_text_3.pdf"
    ],
    "entry_prefix": "Gs",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    1,
+    25
+   ]
   },
   {
    "id": "gr3",
@@ -679,7 +719,11 @@
     "gr3_29_Fiktiv.pdf"
    ],
    "entry_prefix": "G",
-   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare"
+   "licence": "ingen licens angiven: läsa, räkna och citera kort med källa – inte publicera vidare",
+   "entry_range": [
+    223,
+    400
+   ]
   },
   {
    "id": "urs",

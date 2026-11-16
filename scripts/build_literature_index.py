@@ -47,7 +47,7 @@ def main():
                 is_list = n_signa / max(n_words, 1) > literature.LIST_RATIO
                 if w.get("entry_prefix"):  # the edition's own articles, headed "179. Kölaby sn …"
                     for m in literature.ENTRY.finditer(text):
-                        key = fold_signum(f"{w['entry_prefix']} {m.group(1)}")
+                        key = fold_signum(f"{w['entry_prefix']} {literature.entry_number(m.group(1))}")
                         if key in signa and key not in seen_here:
                             seen_here.add(key)
                             stones.setdefault(key, []).append({"work": w["id"], "page": page, "file": os.path.basename(path),

@@ -36,8 +36,8 @@ def artiklar(work: dict, signa: dict) -> tuple[list[dict], dict]:
     prefix = work["entry_prefix"]
     flat: list[tuple[str, str, str]] = []  # (fil, tryckt sida, text)
     for f in literature.files(work):
-        if not re.search(r"_text", f) or re.search(r"_(ord|karta|titel)", f):
-            continue  # inledning, titelblad, ordregister och karta är inga stenartiklar
+        if re.search(r"(plansch|pl_titel|_ord|_karta|_titel|_inledn)", f):
+            continue  # planscher, inledning, titelblad, ordregister och karta är inga stenartiklar
         p = os.path.join(literature.DIR, f)
         if not os.path.exists(p):
             continue
@@ -56,8 +56,9 @@ def artiklar(work: dict, signa: dict) -> tuple[list[dict], dict]:
             sidnr = bool(re.search(r"\s{3,}\d{1,4}\s*$", rad)) or len(literature.ENTRY.findall(rad)) > 1
             if overst and (versaler or sidnr):
                 continue  # sidhuvud ("311—312. H A R G , SKÅNELA SN.   25"), inte artikelns rubrik
-            a = int(m.group(1))
-            b = int(m.group(2)) if m.group(2) and 0 < int(m.group(2)) - a <= 12 else a  # "309—311."
+            a = literature.entry_number(m.group(1))
+            b2 = literature.entry_number(m.group(2))
+            b = b2 if b2 and 0 < b2 - a <= 12 else a  # "309—311."
             heads.append((si, m.start(), a, b))
     if work.get("entry_range"):  # bandets egna nummer; andra numrerade listor (inledning, register) faller bort
         lo, hi = work["entry_range"]
