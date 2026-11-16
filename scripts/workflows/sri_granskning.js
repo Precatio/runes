@@ -1,5 +1,5 @@
 // Granskning av SRI-utplockningen för A1, tillägg 1 (samma instruktion som Södermanland + not 2:s regel om artiklar med flera
-// stenar). Körs med Workflow({scriptPath: "scripts/workflows/sri_granskning.js", args: {enhet: "upp", delar: 4, verk: "SRI VI–IX, Upplands runinskrifter"}})
+// stenar + från not 6: läsarnas regler 1–11, så att fälten bedöms efter dem). Körs med Workflow({scriptPath: "scripts/workflows/sri_granskning.js", args: {enhet: "upp", delar: 4, verk: "SRI VI–IX, Upplands runinskrifter"}})
 // Indata: /Volumes/2TB/Antigrvity/Runes/downloads/sri_fakta/granskning/<enhet>_stickprov_<i>.jsonl (delat ur <enhet>_stickprov.jsonl).
 export const meta = {
   name: 'sri-granskning',
@@ -22,6 +22,20 @@ Regler för utplockningen (som den skulle följa): bara det utgivaren skriver, i
 - kallor_i_ordning: källorna i litteraturraden i ordning.
 - samma_sten_som[]: där utgivaren säger att det är samma sten eller del av samma sten.
 - datering_text: utgivarens datering/stilbedömning.
+
+REGLERNA LÄSAREN FÖLJDE (not 1–6) – bedöm fälten efter dem:
+1. Hittad och rest/förd till en ANNAN plats än fyndplatsen = flyttning (fran = fyndplatsen), lage_vid_utgavan "flyttad".
+2. Återresning på samma plats eller i närheten (inom ca 100 m) = flyttning med orsak "återresning på samma plats eller i närheten".
+3. "ar" bara med ett årtal som står i texten för just den händelsen; första året vid ett spann med säkra årtal.
+4. Fast häll, bergvägg eller jordfast block = "ursprunglig plats".
+5. Fyndplats är INTE ursprunglig plats om utgivaren inte säger det.
+6. Inmurad eller inlagd i en byggnad (vägg, mur, grund, golv, tröskel) när utgivaren säger det = flyttning; senare uttagning = egen post.
+7. Källans år (när någon beskrev/ritade/inventerade läget) är inte händelsens år → ar = null.
+8. En sten som bara LIGGER i en byggnad, utan att utgivaren säger att den förts dit, är ingen flyttning.
+9. Decennier ("på 1850-talet") och osäkra år ("torde", "omkring", "troligen") → ar = null. Monumenthus/museum/samling/park som samlar runstenar = "samling eller museum". Kyrkogårdens utvidgning = "kyrkbygge eller restaurering".
+10. Byggnadsmaterial även utanför byggnader (bro, väg, stig, trappa, farstubro, grind, gärdesgård, fyllning) = flyttning, när utgivaren säger att den fördes dit eller användes så.
+11. Flyttning när en kyrka revs, byggdes om eller utvidgades → orsak "kyrkbygge eller restaurering".
+Fältet "inmurad" = satt/sitter inmurad i en byggnad (vägg, mur, grund/stenfot, golv, tröskel i en dörröppning); en trappsten UTANFÖR byggnaden är inte inmurad.
 
 FLERA STENAR I EN ARTIKEL: "omfattar" listar alla signum artikeln behandlar; bedöm bara uppgifterna om radens eget "signum" (not 2, punkt 3).
 
