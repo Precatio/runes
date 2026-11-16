@@ -185,7 +185,14 @@ def utfall(verk: str, runda: int = 1) -> None:
 ENHETER = {"upp": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp", "seed": 2030, "viktor_seed": 2031, "n": 100},
            # not 3: Uppland runda 2, nytt stickprov bland stenar som inte låg i runda 1
            "upp2": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp_r2", "seed": 2040, "viktor_seed": 2041, "n": 100,
-                    "utom": "upp"}}
+                    "utom": "upp"},
+           # not 5: de övriga banden i sex enheter
+           "sm": {"verk": ["sri4"], "delar": "delar_ovr", "seed": 2032, "viktor_seed": 2033, "n": 100},
+           "og": {"verk": ["sri2"], "delar": "delar_ovr", "seed": 2034, "viktor_seed": 2035, "n": 100},
+           "vg": {"verk": ["sri5"], "delar": "delar_ovr", "seed": 2036, "viktor_seed": 2037, "n": 100},
+           "ol": {"verk": ["sri1"], "delar": "delar_ovr", "seed": 2038, "viktor_seed": 2039, "n": 100},
+           "got": {"verk": ["sri11", "sri12", "gr3"], "delar": "delar_ovr", "seed": 2044, "viktor_seed": 2045, "n": 100},
+           "msv": {"verk": ["sri13", "sri14a", "sri14b", "sri15"], "delar": "delar_ovr", "seed": 2046, "viktor_seed": 2047, "n": 100}}
 VIKTOR_FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "flyttningar"]  # not 2: läget och flyttningarna
 
 
@@ -225,7 +232,7 @@ def sammanstall_enhet(enhet: str) -> None:
         tidigare = {json.loads(x)["signum"] for x in open(os.path.join(FAKTA, "granskning", f"{E['utom']}_stickprov.jsonl"), encoding="utf-8")}
         pool = [x for x in pool if x not in tidigare]
     stick = sorted(random.Random(E["seed"]).sample(pool, min(E["n"], len(pool))))
-    viktor = sorted(random.Random(E["viktor_seed"]).sample(stick, 10))
+    viktor = sorted(random.Random(E["viktor_seed"]).sample(stick, min(10, len(stick))))
     os.makedirs(os.path.join(FAKTA, "granskning"), exist_ok=True)
     with open(os.path.join(FAKTA, "granskning", f"{enhet}_stickprov.jsonl"), "w", encoding="utf-8") as fh:
         for s in stick:
