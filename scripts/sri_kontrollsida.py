@@ -10,9 +10,9 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 G = "/Volumes/2TB/Antigrvity/Runes/downloads/sri_fakta/granskning"
-F = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "flyttningar"]
+F = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "forsvunnen", "aterfunnen"]  # not 7
 NAMN = {"lage_vid_utgavan": "Läge när bandet skrevs", "ursprunglig_plats_text": "Ursprunglig plats", "inmurad": "Inmurad",
-        "flyttningar": "Flyttningar"}
+        "forsvunnen": "Försvunnen", "aterfunnen": "Återfunnen"}
 CSS = """:root{--rust:#b7410e;--ink:#1d2226;--bg:#faf8f4} body{font:15px/1.5 -apple-system,Helvetica,sans-serif;color:var(--ink);background:var(--bg);max-width:1000px;margin:0 auto;padding:16px}
 h1{font-family:Georgia,serif} h2{border-top:3px solid var(--rust);padding-top:8px} small{color:#666;font-weight:400} table{width:100%;border-collapse:collapse} td{border-bottom:1px solid #ddd;padding:6px;vertical-align:top} td:first-child{width:160px;color:#555}
 q{color:#444;font-style:italic} .tom{color:#999} .om{color:var(--rust);font-weight:600} pre{white-space:pre-wrap;font-size:12px;background:#fff;padding:8px;max-height:420px;overflow:auto} button{background:var(--rust);color:#fff;border:0;padding:10px 16px;font-size:15px;cursor:pointer} textarea{width:100%;height:120px}"""
@@ -45,9 +45,8 @@ def sida(enhet: str) -> str:
                     f'<details><summary>Visa SRI-texten</summary><pre>{html.escape(s["text"])}</pre></details><table>{tr}</table></section>')
     doc = f"""<!doctype html><html lang="sv"><head><meta charset="utf-8"><title>Kontroll SRI {enhet}</title><style>{CSS}</style></head><body>
 <h1>Kontroll av SRI-utplockningen – {html.escape(", ".join(rap['verk']))}</h1>
-<p>{len(rap['viktor'])} stenar ur stickprovet. Bara läget och flyttningarna. En sten som murats in eller lagts som tröskel räknas som flyttad
-om utgivaren säger att den förts dit; en sten som bara <i>ligger</i> i en byggnad gör det inte. En fyndplats är inte ursprunglig plats om
-utgivaren inte säger det. <b>rätt</b> = rätt värde, eller "nämns inte" och artikeln nämner det inte. <b>fel</b> = ifyllt men fel.
+<p>{len(rap['viktor'])} stenar ur stickprovet. Bara läget och försvunnen/återfunnen (not 7). En sten som hittades inmurad har läget "flyttad". En fyndplats är inte ursprunglig plats om
+utgivaren inte säger det. Ett första fynd ("förut okänd", "nyfunnen") är inget återfynd. <b>rätt</b> = rätt värde, eller "nämns inte" och artikeln nämner det inte. <b>fel</b> = ifyllt men fel.
 <b>saknat</b> = artikeln nämner det men fältet är tomt eller ofullständigt. Allt står på "rätt" – ändra bara där något inte stämmer,
 tryck på knappen och klistra in texten i chatten.</p>
 {"".join(rows)}<p><button onclick="ut()">Skapa resultat</button></p><textarea id="r"></textarea><script>{JS}</script></body></html>"""

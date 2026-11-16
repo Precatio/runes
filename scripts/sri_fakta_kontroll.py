@@ -194,8 +194,11 @@ ENHETER = {"upp": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp
            "got": {"verk": ["sri11", "sri12", "gr3"], "delar": "delar_ovr", "seed": 2044, "viktor_seed": 2045, "n": 100},
            "msv": {"verk": ["sri13", "sri14a", "sri14b", "sri15"], "delar": "delar_ovr", "seed": 2046, "viktor_seed": 2047, "n": 100},
            # not 6: Småland runda 2
-           "sm2": {"verk": ["sri4"], "delar": "delar_sm2", "seed": 2048, "viktor_seed": 2049, "n": 100, "utom": "sm"}}
-VIKTOR_FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "flyttningar"]  # not 2: läget och flyttningarna
+           "sm2": {"verk": ["sri4"], "delar": "delar_sm2", "seed": 2048, "viktor_seed": 2049, "n": 100, "utom": "sm"},
+           # not 7: Västergötland och Öland runda 2 (Öland: samma 40 stenar, omlästa)
+           "vg2": {"verk": ["sri5"], "delar": "delar_vg2", "seed": 2050, "viktor_seed": 2051, "n": 100, "utom": "vg"},
+           "ol2": {"verk": ["sri1"], "delar": "delar_ol2", "seed": 2052, "viktor_seed": 2053, "n": 100}}
+VIKTOR_FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "forsvunnen", "aterfunnen"]  # not 7: läget, försvunnen och återfunnen
 
 
 def sammanstall_enhet(enhet: str) -> None:
