@@ -1,0 +1,771 @@
+{
+ "sha": "e120282a",
+ "traffar": 64,
+ "oenighet": [
+  {
+   "namn": "Torsebro",
+   "gud": "Tor",
+   "kodare1": "säker",
+   "kodare2": "avvisad",
+   "slutlig": "avvisad"
+  }
+ ],
+ "utan_lage": [
+  {
+   "namn": "Frösåkers härad",
+   "gud": "Frö",
+   "skäl": "ingen socken"
+  },
+  {
+   "namn": "Gullmarn",
+   "gud": "gud(ar) ospec.",
+   "skäl": "ingen socken"
+  },
+  {
+   "namn": "Odensala",
+   "gud": "Oden",
+   "skäl": "ingen socken"
+  },
+  {
+   "namn": "Odensbacken",
+   "gud": "Oden",
+   "skäl": "ingen socken"
+  },
+  {
+   "namn": "Onsjö härad",
+   "gud": "Oden",
+   "skäl": "ingen socken"
+  },
+  {
+   "namn": "Torshälla",
+   "gud": "Tor",
+   "skäl": "inget landskap"
+  },
+  {
+   "namn": "Ulleråkers härad",
+   "gud": "Ull",
+   "skäl": "ingen socken"
+  },
+  {
+   "namn": "Ultuna",
+   "gud": "Ull",
+   "skäl": "ingen socken"
+  }
+ ],
+ "avvikelser": [
+  "Stavningen Åsheda (SOL) matchas mot Åseda sn (ISOF); ISOF:s sockennamn står i genitiv och matchas så.",
+  "Första körningen slog ihop socknar med samma namn i olika landskap (tre Torsåker, två Odensvi). Rättat innan resultatet användes; båda körningarna gav samma utfall: inget av proven håller."
+ ],
+ "A_per_gud": {
+  "Frigg": {
+   "säker": 1,
+   "osäker": 0,
+   "regioner": {
+    "Västra Götaland": 1
+   }
+  },
+  "Frö": {
+   "säker": 4,
+   "osäker": 3,
+   "regioner": {
+    "Västra Götaland": 2,
+    "Mälarlanden": 3,
+    "Östra Götaland": 1,
+    "Norska riket": 1
+   }
+  },
+  "Fröja": {
+   "säker": 0,
+   "osäker": 2,
+   "regioner": {
+    "Västra Götaland": 1,
+    "Mälarlanden": 1
+   }
+  },
+  "Liudhgudha": {
+   "säker": 0,
+   "osäker": 1,
+   "regioner": {
+    "Mälarlanden": 1
+   }
+  },
+  "Njärd": {
+   "säker": 1,
+   "osäker": 1,
+   "regioner": {
+    "Norska riket": 1,
+    "Mälarlanden": 1
+   }
+  },
+  "Oden": {
+   "säker": 7,
+   "osäker": 4,
+   "regioner": {
+    "Västra Götaland": 4,
+    "Mälarlanden": 2,
+    "Östra Götaland": 3,
+    "Danska riket": 2
+   }
+  },
+  "Tor": {
+   "säker": 12,
+   "osäker": 2,
+   "regioner": {
+    "Östra Götaland": 4,
+    "Gotland": 1,
+    "Danska riket": 1,
+    "Norska riket": 1,
+    "Mälarlanden": 3,
+    "Norr": 3,
+    "Västra Götaland": 1
+   }
+  },
+  "Ull": {
+   "säker": 1,
+   "osäker": 1,
+   "regioner": {
+    "Norr": 1,
+    "Mälarlanden": 1
+   }
+  },
+  "gud(ar) ospec.": {
+   "säker": 1,
+   "osäker": 4,
+   "regioner": {
+    "Västra Götaland": 2,
+    "Mälarlanden": 1,
+    "Östra Götaland": 2
+   }
+  }
+ },
+ "namn": [
+  {
+   "namn": "Barne-Åsaka",
+   "gud": "gud(ar) ospec.",
+   "grad": "osäker",
+   "socken": "Barne-Åsaka sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.144535,
+    12.828816
+   ],
+   "belagg": 1412
+  },
+  {
+   "namn": "Estuna",
+   "gud": "gud(ar) ospec.",
+   "grad": "osäker",
+   "socken": "Estuna sn",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.816573,
+    18.656336
+   ],
+   "belagg": 1289
+  },
+  {
+   "namn": "Fredsberg",
+   "gud": "Frö",
+   "grad": "säker",
+   "socken": "Fredsbergs sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.741378,
+    14.074404
+   ],
+   "belagg": 1279
+  },
+  {
+   "namn": "Friel",
+   "gud": "Fröja",
+   "grad": "osäker",
+   "socken": "Friels sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.450033,
+    12.784433
+   ],
+   "belagg": 1305
+  },
+  {
+   "namn": "Friggeråker",
+   "gud": "Frigg",
+   "grad": "säker",
+   "socken": "Friggeråkers sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.195496,
+    13.574763
+   ],
+   "belagg": 1311
+  },
+  {
+   "namn": "Frustuna",
+   "gud": "Frö",
+   "grad": "osäker",
+   "socken": "Frustuna sn",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.058548,
+    17.308942
+   ],
+   "belagg": 1314
+  },
+  {
+   "namn": "Fröseke",
+   "gud": "Frö",
+   "grad": "säker",
+   "socken": "Åseda sn",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "pt": [
+    57.175185,
+    15.352344
+   ],
+   "belagg": 1539
+  },
+  {
+   "namn": "Fröslunda",
+   "gud": "Frö",
+   "grad": "säker",
+   "socken": "Fröslunda sn",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.720309,
+    17.271607
+   ],
+   "belagg": 1344
+  },
+  {
+   "namn": "Frösthult",
+   "gud": "Frö",
+   "grad": "osäker",
+   "socken": "Frösthults sn",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.741359,
+    16.948358
+   ],
+   "belagg": 1344
+  },
+  {
+   "namn": "Frösve",
+   "gud": "Frö",
+   "grad": "osäker",
+   "socken": "Frösve sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.503166,
+    13.878734
+   ],
+   "belagg": 1411
+  },
+  {
+   "namn": "Frösön",
+   "gud": "Frö",
+   "grad": "säker",
+   "socken": "Frösö sn",
+   "landskap": "Jämtland",
+   "region": "Norska riket",
+   "pt": [
+    63.181136,
+    14.523046
+   ],
+   "belagg": 1200
+  },
+  {
+   "namn": "Frötuna",
+   "gud": "Fröja",
+   "grad": "osäker",
+   "socken": "Frötuna sn",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.739699,
+    18.675406
+   ],
+   "belagg": 1311
+  },
+  {
+   "namn": "Gudhem",
+   "gud": "gud(ar) ospec.",
+   "grad": "säker",
+   "socken": "Gudhems sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.221768,
+    13.57257
+   ],
+   "belagg": 1170
+  },
+  {
+   "namn": "Göteve",
+   "gud": "Oden",
+   "grad": "osäker",
+   "socken": "Göteve sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.122814,
+    13.411638
+   ],
+   "belagg": 1393
+  },
+  {
+   "namn": "Götlunda",
+   "gud": "Oden",
+   "grad": "osäker",
+   "socken": "Götlunda sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.551109,
+    14.001389
+   ],
+   "belagg": 1397
+  },
+  {
+   "namn": "Ludgo",
+   "gud": "Liudhgudha",
+   "grad": "osäker",
+   "socken": "Ludgo sn",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "pt": [
+    58.915928,
+    17.138456
+   ],
+   "belagg": 1293
+  },
+  {
+   "namn": "Nedre Ullerud",
+   "gud": "Ull",
+   "grad": "osäker",
+   "socken": "Nedre Ulleruds sn",
+   "landskap": "Värmland",
+   "region": "Norr",
+   "pt": [
+    59.605495,
+    13.500302
+   ],
+   "belagg": 1315
+  },
+  {
+   "namn": "Norderö(n)",
+   "gud": "Njärd",
+   "grad": "säker",
+   "socken": "Norderö sn",
+   "landskap": "Jämtland",
+   "region": "Norska riket",
+   "pt": [
+    63.149675,
+    14.364769
+   ],
+   "belagg": 1438
+  },
+  {
+   "namn": "Närtuna",
+   "gud": "Njärd",
+   "grad": "osäker",
+   "socken": "Närtuna sn",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.692651,
+    18.151822
+   ],
+   "belagg": 1291
+  },
+  {
+   "namn": "Odensala",
+   "gud": "Oden",
+   "grad": "säker",
+   "socken": "Odensala sn",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.665906,
+    17.850595
+   ],
+   "belagg": 1286
+  },
+  {
+   "namn": "Odensberg",
+   "gud": "Oden",
+   "grad": "säker",
+   "socken": "Gökhems sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.173435,
+    13.410666
+   ],
+   "belagg": null
+  },
+  {
+   "namn": "Odensjö",
+   "gud": "Oden",
+   "grad": "osäker",
+   "socken": "Odensjö sn",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "pt": [
+    56.860558,
+    13.614722
+   ],
+   "belagg": 1389
+  },
+  {
+   "namn": "Odensjö",
+   "gud": "Oden",
+   "grad": "osäker",
+   "socken": "Barnarps sn",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "pt": [
+    57.707904,
+    14.184223
+   ],
+   "belagg": 1394
+  },
+  {
+   "namn": "Odensvi",
+   "gud": "Oden",
+   "grad": "säker",
+   "socken": "Odensvi sn",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "pt": [
+    57.896667,
+    16.1675
+   ],
+   "belagg": 1371
+  },
+  {
+   "namn": "Odensvi",
+   "gud": "Oden",
+   "grad": "säker",
+   "socken": "Odensvi sn",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.583711,
+    15.985611
+   ],
+   "belagg": 1351
+  },
+  {
+   "namn": "Odensåker",
+   "gud": "Oden",
+   "grad": "säker",
+   "socken": "Odensåkers sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.553686,
+    13.888236
+   ],
+   "belagg": 1292
+  },
+  {
+   "namn": "Onsala",
+   "gud": "Oden",
+   "grad": "säker",
+   "socken": "Onsala sn",
+   "landskap": "Halland",
+   "region": "Danska riket",
+   "pt": [
+    57.415582,
+    12.029532
+   ],
+   "belagg": 1231
+  },
+  {
+   "namn": "Onslunda",
+   "gud": "Oden",
+   "grad": "säker",
+   "socken": "Onslunda sn",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "pt": [
+    55.604171,
+    14.049395
+   ],
+   "belagg": 1401
+  },
+  {
+   "namn": "Östra Torsås",
+   "gud": "Tor",
+   "grad": "osäker",
+   "socken": "Östra Torsås sn ",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "pt": [
+    56.740833,
+    14.928889
+   ],
+   "belagg": 1403
+  },
+  {
+   "namn": "Regna",
+   "gud": "gud(ar) ospec.",
+   "grad": "osäker",
+   "socken": "Regna sn",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "pt": [
+    58.895314,
+    15.697547
+   ],
+   "belagg": 1332
+  },
+  {
+   "namn": "Rejmyre",
+   "gud": "gud(ar) ospec.",
+   "grad": "osäker",
+   "socken": "Skedevi sn",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "pt": [
+    58.938369,
+    15.884715
+   ],
+   "belagg": 1353
+  },
+  {
+   "namn": "Torsburgen",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Kräklingbo sn",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "pt": [
+    57.443862,
+    18.711716
+   ],
+   "belagg": 1300
+  },
+  {
+   "namn": "Torsjö",
+   "gud": "Tor",
+   "grad": "osäker",
+   "socken": "Solberga sn",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "pt": [
+    55.450833,
+    13.574722
+   ],
+   "belagg": 1349
+  },
+  {
+   "namn": "Torslanda",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torslanda sn",
+   "landskap": "Bohuslän",
+   "region": "Norska riket",
+   "pt": [
+    57.721391,
+    11.756024
+   ],
+   "belagg": 1388
+  },
+  {
+   "namn": "Torslunda",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torslunda sn",
+   "landskap": "Öland",
+   "region": "Östra Götaland",
+   "pt": [
+    56.633957,
+    16.51058
+   ],
+   "belagg": 1320
+  },
+  {
+   "namn": "Torstuna härad",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torstuna sn",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.765435,
+    17.083068
+   ],
+   "belagg": 1344
+  },
+  {
+   "namn": "Torsvi",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torsvi sn",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.487435,
+    17.320426
+   ],
+   "belagg": 1344
+  },
+  {
+   "namn": "Torsåker",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torsåkers sn",
+   "landskap": "Gästrikland",
+   "region": "Norr",
+   "pt": [
+    60.509104,
+    16.470405
+   ],
+   "belagg": 1344
+  },
+  {
+   "namn": "Torsåker",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torsåkers sn",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "pt": [
+    58.959722,
+    17.360833
+   ],
+   "belagg": 1314
+  },
+  {
+   "namn": "Torsåker",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torsåkers sn",
+   "landskap": "Ångermanland",
+   "region": "Norr",
+   "pt": [
+    63.079778,
+    17.741611
+   ],
+   "belagg": 1344
+  },
+  {
+   "namn": "Torsång",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torsångs sn",
+   "landskap": "Dalarna",
+   "region": "Norr",
+   "pt": [
+    60.462882,
+    15.578467
+   ],
+   "belagg": 1288
+  },
+  {
+   "namn": "Torsås",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torsås sn",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "pt": [
+    56.411828,
+    16.014387
+   ],
+   "belagg": 1290
+  },
+  {
+   "namn": "Torsö",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Torsö sn",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "pt": [
+    58.775,
+    13.804167
+   ],
+   "belagg": 1309
+  },
+  {
+   "namn": "Ullvi",
+   "gud": "Ull",
+   "grad": "säker",
+   "socken": "Irsta sn",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "pt": [
+    59.604063,
+    16.70819
+   ],
+   "belagg": 1371
+  },
+  {
+   "namn": "Västra Torsås",
+   "gud": "Tor",
+   "grad": "säker",
+   "socken": "Västra Torsås sn ",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "pt": [
+    56.65,
+    14.516111
+   ],
+   "belagg": 1385
+  }
+ ],
+ "B": {
+  "n": 32,
+  "n_saker": 23,
+  "B1": {
+   "chi2": 12.384662956091528,
+   "p": 0.46195380461953806,
+   "p_holm": 0.773922607739226,
+   "median_null": 11.955473098330241,
+   "chi2_saker": 11.554761904761904,
+   "haller": false
+  },
+  "B2": {
+   "samma_gud_bland_3_narmaste": 0.35416666666666663,
+   "p": 0.386961303869613,
+   "p_holm": 0.773922607739226,
+   "median_null": 0.3333333333333333,
+   "varde_saker": 0.28985507246376807,
+   "haller": false
+  },
+  "tabell": {
+   "Tor": {
+    "Östra Götaland": 4,
+    "Gotland": 1,
+    "Danska riket": 1,
+    "Norska riket": 1,
+    "Mälarlanden": 3,
+    "Norr": 3,
+    "Västra Götaland": 1
+   },
+   "Oden": {
+    "Västra Götaland": 4,
+    "Mälarlanden": 2,
+    "Östra Götaland": 3,
+    "Danska riket": 2
+   },
+   "Frö": {
+    "Västra Götaland": 2,
+    "Mälarlanden": 3,
+    "Östra Götaland": 1,
+    "Norska riket": 1
+   }
+  }
+ }
+}
