@@ -1,0 +1,259 @@
+{
+ "sha": "90e7af35",
+ "noter": [
+  "Socknar utan runstenar har ingen halva i Pröva en egen frågas indelning; de delas växelvis A/B i namnordning inom landskapet (planen säger bara 'samma halvor')."
+ ],
+ "stenar_matchade": 2051,
+ "stenar_omatchade": 270,
+ "provlandskap": [
+  "Gotland",
+  "Småland",
+  "Södermanland",
+  "Uppland",
+  "Västergötland",
+  "Öland",
+  "Östergötland"
+ ],
+ "kultsocknar": {
+  "Gotland": 3,
+  "Småland": 11,
+  "Södermanland": 9,
+  "Uppland": 20,
+  "Västergötland": 14,
+  "Öland": 3,
+  "Östergötland": 5
+ },
+ "socknar": {
+  "Gotland": 93,
+  "Småland": 298,
+  "Södermanland": 132,
+  "Uppland": 198,
+  "Västergötland": 464,
+  "Öland": 34,
+  "Östergötland": 158
+ },
+ "K1": {
+  "kvot": 0.9458128211862866,
+  "p": 0.8253174682531746,
+  "stenar_i_kultsocknar": 145,
+  "kultsocknar": 65,
+  "socknar": 1377,
+  "stenar": 1958,
+  "p_holm": 0.8253174682531746,
+  "halvor": {
+   "A": {
+    "kvot": 0.7598402464367934,
+    "p": 0.5356464353564644,
+    "stenar_i_kultsocknar": 51,
+    "kultsocknar": 28,
+    "socknar": 694,
+    "stenar": 1020
+   },
+   "B": {
+    "kvot": 1.0715143890991226,
+    "p": 0.8073192680731927,
+    "stenar_i_kultsocknar": 94,
+    "kultsocknar": 37,
+    "socknar": 683,
+    "stenar": 938
+   }
+  },
+  "saker": {
+   "kvot": 0.8611854677372761,
+   "p": 0.7748225177482252,
+   "stenar_i_kultsocknar": 39,
+   "kultsocknar": 25,
+   "socknar": 1377,
+   "stenar": 1958
+  },
+  "haller": false
+ },
+ "K2": {
+  "kult_ja": 22,
+  "kult_n": 76,
+  "ovr_ja": 145,
+  "ovr_n": 841,
+  "or_mh": 1.9774651246221784,
+  "p": 0.021369387959979773,
+  "skikt": 11,
+  "p_holm": 0.06410816387993931,
+  "halvor": {
+   "A": {
+    "kult_ja": 4,
+    "kult_n": 23,
+    "ovr_ja": 82,
+    "ovr_n": 448,
+    "or_mh": 1.0869347784298513,
+    "p": 0.8727164125619776,
+    "skikt": 7
+   },
+   "B": {
+    "kult_ja": 18,
+    "kult_n": 53,
+    "ovr_ja": 63,
+    "ovr_n": 393,
+    "or_mh": 2.9011073396063543,
+    "p": 0.0034469921718222984,
+    "skikt": 9
+   }
+  },
+  "saker": {
+   "kult_ja": 3,
+   "kult_n": 18,
+   "ovr_ja": 164,
+   "ovr_n": 899,
+   "or_mh": 1.019136416702587,
+   "p": 0.7626727380054874,
+   "skikt": 6
+  },
+  "haller": false
+ },
+ "K3": {
+  "kult_ja": 29,
+  "kult_n": 76,
+  "ovr_ja": 381,
+  "ovr_n": 841,
+  "or_mh": 0.6383056094181082,
+  "p": 0.20010495206617787,
+  "skikt": 7,
+  "p_holm": 0.40020990413235574,
+  "halvor": {
+   "A": {
+    "kult_ja": 9,
+    "kult_n": 23,
+    "ovr_ja": 201,
+    "ovr_n": 448,
+    "or_mh": 0.5865199730042913,
+    "p": 0.5029193585713918,
+    "skikt": 5
+   },
+   "B": {
+    "kult_ja": 20,
+    "kult_n": 53,
+    "ovr_ja": 180,
+    "ovr_n": 393,
+    "or_mh": 0.6186479344630182,
+    "p": 0.29141977107251754,
+    "skikt": 5
+   }
+  },
+  "saker": {
+   "kult_ja": 9,
+   "kult_n": 18,
+   "ovr_ja": 401,
+   "ovr_n": 899,
+   "or_mh": 0.9505413936503793,
+   "p": 0.8216660286280912,
+   "skikt": 5
+  },
+  "haller": false
+ },
+ "bon": {
+  "kult_ja": 19,
+  "kult_n": 76,
+  "ovr_ja": 128,
+  "ovr_n": 841,
+  "or_mh": 1.8402181888577778,
+  "p": 0.051189150979419534,
+  "skikt": 11
+ },
+ "hedniska": [
+  {
+   "signum": "Ög 136",
+   "socken": "Röks sn",
+   "kultsocken": false
+  },
+  {
+   "signum": "Sö 111",
+   "socken": "Stenkvista sn",
+   "kultsocken": false
+  },
+  {
+   "signum": "Sö 140",
+   "socken": "Ludgo sn",
+   "kultsocken": true
+  },
+  {
+   "signum": "Sö 352",
+   "socken": "Överjärna sn",
+   "kultsocken": false
+  },
+  {
+   "signum": "Vg 67",
+   "socken": "Saleby sn",
+   "kultsocken": false
+  },
+  {
+   "signum": "Vg 150",
+   "socken": "Väne-Åsaka sn",
+   "kultsocken": false
+  },
+  {
+   "signum": "U 1161",
+   "socken": "Altuna sn",
+   "kultsocken": true
+  }
+ ],
+ "flest": [
+  {
+   "socken": "Odensala sn",
+   "landskap": "Uppland",
+   "stenar": 16
+  },
+  {
+   "socken": "Ludgo sn",
+   "landskap": "Södermanland",
+   "stenar": 13
+  },
+  {
+   "socken": "Tensta sn",
+   "landskap": "Uppland",
+   "stenar": 11
+  },
+  {
+   "socken": "Viby sn",
+   "landskap": "Östergötland",
+   "stenar": 9
+  },
+  {
+   "socken": "Estuna sn",
+   "landskap": "Uppland",
+   "stenar": 8
+  },
+  {
+   "socken": "Lunda sn",
+   "landskap": "Uppland",
+   "stenar": 7
+  },
+  {
+   "socken": "Fröslunda sn",
+   "landskap": "Uppland",
+   "stenar": 6
+  },
+  {
+   "socken": "Alunda sn",
+   "landskap": "Uppland",
+   "stenar": 6
+  },
+  {
+   "socken": "Åkers sn",
+   "landskap": "Södermanland",
+   "stenar": 5
+  },
+  {
+   "socken": "Skederids sn",
+   "landskap": "Uppland",
+   "stenar": 5
+  },
+  {
+   "socken": "Västra Vingåkers sn",
+   "landskap": "Södermanland",
+   "stenar": 4
+  },
+  {
+   "socken": "Österåkers sn",
+   "landskap": "Uppland",
+   "stenar": 4
+  }
+ ]
+}
