@@ -63,7 +63,7 @@ RAPPORTER = {
     "familjegrupper-vid-gravfalten": ("Runstenar i familjegrupper vid gravfälten", "Runestones in family groups at grave fields"),
     "soner-och-broder-dog-utanfor-norden": ("Söner och bröder som dog utanför Norden", "Sons and brothers dying outside Scandinavia"),
     "kvinnor-bland-resarna-svealand-gotaland": ("Kvinnor som reste runstenar", "Women who raised runestones"),
-    "r-for-yr-runan-vastra-uppland": ("Yr-runan byttes mot r i västra Uppland", "The yr rune replaced by r in western Uppland"),
+    "r-for-yr-runan-vastra-uppland": ("Yr-runan byttes mot r i västra Uppland", "The yr rune gives way to r in west Uppland"),
 }
 # Google visar omkring 60 tecken; titeln får suffixet " | Vitki" (8) och rapporterna " – rapport | Vitki" (18)
 for d, room in ((ARTIKLAR, 60 - 8), (RAPPORTER, 60 - 18)):
