@@ -42,6 +42,18 @@ export interface Inscription {
     edition: string; url: string | null; signum: string; extant: boolean | null; original_location: boolean | null;
     placement: string | null; dating: string | null; notes: string[]; reading: string | null; reading_changed: boolean;
   } | null;
+  // SRI:s fyndhistorik (src/sri_fyndhistorik.py, A1 tillägg 1), when the extraction is on the machine; shown, not computed on
+  sri?: SriFindHistory | null;
+}
+
+export interface SriPost { value: string | boolean | null; page: string | null; quote: string | null }
+
+export interface SriFindHistory {
+  volume: string | null; year: number | null; url: string | null; checked_by: string; method: string;
+  position: SriPost | null; original_place: SriPost | null; built_in: SriPost | null; built_in_corrected: string | null;
+  lost: { lost_at_edition: boolean | null; year: number | null; page: string | null; quote: string | null } | null;
+  refound: { year: number | null; place: string | null; page: string | null; quote: string | null }[];
+  same_stone: { value: string | null; page: string | null; quote: string | null }[];
 }
 
 export interface StoneDimensions {

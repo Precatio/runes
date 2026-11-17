@@ -2,6 +2,14 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "sri-fyndhistorik-stensidan",
+   "date": "2026-11-17",
+   "status": "nytt",
+   "title": "Fyndhistorik ur Sveriges runinskrifter på stensidan",
+   "text": "Stensidan under Inskrifter visar nu vad utgåvan Sveriges runinskrifter säger om stenens historia: var den stod när bandet skrevs, om den står på sin ursprungliga plats eller satt inmurad i en byggnad, om den har försvunnit eller återfunnits och om den är samma sten som en annan. Varje uppgift har sidhänvisning och ett kort citat ur bandet. Uppgifterna är utplockade ur alla 2 503 stenartiklar i banden av Anthropics språkmodell Claude och granskade i stickprov, med 95–100 procent rätt för de fält som visas. Flyttningarna visas inte, eftersom de inte klarade granskningen. Appen visar uppgifterna men räknar ännu inte på dem; det görs först i studien om flyttade och försvunna stenar i januari.",
+   "kategori": "metod"
+  },
+  {
    "id": "korpus-nr1-tryck",
    "date": "2026-11-12",
    "status": "nytt",

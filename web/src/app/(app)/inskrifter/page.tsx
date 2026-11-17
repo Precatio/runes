@@ -16,6 +16,7 @@ import {
   type OrthographyProfile,
   type RundataMeta,
   type SimilarInscription,
+  type SriFindHistory,
 } from "@/lib/rundata";
 
 const PROVINCES = ["U", "Sö", "Ög", "Vg", "Sm", "Öl", "G", "Vs", "Nä", "Gs", "Hs", "M", "Ån", "J", "D", "Bo", "DR", "N"];
@@ -38,6 +39,59 @@ function Attribution({ meta }: { meta: RundataMeta | null }) {
     <p className="text-[11px] text-slate-500 leading-relaxed">
       Uppgifter ur {meta.source}. {meta.attribution} {meta.note}
     </p>
+  );
+}
+
+const SRI_POSITION: Record<string, string> = {
+  "ursprunglig plats": "Står på sin ursprungliga plats",
+  "flyttad": "Flyttad",
+  "försvunnen": "Försvunnen",
+  "okänt": "Läget går inte att avgöra",
+};
+
+function SriQuote({ quote, page }: { quote?: string | null; page?: string | null }) {
+  if (!quote && !page) return null;
+  return (
+    <span className="text-slate-500 text-xs">
+      {quote && <> – <q className="italic" translate="no">{quote}</q></>}
+      {page && <> (s. {page})</>}
+    </span>
+  );
+}
+
+function SriHistory({ sri }: { sri: SriFindHistory }) {
+  return (
+    <Field label={`Fyndhistorik enligt ${sri.volume ?? "Sveriges runinskrifter"}${sri.year ? ` (${sri.year})` : ""}`}>
+      <div className="space-y-1 text-sm">
+        {sri.position && (
+          <div>{SRI_POSITION[sri.position.value as string] ?? String(sri.position.value)} när bandet skrevs <SriQuote {...sri.position} /></div>
+        )}
+        {sri.original_place && (
+          <div>Ursprunglig plats: <span translate="no">{String(sri.original_place.value)}</span> <SriQuote page={sri.original_place.page} /></div>
+        )}
+        {sri.built_in && <div>Inmurad i en byggnad <SriQuote {...sri.built_in} /></div>}
+        {sri.lost && (
+          <div>
+            {sri.lost.lost_at_edition ? "Försvunnen när bandet skrevs" : "Har varit försvunnen"}
+            {sri.lost.year && <> (försvann {sri.lost.year})</>} <SriQuote quote={sri.lost.quote} page={sri.lost.page} />
+          </div>
+        )}
+        {sri.refound.map((a, i) => (
+          <div key={i}>Återfunnen{a.year && <> {a.year}</>}{a.place && <>: <span translate="no">{a.place}</span></>} <SriQuote quote={a.quote} page={a.page} /></div>
+        ))}
+        {sri.same_stone.map((s, i) => (
+          <div key={i}>Samma sten som <span translate="no">{String(s.value)}</span> <SriQuote quote={s.quote} page={s.page} /></div>
+        ))}
+        {!sri.position && !sri.original_place && !sri.built_in && !sri.lost && sri.refound.length === 0 && sri.same_stone.length === 0 && (
+          <div className="text-slate-500">Artikeln säger inget om läget, försvinnanden eller återfynd.</div>
+        )}
+        {sri.url && <a href={sri.url} target="_blank" rel="noreferrer" className="text-[#b7410e] underline text-xs">Digitala Sveriges runinskrifter (RAÄ)</a>}
+        <div className="text-[11px] text-slate-500">
+          {sri.method} Kontrollerat av {sri.checked_by === "Viktor" ? "Viktor Kvant" : "en oberoende omläsning (not 8)"}. Flyttningarna visas inte: de klarade inte granskningen.
+          {sri.built_in_corrected && " Inmurningen i en kyrkogårdsmur eller stenmur räknas inte som byggnad (not 9)."} Visas bredvid Rundata; inget räknas på det före studie A1.
+        </div>
+      </div>
+    </Field>
   );
 }
 
@@ -170,6 +224,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
               </div>
             </Field>
           )}
+          {rec.sri && <SriHistory sri={rec.sri} />}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2 border-t border-slate-900/5">
           <div className="space-y-2">

@@ -21,12 +21,12 @@ def inscription(signum: str):
     rec = store().get(signum)
     if not rec:
         raise HTTPException(status_code=404, detail=f"Signum '{signum}' finns inte i Rundata.")
-    from src import runor, stone_dimensions
+    from src import runor, sri_fyndhistorik, stone_dimensions
     dims = stone_dimensions.lookup(rec["signum"])
     if dims:
         dims = {**dims, "in_province": stone_dimensions.province_percentile(rec["signum"], lambda s: s.split(" ")[0])}
-    # Runor 2020 bredvid Rundata 2018 (src/runor.py): visas, räknas inte på
-    return {**rec, "dimensions": dims, "runor": runor.for_inscription(rec)}
+    # Runor 2020 bredvid Rundata 2018 (src/runor.py) och SRI:s fyndhistorik (src/sri_fyndhistorik.py): visas, räknas inte på
+    return {**rec, "dimensions": dims, "runor": runor.for_inscription(rec), "sri": sri_fyndhistorik.for_inscription(rec)}
 
 
 @router.get("/tokens")
