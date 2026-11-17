@@ -74,7 +74,8 @@ Q = {"spurk65": "The view of the matter that seems to have the strongest support
      "kall114": "som först verkar ha etablerats i slutet av 900-talet",
      "carl40": "kontakten med det skriftkompetenta Rom var avgörande",
      "fw169": "som en lönnskrift",
-     "kall135": "medan det i Uppland sannolikt dröjde till efter tiden 1200"}
+     "kall135": "medan det i Uppland sannolikt dröjde till efter tiden 1200",
+     "frid8": "Vid ristning i sten har man, menar jag, efterliknat de runformer som utvecklats vid och påverkats av ristning i trä"}
 jcheck("futhark_1_65_381133", 1, Q["spurk65"])            # Spurkland 2010, s. 65
 jcheck("futhark_1_65_381133", 10, Q["spurk74"])           # s. 74
 jcheck("futhark_6_7_922587", 10, Q["frid12"], Q["frid12b"])  # Fridell 2015, s. 12
@@ -87,6 +88,7 @@ jcheck("futhark_4_102_682693", 16, Q["kall114"])          # s. 114
 jcheck("futhark_13_5_1847931", 36, Q["carl40"])           # Carlquist 2024, s. 40
 jcheck("futhark_11_167_1543732", 3, Q["fw169"])           # Fridell & Williams 2021, s. 169
 jcheck("futhark_6_107_922589", 33, Q["kall135"])          # Källström 2015, s. 135
+jcheck("futhark_6_7_922587", 6, Q["frid8"])               # Fridell 2015, s. 8
 
 # ---- pictures --------------------------------------------------------------------------------------------------------
 INFO = json.load(open(os.path.join(ROOT, "utdata", "blogg", "build", "runform_imgs.json"), encoding="utf-8"))
@@ -100,6 +102,25 @@ for label, f in (("Vimosekammen", "Kam-med-runer-fra-Vimose DO-4148 2000.jpg"),
     IMG[label] = {**d, "signum": label}
 assert IMG["Vimosekammen"]["author"].startswith("Nationalmuseet")
 PIC = lambda s, lang: commons.markdown(IMG[s], lang)  # noqa: E731
+FIG = json.load(open(os.path.join(ROOT, "utdata", "blogg", "build", "runform_figurer.json"), encoding="utf-8"))["Ög 240 rad"]
+G = json.load(open(os.path.join(ROOT, "utdata", "skanningar_g5", "gravmonument_og_sm", "Ög_240.json"), encoding="utf-8"))
+G_N, G_RUNES = G["counts"]["accepted"], G["counts"]["runes_measured"]
+G_DEPTH, G_WIDTH = G["means"]["spårdjup_mm"], G["means"]["spårbredd_mm"]
+assert (G_N, G_RUNES, round(G_DEPTH, 1), round(G_WIDTH, 1)) == (1172, 97, 3.7, 12.8)
+G_DEPTH_SV, G_DEPTH_EN, G_WIDTH_R = f"{G_DEPTH:.1f}".replace(".", ","), f"{G_DEPTH:.1f}", f"{G_WIDTH:.0f}"
+G_N_SV = f"{G_N:,}".replace(",", " ")
+SCAN_SV = ("Skanningen är gjord av Laila Kitzler Åhfeldt 2008 (ATOS II) i Cecilia Ljungs avhandlingsprojekt om tidigkristna "
+           "gravmonument: Kitzler Åhfeldt, L. 2025, 3D-data Tidigkristna gravmonument Östergötland och Småland, "
+           "[doi:10.5281/zenodo.17571537](https://doi.org/10.5281/zenodo.17571537), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")
+SCAN_EN = ("Scanned by Laila Kitzler Åhfeldt in 2008 (ATOS II) in Cecilia Ljung's doctoral project on early Christian grave "
+           "monuments: Kitzler Åhfeldt, L. 2025, 3D-data Tidigkristna gravmonument Östergötland och Småland, "
+           "[doi:10.5281/zenodo.17571537](https://doi.org/10.5281/zenodo.17571537), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")
+GROOVE = {"sv": (f"![En rad runor på gravhällen Ög 240]({FIG})\nBild: Vitki, utsnitt ur huggspårsanalysen av gravhällen Ög 240 i Hovs "
+                 "kyrka, Östergötland, vridet ett kvarts varv så att raden ligger vågrätt. Orange: ristade spår som analysen hittat; "
+                 "prickar: uppmätta tvärsnitt längs staven och tvärs över bistavarna. " + SCAN_SV),
+          "en": (f"![A row of runes on the grave slab Ög 240]({FIG})\nImage: Vitki, detail from the groove analysis of the grave slab "
+                 "Ög 240 in Hov church, Östergötland, turned a quarter so that the row lies horizontally. Orange: carved grooves found "
+                 "by the analysis; dots: measured cross-sections along the stave and across the side-strokes. " + SCAN_EN)}
 
 pc = lambda x: round(100 * x)  # noqa: E731
 p1 = lambda x: f"{100 * x:.1f}"  # noqa: E731
@@ -161,6 +182,10 @@ Det första man ser är att runorna består av raka streck. Det finns nästan in
 Den vanligaste förklaringen är träet. Staffan Fridell skriver: ”{Q['frid12b']} {Q['frid12']}” (Futhark 6, 2015, s. 12). Ett vågrätt snitt följer träets fibrer och syns dåligt. Ett snett eller lodrätt snitt går tvärs över dem.
 
 Men det är en förklaring utan direkta bevis. Trä från runornas första århundraden är nästan aldrig bevarat, och de äldsta fynden är av metall och ben. Spurkland påpekar att de som hävdar träteorin har fått lita till ett *{Q['spurk74']}*, ett argument ur tystnad (s. 74). Fridell har senare nyanserat bilden: de sneda strecken passar träet, men att bågar blev vinklar förklaras snarare av metallen – ”{Q['frid205']}” (Futhark 14–15, 2025, s. 205). Runornas form kan alltså vara ett arv från både kniven i träet och stiftet i metallen.
+
+I sten finns inga fibrer, men formen följde med. ”{Q['frid8']}”, skriver Fridell (s. 8). Så här ser de raka strecken ut när de är huggna i kalksten, på en gravhäll från slutet av vikingatiden. Vitkis huggspårsanalys har letat upp spåren i skanningen och mätt dem: {G_N_SV} tvärsnitt i {G_RUNES} runor. Spåren är i genomsnitt {G_DEPTH_SV} millimeter djupa och {G_WIDTH_R} millimeter breda. Varje stav och varje bistav är ett eget rakt snitt.
+
+{GROOVE['sv']}
 
 ## Runraden
 
@@ -235,7 +260,7 @@ Det här är första delen i vår serie om runorna, där varje runa får en egen
 - Fridell, Staffan och Henrik Williams 2021. De äldre runorna på Rökstenen. *Futhark* 11, s. 167–171. CC BY 4.0.
 - Futhark 1–6 har licensen CC BY-NC-ND; vi citerar kort med källa. Alla volymer finns fritt på [futhark-journal.com](https://www.futhark-journal.com/).
 - Analysplanen (låst före räkningen) och koden finns öppet på [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-17-runornas-form.md).
-- Foton: Wikimedia Commons, med fotograf och licens i bildtexterna."""
+- Foton: Wikimedia Commons, med fotograf och licens i bildtexterna. Huggspårsbilden: Vitki, efter den öppna skanning som anges i bildtexten."""
 
 body_en = f"""*siriþr : kiarþi : bur : þosi*
 
@@ -258,6 +283,10 @@ The first thing one sees is that the runes are made of straight strokes. There a
 The usual explanation is wood. Staffan Fridell writes that when you carve runes in wood with a knife it is much easier to cut towards yourself than away from yourself, and that horizontal cuts are troublesome (Futhark 6, 2015, p. 12). A horizontal cut follows the grain and shows poorly. A slanting or vertical cut goes across it.
 
 But it is an explanation without direct proof. Wood from the runes' first centuries is almost never preserved, and the oldest finds are of metal and bone. Spurkland notes that those who argue the wood theory have had to rely on an *{Q['spurk74']}*, an argument from silence (p. 74). Fridell has since refined the picture: the slanting strokes suit wood, but curves turning into angles are better explained by metal – it is easier to carve angles than curves in metal (Futhark 14–15, 2025, p. 205). The shape of the runes may thus be a legacy of both the knife in wood and the point in metal.
+
+Stone has no grain, but the shapes came along. When carving in stone, Fridell argues, people imitated the rune forms that had developed in, and been shaped by, carving in wood (p. 8). This is what the straight strokes look like when cut in limestone, on a grave slab from the end of the Viking Age. Vitki's groove analysis has found the grooves in the scan and measured them: {G_N:,} cross-sections in {G_RUNES} runes. The grooves are on average {G_DEPTH_EN} millimetres deep and {G_WIDTH_R} millimetres wide. Every stave and every side-stroke is a straight cut of its own.
+
+{GROOVE['en']}
 
 ## The rune row
 
@@ -332,7 +361,7 @@ This is the first part of our series on the runes, where each rune gets an artic
 - Fridell, Staffan and Henrik Williams 2021. De äldre runorna på Rökstenen. *Futhark* 11, pp. 167–171. CC BY 4.0.
 - Futhark 1–6 carry the licence CC BY-NC-ND; we quote briefly with the source. All volumes are freely available at [futhark-journal.com](https://www.futhark-journal.com/).
 - The analysis plan (locked before the count) and the code are open on [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-17-runornas-form.md).
-- Photos: Wikimedia Commons, with photographer and licence in the captions."""
+- Photos: Wikimedia Commons, with photographer and licence in the captions. The groove image: Vitki, after the open scan named in the caption."""
 
 # ---- checks ----------------------------------------------------------------------------------------------------------
 for b, lang in ((body, "sv"), (body_en, "en")):
@@ -342,7 +371,7 @@ for b, lang in ((body, "sv"), (body_en, "en")):
     assert ("Det viktigaste i korthet" if lang == "sv" else "The essentials in brief") in b
     assert b.index(":::box") < b.index("## Källor" if lang == "sv" else "## Sources")
     imgs = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", b)
-    assert len(imgs) == 4 and all(re.match(r"https://(upload|thumb)\.wikimedia\.org/", u) for u in imgs), imgs
+    assert len(imgs) == 5 and all(re.match(r"https://(upload|thumb)\.wikimedia\.org/|/api/blog/figures/[0-9a-f]{16}\.png$", u) for u in imgs), imgs
 labels = ["Forskning", "Språk och stavning", "Datering och stil"]
 err = blog_labels.check(labels)
 assert err is None, err
