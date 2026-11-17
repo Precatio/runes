@@ -9,7 +9,7 @@ underlag: analysplaner/2027-01-A1-flyttade-och-forsvunna.md (citaten där kontro
 
 Väsbystenen i Kräcklinge socken i Närke reste en gång någon efter en död. Sedan låg den i över tvåhundra år som bro
 tvärs över landsvägen, täckt av grus. Den grävdes fram 1860 och restes på den kulle där man trodde att den hade stått,
-välts omkull av några okynniga personer 1867, och murades till sist in i kyrkogårdsmuren, där den ligger i dag.
+vältes omkull av några okynniga personer 1867, och murades till sist in i kyrkogårdsmuren, där den ligger i dag.
 
 [Bild: skärmbild av stensidan för Nä 8 i Vitki – rutan "Fyndhistorik enligt Närkes runinskrifter". Bildtext: "Så ser
 Väsbystenens historia ut i Vitki: läget när bandet skrevs, platsen utgivaren kallar dess gamla och inmurningen i
