@@ -33,7 +33,7 @@ def signum_from(path: str) -> str:
 
 
 def measure(path: str, api: str, sensitivity: float, resolution: float | None = None,
-            harmonize: float | None = None) -> dict:
+            harmonize: float | None = None, staveless: bool = False) -> dict:
     with open(path, "rb") as fh:
         r = requests.post(f"{api}/api/3d/upload", files={"file": (os.path.basename(path), fh)}, timeout=3600)
     if not r.ok:
@@ -44,7 +44,8 @@ def measure(path: str, api: str, sensitivity: float, resolution: float | None = 
     n = relief["normal"]
     d = requests.post(f"{api}/api/3d/auto_analyze", data={"mesh_id": mid, "normal_x": n[0], "normal_y": n[1],
                       "normal_z": n[2], "sensitivity": sensitivity, "meta_stone": "", "meta_weathering": ""}
-                      | ({"resolution_mm": resolution} if resolution else {}) | ({"harmonize_mm": harmonize} if harmonize else {}),
+                      | ({"resolution_mm": resolution} if resolution else {}) | ({"harmonize_mm": harmonize} if harmonize else {})
+                      | ({"staveless": "true"} if staveless else {}),
                       timeout=3600).json()
     if "summary" not in d:  # the engine found nothing to measure (a small fragment) or failed
         raise RuntimeError(f"ingen mätning: {str(d.get('detail') or d)[:200]}")
@@ -64,6 +65,7 @@ def main(argv=None):
     ap.add_argument("--sensitivity", type=float, default=3)
     ap.add_argument("--resolution", type=float, help="fast rutnätsupplösning i mm (samma för alla stenar)")
     ap.add_argument("--harmonize", type=float, help="utjämna profilerna till denna effektiva upplösning i mm")
+    ap.add_argument("--staveless", action="store_true", help="läget för stavlösa runor (korta, lösa bistavar räknas som runor)")
     a = ap.parse_args(argv)
     os.makedirs(a.out, exist_ok=True)
     signa = [signum_from(p) for p in a.files]
@@ -79,7 +81,7 @@ def main(argv=None):
         print("mäter", signum, flush=True)
         try:
             res = {"signum": signum, "part": part.lstrip("_") or None,
-                   **measure(path, a.api, a.sensitivity, a.resolution, a.harmonize)}
+                   **measure(path, a.api, a.sensitivity, a.resolution, a.harmonize, a.staveless)}
         except Exception as e:  # noqa: BLE001 - one stone that cannot be measured must not stop the series
             print(f"  {signum}: misslyckades – {e}", flush=True)
             continue
