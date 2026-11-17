@@ -34,7 +34,7 @@ CONTENT = os.path.join(ROOT, "web", "content", "articles.json")
 FIGURES = os.path.join(ROOT, "web", "public", "figurer")
 # The search box's index (src/blog_search.py), the same format as GET /api/blog/search_index serves locally
 SEARCH = os.path.join(ROOT, "web", "public", "artiklar-sok.json")
-FIELDS = ("id", "slug", "title", "summary", "body", "title_en", "summary_en", "body_en", "month", "author", "topic",
+FIELDS = ("id", "slug", "title", "summary", "body", "title_en", "summary_en", "body_en", "seo_title", "seo_title_en", "month", "author", "topic",
           "publishedAt", "updatedAt", "featured", "labels")
 FIGURE = re.compile(r"/api/blog/figures/([0-9a-f]{16}\.png)")
 # A Commons photo in an article: ![alt](https://upload.wikimedia.org/… or https://thumb.wikimedia.org/…) at the start

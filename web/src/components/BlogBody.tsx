@@ -13,6 +13,9 @@ export interface BlogPost {
   summary: string;
   body?: string;
   title_en?: string;
+  // Search title (<title>, link previews): the headline with the search words, when the headline itself lacks them
+  seo_title?: string;
+  seo_title_en?: string;
   summary_en?: string;
   body_en?: string;
   month: string;

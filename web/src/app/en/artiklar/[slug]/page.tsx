@@ -28,18 +28,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = metaDescription(post.summary_en || post.body_en);
   const path = enPostPath(post.slug);
   return {
-    title: post.title_en || post.title,
+    title: post.seo_title_en || post.title_en || post.title,
     description,
     keywords: keywords(post),
     authors: [{ name: post.author || "Viktor Kvant" }],
     alternates: { canonical: path, languages: languageAlternates(post.slug) },
     openGraph: {
-      type: "article", url: path, title: post.title_en || post.title, description, siteName: "Vitki", locale: "en_GB",
+      type: "article", url: path, title: post.seo_title_en || post.title_en || post.title, description, siteName: "Vitki", locale: "en_GB",
       publishedTime: post.publishedAt ?? undefined, modifiedTime: post.updatedAt ?? post.publishedAt ?? undefined,
       authors: [post.author || "Viktor Kvant"], section: "Articles", tags: keywords(post),
       images: [{ url: enSharePath(post.slug), ...SHARE_SIZE, alt: post.title_en || post.title }],
     },
-    twitter: { card: "summary_large_image", title: post.title_en || post.title, description, images: [enSharePath(post.slug)] },
+    twitter: { card: "summary_large_image", title: post.seo_title_en || post.title_en || post.title, description, images: [enSharePath(post.slug)] },
     robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   };
 }
