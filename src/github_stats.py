@@ -85,7 +85,15 @@ def merge(history: dict, clones: dict | None, views: dict | None) -> dict:
 
 def _fetch() -> dict:
     tok = token()
-    info = _get("", tok)
+    dead = False
+    try:
+        info = _get("", tok)
+    except requests.HTTPError as e:
+        # A token that has expired or been revoked gives 401 even for the public data: fall back to no token, and say so
+        if not tok or e.response is None or e.response.status_code != 401:
+            raise
+        tok, dead = "", True
+        info = _get("", tok)
     releases = _get("/releases?per_page=100", tok)
     out = {
         "repo": repo(), "url": info.get("html_url"),
@@ -97,6 +105,10 @@ def _fetch() -> dict:
         "traffic": {"available": False, "reason": "Lägg GITHUB_TOKEN i .env för kloner och besök (se Admin)."},
     }
     out["release_downloads"] = sum(r["downloads"] for r in out["releases"])
+    if dead:
+        out["traffic"] = {"available": False,
+                          "reason": "GITHUB_TOKEN i .env har gått ut eller dragits in (GitHub svarar 401). Skapa en ny "
+                                    "finkornig token för repot med Administration: Read-only och byt ut den i .env."}
     if not tok:
         return out
     try:
