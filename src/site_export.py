@@ -133,6 +133,35 @@ def _lighter(published: list[dict], files: dict[str, str]) -> None:
                 t = FIGURE.sub(lambda m: f"/figurer/{files[m.group(1)]}" if files.get(m.group(1), "").endswith(".webp")
                                else m.group(0), p[f])
                 p[f] = PHOTO.sub(lambda m: m.group(1) + commons.site_photo(m.group(2), sizes) + m.group(3), t)
+                p[f] = GENERIC_ALT.sub(lambda m: "![" + describe_alt(m.group(2), "en" if f.endswith("_en") else "sv") + "](", p[f])
+
+
+# A photo's generic alt text ("Runstenen Ög 136", src/commons.markdown): written out from Rundata on the website, so
+# that a screen reader and a search engine learn what and where the object is
+GENERIC_ALT = re.compile(r"^!\[(Runstenen|The runestone) ([^\]]+)\]\(", re.M)
+OBJECT_EN = {"runsten": "runestone", "runstenar": "runestones", "gravhäll": "grave slab", "häll": "slab",
+             "fragment": "fragment", "av": "of", "hällristning": "rock carving", "bergyta": "rock face",
+             "runristad": "runic", "sten": "stone", "stenar": "stones", "block": "boulder", "kors": "cross"}
+
+
+def describe_alt(name: str, lang: str) -> str:
+    """'Runsten Ög 136, Röks kyrkogård, Röks socken' (en: 'Runestone Ög 136, Röks kyrkogård, Ödeshög') from Rundata;
+    a name Rundata does not know (Vimosekammen) is left as the name alone."""
+    from api.rundata import store
+    rec = store().get(name.strip())
+    if not rec:
+        return name.strip()
+    obj = (rec.get("object") or "").strip() or "runinskrift"
+    if lang == "en":
+        words = obj.split()
+        known = all(w.isdigit() or w in OBJECT_EN for w in words)
+        obj = " ".join(OBJECT_EN.get(w, w) for w in words) if known else "runic inscription"
+        obj = re.sub(r"^(\d+) fragment of", lambda m: m.group(1) + (" fragments of" if m.group(1) != "1" else " fragment of"), obj)
+        where = [rec.get("place"), rec.get("municipality")]
+    else:
+        where = [rec.get("place"), re.sub(r" sn$", " socken", rec.get("parish") or "")]
+    head = obj[:1].upper() + obj[1:] + " " + rec["signum"]
+    return ", ".join([head] + [w for w in where if w])
 
 
 

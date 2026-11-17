@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = metaDescription(post.summary || parts.abstract || "");
   const path = reportPath(post.slug);
   return {
-    title: `${post.title} – forskningsrapport`,
+    // A shorter search title when the report has one (seo_title); the citation metadata keep the full title
+    title: post.seo_title ? `${post.seo_title} – rapport` : `${post.title} – forskningsrapport`,
     description,
     keywords: [...(parts.header?.keywords ?? []), "forskningsrapport", "forskningsresultat", ...keywords(post)],
     authors: [{ name: post.author || "Viktor Kvant" }],

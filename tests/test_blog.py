@@ -540,7 +540,9 @@ def test_the_exported_articles_get_lighter_commons_photos(tmp_path, monkeypatch)
     got = json.loads(open(site_export.CONTENT, encoding="utf-8").read())["posts"][0]
     assert f"({base}/thumb/a/ab/Big.jpg/960px-Big.jpg)\nU 1. Foto: B" in got["body"]
     assert "[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Big.jpg)" in got["body"]  # the credit stays
-    assert got["body_en"].startswith(f"![The runestone U 1]({base}/thumb/c/cd/Y.jpg/960px-Y.jpg)")
+    # the generic alt text is written out from Rundata (src/site_export.describe_alt): object, signum and place
+    assert got["body_en"].startswith(f"![Runestone U 1, Adelsö kyrka, Ekerö]({base}/thumb/c/cd/Y.jpg/960px-Y.jpg)")
+    assert got["body"].count("![Runsten U 1, Adelsö kyrka, Adelsö socken](") == 1
 
 
 def test_an_export_that_looks_wrong_is_not_written_or_pushed(monkeypatch):

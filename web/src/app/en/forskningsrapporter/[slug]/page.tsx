@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = metaDescription(post.summary_en || parts.abstract || "");
   const path = enReportPath(post.slug);
   return {
-    title: `${title} – research report`,
+    title: post.seo_title_en ? `${post.seo_title_en} – report` : `${title} – research report`,
     description,
     keywords: [...(parts.header?.keywords ?? []), "research report", "research findings", ...keywords(post)],
     authors: [{ name: post.author || "Viktor Kvant" }],
