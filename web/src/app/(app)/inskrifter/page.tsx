@@ -61,8 +61,11 @@ function SriQuote({ quote, page }: { quote?: string | null; page?: string | null
 
 function SriHistory({ sri }: { sri: SriFindHistory }) {
   return (
-    <Field label={`Fyndhistorik enligt ${sri.volume ?? "Sveriges runinskrifter"}${sri.year ? ` (${sri.year})` : ""}`}>
-      <div className="space-y-1 text-sm">
+    <div>
+      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+        <span>Fyndhistorik enligt</span> <span translate="no">{sri.volume ?? "Sveriges runinskrifter"}</span>{sri.year ? <> ({sri.year})</> : null}
+      </div>
+      <div className="space-y-1 text-sm text-slate-800 font-medium leading-relaxed">
         {sri.position && (
           <div>{SRI_POSITION[sri.position.value as string] ?? String(sri.position.value)} när bandet skrevs <SriQuote {...sri.position} /></div>
         )}
@@ -87,11 +90,14 @@ function SriHistory({ sri }: { sri: SriFindHistory }) {
         )}
         {sri.url && <a href={sri.url} target="_blank" rel="noreferrer" className="text-[#b7410e] underline text-xs">Digitala Sveriges runinskrifter (RAÄ)</a>}
         <div className="text-[11px] text-slate-500">
-          {sri.method} Kontrollerat av {sri.checked_by === "Viktor" ? "Viktor Kvant" : "en oberoende omläsning (not 8)"}. Flyttningarna visas inte: de klarade inte granskningen.
-          {sri.built_in_corrected && " Inmurningen i en kyrkogårdsmur eller stenmur räknas inte som byggnad (not 9)."} Visas bredvid Rundata; inget räknas på det före studie A1.
+          <span>Utplockat ur Sveriges runinskrifter av Anthropics språkmodell Claude (Sonnet), granskat fält för fält av Claude Opus i stickprov om 40–100 stenar per landskap (95–100 % rätt för de fält som visas här), med en kontroll av Viktor Kvant eller en oberoende omläsning. Analysplan A1, tillägg 1, noterna 1–9.</span>{" "}
+          <span>{sri.checked_by === "Viktor" ? "Kontrollerat av Viktor Kvant." : "Kontrollerat av en oberoende omläsning (not 8)."}</span>{" "}
+          <span>Flyttningarna visas inte: de klarade inte granskningen.</span>{" "}
+          {sri.built_in_corrected && <><span>Inmurningen i en kyrkogårdsmur eller stenmur räknas inte som byggnad (not 9).</span>{" "}</>}
+          <span>Visas bredvid Rundata; inget räknas på det före studie A1.</span>
         </div>
       </div>
-    </Field>
+    </div>
   );
 }
 
