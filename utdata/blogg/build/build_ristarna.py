@@ -149,6 +149,33 @@ IMG0_EN = fig("00_oversikt.png", "The page The carvers in Vitki, here for Åsmun
               "arrows. Below the heading is what the profile rests on, and below that the app's suggestions: runestones without "
               "a certain carver that the model thinks Åsmund carved, with the model's percentage, the next most likely carver "
               "and where the stone lies against Åsmund's fingerprint. Screenshot from Vitki (Swedish edition).")
+# ---- the groove analysis of two stones Åsmund signed (open scans, Kitzler Åhfeldt 2024, CC BY 4.0) ---------------------
+import base64 as _b64, io as _io  # noqa: E402
+from PIL import Image as _Im  # noqa: E402
+_G = {s: json.load(open(os.path.join(ROOT, "utdata", "skanningar_g5", "asmund", f"{s.replace(' ', '_')}.json"), encoding="utf-8"))
+      for s in ("Gs 13", "U 1144")}
+G13, U44 = _G["Gs 13"], _G["U 1144"]
+assert (G13["counts"]["accepted"], U44["counts"]["accepted"]) == (1974, 397)
+assert (round(G13["means"]["apex_vinkel_deg"]), round(U44["means"]["apex_vinkel_deg"])) == (133, 132)
+assert (round(G13["means"]["spårdjup_mm"], 1), round(U44["means"]["spårdjup_mm"], 1)) == (1.9, 2.0)
+assert (round(G13["means"]["spårbredd_mm"]), round(U44["means"]["spårbredd_mm"])) == (10, 10)
+_im = _Im.open(_io.BytesIO(_b64.b64decode(G13["review_png"].split(",")[-1]))).convert("RGB")
+_buf = _io.BytesIO()
+_im.save(_buf, "PNG", optimize=True)
+G13_FIG = blog_figures.freeze(_buf.getvalue())
+_SCAN_SV = ("Skanningen är gjord av Laila Kitzler Åhfeldt (ATOS I) i forskningsprojektet Runristandets dynamik: Kitzler Åhfeldt, L. "
+            "2024, 3D-data Runstenar signerade av Åsmund Kåresson, Riksantikvarieämbetet, "
+            "[doi:10.5281/zenodo.13347851](https://doi.org/10.5281/zenodo.13347851), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")
+_SCAN_EN = ("Scanned by Laila Kitzler Åhfeldt (ATOS I) in the research project Runristandets dynamik: Kitzler Åhfeldt, L. 2024, "
+            "3D-data Runstenar signerade av Åsmund Kåresson / Runestones signed by Asmund Karasun, Swedish National Heritage Board, "
+            "[doi:10.5281/zenodo.13347851](https://doi.org/10.5281/zenodo.13347851), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")
+IMG_G13 = (f"![Huggspårsanalysen av Gs 13]({G13_FIG})\nBild: Vitki, huggspårsanalysen av Gs 13 i Gästrikland, en sten som Åsmund "
+           "signerade. Blått: runslingan, som analysen har följt; orange: ristade spår; prickar: uppmätta tvärsnitt i runorna. "
+           "Ornamentiken utanför slingan mäts inte. " + _SCAN_SV)
+IMG_G13_EN = (f"![The groove analysis of Gs 13]({G13_FIG})\nImage: Vitki, the groove analysis of Gs 13 in Gästrikland, a stone that "
+              "Åsmund signed. Blue: the rune band, which the analysis has followed; orange: carved grooves; dots: measured "
+              "cross-sections in the runes. The ornament outside the band is not measured. " + _SCAN_EN)
+
 IMG1_EN = fig("01_fingeravtryck.png", "The fingerprint for Balle in Vitki",
               "The fingerprint, here for Balle: for each trait the share among the carver's 20 signed stones (rust) and among "
               "the neighbouring stones (grey). At the top what the carver does more often, at the bottom what the carver does "
@@ -256,6 +283,10 @@ Modellen säger också hur säker den är, och det ska gå att lita på. Förut 
 
 Forskarnas viktigaste belägg saknas fortfarande: ornamentiken utöver korset, alltså hur djurhuvudena är tecknade, hur svansarna slutar och hur flikarna löper, och runornas former. Vi har försökt läsa ornamentiken ur beskrivningarna i *Sveriges runinskrifter*, men att ett ord står i en artikel säger för lite. Det kräver att varje sten beskrivs på samma sätt, och det arbetet återstår. Runformerna kräver skanningar, och i dag finns som mest fyra skannade stenar per ristare.
 
+Hur det kan se ut visar två av de stenar som Åsmund själv signerade, Gs 13 i Gästrikland och U 1144 i Uppland, som Laila Kitzler Åhfeldt har skannat och lagt ut fritt. Vitkis huggspårsanalys följer runslingan och mäter varje ristat spår i tvärsnitt: på Gs 13 {G13['counts']['accepted']:,} snitt, på den vittrade och spruckna U 1144 bara {U44['counts']['accepted']}. Spåren är ändå nästan likadana: i genomsnitt {G13['means']['spårdjup_mm']:.1f} och {U44['means']['spårdjup_mm']:.1f} millimeter djupa, omkring tio millimeter breda och med en vinkel i botten på {G13['means']['apex_vinkel_deg']:.0f} och {U44['means']['apex_vinkel_deg']:.0f} grader. Två stenar bevisar ingenting – stenens material och vittringen påverkar spåret – men det är den sortens mätning som en dag kan ge ristarnas verktyg och handlag en plats bredvid stavningen och formlerna. Kitzler Åhfeldt har visat vägen i sin avhandling *Work and Worship* (2002).
+
+{IMG_G13}
+
 ## Pröva själv
 
 Sidan finns på [vitkirunor.se/ristarna](/ristarna/) och i appen under Korpus → Ristarna. Välj en ristare i listan och bläddra med pilarna. Titta särskilt på rutan Ytterkanten och utanför: där står de stenar som inte följer ristarens drag. Har du en av dem nära dig, så gå dit och titta på slingan och korset. Det är där maskinen ännu inte ser, och där ett mänskligt öga fortfarande gör skillnad.
@@ -360,6 +391,10 @@ The model also says how sure it is, and that should be something to rely on. It 
 
 The researchers' most important evidence is still missing: the ornament beyond the cross – how the animal heads are drawn, how the tails end, how the lobes run – and the forms of the runes. We tried to read the ornament from the descriptions in *Sveriges runinskrifter*, but that a word occurs in an article says too little. It needs every stone described in the same way, and that work remains. The rune forms need scans, and today there are at most four scanned stones per carver.
 
+What that can look like is shown by two of the stones that Åsmund signed, Gs 13 in Gästrikland and U 1144 in Uppland, which Laila Kitzler Åhfeldt has scanned and published openly. Vitki's groove analysis follows the rune band and measures every carved groove in cross-section: on Gs 13 {G13['counts']['accepted']:,} cross-sections, on the weathered and cracked U 1144 only {U44['counts']['accepted']}. Yet the grooves are almost alike: on average {G13['means']['spårdjup_mm']:.1f} and {U44['means']['spårdjup_mm']:.1f} millimetres deep, about ten millimetres wide and with an angle at the bottom of {G13['means']['apex_vinkel_deg']:.0f} and {U44['means']['apex_vinkel_deg']:.0f} degrees. Two stones prove nothing – the stone's material and weathering affect the groove – but it is the kind of measurement that may one day give the carvers' tools and hands a place beside the spelling and the formulas. Kitzler Åhfeldt showed the way in the thesis *Work and Worship* (2002).
+
+{IMG_G13_EN}
+
 ## Try it yourself
 
 The page is at [vitkirunor.se/ristarna](/ristarna/) and in the app under Corpus → The carvers. Pick a carver from the list and step through with the arrows. Look especially at the box At the edge and outside: there are the stones that do not follow the carver's traits. If one of them is near you, go there and look at the band and the cross. That is where the machine does not yet see, and where a human eye still makes the difference.
@@ -392,7 +427,7 @@ The fingerprints rest on the traits that set the carver's signed stones apart fr
 for b_ in (body, body_en):
     assert not re.search(r"^\|", b_, re.M)  # no tables (the article page cannot show them)
     assert b_.count(":::") == 4  # one chart and one box, each closed
-    assert b_.count("](/api/blog/figures/") == 4 and "wikimedia" not in b_  # four screenshots, no photographs
+    assert b_.count("](/api/blog/figures/") == 5 and "wikimedia" not in b_  # four screenshots + the groove image, no photographs
 assert body_en.count("## ") == body.count("## ")
 for word in (" han ", " hans ", " hon ", " henne ", " hennes "):  # no gendered pronouns for the carvers
     assert word not in body, word
