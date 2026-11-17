@@ -278,11 +278,11 @@ function Result({ d }: { d: Answer }) {
             {d.province_check && (
               <li>
                 <Tip text="Frågan räknas om utan ett landskap i taget (landskap med minst 30 stenar). Riktningen ska hålla utan vart och ett; p under 0,05 krävs bara där minst två tredjedelar av stenarna är kvar – samma regel som robusthetstrappan i Statistik (R).">Utan ett landskap i taget</Tip>:{" "}
-                sämst utan <strong>{d.province_check.without}</strong> ({d.province_check.n} stenar kvar): oddskvot {num(d.province_check.or)}, p {pIs(d.province_check.p)} –{" "}
+                sämst utan <strong>{d.province_check.without}</strong> {`(${d.province_check.n} stenar kvar): oddskvot ${num(d.province_check.or)}, p ${pIs(d.province_check.p)} –`}{" "}
                 {d.province_check.all_hold ? "håller utan vart och ett av landskapen." : <strong>håller inte utan alla landskap.</strong>}
-                {d.province_check.flips.length > 0 && <> Riktningen vänder utan {d.province_check.flips.join(", ")}.</>}
+                {d.province_check.flips.length > 0 && <> <span>Riktningen vänder utan</span> <span translate="no">{d.province_check.flips.join(", ")}</span>.</>}
                 {d.province_check.or != null && d.adjusted?.or != null && Math.abs(Math.log(d.province_check.or)) < Math.abs(Math.log(d.adjusted.or)) / 3 && (
-                  <span className="block text-amber-700">Utan {d.province_check.without} är sambandet nästan borta: det bärs till stor del av ett landskap.</span>
+                  <span className="block text-amber-700"><span>Utan</span> <span translate="no">{d.province_check.without}</span> <span>är sambandet nästan borta: det bärs till stor del av ett landskap.</span></span>
                 )}
               </li>
             )}

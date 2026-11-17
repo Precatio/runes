@@ -169,12 +169,14 @@ _SCAN_SV = ("Skanningen är gjord av Laila Kitzler Åhfeldt (ATOS I) i forskning
 _SCAN_EN = ("Scanned by Laila Kitzler Åhfeldt (ATOS I) in the research project Runristandets dynamik: Kitzler Åhfeldt, L. 2024, "
             "3D-data Runstenar signerade av Åsmund Kåresson / Runestones signed by Asmund Karasun, Swedish National Heritage Board, "
             "[doi:10.5281/zenodo.13347851](https://doi.org/10.5281/zenodo.13347851), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")
-IMG_G13 = (f"![Huggspårsanalysen av Gs 13]({G13_FIG})\nBild: Vitki, huggspårsanalysen av Gs 13 i Gästrikland, en sten som Åsmund "
-           "signerade. Blått: runslingan, som analysen har följt; orange: ristade spår; prickar: uppmätta tvärsnitt i runorna. "
-           "Ornamentiken utanför slingan mäts inte. " + _SCAN_SV)
-IMG_G13_EN = (f"![The groove analysis of Gs 13]({G13_FIG})\nImage: Vitki, the groove analysis of Gs 13 in Gästrikland, a stone that "
-              "Åsmund signed. Blue: the rune band, which the analysis has followed; orange: carved grooves; dots: measured "
-              "cross-sections in the runes. The ornament outside the band is not measured. " + _SCAN_EN)
+from utdata.blogg.build import huggspar_bildtext  # noqa: E402
+IMG_G13 = (f"![Huggspårsanalysen av Gs 13]({G13_FIG})\n" + huggspar_bildtext.text(
+    "sv", "huggspårsanalysen av Gs 13 i Gästrikland, en sten som Åsmund signerade", G13, _SCAN_SV,
+    "Ornamentiken utanför slingan mäts inte. "))
+IMG_G13_EN = (f"![The groove analysis of Gs 13]({G13_FIG})\n" + huggspar_bildtext.text(
+    "en", "the groove analysis of Gs 13 in Gästrikland, a stone that Åsmund signed", G13, _SCAN_EN,
+    "The ornament outside the band is not measured. "))
+assert G13["counts"]["candidates"] == 6629
 
 IMG1_EN = fig("01_fingeravtryck.png", "The fingerprint for Balle in Vitki",
               "The fingerprint, here for Balle: for each trait the share among the carver's 20 signed stones (rust) and among "

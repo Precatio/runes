@@ -102,26 +102,28 @@ def pic(label, lang, extra=""):
     return f"![{alt}]({img['thumb']})\n{commons.caption(img, lang)}{(' ' + extra) if extra else ''}"
 
 
-CREDIT_M1 = {"sv": ("Bild: Vitki, huggspårsanalys av skanningen av M 1 (Nolby, Medelpad). Orange: ristade spår som "
-                    "analysen hittat; prickar: uppmätta tvärsnitt. Skanningen är gjord av Henrik Zedig, Länsstyrelsen Västra "
-                    "Götalands län, i forskningsprojektet Evighetsrunor: Kitzler Åhfeldt, L. & Zedig, H. 2024, 3D-data Runstenar "
-                    "i Medelpad, Riksantikvarieämbetet, [doi:10.5281/zenodo.14141222](https://doi.org/10.5281/zenodo.14141222), "
-                    "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)."),
-             "en": ("Image: Vitki, groove analysis of the scan of M 1 (Nolby, Medelpad). Orange: carved grooves found by the "
-                    "analysis; dots: measured cross-sections. Scanned by Henrik Zedig, County Administrative Board of Västra "
-                    "Götaland, in the research project Evighetsrunor: Kitzler Åhfeldt, L. & Zedig, H. 2024, 3D-data Runstenar i "
-                    "Medelpad, Swedish National Heritage Board, [doi:10.5281/zenodo.14141222](https://doi.org/10.5281/zenodo.14141222), "
-                    "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")}
-CREDIT_OG = {"sv": ("Bild: Vitki, huggspårsanalys av skanningen av gravhällen Ög 240–241 i Hovs kyrka, Östergötland. Orange: "
-                    "ristade spår; prickar: uppmätta tvärsnitt. Skanningen är gjord av Laila Kitzler Åhfeldt 2008 (ATOS II) i "
-                    "Cecilia Ljungs avhandlingsprojekt om tidigkristna gravmonument: Kitzler Åhfeldt, L. 2025, 3D-data "
-                    "Tidigkristna gravmonument Östergötland och Småland, [doi:10.5281/zenodo.17571537](https://doi.org/10.5281/zenodo.17571537), "
-                    "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)."),
-             "en": ("Image: Vitki, groove analysis of the scan of the grave slab Ög 240–241 in Hov church, Östergötland. Orange: "
-                    "carved grooves; dots: measured cross-sections. Scanned by Laila Kitzler Åhfeldt in 2008 (ATOS II) in Cecilia "
-                    "Ljung's doctoral project on early Christian grave monuments: Kitzler Åhfeldt, L. 2025, 3D-data Tidigkristna "
-                    "gravmonument Östergötland och Småland, [doi:10.5281/zenodo.17571537](https://doi.org/10.5281/zenodo.17571537), "
-                    "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")}
+# The captions say what Vitki's analysis did (utdata/blogg/build/huggspar_bildtext.py), then whose scan it is
+from utdata.blogg.build import huggspar_bildtext  # noqa: E402
+_GR = {k: json.load(open(os.path.join(ROOT, "utdata", "skanningar_g5", d, f), encoding="utf-8"))
+       for k, d, f in (("M 1", "medelpad", "M_1.json"), ("Ög 240", "gravmonument_og_sm", "Ög_240.json"))}
+assert (_GR["M 1"]["counts"]["accepted"], _GR["Ög 240"]["counts"]["accepted"]) == (128, 1172)
+SCAN_M1 = {"sv": ("Skanningen är gjord av Henrik Zedig, Länsstyrelsen Västra Götalands län, i forskningsprojektet Evighetsrunor: "
+                  "Kitzler Åhfeldt, L. & Zedig, H. 2024, 3D-data Runstenar i Medelpad, Riksantikvarieämbetet, "
+                  "[doi:10.5281/zenodo.14141222](https://doi.org/10.5281/zenodo.14141222), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)."),
+           "en": ("Scanned by Henrik Zedig, County Administrative Board of Västra Götaland, in the research project Evighetsrunor: "
+                  "Kitzler Åhfeldt, L. & Zedig, H. 2024, 3D-data Runstenar i Medelpad, Swedish National Heritage Board, "
+                  "[doi:10.5281/zenodo.14141222](https://doi.org/10.5281/zenodo.14141222), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")}
+SCAN_OG = {"sv": ("Skanningen är gjord av Laila Kitzler Åhfeldt 2008 (ATOS II) i Cecilia Ljungs avhandlingsprojekt om tidigkristna "
+                  "gravmonument: Kitzler Åhfeldt, L. 2025, 3D-data Tidigkristna gravmonument Östergötland och Småland, "
+                  "[doi:10.5281/zenodo.17571537](https://doi.org/10.5281/zenodo.17571537), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)."),
+           "en": ("Scanned by Laila Kitzler Åhfeldt in 2008 (ATOS II) in Cecilia Ljung's doctoral project on early Christian grave "
+                  "monuments: Kitzler Åhfeldt, L. 2025, 3D-data Tidigkristna gravmonument Östergötland och Småland, "
+                  "[doi:10.5281/zenodo.17571537](https://doi.org/10.5281/zenodo.17571537), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).")}
+WHAT = {("M 1", "sv"): "huggspårsanalysen av M 1 i Nolby, Medelpad", ("M 1", "en"): "the groove analysis of M 1 at Nolby, Medelpad",
+        ("Ög 240", "sv"): "huggspårsanalysen av gravhällen Ög 240–241 i Hovs kyrka, Östergötland",
+        ("Ög 240", "en"): "the groove analysis of the grave slab Ög 240–241 in Hov church, Östergötland"}
+CREDIT_M1 = {l: huggspar_bildtext.text(l, WHAT["M 1", l], _GR["M 1"], SCAN_M1[l]) for l in ("sv", "en")}
+CREDIT_OG = {l: huggspar_bildtext.text(l, WHAT["Ög 240", l], _GR["Ög 240"], SCAN_OG[l]) for l in ("sv", "en")}
 APP_OG = lambda lang: f"![{'Gravhällen Ög 240–241' if lang == 'sv' else 'The grave slab Ög 240–241'}]({FIG['Ög 240']})\n{CREDIT_OG[lang]}"  # noqa: E731
 APP_M1 = lambda lang: f"![{'Runstenen M 1' if lang == 'sv' else 'The runestone M 1'}]({FIG['M 1']})\n{CREDIT_M1[lang]}"  # noqa: E731
 
