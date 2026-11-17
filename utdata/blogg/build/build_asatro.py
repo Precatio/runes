@@ -61,6 +61,53 @@ SOL = json.load(open("/Volumes/2TB/Antigrvity/Runes/downloads/asatro/isof_sol/so
 sol_text = {e["name"]: re.sub(r"\s+", " ", e["text"]) for e in SOL if e["name"] == "Odensvi"}
 assert "vi ’helig plats, kultplats’" in sol_text["Odensvi"]
 
+# ---- part 2: the graves (analysplaner/2026-11-17-kultplatsernas-landskap.md, 55a61e0d) ---------------------------
+import csv as _csv  # noqa: E402
+import statistics as _st  # noqa: E402
+L = json.load(open(os.path.join(A, "resultat_landskap.json"), encoding="utf-8"))
+assert L["sha"] == "55a61e0d" and L["kultsocknar"] == 78 and L["socknar"] == 1844
+CONF = {(r, x["feature"]): x for r in ("huvud", "bytta") for x in L[r]["kandidater"]}
+for f in ("gravfalt", "hog"):
+    assert CONF[("huvud", f)]["bekraftat"] and CONF[("bytta", f)]["bekraftat"], f
+for f in ("kyrka", "ting", "fornborg"):
+    assert not any(CONF.get((r, f), {}).get("bekraftat") for r in ("huvud", "bytta")), f
+LD = list(_csv.DictReader(open(os.path.join(A, "landskap_drag.csv"), encoding="utf-8")))
+_c = [x for x in LD if x["cult"] == "1"]
+_o = [x for x in LD if x["cult"] == "0"]
+NO_GRAVE = (100 * sum(x["gravfalt"] == "0" for x in _c) / len(_c), 100 * sum(x["gravfalt"] == "0" for x in _o) / len(_o))
+NO_MOUND = (100 * sum(x["hog"] == "0" for x in _c) / len(_c), 100 * sum(x["hog"] == "0" for x in _o) / len(_o))
+assert [round(v) for v in NO_GRAVE] == [5, 28] and [round(v) for v in NO_MOUND] == [14, 28]
+
+
+def _ratio(v):
+    by = {}
+    for x in LD:
+        by.setdefault(x["land"], []).append(int(x[v]))
+    obs = sum(int(x[v]) for x in _c)
+    exp = sum(_st.mean(by[x["land"]]) for x in _c)
+    return obs / exp
+
+
+R_GRAVE, R_MOUND = _ratio("gravfalt"), _ratio("hog")
+assert (round(R_GRAVE, 2), round(R_MOUND, 2)) == (1.33, 1.62)
+# ---- part 3: the runestones in the cult parishes (analysplaner/2026-11-17-korset-och-kultplatserna.md, 90e7af35)
+KR = json.load(open(os.path.join(A, "resultat_korset.json"), encoding="utf-8"))
+assert KR["sha"] == "90e7af35" and not any(KR[k]["haller"] for k in ("K1", "K2", "K3"))
+assert round(KR["K1"]["kvot"], 2) == 0.95
+HED = {x["signum"]: x for x in KR["hedniska"]}
+assert len(HED) == 7 and [s_ for s_, x in HED.items() if x["kultsocken"]] == ["Sö 140", "U 1161"]
+_share = KR["K1"]["stenar_i_kultsocknar"] / KR["K1"]["stenar"]
+P2 = 1 - (1 - _share) ** 7 - 7 * _share * (1 - _share) ** 6
+assert 0.08 < P2 < 0.10  # about one chance in eleven
+RD = {r["signum"]: r for r in json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["inscriptions"]}
+assert "Siði(?) \"Þorr(?)" in RD["Sö 140"]["normalization"] and "May Þórr(?) safeguard(?)" in RD["Sö 140"]["translation_en"]
+assert "Tors fiskafänge" in RD["U 1161"]["other"]
+_SOL_TXT = {}
+for _e in SOL:
+    _SOL_TXT.setdefault(_e["name"], []).append(re.sub(r"\s+", " ", _e["text"]))
+assert any("Namnet innehåller efterleden → vi ’helig plats, kultplats’" in t and "växtlighetsgudinna" in t for t in _SOL_TXT["Ludgo"])
+assert any("oftast sammanhållits med → al" in t for t in _SOL_TXT["Altuna"])
+
 # ---- the literature (sok.sqlite; pdf page → printed page from the page header) --------------------------------------
 SOK = sqlite3.connect("/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite")
 
@@ -136,20 +183,41 @@ def chart(sv):
     return "\n".join(out)
 
 
+def chart_graves(sv):
+    f = lambda v: f"{v:.0f}"  # noqa: E731
+    return "\n".join([
+        ":::chart " + ("Socknar utan registrerade gravar" if sv else "Parishes without registered graves"),
+        "# " + ("Utan gravfält" if sv else "Without a grave field"),
+        f"+{'Socken med kultplatsnamn' if sv else 'Parish with a cult-place name'} | {f(NO_GRAVE[0])} | 78 {'socknar' if sv else 'parishes'}",
+        f"{'Övriga socknar' if sv else 'Other parishes'} | {f(NO_GRAVE[1])} | {'1 766 socknar' if sv else '1,766 parishes'}",
+        "# " + ("Utan gravhög" if sv else "Without a mound"),
+        f"+{'Socken med kultplatsnamn' if sv else 'Parish with a cult-place name'} | {f(NO_MOUND[0])} |",
+        f"{'Övriga socknar' if sv else 'Other parishes'} | {f(NO_MOUND[1])} |",
+        ("Källa: Svenskt ortnamnslexikon (2016) och Riksantikvarieämbetets Kulturmiljöregister; varje gravfält och hög räknad "
+         "till den socken vars mittpunkt ligger närmast, i nio landskap. Procent, utan justering; proven i texten håller "
+         "landskapet och sockenstorleken lika. Bild: Vitki.") if sv else
+        ("Source: Svenskt ortnamnslexikon (2016) and the Swedish National Heritage Board's register of ancient remains; each "
+         "grave field and mound counted to the parish whose centre lies nearest, in nine provinces. Per cent, unadjusted; the "
+         "tests in the text hold the province and the parish size equal. Image: Vitki."),
+        ":::"])
+
+
 p1 = lambda x, sv=True: f"{x:.1f}".replace(".", ",") if sv else f"{x:.1f}"  # noqa: E731
 
 SLUG = "asatron-i-landskapet"
-title = "Asatron i landskapet – där de heliga platserna låg"
-title_en = "The old faith in the landscape – where the sacred places lay"
-seo_title = "Asatron i ortnamnen: heliga platser och ting"
-seo_title_en = "Old Norse religion in Swedish place names"
+title = "Asatron i landskapet – gudarnas platser låg bland förfädernas gravar"
+title_en = "The old faith in the landscape – the places of the gods lay among the graves of the ancestors"
+seo_title = "Asatron i ortnamnen: heliga platser och gravfält"
+seo_title_en = "Old Norse religion in place names and graves"
 summary = ("Runstenarna är nästan alla kristna, men asatron finns kvar i landskapet: i Odensvi, Torsåker, Ullvi och hundra "
-           "andra namn. Vi har gått igenom hela Svenskt ortnamnslexikon. Samma gudar fanns i hela landet, men de heliga "
-           "platserna låg tätast kring Mälaren – tre gånger tätare än i norr – och där låg också tingen.")
+           "andra namn. Vi har gått igenom hela Svenskt ortnamnslexikon och lagt namnen bredvid Riksantikvarieämbetets register "
+           "över fornlämningar. De heliga platserna låg tätast kring Mälaren, och de låg där gravarna låg: nästan ingen "
+           "socken med ett kultplatsnamn saknar gravfält. Runstenarna följde däremot inte efter.")
 summary_en = ("The runestones are almost all Christian, but the old faith survives in the landscape: in Odensvi, Torsåker, "
-              "Ullvi and a hundred other names. We went through the whole Swedish place-name dictionary. The same gods were "
-              "found across the country, but the sacred places lay thickest around Lake Mälaren – three times as thick as in "
-              "the north – and that is where the assemblies lay too.")
+              "Ullvi and a hundred other names. We went through the whole Swedish place-name dictionary and laid the names "
+              "beside the national register of ancient remains. The sacred places lay thickest around Lake Mälaren, and they "
+              "lay where the graves lay: hardly any parish with a cult-place name lacks a grave field. The runestones, on "
+              "the other hand, did not follow.")
 
 body = f"""Den som tar tåget från Stockholm till Uppsala passerar Odensala och Ultuna utan att tänka på det. Namnen är så vanliga att de har slutat betyda något. Men en gång betydde de något mycket bestämt: Odensala var Odens harg, en kultplats, och Ultuna var Ulls tuna.
 
@@ -177,13 +245,33 @@ Gudarna var gemensamma. Platserna där de dyrkades var det inte i samma mått.
 
 Av lexikonets namn i Mälarlanden – Uppland, Södermanland, Västmanland och Närke – är {p1(SH['Mälarlanden'])} procent kultplatser. I norr är det {p1(SH['Norr'])} procent, en tredjedel så mycket. Östra Götaland och Gotland ligger däremellan. Talen är räknade mot hur många namn lexikonet har i varje landsdel, så det är inte bara så att Mälardalen har fler namn. Ett så tydligt mönster skulle uppstå av en slump i färre än ett fall på 250.
 
-Och där kultplatserna låg tätast låg också tingen. Av de 52 tingsplatserna i lexikonet ligger 25 i Mälarlanden, bland dem Anundshögen i Västmanland. Tinget, marknaden och kulten hörde ihop.
+Och där kultplatserna låg tätast låg också tingen. Av de 52 tingsplatserna i lexikonet ligger 25 i Mälarlanden, bland dem Anundshögen i Västmanland. Kultplatserna och tingen låg tätast i samma landsdel.
 
 Vi prövade också om olika slags kultplatser hörde till olika landsdelar – vi i en, harg i en annan. Det gick inte att se. Vi-namnen finns från Gotland till Västergötland.
 
+## Bland förfädernas gravar
+
+Var i bygden låg då de heliga platserna? För att se det lade vi namnen bredvid något helt annat: Riksantikvarieämbetets register över fornlämningar, där gravfält, högar, fornborgar, hamnar, vägar och broar är inmätta, och kartor över jordarterna och de medeltida kyrkorna. Tretton drag i allt. Vi lät dem tävla på ett sätt som skyddar mot att vi lurar oss själva: vi delade landets socknar i två halvor och letade fritt i den ena. Det som stack ut där låstes, och fick sedan visa sig i den andra halvan, där vi inte hade tittat.
+
+Två drag klarade det, och de klarade det åt båda hållen: gravfälten och gravhögarna.
+
+{chart_graves(True)}
+
+Bara {NO_GRAVE[0]:.0f} procent av socknarna med ett kultplatsnamn saknar registrerade gravfält, mot {NO_GRAVE[1]:.0f} procent av de andra. Räknat mot landskapets genomsnitt har de en tredjedel fler gravfält och {p1(R_MOUND)} gånger så många gravhögar. Det håller när socknens storlek hålls lika – stora socknar har förstås fler gravar – och när bara de namn som lexikonet tolkar säkert räknas.
+
+De heliga platserna låg alltså där de döda låg, i de bygder där människor hade bott och begravt sina föräldrar i generationer. Det säger inte att kulten utövades vid gravarna. Men det säger att gudarnas platser hörde till de gamla, tätt bebodda bygderna, inte till utmarkerna eller de nya gårdarna.
+
+Lika viktigt är det som inte höll. Socknar med ett kultplatsnamn har inte påvisbart oftare en hamn, en väg eller ett Husby, och de ligger inte på någon särskild jord. Fornborgarna, tingen och de tidiga kyrkorna syntes bara i den ena halvan, och det räcker inte.
+
+## Runstenarna följde inte efter
+
+Om de gamla gudarna hade sina platser i de gamla bygderna, borde väl den nya trons första monument ha sökt sig dit? Vi prövade det också, med en plan som låstes innan vi räknade. Svaret är nej, så långt vi kan se. I socknar med ett kultplatsnamn restes inte fler runstenar än i grannsocknarna, de är inte senare, och de har inte säkert oftare en kristen text.
+
+Två stenar är ändå värda att stanna vid. Av de sju svenska runstenar som har hedniska drag står två i en socken med ett kultplatsnamn. Vid Korpbron i Ludgo i Södermanland står en sten som slutar med orden *Siði Þorr*, som Rundata läser som ”Tor vige” – med frågetecken. Ludgo innehåller enligt lexikonet *vi*, helig plats, och kanske namnet på en växtlighetsgudinna. Och i Altuna kyrka i Uppland står stenen där Tor fiskar efter Midgårdsormen, i en socken vars namn oftast förs till *al*, helgedom. Med så få stenar kan det lätt vara en slump, ungefär en chans på elva. Men den som vill se de gamla gudarna i landskapet kan börja där.
+
 ## Det namnforskarna redan visste
 
-Det här är inte en upptäckt i den meningen att ingen har sett det förut. Per Vikstrand skrev 2001 en hel avhandling om *Gudarnas platser* i Mälarlandskapen, och Eva Nyman konstaterar att namn som Odensvi, Torsvi, Frösvi och Ullvi är ”typiskt för centrala Sverige” (Namn och bygd 110, s. 20). Det nya är måttet: hela landet räknat med samma lexikon, samma regler och två läsare, och prövat mot hur många namn som fanns att välja bland. Det namnforskarna har sett i trakt efter trakt syns då som ett mönster i siffror.
+Det här är inte en upptäckt i den meningen att ingen har sett det förut. Per Vikstrand skrev 2001 en hel avhandling om *Gudarnas platser* i Mälarlandskapen, och Eva Nyman konstaterar att namn som Odensvi, Torsvi, Frösvi och Ullvi är ”typiskt för centrala Sverige” (Namn och bygd 110, s. 20). Att kultplatserna låg i de gamla centralbygderna har de också skrivit. Det nya här är måttet och kombinationen: hela landet räknat med samma lexikon och två läsare, och lagt mot ett helt annat register – de inmätta gravarna – och mot runstenarna. Det namnforskarna har sett i trakt efter trakt syns då som mönster i siffror, och runstenarnas tystnad om de gamla platserna har ingen visat förut.
 
 ## Hur hölls tron ihop?
 
@@ -201,17 +289,20 @@ Vi letade också efter namn med troll, jättar, alver och vättar. Lexikonet har
 - Asatron syns i landskapet: 128 ortnamn tolkas av namnforskarna som förkristna kultplatser, och ytterligare några bär en guds namn.
 - Gudarna var gemensamma. Tor finns i alla delar av landet, från Gotland till Ångermanland, och vi kunde inte se att olika gudar hörde till olika bygder.
 - De heliga platserna låg tätast kring Mälaren, tre gånger tätare än i norr, och där låg också tingen. Tron hade ett centrum.
-- Namnforskarna har sett mönstret trakt för trakt. Här är det räknat för hela landet med samma mått.
+- De heliga platserna låg där gravarna låg: bara 5 procent av socknarna med ett kultplatsnamn saknar gravfält, mot 28 procent av de andra. Gudarnas platser hörde till de gamla bygderna.
+- Runstenarna följde inte efter. Kristendomens första monument restes inte oftare eller senare vid de gamla platserna.
 :::
 
 ## Så säkra är vi
 
-Lexikonet täcker främst socknar, härader, städer och sjöar, inte enskilda gårdar, och det har fler uppslag i vissa landsdelar än i andra; därför jämförde vi alltid med hur många namn lexikonet har i landsdelen. Ett namns äldsta skriftliga belägg är oftast från 1300-talet och säger inget om när platsen var helig. De två läsarna var oense om 12 av 402 uppslag; där räknades namnet inte. Fyra samiska heliga platser i Lappland räknades i provet som kultplatser; utan dem är andelen i norr ännu lägre, {p1(NORR_UTAN)} procent. Planerna låstes innan något räknades per landsdel, och de ligger öppet på GitHub tillsammans med koden.
+Lexikonet täcker främst socknar, härader, städer och sjöar, inte enskilda gårdar, och det har fler uppslag i vissa landsdelar än i andra; därför jämförde vi alltid med hur många namn lexikonet har i landsdelen. Ett namns äldsta skriftliga belägg är oftast från 1300-talet och säger inget om när platsen var helig. De två läsarna var oense om 12 av 402 uppslag; där räknades namnet inte. Fyra samiska heliga platser i Lappland räknades i provet som kultplatser; utan dem är andelen i norr ännu lägre, {p1(NORR_UTAN)} procent. Socknarnas gränser fanns inte att tillgå, så varje gravfält och hög räknades till den socken vars mittpunkt ligger närmast. Runstensprovet saknar 270 av 2 321 stenar vars socken inte gick att matcha. Planerna låstes innan något räknades, fyra stycken i följd, och de ligger öppet på GitHub tillsammans med koden.
 
 ## Källor
 
 - *Svenskt ortnamnslexikon*, 2:a uppl. 2016, Institutet för språk och folkminnen. Läst och räknat; citeras kort.
 - Institutet för språk och folkminnen, Ortnamnsregistret: socknarna och deras mittpunkter. CC BY.
+- Riksantikvarieämbetet, Kulturmiljöregistret: gravfält, högar och andra fornlämningar.
+- Samnordisk runtextdatabas (Rundata), Uppsala universitet. Open Database License.
 - Nordberg, Andreas 2018. Circular flow of tradition in Old Norse religion. *Fornvännen* 113, s. 76 ff. CC BY 4.0.
 - Nyman, Eva 2022. Sakrala ortnamn av förkristen nordisk typ i de nordliga delarna av Norge och Sverige. *Namn och bygd* 110, s. 13–60. CC BY 4.0.
 - Vikstrand, Per 2001. *Gudarnas platser. Förkristna sakrala ortnamn i Mälarlandskapen*. Uppsala.
@@ -243,13 +334,33 @@ The gods were shared. The places where they were worshipped were not shared to t
 
 Of the dictionary's names in the Mälar lands – Uppland, Södermanland, Västmanland and Närke – {p1(SH['Mälarlanden'], False)} per cent are cult places. In the north it is {p1(SH['Norr'], False)} per cent, a third as much. Eastern Götaland and Gotland lie in between. The figures are counted against how many names the dictionary has in each region, so it is not simply that the Mälar valley has more names. A pattern this clear would arise by chance in fewer than one case in 250.
 
-And where the cult places lay thickest, the assemblies lay too. Of the 52 thing places in the dictionary, 25 are in the Mälar lands, among them Anundshögen in Västmanland. The assembly, the market and the cult belonged together.
+And where the cult places lay thickest, the assemblies lay too. Of the 52 thing places in the dictionary, 25 are in the Mälar lands, among them Anundshögen in Västmanland. The cult places and the assemblies lay thickest in the same region.
 
 We also tested whether different kinds of cult place belonged to different regions – vi in one, harg in another. It could not be seen. The vi names run from Gotland to Västergötland.
 
+## Among the graves of the ancestors
+
+Where in the district, then, did the sacred places lie? To see that, we laid the names beside something quite different: the national register of ancient remains, where grave fields, mounds, hillforts, harbours, roads and bridges are surveyed, and maps of the soils and the medieval churches. Thirteen traits in all. We let them compete in a way that guards against fooling ourselves: we split the country's parishes into two halves and searched freely in one. What stood out there was locked, and then had to show itself in the other half, where we had not looked.
+
+Two traits passed, and they passed both ways: the grave fields and the burial mounds.
+
+{chart_graves(False)}
+
+Only {NO_GRAVE[0]:.0f} per cent of the parishes with a cult-place name lack a registered grave field, against {NO_GRAVE[1]:.0f} per cent of the others. Counted against the province's average they have a third more grave fields and {p1(R_MOUND, False)} times as many mounds. It holds when the size of the parish is held equal – large parishes of course have more graves – and when only the names the dictionary interprets with certainty are counted.
+
+So the sacred places lay where the dead lay, in the districts where people had lived and buried their parents for generations. That does not say the cult was practised at the graves. But it says that the places of the gods belonged to the old, densely settled districts, not to the outlands or the new farms.
+
+What did not hold matters just as much. Parishes with a cult-place name do not demonstrably more often have a harbour, a road or a Husby, and they do not lie on any particular soil. The hillforts, the assemblies and the early churches showed only in one half, and that is not enough.
+
+## The runestones did not follow
+
+If the old gods had their places in the old districts, surely the first monuments of the new faith would have sought them out? We tested that too, with a plan locked before we counted. The answer is no, as far as we can see. In parishes with a cult-place name no more runestones were raised than in the neighbouring parishes, they are not later, and they do not with any certainty more often have a Christian text.
+
+Two stones are still worth pausing at. Of the seven Swedish runestones with pagan features, two stand in a parish with a cult-place name. At Korpbron in Ludgo in Södermanland stands a stone that ends with the words *Siði Þorr*, which Rundata reads as ”may Thor hallow” – with a question mark. Ludgo contains, according to the dictionary, *vi*, a holy place, and perhaps the name of a goddess of growth. And in Altuna church in Uppland stands the stone where Thor fishes for the Midgard serpent, in a parish whose name is most often linked to *al*, sanctuary. With so few stones it could easily be chance, about one chance in eleven. But whoever wants to see the old gods in the landscape can start there.
+
 ## What the place-name scholars already knew
 
-This is not a discovery in the sense that no one has seen it before. In 2001 Per Vikstrand wrote a whole dissertation on *Gudarnas platser*, the places of the gods, in the Mälar provinces, and Eva Nyman notes that names such as Odensvi, Torsvi, Frösvi and Ullvi are ”typiskt för centrala Sverige”, typical of central Sweden (Namn och bygd 110, p. 20). What is new is the measure: the whole country counted with the same dictionary, the same rules and two readers, and tested against how many names there were to choose from. What the scholars have seen district by district then shows as a pattern in numbers.
+This is not a discovery in the sense that no one has seen it before. In 2001 Per Vikstrand wrote a whole dissertation on *Gudarnas platser*, the places of the gods, in the Mälar provinces, and Eva Nyman notes that names such as Odensvi, Torsvi, Frösvi and Ullvi are ”typiskt för centrala Sverige”, typical of central Sweden (Namn och bygd 110, p. 20). They have also written that the cult places lay in the old central districts. What is new here is the measure and the combination: the whole country counted with the same dictionary and two readers, and laid against an entirely different register – the surveyed graves – and against the runestones. What the scholars have seen district by district then shows as patterns in numbers, and no one has shown before that the runestones were silent about the old places.
 
 ## How was the faith held together?
 
@@ -267,17 +378,20 @@ We also looked for names with trolls, giants, elves and wights. The dictionary h
 - The old faith can be seen in the landscape: 128 place names are interpreted by the place-name scholars as pre-Christian cult places, and a few more carry a god's name.
 - The gods were shared. Thor is in every part of the country, from Gotland to Ångermanland, and we could not see different gods belonging to different districts.
 - The sacred places lay thickest around Lake Mälaren, three times as thick as in the north, and that is where the assemblies lay too. The faith had a centre.
-- The place-name scholars have seen the pattern district by district. Here it is counted for the whole country with the same measure.
+- The sacred places lay where the graves lay: only 5 per cent of the parishes with a cult-place name lack a grave field, against 28 per cent of the others. The places of the gods belonged to the old districts.
+- The runestones did not follow. The first monuments of Christianity were not raised more often or later at the old places.
 :::
 
 ## How sure we are
 
-The dictionary covers mainly parishes, hundreds, towns and lakes, not single farms, and it has more entries in some regions than in others; so we always compared with how many names the dictionary has in the region. A name's oldest written record is usually from the fourteenth century and says nothing about when the place was holy. The two readers disagreed on 12 of 402 entries; there the name was not counted. Four Sami sacred places in Lapland were counted as cult places in the test; without them the share in the north is even lower, {p1(NORR_UTAN, False)} per cent. The plans were locked before anything was counted by region, and they are open on GitHub with the code.
+The dictionary covers mainly parishes, hundreds, towns and lakes, not single farms, and it has more entries in some regions than in others; so we always compared with how many names the dictionary has in the region. A name's oldest written record is usually from the fourteenth century and says nothing about when the place was holy. The two readers disagreed on 12 of 402 entries; there the name was not counted. Four Sami sacred places in Lapland were counted as cult places in the test; without them the share in the north is even lower, {p1(NORR_UTAN, False)} per cent. Parish boundaries were not available, so each grave field and mound was counted to the parish whose centre lies nearest. The runestone test lacks 270 of 2,321 stones whose parish could not be matched. The plans were locked before anything was counted, four of them in turn, and they are open on GitHub with the code.
 
 ## Sources
 
 - *Svenskt ortnamnslexikon*, 2nd ed. 2016, Institute for Language and Folklore. Read and counted; quoted briefly.
 - Institute for Language and Folklore, Place-name register: the parishes and their centres. CC BY.
+- Swedish National Heritage Board, Kulturmiljöregistret: grave fields, mounds and other ancient remains.
+- Scandinavian Runic-text Database (Rundata), Uppsala University. Open Database License.
 - Nordberg, Andreas 2018. Circular flow of tradition in Old Norse religion. *Fornvännen* 113, pp. 76 ff. CC BY 4.0.
 - Nyman, Eva 2022. Sakrala ortnamn av förkristen nordisk typ i de nordliga delarna av Norge och Sverige. *Namn och bygd* 110, pp. 13–60. CC BY 4.0.
 - Vikstrand, Per 2001. *Gudarnas platser. Förkristna sakrala ortnamn i Mälarlandskapen*. Uppsala.
