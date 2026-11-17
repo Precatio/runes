@@ -165,9 +165,9 @@ LATE_BON = sum(1 for r in _late if _nd.patterns(r, _nd.features(r)).get("bon") =
 assert (LATE_N, LATE_BON) == (44, 17) and sum(1 for r in _late if _nd.realm_of(r) == "dk_bornholm") == 38
 TITEL_SE_SV = f"{100 * A['A_titel']['SE']['a'] / 2321:.1f}".replace(".", ",")
 TITEL_SE_EN = f"{100 * A['A_titel']['SE']['a'] / 2321:.1f}"
-SLUG = "i-danmark-mindes-man-kamraten"
-title = "I Danmark mindes man kamraten – vad de danska runstenarna säger"
-title_en = "In Denmark they remembered the comrade – what the Danish runestones say"
+SLUG = "vi-studerar-de-danska-runstenarna"
+title = "Vi studerar de danska runstenarna: de minns kamraten, inte släkten"
+title_en = "We study the Danish runestones: they remember the comrade, not the kin"
 summary = ("Två nästan likadana runstenar, en i Hobro och en i Västergötland, minns samma man: Karl, sin félagi. Det är typiskt "
            "danskt. Vi har jämfört budskapen på 239 danska och 2 321 svenska runstenar från samma tid. De danska minns kamrater "
            "och herrar, nämner ämbeten och hedniska gudar, och säger oftare att minnesmärket är större än stenen.")
