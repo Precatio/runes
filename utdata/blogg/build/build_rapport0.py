@@ -352,10 +352,10 @@ summary_en = (f"We read {en_n(N_TEXTS)} texts from Fornvännen and Futhark with 
 
 FV_CREDIT_SV = ("Fornvännen, utgiven av Kungl. Vitterhets Historie och Antikvitets Akademien, digitaliserad av "
                 "Riksantikvarieämbetet (CC BY 4.0)")
-FU_CREDIT_SV = "Futhark: International Journal of Runic Studies, Uppsala universitet, via DiVA (CC BY 4.0)"
+FU_CREDIT_SV = "Futhark: International Journal of Runic Studies, Uppsala universitet, via DiVA (volym 1–5 CC BY-NC-ND 3.0, volym 6 CC BY-NC-ND 4.0, från volym 7 CC BY 4.0)"
 FV_CREDIT_EN = ("Fornvännen, published by the Royal Swedish Academy of Letters, History and Antiquities (KVHAA), digitised "
                 "by the Swedish National Heritage Board (CC BY 4.0)")
-FU_CREDIT_EN = "Futhark: International Journal of Runic Studies, Uppsala University, via DiVA (CC BY 4.0)"
+FU_CREDIT_EN = "Futhark: International Journal of Runic Studies, Uppsala University, via DiVA (volumes 1–5 CC BY-NC-ND 3.0, volume 6 CC BY-NC-ND 4.0, from volume 7 CC BY 4.0)"
 
 c = CT
 body = f"""*Viktor Kvant, oberoende forskare. Datanotis. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, runologi, forskningshistoria, litteraturgenomgång, Fornvännen, Futhark, språkmodeller, forskningsagenda. Konkurrerande intressen: rapporten bedömer hur relevant projektets eget bidrag skulle vara; i övrigt inga. Finansiering: ingen.*
@@ -376,7 +376,7 @@ Den här datanotisen prövar ingen hypotes. Den beskriver vad hundra års runfor
 
 ## 1. Källorna
 
-**Fornvännen** har getts ut av Kungl. Vitterhets Historie och Antikvitets Akademien sedan 1906 och är en av de viktigaste tidskrifterna för svensk arkeologi och runforskning. Riksantikvarieämbetet har digitaliserat årgångarna 1906 till april 2023 under licensen CC BY 4.0. Av de {sv_n(len(FV_ALL))} texterna i den samlingen läste vi {sv_n(JOUR['fornvannen'])}. **Futhark: International Journal of Runic Studies** ges ut vid Uppsala universitet sedan 2010 och finns i DiVA under CC BY 4.0. Vi läste {JOUR['futhark']} av {len(FU_ALL)} poster; de {len(FU_UNREAD)} olästa är nästan bara hela volymer ({sum(r['whole_volume'] for r in FU_UNREAD)}), vars artiklar lästes var för sig.
+**Fornvännen** har getts ut av Kungl. Vitterhets Historie och Antikvitets Akademien sedan 1906 och är en av de viktigaste tidskrifterna för svensk arkeologi och runforskning. Riksantikvarieämbetet har digitaliserat årgångarna 1906 till april 2023 under licensen CC BY 4.0. Av de {sv_n(len(FV_ALL))} texterna i den samlingen läste vi {sv_n(JOUR['fornvannen'])}. **Futhark: International Journal of Runic Studies** ges ut vid Uppsala universitet sedan 2010 och finns i DiVA (volym 1–5 CC BY-NC-ND 3.0, volym 6 CC BY-NC-ND 4.0, från volym 7 CC BY 4.0). Vi läste {JOUR['futhark']} av {len(FU_ALL)} poster; de {len(FU_UNREAD)} olästa är nästan bara hela volymer ({sum(r['whole_volume'] for r in FU_UNREAD)}), vars artiklar lästes var för sig.
 
 Texterna valdes i tre nivåer, efter ord som räknades maskinellt i varje text:
 
@@ -461,8 +461,8 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 
 ## Referenser
 
-- Fornvännen. Tidskrift för svensk antikvarisk forskning. Stockholm: Kungl. Vitterhets Historie och Antikvitets Akademien, 1906–. Digitaliserad av Riksantikvarieämbetet, Arkivsök, samlingen Fornvännen (1906–april 2023), https://arkivsok.raa.se, hämtad 2026-11-09. CC BY 4.0.
-- Futhark: International Journal of Runic Studies 1–15 (2010–2025). Uppsala: Institutionen för nordiska språk, Uppsala universitet. ISSN 1892-0950. DiVA, https://uu.diva-portal.org, hämtad 2026-11-09. CC BY 4.0.
+- Fornvännen. Tidskrift för svensk antikvarisk forskning. Stockholm: Kungl. Vitterhets Historie och Antikvitets Akademien, 1906–. Digitaliserad av Riksantikvarieämbetet, Arkivsök, samlingen Fornvännen (1906–april 2023), https://arkivsok.raa.se, hämtad 2026-11-09. Volym 1–5 cc by-nc-nd 3.0, volym 6 cc by-nc-nd 4.0, från volym 7 cc by 4.0.
+- Futhark: International Journal of Runic Studies 1–15 (2010–2025). Uppsala: Institutionen för nordiska språk, Uppsala universitet. ISSN 1892-0950. DiVA, https://uu.diva-portal.org, hämtad 2026-11-09. Volym 1–5 cc by-nc-nd 3.0, volym 6 cc by-nc-nd 4.0, från volym 7 cc by 4.0.
 - Klos, L. 2009. *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion.* Ergänzungsbände zum Reallexikon der Germanischen Altertumskunde 64. Berlin & New York: de Gruyter.
 - Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden.* Stockholm Studies in Scandinavian Philology, New Series 43. Stockholm.
 - Palm, R. 1992. *Runor och regionalitet. Studier av variation i de nordiska minnesinskrifterna.* Runrön 7. Uppsala.
@@ -493,7 +493,7 @@ This data note tests no hypothesis. It describes what a hundred years of runic r
 
 ## 1. The sources
 
-**Fornvännen** has been published by the Royal Swedish Academy of Letters, History and Antiquities (KVHAA) since 1906 and is one of the main journals for Swedish archaeology and runic research. The Swedish National Heritage Board (Riksantikvarieämbetet) has digitised the volumes from 1906 to April 2023 under the licence CC BY 4.0. Of the {en_n(len(FV_ALL))} texts in that collection we read {en_n(JOUR['fornvannen'])}. **Futhark: International Journal of Runic Studies** has been published at Uppsala University since 2010 and is available in DiVA under CC BY 4.0. We read {JOUR['futhark']} of {len(FU_ALL)} records; the {len(FU_UNREAD)} unread ones are almost all whole volumes ({sum(r['whole_volume'] for r in FU_UNREAD)}), whose articles were read one by one.
+**Fornvännen** has been published by the Royal Swedish Academy of Letters, History and Antiquities (KVHAA) since 1906 and is one of the main journals for Swedish archaeology and runic research. The Swedish National Heritage Board (Riksantikvarieämbetet) has digitised the volumes from 1906 to April 2023 under the licence CC BY 4.0. Of the {en_n(len(FV_ALL))} texts in that collection we read {en_n(JOUR['fornvannen'])}. **Futhark: International Journal of Runic Studies** has been published at Uppsala University since 2010 and is available in DiVA (volumes 1–5 CC BY-NC-ND 3.0, volume 6 CC BY-NC-ND 4.0, from volume 7 CC BY 4.0). We read {JOUR['futhark']} of {len(FU_ALL)} records; the {len(FU_UNREAD)} unread ones are almost all whole volumes ({sum(r['whole_volume'] for r in FU_UNREAD)}), whose articles were read one by one.
 
 The texts were selected in three tiers, by words counted automatically in each text:
 
@@ -578,8 +578,8 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 
 ## References
 
-- Fornvännen. Journal of Swedish Antiquarian Research. Stockholm: Royal Swedish Academy of Letters, History and Antiquities (KVHAA), 1906–. Digitised by the Swedish National Heritage Board, Arkivsök, collection Fornvännen (1906–April 2023), https://arkivsok.raa.se, retrieved 2026-11-09. CC BY 4.0.
-- Futhark: International Journal of Runic Studies 1–15 (2010–2025). Uppsala: Department of Scandinavian Languages, Uppsala University. ISSN 1892-0950. DiVA, https://uu.diva-portal.org, retrieved 2026-11-09. CC BY 4.0.
+- Fornvännen. Journal of Swedish Antiquarian Research. Stockholm: Royal Swedish Academy of Letters, History and Antiquities (KVHAA), 1906–. Digitised by the Swedish National Heritage Board, Arkivsök, collection Fornvännen (1906–April 2023), https://arkivsok.raa.se, retrieved 2026-11-09. Volumes 1–5 cc by-nc-nd 3.0, volume 6 cc by-nc-nd 4.0, from volume 7 cc by 4.0.
+- Futhark: International Journal of Runic Studies 1–15 (2010–2025). Uppsala: Department of Scandinavian Languages, Uppsala University. ISSN 1892-0950. DiVA, https://uu.diva-portal.org, retrieved 2026-11-09. Volumes 1–5 cc by-nc-nd 3.0, volume 6 cc by-nc-nd 4.0, from volume 7 cc by 4.0.
 - Klos, L. 2009. *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion.* Ergänzungsbände zum Reallexikon der Germanischen Altertumskunde 64. Berlin & New York: de Gruyter.
 - Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden.* Stockholm Studies in Scandinavian Philology, New Series 43. Stockholm.
 - Palm, R. 1992. *Runor och regionalitet. Studier av variation i de nordiska minnesinskrifterna.* Runrön 7. Uppsala.

@@ -266,8 +266,8 @@ Nästa gång du läser en dansk runsten, se efter vem som reste den. Är det en 
 - Sawyer, Birgit 1989. Det vikingatida runstensresandet i Skandinavien. *Scandia* 55:2, s. 185–202. [Fritt hos Scandia](https://journals.lub.lu.se/scandia/article/view/440).
 - Palm, Rune 1992. *Runor och regionalitet. Studier av variation i de nordiska minnesinskrifterna*. Runrön 7. Uppsala. [Fritt på DiVA](https://www.diva-portal.org/smash/record.jsf?pid=diva2:740596).
 - Löfving, Carl 1984. Förändringar i maktstrukturen kring östra Skagerrak vid kristendomens införande. *Fornvännen* 79, s. 93–103. CC BY 4.0. [Fri fulltext](http://kulturarvsdata.se/raa/fornvannen/html/1984_093).
-- Jesch, Judith 2013. Runes and Words: Runic Lexicography in Context. *Futhark* 4, s. 77–100. CC BY 4.0.
-- Williams, Henrik 2013. Runstenarnas sociala dimension. *Futhark* 4, s. 61–76. CC BY 4.0.
+- Jesch, Judith 2013. Runes and Words: Runic Lexicography in Context. *Futhark* 4, s. 77–100. CC BY-NC-ND 3.0.
+- Williams, Henrik 2013. Runstenarnas sociala dimension. *Futhark* 4, s. 61–76. CC BY-NC-ND 3.0.
 - Gräslund, Anne-Sofie 2016. Recension av Lisbeth M. Imer och Roberto Fortuna, *Danmarks runesten: En fortælling* (2016). *Futhark* 7, s. 181–185. [Fri fulltext](https://uu.diva-portal.org/smash/get/diva2:1087624/FULLTEXT01.pdf).
 - Thamdrup, Ole 1981. … og gjorde disse mindesmærker … *Kuml* 1981, s. 7–12. [doi:10.7146/kuml.v30i30.107749](https://doi.org/10.7146/kuml.v30i30.107749).
 - Analysplanen och tillägget om budskapet (låsta före körningen) och koden finns öppet på [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-17-danska-runstenar.md). Om de hedniska stenarna: [Tor svarade korset – och tystnade](/artiklar/tor-svarade-korset-och-tystnade). Om gränsen: [Västgötarna skrev som danskarna](/artiklar/vastgotarna-skrev-som-danskarna). Om Norge: [Varför har Norge bara 66 runstenar – och Sverige 2 300?](/artiklar/varfor-har-norge-bara-66-runstenar)
@@ -363,8 +363,8 @@ Next time you read a Danish runestone, look at who raised it. If it is a *félag
 - Sawyer, Birgit 1989. Det vikingatida runstensresandet i Skandinavien. *Scandia* 55:2, pp. 185–202. [Open at Scandia](https://journals.lub.lu.se/scandia/article/view/440).
 - Palm, Rune 1992. *Runor och regionalitet. Studier av variation i de nordiska minnesinskrifterna*. Runrön 7. Uppsala. [Open on DiVA](https://www.diva-portal.org/smash/record.jsf?pid=diva2:740596).
 - Löfving, Carl 1984. Förändringar i maktstrukturen kring östra Skagerrak vid kristendomens införande. *Fornvännen* 79, pp. 93–103. CC BY 4.0. [Free full text](http://kulturarvsdata.se/raa/fornvannen/html/1984_093).
-- Jesch, Judith 2013. Runes and Words: Runic Lexicography in Context. *Futhark* 4, pp. 77–100. CC BY 4.0.
-- Williams, Henrik 2013. Runstenarnas sociala dimension. *Futhark* 4, pp. 61–76. CC BY 4.0.
+- Jesch, Judith 2013. Runes and Words: Runic Lexicography in Context. *Futhark* 4, pp. 77–100. CC BY-NC-ND 3.0.
+- Williams, Henrik 2013. Runstenarnas sociala dimension. *Futhark* 4, pp. 61–76. CC BY-NC-ND 3.0.
 - Gräslund, Anne-Sofie 2016. Review of Lisbeth M. Imer and Roberto Fortuna, *Danmarks runesten: En fortælling* (2016). *Futhark* 7, pp. 181–185. [Free full text](https://uu.diva-portal.org/smash/get/diva2:1087624/FULLTEXT01.pdf).
 - Thamdrup, Ole 1981. … og gjorde disse mindesmærker … *Kuml* 1981, pp. 7–12. [doi:10.7146/kuml.v30i30.107749](https://doi.org/10.7146/kuml.v30i30.107749).
 - The analysis plan and the addendum on the message (locked before the run) and the code are open on [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-17-danska-runstenar.md). On the pagan stones: [Thor answered the cross – and fell silent](/en/artiklar/tor-svarade-korset-och-tystnade). On the border: [The men of Västergötland wrote like the Danes](/en/artiklar/vastgotarna-skrev-som-danskarna). On Norway: [Why does Norway have only 66 runestones – and Sweden 2,300?](/en/artiklar/varfor-har-norge-bara-66-runstenar)

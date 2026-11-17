@@ -460,11 +460,11 @@ CHECK_EN = ("In a spot check, about four in five of the summaries' statements we
 JOURNALS_SV = ("Fornvännen ges ut av Kungl. Vitterhets Historie och Antikvitets Akademien och finns fritt via Riksantikvarieämbetets "
                "plattform [pub.raa.se](https://pub.raa.se) (CC BY 4.0). Futhark: International Journal of Runic Studies ges ut av "
                "Uppsala universitet och Universitetet i Oslo och finns fritt i [DiVA](https://uu.diva-portal.org) och på "
-               "[futhark-journal.com](http://www.futhark-journal.com) (CC BY).")
+               "[futhark-journal.com](http://www.futhark-journal.com) (volym 1–5 CC BY-NC-ND 3.0, volym 6 CC BY-NC-ND 4.0, från volym 7 CC BY 4.0).")
 JOURNALS_EN = ("Fornvännen is published by the Royal Swedish Academy of Letters, History and Antiquities and is freely available "
                "through the Swedish National Heritage Board's platform [pub.raa.se](https://pub.raa.se) (CC BY 4.0). Futhark: "
                "International Journal of Runic Studies is published by Uppsala University and the University of Oslo and is freely "
-               "available in [DiVA](https://uu.diva-portal.org) and at [futhark-journal.com](http://www.futhark-journal.com) (CC BY).")
+               "available in [DiVA](https://uu.diva-portal.org) and at [futhark-journal.com](http://www.futhark-journal.com) (volumes 1–5 CC BY-NC-ND 3.0, volume 6 CC BY-NC-ND 4.0, from volume 7 CC BY 4.0).")
 has("futhark_x_hel_2024374", "All articles are available free of charge at http://www.futhark-journal.com")
 has("futhark_x_hel_2024374", "University of Oslo")
 

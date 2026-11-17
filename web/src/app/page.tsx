@@ -292,7 +292,7 @@ const SOURCES = [
   },
   {
     name: "Fornvännen och Futhark",
-    detail: "Fornvännen 1906–2023 (Kungl. Vitterhetsakademien och Riksantikvarieämbetet) och Futhark 1–15 (Uppsala universitet), båda CC BY 4.0. Varje påstående i artiklarna stäms av mot forskningen här innan vi kallar något nytt.",
+    detail: "Fornvännen 1906–2023 (Kungl. Vitterhetsakademien och Riksantikvarieämbetet, CC BY 4.0) och Futhark 1–15 (Uppsala universitet; volym 1–5 CC BY-NC-ND 3.0, volym 6 CC BY-NC-ND 4.0, från volym 7 CC BY 4.0). Varje påstående i artiklarna stäms av mot forskningen här innan vi kallar något nytt; vi citerar kort med källa.",
     href: "https://www.futhark-journal.com/",
   },
   {
