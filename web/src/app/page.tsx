@@ -286,6 +286,25 @@ const SOURCES = [
     href: "https://runer.ku.dk/",
   },
   {
+    name: "Sveriges runinskrifter",
+    detail: "Kungl. Vitterhets Historie och Antikvitets Akademien och Riksantikvarieämbetet, 1900–1981, och Gotlands runinskrifter 3 (preliminära artiklar, 2004). Alla utgivna band är lästa sten för sten: fyndhistoriken på stensidorna (läget, försvinnanden, återfynd) med sidhänvisning och korta citat. Utgåvan läses och citeras kort; den publiceras inte vidare.",
+    href: "https://www.raa.se/kulturarv/runor-och-runstenar/digitala-sveriges-runinskrifter/",
+  },
+  {
+    name: "Fornvännen och Futhark",
+    detail: "Fornvännen 1906–2023 (Kungl. Vitterhetsakademien och Riksantikvarieämbetet) och Futhark 1–15 (Uppsala universitet), båda CC BY 4.0. Varje påstående i artiklarna stäms av mot forskningen här innan vi kallar något nytt.",
+    href: "https://www.futhark-journal.com/",
+  },
+  {
+    name: "Avhandlingar och utgåvor",
+    detail: "Litteraturregistret under Inskrifter visar på vilka sidor en sten behandlas, bland annat i Williams 1990, Lagman 1990, Larsson 2002, Zilmer 2005, Källström 2007, Stern 2013 och Pereswetoff-Morath 2017, och i Sveriges runinskrifter. Texterna ligger inte i appen.",
+  },
+  {
+    name: "Palm, R. 1992 och Sawyer, B. 1989",
+    detail: "Runor och regionalitet (Runrön 7, Uppsala) och Det vikingatida runstensresandet i Skandinavien (Scandia 55:2). Grunden för jämförelserna mellan landskapen och länderna; deras iakttagelser prövas och krediteras i artiklarna.",
+    href: "https://journals.lub.lu.se/scandia/article/view/440",
+  },
+  {
     name: "Gräslund, A.-S. 1998",
     detail: "Ornamentiken som dateringsgrund för Upplands runstenar. I: Innskrifter og datering / Dating inscriptions. Trondheim, s. 73–91.",
   },
@@ -322,8 +341,13 @@ const SOURCES = [
   },
   {
     name: "SGU och Natural Earth",
-    detail: "Berggrund 1:50 000–1:250 000 (Sveriges geologiska undersökning) och kustlinjer, sjöar och vattendrag 1:10 miljoner (public domain).",
+    detail: "Berggrund 1:50 000–1:250 000, jordartskartan 1:25 000–1:100 000 och strandlinjerna omkring 900 och 1000 (Sveriges geologiska undersökning, CC BY 4.0), och kustlinjer, sjöar och vattendrag 1:10 miljoner (public domain).",
     href: "https://www.sgu.se/",
+  },
+  {
+    name: "Ortnamn, socknar och härader",
+    detail: "Institutet för språk och folkminnens ortnamns- och sockenregister (CC BY), häradsgränserna 1634 (R-paketet histmaps) och Svenskt Diplomatariums huvudkartotek (Riksarkivet), läst i Språkbankens Korp, för de gamla gränserna och namnen efter vikingatiden.",
+    href: "https://www.isof.se/",
   },
   {
     name: "Rikenas gränser",
@@ -736,6 +760,13 @@ andel <- tapply(stenar$bon,
             egen API-nyckel sparad i din webbläsare. Den skriver löptext i syntes, rapporter och assistenten ur resultat
             som redan är räknade; texten märks och ska granskas, och den används aldrig som källa till mätvärden,
             läsningar, stilgrupper, statistik eller sannolikheter.
+          </p>
+          <p className="mt-3 text-sm text-slate-500 max-w-3xl">
+            Ett undantag är fyndhistoriken ur Sveriges runinskrifter. Där har Anthropics språkmodell Claude (Sonnet)
+            läst banden och plockat ut uppgifterna med ordagranna citat och sidhänvisningar, och Claude (Opus) har
+            granskat dem fält för fält i stickprov, med en kontroll av Viktor Kvant eller en oberoende omläsning. De fält
+            som visas klarade kraven (95–100 % rätt); flyttningarna gjorde det inte och visas inte. Planen och kraven
+            låstes i förväg (analysplan A1, tillägg 1).
           </p>
         </div>
       </section>
