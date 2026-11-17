@@ -1,0 +1,2727 @@
+{
+ "sha": "f7b339ef",
+ "noter": [
+  "När kodarna är oeniga om efterledet räknas namnet till 'övrigt' (planen säger inget om det fallet).",
+  "Ett gudanamn ur huvudplanen som kodarna också gav kultplats får den strängare av de två slutliga graderna."
+ ],
+ "indata": 402,
+ "oenig_kategori": 12,
+ "oenig_grad": 3,
+ "uppslag_med_landsdel": 5855,
+ "uppslag_utan_landsdel": 190,
+ "A": {
+  "kultplats": {
+   "n": 128,
+   "per_landsdel": {
+    "Mälarlanden": {
+     "säker": 11,
+     "osäker": 28
+    },
+    "Östra Götaland": {
+     "säker": 10,
+     "osäker": 16
+    },
+    "Norr": {
+     "säker": 7,
+     "osäker": 8
+    },
+    "Danska riket": {
+     "säker": 5,
+     "osäker": 12
+    },
+    "Västra Götaland": {
+     "säker": 8,
+     "osäker": 9
+    },
+    "Norska riket": {
+     "säker": 5,
+     "osäker": 2
+    },
+    "Gotland": {
+     "säker": 3,
+     "osäker": 2
+    },
+    "utan landsdel": {
+     "säker": 1,
+     "osäker": 1
+    }
+   },
+   "andel_av_sol": {
+    "Östra Götaland": 0.0274,
+    "Norr": 0.011,
+    "Mälarlanden": 0.0357,
+    "Norska riket": 0.0167,
+    "Danska riket": 0.0168,
+    "Västra Götaland": 0.0206,
+    "Gotland": 0.0253
+   }
+  },
+  "väsen": {
+   "n": 10,
+   "per_landsdel": {
+    "Östra Götaland": {
+     "säker": 0,
+     "osäker": 2
+    },
+    "Danska riket": {
+     "säker": 0,
+     "osäker": 2
+    },
+    "Norska riket": {
+     "säker": 0,
+     "osäker": 1
+    },
+    "Norr": {
+     "säker": 2,
+     "osäker": 1
+    },
+    "Västra Götaland": {
+     "säker": 1,
+     "osäker": 0
+    },
+    "Gotland": {
+     "säker": 1,
+     "osäker": 0
+    }
+   },
+   "andel_av_sol": {
+    "Östra Götaland": 0.0021,
+    "Norr": 0.0022,
+    "Mälarlanden": 0.0,
+    "Norska riket": 0.0024,
+    "Danska riket": 0.002,
+    "Västra Götaland": 0.0012,
+    "Gotland": 0.0051
+   },
+   "sena": 7
+  },
+  "ting": {
+   "n": 52,
+   "per_landsdel": {
+    "Västra Götaland": {
+     "säker": 0,
+     "osäker": 1
+    },
+    "Mälarlanden": {
+     "säker": 17,
+     "osäker": 8
+    },
+    "Östra Götaland": {
+     "säker": 5,
+     "osäker": 8
+    },
+    "Norr": {
+     "säker": 2,
+     "osäker": 0
+    },
+    "Gotland": {
+     "säker": 3,
+     "osäker": 0
+    },
+    "Danska riket": {
+     "säker": 1,
+     "osäker": 6
+    },
+    "Norska riket": {
+     "säker": 0,
+     "osäker": 1
+    }
+   },
+   "andel_av_sol": {
+    "Östra Götaland": 0.0137,
+    "Norr": 0.0015,
+    "Mälarlanden": 0.0229,
+    "Norska riket": 0.0024,
+    "Danska riket": 0.0069,
+    "Västra Götaland": 0.0012,
+    "Gotland": 0.0152
+   }
+  },
+  "efterled": {
+   "åker": 16,
+   "övrigt": 53,
+   "al": 10,
+   "lund": 9,
+   "vi": 25,
+   "harg": 10,
+   "hov": 5
+  }
+ },
+ "namn": [
+  {
+   "namn": "Åkerbo härad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Åkerbo härad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Öland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Åkerbo härad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Åkers härad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Åkers sn",
+   "pt": [
+    59.277222,
+    17.102778
+   ]
+  },
+  {
+   "namn": "Ås härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Áhkká",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Lappland",
+   "region": "Norr",
+   "socken": "Jokkmokks sn",
+   "pt": [
+    66.610966,
+    19.857026
+   ]
+  },
+  {
+   "namn": "Albo härad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Alböke",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Öland",
+   "region": "Östra Götaland",
+   "socken": "Alböke sn",
+   "pt": [
+    56.948335,
+    16.783171
+   ]
+  },
+  {
+   "namn": "Ale härad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Ales stenar",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Valleberga sn",
+   "pt": [
+    55.428611,
+    14.061667
+   ]
+  },
+  {
+   "namn": "Alsike",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Alsike sn",
+   "pt": [
+    59.757409,
+    17.749253
+   ]
+  },
+  {
+   "namn": "Altuna",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Altuna sn",
+   "pt": [
+    59.819168,
+    16.931379
+   ]
+  },
+  {
+   "namn": "Alunda",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Alunda sn",
+   "pt": [
+    60.071689,
+    18.069668
+   ]
+  },
+  {
+   "namn": "Anundshögen",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": "Badelunda sn",
+   "pt": [
+    59.639968,
+    16.633616
+   ]
+  },
+  {
+   "namn": "Aska härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Askers härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Aspa löt",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Ludgo sn",
+   "pt": [
+    58.915928,
+    17.138456
+   ]
+  },
+  {
+   "namn": "Barne-Åsaka",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Barne-Åsaka sn",
+   "pt": [
+    58.144535,
+    12.828816
+   ]
+  },
+  {
+   "namn": "Bobergs härad",
+   "kategori": "väsen",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "ja",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Bro härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Bro sn",
+   "pt": [
+    59.505833,
+    17.626667
+   ]
+  },
+  {
+   "namn": "Daga härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Edenryd",
+   "kategori": "väsen",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "ja",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Ivetofta sn",
+   "pt": [
+    56.087495,
+    14.471838
+   ]
+  },
+  {
+   "namn": "Edsbergs härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Estuna",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Estuna sn",
+   "pt": [
+    59.816573,
+    18.656336
+   ]
+  },
+  {
+   "namn": "Folkare härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Dalarna",
+   "region": "Norr",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Fredsberg",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Fredsbergs sn",
+   "pt": [
+    58.741378,
+    14.074404
+   ]
+  },
+  {
+   "namn": "Friel",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Friels sn",
+   "pt": [
+    58.450033,
+    12.784433
+   ]
+  },
+  {
+   "namn": "Friggeråker",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Friggeråkers sn",
+   "pt": [
+    58.195496,
+    13.574763
+   ]
+  },
+  {
+   "namn": "Frustuna",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Frustuna sn",
+   "pt": [
+    59.058548,
+    17.308942
+   ]
+  },
+  {
+   "namn": "Fröseke",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Åseda sn",
+   "pt": [
+    57.175185,
+    15.352344
+   ]
+  },
+  {
+   "namn": "Fröslunda",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Fröslunda sn",
+   "pt": [
+    59.720309,
+    17.271607
+   ]
+  },
+  {
+   "namn": "Frösthult",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Frösthults sn",
+   "pt": [
+    59.741359,
+    16.948358
+   ]
+  },
+  {
+   "namn": "Frösve",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Frösve sn",
+   "pt": [
+    58.503166,
+    13.878734
+   ]
+  },
+  {
+   "namn": "Frösåkers härad",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Frösön",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Jämtland",
+   "region": "Norska riket",
+   "socken": "Frösö sn",
+   "pt": [
+    63.181136,
+    14.523046
+   ]
+  },
+  {
+   "namn": "Frötuna",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Frötuna sn",
+   "pt": [
+    59.739699,
+    18.675406
+   ]
+  },
+  {
+   "namn": "Glanshammars härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": "Glanshammars sn",
+   "pt": [
+    59.31889,
+    15.401944
+   ]
+  },
+  {
+   "namn": "Grimstens härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Gräsgårds härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Öland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Gudhem",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Gudhems sn",
+   "pt": [
+    58.221768,
+    13.57257
+   ]
+  },
+  {
+   "namn": "Gullbergs härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Gullmarn",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Bohuslän",
+   "region": "Norska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Gödåker",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Tensta sn",
+   "pt": [
+    60.040772,
+    17.672012
+   ]
+  },
+  {
+   "namn": "Göstrings härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Götala",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Göteve",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Göteve sn",
+   "pt": [
+    58.122814,
+    13.411638
+   ]
+  },
+  {
+   "namn": "Götlunda",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Götlunda sn",
+   "pt": [
+    58.551109,
+    14.001389
+   ]
+  },
+  {
+   "namn": "Hablingbo",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": "Hablingbo sn",
+   "pt": [
+    57.184214,
+    18.261332
+   ]
+  },
+  {
+   "namn": "Handbörds härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Hanekinds härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Hardemo härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": "Hardemo sn",
+   "pt": [
+    59.104367,
+    15.001682
+   ]
+  },
+  {
+   "namn": "Harg",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Hargs sn",
+   "pt": [
+    60.187392,
+    18.39171
+   ]
+  },
+  {
+   "namn": "Harjagers härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Helagsfjället",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Härjedalen",
+   "region": "Norska riket",
+   "socken": "Storsjö sn",
+   "pt": [
+    62.800556,
+    13.056667
+   ]
+  },
+  {
+   "namn": "Helgarö",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Helgarö sn",
+   "pt": [
+    59.430914,
+    16.804985
+   ]
+  },
+  {
+   "namn": "Helgasjön",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Helgenäs",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Västra Eds sn",
+   "pt": [
+    58.013056,
+    16.475833
+   ]
+  },
+  {
+   "namn": "Helgesta",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Helgesta sn",
+   "pt": [
+    59.029885,
+    16.791401
+   ]
+  },
+  {
+   "namn": "Helge å",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Helgum",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Ångermanland",
+   "region": "Norr",
+   "socken": "Helgums sn",
+   "pt": [
+    63.219229,
+    16.832762
+   ]
+  },
+  {
+   "namn": "Helgö",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Hellvi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": "Hellvi sn",
+   "pt": [
+    57.776236,
+    18.897397
+   ]
+  },
+  {
+   "namn": "Hov",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "hov",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Hovs sn",
+   "pt": [
+    56.435556,
+    12.728333
+   ]
+  },
+  {
+   "namn": "Hov",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "hov",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Hovs sn",
+   "pt": [
+    57.994167,
+    13.115278
+   ]
+  },
+  {
+   "namn": "Hov",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "hov",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": "Hovs sn",
+   "pt": [
+    58.378611,
+    14.918056
+   ]
+  },
+  {
+   "namn": "Hovid",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "hov",
+   "sen": "nej",
+   "landskap": "Medelpad",
+   "region": "Norr",
+   "socken": "Alnö sn",
+   "pt": [
+    62.447798,
+    17.416887
+   ]
+  },
+  {
+   "namn": "Håbo härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Hårga",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Hälsingland",
+   "region": "Norr",
+   "socken": "Hanebo sn",
+   "pt": [
+    61.244992,
+    16.559511
+   ]
+  },
+  {
+   "namn": "Hällekis",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Medelplana sn",
+   "pt": [
+    58.57873,
+    13.366987
+   ]
+  },
+  {
+   "namn": "Hällestad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Hällestads sn",
+   "pt": [
+    55.677222,
+    13.420556
+   ]
+  },
+  {
+   "namn": "Härnevi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Härnevi sn",
+   "pt": [
+    59.726521,
+    17.071318
+   ]
+  },
+  {
+   "namn": "Högsby",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Högsby sn",
+   "pt": [
+    57.172166,
+    16.032395
+   ]
+  },
+  {
+   "namn": "Höks härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Halland",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Hörby",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Blekinge",
+   "region": "Danska riket",
+   "socken": "Mjällby sn",
+   "pt": [
+    56.043103,
+    14.694475
+   ]
+  },
+  {
+   "namn": "Hörby",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Hörby sn",
+   "pt": [
+    55.8488,
+    13.669978
+   ]
+  },
+  {
+   "namn": "Hörja",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Hörja sn",
+   "pt": [
+    56.204963,
+    13.585291
+   ]
+  },
+  {
+   "namn": "Höör",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Höörs sn",
+   "pt": [
+    55.932808,
+    13.56189
+   ]
+  },
+  {
+   "namn": "Karlevi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Öland",
+   "region": "Östra Götaland",
+   "socken": "Vickleby sn",
+   "pt": [
+    56.577959,
+    16.467099
+   ]
+  },
+  {
+   "namn": "Kinnevalds härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Kinneved",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Kinneveds sn",
+   "pt": [
+    58.067935,
+    13.515324
+   ]
+  },
+  {
+   "namn": "Kjulaås",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Kjula sn",
+   "pt": [
+    59.398239,
+    16.66644
+   ]
+  },
+  {
+   "namn": "Kumla härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": "Kumla sn",
+   "pt": [
+    59.120833,
+    15.154444
+   ]
+  },
+  {
+   "namn": "Kungsgården",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Gästrikland",
+   "region": "Norr",
+   "socken": "Ovansjö sn",
+   "pt": [
+    60.608005,
+    16.614224
+   ]
+  },
+  {
+   "namn": "Locknevi",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Locknevi sn",
+   "pt": [
+    57.798271,
+    16.083685
+   ]
+  },
+  {
+   "namn": "Ludgo",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Ludgo sn",
+   "pt": [
+    58.915928,
+    17.138456
+   ]
+  },
+  {
+   "namn": "Lummelunda",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": "Lummelunda sn",
+   "pt": [
+    57.77121,
+    18.459408
+   ]
+  },
+  {
+   "namn": "Lund",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Lunda",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Lunda sn",
+   "pt": [
+    58.743056,
+    16.7375
+   ]
+  },
+  {
+   "namn": "Lunda",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Lunda sn",
+   "pt": [
+    59.666667,
+    18.046111
+   ]
+  },
+  {
+   "namn": "Lyby",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Lyby sn",
+   "pt": [
+    55.833792,
+    13.621108
+   ]
+  },
+  {
+   "namn": "Motala",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Nammásj",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Lappland",
+   "region": "Norr",
+   "socken": "Jokkmokks sn",
+   "pt": [
+    66.610966,
+    19.857026
+   ]
+  },
+  {
+   "namn": "Nedre Ullerud",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Värmland",
+   "region": "Norr",
+   "socken": "Nedre Ulleruds sn",
+   "pt": [
+    59.605495,
+    13.500302
+   ]
+  },
+  {
+   "namn": "Norderö(n)",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Jämtland",
+   "region": "Norska riket",
+   "socken": "Norderö sn",
+   "pt": [
+    63.149675,
+    14.364769
+   ]
+  },
+  {
+   "namn": "Norrala",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Hälsingland",
+   "region": "Norr",
+   "socken": "Norrala sn",
+   "pt": [
+    61.362307,
+    16.989303
+   ]
+  },
+  {
+   "namn": "Norra Vi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": "Norra Vi sn",
+   "pt": [
+    57.88551,
+    15.34951
+   ]
+  },
+  {
+   "namn": "Norrbo härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Näkten",
+   "kategori": "väsen",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "ja",
+   "landskap": "Jämtland",
+   "region": "Norska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Närtuna",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Närtuna sn",
+   "pt": [
+    59.692651,
+    18.151822
+   ]
+  },
+  {
+   "namn": "Odensala",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Jämtland",
+   "region": "Norska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Odensala",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Odensala sn",
+   "pt": [
+    59.665906,
+    17.850595
+   ]
+  },
+  {
+   "namn": "Odensbacken",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Odensberg",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Gökhems sn",
+   "pt": [
+    58.173435,
+    13.410666
+   ]
+  },
+  {
+   "namn": "Odensjö",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Odensjö sn",
+   "pt": [
+    56.860558,
+    13.614722
+   ]
+  },
+  {
+   "namn": "Odensjö",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Barnarps sn",
+   "pt": [
+    57.707904,
+    14.184223
+   ]
+  },
+  {
+   "namn": "Odensvi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Odensvi sn",
+   "pt": [
+    57.896667,
+    16.1675
+   ]
+  },
+  {
+   "namn": "Odensvi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": "Odensvi sn",
+   "pt": [
+    59.583711,
+    15.985611
+   ]
+  },
+  {
+   "namn": "Odensåker",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Odensåkers sn",
+   "pt": [
+    58.553686,
+    13.888236
+   ]
+  },
+  {
+   "namn": "Onsala",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Halland",
+   "region": "Danska riket",
+   "socken": "Onsala sn",
+   "pt": [
+    57.415582,
+    12.029532
+   ]
+  },
+  {
+   "namn": "Onsjö härad",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Onslunda",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Onslunda sn",
+   "pt": [
+    55.604171,
+    14.049395
+   ]
+  },
+  {
+   "namn": "Örebro härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Österåker",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": null,
+   "region": null,
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Österåker",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Österåkers sn",
+   "pt": [
+    59.5075,
+    18.283611
+   ]
+  },
+  {
+   "namn": "Östra Torsås",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Östra Torsås sn ",
+   "pt": [
+    56.740833,
+    14.928889
+   ]
+  },
+  {
+   "namn": "Regna",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": "Regna sn",
+   "pt": [
+    58.895314,
+    15.697547
+   ]
+  },
+  {
+   "namn": "Rejmyre",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": "Skedevi sn",
+   "pt": [
+    58.938369,
+    15.884715
+   ]
+  },
+  {
+   "namn": "Riala",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "al",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Riala sn",
+   "pt": [
+    59.63116,
+    18.511891
+   ]
+  },
+  {
+   "namn": "Runtuna",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Runtuna sn",
+   "pt": [
+    58.873803,
+    17.068562
+   ]
+  },
+  {
+   "namn": "Rönnebergs härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Rönö härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Simtuna",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Simtuna sn",
+   "pt": [
+    59.77154,
+    16.898658
+   ]
+  },
+  {
+   "namn": "Simtuna härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Simtuna sn",
+   "pt": [
+    59.77154,
+    16.898658
+   ]
+  },
+  {
+   "namn": "Skederid",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Skederids sn",
+   "pt": [
+    59.733831,
+    18.504398
+   ]
+  },
+  {
+   "namn": "Skedevi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": "Skedevi sn",
+   "pt": [
+    58.938369,
+    15.884715
+   ]
+  },
+  {
+   "namn": "Skee",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "hov",
+   "sen": "nej",
+   "landskap": "Bohuslän",
+   "region": "Norska riket",
+   "socken": "Skee sn",
+   "pt": [
+    58.932437,
+    11.274547
+   ]
+  },
+  {
+   "namn": "Skerike",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": "Skerike sn",
+   "pt": [
+    59.644565,
+    16.481376
+   ]
+  },
+  {
+   "namn": "Skärkinds härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Sköllersta härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": "Sköllersta sn",
+   "pt": [
+    59.144517,
+    15.335111
+   ]
+  },
+  {
+   "namn": "Stafsinge",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Halland",
+   "region": "Danska riket",
+   "socken": "Stafsinge sn",
+   "pt": [
+    56.919661,
+    12.488073
+   ]
+  },
+  {
+   "namn": "Staloluokta",
+   "kategori": "väsen",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "ja",
+   "landskap": "Lappland",
+   "region": "Norr",
+   "socken": "Jokkmokks sn",
+   "pt": [
+    66.610966,
+    19.857026
+   ]
+  },
+  {
+   "namn": "Stalon",
+   "kategori": "väsen",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "ja",
+   "landskap": "Lappland",
+   "region": "Norr",
+   "socken": "Vilhelmina sn",
+   "pt": [
+    64.629769,
+    16.629976
+   ]
+  },
+  {
+   "namn": "Stavby",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Stavby sn",
+   "pt": [
+    60.012976,
+    17.960609
+   ]
+  },
+  {
+   "namn": "Stavgard",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Stavnäs",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Värmland",
+   "region": "Norr",
+   "socken": "Stavnäs sn",
+   "pt": [
+    59.483612,
+    12.738611
+   ]
+  },
+  {
+   "namn": "Stenkumla",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": "Stenkumla sn",
+   "pt": [
+    57.547439,
+    18.272743
+   ]
+  },
+  {
+   "namn": "Sundbo härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Närke",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Svartlösa härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Svedvi",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Södra Vi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Södra Vi sn",
+   "pt": [
+    57.742144,
+    15.803611
+   ]
+  },
+  {
+   "namn": "Tarradalen",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Lappland",
+   "region": "Norr",
+   "socken": "Jokkmokks sn",
+   "pt": [
+    66.610966,
+    19.857026
+   ]
+  },
+  {
+   "namn": "Tingsryd",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Tingsås sn",
+   "pt": [
+    56.52928,
+    14.970375
+   ]
+  },
+  {
+   "namn": "Tingstad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": "Tingstads sn",
+   "pt": [
+    58.529167,
+    16.291389
+   ]
+  },
+  {
+   "namn": "Tingstäde",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": "Tingstäde sn",
+   "pt": [
+    57.738345,
+    18.618257
+   ]
+  },
+  {
+   "namn": "Tingsås",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Tingsås sn",
+   "pt": [
+    56.52928,
+    14.970375
+   ]
+  },
+  {
+   "namn": "Tingvallaön",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Värmland",
+   "region": "Norr",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Torna härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Torsburgen",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": "Kräklingbo sn",
+   "pt": [
+    57.443862,
+    18.711716
+   ]
+  },
+  {
+   "namn": "Torsebro",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Fjälkestads sn",
+   "pt": [
+    56.105883,
+    14.164151
+   ]
+  },
+  {
+   "namn": "Torshälla",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "harg",
+   "sen": "nej",
+   "landskap": null,
+   "region": null,
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Torsjö",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Solberga sn",
+   "pt": [
+    55.450833,
+    13.574722
+   ]
+  },
+  {
+   "namn": "Torslanda",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Bohuslän",
+   "region": "Norska riket",
+   "socken": "Torslanda sn",
+   "pt": [
+    57.721391,
+    11.756024
+   ]
+  },
+  {
+   "namn": "Torslunda",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "lund",
+   "sen": "nej",
+   "landskap": "Öland",
+   "region": "Östra Götaland",
+   "socken": "Torslunda sn",
+   "pt": [
+    56.633957,
+    16.51058
+   ]
+  },
+  {
+   "namn": "Torstuna",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Torstuna sn",
+   "pt": [
+    59.765435,
+    17.083068
+   ]
+  },
+  {
+   "namn": "Torstuna härad",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Torstuna sn",
+   "pt": [
+    59.765435,
+    17.083068
+   ]
+  },
+  {
+   "namn": "Torsvi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Torsvi sn",
+   "pt": [
+    59.487435,
+    17.320426
+   ]
+  },
+  {
+   "namn": "Torsåker",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Gästrikland",
+   "region": "Norr",
+   "socken": "Torsåkers sn",
+   "pt": [
+    60.509104,
+    16.470405
+   ]
+  },
+  {
+   "namn": "Torsåker",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Torsåkers sn",
+   "pt": [
+    58.959722,
+    17.360833
+   ]
+  },
+  {
+   "namn": "Torsåker",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Ångermanland",
+   "region": "Norr",
+   "socken": "Torsåkers sn",
+   "pt": [
+    63.079778,
+    17.741611
+   ]
+  },
+  {
+   "namn": "Torsång",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Dalarna",
+   "region": "Norr",
+   "socken": "Torsångs sn",
+   "pt": [
+    60.462882,
+    15.578467
+   ]
+  },
+  {
+   "namn": "Torsås",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Torsås sn",
+   "pt": [
+    56.411828,
+    16.014387
+   ]
+  },
+  {
+   "namn": "Torsö",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": "Torsö sn",
+   "pt": [
+    58.775,
+    13.804167
+   ]
+  },
+  {
+   "namn": "Tortuna",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Tossebergsklätten",
+   "kategori": "väsen",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Värmland",
+   "region": "Norr",
+   "socken": "Sunne sn",
+   "pt": [
+    59.836864,
+    13.154783
+   ]
+  },
+  {
+   "namn": "Trollaborg",
+   "kategori": "väsen",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "ja",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Voxtorps sn",
+   "pt": [
+    57.127778,
+    14.128056
+   ]
+  },
+  {
+   "namn": "Trollhättan",
+   "kategori": "väsen",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västergötland",
+   "region": "Västra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Trullhalsar",
+   "kategori": "väsen",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": "Anga sn",
+   "pt": [
+    57.482227,
+    18.705327
+   ]
+  },
+  {
+   "namn": "Tönnersjö härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Halland",
+   "region": "Danska riket",
+   "socken": "Tönnersjö sn",
+   "pt": [
+    56.637222,
+    13.0625
+   ]
+  },
+  {
+   "namn": "Ulleråkers härad",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Ullvi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": "Irsta sn",
+   "pt": [
+    59.604063,
+    16.70819
+   ]
+  },
+  {
+   "namn": "Ultuna",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Unna Sájvva",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Lappland",
+   "region": "Norr",
+   "socken": "Gällivare sn",
+   "pt": [
+    67.126788,
+    20.698224
+   ]
+  },
+  {
+   "namn": "Vangsbro härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Vedbo härad",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Dalsland",
+   "region": "Västra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Vemmenhögs härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Vi",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Medelpad",
+   "region": "Norr",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Viby",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": "Viby sn",
+   "pt": [
+    58.368056,
+    15.311389
+   ]
+  },
+  {
+   "namn": "Vibyholm",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Årdala sn",
+   "pt": [
+    58.993611,
+    16.828611
+   ]
+  },
+  {
+   "namn": "Vifolka härad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Östergötland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Vireda",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Vireda sn",
+   "pt": [
+    57.915278,
+    14.633333
+   ]
+  },
+  {
+   "namn": "Visby",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Gotland",
+   "region": "Gotland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Vista härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Vä",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "vi",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Vä sn",
+   "pt": [
+    55.991667,
+    14.086944
+   ]
+  },
+  {
+   "namn": "Västeråker",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Uppland",
+   "region": "Mälarlanden",
+   "socken": "Västeråkers sn",
+   "pt": [
+    59.7525,
+    17.510556
+   ]
+  },
+  {
+   "namn": "Västra Göinge härad",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Västra Torsås",
+   "kategori": "kultplats",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Småland",
+   "region": "Östra Götaland",
+   "socken": "Västra Torsås sn ",
+   "pt": [
+    56.65,
+    14.516111
+   ]
+  },
+  {
+   "namn": "Västra Vingåker",
+   "kategori": "kultplats",
+   "grad": "osäker",
+   "efterled": "åker",
+   "sen": "nej",
+   "landskap": "Södermanland",
+   "region": "Mälarlanden",
+   "socken": "Västra Vingåkers sn",
+   "pt": [
+    59.053056,
+    15.878333
+   ]
+  },
+  {
+   "namn": "Vätte härad",
+   "kategori": "ting",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Bohuslän",
+   "region": "Norska riket",
+   "socken": null,
+   "pt": null
+  },
+  {
+   "namn": "Vätteryd",
+   "kategori": "väsen",
+   "grad": "osäker",
+   "efterled": "övrigt",
+   "sen": "ja",
+   "landskap": "Skåne",
+   "region": "Danska riket",
+   "socken": "Norra Mellby sn",
+   "pt": [
+    56.045387,
+    13.71859
+   ]
+  },
+  {
+   "namn": "Yttertjurbo härad",
+   "kategori": "ting",
+   "grad": "säker",
+   "efterled": "övrigt",
+   "sen": "nej",
+   "landskap": "Västmanland",
+   "region": "Mälarlanden",
+   "socken": null,
+   "pt": null
+  }
+ ],
+ "C1": {
+  "chi2": 20.901696319985863,
+  "p": 0.0016998300169983002,
+  "p_holm": 0.0033996600339966003,
+  "median_null": 5.364652549841735,
+  "chi2_saker": 6.001822129776559,
+  "haller": true,
+  "andel_per_landsdel": {
+   "Östra Götaland": {
+    "kult": 26,
+    "n": 948
+   },
+   "Norr": {
+    "kult": 15,
+    "n": 1363
+   },
+   "Mälarlanden": {
+    "kult": 39,
+    "n": 1091
+   },
+   "Norska riket": {
+    "kult": 7,
+    "n": 418
+   },
+   "Danska riket": {
+    "kult": 17,
+    "n": 1012
+   },
+   "Västra Götaland": {
+    "kult": 17,
+    "n": 825
+   },
+   "Gotland": {
+    "kult": 5,
+    "n": 198
+   }
+  }
+ },
+ "C2": {
+  "n": 126,
+  "chi2": 41.10564284697914,
+  "p": 0.25407459254074594,
+  "p_holm": 0.25407459254074594,
+  "median_null": 35.435623893679384,
+  "chi2_saker": 25.458591597796143,
+  "haller": false,
+  "tabell": {
+   "vi": {
+    "Västra Götaland": 4,
+    "Gotland": 2,
+    "Mälarlanden": 7,
+    "Östra Götaland": 9,
+    "Norr": 2,
+    "Danska riket": 1
+   },
+   "harg": {
+    "Mälarlanden": 4,
+    "Norr": 1,
+    "Danska riket": 4
+   },
+   "hov": {
+    "Danska riket": 1,
+    "Västra Götaland": 1,
+    "Östra Götaland": 1,
+    "Norr": 1,
+    "Norska riket": 1
+   },
+   "al": {
+    "Danska riket": 2,
+    "Östra Götaland": 2,
+    "Västra Götaland": 2,
+    "Mälarlanden": 3,
+    "Norr": 1
+   },
+   "lund": {
+    "Mälarlanden": 4,
+    "Västra Götaland": 1,
+    "Gotland": 1,
+    "Danska riket": 2,
+    "Östra Götaland": 1
+   },
+   "åker": {
+    "Mälarlanden": 9,
+    "Östra Götaland": 2,
+    "Västra Götaland": 2,
+    "Norr": 2
+   },
+   "övrigt": {
+    "Norr": 8,
+    "Västra Götaland": 7,
+    "Mälarlanden": 12,
+    "Östra Götaland": 11,
+    "Norska riket": 6,
+    "Danska riket": 7,
+    "Gotland": 2
+   }
+  }
+ }
+}
