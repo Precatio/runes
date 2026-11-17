@@ -32,6 +32,28 @@ FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "flyttningar", "forsvunnen
         "kallor_i_ordning", "samma_sten_som", "datering_text"]
 GRUPPER = {"läget": ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad"], "flyttningarna": ["flyttningar"],
            "försvunnen och återfunnen": ["forsvunnen", "aterfunnen"], "samma sten": ["samma_sten_som"]}
+# not 9: "inmurad" gäller bara byggnader (not 4). Läsare och granskare tog genomgående med kyrkogårdsmurar, ringmurar,
+# stenmurar och gärdsgårdar. De 51 fallen nedan (genomlästa citat i de slutliga utplockningarna) sätts till null i A1;
+# kyrkogårdsportar (Sö 129, U 1132, Vg 184) och vapenhuset i Sm 153 står kvar.
+INMURAD_KYRKOGARDSMUR = {
+    "Sö 351", "Sö 378",
+    "U 168", "U 223", "U 357", "U 417", "U 580", "U 649", "U 679", "U 759", "U 802", "U 834", "U 855", "U 961", "U 963",
+    "U 1026", "U 1068", "U 1077",
+    "Sm 1", "Sm 2", "Sm 3", "Sm 28", "Sm 92",
+    "Ög 107", "Ög 109", "Ög 118", "Ög 121", "Ög 145", "Ög 153", "Ög 154", "Ög 184", "Ög 185", "Ög 201",
+    "Vg 9", "Vg 51", "Vg 116", "Vg 144", "Vg 164", "Vg 178", "Vg 186",
+    "Öl 16",
+    "Nä 8", "Nä 11", "Nä 12", "Nä 27",
+    "G 12", "G 21", "G 26", "G 27", "G 77", "G 192"}
+
+
+def slutlig(r: dict) -> dict:
+    """En utplockad rad som A1 använder den: not 9:s rättning av 'inmurad' (kyrkogårdsmur m.m. är ingen byggnad)."""
+    if r.get("signum") in INMURAD_KYRKOGARDSMUR and r.get("inmurad"):
+        r = dict(r, inmurad=None, inmurad_rattad="not 9: kyrkogårdsmur, ringmur, stenmur eller gärdsgård, ingen byggnad")
+    return r
+
+
 LAGE = {"ursprunglig plats", "flyttad", "försvunnen", "okänt"}
 ORSAK = {"kyrkbygge eller restaurering", "vägbygge", "odling, dikning eller annat jordbruk", "samling eller museum",
          "återresning på samma plats eller i närheten", "annat", "okänd"}
@@ -201,7 +223,9 @@ ENHETER = {"upp": {"verk": ["sri6", "sri7", "sri8", "sri9"], "delar": "delar_upp
            # not 8: Östergötland runda 2 (granskaren för snäll i runda 1), omläst med reglerna 1–13
            "og2": {"verk": ["sri2"], "delar": "delar_og2", "seed": 2054, "viktor_seed": 2055, "n": 100, "utom": "og"},
            # not 8: de mellansvenska banden runda 2 = ny granskning av samma 81 stenar (alla låg i runda 1), samma utplockning
-           "msv2": {"verk": ["sri13", "sri14a", "sri14b", "sri15"], "delar": "delar_ovr", "seed": 2056, "viktor_seed": 2057, "n": 100}}
+           "msv2": {"verk": ["sri13", "sri14a", "sri14b", "sri15"], "delar": "delar_ovr", "seed": 2056, "viktor_seed": 2057, "n": 100},
+           # not 9: Gotland runda 2 (granskaren för snäll i runda 1) = nytt stickprov, samma utplockning (reglerna 1–13, gr3 OCR-läst)
+           "got2": {"verk": ["sri11", "sri12", "gr3"], "delar": "delar_ovr", "seed": 2058, "viktor_seed": 2059, "n": 100, "utom": "got"}}
 VIKTOR_FALT = ["lage_vid_utgavan", "ursprunglig_plats_text", "inmurad", "forsvunnen", "aterfunnen"]  # not 7: läget, försvunnen och återfunnen
 
 
@@ -268,9 +292,13 @@ def utfall_enhet(enhet: str) -> None:
     if os.path.exists(vp):
         for r in map(json.loads, open(vp, encoding="utf-8")):
             for f, b in r["bedomning"].items():
+                if f == "inmurad" and r["signum"] in INMURAD_KYRKOGARDSMUR:
+                    continue  # not 9: fältet rättas mekaniskt i A1 och räknas inte mot granskaren
                 if b in ("fel", "saknat") and g.get(r["signum"], {}).get("bedomning", {}).get(f) == "rätt":
                     for_snall += 1
             g.setdefault(r["signum"], {"bedomning": {}})["bedomning"].update(r["bedomning"])
+    for sig in INMURAD_KYRKOGARDSMUR & set(g):  # efter rättningen är fältet tomt, och artikeln nämner ingen byggnad
+        g[sig]["bedomning"]["inmurad"] = "rätt"
     ut = {}
     for grupp, falt in GRUPPER.items():
         k = n = 0

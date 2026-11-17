@@ -28,7 +28,15 @@ UT = "/Volumes/2TB/Antigrvity/Runes/downloads/sri_artiklar"
 MAX_TECKEN = 40000
 
 
+# PDF:er vars textlager är teckenförskjutet (typsnitt med egen kodning; gr3: brödtexten skiftad, rubriker och runor inte)
+# läses i stället ur en OCR-kopia (ocrmypdf -l swe --force-ocr) utanför repot.
+OCR_DIR = "/Volumes/2TB/Antigrvity/Runes/downloads/gr3_ocr"
+
+
 def sidor(path: str) -> list[str]:
+    ocr = os.path.join(OCR_DIR, os.path.basename(path))
+    if os.path.exists(ocr):
+        path = ocr
     return subprocess.run(["pdftotext", "-layout", path, "-"], capture_output=True, text=True, timeout=600).stdout.split("\f")
 
 
