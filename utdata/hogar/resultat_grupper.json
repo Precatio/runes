@@ -1,0 +1,449 @@
+{
+ "sha": "6870d6cd",
+ "grupper": 3410,
+ "grupper_med_stor": 703,
+ "grupper_med_stor_och_sten": 30,
+ "grupper_utan_stor_med_sten": 161,
+ "storleksklasser": {
+  "2-3": 175,
+  "10+": 112,
+  "4-9": 168,
+  "1": 248
+ },
+ "storleksklasser_alla": {
+  "2-3": 959,
+  "4-9": 500,
+  "10+": 159,
+  "1": 1792
+ },
+ "G1": {
+  "or": 1.6656253857816867,
+  "ci95": [
+   0.9849886435088776,
+   2.816588743477619
+  ],
+  "p": 0.08199180081991801,
+  "stora": 703,
+  "mindre": 2707,
+  "stora_med_sten": 30,
+  "mindre_med_sten": 161,
+  "andel_stora": 0.04267425320056899,
+  "andel_mindre": 0.059475434059844845
+ },
+ "G1_halvor": {
+  "A": {
+   "or": 1.5074320659799976,
+   "ci95": [
+    0.7303405616964389,
+    3.111358662959227
+   ],
+   "p": 0.2860713928607139,
+   "stora": 366,
+   "mindre": 1388,
+   "stora_med_sten": 15,
+   "mindre_med_sten": 83,
+   "andel_stora": 0.040983606557377046,
+   "andel_mindre": 0.05979827089337176
+  },
+  "B": {
+   "or": 2.5274869383750223,
+   "ci95": [
+    1.107777631242849,
+    5.766671977740915
+   ],
+   "p": 0.05369463053694631,
+   "stora": 337,
+   "mindre": 1319,
+   "stora_med_sten": 15,
+   "mindre_med_sten": 78,
+   "andel_stora": 0.04451038575667656,
+   "andel_mindre": 0.05913570887035633
+  }
+ },
+ "G2": {
+  "or": 1.91587593317454,
+  "ci95": [
+   1.0701961258829003,
+   3.4298204810723134
+  ],
+  "p": 0.05399460053994601,
+  "stora": 659,
+  "mindre": 2542,
+  "stora_med_sten": 26,
+  "mindre_med_sten": 141,
+  "andel_stora": 0.03945371775417299,
+  "andel_mindre": 0.05546813532651455,
+  "borttagna_grupper": 209
+ },
+ "G3": {
+  "or": 1.6,
+  "ci95": [
+   0.47955434007012354,
+   5.338289712122427
+  ],
+  "p": 0.46045395460453953,
+  "stora": 703,
+  "mindre": 2707,
+  "stora_med_sten": 30,
+  "mindre_med_sten": 161,
+  "andel_stora": 0.04267425320056899,
+  "andel_mindre": 0.059475434059844845
+ },
+ "G4": {
+  "or": 1.6116356994882217,
+  "ci95": [
+   0.9224592304245796,
+   2.815701271339007
+  ],
+  "p": 0.11588841115888411,
+  "stora": 703,
+  "mindre": 2707,
+  "stora_med_sten": 30,
+  "mindre_med_sten": 161,
+  "andel_stora": 0.04267425320056899,
+  "andel_mindre": 0.059475434059844845
+ },
+ "G5": {
+  "Bohuslän": {
+   "or": 1.665625385781687,
+   "ci95": [
+    0.9849886435088776,
+    2.816588743477619
+   ],
+   "p": 0.08245877061469266,
+   "stora": 693,
+   "mindre": 2634,
+   "stora_med_sten": 30,
+   "mindre_med_sten": 161,
+   "andel_stora": 0.04329004329004329,
+   "andel_mindre": 0.061123766135155654,
+   "kvar_av_grupper_med_stor": 0.9857752489331437
+  },
+  "Gotland": {
+   "or": 1.6887629268493276,
+   "ci95": [
+    0.9970447181577881,
+    2.860373432768514
+   ],
+   "p": 0.0769615192403798,
+   "stora": 689,
+   "mindre": 2636,
+   "stora_med_sten": 30,
+   "mindre_med_sten": 160,
+   "andel_stora": 0.04354136429608128,
+   "andel_mindre": 0.06069802731411229,
+   "kvar_av_grupper_med_stor": 0.9800853485064012
+  },
+  "Halland": {
+   "or": 1.665625385781687,
+   "ci95": [
+    0.9849886435088776,
+    2.816588743477619
+   ],
+   "p": 0.08695652173913043,
+   "stora": 624,
+   "mindre": 2580,
+   "stora_med_sten": 30,
+   "mindre_med_sten": 161,
+   "andel_stora": 0.04807692307692308,
+   "andel_mindre": 0.0624031007751938,
+   "kvar_av_grupper_med_stor": 0.887624466571835
+  },
+  "Medelpad": {
+   "or": 1.581016432171139,
+   "ci95": [
+    0.9278772439558702,
+    2.6939047972966987
+   ],
+   "p": 0.13143428285857073,
+   "stora": 688,
+   "mindre": 2648,
+   "stora_med_sten": 28,
+   "mindre_med_sten": 159,
+   "andel_stora": 0.040697674418604654,
+   "andel_mindre": 0.060045317220543806,
+   "kvar_av_grupper_med_stor": 0.9786628733997155
+  },
+  "Skåne": {
+   "or": 1.665625385781687,
+   "ci95": [
+    0.9849886435088776,
+    2.816588743477619
+   ],
+   "p": 0.08445777111444278,
+   "stora": 322,
+   "mindre": 2492,
+   "stora_med_sten": 30,
+   "mindre_med_sten": 161,
+   "andel_stora": 0.09316770186335403,
+   "andel_mindre": 0.06460674157303371,
+   "kvar_av_grupper_med_stor": 0.45803698435277385
+  },
+  "Småland": {
+   "or": 1.7368836951909523,
+   "ci95": [
+    1.021830681554415,
+    2.9523139450374067
+   ],
+   "p": 0.06746626686656672,
+   "stora": 692,
+   "mindre": 2526,
+   "stora_med_sten": 29,
+   "mindre_med_sten": 154,
+   "andel_stora": 0.04190751445086705,
+   "andel_mindre": 0.06096595407759303,
+   "kvar_av_grupper_med_stor": 0.984352773826458
+  },
+  "Södermanland": {
+   "or": 1.670881819084539,
+   "ci95": [
+    0.927748795544306,
+    3.00926939140815
+   ],
+   "p": 0.11744127936031984,
+   "stora": 681,
+   "mindre": 2361,
+   "stora_med_sten": 24,
+   "mindre_med_sten": 123,
+   "andel_stora": 0.03524229074889868,
+   "andel_mindre": 0.052096569250317665,
+   "kvar_av_grupper_med_stor": 0.968705547652916
+  },
+  "Uppland": {
+   "or": 2.1673386338638174,
+   "ci95": [
+    1.0141337922021618,
+    4.631890574949194
+   ],
+   "p": 0.08095952023988005,
+   "stora": 660,
+   "mindre": 2122,
+   "stora_med_sten": 16,
+   "mindre_med_sten": 59,
+   "andel_stora": 0.024242424242424242,
+   "andel_mindre": 0.027803958529688973,
+   "kvar_av_grupper_med_stor": 0.9388335704125178
+  },
+  "Värmland": {
+   "or": 1.665625385781687,
+   "ci95": [
+    0.9849886435088776,
+    2.816588743477619
+   ],
+   "p": 0.08495752123938032,
+   "stora": 691,
+   "mindre": 2578,
+   "stora_med_sten": 30,
+   "mindre_med_sten": 161,
+   "andel_stora": 0.04341534008683068,
+   "andel_mindre": 0.06245151280062063,
+   "kvar_av_grupper_med_stor": 0.9829302987197724
+  },
+  "Västergötland": {
+   "or": 1.4343692273812907,
+   "ci95": [
+    0.8160665967636637,
+    2.521136251156028
+   ],
+   "p": 0.25287356321839083,
+   "stora": 643,
+   "mindre": 2429,
+   "stora_med_sten": 25,
+   "mindre_med_sten": 157,
+   "andel_stora": 0.038880248833592534,
+   "andel_mindre": 0.06463565253190613,
+   "kvar_av_grupper_med_stor": 0.914651493598862
+  },
+  "Västmanland": {
+   "or": 1.7036637033035609,
+   "ci95": [
+    1.0050071777534804,
+    2.888009238343922
+   ],
+   "p": 0.079960019990005,
+   "stora": 691,
+   "mindre": 2554,
+   "stora_med_sten": 30,
+   "mindre_med_sten": 160,
+   "andel_stora": 0.04341534008683068,
+   "andel_mindre": 0.06264682850430697,
+   "kvar_av_grupper_med_stor": 0.9829302987197724
+  },
+  "Ångermanland": {
+   "or": 1.665625385781687,
+   "ci95": [
+    0.9849886435088776,
+    2.816588743477619
+   ],
+   "p": 0.08495752123938032,
+   "stora": 697,
+   "mindre": 2616,
+   "stora_med_sten": 30,
+   "mindre_med_sten": 161,
+   "andel_stora": 0.043041606886657105,
+   "andel_mindre": 0.06154434250764526,
+   "kvar_av_grupper_med_stor": 0.9914651493598862
+  },
+  "Öland": {
+   "or": 1.6825302946903378,
+   "ci95": [
+    0.9938007288556923,
+    2.848567233202165
+   ],
+   "p": 0.08095952023988005,
+   "stora": 694,
+   "mindre": 2668,
+   "stora_med_sten": 30,
+   "mindre_med_sten": 160,
+   "andel_stora": 0.043227665706051875,
+   "andel_mindre": 0.05997001499250375,
+   "kvar_av_grupper_med_stor": 0.9871977240398293
+  },
+  "Östergötland": {
+   "or": 1.6788051771605026,
+   "ci95": [
+    0.9780464326471094,
+    2.8816493049648635
+   ],
+   "p": 0.08945527236381809,
+   "stora": 683,
+   "mindre": 2529,
+   "stora_med_sten": 29,
+   "mindre_med_sten": 156,
+   "andel_stora": 0.0424597364568082,
+   "andel_mindre": 0.06168446026097272,
+   "kvar_av_grupper_med_stor": 0.9715504978662873
+  }
+ },
+ "G6": {
+  "250": {
+   "or": 2.5997614105397773,
+   "ci95": [
+    1.4100147206681828,
+    4.793396333145307
+   ],
+   "p": 0.0117988201179882,
+   "stora": 703,
+   "mindre": 2707,
+   "stora_med_sten": 25,
+   "mindre_med_sten": 79,
+   "andel_stora": 0.03556187766714083,
+   "andel_mindre": 0.029183598079054303
+  },
+  "1000": {
+   "or": 1.206974856883321,
+   "ci95": [
+    0.7691915166879286,
+    1.8939214402952804
+   ],
+   "p": 0.4497550244975502,
+   "stora": 703,
+   "mindre": 2707,
+   "stora_med_sten": 41,
+   "mindre_med_sten": 316,
+   "andel_stora": 0.05832147937411095,
+   "andel_mindre": 0.11673439231621721
+  }
+ },
+ "per_landskap": {
+  "Bohuslän": {
+   "grupper_med_stor": 10,
+   "med_sten": 0,
+   "grupper_utan_stor": 73,
+   "utan_stor_med_sten": 0
+  },
+  "Gotland": {
+   "grupper_med_stor": 14,
+   "med_sten": 0,
+   "grupper_utan_stor": 71,
+   "utan_stor_med_sten": 1
+  },
+  "Halland": {
+   "grupper_med_stor": 79,
+   "med_sten": 0,
+   "grupper_utan_stor": 127,
+   "utan_stor_med_sten": 0
+  },
+  "Medelpad": {
+   "grupper_med_stor": 15,
+   "med_sten": 2,
+   "grupper_utan_stor": 59,
+   "utan_stor_med_sten": 2
+  },
+  "Skåne": {
+   "grupper_med_stor": 381,
+   "med_sten": 0,
+   "grupper_utan_stor": 215,
+   "utan_stor_med_sten": 0
+  },
+  "Småland": {
+   "grupper_med_stor": 11,
+   "med_sten": 1,
+   "grupper_utan_stor": 181,
+   "utan_stor_med_sten": 7
+  },
+  "Södermanland": {
+   "grupper_med_stor": 22,
+   "med_sten": 6,
+   "grupper_utan_stor": 346,
+   "utan_stor_med_sten": 38
+  },
+  "Uppland": {
+   "grupper_med_stor": 43,
+   "med_sten": 14,
+   "grupper_utan_stor": 585,
+   "utan_stor_med_sten": 102
+  },
+  "Värmland": {
+   "grupper_med_stor": 12,
+   "med_sten": 0,
+   "grupper_utan_stor": 129,
+   "utan_stor_med_sten": 0
+  },
+  "Västergötland": {
+   "grupper_med_stor": 60,
+   "med_sten": 5,
+   "grupper_utan_stor": 278,
+   "utan_stor_med_sten": 4
+  },
+  "Västmanland": {
+   "grupper_med_stor": 12,
+   "med_sten": 0,
+   "grupper_utan_stor": 153,
+   "utan_stor_med_sten": 1
+  },
+  "Ångermanland": {
+   "grupper_med_stor": 6,
+   "med_sten": 0,
+   "grupper_utan_stor": 91,
+   "utan_stor_med_sten": 0
+  },
+  "Öland": {
+   "grupper_med_stor": 9,
+   "med_sten": 0,
+   "grupper_utan_stor": 39,
+   "utan_stor_med_sten": 1
+  },
+  "Östergötland": {
+   "grupper_med_stor": 20,
+   "med_sten": 1,
+   "grupper_utan_stor": 178,
+   "utan_stor_med_sten": 5
+  }
+ },
+ "T1_hog_or": 2.9807520350090866,
+ "T1_klusterbootstrap_95": [
+  1.6079339124554028,
+  4.761551098984011
+ ],
+ "steg": {
+  "G1": false,
+  "G1_halvor": true,
+  "G2": false,
+  "G3": false,
+  "G4": false,
+  "G5": false,
+  "G6": true
+ },
+ "robust": false
+}
