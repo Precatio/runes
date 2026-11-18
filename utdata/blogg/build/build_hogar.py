@@ -211,7 +211,9 @@ Inom en och en halv kilometer från Ättekulla gård har registret 54 högar. 39
 
 Men minnet var långt. I Rannsakningarna 1667–68, rikets första stora inventering av fornminnen, berättade de äldsta i Raus att ett slag hade stått där, ”men mellan vem vet de icke”, och att de danska sagornas hjältar Sven Fælding och Starkodder skulle ligga begravda i högarna.
 
-Det finns något nästan försonande i det. Staden växte över platsen och kullarna försvann, de flesta av dem. Men gatorna fick namn efter forntiden, och området bär fortfarande gravhögarnas namn. I Grímnismál säger Oden att han fruktar för korpen Hugin, tanken, men ännu mer för Munin, minnet. Här klarade sig minnet bättre än kullarna.
+Raus är ett namn jag bär med mig. I mitt pass står det som min födelseort, och förr tror jag att det stod Raus församling. Jag har inte så mycket relation till platsen i dag, men den kommer alltid att följa med mig. Den är en del av min historia.
+
+Det finns något nästan försonande i Ättekullas historia. Staden växte över platsen och kullarna försvann, de flesta av dem. Men gatorna fick namn efter forntiden, och området bär fortfarande gravhögarnas namn. I Grímnismál säger Oden att han fruktar för korpen Hugin, tanken, men ännu mer för Munin, minnet. Här klarade sig minnet bättre än kullarna.
 
 ## Redan gamla för vikingarna
 
@@ -318,7 +320,9 @@ Within one and a half kilometres of Ättekulla farm the register has 54 mounds. 
 
 But the memory was long. In the Rannsakningar of 1667–68, the kingdom's first great survey of ancient monuments, the oldest people in Raus said that a battle had been fought there, ”but between whom they do not know”, and that the Danish saga heroes Sven Fælding and Starkodder were buried in the mounds.
 
-There is something almost consoling in that. The town grew over the place and the mounds disappeared, most of them. But the streets were named after the ancient past, and the district still bears the burial mounds' name. In Grímnismál Odin says that he fears for the raven Huginn, thought, but even more for Muninn, memory. Here memory fared better than the mounds.
+Raus is a name I carry with me. My passport gives it as my place of birth, and I think it used to say Raus parish. I do not have much of a relationship with the place today, but it will always come with me. It is part of my story.
+
+There is something almost consoling in Ättekulla's history. The town grew over the place and the mounds disappeared, most of them. But the streets were named after the ancient past, and the district still bears the burial mounds' name. In Grímnismál Odin says that he fears for the raven Huginn, thought, but even more for Muninn, memory. Here memory fared better than the mounds.
 
 ## Already old to the Vikings
 
