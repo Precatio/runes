@@ -17,9 +17,10 @@ new = json.load(open(os.path.join(ROOT, "utdata", "blogg", "hogar.json"), encodi
 ref = blog.firestore().collection(blog.COLLECTION).document("YAhSiMGzlXvPC9ZW31hD")
 old = ref.get().to_dict()
 assert old and old["slug"] == "kullarna-vid-skogens-rand" and old.get("published")
-assert "Uppdaterad 18 november 2026" in new["body"] and "Updated 18 November 2026" in new["body_en"]
+assert "Rättad 18 november 2026" in new["body"] and "Corrected 18 November 2026" in new["body_en"]
+assert "sökte sig till de stora högarna" not in new["body"].split("*Rättad")[0]
 blog._backup(ref.id, old)
-ref.set({k: new[k] for k in ("summary", "body", "summary_en", "body_en")} | {"updatedAt": dt.datetime.now(dt.timezone.utc)},
+ref.set({k: new[k] for k in ("summary", "body", "summary_en", "body_en", "seo_title")} | {"updatedAt": dt.datetime.now(dt.timezone.utc)},
         merge=True)
 blog._forget()
 print("artikeln uppdaterad; publiceringsdatum oförändrat:", old.get("publishedAt"))

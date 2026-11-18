@@ -118,6 +118,9 @@ assert round(_near("Skåne", True)) == 36 and round(_near("Skåne", False)) == 4
 GF = collections.Counter(r["province"] for r in csv.DictReader(open(os.path.join(ROOT, "data", "raa", "lamningar.csv"), encoding="utf-8")) if r["type"] == "gravfält")
 assert (GF["Uppland"], GF["Skåne"]) == (5307, 359)
 
+# ---- plan 2 (groups as units, 6870d6cd) did NOT hold: the runestone section is removed (Viktor 2026-11-18)
+GR = json.load(open(os.path.join(HG, "resultat_grupper.json"), encoding="utf-8"))
+assert GR["sha"] == "6870d6cd" and not GR["robust"] and not GR["steg"]["G1"]
 # ---- the robustness ladder (plan 2026-11-18-hogarna-trappan, 53f11fa6): every rung must hold
 TR = json.load(open(os.path.join(HG, "resultat_trappan.json"), encoding="utf-8"))
 assert TR["sha"] == "53f11fa6" and TR["robust"] and all(TR["steg"].values())
@@ -206,16 +209,14 @@ p0 = lambda v: f"{v:.0f}"  # noqa: E731
 SLUG = "kullarna-vid-skogens-rand"
 title = "Kullarna vid skogens rand – från Ättekulla till Sveriges största gravhögar"
 title_en = "The mounds at the edge of the forest – from Ättekulla to Sweden's largest burial mounds"
-seo_title = "Gravhögar i Sverige: från bronsålder till runstenar"
+seo_title = "Gravhögar i Sverige: vilka låg i kullarna?"
 seo_title_en = "Burial mounds in Sweden: who lay in them?"
 summary = ("Jag växte upp i Ättekulla i Helsingborg, bland gator med fornnordiska namn. Vid skogens rand låg kullarna: "
-           "bronsåldersgravar som användes i nästan tusen år. De flesta är borta i dag. Vi följer högarna därifrån över hela landet – 76 000 i registret – och finner att vikingatidens "
-           "runstenar sökte sig till de stora högarna: vid en stor hög är oddsen för en runsten ungefär tre gånger så stora, "
-           "också när bara stenar som står där de restes räknas.")
+           "bronsåldersgravar som användes i nästan tusen år. De flesta är borta i dag. Vi följer högarna därifrån över hela landet – "
+           "76 000 i registret – och in i vikingatiden, då de redan var forntid.")
 summary_en = ("I grew up at Ättekulla in Helsingborg, among streets with Old Norse names. At the edge of the forest lay the mounds: "
-              "Bronze Age graves used for almost a thousand years. Most are gone today. We follow the mounds from there across the whole country – 76,000 in the register – and "
-              "find that the Viking Age runestones sought out the large mounds: at a large mound the odds of a runestone are about "
-              "three times as high, even counting only stones that stand where they were raised.")
+              "Bronze Age graves used for almost a thousand years. Most are gone today. We follow the mounds from there across the whole "
+              "country – 76,000 in the register – and into the Viking Age, when they were already the ancient past.")
 
 body = f"""Den här artikeln börjar inte med en runsten, utan med platsen där jag växte upp: ett område i Helsingborg som heter Ättekulla. Gatorna där har fornnordiskt inspirerade namn – Bifrostgatan, Midgårdsgatan, Utgårdsgatan, Runristargatan, Sven Tveskäggs gata, Styrbjörn Starkes gata, Erik Rödes gata. Och vid skogens rand låg kullarna.
 
@@ -259,21 +260,7 @@ När vikingarna levde var kullarna i Ättekulla redan mellan 1 500 och 2 500 år
 
 Ett par hundra år senare skrev islänningen Snorre Sturlasson ned hur man mindes de gamla gravskicken. Först kom brandåldern, *brunaöld*, då man brände de döda och reste bautastenar efter dem. Men sedan Frö hade lagts i hög i Uppsala ”gerðu margir höfðingjar eigi síður hauga en bautasteina til minningar um frændur sína” – byggde många hövdingar högar lika väl som bautastenar till minne av sina fränder. I Ynglingasagan låter han Oden själv stifta regeln: hög åt de förnäma, ”eptir göfga menn skyldi haug gera til minningar”, och stenar åt de andra.
 
-Snorre var en kristen lärd som såg tillbaka, inte ett ögonvittne. Men i hans bild hör högen och stenen ihop. Den bilden kan vi pröva.
-
-## Runstenarna sökte sig till de stora högarna
-
-Drog de stora högarna till sig fler runstenar än de vanliga? Vi prövade det med en plan som låstes innan vi räknade, och vi räknade bara runstenar som står kvar där de restes.
-
-{chart(True)}
-
-Svaret är ja. I Uppland står det en runsten inom 500 meter från {p0(PL['Uppland'][0])} procent av de stora högarna, mot {p0(PL['Uppland'][1])} procent av de mindre. I Södermanland är det {p0(PL['Södermanland'][0])} mot {p0(PL['Södermanland'][1])} procent, i Medelpad {p0(PL['Medelpad'][0])} mot {p0(PL['Medelpad'][1])}. Räknat inom varje landskap är oddsen för en runsten ungefär tre gånger så stora vid en stor hög.
-
-Vi har prövat mönstret hårt, eftersom det finns en uppenbar fälla: många runstenar flyttades långt senare till kyrkor, och kyrkor byggdes ofta vid storhögar. Stenarna vid Skalunda hög och Ledbergs kulle står just så, på kyrkogården, och räknas därför inte. Mönstret håller ändå – när högar nära medeltida kyrkor räknas bort, när stora högar bara jämförs med mindre högar i samma socken, när vi tar hänsyn till hur många runstenar och gravfält som finns i trakten, och när vi lämnar ut ett landskap i taget, också Uppland. I Skåne och Halland går det inte att pröva, eftersom runstenarna där räknas som danska.
-
-Exemplen står där de restes. Vid Tjärkullen vid Borresta i Orkesta, 35 meter bred, står en runsten, U Fv1975;169. Vid Tingshögen i Ludgo står Aspastenarna, Sö 137 och Sö 138. Och vid Östa i Ytterselö står Sö 202 nära en 25 meter bred hög – stenen som säger att den döde ägde Kolhaugr, om läsningen stämmer, ett ställe som bar en hög i sitt namn.
-
-Varför? Det prövade vi inte. Men den som reste en sten vid en storhög ställde sin döde bredvid något som alla i bygden kunde se, och som redan var gammalt. Det kan ha varit ett sätt att säga: vi hör hit, och vi har alltid gjort det. Det är också Snorres bild – högen och stenen tillsammans – men här står de bredvid varandra.
+Snorre var en kristen lärd som såg tillbaka, inte ett ögonvittne. Men i hans bild hör högen och stenen ihop, som två sätt att minnas de döda.
 
 ## Det som inte höll
 
@@ -291,7 +278,7 @@ Varför ändrades det? Det har vi inte prövat. Men Snorre ger en ledtråd: var 
 
 ## Tillbaka vid skogens rand
 
-Så vilka var kullarna vid skogens rand? De var bronsålderns släktgravar, först för de förnämsta och sedan för många, i nästan tusen år. För vikingarna var de redan forntid, och vid de största reste de sina runstenar – kanske för att låna något av deras ålder. Sedan flyttade de döda in på kyrkogården, och högarna blev platser för sägner, för skattgrävare och till sist för en växande stad.
+Så vilka var kullarna vid skogens rand? De var bronsålderns släktgravar, först för de förnämsta och sedan för många, i nästan tusen år. För vikingarna var de redan forntid, och ibland gjorde de efterlevande en ny hög vid sin runsten. Sedan flyttade de döda in på kyrkogården, och högarna blev platser för sägner, för skattgrävare och till sist för en växande stad.
 
 Gatunamnen i Ättekulla pekade mot vikingatiden, och de pekade fel. Men kanske inte helt. Vikingarna levde, precis som jag, bland högar som redan var gamla, och de hade sina egna berättelser om vilka som låg där.
 
@@ -300,16 +287,15 @@ I Grímnismál säger Oden att han fruktar för korpen Hugin, tanken, men ännu 
 :::box Det viktigaste i korthet
 - Kullarna i Ättekulla var bronsåldersgravar, använda i nästan tusen år. 39 av 54 högar runt gården är borta i dag.
 - Fyra av fem av Sveriges stora gravhögar ligger i Skåne och Halland: bronsålderns högar på kustslätterna.
-- Vikingatidens runstenar sökte sig till de stora högarna. Mönstret håller också när flyttade stenar och kyrkorna räknas bort, och inom samma socken.
 - Högarna var forntid redan för vikingarna, och ännu vid kristna stenar gjordes en hög. Sedan flyttade de döda långsamt till kyrkogården.
 - Lindqvists tanke att storhögarna hör till husbyarna går inte att bekräfta för hela landet.
 :::
 
 ## Så säkra är vi
 
-Registret anger sällan när en hög byggdes, så stora och små högar kan vara från olika tider. Högens storlek är läst ur beskrivningen, som för 11 072 fristående högar anger en diameter; registret skriver oftast ”20 m i diam”, och den formen lade vi till innan proven räknades. Runstenarnas mönster prövades först med alla stenar och sedan, i en andra låst plan, i en trappa av kontroller där varje steg måste hålla. Alla gjorde det. En avvikelse från den andra planen: de flesta högar har inga runstenar alls en till fem kilometer bort, så tätheten delades i ”inga” och ”några” i stället för i tredjedelar. Planerna och koden ligger öppet på GitHub.
+Registret anger sällan när en hög byggdes, så stora och små högar kan vara från olika tider. Högens storlek är läst ur beskrivningen, som för 11 072 fristående högar anger en diameter; registret skriver oftast ”20 m i diam”, och den formen lade vi till innan proven räknades. Planerna och koden ligger öppet på GitHub.
 
-*Uppdaterad 18 november 2026: texten är kortad, och runstenssiffrorna räknas nu bara på stenar som står där de restes, prövade i en trappa av kontroller. Mönstret står kvar.*
+*Rättad 18 november 2026: ett avsnitt om att runstenarna sökte sig till de stora högarna är struket. Räknat hög för hög såg sambandet starkt ut, men högar ligger ofta i grupper som delar samma runsten. När grupperna räknades som en enhet, enligt en plan som låstes innan vi räknade, höll mönstret inte.*
 
 ## Källor
 
@@ -320,7 +306,7 @@ Registret anger sällan när en hög byggdes, så stora och små högar kan vara
 - Lindqvist, Sune 1917. Ottarshögen i Vendel. *Fornvännen* 12, s. 127–143. CC BY 4.0.
 - Snorre Sturlasson, *Heimskringla*: förordet efter Frísbók (isländska Wikisource) och Ynglingasagan kap. 8 efter N. Linder och H. A. Haggsons utgåva 1869–72 (heimskringla.no). Korta citat.
 - Vitkis tidigare mätning: Tog kyrkan över efter gravfältet?, analysplan 2026-10-29 på GitHub.
-- Analysplanerna och koden: [Kullarna](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md) och [trappan](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna-trappan.md) på GitHub."""
+- Analysplanerna och koden: [Kullarna](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md) , [trappan](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna-trappan.md) och [grupperna](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna-grupper.md) på GitHub."""
 
 body_en = f"""This article does not begin with a runestone, but with the place where I grew up: a part of Helsingborg called Ättekulla. Its streets have Old Norse-inspired names – Bifrostgatan, Midgårdsgatan, Utgårdsgatan, Runristargatan (Rune Carvers' Street), Sven Tveskäggs gata, Styrbjörn Starkes gata, Erik Rödes gata. And at the edge of the forest lay the mounds.
 
@@ -364,21 +350,7 @@ When the Vikings lived, the mounds at Ättekulla were already between 1,500 and 
 
 A couple of centuries later the Icelander Snorri Sturluson wrote down how the old burial customs were remembered. First came the age of burning, *brunaöld*, when the dead were burned and standing stones raised after them. But after Freyr had been laid in a mound at Uppsala ”gerðu margir höfðingjar eigi síður hauga en bautasteina til minningar um frændur sína” – many chieftains built mounds no less than standing stones in memory of their kinsmen. In Ynglinga saga he has Odin himself lay down the rule: a mound for the noble, ”eptir göfga menn skyldi haug gera til minningar”, and stones for the others.
 
-Snorri was a Christian scholar looking back, not an eyewitness. But in his picture the mound and the stone belong together. That picture we can test.
-
-## The runestones sought out the large mounds
-
-Did the large mounds draw more runestones than the ordinary ones? We tested it with a plan locked before we counted, and we counted only runestones that still stand where they were raised.
-
-{chart(False)}
-
-The answer is yes. In Uppland a runestone stands within 500 metres of {p0(PL['Uppland'][0])} per cent of the large mounds, against {p0(PL['Uppland'][1])} per cent of the smaller ones. In Södermanland it is {p0(PL['Södermanland'][0])} against {p0(PL['Södermanland'][1])} per cent, in Medelpad {p0(PL['Medelpad'][0])} against {p0(PL['Medelpad'][1])}. Counted within each province, the odds of a runestone are about three times as high at a large mound.
-
-We tested the pattern hard, because there is an obvious trap: many runestones were moved to churches long afterwards, and churches were often built by great mounds. The stones at Skalunda hög and Ledbergs kulle stand just like that, in the churchyard, and so are not counted. The pattern holds even so – when mounds near medieval churches are left out, when large mounds are compared only with smaller mounds in the same parish, when we allow for how many runestones and grave fields there are in the district, and when we leave out one province at a time, Uppland included. In Skåne and Halland it cannot be tested, because the runestones there count as Danish.
-
-The examples stand where they were raised. By Tjärkullen at Borresta in Orkesta, 35 metres across, stands a runestone, U Fv1975;169. By Tingshögen in Ludgo stand the Aspa stones, Sö 137 and Sö 138. And at Östa in Ytterselö Sö 202 stands near a 25-metre mound – the stone that says the dead man owned Kolhaugr, if the reading is right, a place with a mound in its name.
-
-Why? We did not test that. But whoever raised a stone by a great mound placed their dead beside something everyone in the district could see, and which was already old. It may have been a way of saying: we belong here, and we always have. It is Snorri's picture too – the mound and the stone together – but here they stand side by side.
+Snorri was a Christian scholar looking back, not an eyewitness. But in his picture the mound and the stone belong together, as two ways of remembering the dead.
 
 ## What did not hold
 
@@ -396,7 +368,7 @@ Why did it change? We have not tested that. But Snorri gives a clue: everyone wo
 
 ## Back at the edge of the forest
 
-So who were the mounds at the edge of the forest? They were the graves of Bronze Age families, first for the most distinguished and then for many, for almost a thousand years. To the Vikings they were already the ancient past, and by the largest they raised their runestones – perhaps to borrow something of their age. Then the dead moved into the churchyard, and the mounds became places for legends, for treasure-hunters and at last for a growing town.
+So who were the mounds at the edge of the forest? They were the graves of Bronze Age families, first for the most distinguished and then for many, for almost a thousand years. To the Vikings they were already the ancient past, and sometimes the survivors made a new mound by their runestone. Then the dead moved into the churchyard, and the mounds became places for legends, for treasure-hunters and at last for a growing town.
 
 The street names at Ättekulla pointed to the Viking Age, and they pointed the wrong way. But perhaps not entirely. The Vikings lived, just as I did, among mounds that were already old, and they had their own stories of who lay there.
 
@@ -405,16 +377,15 @@ In Grímnismál Odin says that he fears for the raven Huginn, thought, but even 
 :::box The essentials in brief
 - The mounds at Ättekulla were Bronze Age graves, used for almost a thousand years. 39 of the 54 mounds around the farm are gone today.
 - Four in five of Sweden's large burial mounds lie in Skåne and Halland: the Bronze Age mounds of the coastal plains.
-- The Viking Age runestones sought out the large mounds. The pattern holds also when moved stones and the churches are left out, and within the same parish.
 - The mounds were the ancient past already to the Vikings, and even beside Christian stones a mound was made. Then the dead moved slowly to the churchyard.
 - Lindqvist's idea that the great mounds belong to the husbyar cannot be confirmed for the whole country.
 :::
 
 ## How sure we are
 
-The register seldom says when a mound was built, so large and small mounds may be from different times. The mound's size is read from the description, which gives a diameter for 11,072 free-standing mounds; the register usually writes ”20 m i diam”, and we added that form before the tests were run. The runestone pattern was first tested with all stones and then, in a second locked plan, in a ladder of checks where every step had to hold. All did. One departure from the second plan: most mounds have no runestones at all one to five kilometres away, so density was split into ”none” and ”some” instead of into thirds. The plans and the code are open on GitHub.
+The register seldom says when a mound was built, so large and small mounds may be from different times. The mound's size is read from the description, which gives a diameter for 11,072 free-standing mounds; the register usually writes ”20 m i diam”, and we added that form before the tests were run. The plans and the code are open on GitHub.
 
-*Updated 18 November 2026: the text has been shortened, and the runestone figures now count only stones that stand where they were raised, tested in a ladder of checks. The pattern stands.*
+*Corrected 18 November 2026: a section saying that the runestones sought out the large mounds has been removed. Counted mound by mound the link looked strong, but mounds often lie in groups that share the same runestone. When the groups were counted as one unit, under a plan locked before we counted, the pattern did not hold.*
 
 ## Sources
 
@@ -425,7 +396,7 @@ The register seldom says when a mound was built, so large and small mounds may b
 - Lindqvist, Sune 1917. Ottarshögen i Vendel. *Fornvännen* 12, pp. 127–143. CC BY 4.0.
 - Snorri Sturluson, *Heimskringla*: the prologue after Frísbók (Icelandic Wikisource) and Ynglinga saga ch. 8 after N. Linder and H. A. Haggson's edition 1869–72 (heimskringla.no). Short quotations.
 - Vitki's earlier measurement: Did the church take over from the grave field?, analysis plan of 2026-10-29 on GitHub.
-- The analysis plans and the code: [the mounds](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md) and [the ladder](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna-trappan.md) on GitHub."""
+- The analysis plans and the code: [the mounds](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md) , [the ladder](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna-trappan.md) and [the groups](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna-grupper.md) on GitHub."""
 
 body = body.replace(f"{R['stora_20']:,}", f"{R['stora_20']:,}".replace(",", " ")).replace(f"{N_GONE:,}", f"{N_GONE:,}".replace(",", " ")).replace(f"{N_GROP:,}", f"{N_GROP:,}".replace(",", " "))
 for b, lang in ((body, "sv"), (body_en, "en")):
