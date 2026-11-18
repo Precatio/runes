@@ -66,6 +66,11 @@ assert UI["ci"][0] > HK["ci"][1] and UI["ci"][0] > IS["ci"][1], "utan Ingvar: in
 assert pc(UI["ostandel"]) == pc(FA["ostandel"]) == 58, "texten: i nivå med fornaldarsagorna"
 assert pc(ALL["ostandel"]) > pc(FA["ostandel"])
 IS_P, (IS_LO, IS_HI), HK_P, FA_P = pc(IS["ostandel"]), ci(IS), pc(HK["ostandel"]), pc(FA["ostandel"])
+# Fornaldarsagornas andel räknar med Ingvars egen saga (en av de 36 texterna); det sägs i texten.
+FA_TEXTS = [r["text"] for r in csv.DictReader(open(os.path.join(V, "platser_per_text.csv"), encoding="utf-8"))
+            if r["korpus"] == "fornaldarsagor"]
+assert len(FA_TEXTS) == 36 and "Yngvars saga víðförla" in FA_TEXTS
+N_FA = len(FA_TEXTS)
 
 # ---- P2 och tidskurvan ---------------------------------------------------------------------------------------------------
 P2 = SK["p2"]["huvud_med_ingvar"]
@@ -81,6 +86,8 @@ EARLY_P, LATE_P = pc(K["med_ingvar_tidig"]["ostandel"]), pc(K["med_ingvar_sen"][
 EARLY_UI = pc(K["utan_ingvar_tidig"]["ostandel"])
 assert (EARLY_P, LATE_P, EARLY_UI) == (65, 67, 53)
 RAK_P, RAK_N, RAK_UI = pc(KM["RAK"]["ostandel"]), KM["RAK"]["stenar"], pc(KU["RAK"]["ostandel"])
+RAK_LO, RAK_HI = ci(KM["RAK"])
+assert (RAK_LO, RAK_HI) == (20, 60) and RAK_LO < 50 < RAK_HI, "RAK-gruppens intervall omfattar hälften"
 assert RAK_P == min(pc(g["ostandel"]) for g in K["med_ingvar"]), "RAK ser mest mot väster"
 FP_P, FP_N, FP_UI = pc(KM["Fp"]["ostandel"]), KM["Fp"]["stenar"], pc(KU["Fp"]["ostandel"])
 FP_ING = KM["Fp"]["stenar"] - KU["Fp"]["stenar"]
@@ -201,7 +208,7 @@ SINDBAEK = ("Endelig kendes ikke mindre end 96 svenske runesten som nævner pers
             "helt til *Griklandi* eller *Serkland* … Runestenene taler selv på dette tidspunkt ofte om særlige "
             "heltebedrifter som Ingvar Vidfarnes togt til Det kaspiske Hav, der alene tegner sig for mere end 25 sten.")
 # OCR:en läser æ som ae/a och 'taler' som 'tåler'; texten ovan är jämförd med sidbilden (s. 180).
-URL_SINDBAEK = check("2003_179", "kendes ikke mindre end 96 svenske runesten", "Vidfarnes", "Det kaspiske Hav",
+URL_SINDBAEK = check("2003_179", "Larsson 1990", "kendes ikke mindre end 96 svenske runesten", "Vidfarnes", "Det kaspiske Hav",
                      "tegner sig for mere end 25 sten", "Alle disse kilder er imid", "fra 1 1. årk. eller senere")
 WESTIN = ("De svenska vikingatågen voro huvudsakligen riktade mot öster. Mot slutet av vikingatiden inträder emellertid "
           "en förskjutning. Den östra vägen genom Ryssland till Orienten blir av flera orsaker mindre betydande för nordborna.")
@@ -313,9 +320,10 @@ def chart(lang):
 
 # ---- texten -------------------------------------------------------------------------------------------------------------------
 title = "Vikingarnas österled – eller bara Ingvars?"
-summary = (f"Runstenarna ser mot öster, skrev vi i en tidigare artikel. Men {N_ING} av stenarna minns samma färd: Ingvars "
-           "tåg mot Serkland. Vi räknade bort dem efter en plan som låstes i förväg. Ungefär halva österns övervikt "
-           "försvann – och det visade sig att samma tåg också är ett av ankarna för när runstenarna restes.")
+summary = (f"Runstenarna ser oftare mot öster än islänningarnas sagor om sina förfäder – det står fast. Men {N_ING} av "
+           "stenarna minns samma färd, Ingvars tåg mot Serkland, och de står för ungefär halva österns övervikt. Vi mötte "
+           "Ingvars män, räknade efter en plan som låstes i förväg och fann att samma tåg också är ett av ankarna för när "
+           "runstenarna restes.")
 
 body = f"""*{SO173}*
 
@@ -326,7 +334,7 @@ Raden står på en sten vid Tystberga i Södermanland (Sö 173). Myskja och Mann
 ![Runstenen Sö 173]({IMG['Sö 173']['thumb']})
 Sö 173 vid Tystberga: ”Han hade länge varit i väster, dog i öster med Ingvar.” {credit('Sö 173', 'sv')}
 
-I artikeln [Vikingarnas värld – vilka platser nämner de?](/artiklar/vikingarnas-varld) räknade vi alla platser utanför Norden som nämns på de svenska runstenarna. Två av tre låg i öster, {ALL_P} %. Den här artikeln handlar om vad som hände när vi vände oss mot vår egen siffra och frågade om den håller.
+I artikeln [Vikingarnas värld – vilka platser nämner de?](/artiklar/vikingarnas-varld) räknade vi alla platser utanför Norden som nämns på de svenska runstenarna. Två av tre låg i öster, {ALL_P} %. Den här artikeln handlar om vad som hände när vi vände oss mot vår egen siffra och frågade om den håller. Kort sagt: huvudtanken står kvar – runstenarna ser åt ett annat håll än islänningarnas sagor om sina förfäder. Men en stor del av österns övervikt är ett och samma tåg, och det tåget bär också en del av runstenarnas tideräkning.
 
 ## En invändning i en bisats
 
@@ -342,7 +350,7 @@ Om det stämmer kan vår östandel vara Ingvars förlis snarare än en hel gener
 
 ## Ingvars män
 
-Vår definition var medvetet vid. En sten räknas om den nämner Ingvar som ledare för en färd, eller om den nämner namnet Ingvar och dessutom en plats i öster. Hellre en sten för mycket än en för lite, för det gör det svårare för vår egen siffra att klara sig. Tjugosex stenar fångades. En av dem, U 540, tog vi bort när vi läste texten: där är Ingvar en av dem som reste stenen, och den döde dog i Grekland, utan något som knyter honom till tåget. Kvar blev {N_ING}, lika många som Sindbæk räknade.
+Vår definition var medvetet vid. En sten räknas om den nämner Ingvar som ledare för en färd, eller om den nämner namnet Ingvar och dessutom en plats i öster. Hellre en sten för mycket än en för lite, för det gör det svårare för vår egen siffra att klara sig. Tjugosex stenar fångades. En av dem, U 540, tog vi bort när vi läste texten: där är Ingvar en av dem som reste stenen, och den döde dog i Grekland, utan något som knyter honom till tåget. Kvar blev {N_ING}. Sindbæk, som byggde på Mats G. Larsson (1990), skrev ”mer än 25”, så vi hamnar på ungefär samma antal.
 
 De står från Medelpad i norr till Östergötland i söder, men de flesta i Södermanland ({PROV['Sö']}) och Uppland ({PROV['U']}). Läser man dem i följd är de en ovanligt tät samling människor.
 
@@ -361,7 +369,7 @@ Ingvarsstenarna nämner {GRP_O} platser i öster och {GRP_V} i väster. Räknar 
 
 Det är en stor rörelse för en enda färd. Av de {SURPLUS} procentenheter som runstenarna låg över hälften står Ingvarsstenarna för {DROP}. Ungefär halva österns övervikt är alltså ett tåg.
 
-Det som blir kvar är dessutom osäkrare än vi skulle vilja. Med {UI_N} stenar kvar ligger östandelen troligen mellan {UI_LO} och {UI_HI} %. Eftersom hälften ligger inom det spannet kan vi inte utesluta att stenarna, utan Ingvar, nämnde öster och väster ungefär lika ofta. (Spannet räknade vi genom att dra stenarna på nytt tiotusen gånger, så att en sten som nämner många platser inte väger som många stenar.) Planens dom blir därför: försvagat. Den bästa skattningen ligger fortfarande över hälften, men vi kan inte längre säga att stenarna tydligt ser mot öster.
+Det som blir kvar är dessutom osäkrare än vi skulle vilja. Med {UI_N} stenar kvar ligger östandelen troligen mellan {UI_LO} och {UI_HI} %. Eftersom hälften ligger inom det spannet kan vi inte utesluta att stenarna, utan Ingvar, nämnde öster och väster ungefär lika ofta. (Spannet räknade vi genom att dra stenarna på nytt tiotusen gånger, så att en sten som nämner många platser inte väger som många stenar.) Planens dom för just den siffran blir därför: försvagat. Den bästa skattningen ligger fortfarande över hälften, men vi kan inte längre säga att stenarna tydligt ser mot öster. Det som bar den förra artikelns huvudtanke var dock inte den siffran, utan jämförelsen med sagorna, och den står kvar, som vi ska se.
 
 Vi räknade också på andra sätt, och alla pekar åt samma håll:
 
@@ -371,9 +379,9 @@ Räknas tåget som en enda text, i stället för att strykas helt, landar andele
 
 ## Det som håller
 
-Det låter som en förlust, och till en del är det en. Men det viktigaste i den förra artikeln var inte att stenarna ser mot öster i sig. Det var jämförelsen: att runstenarna och islänningarnas sagor om sina egna förfäder ser åt olika håll, och att sagorna om forntiden liknar stenarna.
+Det kan låta som en förlust. Men det viktigaste i den förra artikeln var inte att stenarna ser mot öster i sig. Det var jämförelsen: att runstenarna och islänningarnas sagor om sina egna förfäder ser åt olika håll, och att sagorna om forntiden liknar stenarna.
 
-Den jämförelsen står kvar. Islänningasagorna har {IS_P} % öster, troligen mellan {IS_LO} och {IS_HI} %, och kungasagorna i Heimskringla {HK_P} %. Runstenarna utan Ingvar, {UI_P} %, överlappar ingen av dem. Med Ingvar låg stenarna högre än alla sagor. Utan honom hamnar de i nivå med fornaldarsagorna, sagorna om tiden före Islands bebyggelse, som också har {FA_P} %. Det är en lustig symmetri, eftersom sagan om Ingvar själv räknas till fornaldarsagorna, och mer än så ska vi inte göra av den. Men hypotesen från förra gången, att österleden på Island hade blivit forntid, vilar inte på Ingvar.
+Den jämförelsen står kvar. Islänningasagorna har {IS_P} % öster, troligen mellan {IS_LO} och {IS_HI} %, och kungasagorna i Heimskringla {HK_P} %. Runstenarna utan Ingvar, {UI_P} %, överlappar ingen av dem. Med Ingvar låg stenarna högre än alla sagor. Utan honom hamnar de i nivå med fornaldarsagorna, sagorna om tiden före Islands bebyggelse, som också har {FA_P} %. En sak ska sägas om den jämförelsen: fornaldarsagornas andel räknar med sagan om Ingvar själv, *Yngvars saga víðförla*, en av de {N_FA} sagorna. Vi tog alltså bort Ingvar ur stenarna men inte ur sagorna, och därför ska likheten mellan de två talen inte läsas för noga. Jämförelsen med islänningasagorna påverkas inte. Hypotesen från förra gången, att österleden på Island hade blivit forntid, vilar inte på Ingvar.
 
 ## Westin och tiden
 
@@ -392,7 +400,7 @@ Hur stor del av platserna som ligger i öster, stilgrupp för stilgrupp, med och
 
 Kurvan visar ingen förskjutning mot väster. Stenarna före omkring 1050 har {EARLY_P} % öster, de senare {LATE_P} %. Om något lutar kurvan åt andra hållet, men den vilar på för få sena stenar för att vi ska bygga något på det.
 
-Två saker syns ändå tydligt. Den första är att de äldsta stenarna, RAK-gruppen omkring år 1000, är de som ser mest mot väster: {RAK_P} % öster. England är det land de nämner oftast, på {RAK_ENG} av {RAK_N} stenar, och lika många säger bara ”i väster”. Väst kom alltså inte sist på stenarna, utan först. Mats G. Larsson påpekar dessutom att Englandsstenarna i många fall restes över män som kommit hem välbehållna och fick sin sten först när de dött hemma (Larsson 2021). Resan kan alltså vara äldre än stenen.
+Två saker syns ändå, med de förbehåll som små grupper kräver. Den första är att de äldsta stenarna, RAK-gruppen omkring år 1000, är de som ser mest mot väster: {RAK_P} % öster. Med {RAK_N} stenar ligger andelen troligen mellan {RAK_LO} och {RAK_HI} %, så också lika ofta öster som väster är möjligt. England är det land de nämner oftast, på {RAK_ENG} av {RAK_N} stenar, och lika många säger bara ”i väster”. Väst kom alltså inte sist på stenarna; om något kom det tidigt. Mats G. Larsson påpekar dessutom att Englandsstenarna i många fall restes över män som kommit hem välbehållna och fick sin sten först när de dött hemma (Larsson 2021). Resan kan alltså vara äldre än stenen.
 
 Den andra är toppen i Fp-gruppen, 1010–1050: {FP_P} % öster. Av gruppens {FP_N} stenar är {FP_ING} Ingvarsstenar. Utan dem sjunker toppen till {FP_UI} %. Den östliga höjdpunkten mitt i 1000-talet är, i vårt material, till stor del ett och samma tåg.
 
@@ -427,8 +435,8 @@ Vår tolkning, och den har vi inte visat, är att runstenarna mäter förlust sn
 Nästa gång du läser att ”runstenarna visar” något, också hos oss, fråga hur många av stenarna som handlar om samma dag. Och står du framför en Ingvarsten, vid Tystberga, Svinnegarn eller Gripsholm, läs vem som reste den. Det är nästan alltid någon som blev kvar.
 
 :::box Det viktigaste i korthet
+- Det som skiljer runstenarna från islänningarnas sagor om sina förfäder står kvar, också utan Ingvar. Hypotesen att österleden på Island blev forntid bärs inte av honom.
 - Ungefär halva österns övervikt på de svenska runstenarna är minnet av ett enda tåg. Utan Ingvar ser stenarna fortfarande något oftare österut, men inte så tydligt att vi kan utesluta att det var lika ofta.
-- Det som skiljer runstenarna från islänningarnas sagor om sina förfäder står kvar. Hypotesen att österleden på Island blev forntid bärs inte av Ingvar.
 - Runstenar är minnen av förluster. En katastrof ger många stenar på en gång, och den som räknar dem måste fråga hur många som handlar om samma händelse.
 - Samma tåg är också ett av ankarna för när runstenarna restes, och dess år är omstritt. Någon förskjutning mot väster under 1000-talet syns inte, men de sena stenarna är för få för en dom.
 :::
@@ -447,10 +455,10 @@ Nästa gång du läser att ”runstenarna visar” något, också hos oss, fråg
 - Foto: Wikimedia Commons, med fotograf och licens i bildtexterna. Diagrammen: Vitki."""
 
 title_en = "The Vikings' road east – or just Ingvarr's?"
-summary_en = (f"The runestones look east, we wrote in an earlier article. But {N_ING} of the stones remember the same "
-              "journey: Ingvarr's expedition to Serkland. We took them out, following a plan locked in advance. About half "
-              "of the east's lead disappeared – and the same expedition turned out to be one of the anchors for when the "
-              "runestones were raised.")
+summary_en = (f"The runestones look east more often than the Icelanders' sagas about their ancestors – that still stands. "
+              f"But {N_ING} of the stones remember the same journey, Ingvarr's expedition to Serkland, and they account for "
+              "about half of the east's lead. We met Ingvarr's men, counted by a plan locked in advance, and found that the "
+              "same expedition is also one of the anchors for when the runestones were raised.")
 
 body_en = f"""*{SO173}*
 
@@ -461,7 +469,7 @@ The line stands on a stone at Tystberga in Södermanland (Sö 173). Myskja and M
 ![The runestone Sö 173]({IMG['Sö 173']['thumb']})
 Sö 173 at Tystberga: "He had long been in the west; died in the east with Ingvarr." {credit('Sö 173', 'en')}
 
-In the article [The Vikings' world – which places do they name?](/en/artiklar/vikingarnas-varld) we counted every place outside Scandinavia named on the Swedish runestones. Two in three lay in the east, {ALL_P} %. This article is about what happened when we turned to our own figure and asked whether it holds.
+In the article [The Vikings' world – which places do they name?](/en/artiklar/vikingarnas-varld) we counted every place outside Scandinavia named on the Swedish runestones. Two in three lay in the east, {ALL_P} %. This article is about what happened when we turned to our own figure and asked whether it holds. In short: the main idea stands – the runestones look in a different direction from the Icelanders' sagas about their ancestors. But much of the east's lead is one and the same expedition, and that expedition also carries part of the runestones' chronology.
 
 ## An objection in a subordinate clause
 
@@ -477,7 +485,7 @@ If so, our east share might be Ingvarr's shipwreck rather than a whole generatio
 
 ## Ingvarr's men
 
-Our definition was deliberately wide. A stone counts if it names Ingvarr as the leader of a journey, or if it names Ingvarr and also a place in the east. Better one stone too many than one too few, because that makes it harder for our own figure to survive. Twenty-six stones were caught. One of them, U 540, we removed on reading the text: there Ingvarr is one of those who raised the stone, and the dead man died in Greece, with nothing to tie him to the expedition. That left {N_ING}, as many as Sindbæk counted.
+Our definition was deliberately wide. A stone counts if it names Ingvarr as the leader of a journey, or if it names Ingvarr and also a place in the east. Better one stone too many than one too few, because that makes it harder for our own figure to survive. Twenty-six stones were caught. One of them, U 540, we removed on reading the text: there Ingvarr is one of those who raised the stone, and the dead man died in Greece, with nothing to tie him to the expedition. That left {N_ING}. Sindbæk, drawing on Mats G. Larsson (1990), wrote “more than 25”, so we arrive at about the same number.
 
 They stand from Medelpad in the north to Östergötland in the south, but most of them in Södermanland ({PROV['Sö']}) and Uppland ({PROV['U']}). Read one after another, they are an unusually close gathering of people.
 
@@ -496,7 +504,7 @@ The Ingvarr stones name {GRP_O} places in the east and {GRP_V} in the west. Take
 
 That is a large movement for a single journey. Of the {SURPLUS} percentage points by which the runestones lay above half, the Ingvarr stones account for {DROP}. About half of the east's lead, in other words, is one expedition.
 
-What is left is also less certain than we would like. With {UI_N} stones left, the east share probably lies between {UI_LO} and {UI_HI} %. Since half lies inside that range, we cannot rule out that the stones, without Ingvarr, named east and west about equally often. (We computed the range by drawing the stones anew ten thousand times, so that a stone naming many places does not weigh like many stones.) The plan's verdict is therefore: weakened. The best estimate is still above half, but we can no longer say that the stones clearly look east.
+What is left is also less certain than we would like. With {UI_N} stones left, the east share probably lies between {UI_LO} and {UI_HI} %. Since half lies inside that range, we cannot rule out that the stones, without Ingvarr, named east and west about equally often. (We computed the range by drawing the stones anew ten thousand times, so that a stone naming many places does not weigh like many stones.) The plan's verdict on that figure is therefore: weakened. The best estimate is still above half, but we can no longer say that the stones clearly look east. What carried the main idea of the earlier article, however, was not that figure but the comparison with the sagas, and that stands, as we shall see.
 
 We also counted in other ways, and they all point the same way:
 
@@ -506,9 +514,9 @@ Counting the expedition as a single text, instead of removing it altogether, put
 
 ## What holds
 
-That sounds like a loss, and in part it is one. But the most important thing in the earlier article was not that the stones look east as such. It was the comparison: that the runestones and the Icelanders' sagas about their own ancestors look in different directions, and that the sagas about the ancient past resemble the stones.
+That may sound like a loss. But the most important thing in the earlier article was not that the stones look east as such. It was the comparison: that the runestones and the Icelanders' sagas about their own ancestors look in different directions, and that the sagas about the ancient past resemble the stones.
 
-That comparison stands. The sagas of Icelanders have {IS_P} % east, probably between {IS_LO} and {IS_HI} %, and the kings' sagas in Heimskringla {HK_P} %. The runestones without Ingvarr, at {UI_P} %, overlap with neither. With Ingvarr the stones lay higher than any of the sagas. Without him they are level with the legendary sagas, the sagas about the time before Iceland was settled, which also have {FA_P} %. It is a curious symmetry, since the saga of Ingvarr itself is counted among the legendary sagas, and we will make no more of it than that. But the hypothesis from last time, that in Iceland the eastern route had become the ancient past, does not rest on Ingvarr.
+That comparison stands. The sagas of Icelanders have {IS_P} % east, probably between {IS_LO} and {IS_HI} %, and the kings' sagas in Heimskringla {HK_P} %. The runestones without Ingvarr, at {UI_P} %, overlap with neither. With Ingvarr the stones lay higher than any of the sagas. Without him they are level with the legendary sagas, the sagas about the time before Iceland was settled, which also have {FA_P} %. One thing must be said about that comparison: the legendary sagas' share includes the saga of Ingvarr himself, *Yngvars saga víðförla*, one of the {N_FA} sagas. So we removed Ingvarr from the stones but not from the sagas, and the likeness between the two figures should not be read too closely. The comparison with the sagas of Icelanders is not affected. The hypothesis from last time, that in Iceland the eastern route had become the ancient past, does not rest on Ingvarr.
 
 ## Westin and time
 
@@ -527,7 +535,7 @@ The share of places that lie in the east, style group by style group, with and w
 
 The curve shows no shift to the west. The stones from before about 1050 have {EARLY_P} % east, the later ones {LATE_P} %. If anything the curve tilts the other way, but it rests on too few late stones for us to build anything on that.
 
-Two things do show clearly. The first is that the oldest stones, the RAK group around the year 1000, are the ones that look most to the west: {RAK_P} % east. England is the land they name most often, on {RAK_ENG} of {RAK_N} stones, and as many simply say "in the west". The west, in other words, did not come last on the stones but first. Mats G. Larsson also points out that the England stones were in many cases raised for men who came home safe and got their stone only when they had died at home (Larsson 2021). The journey may be older than the stone.
+Two things do show, with the caveats small groups demand. The first is that the oldest stones, the RAK group around the year 1000, are the ones that look most to the west: {RAK_P} % east. With {RAK_N} stones the share probably lies between {RAK_LO} and {RAK_HI} %, so east and west equally often is also possible. England is the land they name most often, on {RAK_ENG} of {RAK_N} stones, and as many simply say "in the west". The west, in other words, did not come last on the stones; if anything it came early. Mats G. Larsson also points out that the England stones were in many cases raised for men who came home safe and got their stone only when they had died at home (Larsson 2021). The journey may be older than the stone.
 
 The second is the peak in the Fp group, 1010–1050: {FP_P} % east. Of the group's {FP_N} stones, {FP_ING} are Ingvarr stones. Without them the peak drops to {FP_UI} %. The eastern high point in the middle of the eleventh century is, in our material, largely one and the same expedition.
 
@@ -562,8 +570,8 @@ Our interpretation, and we have not shown it, is that the runestones measure los
 The next time you read that "the runestones show" something, ours included, ask how many of the stones are about the same day. And if you stand before an Ingvarr stone, at Tystberga, Svinnegarn or Gripsholm, read who raised it. It is almost always someone who stayed behind.
 
 :::box The essentials in brief
+- What sets the runestones apart from the Icelanders' sagas about their ancestors still stands, also without Ingvarr. The hypothesis that in Iceland the eastern route became the ancient past is not carried by him.
 - About half of the east's lead on the Swedish runestones is the memory of a single expedition. Without Ingvarr the stones still look east somewhat more often, but not clearly enough to rule out that it was equally often.
-- What sets the runestones apart from the Icelanders' sagas about their ancestors still stands. The hypothesis that in Iceland the eastern route became the ancient past is not carried by Ingvarr.
 - Runestones are memorials of losses. A disaster yields many stones at once, and whoever counts them must ask how many are about the same event.
 - The same expedition is also one of the anchors for when the runestones were raised, and its year is disputed. No shift to the west during the eleventh century can be seen, but the late stones are too few for a verdict.
 :::

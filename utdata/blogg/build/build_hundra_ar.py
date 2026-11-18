@@ -306,6 +306,9 @@ has("1923_201", "Venezia")
 has("1997_193", "Sawyer, B. 1988. Property and inheritance in Viking")
 has("2008_litt_d", "Steenholt Olesen")
 has("futhark_9-10_7_1383036", "The Rök Runestone and the End of the World")
+has("futhark_9-10_7_1383036", "semiotics, philology, archaeology, and history of religion")
+assert 89 in pages_with("1907_020", "Rökstens-gruppens inskrifter äro så mycket ålderdomligare än de med samma slags runor på Man och i Norge")
+assert 24 in pages_with("futhark_4_7_682689", "He warns against basing conclusions") and 24 in pages_with("futhark_4_7_682689", "citing the rush to embrace")
 has("2008_245", "Places of assembly")
 has("1970_247", "Halvdan")
 has("1980_183", "Olof Celsius")
@@ -509,7 +512,7 @@ Fornvännen föddes 1906 ur två äldre tidskrifter. Arkeologen Oscar Almgren f�
 
 Montelius själv skrev i första årgången om en guldbrakteat från Vadstena och en nyfunnen brakteat präglad med samma stämpel. Han räknade runorna i futharken på den och konstaterade ”{q('mont1906')}” ({cite('mont1906')}). Det är en liten iakttagelse, men den är en räkning, och den är rätt.
 
-Året därpå skrev språkforskaren Erik Brate om runinskrifterna på ön Man. Hans fråga var varifrån skriften kom, och hans svar var att Röksteninskrifternas ålderdomligare runor ”{q('brate1907')}” och därifrån spridit sig västerut ({cite('brate1907')}). Frågan om var en skrifttyp hör hemma, och hur den rör sig, kommer tillbaka i varje årtionde efter honom.
+Året därpå skrev språkforskaren Erik Brate om runinskrifterna på ön Man. Hans fråga var varifrån skriften kom, och hans svar var att Rökstensgruppens inskrifter, som var så mycket ålderdomligare än de med samma slags runor på Man och i Norge, ”{q('brate1907')}” och därifrån spridit sig västerut ({cite('brate1907')}). Frågan om var en skrifttyp hör hemma, och hur den rör sig, kommer tillbaka i varje årtionde efter honom.
 
 Otto von Friesen ställde en annan fråga: kan runstenarna läsas som historia? I sin artikel om Yttergårdsstenarna i Orkesta läste han Ulfs tre gälder i England – från Toste, Torkel och Knut – och ställde dem mot de engelska krönikorna. Han var noga med vad det betydde att göra så: identifieringen var säker så långt det går, skrev han, ”{q('friesen1909')}” ({cite('friesen1909')}).
 
@@ -622,7 +625,7 @@ Fornvännen was born in 1906 out of two older journals. The archaeologist Oscar 
 
 Montelius himself wrote in the first volume about a gold bracteate from Vadstena and a newly found bracteate struck with the same die. He counted the runes in its futhark and noted “{q('mont1906')}” (“that the rune-row thus consists of 3 times 8 runes”; {cite('mont1906', 'en')}). It is a small observation, but it is a count, and it is right.
 
-The following year the linguist Erik Brate wrote about the runic inscriptions on the Isle of Man. His question was where the script came from, and his answer was that the more archaic runes of the Rök group “{q('brate1907')}” (“prove, of course, that this type of script is at home in Sweden”) and spread west from there ({cite('brate1907', 'en')}). The question of where a script belongs, and how it travels, returns in every decade after him.
+The following year the linguist Erik Brate wrote about the runic inscriptions on the Isle of Man. His question was where the script came from, and his answer was that the inscriptions of the Rök group, so much more archaic than those with the same kind of runes on Man and in Norway, “{q('brate1907')}” (“prove, of course, that this type of script is at home in Sweden”) and spread west from there ({cite('brate1907', 'en')}). The question of where a script belongs, and how it travels, returns in every decade after him.
 
 Otto von Friesen asked a different question: can runestones be read as history? In his article on the Yttergården stones at Orkesta he read Ulf's three payments in England – from Tosti, Thorkell and Knut – and set them against the English chronicles. He was careful about what that meant: the identification was as certain as it could be, he wrote, “{q('friesen1909')}” (“when one has to confront two sources of such different kinds as the statements of English annalists and of Swedish Vikings”; {cite('friesen1909', 'en')}).
 
@@ -785,7 +788,7 @@ Michael Barnes skrev om utgåvorna och ställde ett krav: ”{q('barnes2010')}�
 
 I samma volym recenserade Mats G. Larsson Lydia Klos stora avhandling *Runensteine in Schweden* (2009), som går igenom placeringen för de runstenar i hela Sverige som kan antas stå kvar där de restes. Larsson var kritisk på flera punkter, men han började med det viktigaste: ”{q('larsson2010')}” ({cite('larsson2010')}). I Futhark 2 recenserade Magnus Källström arkeologen Selinges bok om runstenar och gränser, där Selinge hade gått igenom omkring 220 stenar: ”{q('kallstrom2011')}” ({cite('kallstrom2011')}).
 
-År 2013 kom Futhark 4, med plenarföredragen från runsymposiet i Oslo 2010. Barnes frågade vad runologi är, och hans svar knyter an till 1923 års meningsutbyte mellan Shetelig och Brate: ”{q('barnes2013a')}” ({cite('barnes2013a')}). Han såg också tillbaka på grundläggarnas tid och, med en kollegas ord, på ”{q('barnes2013c')}” ({cite('barnes2013c')}). Och han sade något som hela den här serien bekräftar: ”{q('barnes2013b')}” ({cite('barnes2013b')}).
+År 2013 kom Futhark 4, med plenarföredragen från runsymposiet i Oslo 2010. Barnes frågade vad runologi är, och hans svar knyter an till 1923 års meningsutbyte mellan Shetelig och Brate: ”{q('barnes2013a')}” ({cite('barnes2013a')}). Han såg också tillbaka på grundläggarnas tid, när han återgav kollegan Lerche Nielsens varning för ”{q('barnes2013c')}” ({cite('barnes2013c')}). Och han sade något som hela den här serien bekräftar: ”{q('barnes2013b')}” ({cite('barnes2013b')}).
 
 Henrik Williams föreslog i samma volym en social runologi, där man frågar vilka stenar som var påkostade och vilka som var enkla, och konstaterade: ”{q('williams2013')}” ({cite('williams2013')}). Judith Jesch gick igenom orden *bóndi* och *þegn* på över tvåhundra stenar och ställde en fråga som låter enkel men som kräver hela materialet för att besvaras: ”{q('jesch2013')}” ({cite('jesch2013')}). Kristel Zilmer räknade de kristna bönerna och fann att ”{q('zilmer2013')}” ({cite('zilmer2013')}) – Uppland och Södermanland.
 
@@ -793,9 +796,9 @@ Laila Kitzler Åhfeldt hade redan 2011 använt 3D-skanning och huggspårsanalys 
 
 ## 2020-talet: Rök på nytt, Ingvar på nytt
 
-Rökstenen, som Cnattingius 1930 ville placera i landskapet, lästes på nytt av fyra forskare från tre ämnen – Per Holmberg, Bo Gräslund, Olof Sundqvist och Henrik Williams – som en text om solen, Oden och världens undergång ({at('futhark_9-10_7_1383036', '7–38', 'sv')}). Att en ny läsning av Sveriges mest kända runsten kom från språkvetenskap, arkeologi och religionshistoria tillsammans säger något om vart fältet har gått.
+Rökstenen, som Cnattingius 1930 ville placera i landskapet, lästes på nytt av fyra forskare – Per Holmberg, Bo Gräslund, Olof Sundqvist och Henrik Williams – som en text om solen, Oden och världens undergång ({at('futhark_9-10_7_1383036', '7–38', 'sv')}). Att en ny läsning av Sveriges mest kända runsten förenade semiotik, filologi, arkeologi och religionshistoria säger något om vart fältet har gått.
 
-{pic('rok', ('Rökstenen', 'The Rök stone'), 'Rökstenen (Ög 136) i Östergötland. Cnattingius frågade 1930 var den hade stått; 2020 lästes den på nytt av en språkvetare, en arkeolog, en religionshistoriker och en runolog tillsammans.', 'The Rök stone (Ög 136) in Östergötland. Cnattingius asked in 1930 where it had stood; in 2020 it was read anew by a linguist, an archaeologist, a historian of religion and a runologist together.', 'sv')}
+{pic('rok', ('Rökstenen', 'The Rök stone'), 'Rökstenen (Ög 136) i Östergötland. Cnattingius frågade 1930 var den hade stått; 2020 lästes den på nytt av fyra forskare som förenade semiotik, filologi, arkeologi och religionshistoria.', 'The Rök stone (Ög 136) in Östergötland. Cnattingius asked in 1930 where it had stood; in 2020 it was read anew by four scholars combining semiotics, philology, archaeology and the history of religion.', 'sv')}
 
 Annett Krakow granskade 2021 den fasta punkt som Ingvarsstenarna har daterats efter, den isländska sagans uppgift om Ingvars död: ”{q('krakow2021')}” ({cite('krakow2021')}). Och Magnus Källström skrev Futharks översikt över de svenska korpusutgåvorna. Han konstaterade att utgåvorna sällan diskuterar dateringen av de sena vikingatida stenarna – ”{q('kallstrom2021b')}” ({cite('kallstrom2021b')}) – och att den årliga redovisningen av nya fynd, som Svärdström började 1967, inte längre finns: ”{q('kallstrom2021a')}” ({cite('kallstrom2021a')}).
 
@@ -900,7 +903,7 @@ Michael Barnes wrote about corpus editions and set a requirement: “{q('barnes2
 
 In the same volume Mats G. Larsson reviewed Lydia Klos's large dissertation *Runensteine in Schweden* (2009), which goes through the placing of the runestones in all of Sweden that can be assumed to stand where they were raised. Larsson was critical on several points, but he began with what mattered most: “{q('larsson2010')}” (“Klos begins her study with a careful and critical sorting of the runestones that can be assumed to stand in their original place, 730 stones, which is of course an excellent basis for the further work”; {cite('larsson2010', 'en')}). In Futhark 2 Magnus Källström reviewed the archaeologist Selinge's book on runestones and boundaries, in which Selinge had gone through about 220 stones: “{q('kallstrom2011')}” (“Of these he thinks only about 10 % can be primarily linked to boundaries (without also being bridge stones), while 45 % belong with village sites or village lands”; {cite('kallstrom2011', 'en')}).
 
-In 2013 came Futhark 4, with the plenary lectures from the runic symposium in Oslo in 2010. Barnes asked what runology is, and his answer links back to the 1923 exchange between Shetelig and Brate: “{q('barnes2013a')}” ({cite('barnes2013a', 'en')}). He also looked back on the founders' era and, in a colleague's words, on “{q('barnes2013c')}” ({cite('barnes2013c', 'en')}). And he said something this whole series confirms: “{q('barnes2013b')}” ({cite('barnes2013b', 'en')}).
+In 2013 came Futhark 4, with the plenary lectures from the runic symposium in Oslo in 2010. Barnes asked what runology is, and his answer links back to the 1923 exchange between Shetelig and Brate: “{q('barnes2013a')}” ({cite('barnes2013a', 'en')}). He also looked back on the founders' era when he summarised his colleague Lerche Nielsen's warning against “{q('barnes2013c')}” ({cite('barnes2013c', 'en')}). And he said something this whole series confirms: “{q('barnes2013b')}” ({cite('barnes2013b', 'en')}).
 
 In the same volume Henrik Williams proposed a social runology, asking which stones were costly and which were simple, and noted: “{q('williams2013')}” (“but as far as is known no real attempt has yet been made to relate the observations to social factors”; {cite('williams2013', 'en')}). Judith Jesch went through the words *bóndi* and *þegn* on more than two hundred stones and asked a question that sounds simple but needs the whole material to answer: “{q('jesch2013')}” ({cite('jesch2013', 'en')}). Kristel Zilmer counted the Christian prayers and found that “{q('zilmer2013')}” ({cite('zilmer2013', 'en')}) – Uppland and Södermanland.
 
@@ -908,9 +911,9 @@ Laila Kitzler Åhfeldt had already in 2011 used 3D scanning and groove analysis 
 
 ## The 2020s: Rök anew, Ingvar anew
 
-The Rök stone, which Cnattingius in 1930 wanted to place in the landscape, was read anew by four scholars from three fields – Per Holmberg, Bo Gräslund, Olof Sundqvist and Henrik Williams – as a text about the sun, Odin and the end of the world ({at('futhark_9-10_7_1383036', '7–38', 'en')}). That a new reading of Sweden's best-known runestone came from linguistics, archaeology and the history of religion together says something about where the field has gone.
+The Rök stone, which Cnattingius in 1930 wanted to place in the landscape, was read anew by four scholars – Per Holmberg, Bo Gräslund, Olof Sundqvist and Henrik Williams – as a text about the sun, Odin and the end of the world ({at('futhark_9-10_7_1383036', '7–38', 'en')}). That a new reading of Sweden's best-known runestone combined semiotics, philology, archaeology and the history of religion says something about where the field has gone.
 
-{pic('rok', ('The Rök stone', 'The Rök stone'), '', 'The Rök stone (Ög 136) in Östergötland. Cnattingius asked in 1930 where it had stood; in 2020 it was read anew by a linguist, an archaeologist, a historian of religion and a runologist together.', 'en')}
+{pic('rok', ('The Rök stone', 'The Rök stone'), '', 'The Rök stone (Ög 136) in Östergötland. Cnattingius asked in 1930 where it had stood; in 2020 it was read anew by four scholars combining semiotics, philology, archaeology and the history of religion.', 'en')}
 
 In 2021 Annett Krakow examined the fixed point by which the Ingvar stones have been dated, the Icelandic saga's date for Ingvar's death: “{q('krakow2021')}” (“This Icelandic saga's dating of Ingvar's death has been taken over by many historians and runologists as the starting point for dating the Ingvar expedition”; {cite('krakow2021', 'en')}). And Magnus Källström wrote Futhark's survey of the Swedish corpus editions. He noted that the editions seldom discuss the dating of the late Viking Age stones – “{q('kallstrom2021b')}” ({cite('kallstrom2021b', 'en')}) – and that the annual report of new finds that Svärdström began in 1967 no longer exists: “{q('kallstrom2021a')}” ({cite('kallstrom2021a', 'en')}).
 

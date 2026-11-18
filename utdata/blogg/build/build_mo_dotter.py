@@ -105,7 +105,7 @@ lit(OWE, 6, 138, "Wessén avböjer att", "ornamentik, och med honom överensstä
 lit(OWE, 7, 139, "Den 13 augusti 2011 besökte jag stenmuseet",
     "ormhuvud i fågelperspektiv vilket återfinns ovanför runorna mu",
     "efter Åsa, sin dotter, en god mö",
-    "Ög 239 visar att det fanns en skillnad mellan orden māʀ och dōttiʀ åtminstone under sen vikingatid",
+    "Ög 239 visar att det fanns en skillnad mellan orden māʀ och dōttiʀ åtminstone under sen vikingatid", "’mö, flicka’",
     "Cecilia Ljung menar att skillnaden mellan ’mö’ och ’dotter’ handlar om juridisk status",
     "En mö, dvs. en ogift kvinna, tillhör sin", "Unga/Öga, sin dotter", "se Williams 1989 som översätter ordet med ’mö’")
 lit(OWE, 8, 140, "biologiska familj (under faderns förmyndarskap) medan en dotter mycket väl kan vara gift",
@@ -121,7 +121,7 @@ lit(JAN, 15, 254, "flicka»", "brukats som personnamn; se U 861", "Resterna av d
     "i den röda slingan ha åtminstone vissa runföljder varit svarta (sirijir)", "som samtliga voro så gotl som osynliga för blotta ögat")
 lit(SVA, 3, 302)
 lit(SVA, 5, 304)  # sidhuvudet på s. 303 är förvanskat i OCR:en ("'503"); sidan ligger mellan 302 och 304
-lit(SVA, 4, None, "Gerlög som ungmö", "Men en enda flicka levde kvar", "dotter så länge, att hon fick arvingar")
+lit(SVA, 4, None, "Denna lyder i översättning", "Gerlög som ungmö", "Men en enda flicka levde kvar", "dotter så länge, att hon fick arvingar")  # en och samma översättning (s. 303)
 lit(GUS, 4, 98, "lät resa den", "efter sin fader Kalv, sin broder Igull och sin", "moder Ragnvi.")  # två spalter i OCR:en
 lit(SO, 12, 98, "mær ‘maiden, unmarried woman’")
 URL = {k: v["url"] for k, v in json.load(open(os.path.join(ROOT, "data", "cache", "literature", "journals.json"),
@@ -164,7 +164,7 @@ Det här är en artikel om det ordet. Det är sällsynt, och det har översatts 
 :::box Kort sagt
 - Ordet för mö, runsvenskans *mær* (böjt *møy*), står på {len(MAER_STONES)} av de {sp(len(V_SE_STONES))} vikingatida svenska runstenarna och på {len(MAER_OTHER)} andra minnesmärken. Ordet dotter står på {len(DOT_STONES)} runstenar.
 - Forskarna har översatt det med flicka, ungmö, mö och dotter – och ibland inte sett det alls.
-- Där ordet står bredvid dotter, på Åsas häll i Skänninge och på Dynnastenen i Norge, säger det något mer än släktbandet: att kvinnan ännu inte var gift.
+- Där ordet står bredvid dotter, på Åsas häll i Skänninge och på Dynnastenen i Norge, säger det något mer än släktbandet. Enligt Jan Owe och Cecilia Ljung: att kvinnan ännu inte var gift.
 - Hur gammal hon var säger ordet inte. Det gör översättningen flicka.
 :::
 
@@ -193,8 +193,8 @@ Sökningen i de digitaliserade årgångarna av Fornvännen och Futhark gjordes m
 Det märkliga är inte att ordet är ovanligt. Det är hur olika det har översatts.
 
 - **Flicka.** I *Upplands runinskrifter* blev Hillersjöhällens mö en *flicka* (enligt Stroh-Wollin, Futhark 2), och Sven B. F. Jansson återgav slutet på Björkebystenen som *efter sin unga flicka* (Fornvännen 1958).
-- **Ungmö.** Jansson om Sigrid i Linköping: *Sigrid, ungmön, över sin fader* (1958). Elisabeth Svärdström om Gerlög på Hillersjö: *Germund fick till hustru Gerlög som ungmö* (Fornvännen 1970).
-- **Mö.** Owe om Åsa: *en god mö* (2016). Henrik Williams om Guds mö på U 126 (1989, så som Owe återger honom).
+- **Ungmö.** Jansson om Sigrid i Linköping: *Sigrid, ungmön, över sin fader* (1958). Och i den översättning av Hillersjöhällen som Elisabeth Svärdström återger: *Germund fick till hustru Gerlög som ungmö* – samma översättning som några rader senare kallar Inga en *flicka* (Fornvännen 1970, s. 303).
+- **Mö.** Owe om Åsa: *en god mö* (2016). När Owe förklarar ordet skriver han själv ’mö, flicka’, och Jansson förklarade det 1958 som ’flicka, (ren) mö’. Henrik Williams om Guds mö på U 126 (1989, så som Owe återger honom).
 - **Dotter.** Staffan Fridell har hävdat att ordets äldsta betydelse är just dotter (2008, så som Stroh-Wollin och Owe återger honom). Ulla Stroh-Wollin översätter Björkebystenen *Unga, their daughter* (2012).
 - **Maid, maiden.** Samnordisk runtextdatabas på engelska.
 
@@ -275,10 +275,10 @@ I kyrkans språk blev mön en jungfru.
 :::
 
 :::box Det viktigaste i korthet
-- Mö och dotter var inte samma ord. Dotter sa vems hon var; mö sa att hon ännu inte var gift.
-- Därför kan översättningen flicka leda fel. Den gör en ogift kvinna till ett barn, och åldern står aldrig på stenen.
+- Mö och dotter var inte samma ord. Dotter sa vems hon var. Mö sa, enligt Owes och Ljungs läsning av Åsas häll, att hon ännu inte var gift.
+- Därför kan översättningen flicka leda fel, också när forskarna själva använder den. Den kan göra en ogift kvinna till ett barn, och åldern står aldrig på stenen.
 - Ordet är så sällsynt – sju svenska minnesmärken – att nästan varje forskare har fått översätta det på egen hand. Skillnaderna visar hur mycket som kan hänga på ett enda ord.
-- Det tog ett sekel och en ny granskning av två runor innan Åsa i Skänninge fick tillbaka ordet som sa att hon dog ogift.
+- Det tog ett sekel och en ny granskning av två runor innan Åsa i Skänninge fick tillbaka ordet som, om Owe har rätt, säger att hon dog ogift.
 :::
 
 ## Se själv
@@ -322,7 +322,7 @@ This is an article about that word. It is rare, and it has been translated in mo
 :::box In short
 - The word for maiden, Runic Swedish *mær* (inflected *møy*), stands on {len(MAER_STONES)} of the {en(len(V_SE_STONES))} Viking-age Swedish runestones and on {len(MAER_OTHER)} other memorials. The word daughter stands on {len(DOT_STONES)} runestones.
 - Scholars have translated it as girl, young maiden, maiden and daughter – and sometimes not seen it at all.
-- Where the word stands next to daughter, on Ása's slab in Skänninge and on the Dynna stone in Norway, it says something beyond kinship: that the woman was not yet married.
+- Where the word stands next to daughter, on Ása's slab in Skänninge and on the Dynna stone in Norway, it says something beyond kinship. According to Jan Owe and Cecilia Ljung: that the woman was not yet married.
 - How old she was, the word does not say. The translation girl does.
 :::
 
@@ -351,8 +351,8 @@ The search of the digitised volumes of Fornvännen and Futhark was made with the
 What is striking is not that the word is rare. It is how differently it has been translated.
 
 - **Girl.** In *Upplands runinskrifter* the maiden of the Hillersjö rock became a *flicka*, a girl (according to Stroh-Wollin, Futhark 2), and Sven B. F. Jansson rendered the end of the Björkeby stone as *efter sin unga flicka*, in memory of their young girl (Fornvännen 1958).
-- **Young maiden.** Jansson on Sigríðr in Linköping: *Sigrid, ungmön, över sin fader*, Sigríðr, the young maiden, over her father (1958). Elisabeth Svärdström on Geirlaug at Hillersjö: Geirmundr took Geirlaug to wife *som ungmö*, as a young maiden (Fornvännen 1970).
-- **Maiden.** Owe on Ása: *en god mö*, a good maiden (2016). Henrik Williams on God's maiden on U 126 (1989, as Owe reports him).
+- **Young maiden.** Jansson on Sigríðr in Linköping: *Sigrid, ungmön, över sin fader*, Sigríðr, the young maiden, over her father (1958). And in the translation of the Hillersjö rock that Elisabeth Svärdström quotes: Geirmundr took Geirlaug to wife *som ungmö*, as a young maiden – the same translation that a few lines later calls Inga a *flicka*, a girl (Fornvännen 1970, p. 303).
+- **Maiden.** Owe on Ása: *en god mö*, a good maiden (2016). When Owe explains the word he himself writes ’mö, flicka’, maiden, girl, and Jansson explained it in 1958 as ’flicka, (ren) mö’, girl, (pure) maiden. Henrik Williams on God's maiden on U 126 (1989, as Owe reports him).
 - **Daughter.** Staffan Fridell has argued that the oldest meaning of the word is precisely daughter (2008, as Stroh-Wollin and Owe report him). Ulla Stroh-Wollin translates the Björkeby stone *Unga, their daughter* (2012).
 - **Maid, maiden.** The Scandinavian Runic-text Data Base in English.
 
@@ -433,10 +433,10 @@ In the language of the church, the maiden became a virgin.
 :::
 
 :::box The essentials in brief
-- Maiden and daughter were not the same word. Daughter said whose she was; maiden said that she was not yet married.
-- That is why the translation girl can mislead. It turns an unmarried woman into a child, and age is never on the stone.
+- Maiden and daughter were not the same word. Daughter said whose she was. Maiden said, according to Owe's and Ljung's reading of Ása's slab, that she was not yet married.
+- That is why the translation girl can mislead, even when scholars use it themselves. It can turn an unmarried woman into a child, and age is never on the stone.
 - The word is so rare – seven Swedish memorials – that nearly every scholar has had to translate it on their own. The differences show how much can hang on a single word.
-- It took a century and a fresh look at two runes before Ása in Skänninge got back the word that said she died unmarried.
+- It took a century and a fresh look at two runes before Ása in Skänninge got back the word that, if Owe is right, says she died unmarried.
 :::
 
 ## See for yourself

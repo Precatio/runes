@@ -290,7 +290,7 @@ summary = (f"Ingen vet hur många som kunde läsa runor på 1000-talet. Men sten
            f"ristarens namn – och bara tio ber uttryckligen om en läsare: tyde den som kan.")
 
 chart_sv = f""":::chart Hur ofta talar runstenen om sig själv och sin läsare?
-Ordet ”denna” eller ”dessa” – om stenen, runorna eller bron | {dsv(100 * N_DENNA / N)} | {N_DENNA} stenar
+Ordet ”denna” eller ”dessa” – nästan alltid om stenen, runorna eller bron | {dsv(100 * N_DENNA / N)} | {N_DENNA} stenar
 En bön till Gud för den döde | {dsv(100 * N_PRAYER / N)} | {N_PRAYER} stenar
 Ristarens namn | {dsv(100 * N_SIGNED / N)} | {N_SIGNED} stenar
 ”Här” eller ”står” – texten pekar ut sin plats | {dsv(100 * N_HAR / N)} | {N_HAR} stenar
@@ -410,9 +410,9 @@ Nästa gång du står vid en runsten, leta efter ordet för sten – *stain*, *s
 
 :::box Det viktigaste i korthet
 - Runstenarna räknar med en läsare hela tiden – en sten på tre pekar på sig själv med ordet ”denna” – men bara tio av {sp(N)} ber uttryckligen någon att läsa.
-- De som ber gör det som en utmaning, *tyde den som kan*, och ristare lovade ibland ”rätta runor”. Att kunna läsa var något att vara stolt över, inte något alla väntades kunna.
+- Flera av dem formulerar det som en utmaning, *tyde den som kan*, och ristare lovade ibland ”rätta runor”. Det tyder på att man var stolt över att kunna läsa. Men det är vår tolkning av tio stenar, inte något vi har mätt.
 - Bönen på runstenarna riktades till Gud. Att be den som läser om förbön blev vanligt först på medeltidens gravhällar.
-- Hur många som kunde läsa vet ingen. Stenarna svarar på en annan fråga: de var gjorda för att ses av alla och läsas av några.
+- Hur många som kunde läsa vet ingen, och det kan stenarna inte svara på. De svarar på en annan fråga: de var gjorda för att synas, och de räknade med att någon skulle läsa.
 :::
 
 ## Källor
@@ -433,7 +433,7 @@ summary_en = (f"Of Sweden's {en(N)} Viking-age runestones, one in three points a
               f"carries the carver's name, but only ten explicitly ask for a reader: interpret, he who can.")
 
 chart_en = f""":::chart How often does a runestone speak of itself and its reader?
-The word ‘this’ or ‘these’ – of the stone, the runes or the bridge | {den(100 * N_DENNA / N)} | {N_DENNA} stones
+The word ‘this’ or ‘these’ – almost always of the stone, the runes or the bridge | {den(100 * N_DENNA / N)} | {N_DENNA} stones
 A prayer to God for the dead | {den(100 * N_PRAYER / N)} | {N_PRAYER} stones
 The carver's name | {den(100 * N_SIGNED / N)} | {N_SIGNED} stones
 ‘Here’ or ‘stands’ – the text points out its place | {den(100 * N_HAR / N)} | {N_HAR} stones
@@ -553,9 +553,9 @@ Next time you stand by a runestone, look for the word for stone – *stain*, *st
 
 :::box The essentials in brief
 - The runestones count on a reader all the time – one stone in three points at itself with the word ‘this’ – but only ten of {en(N)} explicitly ask anyone to read.
-- Those that ask do it as a challenge, *interpret, he who can*, and carvers sometimes promised ‘right runes’. Being able to read was something to be proud of, not something everyone was expected to manage.
+- Several of them phrase it as a challenge, *interpret, he who can*, and carvers sometimes promised ‘right runes’. That suggests people were proud of being able to read. But it is our interpretation of ten stones, not something we have measured.
 - The prayer on the runestones was addressed to God. Asking the reader to pray became common only on the grave slabs of the Middle Ages.
-- How many could read, nobody knows. The stones answer a different question: they were made to be seen by all and read by some.
+- How many could read, nobody knows, and the stones cannot tell us. They answer a different question: they were made to be seen, and they counted on someone reading them.
 :::
 
 ## Sources
