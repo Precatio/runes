@@ -1,7 +1,7 @@
 """Artikeln om gravhögarna (sv + en), med början i Ättekulla i Helsingborg (Viktor 2026-11-18: "Vore kul om vi började vid
 Ättekulla i Helsingborg, eftersom jag började där"). Låst plan analysplaner/2026-11-18-hogarna.md (089fcfb5), resultat
 utdata/hogar/resultat.json, kartor utdata/hogar/karta_*.py. Registret: /Volumes/2TB/Antigrvity/Runes/downloads/hogar/.
-Litteraturen (Rydbeck 1912, Lindqvist 1917, Stjerna 1906) prövas mot tidskrifternas text.
+Litteraturen (Rydbeck 1912, Lindqvist 1917) prövas mot tidskrifternas text.
     ../../../.venv/bin/python build_hogar.py [--write | --update DOC]"""
 import collections
 import csv
@@ -79,7 +79,6 @@ EX = {r["raa_nummer"]: r for r in HROWS}
 assert "Hög, 65 m diam och 6-7 m h" in EX["Skalunda 3:1"]["beskrivning"] and "lär en källare ha legat" in EX["Skalunda 3:1"]["beskrivning"]
 assert EX["Skalunda 3:1"]["lamningsnamn"] == "Skalunda hög" and EX["Ledberg 5:1"]["lamningsnamn"] == "Ledbergs kulle"
 assert EX["Ludgo 62:1"]["lamningsnamn"] == "Tingshögen" and "30 m diam" in EX["Ludgo 62:1"]["beskrivning"]
-assert "I högen finns en skatt som vaktas av endrake" in re.sub(r"\s+", " ", EX["Träne 46:1"]["tradition"])
 assert "Träne byhade källare i högen" in re.sub(r"\s+", " ", EX["Träne 46:1"]["tradition"])
 assert "guldvagga och därskall ligga en prins begraven" in re.sub(r"\s+", " ", EX["Borrby 18:1"]["tradition"])
 N_GONE = sum(1 for r in HROWS if gone(r))
@@ -135,7 +134,6 @@ jcheck("1912_081", 3, "82", "man fortsatt med grafsättningar i närheten af hö
 jcheck("1912_081", 4, "83", "högarne blifvit öfverfyllda och seden att uppföra sådana föråldrats",
        "bruket att nedsätta grafurnorna under flat mark, utan täckande hög")
 jcheck("1912_081", 23, "102", "Bronsåldersfolkets", "grafhög motsvaras längre fram af de kristnas")
-jcheck("1906_119", 26, "143", "draken bor kvar i ättekullen", "i likhet med draken i Beovulf")
 
 # ---- pictures
 from PIL import Image  # noqa: E402
@@ -265,11 +263,9 @@ Vi har försökt se skiftet i runstenarna själva. Där en familj reste flera st
 
 Varför ändrades det? Det har vi inte prövat. Men Snorre ger en ledtråd till varför graven hörde ihop med tron. Oden lovade, skriver han, att var och en skulle komma till Valhall med det som brändes med honom: ”með þvílíkum auðœfum skyldi hverr koma til Valhallar, sem hann hafði á bál”. Bålet och högen var en del av en föreställning om vart de döda tog vägen. När föreställningen byttes, byttes graven.
 
-## Kungar, drakar och skatter
+## Kungar och skatter
 
-Högarna har burit berättelser länge. {N_KUNG} högar i registret heter Kungshögen. I Borrby i Skåne ska det i Stora Fulhög finnas ”en guldvagga”, och där ska ligga en prins begraven. I Träne sades det att ”i högen finns en skatt som vaktas av en drake”.
-
-Draken är gammal. Knut Stjerna skrev redan 1906 att draken i de skånska sägnerna ”bor kvar i ättekullen”, och att den liknar draken i Beowulf, den anglosaxiska dikten där en drake vaktar en skatt i en hög (Fornvännen 1, 1906, s. 143). Kanske är det därför så många högar har en grop i toppen.
+Högarna har burit berättelser länge. {N_KUNG} högar i registret heter Kungshögen. I Borrby i Skåne ska det i Stora Fulhög finnas ”en guldvagga”, och där ska ligga en prins begraven.
 
 :::box Det viktigaste i korthet
 - Kullarna i Ättekulla var bronsåldersgravar, använda i nästan tusen år: först för de förnämsta, sedan för många. 39 av 54 högar runt gården är borta i dag.
@@ -290,7 +286,6 @@ Registret anger sällan när en hög byggdes, så stora och små högar kan vara
 - Gatunamnen: © OpenStreetMaps bidragsgivare, Open Database License.
 - Rydbeck, Otto 1912. Undersökning af bronsåldershögar i Köpinge, nära Ramlösa hälsobrunn i Skåne. *Fornvännen* 7, s. 81–132. CC BY 4.0.
 - Lindqvist, Sune 1917. Ottarshögen i Vendel. *Fornvännen* 12, s. 127–143. CC BY 4.0.
-- Stjerna, Knut 1906. Drakskatten i Beovulf. *Fornvännen* 1, s. 119–144. CC BY 4.0.
 - Snorre Sturlasson, *Heimskringla*: förordet efter Frísbók (isländska Wikisource) och Ynglingasagan kap. 8 efter N. Linder och H. A. Haggsons utgåva 1869–72 (heimskringla.no). Korta citat.
 - Vitkis tidigare mätningar: Familjens plats och Tog kyrkan över efter gravfältet?, analysplaner 2026-10-29 på GitHub.
 - Analysplanen och koden: [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md)."""
@@ -375,11 +370,9 @@ We have tried to see the shift in the runestones themselves. Where a family rais
 
 Why did it change? We have not tested that. But Snorri gives a clue to why the grave belonged with the belief. Odin promised, he writes, that everyone would come to Valhalla with what was burned with him: ”með þvílíkum auðœfum skyldi hverr koma til Valhallar, sem hann hafði á bál”. The pyre and the mound were part of an idea of where the dead went. When the idea changed, the grave changed.
 
-## Kings, dragons and treasure
+## Kings and treasure
 
-The mounds have carried stories for a long time. {N_KUNG} mounds in the register are called Kungshögen, the king's mound. At Borrby in Skåne there is said to be ”a golden cradle” in Stora Fulhög, and a prince buried there. At Träne it was said that ”in the mound there is a treasure guarded by a dragon”.
-
-The dragon is old. Knut Stjerna wrote as early as 1906 that the dragon of the Scanian legends ”still lives in the ättekulle”, and that it resembles the dragon in Beowulf, the Old English poem in which a dragon guards a treasure in a mound (Fornvännen 1, 1906, p. 143). Perhaps that is why so many mounds have a pit in the top.
+The mounds have carried stories for a long time. {N_KUNG} mounds in the register are called Kungshögen, the king's mound. At Borrby in Skåne there is said to be ”a golden cradle” in Stora Fulhög, and a prince buried there.
 
 :::box The essentials in brief
 - The mounds at Ättekulla were Bronze Age graves, used for almost a thousand years: first for the most distinguished, then for many. 39 of the 54 mounds around the farm are gone today.
@@ -400,7 +393,6 @@ The register seldom says when a mound was built, so large and small mounds may b
 - Street names: © OpenStreetMap contributors, Open Database License.
 - Rydbeck, Otto 1912. Undersökning af bronsåldershögar i Köpinge, nära Ramlösa hälsobrunn i Skåne. *Fornvännen* 7, pp. 81–132. CC BY 4.0.
 - Lindqvist, Sune 1917. Ottarshögen i Vendel. *Fornvännen* 12, pp. 127–143. CC BY 4.0.
-- Stjerna, Knut 1906. Drakskatten i Beovulf. *Fornvännen* 1, pp. 119–144. CC BY 4.0.
 - Snorri Sturluson, *Heimskringla*: the prologue after Frísbók (Icelandic Wikisource) and Ynglinga saga ch. 8 after N. Linder and H. A. Haggson's edition 1869–72 (heimskringla.no). Short quotations.
 - Vitki's earlier measurements: Familjens plats and Did the church take over from the grave field?, analysis plans of 2026-10-29 on GitHub.
 - The analysis plan and the code: [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md)."""
