@@ -42,6 +42,27 @@ def mh(big, y, strata):
     return num / den if num > 0 and den > 0 else float("nan")
 
 
+def mh_ci(big, y, strata):
+    """95 % interval for the Mantel–Haenszel odds ratio (Robins, Breslow & Greenland 1986); descriptive."""
+    out = []
+    for s_ in np.unique(strata):
+        k = strata == s_
+        a = float((big & y)[k].sum()); b = float((big & ~y)[k].sum()); c = float((~big & y)[k].sum()); d = float((~big & ~y)[k].sum())
+        n = a + b + c + d
+        if a + b == 0 or c + d == 0:
+            continue
+        out.append((a, b, c, d, n))
+    R = sum(a * d / n for a, b, c, d, n in out); S = sum(b * c / n for a, b, c, d, n in out)
+    if R == 0 or S == 0:
+        return [float("nan"), float("nan")]
+    PR = sum((a + d) / n * a * d / n for a, b, c, d, n in out)
+    PSQR = sum(((a + d) / n * b * c / n + (b + c) / n * a * d / n) for a, b, c, d, n in out)
+    QS = sum((b + c) / n * b * c / n for a, b, c, d, n in out)
+    var = PR / (2 * R * R) + PSQR / (2 * R * S) + QS / (2 * S * S)
+    lo, hi = math.log(R / S) - 1.96 * math.sqrt(var), math.log(R / S) + 1.96 * math.sqrt(var)
+    return [math.exp(lo), math.exp(hi)]
+
+
 def test(big, y, strata, reps, seed=SEED):
     big, y = np.asarray(big, bool), np.asarray(y, bool)
     _, strata = np.unique(np.asarray(strata), return_inverse=True)
@@ -59,7 +80,8 @@ def test(big, y, strata, reps, seed=SEED):
         v = mh(pb, y, strata)
         if v == v and v > 0 and abs(math.log(v)) >= lo - 1e-12:
             ge += 1
-    return {"or": obs, "p": (ge + 1) / (reps + 1), "stora": int(big.sum()), "mindre": int((~big).sum()),
+    return {"or": obs, "ci95": mh_ci(big, y, strata), "p": (ge + 1) / (reps + 1), "stora": int(big.sum()), "mindre": int((~big).sum()),
+            "stora_med_sten": int((big & y).sum()), "mindre_med_sten": int((~big & y).sum()),
             "andel_stora": float(y[big].mean()) if big.any() else None,
             "andel_mindre": float(y[~big].mean()) if (~big).any() else None}
 
@@ -82,9 +104,11 @@ def main():
         M.append({"x": x, "y": y, "diam": float(m.group(1).replace(",", ".")), "lan": r["lan"], "socken": r["socken"],
                   "land": pland[ptree.query([x, y])[1]]})
     assert len(M) == 11072
+    # halves as in analys.py and the plan ("som förut"): parishes alternate A/B within the county over ALL mounds. The first
+    # run alternated over the mounds with a diameter only; corrected 2026-11-18 (stated in the report as a deviation)
     half = {}
-    for lan in {m["lan"] for m in M}:
-        for i, s in enumerate(sorted({m["socken"] for m in M if m["lan"] == lan})):
+    for lan in {r["lan"] for r in H}:
+        for i, s in enumerate(sorted({r["socken"] for r in H if r["lan"] == lan})):
             half[(lan, s)] = "A" if i % 2 == 0 else "B"
     XY = np.array([[m["x"], m["y"]] for m in M])
     big = np.array([m["diam"] >= 20 for m in M])
@@ -124,6 +148,13 @@ def main():
     res["T0"] = test(big, y_all, land, R)
     res["T1"] = test(big, y_in, land, R)
     res["T1_halvor"] = {h: test(big[hv == h], y_in[hv == h], land[hv == h], R) for h in "AB"}
+    # the first run's halves (alternation over mounds with a diameter), kept for the record
+    half0 = {}
+    for lan in {m["lan"] for m in M}:
+        for i, s in enumerate(sorted({m["socken"] for m in M if m["lan"] == lan})):
+            half0[(lan, s)] = "A" if i % 2 == 0 else "B"
+    hv0 = np.array([half0[(m["lan"], m["socken"])] for m in M])
+    res["T1_halvor_forsta_korningen"] = {h: test(big[hv0 == h], y_in[hv0 == h], land[hv0 == h], R) for h in "AB"}
     keep = ~near_church
     res["T2"] = test(big[keep], y_in[keep], land[keep], R)
     res["T2"]["borttagna_hogar"] = int(near_church.sum())
@@ -138,7 +169,11 @@ def main():
         res["T5"][l_] = r
     res["T6"] = {str(rad): test(big, within(t_in, rad), land, R) for rad in (250, 1000)}
     # per province, in situ (descriptive)
+    res["landskap_none"] = int((land == "None").sum())
     res["per_landskap_pa_plats"] = {l_: {"stora": int((big & (land == l_)).sum()),
+                                         "mindre": int((~big & (land == l_)).sum()),
+                                         "stora_med_sten": int((big & (land == l_) & y_in).sum()),
+                                         "mindre_med_sten": int((~big & (land == l_) & y_in).sum()),
                                          "andel_stora": float(y_in[big & (land == l_)].mean()),
                                          "andel_mindre": float(y_in[~big & (land == l_)].mean())}
                                     for l_ in sorted(set(land[big])) if (big & (land == l_)).sum() >= 10}

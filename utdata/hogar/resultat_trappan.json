@@ -11,177 +11,327 @@
  ],
  "T0": {
   "or": 3.2211596565591254,
+  "ci95": [
+   2.4296652249844346,
+   4.270493492827012
+  ],
   "p": 9.999000099990002e-05,
   "stora": 2017,
   "mindre": 9055,
+  "stora_med_sten": 81,
+  "mindre_med_sten": 575,
   "andel_stora": 0.04015865146256817,
   "andel_mindre": 0.06350082827167311
  },
  "T1": {
   "or": 2.9807520350090866,
+  "ci95": [
+   2.109231133654329,
+   4.212379834739773
+  ],
   "p": 0.00039996000399960006,
   "stora": 2017,
   "mindre": 9055,
+  "stora_med_sten": 47,
+  "mindre_med_sten": 356,
   "andel_stora": 0.02330193356470005,
   "andel_mindre": 0.03931529541689674
  },
  "T1_halvor": {
   "A": {
+   "or": 2.6587790473915947,
+   "ci95": [
+    1.6445285917234878,
+    4.298560729455021
+   ],
+   "p": 0.007899210078992101,
+   "stora": 979,
+   "mindre": 4478,
+   "stora_med_sten": 24,
+   "mindre_med_sten": 164,
+   "andel_stora": 0.024514811031664963,
+   "andel_mindre": 0.03662349263063868
+  },
+  "B": {
+   "or": 3.68523376253665,
+   "ci95": [
+    2.221366877021132,
+    6.1137797745288145
+   ],
+   "p": 0.006199380061993801,
+   "stora": 1038,
+   "mindre": 4577,
+   "stora_med_sten": 23,
+   "mindre_med_sten": 192,
+   "andel_stora": 0.022157996146435453,
+   "andel_mindre": 0.041948874808826746
+  }
+ },
+ "T1_halvor_forsta_korningen": {
+  "A": {
    "or": 3.1655196179718064,
+   "ci95": [
+    1.9058546272329395,
+    5.257753822657972
+   ],
    "p": 0.0174982501749825,
    "stora": 1000,
    "mindre": 4728,
+   "stora_med_sten": 22,
+   "mindre_med_sten": 164,
    "andel_stora": 0.022,
    "andel_mindre": 0.03468697123519458
   },
   "B": {
    "or": 2.7150642408075587,
+   "ci95": [
+    1.672864298288476,
+    4.406558164492994
+   ],
    "p": 0.0065993400659934,
    "stora": 1017,
    "mindre": 4327,
+   "stora_med_sten": 25,
+   "mindre_med_sten": 192,
    "andel_stora": 0.024582104228121928,
    "andel_mindre": 0.04437254448809799
   }
  },
  "T2": {
   "or": 3.0614608261561247,
+  "ci95": [
+   2.127963368958518,
+   4.4044660386591685
+  ],
   "p": 0.0006999300069993001,
   "stora": 1955,
   "mindre": 8615,
+  "stora_med_sten": 43,
+  "mindre_med_sten": 343,
   "andel_stora": 0.021994884910485932,
   "andel_mindre": 0.039814277423099245,
   "borttagna_hogar": 502
  },
  "T3": {
   "or": 3.1381933068705243,
+  "ci95": [
+   1.9713835583681392,
+   4.995606861730699
+  ],
   "p": 0.0004999500049995,
   "stora": 2017,
   "mindre": 9055,
+  "stora_med_sten": 47,
+  "mindre_med_sten": 356,
   "andel_stora": 0.02330193356470005,
   "andel_mindre": 0.03931529541689674
  },
  "T4": {
   "or": 3.0548297504419715,
+  "ci95": [
+   2.1234577566034747,
+   4.394711773834439
+  ],
   "p": 9.999000099990002e-05,
   "stora": 2017,
   "mindre": 9055,
+  "stora_med_sten": 47,
+  "mindre_med_sten": 356,
   "andel_stora": 0.02330193356470005,
   "andel_mindre": 0.03931529541689674
  },
  "T5": {
   "Bohuslän": {
    "or": 2.9807520350090866,
+   "ci95": [
+    2.109231133654329,
+    4.212379834739773
+   ],
    "p": 0.0004997501249375312,
    "stora": 2004,
    "mindre": 8894,
+   "stora_med_sten": 47,
+   "mindre_med_sten": 356,
    "andel_stora": 0.023453093812375248,
    "andel_mindre": 0.040026984483921745,
    "kvar_av_stora": 0.993554784333168
   },
   "Gotland": {
    "or": 3.007312647803671,
+   "ci95": [
+    2.126973218530159,
+    4.252018447082147
+   ],
    "p": 0.0004997501249375312,
    "stora": 2002,
    "mindre": 8945,
+   "stora_med_sten": 47,
+   "mindre_med_sten": 355,
    "andel_stora": 0.023476523476523476,
    "andel_mindre": 0.039686975964225824,
    "kvar_av_stora": 0.992563212692117
   },
   "Halland": {
    "or": 2.9807520350090866,
+   "ci95": [
+    2.109231133654329,
+    4.212379834739773
+   ],
    "p": 0.0004997501249375312,
    "stora": 1798,
    "mindre": 8114,
+   "stora_med_sten": 47,
+   "mindre_med_sten": 356,
    "andel_stora": 0.02614015572858732,
    "andel_mindre": 0.04387478432339167,
    "kvar_av_stora": 0.8914229053049083
   },
   "Medelpad": {
    "or": 2.47229181464504,
+   "ci95": [
+    1.683842380893304,
+    3.6299281251718085
+   ],
    "p": 0.0034982508745627187,
    "stora": 1955,
    "mindre": 8289,
+   "stora_med_sten": 37,
+   "mindre_med_sten": 342,
    "andel_stora": 0.018925831202046037,
    "andel_mindre": 0.04125950054288816,
    "kvar_av_stora": 0.969261279127417
   },
   "Skåne": {
    "or": 2.9807520350090866,
+   "ci95": [
+    2.109231133654329,
+    4.212379834739773
+   ],
    "p": 0.0014992503748125937,
    "stora": 631,
    "mindre": 7455,
+   "stora_med_sten": 47,
+   "mindre_med_sten": 356,
    "andel_stora": 0.07448494453248812,
    "andel_mindre": 0.0477531857813548,
    "kvar_av_stora": 0.31284085275161133
   },
   "Småland": {
    "or": 3.0983234374539563,
+   "ci95": [
+    2.186999996050279,
+    4.389395583179417
+   ],
    "p": 0.001999000499750125,
    "stora": 2003,
    "mindre": 8716,
+   "stora_med_sten": 47,
+   "mindre_med_sten": 343,
    "andel_stora": 0.023464802795806292,
    "andel_mindre": 0.039352914180816885,
    "kvar_av_stora": 0.9930589985126426
   },
   "Södermanland": {
    "or": 2.902882422307109,
+   "ci95": [
+    1.9789065310262013,
+    4.258274064803728
+   ],
    "p": 0.001999000499750125,
    "stora": 1985,
    "mindre": 8278,
+   "stora_med_sten": 38,
+   "mindre_med_sten": 275,
    "andel_stora": 0.019143576826196475,
    "andel_mindre": 0.03322058468229041,
    "kvar_av_stora": 0.984134853743183
   },
   "Uppland": {
    "or": 3.7717400306577322,
+   "ci95": [
+    2.3958179546652794,
+    5.937856351382722
+   ],
    "p": 0.0029985007496251873,
    "stora": 1942,
    "mindre": 7476,
+   "stora_med_sten": 27,
+   "mindre_med_sten": 139,
    "andel_stora": 0.013903192584963954,
    "andel_mindre": 0.0185928303905832,
    "kvar_av_stora": 0.962816063460585
   },
   "Värmland": {
    "or": 2.980752035009087,
+   "ci95": [
+    2.109231133654329,
+    4.212379834739773
+   ],
    "p": 0.0004997501249375312,
    "stora": 2001,
    "mindre": 8689,
+   "stora_med_sten": 47,
+   "mindre_med_sten": 356,
    "andel_stora": 0.02348825587206397,
    "andel_mindre": 0.04097134307745425,
    "kvar_av_stora": 0.9920674268715914
   },
   "Västergötland": {
    "or": 3.23850614281508,
+   "ci95": [
+    2.2625043554807016,
+    4.6355367279824256
+   ],
    "p": 0.0014992503748125937,
    "stora": 1912,
    "mindre": 8207,
+   "stora_med_sten": 45,
+   "mindre_med_sten": 341,
    "andel_stora": 0.023535564853556484,
    "andel_mindre": 0.041549896429876935,
    "kvar_av_stora": 0.947942488844819
   },
   "Västmanland": {
    "or": 2.992506883201487,
+   "ci95": [
+    2.1170034810224694,
+    4.230081587623628
+   ],
    "p": 0.0004997501249375312,
    "stora": 1998,
    "mindre": 8718,
+   "stora_med_sten": 47,
+   "mindre_med_sten": 355,
    "andel_stora": 0.023523523523523524,
    "andel_mindre": 0.040720348703831157,
    "kvar_av_stora": 0.9905800694100149
   },
   "Öland": {
    "or": 3.0468462158521357,
+   "ci95": [
+    2.1536187713851147,
+    4.310545573988417
+   ],
    "p": 0.0004997501249375312,
    "stora": 2003,
    "mindre": 8974,
+   "stora_med_sten": 47,
+   "mindre_med_sten": 354,
    "andel_stora": 0.023464802795806292,
    "andel_mindre": 0.03944729217740138,
    "kvar_av_stora": 0.9930589985126426
   },
   "Östergötland": {
    "or": 3.014453002366186,
+   "ci95": [
+    2.1225257927286356,
+    4.281185620737602
+   ],
    "p": 0.0014992503748125937,
    "stora": 1994,
    "mindre": 8739,
+   "stora_med_sten": 46,
+   "mindre_med_sten": 349,
    "andel_stora": 0.023069207622868605,
    "andel_mindre": 0.03993591944158371,
    "kvar_av_stora": 0.9885969261279127
@@ -190,84 +340,136 @@
  "T6": {
   "250": {
    "or": 3.6230482732537284,
+   "ci95": [
+    2.318188956858022,
+    5.662385178522254
+   ],
    "p": 0.004199580041995801,
    "stora": 2017,
    "mindre": 9055,
+   "stora_med_sten": 26,
+   "mindre_med_sten": 157,
    "andel_stora": 0.012890431333663858,
    "andel_mindre": 0.017338487023743788
   },
   "1000": {
    "or": 1.6244752615048381,
+   "ci95": [
+    1.209335551779698,
+    2.1821237880236732
+   ],
    "p": 0.004399560043995601,
    "stora": 2017,
    "mindre": 9055,
+   "stora_med_sten": 66,
+   "mindre_med_sten": 861,
    "andel_stora": 0.03272186415468518,
    "andel_mindre": 0.0950855880728879
   }
  },
+ "landskap_none": 18,
  "per_landskap_pa_plats": {
   "Bohuslän": {
    "stora": 13,
+   "mindre": 161,
+   "stora_med_sten": 0,
+   "mindre_med_sten": 0,
    "andel_stora": 0.0,
    "andel_mindre": 0.0
   },
   "Gotland": {
    "stora": 15,
+   "mindre": 110,
+   "stora_med_sten": 0,
+   "mindre_med_sten": 1,
    "andel_stora": 0.0,
    "andel_mindre": 0.00909090909090909
   },
   "Halland": {
    "stora": 219,
+   "mindre": 941,
+   "stora_med_sten": 0,
+   "mindre_med_sten": 0,
    "andel_stora": 0.0,
    "andel_mindre": 0.0
   },
   "Medelpad": {
    "stora": 62,
+   "mindre": 766,
+   "stora_med_sten": 10,
+   "mindre_med_sten": 14,
    "andel_stora": 0.16129032258064516,
    "andel_mindre": 0.018276762402088774
   },
   "Skåne": {
    "stora": 1386,
+   "mindre": 1600,
+   "stora_med_sten": 0,
+   "mindre_med_sten": 0,
    "andel_stora": 0.0,
    "andel_mindre": 0.0
   },
   "Småland": {
    "stora": 14,
+   "mindre": 339,
+   "stora_med_sten": 0,
+   "mindre_med_sten": 13,
    "andel_stora": 0.0,
    "andel_mindre": 0.038348082595870206
   },
   "Södermanland": {
    "stora": 32,
+   "mindre": 777,
+   "stora_med_sten": 9,
+   "mindre_med_sten": 81,
    "andel_stora": 0.28125,
    "andel_mindre": 0.10424710424710425
   },
   "Uppland": {
    "stora": 75,
+   "mindre": 1579,
+   "stora_med_sten": 20,
+   "mindre_med_sten": 217,
    "andel_stora": 0.26666666666666666,
    "andel_mindre": 0.13742875237492083
   },
   "Värmland": {
    "stora": 16,
+   "mindre": 366,
+   "stora_med_sten": 0,
+   "mindre_med_sten": 0,
    "andel_stora": 0.0,
    "andel_mindre": 0.0
   },
   "Västergötland": {
    "stora": 105,
+   "mindre": 848,
+   "stora_med_sten": 2,
+   "mindre_med_sten": 15,
    "andel_stora": 0.01904761904761905,
    "andel_mindre": 0.01768867924528302
   },
   "Västmanland": {
    "stora": 19,
+   "mindre": 337,
+   "stora_med_sten": 0,
+   "mindre_med_sten": 1,
    "andel_stora": 0.0,
    "andel_mindre": 0.002967359050445104
   },
   "Öland": {
    "stora": 14,
+   "mindre": 81,
+   "stora_med_sten": 0,
+   "mindre_med_sten": 2,
    "andel_stora": 0.0,
    "andel_mindre": 0.024691358024691357
   },
   "Östergötland": {
    "stora": 23,
+   "mindre": 316,
+   "stora_med_sten": 1,
+   "mindre_med_sten": 7,
    "andel_stora": 0.043478260869565216,
    "andel_mindre": 0.022151898734177215
   }
