@@ -99,6 +99,20 @@ for g in ("Bifrostgatan", "Midgårdsgatan", "Utgårdsgatan", "Runristargatan", "
           "Erik Rödes gata", "Bronsgatan", "Ättekullagatan"):
     assert GATOR[g] < 1000, g
 
+# ---- the runestones that speak of mounds, and our earlier measurements
+RDS = {r["signum"]: r for r in RD}
+assert "i þæimsi haugi" in RDS["Öl 1"]["normalization"] and RDS["Öl 1"]["dating"] == "V s 900-t"
+assert "bro þessa gærðu ok haug þenna" in RDS["U 135"]["normalization"] and RDS["U 135"]["cross_form"] and RDS["U 135"]["style"] == "Pr2"
+assert "ræisa stæina ok haug gæra" in RDS["U 269"]["normalization"] and RDS["U 269"]["cross_form"] and RDS["U 269"]["style"] == "Pr4"
+assert '"Haugby' in RDS["Ög 82"]["normalization"] and '"Kulhaug(?)' in RDS["Sö 202"]["normalization"]
+assert (RDS["U 135"]["place"], RDS["U 269"]["place"]) == ("Broby", "Harby")
+FP = open(os.path.join(ROOT, "utdata", "familjens_plats", "resultat.md"), encoding="utf-8").read()
+assert "82 % av stenarna i grupp mot 55 %" in FP
+KY = open(os.path.join(ROOT, "utdata", "familjens_plats", "kyrkan_resultat.md"), encoding="utf-8").read()
+assert "28 vid kyrkan mot 16 på sin plats" in KY and "inget av de fyra testen håller" in KY.lower()
+# Snorri (checked 2026-11-18 against is.wikisource Heimskringla/Prologus (úr Frísbók) and heimskringla.no Ynglinga saga
+# ch. 8, Linder & Haggson 1869–72): the quoted words below are verbatim from those pages.
+
 # ---- the literature
 SOK = sqlite3.connect("/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite")
 
@@ -117,6 +131,10 @@ jcheck("1912_081", 11, "90", "elfva grafvar från äldre bronsåldern", "svara f
 jcheck("1912_081", 12, "91", "Här jordades san", "nolikt rika och fattiga om hvarandra")
 jcheck("1912_081", 10, "89", "man fort", "farande ville använda dem som begrafningsplats", "påfylla ett nytt jordlager")
 jcheck("1917_127", 17, "142", "kung Nordians hög", "vid Ås-Husby", "Björn Järnsidas hög", "Husby på Munsön")
+jcheck("1912_081", 3, "82", "man fortsatt med grafsättningar i närheten af högarne")
+jcheck("1912_081", 4, "83", "högarne blifvit öfverfyllda och seden att uppföra sådana föråldrats",
+       "bruket att nedsätta grafurnorna under flat mark, utan täckande hög")
+jcheck("1912_081", 23, "102", "Bronsåldersfolkets", "grafhög motsvaras längre fram af de kristnas")
 jcheck("1906_119", 26, "143", "draken bor kvar i ättekullen", "i likhet med draken i Beovulf")
 
 # ---- pictures
@@ -197,6 +215,16 @@ Men minnet var långt. I Rannsakningarna 1667–68, rikets första stora invente
 
 Det finns något nästan försonande i det. Staden växte över platsen och kullarna försvann, de flesta av dem. Men gatorna fick namn efter forntiden, och området bär fortfarande gravhögarnas namn. I Grímnismál säger Oden att han fruktar för korpen Hugin, tanken, men ännu mer för Munin, minnet. Här klarade sig minnet bättre än kullarna.
 
+## Redan gamla för vikingarna
+
+När vikingarna levde var kullarna i Ättekulla redan mellan ett och ett halvt och två och ett halvt tusen år gamla. De var forntid redan då.
+
+Hur såg man på dem? Runstenarna ger några glimtar. På Karlevistenen på Öland, Öl 1, från slutet av 900-talet, står en dikt om en hövding som ligger dold ”i þæimsi haugi”, i denna hög. På två uppländska stenar gjorde de efterlevande en hög bredvid stenen. Vid Broby i Täby lät tre bröder resa stenarna efter sin far ”ok bro þessa gærðu ok haug þenna”, och gjorde denna bro och denna hög (U 135). Vid Harby i Fresta lät Illugi ”ræisa stæina ok haug gæra”, resa stenarna och göra en hög, efter sin bror (U 269). Och två män på andra stenar ägde gårdar som hade fått namn efter högar: Haugbýr (Ög 82) och kanske Kolhaugr (Sö 202, läsningen är osäker).
+
+Ett par hundra år senare skrev islänningen Snorre Sturlasson ned hur man på hans tid mindes de gamla gravskicken. I förordet till Heimskringla delar han in forntiden i åldrar. ”Hin fyrsta öld er kölluð brunaöld”, den första åldern kallas brandåldern: då brände man de döda och reste bautastenar efter dem. Men sedan Frö hade lagts i hög i Uppsala ”gerðu margir höfðingjar eigi síður hauga en bautasteina til minningar um frændur sína” – byggde många hövdingar högar lika väl som bautastenar till minne av sina fränder. I Ynglingasagan låter han Oden själv stifta lagen: efter förnäma män skulle man göra en hög till minne, ”eptir göfga menn skyldi haug gera til minningar”, och efter alla andra som var något att räkna med skulle man ”reisa bautasteina”, resa stenar.
+
+Snorre var en kristen lärd på 1200-talet som såg tillbaka, inte ett ögonvittne. Men i hans bild hör högen och stenen ihop, som två sätt att minnas de döda. Den bilden kan vi pröva i siffrorna.
+
 ## 76 000 kullar
 
 Ättekulla är inget undantag. Registret har 17 531 fristående gravhögar och ytterligare omkring 58 000 i gravfälten – omkring 76 000 i allt. Den typiska högen är elva meter bred. {R['stora_20']:,} är minst 20 meter.
@@ -217,11 +245,25 @@ Svaret är ja. I Uppland står det en runsten inom 500 meter från {p0(SH['Uppla
 
 Exemplen är kända. Vid Skalunda hög i Västergötland, 65 meter bred och sex meter hög, står Vg 44 och Vg 45. Vid Ledbergs kulle i Östergötland står Ledbergsstenen, Ög 181. Vid Tingshögen i Ludgo i Södermanland, 30 meter bred, står Sö 137 och Sö 138.
 
-Varför? Det prövade vi inte. Men den som reste en sten vid en stor hög ställde sin döde bredvid något som alla i bygden kunde se, och som redan var gammalt. En storhög var ett påstående om makt och om rätten till marken. En runsten bredvid den kan ha varit ett sätt att säga: vi hör hit, och vi har alltid gjort det.
+Varför? Det prövade vi inte. Men den som reste en sten vid en stor hög ställde sin döde bredvid något som alla i bygden kunde se, och som redan var gammalt. En storhög var ett påstående om makt och om rätten till marken. En runsten bredvid den kan ha varit ett sätt att säga: vi hör hit, och vi har alltid gjort det. Det är också Snorres bild – högen för de förnäma, stenen för de andra – men här står de bredvid varandra.
 
 ## Det som inte höll
 
 Sune Lindqvist skrev 1917 att storhögarna ligger vid husbyarna, kungens gårdar: ”kung Nordians hög” vid Ås-Husby, ”Björn Järnsidas hög” vid Husby på Munsön (Fornvännen 12, s. 142). Vi prövade det för hela landet. De stora högarna ligger något närmare husbyar och tunaorter än de mindre, men mönstret syns bara i den ena halvan av materialet, och det vänder när gränsen sätts vid 15 meter. Det räcker inte. Inte heller låg de stora högarna närmare de gamla kultplatserna.
+
+## Från högen till kyrkogården
+
+Begravde man fortsatt så? Svaret är att man aldrig riktigt slutade bygga högar, men att seden ändrades gång på gång.
+
+I Ättekulla syns de första skiftena. De äldsta gravarna låg i kistor mitt i högarna. Under den yngre bronsåldern grävde man ned de brända benen i de högar som redan stod där. Mot slutet, skriver Rydbeck, när ”högarne blifvit öfverfyllda och seden att uppföra sådana föråldrats”, började man i stället sätta ned gravurnorna ”under flat mark, utan täckande hög” – men fortfarande nära högarna (s. 82–83). Platsen behöll sin dragningskraft också när seden ändrades.
+
+Under järnåldern kom högarna tillbaka, nu oftast små och samlade i gravfält; omkring 58 000 av registrets högar ligger i gravfält. Några blev väldiga, som Skalunda hög. Och under vikingatiden lades de döda fortfarande i högar: Karlevistenens hövding ligger i sin.
+
+Sedan kom kyrkan. Stenarna vid Broby och Harby bär kors, och ändå gjordes en hög vid dem. Broby-stenen hör till en stilgrupp som brukar dateras till omkring 1020–1050, Harby-stenen till omkring 1070–1100. Också när människorna var kristna kunde högen alltså höra till minnet. Men de döda började begravas obrända, på kyrkogården. Rydbeck såg sambandet redan 1912: ”Bronsåldersfolkets grafhög motsvaras längre fram af de kristnas kyrkogård” (s. 102).
+
+Vi har försökt se skiftet i runstenarna själva. Där en familj reste flera stenar låg nästan alltid ett gravfält nära: 82 procent av stenarna i grupp mot 55 procent av de ensamma. Det var familjens plats, och den låg vid de gamla gravarna. Men när vi prövade om de senare stenarna lämnade gravfälten för kyrkorna pekade siffrorna åt det väntade hållet utan att räcka hela vägen. Bara de allra sista runstenarna, från omkring 1100–1130, står tydligt oftare vid kyrkan: 28 mot 16 på sin ursprungliga plats. Skiftet gick alltså inte på en dag.
+
+Varför ändrades det? Det har vi inte prövat. Men Snorre ger en ledtråd till varför graven hörde ihop med tron. Oden lovade, skriver han, att var och en skulle komma till Valhall med det som brändes med honom: ”með þvílíkum auðœfum skyldi hverr koma til Valhallar, sem hann hafði á bál”. Bålet och högen var en del av en föreställning om vart de döda tog vägen. När föreställningen byttes, byttes graven.
 
 ## Kungar, drakar och skatter
 
@@ -233,6 +275,7 @@ Draken är gammal. Knut Stjerna skrev redan 1906 att draken i de skånska sägne
 - Kullarna i Ättekulla var bronsåldersgravar, använda i nästan tusen år: först för de förnämsta, sedan för många. 39 av 54 högar runt gården är borta i dag.
 - Sverige har omkring 76 000 registrerade gravhögar. Var tredje fristående hög har en grop där någon har grävt.
 - Vikingatidens runstenar sökte sig till de stora högarna: i Uppland och Södermanland står det en runsten vid nästan varannan stor hög, mot var femte eller sjunde mindre.
+- Högarna var forntid redan för vikingarna. Runstenar talar om högar, och ännu vid kristna stenar gjordes en hög. Sedan flyttade de döda till kyrkogården – men långsamt.
 - Lindqvists gamla tanke att storhögarna hör till husbyarna går inte att bekräfta för hela landet.
 :::
 
@@ -248,6 +291,8 @@ Registret anger sällan när en hög byggdes, så stora och små högar kan vara
 - Rydbeck, Otto 1912. Undersökning af bronsåldershögar i Köpinge, nära Ramlösa hälsobrunn i Skåne. *Fornvännen* 7, s. 81–132. CC BY 4.0.
 - Lindqvist, Sune 1917. Ottarshögen i Vendel. *Fornvännen* 12, s. 127–143. CC BY 4.0.
 - Stjerna, Knut 1906. Drakskatten i Beovulf. *Fornvännen* 1, s. 119–144. CC BY 4.0.
+- Snorre Sturlasson, *Heimskringla*: förordet efter Frísbók (isländska Wikisource) och Ynglingasagan kap. 8 efter N. Linder och H. A. Haggsons utgåva 1869–72 (heimskringla.no). Korta citat.
+- Vitkis tidigare mätningar: Familjens plats och Tog kyrkan över efter gravfältet?, analysplaner 2026-10-29 på GitHub.
 - Analysplanen och koden: [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md)."""
 
 body_en = f"""This article does not begin with a runestone but with the place where I grew up.
@@ -280,6 +325,16 @@ But the memory was long. In the Rannsakningar of 1667–68, the kingdom's first 
 
 There is something almost consoling in that. The town grew over the place and the mounds disappeared, most of them. But the streets were named after the ancient past, and the district still bears the burial mounds' name. In Grímnismál Odin says that he fears for the raven Huginn, thought, but even more for Muninn, memory. Here memory fared better than the mounds.
 
+## Already old to the Vikings
+
+When the Vikings lived, the mounds at Ättekulla were already between one and a half and two and a half thousand years old. They were the ancient past even then.
+
+How did people see them? The runestones give a few glimpses. On the Karlevi stone on Öland, Öl 1, from the late 900s, there is a poem about a chieftain who lies hidden ”i þæimsi haugi”, in this mound. On two stones in Uppland the survivors made a mound beside the stone. At Broby in Täby three brothers had the stones raised for their father ”ok bro þessa gærðu ok haug þenna”, and made this bridge and this mound (U 135). At Harby in Fresta Illugi had them ”ræisa stæina ok haug gæra”, raise the stones and make a mound, for his brother (U 269). And two men on other stones owned farms named after mounds: Haugbýr (Ög 82) and perhaps Kolhaugr (Sö 202, the reading is uncertain).
+
+A couple of centuries later the Icelander Snorri Sturluson wrote down how the old burial customs were remembered in his day. In the prologue to Heimskringla he divides the ancient past into ages. ”Hin fyrsta öld er kölluð brunaöld”, the first age is called the age of burning: the dead were burned and standing stones raised after them. But after Freyr had been laid in a mound at Uppsala ”gerðu margir höfðingjar eigi síður hauga en bautasteina til minningar um frændur sína” – many chieftains built mounds no less than standing stones in memory of their kinsmen. In Ynglinga saga he has Odin himself lay down the law: for noble men a mound was to be made in their memory, ”eptir göfga menn skyldi haug gera til minningar”, and for all others of any worth one was to ”reisa bautasteina”, raise stones.
+
+Snorri was a Christian scholar of the 1200s looking back, not an eyewitness. But in his picture the mound and the stone belong together, as two ways of remembering the dead. That picture we can test in the numbers.
+
 ## 76,000 mounds
 
 Ättekulla is no exception. The register has 17,531 free-standing burial mounds and about another 58,000 inside the grave fields – some 76,000 in all. The typical mound is eleven metres across. {R['stora_20']:,} are at least 20 metres.
@@ -300,11 +355,25 @@ The answer is yes. In Uppland a runestone stands within 500 metres of {p0(SH['Up
 
 The examples are well known. By Skalunda hög in Västergötland, 65 metres across and six metres high, stand Vg 44 and Vg 45. By Ledbergs kulle in Östergötland stands the Ledberg stone, Ög 181. By Tingshögen in Ludgo in Södermanland, 30 metres across, stand Sö 137 and Sö 138.
 
-Why? We did not test that. But whoever raised a stone by a large mound placed their dead beside something everyone in the district could see, and which was already old. A great mound was a statement about power and about the right to the land. A runestone beside it may have been a way of saying: we belong here, and we always have.
+Why? We did not test that. But whoever raised a stone by a large mound placed their dead beside something everyone in the district could see, and which was already old. A great mound was a statement about power and about the right to the land. A runestone beside it may have been a way of saying: we belong here, and we always have. It is Snorri's picture too – the mound for the noble, the stone for the others – but here they stand side by side.
 
 ## What did not hold
 
 Sune Lindqvist wrote in 1917 that the great mounds lie by the husbyar, the king's farms: ”King Nordian's mound” at Ås-Husby, ”Björn Ironside's mound” at Husby on Munsön (Fornvännen 12, p. 142). We tested it for the whole country. The large mounds lie somewhat closer to husby and tuna places than the smaller ones, but the pattern shows only in one half of the material, and it reverses when the limit is set at 15 metres. That is not enough. Nor did the large mounds lie closer to the old cult places.
+
+## From the mound to the churchyard
+
+Did people go on burying that way? The answer is that they never quite stopped building mounds, but the custom changed again and again.
+
+At Ättekulla the first shifts can be seen. The oldest graves lay in coffins in the middle of the mounds. In the later Bronze Age the burnt bones were dug down into the mounds that already stood there. Towards the end, Rydbeck writes, when ”the mounds had become over-filled and the custom of raising them had grown old-fashioned”, people began instead to set down the burial urns ”under flat ground, without a covering mound” – but still close to the mounds (pp. 82–83). The place kept its pull even when the custom changed.
+
+In the Iron Age the mounds came back, now mostly small and gathered in grave fields; some 58,000 of the register's mounds lie in grave fields. A few became huge, like Skalunda hög. And in the Viking Age the dead were still laid in mounds: the Karlevi stone's chieftain lies in his.
+
+Then came the church. The stones at Broby and Harby bear crosses, and yet a mound was made beside them. The Broby stone belongs to a style group usually dated to about 1020–1050, the Harby stone to about 1070–1100. So even when people were Christian, the mound could still belong to the memorial. But the dead began to be buried unburnt, in the churchyard. Rydbeck saw the link as early as 1912: ”The Bronze Age people's burial mound corresponds later to the Christians' churchyard” (p. 102).
+
+We have tried to see the shift in the runestones themselves. Where a family raised several stones, a grave field almost always lay nearby: 82 per cent of the stones in groups against 55 per cent of the lone ones. That was the family's place, and it lay by the old graves. But when we tested whether the later stones left the grave fields for the churches, the numbers pointed the expected way without going the whole distance. Only the very last runestones, from about 1100–1130, clearly stand more often by the church: 28 against 16 in their original place. The shift did not happen in a day.
+
+Why did it change? We have not tested that. But Snorri gives a clue to why the grave belonged with the belief. Odin promised, he writes, that everyone would come to Valhalla with what was burned with him: ”með þvílíkum auðœfum skyldi hverr koma til Valhallar, sem hann hafði á bál”. The pyre and the mound were part of an idea of where the dead went. When the idea changed, the grave changed.
 
 ## Kings, dragons and treasure
 
@@ -316,6 +385,7 @@ The dragon is old. Knut Stjerna wrote as early as 1906 that the dragon of the Sc
 - The mounds at Ättekulla were Bronze Age graves, used for almost a thousand years: first for the most distinguished, then for many. 39 of the 54 mounds around the farm are gone today.
 - Sweden has about 76,000 registered burial mounds. One free-standing mound in three has a pit where someone has dug.
 - The Viking Age runestones sought out the large mounds: in Uppland and Södermanland a runestone stands by almost every other large mound, against one in five or seven smaller ones.
+- The mounds were the ancient past already to the Vikings. Runestones speak of mounds, and even beside Christian stones a mound was made. Then the dead moved to the churchyard – but slowly.
 - Lindqvist's old idea that the great mounds belong to the husbyar cannot be confirmed for the whole country.
 :::
 
@@ -331,6 +401,8 @@ The register seldom says when a mound was built, so large and small mounds may b
 - Rydbeck, Otto 1912. Undersökning af bronsåldershögar i Köpinge, nära Ramlösa hälsobrunn i Skåne. *Fornvännen* 7, pp. 81–132. CC BY 4.0.
 - Lindqvist, Sune 1917. Ottarshögen i Vendel. *Fornvännen* 12, pp. 127–143. CC BY 4.0.
 - Stjerna, Knut 1906. Drakskatten i Beovulf. *Fornvännen* 1, pp. 119–144. CC BY 4.0.
+- Snorri Sturluson, *Heimskringla*: the prologue after Frísbók (Icelandic Wikisource) and Ynglinga saga ch. 8 after N. Linder and H. A. Haggson's edition 1869–72 (heimskringla.no). Short quotations.
+- Vitki's earlier measurements: Familjens plats and Did the church take over from the grave field?, analysis plans of 2026-10-29 on GitHub.
 - The analysis plan and the code: [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md)."""
 
 body = body.replace(f"{R['stora_20']:,}", f"{R['stora_20']:,}".replace(",", " ")).replace(f"{N_GONE:,}", f"{N_GONE:,}".replace(",", " ")).replace(f"{N_GROP:,}", f"{N_GROP:,}".replace(",", " "))
