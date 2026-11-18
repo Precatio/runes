@@ -30,6 +30,10 @@ CLOSER = 100 * (1 - W["huvud"]["u"])
 assert round(CLOSER) == 62
 assert G["p_holm"] < 0.05 and G["halvor"]["A"]["p"] > 0.05 and G["all_mark"]["p"] > 0.05
 assert B["huvud"]["n"] == 322 and B["huvud"]["p"] > 0.3
+# the shoreline curve (plan 2026-11-18-fornborgarnas-strandkurva, ba363a4b): AD 450 does NOT fit better than later shores
+SK = json.load(open(os.path.join(F, "resultat_strandkurva.json"), encoding="utf-8"))
+assert SK["sha"] == "ba363a4b" and not SK["prov"]["K1_idag"]["haller"] and not SK["prov"]["K2_vikingatid"]["haller"]
+assert SK["prov"]["K1_idag"]["medel_d"] > 0 and SK["botten"] == 2000
 
 # ---- the register (counted, not tested)
 K = list(csv.DictReader(open("/Volumes/2TB/Antigrvity/Runes/downloads/fornborgar/fornborgar.csv", encoding="utf-8")))
@@ -111,10 +115,10 @@ seo_title = "Fornborgar i Sverige: vad var de och vad finns kvar?"
 seo_title_en = "Swedish hillforts: what were they, what remains?"
 summary = ("Det finns över 1 300 fornborgar i Sverige: stenvallar på bergen från järnålderns mitt. Bara var "
            "tjugonde är utgrävd, och ingen vet säkert vad de var till för. Vi har mätt var de ligger, och svaret är tydligt: "
-           "de låg vid vattnet, så som det låg omkring år 450.")
+           "de låg vid vattnet.")
 summary_en = ("There are more than 1,300 hillforts in Sweden: stone ramparts on the hills from the middle of the Iron Age. "
               "Only one in twenty has been excavated, and no one knows for certain what they were for. We measured where they "
-              "lie, and the answer is clear: they lay by the water, as it lay around AD 450.")
+              "lie, and the answer is clear: they lay by the water.")
 
 pf = lambda v: f"{v:.0f}"  # noqa: E731
 body = f"""Den som går i skogen på ett berg i Mälardalen kan plötsligt kliva över en låg vall av sten, tvärs över krönet. Den är för lång för att vara ett röjningsröse och för rak för att vara naturens. Det är en fornborg. Det finns {len(K):,} av dem i Riksantikvarieämbetets register, de flesta i Södermanland, Uppland, Östergötland och Västergötland.
@@ -170,7 +174,7 @@ Borgarna var redan gamla när kyrkorna byggdes. I sägnerna blev de jättarnas h
 
 ## Så säkra är vi
 
-SGU:s strandmodell har en osäkerhet på några meter i höjd och några hundra år i tid, och borgarna är inte alla från samma århundrade; år 450 är ett mittvärde. Varje borg är mätt från mitten av sin yta, och de stora borgarna sträcker sig långt ut över berget. Jämförelsebergen är tagna ur SGU:s jordartskarta, som inte täcker Skåne, Halland, Blekinge och Norrland; där räknades borgarna bara med all mark som jämförelse. Registrets uppgift om vilka borgar som är utgrävda är ofullständig. Planen låstes innan något räknades, och den ligger öppet på GitHub tillsammans med koden.
+SGU:s strandmodell har en osäkerhet på några meter i höjd och några hundra år i tid, och borgarna är inte alla från samma århundrade; år 450 är ett mittvärde. Vi prövade också, i en egen låst plan, om borgarna passar bättre till stranden omkring år 450 än till senare stränder. Det gör de inte: jämfört med bergen runt omkring ligger de lika nära, ja något närmare, dagens vatten. Närheten till vattnet säger alltså inget om när borgarna byggdes – bara att vattnet var viktigt för dem som byggde. Varje borg är mätt från mitten av sin yta, och de stora borgarna sträcker sig långt ut över berget. Jämförelsebergen är tagna ur SGU:s jordartskarta, som inte täcker Skåne, Halland, Blekinge och Norrland; där räknades borgarna bara med all mark som jämförelse. Registrets uppgift om vilka borgar som är utgrävda är ofullständig. Planen låstes innan något räknades, och den ligger öppet på GitHub tillsammans med koden.
 
 ## Se själv
 
@@ -241,7 +245,7 @@ The forts were already old when the churches were built. In the legends they bec
 
 ## How sure we are
 
-SGU's shoreline model has an uncertainty of a few metres in height and a few hundred years in time, and the forts are not all from the same century; AD 450 is a middle value. Each fort is measured from the middle of its area, and the large forts stretch far across the hill. The comparison hills are taken from SGU's soil map, which does not cover Skåne, Halland, Blekinge and Norrland; there the forts were counted only with all land as the comparison. The register's information on which forts have been excavated is incomplete. The plan was locked before anything was counted, and it is open on GitHub with the code.
+SGU's shoreline model has an uncertainty of a few metres in height and a few hundred years in time, and the forts are not all from the same century; AD 450 is a middle value. We also tested, in a separate locked plan, whether the forts fit the shore of around AD 450 better than later shores. They do not: compared with the hills around them they lie as close to, indeed slightly closer to, today's water. So closeness to the water says nothing about when the forts were built – only that the water mattered to those who built them. Each fort is measured from the middle of its area, and the large forts stretch far across the hill. The comparison hills are taken from SGU's soil map, which does not cover Skåne, Halland, Blekinge and Norrland; there the forts were counted only with all land as the comparison. The register's information on which forts have been excavated is incomplete. The plan was locked before anything was counted, and it is open on GitHub with the code.
 
 ## See for yourself
 
