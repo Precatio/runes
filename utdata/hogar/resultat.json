@@ -1,0 +1,145 @@
+{
+ "sha": "089fcfb5",
+ "noter": [
+  "Diametern läses som 'N m diam' eller 'N m i diam' (registret skriver oftast det senare; planens exempel nämnde bara den första formen). Rättat innan något prov räknades."
+ ],
+ "hogar": 17531,
+ "med_diameter": 11072,
+ "stora_20": 2017,
+ "stora_30": 448,
+ "diam_median": 11.0,
+ "per_landskap": {
+  "Skåne": 3893,
+  "Uppland": 1794,
+  "Västergötland": 1605,
+  "Halland": 1343,
+  "Bohuslän": 1264,
+  "Södermanland": 1100,
+  "Hälsingland": 1083,
+  "Medelpad": 1018,
+  "Småland": 844,
+  "Jämtland": 658,
+  "Ångermanland": 557,
+  "Värmland": 433,
+  "Dalsland": 420,
+  "Östergötland": 396,
+  "Västmanland": 395,
+  "Gotland": 142,
+  "Gästrikland": 118,
+  "Närke": 110,
+  "Öland": 103,
+  "Dalarna": 85,
+  "Härjedalen": 73,
+  "Blekinge": 55,
+  "null": 35,
+  "Lappland": 3,
+  "Norrbotten": 3,
+  "Västerbotten": 1
+ },
+ "stora_per_landskap": {
+  "Skåne": 1386,
+  "Halland": 219,
+  "Västergötland": 105,
+  "Uppland": 75,
+  "Medelpad": 62,
+  "Södermanland": 32,
+  "Östergötland": 23,
+  "Västmanland": 19,
+  "Värmland": 16,
+  "Gotland": 15,
+  "Småland": 14,
+  "Öland": 14,
+  "Bohuslän": 13,
+  "Hälsingland": 9,
+  "Ångermanland": 7,
+  "Blekinge": 2,
+  "Närke": 2,
+  "Gästrikland": 2,
+  "null": 1,
+  "Jämtland": 1
+ },
+ "prov": {
+  "H1_husby_tuna": {
+   "stat": -0.15433934113308645,
+   "p": 9.999000099990002e-05,
+   "p_holm": 0.00029997000299970003,
+   "halvor": {
+    "A": {
+     "stat": -0.16746939668814598,
+     "p": 0.0004997501249375312,
+     "stora": 979
+    },
+    "B": {
+     "stat": -0.1431644168125139,
+     "p": 0.744127936031984,
+     "stora": 1038
+    }
+   },
+   "troskel_15_30": {
+    "15": 0.043059241432917617,
+    "30": -0.30539746450648586
+   },
+   "haller": false
+  },
+  "H2_kultplats": {
+   "stat": 0.05841170192413081,
+   "p": 0.03899610038996101,
+   "p_holm": 0.03899610038996101,
+   "halvor": {
+    "A": {
+     "stat": 0.030774322594432135,
+     "p": 0.9835082458770614,
+     "stora": 979
+    },
+    "B": {
+     "stat": 0.08454952987843356,
+     "p": 0.8755622188905547,
+     "stora": 1038
+    }
+   },
+   "troskel_15_30": {
+    "15": 0.03546490594435525,
+    "30": -0.015397135538206541
+   },
+   "haller": false
+  },
+  "H3_runsten": {
+   "stat": 1.1697414365093775,
+   "p": 9.999000099990002e-05,
+   "p_holm": 0.00029997000299970003,
+   "halvor": {
+    "A": {
+     "stat": 1.119704315031344,
+     "p": 0.0014992503748125937,
+     "stora": 979
+    },
+    "B": {
+     "stat": 1.2731612050062453,
+     "p": 0.0009995002498750624,
+     "stora": 1038
+    }
+   },
+   "troskel_15_30": {
+    "15": 0.7378323513008247,
+    "30": 1.2183558165247121
+   },
+   "haller": true
+  }
+ },
+ "stora": 2017,
+ "mindre": 9055,
+ "klartext": {
+  "median_km_central": [
+   15.654701947380246,
+   20.906079635341822
+  ],
+  "median_km_cult": [
+   15.682780766539691,
+   15.24913852023404
+  ],
+  "andel_runsten_500m": [
+   0.04015865146256817,
+   0.06350082827167311
+  ]
+ }
+}
