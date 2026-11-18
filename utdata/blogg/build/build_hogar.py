@@ -183,13 +183,11 @@ summary_en = ("I grew up at Ättekulla in Helsingborg, among streets with Old No
               "find that the Viking Age runestones sought out the large mounds: in Uppland and Södermanland a runestone stands "
               "by one ordinary mound in five but by almost every other large one.")
 
-body = f"""Den här artikeln börjar inte med en runsten utan med platsen där jag växte upp.
-
-Jag växte upp i ett område i Helsingborg som heter Ättekulla. Gatorna där har fornnordiskt inspirerade namn: Bifrostgatan, Midgårdsgatan, Utgårdsgatan, Runristargatan, Sven Tveskäggs gata, Styrbjörn Starkes gata, Erik Rödes gata. Och vid skogens rand låg kullarna.
+body = f"""Den här artikeln börjar inte med en runsten, utan med platsen där jag växte upp: ett område i Helsingborg som heter Ättekulla. Gatorna där har fornnordiskt inspirerade namn – Bifrostgatan, Midgårdsgatan, Utgårdsgatan, Runristargatan, Sven Tveskäggs gata, Styrbjörn Starkes gata, Erik Rödes gata. Och vid skogens rand låg kullarna.
 
 I [Korpen som heter Minne](/artiklar/korpen-som-heter-minne/) har jag berättat om boken *Gudar och hjältar i nordisk mytologi*, som jag läste många gånger under mina unga år. Där fanns Tor hos Utgårdaloke. I Ättekulla var Utgård också en gata.
 
-Det var där jag började, och det är där den här artikeln börjar. Vilka var kullarna, och vilka låg i dem? Gatunamnen pekar mot vikingatiden, mot kungar och sjöfarare som Sven Tveskägg och Erik Röde. Det visar sig att de pekar fel – med kanske ett undantag: Bronsgatan. Härifrån följer vi sedan kullarna över hela landet, med Vitki.
+Det var där jag började, och därför börjar artikeln där. Vilka var kullarna, och vilka låg i dem? Gatunamnen pekar mot vikingatiden, mot kungar och sjöfarare som Sven Tveskägg och Erik Röde. Det ska visa sig att de pekar fel, med ett möjligt undantag: Bronsgatan. Från Ättekulla följer vi sedan kullarna ut över landet, och tillbaka in i vikingatiden.
 
 Själva namnet berättade mer än gatorna. En *ättehög* är ett gammalt ord för en gravhög: släktens hög, där ätten låg. Riksantikvarieämbetets register har namnet Ättekulla, eller något liknande, på 97 platser i över femtio socknar. Det var bygdens eget ord för gravarna.
 
@@ -199,7 +197,7 @@ Arkeologen Otto Rydbeck skrev om just dessa högar i Fornvännen 1912. Vid väge
 
 I de åtta högarna fann Söderberg elva gravar från den äldre bronsåldern – skelettgravar, i kistor av sten eller trä – och femtiotre från den yngre, där de brända benen hade grävts ned i högarna som redan stod där. Man fyllde på med ny jord för att inte störa de gamla gravarna, och högarna växte (s. 89–90). Rydbeck förklarade skillnaden så: i början var det bara ”de förnämligare” som ”hade råd att bestå sina anhöriga ett så kostsamt eftermäle som en kista af sten eller trä med dyrbar utrustning i en svåruppförd grafhög” (s. 90). Senare ”jordades sannolikt rika och fattiga om hvarandra” (s. 91).
 
-Kullarna i Ättekulla var alltså inte vikingarnas. De var tusen år äldre, och de användes i nästan tusen år. Namnet hade rätt: det var släktens högar. Av gatorna var det bara Bronsgatan som träffade rätt tid.
+Kullarna i Ättekulla var alltså inte vikingarnas. De var mer än tusen år äldre, och de användes i nästan tusen år. Namnet hade rätt: det var släktens högar. Av gatorna var det bara Bronsgatan som träffade rätt tid.
 
 Den största undersöktes på nytt av Rolf Petré 1967–68. Den hade varit 25 meter bred och fyra meter hög, byggd av torv runt ett röse av sten. I mitten låg tre skelettgravar med spår av ekkistor, och i centralgraven en bronsdolk i sin slida, från bronsålderns tredje period. Sedan togs högen bort.
 
@@ -213,7 +211,17 @@ Men minnet var långt. I Rannsakningarna 1667–68, rikets första stora invente
 
 Raus är ett namn jag bär med mig. I mitt pass står det som min födelseort, och förr tror jag att det stod Raus församling. Jag har inte så mycket relation till platsen i dag, men den kommer alltid att följa med mig. Den är en del av min historia.
 
-Det finns något nästan försonande i Ättekullas historia. Staden växte över platsen och kullarna försvann, de flesta av dem. Men gatorna fick namn efter forntiden, och området bär fortfarande gravhögarnas namn. I Grímnismál säger Oden att han fruktar för korpen Hugin, tanken, men ännu mer för Munin, minnet. Här klarade sig minnet bättre än kullarna.
+## 76 000 kullar
+
+Ättekulla är inget undantag. Registret har 17 531 fristående gravhögar och ytterligare omkring 58 000 i gravfälten – omkring 76 000 i allt. Den typiska högen är elva meter bred. {R['stora_20']:,} är minst 20 meter.
+
+{IMG_SE['sv']}
+
+Kartan visar två högbygder. I söder och väster, längs Skånes och Hallands kuster, ligger de stora runda högarna tätt – många av dem från bronsåldern, som i Ättekulla. Längre norrut, i Mälardalen, i Västergötland och längs Norrlandskusten, är högarna oftare från järnåldern, upp till vikingatiden.
+
+Högarna har också burit berättelser. {N_KUNG} av dem heter Kungshögen, och i Stora Fulhög i Borrby i Skåne ska det finnas ”en guldvagga” och en prins begraven.
+
+De har också haft ett hårt liv. {N_GONE:,} av de fristående högarna står som borttagna eller förstörda i registret. I {N_GROP:,} beskrivningar, nästan var tredje, nämns en grop – ofta i mitten, där någon har grävt efter något. I Träne i Skåne hade byn sina källare i högen, och i Skalunda hög i Västergötland ”lär en källare ha legat”.
 
 ## Redan gamla för vikingarna
 
@@ -224,16 +232,6 @@ Hur såg man på dem? Runstenarna ger några glimtar. På Karlevistenen på Öla
 Ett par hundra år senare skrev islänningen Snorre Sturlasson ned hur man på hans tid mindes de gamla gravskicken. I förordet till Heimskringla delar han in forntiden i åldrar. ”Hin fyrsta öld er kölluð brunaöld”, den första åldern kallas brandåldern: då brände man de döda och reste bautastenar efter dem. Men sedan Frö hade lagts i hög i Uppsala ”gerðu margir höfðingjar eigi síður hauga en bautasteina til minningar um frændur sína” – byggde många hövdingar högar lika väl som bautastenar till minne av sina fränder. I Ynglingasagan låter han Oden själv stifta lagen: efter förnäma män skulle man göra en hög till minne, ”eptir göfga menn skyldi haug gera til minningar”, och efter alla andra som var något att räkna med skulle man ”reisa bautasteina”, resa stenar.
 
 Snorre var en kristen lärd på 1200-talet som såg tillbaka, inte ett ögonvittne. Men i hans bild hör högen och stenen ihop, som två sätt att minnas de döda. Den bilden kan vi pröva i siffrorna.
-
-## 76 000 kullar
-
-Ättekulla är inget undantag. Registret har 17 531 fristående gravhögar och ytterligare omkring 58 000 i gravfälten – omkring 76 000 i allt. Den typiska högen är elva meter bred. {R['stora_20']:,} är minst 20 meter.
-
-{IMG_SE['sv']}
-
-Kartan visar två högbygder. I söder och väster, längs Skånes och Hallands kuster, ligger de stora runda högarna tätt – många av dem från bronsåldern, som i Ättekulla. Längre norrut, i Mälardalen, i Västergötland och längs Norrlandskusten, är högarna oftare från järnåldern, upp till vikingatiden.
-
-Och de har haft ett hårt liv. {N_GONE:,} av de fristående högarna står som borttagna eller förstörda i registret. I {N_GROP:,} beskrivningar, nästan var tredje, nämns en grop – ofta i mitten, där någon har grävt efter något. I Träne i Skåne hade byn sina källare i högen, och i Skalunda hög i Västergötland ”lär en källare ha legat”.
 
 ## Runstenarna sökte sig till de stora högarna
 
@@ -265,9 +263,13 @@ Vi har försökt se skiftet i runstenarna själva. Där en familj reste flera st
 
 Varför ändrades det? Det har vi inte prövat. Men Snorre ger en ledtråd till varför graven hörde ihop med tron. Oden lovade, skriver han, att var och en skulle komma till Valhall med det som brändes med honom: ”með þvílíkum auðœfum skyldi hverr koma til Valhallar, sem hann hafði á bál”. Bålet och högen var en del av en föreställning om vart de döda tog vägen. När föreställningen byttes, byttes graven.
 
-## Kungar och skatter
+## Tillbaka vid skogens rand
 
-Högarna har burit berättelser länge. {N_KUNG} högar i registret heter Kungshögen. I Borrby i Skåne ska det i Stora Fulhög finnas ”en guldvagga”, och där ska ligga en prins begraven.
+Så vilka var kullarna vid skogens rand? De var bronsålderns släktgravar. Först byggde släkterna högar åt sina förnämsta, sedan grävde de ned sina döda i samma högar, generation efter generation, i nästan tusen år. När vikingarna levde var högarna redan forntid. Vikingarna byggde nya, och de reste sina runstenar bredvid de största – kanske för att låna något av deras ålder. Sedan flyttade de döda in på kyrkogården, och högarna blev platser för sägner om slag och sagohjältar, för skattgrävare och till sist för en växande stad.
+
+Gatunamnen i Ättekulla pekade mot vikingatiden, och de pekade fel. Men kanske inte helt. Vikingarna levde, precis som jag, bland högar som redan var gamla, och de hade sina egna berättelser om vilka som låg där. Snorre skrev ned några av dem.
+
+I Grímnismál säger Oden att han fruktar för korpen Hugin, tanken, men ännu mer för Munin, minnet. Av kullarna runt Ättekulla gård är de flesta borta. Men namnen blev kvar: Ättekulla på området och på gatuskyltarna, Raus i mitt pass. Där klarade sig minnet bättre än kullarna.
 
 :::box Det viktigaste i korthet
 - Kullarna i Ättekulla var bronsåldersgravar, använda i nästan tusen år: först för de förnämsta, sedan för många. 39 av 54 högar runt gården är borta i dag.
@@ -292,13 +294,11 @@ Registret anger sällan när en hög byggdes, så stora och små högar kan vara
 - Vitkis tidigare mätningar: Familjens plats och Tog kyrkan över efter gravfältet?, analysplaner 2026-10-29 på GitHub.
 - Analysplanen och koden: [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md)."""
 
-body_en = f"""This article does not begin with a runestone but with the place where I grew up.
-
-I grew up in a part of Helsingborg called Ättekulla. Its streets have Old Norse-inspired names: Bifrostgatan, Midgårdsgatan, Utgårdsgatan, Runristargatan (Rune Carvers' Street), Sven Tveskäggs gata, Styrbjörn Starkes gata, Erik Rödes gata. And at the edge of the forest lay the mounds.
+body_en = f"""This article does not begin with a runestone, but with the place where I grew up: a part of Helsingborg called Ättekulla. Its streets have Old Norse-inspired names – Bifrostgatan, Midgårdsgatan, Utgårdsgatan, Runristargatan (Rune Carvers' Street), Sven Tveskäggs gata, Styrbjörn Starkes gata, Erik Rödes gata. And at the edge of the forest lay the mounds.
 
 In [The raven called Memory](/en/artiklar/korpen-som-heter-minne/) I have told of Brian Branston's *Gods and Heroes from Viking Mythology*, which I read again and again in my young years. Thor's visit to Utgarda-Loki was in it. At Ättekulla, Utgård was also a street.
 
-That is where I began, and that is where this article begins. Who were the mounds, and who lay in them? The street names point to the Viking Age, to kings and seafarers such as Sweyn Forkbeard and Erik the Red. They turn out to point the wrong way – with perhaps one exception: Bronsgatan, Bronze Street. From here we then follow the mounds across the whole country, with Vitki.
+That is where I began, and so the article begins there. Who were the mounds, and who lay in them? The street names point to the Viking Age, to kings and seafarers such as Sweyn Forkbeard and Erik the Red. They will turn out to point the wrong way, with one possible exception: Bronsgatan, Bronze Street. From Ättekulla we then follow the mounds out across the country, and back into the Viking Age.
 
 The name itself told more than the streets. An *ättehög* is an old word for a burial mound: the family's mound, where the kin lay. The Swedish National Heritage Board's register has the name Ättekulla, or something like it, at 97 places in more than fifty parishes. It was the district's own word for the graves.
 
@@ -308,7 +308,7 @@ The archaeologist Otto Rydbeck wrote about these very mounds in Fornvännen in 1
 
 In the eight mounds Söderberg found eleven graves from the earlier Bronze Age – inhumations, in coffins of stone or wood – and fifty-three from the later, where the burnt bones had been dug down into the mounds that already stood there. New earth was heaped on so as not to disturb the old graves, and the mounds grew (pp. 89–90). Rydbeck explained the difference thus: at first only ”the more distinguished” could ”afford to give their kin so costly a memorial as a coffin of stone or wood with precious equipment in a laboriously built burial mound” (p. 90). Later ”rich and poor were probably buried side by side” (p. 91).
 
-So the mounds at Ättekulla were not the Vikings'. They were a thousand years older, and they were used for almost a thousand years. The name was right: they were the family's mounds. Of the streets, only Bronsgatan hit the right age.
+So the mounds at Ättekulla were not the Vikings'. They were more than a thousand years older, and they were used for almost a thousand years. The name was right: they were the family's mounds. Of the streets, only Bronsgatan hit the right age.
 
 The largest was examined again by Rolf Petré in 1967–68. It had been 25 metres across and four metres high, built of turf around a cairn of stone. In the middle lay three inhumation graves with traces of oak coffins, and in the central grave a bronze dagger in its sheath, from the third period of the Bronze Age. Then the mound was removed.
 
@@ -322,7 +322,17 @@ But the memory was long. In the Rannsakningar of 1667–68, the kingdom's first 
 
 Raus is a name I carry with me. My passport gives it as my place of birth, and I think it used to say Raus parish. I do not have much of a relationship with the place today, but it will always come with me. It is part of my story.
 
-There is something almost consoling in Ättekulla's history. The town grew over the place and the mounds disappeared, most of them. But the streets were named after the ancient past, and the district still bears the burial mounds' name. In Grímnismál Odin says that he fears for the raven Huginn, thought, but even more for Muninn, memory. Here memory fared better than the mounds.
+## 76,000 mounds
+
+Ättekulla is no exception. The register has 17,531 free-standing burial mounds and about another 58,000 inside the grave fields – some 76,000 in all. The typical mound is eleven metres across. {R['stora_20']:,} are at least 20 metres.
+
+{IMG_SE['en']}
+
+The map shows two mound landscapes. In the south and west, along the coasts of Skåne and Halland, the large round mounds lie close together – many of them from the Bronze Age, as at Ättekulla. Further north, in the Mälar valley, in Västergötland and along the Norrland coast, the mounds are more often from the Iron Age, up to the Viking Age.
+
+The mounds have carried stories too. {N_KUNG} of them are called Kungshögen, the king's mound, and in Stora Fulhög at Borrby in Skåne there is said to be ”a golden cradle” and a prince buried.
+
+They have also had a hard life. {N_GONE:,} of the free-standing mounds are listed as removed or destroyed. In {N_GROP:,} descriptions, almost one in three, a pit is mentioned – often in the middle, where someone has dug for something. At Träne in Skåne the village kept its cellars in the mound, and in Skalunda hög in Västergötland ”a cellar is said to have lain”.
 
 ## Already old to the Vikings
 
@@ -333,16 +343,6 @@ How did people see them? The runestones give a few glimpses. On the Karlevi ston
 A couple of centuries later the Icelander Snorri Sturluson wrote down how the old burial customs were remembered in his day. In the prologue to Heimskringla he divides the ancient past into ages. ”Hin fyrsta öld er kölluð brunaöld”, the first age is called the age of burning: the dead were burned and standing stones raised after them. But after Freyr had been laid in a mound at Uppsala ”gerðu margir höfðingjar eigi síður hauga en bautasteina til minningar um frændur sína” – many chieftains built mounds no less than standing stones in memory of their kinsmen. In Ynglinga saga he has Odin himself lay down the law: for noble men a mound was to be made in their memory, ”eptir göfga menn skyldi haug gera til minningar”, and for all others of any worth one was to ”reisa bautasteina”, raise stones.
 
 Snorri was a Christian scholar of the 1200s looking back, not an eyewitness. But in his picture the mound and the stone belong together, as two ways of remembering the dead. That picture we can test in the numbers.
-
-## 76,000 mounds
-
-Ättekulla is no exception. The register has 17,531 free-standing burial mounds and about another 58,000 inside the grave fields – some 76,000 in all. The typical mound is eleven metres across. {R['stora_20']:,} are at least 20 metres.
-
-{IMG_SE['en']}
-
-The map shows two mound landscapes. In the south and west, along the coasts of Skåne and Halland, the large round mounds lie close together – many of them from the Bronze Age, as at Ättekulla. Further north, in the Mälar valley, in Västergötland and along the Norrland coast, the mounds are more often from the Iron Age, up to the Viking Age.
-
-And they have had a hard life. {N_GONE:,} of the free-standing mounds are listed as removed or destroyed. In {N_GROP:,} descriptions, almost one in three, a pit is mentioned – often in the middle, where someone has dug for something. At Träne in Skåne the village kept its cellars in the mound, and in Skalunda hög in Västergötland ”a cellar is said to have lain”.
 
 ## The runestones sought out the large mounds
 
@@ -374,9 +374,13 @@ We have tried to see the shift in the runestones themselves. Where a family rais
 
 Why did it change? We have not tested that. But Snorri gives a clue to why the grave belonged with the belief. Odin promised, he writes, that everyone would come to Valhalla with what was burned with him: ”með þvílíkum auðœfum skyldi hverr koma til Valhallar, sem hann hafði á bál”. The pyre and the mound were part of an idea of where the dead went. When the idea changed, the grave changed.
 
-## Kings and treasure
+## Back at the edge of the forest
 
-The mounds have carried stories for a long time. {N_KUNG} mounds in the register are called Kungshögen, the king's mound. At Borrby in Skåne there is said to be ”a golden cradle” in Stora Fulhög, and a prince buried there.
+So who were the mounds at the edge of the forest? They were the graves of Bronze Age families. First the families built mounds for their most distinguished, then they dug their dead down into the same mounds, generation after generation, for almost a thousand years. When the Vikings lived, the mounds were already the ancient past. The Vikings built new ones, and they raised their runestones beside the largest – perhaps to borrow something of their age. Then the dead moved into the churchyard, and the mounds became places for legends of battles and saga heroes, for treasure-hunters and at last for a growing town.
+
+The street names at Ättekulla pointed to the Viking Age, and they pointed the wrong way. But perhaps not entirely. The Vikings lived, just as I did, among mounds that were already old, and they had their own stories of who lay there. Snorri wrote some of them down.
+
+In Grímnismál Odin says that he fears for the raven Huginn, thought, but even more for Muninn, memory. Of the mounds around Ättekulla farm most are gone. But the names remained: Ättekulla on the district and on the street signs, Raus in my passport. There memory fared better than the mounds.
 
 :::box The essentials in brief
 - The mounds at Ättekulla were Bronze Age graves, used for almost a thousand years: first for the most distinguished, then for many. 39 of the 54 mounds around the farm are gone today.
