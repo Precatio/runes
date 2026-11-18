@@ -99,7 +99,7 @@ for g in ("Bifrostgatan", "Midgårdsgatan", "Utgårdsgatan", "Runristargatan", "
     assert GATOR[g] < 1000, g
 
 # ---- the Scanian coastal band (descriptive; distance to today's sea from SGU issjohav_1, code 1, computed by
-# scratch script into downloads/hogar/hogar_kust.csv; province = nearest ISOF parish, as in analys.py)
+# utdata/hogar/kust.R into downloads/hogar/hogar_kust.csv; province = nearest ISOF parish, as in analys.py)
 KU = list(csv.DictReader(open("/Volumes/2TB/Antigrvity/Runes/downloads/hogar/hogar_kust.csv", encoding="utf-8")))
 assert len(KU) == 17531
 KBIG = collections.Counter(r["land"] for r in KU if r["big"] == "TRUE")
