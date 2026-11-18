@@ -33,6 +33,7 @@ for y in ("i_grupp", "flera_resare", "r_for_R"):
     assert not R["T1"][y]["e_utan_fjadrundalands_ristare"]["holds"]
 G, F = R["T1"]["i_grupp"]["grund"], R["T1"]["flera_resare"]["grund"]
 assert (pc(G["share_in"]), pc(G["share_out"]), pc(F["share_in"]), pc(F["share_out"])) == (15, 34, 44, 64)
+assert (G["n_in"], K["grund"]["n_in"]) == (66, 122), (G["n_in"], K["grund"]["n_in"])
 RR = R["T1"]["r_for_R"]["grund"]
 assert (pc(RR["share_in"]), pc(RR["share_out"])) == (52, 15)
 for y in ("skilj_plus", "ord_ræisti"):
@@ -128,7 +129,7 @@ Gravarna här är enklare än på andra håll i Uppland. I Simtuna och Torstuna 
 
 ## Tecknen på hällarna
 
-Det här är ett gammalt land, och det syns. På hällarna hade människor huggit sina tecken mer än tusen år innan den första runstenen restes. I Fjädrundaland är ungefär var sjunde fornlämning en hällristning, i resten av Uppland var trettionde. Kring Simtuna och Torstuna markerar närmare tvåhundrafemtio högar av skörbränd sten, några hällristningar och mängder av skålgropar var bronsålderns människor bodde. Vid källan i Svinnegarn, som senare blev länets mest kända trefaldighetskälla, dit pilgrimer vandrade, finns skålgropar i berget. Och själva namnet Torsvi minns en hednisk kultplats.
+Det här är ett gammalt land, och det syns. På hällarna hade människor huggit sina tecken mer än tusen år innan den första runstenen restes. I Fjädrundaland är ungefär var sjunde fornlämning en hällristning, i resten av Uppland var trettiotredje. Kring Simtuna och Torstuna markerar närmare tvåhundrafemtio högar av skörbränd sten, några hällristningar och mängder av skålgropar var bronsålderns människor bodde. Vid källan i Svinnegarn, som senare blev länets mest kända trefaldighetskälla, dit pilgrimer vandrade, finns skålgropar i berget. Och själva namnet Torsvi minns en hednisk kultplats.
 
 Den som bodde här omkring år 1000 gick alltså bland tecken som redan var uråldriga. Vad de trodde om dem vet vi inte. Men de levde med dem. Föreställ dig barnen som leker på hällarna och djuren som betar mellan tecknen.
 
@@ -166,7 +167,7 @@ Stenen i Ågersta har inget kors, och det är inte ovanligt här. Bara en sten a
 
 Det betyder inte att folket var hedningar. Balle högg också en sten åt Ingileif efter hennes man Brune, som ”dog i Danmark i dopkläder” – nydöpt, alltså. Inte heller den stenen bär något kors. I Fjädrundaland kunde man vara kristen utan att sätta korset på stenen. En ristare antyder att det var landet och inte handen: Torbjörn högg kors på två av fem stenar här men på nio av tio utanför. Det är för få stenar för att bevisa något, men det är vad man skulle vänta sig om ristaren rättade sig efter beställarnas land.
 
-Stenarna här är också ensammare. De står mer sällan i grupper, en av sju mot en av tre i resten av Uppland, och de är oftare resta av en enda person än av flera syskon eller släktingar tillsammans. Och de skriver på sitt eget sätt: hälften av stenarna stavar ʀ med r-runan, mot en av sju i resten av Uppland. Det har vi berättat mer om i [Erik skrev r – och bygden skrev efter]({ERIK}).
+Stenarna här är också ensammare. De står mer sällan i grupper – bland stenarna där vi vet hur de står en av sju mot en av tre i resten av Uppland – och de är oftare resta av en enda person än av flera syskon eller släktingar tillsammans. Och de skriver på sitt eget sätt: hälften av stenarna stavar ʀ med r-runan, mot en av sju i resten av Uppland. Det har vi berättat mer om i [Erik skrev r – och bygden skrev efter]({ERIK}).
 
 ## Ett land som bar sina gamla tecken
 
@@ -174,7 +175,7 @@ Det här är det andra landet i serien där korset var ovanligt; det första var
 
 ## Så vet vi det
 
-Landskapet, gravarna, vägarna och tingsplatserna bygger på *Det medeltida Sverige*, länsstyrelsens beskrivningar av bygderna och fornlämningsregistret. Att Adelsö hörde till Trögd, tingsplatsen vid Enhälja, ängarnas lotter, hamnorna och brevet från 1512 är kända från medeltiden och 1500-talet, inte från vikingatiden. Korset har vi mätt: Fjädrundalands runstenar jämfördes med resten av Upplands, med tiden hållen konstant, och skillnaden står sig när stenarna delas i två grupper socken för socken, när varje ristare får ha sin egen vana, när bara stenar på sin ursprungliga plats räknas och när landets egna ristare tas bort. De ensammare stenarna och r för ʀ håller i allt utom det sista steget, där det blir för få stenar kvar. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
+Landskapet, gravarna, vägarna och tingsplatserna bygger på *Det medeltida Sverige*, länsstyrelsens beskrivningar av bygderna och fornlämningsregistret. Att Adelsö hörde till Trögd, tingsplatsen vid Enhälja, ängarnas lotter, hamnorna och brevet från 1512 är kända från medeltiden och 1500-talet, inte från vikingatiden. Korset har vi mätt: Fjädrundalands runstenar jämfördes med resten av Upplands, med tiden hållen konstant, och skillnaden står sig när stenarna delas i två grupper socken för socken, när varje ristare får ha sin egen vana, när bara stenar på sin ursprungliga plats räknas och när landets egna ristare tas bort. De ensammare stenarna och r för ʀ håller i allt utom det sista steget, där det blir för få stenar kvar. Andelen i grupp gäller de 66 av 122 stenar där vi vet hur de står, och stenar som står tillsammans räknas var för sig, så den skillnaden är något osäkrare än siffrorna ger sken av. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
 
 ## Källor
 
@@ -210,7 +211,7 @@ The graves here are simpler than elsewhere in Uppland. In Simtuna and Torstuna a
 
 ## The signs on the rocks
 
-This is an old land, and it shows. On the rock outcrops people had cut their signs more than a thousand years before the first runestone was raised. In Fjädrundaland about one ancient monument in seven is a rock carving, in the rest of Uppland one in thirty. Around Simtuna and Torstuna nearly two hundred and fifty mounds of fire-cracked stone, a few rock carvings and a great many cup marks show where the people of the Bronze Age lived. By the spring at Svinnegarn, which later became the county's best-known holy spring, visited by pilgrims, there are cup marks in the rock. And the very name Torsvi remembers a heathen cult place.
+This is an old land, and it shows. On the rock outcrops people had cut their signs more than a thousand years before the first runestone was raised. In Fjädrundaland about one ancient monument in seven is a rock carving, in the rest of Uppland one in thirty-three. Around Simtuna and Torstuna nearly two hundred and fifty mounds of fire-cracked stone, a few rock carvings and a great many cup marks show where the people of the Bronze Age lived. By the spring at Svinnegarn, which later became the county's best-known holy spring, visited by pilgrims, there are cup marks in the rock. And the very name Torsvi remembers a heathen cult place.
 
 Whoever lived here around AD 1000 walked, then, among signs that were already ancient. What they believed about them we do not know. But they lived with them. Imagine the children playing on the rocks and the animals grazing among the signs.
 
@@ -248,7 +249,7 @@ The stone at Ågersta has no cross, and that is not unusual here. Only one stone
 
 That does not mean the people were heathens. Balle also cut a stone for Ingileif for her husband Brune, who "died in christening robes in Denmark" – newly baptised, that is. That stone carries no cross either. In Fjädrundaland you could be a Christian without putting the cross on the stone. One carver hints that it was the land and not the hand: Torbjörn cut crosses on two of five stones here but on nine of ten outside. That is too few stones to prove anything, but it is what one would expect if the carver followed the land of those who ordered the stones.
 
-The stones here are also lonelier. They stand less often in groups, one in seven against one in three in the rest of Uppland, and they are more often raised by a single person than by several siblings or kin together. And they write in their own way: half the stones spell ʀ with the r-rune, against one in seven in the rest of Uppland. We have told more about it in [Erik skrev r – och bygden skrev efter]({ERIK}).
+The stones here are also lonelier. They stand less often in groups – among the stones whose setting we know, one in seven against one in three in the rest of Uppland – and they are more often raised by a single person than by several siblings or kin together. And they write in their own way: half the stones spell ʀ with the r-rune, against one in seven in the rest of Uppland. We have told more about it in [Erik skrev r – och bygden skrev efter]({ERIK}).
 
 ## A land that kept its old signs
 
@@ -256,7 +257,7 @@ This is the second land in the series where the cross was rare; the first was [R
 
 ## How we know
 
-The landscape, the graves, the roads and the assembly places rest on *Det medeltida Sverige*, the county board's descriptions of the districts and the register of ancient monuments. That Adelsö belonged to Trögd, the assembly place at Enhälja, the meadow strips, the *hamnor* and the letter of 1512 are known from the Middle Ages and the sixteenth century, not from the Viking Age. The cross we have measured: Fjädrundaland's runestones were compared with the rest of Uppland's, with time held constant, and the difference holds when the stones are split into two groups parish by parish, when each carver is allowed a habit of their own, when only stones in their original place are counted, and when the land's own carvers are removed. The lonelier stones and r for ʀ hold in everything but the last step, where too few stones remain. The plans and calculations are open on GitHub, linked below.
+The landscape, the graves, the roads and the assembly places rest on *Det medeltida Sverige*, the county board's descriptions of the districts and the register of ancient monuments. That Adelsö belonged to Trögd, the assembly place at Enhälja, the meadow strips, the *hamnor* and the letter of 1512 are known from the Middle Ages and the sixteenth century, not from the Viking Age. The cross we have measured: Fjädrundaland's runestones were compared with the rest of Uppland's, with time held constant, and the difference holds when the stones are split into two groups parish by parish, when each carver is allowed a habit of their own, when only stones in their original place are counted, and when the land's own carvers are removed. The lonelier stones and r for ʀ hold in everything but the last step, where too few stones remain. The share in groups concerns the 66 of 122 stones whose setting we know, and stones that stand together are counted one by one, so that difference is somewhat less certain than the figures suggest. The plans and calculations are open on GitHub, linked below.
 
 ## Sources
 

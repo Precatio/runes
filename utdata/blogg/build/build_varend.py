@@ -78,6 +78,10 @@ FACTS = [
     (ING, "de hedniskt-sakrala ortnamnen Torsås och Torsjö"), (H, "Kulten verkar ha varit knuten direkt till enskilda hövdingamiljöer"),
     (H, "medan bönen dominerar klart i Värend"),
     (BEN, "Fascinerad av sägnerna om sköldmön Blända och hennes bragder i forna strider mot danskarna"),
+    (BEN, "Petter Rudbeck på Huseby"), (BEN, "vidlyftiga samband mellan sagan, fornlämningsmiljön och ortnamnen"),
+    (BERG, "bör i likhet med övriga byar i denna del av Värend ha omfattat 4-5 gårdar"),
+    (H, "Snarare utgjorde Värend och Finnveden vid denna tid en form av egna ”riken”"),
+    (ALM, "Dessförinnan torde namnet hava varit Värends lagsaga"),
 ]
 for fil, q in FACTS:
     said(fil, q)
@@ -102,7 +106,7 @@ Namnet Värend kan vara mycket gammalt, kanske lika gammalt som bronsåldern. De
 
 ## Byarna vid sjöarna
 
-I centralbygden kring sjöarna är byarna stora, med minst fem eller sex gårdar, ofta fler. Ingelstad har på medeltiden tio gårdar. Kring Bergkvara, längre söderut, är byarna mindre, fyra eller fem gårdar. Vid Sävsjö i norra Värend har man hittat långa, smala tegar som började anläggas på 500-talet – spåren av flera gårdar som delade på marken, troligen en by som höll på att formas.
+I centralbygden kring sjöarna är byarna stora, med minst fem eller sex gårdar, ofta fler. Ingelstad har på medeltiden tio gårdar. Kring Bergkvara, längre söderut, bör byarna på medeltiden ha varit mindre, fyra eller fem gårdar. Vid Sävsjö i norra Värend har man hittat långa, smala tegar som började anläggas på 500-talet – spåren av flera gårdar som delade på marken, troligen en by som höll på att formas.
 
 Föreställ dig en sådan by en höstdag: röken från husen, säden som bärgas på åkrarna kring sjön, korna som drivs hem från skogen. Det är åkern som betyder mest här i mitten av landet. Ute i randbygderna, där skogen är närmare, är det boskapen.
 
@@ -121,7 +125,7 @@ De stora stenrösena som Värend är känt för är mycket äldre. Värend har t
 
 Hur var landet styrt? Arkeologen Martin Hansson har föreslagit en bild, och han kallar den själv hypotetisk. Hövdingen satt i Ingelstad, vid den stora högen. Några av hans följeslagare bodde i Rinkaby och Tegnaby, ett par kilometer norrut. Ännu längre norrut låg kultplatsen Hov och Thiudby, där tinget hölls – på udden i Helgasjön där biskoparna långt senare byggde borgen Kronoberg. Ortnamnen i centrala Värend pekar mot samma trakt: Hov, Växjö, Helgö, Helgasjön och ett försvunnet Tuna. Länsstyrelsen skriver att Thiudby anses ha varit tingsplats för ”kungadömet” Värend.
 
-Det är en tolkning, men den bygger på något som Hansson menar är säkert: att Värend och Finnveden redan under yngre järnålder var egna riken, med en gräns mellan sig. På medeltiden var Värend en del av en lagsaga som omfattade tre land, Finnveden, Värend och Njudung. Lagsagan hade tidigare hetat Värends lagsaga. Landet hade då fyra härader, och när ett av dem delades fick lagsagan namnet Tiohärad, före 1266. Lagen skrevs ner under 1200-talets senare hälft, men bara kyrkobalken finns kvar.
+Det är en tolkning, men den passar med Hanssons bild av landen: under yngre järnålder var Värend och Finnveden snarare en form av egna ”riken”. På medeltiden var Värend en del av en lagsaga som omfattade tre land, Finnveden, Värend och Njudung. Lagsagan hade troligen tidigare hetat Värends lagsaga. Värend bör ursprungligen ha haft fyra härader, och när ett av dem delades fick lagsagan namnet Tiohärad, före 1266. Lagen skrevs förmodligen ner under 1200-talets senare hälft, men bara kyrkobalken finns kvar.
 
 ![Karta över Värend omkring år 1000 med runstenarna och platserna i texten]({MAP['sv']})
 **Karta.** Värend omkring år 1000. Rostfärgat är Värend, ljust grannlanden; gränserna är ungefärliga. Grå punkter är runstenar, ringar platser i texten. Karta: Vitki, efter SGU:s modell för strandförskjutningen år 1000, Institutet för språk och folkminnens ortnamnsregister och Rundata.
@@ -136,7 +140,7 @@ Sjöarna var vägar. I sjön Furen har man hittat ett fynd som har tolkats som v
 
 ## Tron
 
-Ortnamnen minns gudarna: Frö, Oden och Tor. Nära Inglinge hög ligger Torsås och Torsjö. Kulten verkar ha varit knuten till hövdingarnas gårdar. Namnen Helgasjön och Helgö betyder kanske inte ”helig” utan ”fredad”, enligt ortnamnsforskaren Staffan Fridell. Och sägnen om sköldmön Blända, som slog danskarna, är en lärd berättelse från 1600-talet, inte historia.
+Ortnamnen minns gudarna: Frö, Oden och Tor. Nära Inglinge hög ligger Torsås och Torsjö. Kulten verkar ha varit knuten till hövdingarnas gårdar. Namnen Helgasjön och Helgö betyder kanske inte ”helig” utan ”fredad”, enligt ortnamnsforskaren Staffan Fridell. Och sägnen om sköldmön Blända, som slog danskarna, är sägen och inte historia; det var Petter Rudbeck på Huseby som på 1600-talet knöt den till fornlämningarna och ortnamnen i trakten.
 
 ## Ett land kring sjöarna
 
@@ -167,7 +171,7 @@ The name Värend may be very old, perhaps as old as the Bronze Age. It is a land
 
 ## The villages by the lakes
 
-In the central district round the lakes the villages are large, with at least five or six farms, often more. Ingelstad has ten farms in the Middle Ages. Around Bergkvara, further south, the villages are smaller, four or five farms. At Sävsjö in northern Värend long, narrow strips of field have been found that began to be laid out in the sixth century – the traces of several farms sharing the land, probably a village taking shape.
+In the central district round the lakes the villages are large, with at least five or six farms, often more. Ingelstad has ten farms in the Middle Ages. Around Bergkvara, further south, the villages in the Middle Ages were probably smaller, four or five farms. At Sävsjö in northern Värend long, narrow strips of field have been found that began to be laid out in the sixth century – the traces of several farms sharing the land, probably a village taking shape.
 
 Imagine such a village on an autumn day: the smoke from the houses, the grain being brought in from the fields by the lake, the cows driven home from the forest. Here in the middle of the land it is the field that matters most. Out in the fringes, where the forest is nearer, it is the cattle.
 
@@ -186,7 +190,7 @@ The great stone cairns that Värend is known for are much older. Värend probabl
 
 How was the land governed? The archaeologist Martin Hansson has proposed a picture, and he himself calls it hypothetical. The chieftain sat at Ingelstad, by the great mound. Some of his retinue lived at Rinkaby and Tegnaby, a couple of kilometres north. Further north still lay the cult place Hov and Thiudby, where the assembly was held – on the point in Lake Helgasjön where the bishops much later built the castle of Kronoberg. The place-names of central Värend point to the same district: Hov, Växjö, Helgö, Helgasjön and a lost Tuna. The county board writes that Thiudby is thought to have been the assembly place of the "kingdom" of Värend.
 
-It is an interpretation, but it rests on something Hansson considers certain: that Värend and Finnveden were already in the Late Iron Age realms of their own, with a border between them. In the Middle Ages Värend was part of a law province that covered three lands, Finnveden, Värend and Njudung. It had earlier been called the law province of Värend. The land then had four hundreds, and when one of them was split the law province got the name Tiohärad, the Ten Hundreds, before 1266. The law was written down in the later thirteenth century, but only its church section survives.
+It is an interpretation, but it fits Hansson's picture of the lands: in the Late Iron Age Värend and Finnveden were rather a kind of "realms" of their own. In the Middle Ages Värend was part of a law province that covered three lands, Finnveden, Värend and Njudung. It had probably earlier been called the law province of Värend. Värend must originally have had four hundreds, and when one of them was split the law province got the name Tiohärad, the Ten Hundreds, before 1266. The law was probably written down in the later thirteenth century, but only its church section survives.
 
 ![Map of Värend around AD 1000 with the runestones and the places in the text]({MAP['en']})
 **Map.** Värend around AD 1000. Rust is Värend, light the neighbouring lands; the borders are approximate. Grey points are runestones, rings places in the text. Map: Vitki, after the Geological Survey of Sweden's shore-displacement model for AD 1000, the place-name register of the Institute for Language and Folklore, and Rundata.
@@ -201,7 +205,7 @@ The lakes were roads. In Lake Furen a find has been made that has been interpret
 
 ## Belief
 
-The place-names remember the gods: Frey, Odin and Thor. Near Inglinge hög lie Torsås and Torsjö. The cult seems to have been tied to the chieftains' farms. The names Helgasjön and Helgö may mean not "holy" but "protected", according to the place-name scholar Staffan Fridell. And the legend of the shield-maiden Blända, who beat the Danes, is a learned story from the seventeenth century, not history.
+The place-names remember the gods: Frey, Odin and Thor. Near Inglinge hög lie Torsås and Torsjö. The cult seems to have been tied to the chieftains' farms. The names Helgasjön and Helgö may mean not "holy" but "protected", according to the place-name scholar Staffan Fridell. And the legend of the shield-maiden Blända, who beat the Danes, is legend, not history; it was Petter Rudbeck of Huseby who in the seventeenth century tied it to the ancient monuments and place-names of the district.
 
 ## A land round the lakes
 

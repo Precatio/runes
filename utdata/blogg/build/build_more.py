@@ -76,6 +76,8 @@ FACTS = [
     (DMS, "men det är inte uteslutet att vissa lokaler utnyttjats under sen vikingatid."),
     (FV25, "Kalibreringen visar på en kontinuerlig småskalig produktion under hela äldre järnåldern som minskade under yngre järnålder."),
     (HIK, "tillgång på myrmalm, som tidigt utvanns och under medeltiden blev en av Kalmars viktigare exportprodukter."),
+    (ALM, "omfattande de tre landen Finnveden, Värend och Njudung"), (HOS, "Binga i Hossmo socken"),
+    (HOS, "inga av dem hade någon markering över mark"),
 ]
 for fil, q in FACTS:
     said(fil, q)
@@ -92,7 +94,7 @@ VAREND = "/artiklar/de-gamla-landen-varend"
 
 title = "De gamla landen: Möre – kusten vid sundet"
 summary = ("Möre var kustlandet vid Kalmarsund: en smal slätt av bördig lera mellan skogen och havet, där byarna låg vid åarna "
-           "och skeppen gick förbi utanför. Det hörde inte till Smålands små land utan till Östergötlands lag. Följ med dit "
+           "och skeppen gick förbi utanför. Det hörde inte till Tiohärads lagsaga utan dömdes efter Östergötlands lag. Följ med dit "
            "omkring år 1000. En del i serien De gamla landen.")
 
 body = f"""Öland ligger långt och lågt på andra sidan Kalmarsund. Genom sundet går för tusen år sedan den gamla segelleden, nära kusten, och här passerar en stor del av alla som färdas mellan Västeuropa och de norra delarna av Östersjön. Kusten har gott om skyddade lägen att lägga till vid. Där sundet är som smalast, vid Ryssby, är det bara en kort färd över till Öland.
@@ -114,7 +116,7 @@ Bygden samlas kring åarnas nedre lopp, i det som senare blir socknarna Kalmar, 
 
 ## De döda
 
-Gravfälten i Möre är varierade. I de stora gravfälten blandas rösen, domarringar, resta stenar och skeppsformiga stenkretsar, gravar från många olika tider. Från yngre järnåldern finns gravfält med högar längs åsryggen vid Harby i Ljungby. Ett av dem plundrades på 1870-talet, och det som kom tillbaka var rikt: åtta svärd, sju spjutspetsar, fem pilspetsar och en yxa, åtta spelbrickor av bärnsten och 450 pärlor. På andra sidan ån, vid Binga, var gravarna enkla och omarkerade, och i fyra av dem stod ett lerkärl som troligen innehållit mat eller dryck åt den döde.
+Gravfälten i Möre är varierade. I de stora gravfälten blandas rösen, domarringar, resta stenar och skeppsformiga stenkretsar, gravar från många olika tider. Från yngre järnåldern finns gravfält med högar längs åsryggen vid Harby i Ljungby. Ett av dem plundrades på 1870-talet, och det som kom tillbaka var rikt: åtta svärd, sju spjutspetsar, fem pilspetsar och en yxa, åtta spelbrickor av bärnsten och 450 pärlor. Vid Binga i Hossmo var gravarna enkla och omarkerade, och i fyra av dem stod ett lerkärl som troligen innehållit mat eller dryck åt den döde.
 
 Längs kusten ligger också stora rösen, tjugo meter breda eller mer. De är från bronsåldern. Den som rodde längs Möres kust omkring år 1000 såg dem som minnen från en tid ingen längre kunde berätta om.
 
@@ -131,11 +133,11 @@ Söderut, mitt i den rikaste jordbruksbygden, ligger Hagby, som troligen tidigt 
 
 Bygderna i Möre hade troligen stor självständighet när medeltiden började, med egna tingssocknar. I Dörby finns namnen Tingby och Smedby, som har tolkats som platsen där tinget hölls och en hantverksplats. Landsting omtalas i Dörby 1393 och 1521.
 
-Men Möre hörde inte till de småländska landen. Det dömdes efter östgötsk lag och hörde till Linköpings stift. Norra och Södra Möre tillhörde Östgöta lagsaga ända till 1559, då Smålands lagsaga bildades. Kusten vid sundet hade sin väg till makten norrut, inte västerut genom skogen.
+Men Möre hörde inte till Tiohärad, lagsagan för de småländska landen Finnveden, Värend och Njudung. Det dömdes efter östgötsk lag och hörde till Linköpings stift. Norra och Södra Möre tillhörde Östgöta lagsaga ända till 1559, då Smålands lagsaga bildades. Kusten vid sundet hade sin väg till makten norrut, inte västerut genom skogen.
 
 ## Silvret och tron
 
-I Voxtorp har två vikingatida skatter av arabiska mynt hittats, och i Möre fortsatte man att gräva ner silver ovanligt länge, ända in i början av 1200-talet. Kristendomen kom men slog rot långsamt. De första tecknen är runstenar med kors, från Arby, Ljungby, Kalmar och Ryssby. Att tron skulle ha varit djupare förankrad i bygden i början av 1100-talet är enligt Andersson knappast troligt. Senare byggdes en rad kyrkor längs kusten som borgar.
+I Voxtorp har två vikingatida skatter av arabiska mynt hittats, och i Möre fortsatte man att gräva ner silver ovanligt länge, ända in i början av 1200-talet. Kristendomen kom men slog rot långsamt. De första tecknen är enligt Andersson runstenar med kors, från Arby, Ljungby, Kalmar och Ryssby. Att tron skulle ha varit djupare förankrad i bygden i början av 1100-talet är enligt Andersson knappast troligt. Senare byggdes en rad kyrkor längs kusten som borgar.
 
 Och järnet? Det finns närmare fyrahundra platser i Möre där man framställt järn ur myrmalm, men de flesta är medeltida, även om några kan ha använts redan under sen vikingatid. I hela Kalmar län minskade järnframställningen under yngre järnåldern. Myrmalmen blev viktig först senare, som en av Kalmars exportvaror.
 
@@ -161,8 +163,8 @@ Landskapet, byarna, tinget och lagsagan bygger på *Det medeltida Sverige* om M�
 
 title_en = "The old lands: Möre – the coast by the sound"
 summary_en = ("Möre was the coastal land by the Kalmar Sound: a narrow plain of fertile clay between the forest and the sea, where the "
-              "villages lay by the rivers and the ships went by offshore. It did not belong to Småland's small lands but to the law "
-              "of Östergötland. Come along around AD 1000. A part of the series The old lands.")
+              "villages lay by the rivers and the ships went by offshore. It did not belong to the law province of Tiohärad but was "
+              "judged by the law of Östergötland. Come along around AD 1000. A part of the series The old lands.")
 
 body_en = f"""Öland lies long and low on the far side of the Kalmar Sound. A thousand years ago the old sailing route runs through the sound, close to the coast, and much of all the traffic between Western Europe and the northern Baltic passes here. The coast has plenty of sheltered places to put in. Where the sound is narrowest, at Ryssby, it is only a short crossing to Öland.
 
@@ -183,7 +185,7 @@ The settlement gathers round the lower courses of the rivers, in what will later
 
 ## The dead
 
-The grave fields in Möre are varied. In the large grave fields cairns, stone circles, standing stones and ship-shaped settings mix, graves from many different times. From the Late Iron Age there are grave fields with mounds along the ridge at Harby in Ljungby. One of them was plundered in the 1870s, and what came back was rich: eight swords, seven spearheads, five arrowheads and an axe, eight amber gaming pieces and 450 beads. On the other side of the river, at Binga, the graves were simple and unmarked, and in four of them stood a clay pot that probably held food or drink for the dead.
+The grave fields in Möre are varied. In the large grave fields cairns, stone circles, standing stones and ship-shaped settings mix, graves from many different times. From the Late Iron Age there are grave fields with mounds along the ridge at Harby in Ljungby. One of them was plundered in the 1870s, and what came back was rich: eight swords, seven spearheads, five arrowheads and an axe, eight amber gaming pieces and 450 beads. At Binga in Hossmo the graves were simple and unmarked, and in four of them stood a clay pot that probably held food or drink for the dead.
 
 Along the coast there are also great cairns, twenty metres across or more. They are from the Bronze Age. Whoever rowed along the coast of Möre around AD 1000 saw them as memorials from a time no one could tell of any more.
 
@@ -200,11 +202,11 @@ To the south, in the middle of the richest farmland, lies Hagby, which was proba
 
 The districts of Möre probably had great independence when the Middle Ages began, with assembly parishes of their own. At Dörby there are the names Tingby and Smedby, which have been read as the place where the assembly met and a craft site. A land assembly is mentioned at Dörby in 1393 and 1521.
 
-But Möre did not belong to the lands of Småland. It was judged by the law of Östergötland and belonged to the diocese of Linköping. North and South Möre belonged to the law province of Östergötland right up to 1559, when the law province of Småland was formed. The coast by the sound had its road to power to the north, not west through the forest.
+But Möre did not belong to Tiohärad, the law province of the Småland lands Finnveden, Värend and Njudung. It was judged by the law of Östergötland and belonged to the diocese of Linköping. North and South Möre belonged to the law province of Östergötland right up to 1559, when the law province of Småland was formed. The coast by the sound had its road to power to the north, not west through the forest.
 
 ## The silver and the faith
 
-At Voxtorp two Viking-age hoards of Arabic coins have been found, and in Möre people went on burying silver unusually long, right into the early thirteenth century. Christianity came but took root slowly. The first signs are runestones with crosses, from Arby, Ljungby, Kalmar and Ryssby. That the faith was more deeply rooted in the district by the early twelfth century is, according to Andersson, hardly likely. Later a row of churches was built along the coast as fortresses.
+At Voxtorp two Viking-age hoards of Arabic coins have been found, and in Möre people went on burying silver unusually long, right into the early thirteenth century. Christianity came but took root slowly. The first signs, according to Andersson, are runestones with crosses, from Arby, Ljungby, Kalmar and Ryssby. That the faith was more deeply rooted in the district by the early twelfth century is, according to Andersson, hardly likely. Later a row of churches was built along the coast as fortresses.
 
 And the iron? There are close to four hundred places in Möre where iron was made from bog ore, but most are medieval, even if some may have been used already in the late Viking Age. In the whole of Kalmar county iron production declined during the Late Iron Age. The bog ore became important only later, as one of Kalmar's exports.
 

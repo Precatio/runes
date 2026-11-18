@@ -155,7 +155,7 @@ Omkring år 1000 bor man inte längre i de husen. På många håll ligger gårde
 
 Under golven ligger silvret. Mer än sjuhundra silverskatter från vikingatiden har hittats på Gotland, i en omfattning som saknar motstycke någon annanstans. Många kom fram när myrarna dikades ut och nya åkrar bröts på 1800-talet. Skatterna verkar ofta ha legat kvar i gårdens hus, ibland påfyllda med tiden, kanske som offer till huset. Det är en tolkning, men den ger en bild: silver som inte bara var rikedom utan också något man lade ner hos sig.
 
-Silvret kom över havet. Vid Fröjel, där gårdarna och kyrkan ligger nere vid den vikingatida hamnen, har man hittat en verkstad där silver renades i en ugn, daterad till mellan 970 och 1160. Vid Bandlunde i Burs, på östkusten, finns spår av en hamn och handelsplats med fiskebodar, båthus och flera silverskatter. Länsstyrelsen har registrerat 125 möjliga hamnplatser runt ön, de flesta aldrig undersökta. Gutasagan, nedskriven på 1200-talet, minns att gutarna, fast de var hedningar, seglade i handel till alla länder, både kristna och hedniska.
+Silvret kom över havet. Vid Fröjel, där gårdarna och kyrkan ligger nere vid den vikingatida hamnen, har man hittat en verkstad där silver renades i en ugn, daterad till mellan 970 och 1160. Vid Bandlunde i Burs, på östkusten, finns spår av en hamn och handelsplats med fiskebodar, båthus och flera silverskatter. Länsstyrelsen har registrerat 125 möjliga hamnplatser runt ön, de flesta aldrig undersökta. Gutasagan, nedskriven på 1200- eller 1300-talet, minns att gutarna, fast de var hedningar, seglade i handel till alla länder, både kristna och hedniska.
 
 Och Visby? Där Strandgatan går låg strandlinjen på vikingatiden, och små hus av trä låg i rader upp från hamnen. Men platsen var snarare en handelsplats än en stad. Arkeologen Mats Roslund menar att staden Visby är medeltida från början.
 
@@ -170,7 +170,7 @@ Föreställ dig att färdas längs en sådan väg: förbi gårdarnas gravfält, 
 
 ## Tinget mitt på ön
 
-Gotland styrde sig självt. Ön var indelad i lokala ting, i settingar och i tre tredingar, och över dem stod Gutnaltinget, där man fattade beslut som rörde hela Gotland. Gutalagen visar hur nivåerna hängde ihop: settingstinget fick döma till högst tre marks böter, tredingstinget till sex och Gutnaltinget till tolv. Socknarna hade en ovanligt stark ställning, och det var de jordägande bönderna som dominerade samhället. Någon adel fanns inte. Arkeologen Majvor Östergren menar att samma ordning tycks ha gällt redan på vikingatiden.
+Gotland styrde sig självt. Ön var indelad i lokala ting, i settingar och i tre tredingar, och över dem stod Gutnaltinget, där man fattade beslut som rörde hela Gotland. Gutalagen visar hur nivåerna hängde ihop: settingstinget fick döma till högst tre marks böter, tredingstinget till sex och Gutnaltinget till tolv. Socknarna hade en ovanligt stark ställning, och det var de jordägande bönderna som dominerade samhället. Arkeologen Majvor Östergren menar att samma ordning tycks ha gällt redan på vikingatiden.
 
 Men allt detta kommer ur Gutalagen och Gutasagan, vars äldsta delar skrevs ner på 1220-talet. Tredingarna nämns första gången 1213, de lokala tingen namnges först 1412, och att Gutnaltinget låg i Roma står först i en tysk översättning av lagen från 1401.
 
@@ -183,7 +183,7 @@ Roma ligger mitt på ön, på en låg udde omgiven av sjöar och myrar. På en �
 
 Gotland var ett eget land, men det hade en överenskommelse med sveakungen. Enligt Gutasagan betalade gutarna sextio mark silver om året, fyrtio till kungen och tjugo till jarlen, och kungens sändebud skulle hämta skatten vid Gutnaltinget. Gutarna skulle följa kungen i ledung med sju skepp, men bara mot hedniska länder, inte mot kristna. När överenskommelsen gjordes vet ingen, och villkoren speglar troligen 1200-talet mer än vikingatiden.
 
-Men en runsten i Uppland visar att något liknande fanns redan på 1000-talet. Vid Torsätra i Västra Ryd, i [Attundaland]({ATT}), reste två bröder en sten efter sin bror:
+Men en runsten i Uppland tyder på att något liknande fanns redan på 1000-talet. Vid Torsätra i Västra Ryd, i [Attundaland]({ATT}), reste två bröder en sten efter sin bror:
 
 > *{nz("U 614")}*
 
@@ -191,13 +191,13 @@ Skule och Folke lät resa denna sten efter Husbjörn, sin broder. Han låg sjuk 
 
 ## Borgarna
 
-Gotland har sina borgar. Torsburgen, byggd i omgångar mellan 200 och 900, omges av en två kilometer lång stenmur där berget inte skyddar, men inga spår av bebyggelse finns innanför. Kanske var det en plats att fly till. Grogarnsberget på östkusten användes under vikingatiden och den tidiga medeltiden, och kanske kunde en vårdkase där tändas och signalen föras vidare från borg till borg längs hela östkusten.
+Gotland har sina borgar. Torsburgen, troligen byggd i omgångar mellan 200 och 900, omges av en två kilometer lång stenmur där berget inte skyddar, men inga spår av bebyggelse finns innanför. Kanske var det en plats att fly till. Grogarnsberget på östkusten tros ha använts under vikingatiden och den tidiga medeltiden, och kanske kunde en vårdkase där tändas och signalen föras vidare från borg till borg längs hela östkusten.
 
 ## Tron
 
 Gutasagan berättar hur det var före kristendomen: folk trodde på lundar och högar, på heliga platser och gamla platser, och på hedniska gudar. Det största offret hölls av hela landet, men annars höll varje treding sitt eget. Gutalagen förbjuder senare att be till lundar, högar, hedniska gudar och heliga platser – ett förbud som visar vad man hade gjort. I myren vid Roma har man vid utdikning hittat guld och betar av vildsvin.
 
-Sagan berättar också hur det nya kom. En man, Ormika, tog emot kristendomen efter Olav den heliges lära och byggde ett bönehus där Akergarns kyrka sedan kom att stå. Det är en berättelse, nedskriven två hundra år senare, men den pekar mot samma tid som den här artikeln: början av 1000-talet.
+Sagan berättar också hur det nya kom. En man, Ormika, tog emot kristendomen efter Olav den heliges lära och byggde ett bönehus där Akergarns kyrka sedan kom att stå. Det är en berättelse, nedskriven två eller tre hundra år senare, men den pekar mot samma tid som den här artikeln: början av 1000-talet.
 
 ## Ett land mitt i havet
 
@@ -205,7 +205,7 @@ Gotland omkring år 1000 är ett land som lever av havet och styr sig självt. G
 
 ## Så vet vi det
 
-Landskapet, gårdarna, hamnarna och borgarna bygger på länsstyrelsens kunskapsunderlag för Gotlands riksintressen, Naturvårdsverkets beskrivning av Paviken och artiklar i *Fornvännen* om silverskatterna och verkstaden i Fröjel. Tingen, lagen och skatten till sveakungen bygger på Gutalagen och Gutasagan, som skrevs ner på 1200-talet; de visar medeltidens Gotland, och om ordningen var densamma på vikingatiden är omstritt. Var Gutnaltinget låg, om ön var ett land av jämlika bönder eller av stormän, och när Gotland kom under sveakungen är frågor där forskarna inte är eniga. De 1 800 husgrunderna av sten är äldre än vikingatiden, och att silverskatterna var offer till huset är en tolkning. Länkarna till källorna finns nedan.
+Landskapet, gårdarna, hamnarna och borgarna bygger på länsstyrelsens kunskapsunderlag för Gotlands riksintressen, Naturvårdsverkets beskrivning av Paviken och artiklar i *Fornvännen* om silverskatterna och verkstaden i Fröjel. Tingen, lagen och skatten till sveakungen bygger på Gutalagen och Gutasagan, som skrevs ner på 1200-talet och kanske in på 1300-talet; de visar medeltidens Gotland, och om ordningen var densamma på vikingatiden är omstritt. Var Gutnaltinget låg, om ön var ett land av jämlika bönder eller av stormän, och när Gotland kom under sveakungen är frågor där forskarna inte är eniga. De 1 800 husgrunderna av sten är äldre än vikingatiden, och att silverskatterna var offer till huset är en tolkning. Länkarna till källorna finns nedan.
 
 ## Källor
 
@@ -247,7 +247,7 @@ Around AD 1000 people no longer live in those houses. In many places the farm's 
 
 Under the floors lies the silver. More than seven hundred Viking-age silver hoards have been found on Gotland, on a scale unseen anywhere else. Many came to light when the bogs were drained and new fields broken in the nineteenth century. The hoards often seem to have stayed in the farm's buildings, sometimes added to over time, perhaps as offerings to the house. That is an interpretation, but it gives a picture: silver that was not only wealth but also something one laid down at home.
 
-The silver came over the sea. At Fröjel, where the farms and the church lie down by the Viking-age harbour, a workshop has been found where silver was refined in a furnace, dated to between 970 and 1160. At Bandlunde in Burs, on the east coast, there are traces of a harbour and trading place with fishing huts, boathouses and several silver hoards. The county board has registered 125 possible harbour sites round the island, most never examined. Guta saga, written down in the thirteenth century, remembers that the Gotlanders, though heathen, sailed on trading voyages to all countries, Christian and heathen alike.
+The silver came over the sea. At Fröjel, where the farms and the church lie down by the Viking-age harbour, a workshop has been found where silver was refined in a furnace, dated to between 970 and 1160. At Bandlunde in Burs, on the east coast, there are traces of a harbour and trading place with fishing huts, boathouses and several silver hoards. The county board has registered 125 possible harbour sites round the island, most never examined. Guta saga, written down in the thirteenth or fourteenth century, remembers that the Gotlanders, though heathen, sailed on trading voyages to all countries, Christian and heathen alike.
 
 And Visby? Where Strandgatan runs, the shoreline lay in the Viking Age, and small wooden houses lay in rows up from the harbour. But the place was a trading place rather than a town. The archaeologist Mats Roslund argues that the town of Visby was medieval from the start.
 
@@ -262,7 +262,7 @@ Imagine travelling along such a road: past the farms' grave fields, past stones 
 
 ## The assembly in the middle of the island
 
-Gotland governed itself. The island was divided into local assemblies, into sixths and into three thirds, and above them stood the Gutnalthing, where decisions were made that concerned the whole of Gotland. Guta lag shows how the levels fitted together: the sixth's assembly could fine up to three marks, the third's up to six and the Gutnalthing up to twelve. The parishes had an unusually strong position, and it was the land-owning farmers who dominated society. There was no nobility. The archaeologist Majvor Östergren thinks the same order seems to have held already in the Viking Age.
+Gotland governed itself. The island was divided into local assemblies, into sixths and into three thirds, and above them stood the Gutnalthing, where decisions were made that concerned the whole of Gotland. Guta lag shows how the levels fitted together: the sixth's assembly could fine up to three marks, the third's up to six and the Gutnalthing up to twelve. The parishes had an unusually strong position, and it was the land-owning farmers who dominated society. The archaeologist Majvor Östergren thinks the same order seems to have held already in the Viking Age.
 
 But all this comes from Guta lag and Guta saga, whose oldest parts were written down in the 1220s. The thirds are first mentioned in 1213, the local assemblies are first named in 1412, and that the Gutnalthing met at Roma is first stated in a German translation of the law from 1401.
 
@@ -275,7 +275,7 @@ Roma lies in the middle of the island, on a low promontory surrounded by lakes a
 
 Gotland was a land of its own, but it had an agreement with the king of the Swedes. According to Guta saga the Gotlanders paid sixty marks of silver a year, forty to the king and twenty to the jarl, and the king's messengers were to collect the tax at the Gutnalthing. The Gotlanders were to follow the king on levy with seven ships, but only against heathen lands, not against Christian ones. When the agreement was made no one knows, and the terms probably reflect the thirteenth century more than the Viking Age.
 
-But a runestone in Uppland shows that something similar existed already in the eleventh century. At Torsätra in Västra Ryd, in [Attundaland]({ATT}), two brothers raised a stone for their brother:
+But a runestone in Uppland suggests that something similar existed already in the eleventh century. At Torsätra in Västra Ryd, in [Attundaland]({ATT}), two brothers raised a stone for their brother:
 
 > *{nz("U 614")}*
 
@@ -283,13 +283,13 @@ Skúli and Folki had this stone raised in memory of Húsbjôrn, their brother. H
 
 ## The forts
 
-Gotland has its forts. Torsburgen, built in stages between 200 and 900, is enclosed by a stone wall two kilometres long where the cliff gives no protection, but there are no traces of settlement inside. Perhaps it was a place to flee to. Grogarnsberget on the east coast was used in the Viking Age and the early Middle Ages, and perhaps a beacon there could be lit and the signal passed on from fort to fort along the whole east coast.
+Gotland has its forts. Torsburgen, probably built in stages between 200 and 900, is enclosed by a stone wall two kilometres long where the cliff gives no protection, but there are no traces of settlement inside. Perhaps it was a place to flee to. Grogarnsberget on the east coast is thought to have been used in the Viking Age and the early Middle Ages, and perhaps a beacon there could be lit and the signal passed on from fort to fort along the whole east coast.
 
 ## Belief
 
 Guta saga tells how it was before Christianity: people believed in groves and grave mounds, in holy places and ancient sites, and in heathen gods. The greatest sacrifice was held by the whole land, but otherwise each third held its own. Guta lag later forbids praying to groves, mounds, heathen gods and holy places – a ban that shows what people had done. In the mire at Roma gold and wild boar tusks have been found during drainage.
 
-The saga also tells how the new came. A man, Ormika, received Christianity after St Olaf's teaching and built an oratory where Akergarn church later came to stand. It is a story, written down two hundred years later, but it points to the same time as this article: the beginning of the eleventh century.
+The saga also tells how the new came. A man, Ormika, received Christianity after St Olaf's teaching and built an oratory where Akergarn church later came to stand. It is a story, written down two or three hundred years later, but it points to the same time as this article: the beginning of the eleventh century.
 
 ## A land in the middle of the sea
 
@@ -297,7 +297,7 @@ Gotland around AD 1000 is a land that lives by the sea and governs itself. The f
 
 ## How we know
 
-The landscape, the farms, the harbours and the forts rest on the county board's survey of Gotland's areas of national interest, the Swedish Environmental Protection Agency's description of Paviken and articles in *Fornvännen* on the silver hoards and the workshop at Fröjel. The assemblies, the law and the tax to the Swedish king rest on Guta lag and Guta saga, which were written down in the thirteenth century; they show medieval Gotland, and whether the order was the same in the Viking Age is disputed. Where the Gutnalthing met, whether the island was a land of equal farmers or of great men, and when Gotland came under the Swedish king are questions on which researchers do not agree. The 1,800 stone house foundations are older than the Viking Age, and that the silver hoards were offerings to the house is an interpretation. The sources are listed below.
+The landscape, the farms, the harbours and the forts rest on the county board's survey of Gotland's areas of national interest, the Swedish Environmental Protection Agency's description of Paviken and articles in *Fornvännen* on the silver hoards and the workshop at Fröjel. The assemblies, the law and the tax to the Swedish king rest on Guta lag and Guta saga, which were written down in the thirteenth century and perhaps into the fourteenth; they show medieval Gotland, and whether the order was the same in the Viking Age is disputed. Where the Gutnalthing met, whether the island was a land of equal farmers or of great men, and when Gotland came under the Swedish king are questions on which researchers do not agree. The 1,800 stone house foundations are older than the Viking Age, and that the silver hoards were offerings to the house is an interpretation. The sources are listed below.
 
 ## Sources
 

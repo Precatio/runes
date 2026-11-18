@@ -80,6 +80,19 @@ FACTS = [
 ]
 for fil, q in FACTS:
     said(fil, q)
+for q in ("en liten guldring, en annan filigranprydd guldring, sannolikt hänget till en guldbrakteat",
+          "närmast framstår som en kvinnograv", "troligen uppförd redan i mitten av 1100-talet"):
+    said(H if "guld" in q or "kvinnograv" in q else FV12, q)
+said(TRO, "Här karaktäriseras höggravfälten av runda och starkt välvda högar")
+# Vitkis egen kodning av korset (drag.csv, stenarna i sitt gamla land enligt sten_land.json)
+import csv  # noqa: E402
+SL = json.load(open(os.path.join(ROOT, "web", "public", "geo", "sten_land.json"), encoding="utf-8"))
+KORS = {"finnveden": [0, 0], "U": [0, 0]}
+for r in csv.DictReader(open(os.path.join(ROOT, "utdata", "upptackt_v3", "drag.csv"), encoding="utf-8")):
+    if r["pm_kors"] in ("0", "1"):
+        for k in ({"finnveden"} if SL.get(r["signum"]) == "finnveden" else set()) | ({"U"} if r["signum"].startswith("U ") else set()):
+            KORS[k][0] += int(r["pm_kors"]); KORS[k][1] += 1
+assert tuple(KORS["finnveden"]) == (13, 30) and round(100 * KORS["U"][0] / KORS["U"][1]) == 57, KORS
 
 # ---- picture and map --------------------------------------------------------------------------------------------------
 FK = "Kungshögen Bolmsö Sweden.jpg"
@@ -98,7 +111,7 @@ summary = ("Finnveden var det västligaste av Smålands små land: dalgångar l�
 
 body = f"""Lagan har kanske det äldsta namnet i hela trakten. Ån har varit en väg sedan forntiden, både på vattnet och på landsvägen som följer dess lopp, och den som för tusen år sedan färdas söderut längs den går på rullstensåsarna, som bär stigen. Runt omkring ligger Finnveden, det västligaste av Smålands små land.
 
-Bygden ligger i dalgångarna, längs Lagan och Nissan och kring sjöarna Bolmen och Vidöstern. Mellan dem breder ljunghedar ut sig, öppna och karga, och ortnamnen visar att de har funnits länge. Mitt i landet, nästan exakt i dess geografiska centrum, ligger Bolmsö, Smålands största ö, i sjön Bolmen.
+Bygden ligger i dalgångarna, längs Lagan och Nissan och kring sjöarna Bolmen och Vidöstern. Mellan dem breder ljunghedar ut sig, öppna och karga, och ortnamnen tyder på att de har funnits länge. Mitt i landet, nästan exakt i dess geografiska centrum, ligger Bolmsö, Smålands största ö, i sjön Bolmen.
 
 ## Byarna och åkrarna
 
@@ -108,7 +121,7 @@ Föreställ dig en sådan by en sommardag: åkrarna nere i dalen, djuren uppe p�
 
 ## Högarna
 
-Den som färdas genom Finnveden ser högar överallt. Under yngre järnåldern ersattes de gamla gravfälten, med sina resta stenar, domarringar och runda stensättningar, av ett gravskick där nästan allt var högar: på många gravfält är mer än nio av tio gravar högar, runda och välvda, ofta med en ränna runt kanten. Finnveden, och särskilt Sunnerbo, hör till de trakter i landet där gravskicket är som mest enhetligt. Kånna högar söder om Ljungby är länets största gravfält, med omkring 250 gravar. Vid Hamneda ligger 241 högar väl synliga längs vattnet och längs vägen, och i gravarna har man hittat knivar, brynen och pärlor av glas och silver. Kärda, längre norrut, är den socken i Jönköpings län som har flest högar.
+Den som färdas genom Finnveden ser högar överallt. Under yngre järnåldern ersattes de gamla gravfälten, med sina resta stenar, domarringar och runda stensättningar, av ett gravskick där nästan allt var högar: på många gravfält är mer än nio av tio gravar högar, i trakten kring Trotteslöv runda och välvda, ofta med en ränna runt kanten. Finnveden, och särskilt Sunnerbo, hör till de trakter i landet där gravskicket är som mest enhetligt. Kånna högar söder om Ljungby är länets största gravfält, med omkring 250 gravar. Vid Hamneda ligger 241 högar väl synliga längs vattnet och längs vägen, och i gravarna har man hittat knivar, brynen och pärlor av glas och silver. Kärda, längre norrut, är den socken i Jönköpings län som har flest högar.
 
 ![Kungshögen på Bolmsö]({INFO[FK]['thumb']})
 Kungshögen på Bolmsö. Foto: Sven Rosborn, {LIC}, via [Wikimedia Commons]({PAGE}).
@@ -117,7 +130,7 @@ Några gravar berättar mer. Vid Fallnaveka i Berga socken har två människor b
 
 ## Bolmsö
 
-Mitt i Bolmen ligger ön där landets hövding troligen satt. På Bolmsö har man hittat guld från järnåldern, äldre än vikingatiden: en brakteat, guldtenar och två guldgubbar, små tunna bleck med bilder som av allt att döma hörde till den hedniska kulten. Ett par kilometer därifrån ligger ett ställe som heter Hov, ett namn som visar att där funnits en kultplats. Ortnamnen på ön – Husa, Bo, Hov, Tjust och Bollstad – bildar tillsammans en centralort, och ortnamnsforskaren Staffan Fridell ser i dem ett starkt inslag från Svealand, kanske en kolonisation av ön. På Bolmsö har också ett femtontal gravar med slagg från järnframställning hittats, som om de döda hade haft med järnet att göra.
+Mitt i Bolmen ligger ön där landets hövding troligen satt. I en kvinnograv på Bolmsö har man hittat guld: två guldringar, den ena sannolikt öglan till en guldbrakteat, guldtenar och två guldgubbar, små tunna bleck med bilder som av allt att döma hörde till den hedniska kulten. Ett par kilometer därifrån ligger ett ställe som heter Hov, ett namn som visar att där funnits en kultplats. Ortnamnen på ön – Husa, Bo, Hov, Tjust och Bollstad – bildar tillsammans en centralort, och ortnamnsforskaren Staffan Fridell ser i dem ett starkt inslag från Svealand, kanske en kolonisation av ön. På Bolmsö har också ett femtontal gravar med slagg från järnframställning hittats, som om de döda hade haft med järnet att göra.
 
 Många forskare menar att Bolmsö var Finnvedens centrum och platsen för landstinget. Länsstyrelsen skriver att Bolmsö möjligen var för Finnveden vad Visingsö var för Götaland. Men det är en tolkning, och Finnveden hade inte, som Värend, något självklart centrum.
 
@@ -130,9 +143,9 @@ I Finnveden hörde järnet till vardagen. Kring sjön Rusken i Östbo ligger pla
 
 ## Vägen och gränsen
 
-Lagastigen, vägen längs Lagan, var sedan tidig medeltid en av Sveriges viktigaste leder mellan Mälardalen och kontinenten. Kanske syftar själva namnet Finnveden på den leden, som på rullstensåsarna förband södra Skandinavien med Uppsverige; det är en möjlig tolkning. Runstenarna i Tiohärad står tätast i centrala Värend, i Lagans dalgång norr om Hamneda och i centrala Njudung. På Finnvedens stenar dominerar korset, oftare än i Uppland: två av tre stenar.
+Lagastigen, vägen längs Lagan, var sedan tidig medeltid en av Sveriges viktigaste leder mellan Mälardalen och kontinenten. Kanske syftar själva namnet Finnveden på den leden, som på rullstensåsarna förband södra Skandinavien med Uppsverige; det är en möjlig tolkning. Runstenarna i Tiohärad står tätast i centrala Värend, i Lagans dalgång norr om Hamneda och i centrala Njudung. Hur vanligt korset var på Finnvedens stenar beror på hur man räknar. I Martin Hanssons bok bär två av tre stenar ett kors, oftare än i Uppland (67 mot 58 procent). Vitkis egen kodning av stenarna ger mindre: kors på 13 av Finnvedens 30 stenar, mot 57 procent i Uppland.
 
-Finnveden var länge en gränsbygd mot Danmark, som tog vid söder och väster om landet. Ortnamn på -löv, som Trotteslöv i Berga, visar att impulser kom söderifrån. Men det betyder inte att landet var danskt, skriver Hansson. I mitten av 1100-talet byggdes kyrkan i Hamneda, som har tolkats som den svenska kungamaktens utpost i sydväst.
+Finnveden var länge en gränsbygd mot Danmark, som tog vid söder och väster om landet. Ortnamn på -löv, som Trotteslöv i Berga, visar att impulser kom söderifrån. Men det betyder inte att landet var danskt, skriver Hansson. Troligen redan i mitten av 1100-talet byggdes kyrkan i Hamneda, som har tolkats som den svenska kungamaktens utpost i sydväst.
 
 ## Tinget
 
@@ -169,7 +182,7 @@ summary_en = ("Finnveden was the westernmost of Småland's small lands: valleys 
 
 body_en = f"""The Lagan has perhaps the oldest name in the whole district. The river has been a road since prehistoric times, both on the water and on the highway that follows its course, and whoever travels south along it a thousand years ago walks on the gravel ridges that carry the path. All around lies Finnveden, the westernmost of Småland's small lands.
 
-The settlement lies in the valleys, along the Lagan and the Nissan and round the lakes Bolmen and Vidöstern. Between them heaths spread out, open and barren, and the place-names show that they have been there a long time. In the middle of the land, almost exactly at its geographical centre, lies Bolmsö, Småland's largest island, in Lake Bolmen.
+The settlement lies in the valleys, along the Lagan and the Nissan and round the lakes Bolmen and Vidöstern. Between them heaths spread out, open and barren, and the place-names suggest that they have been there a long time. In the middle of the land, almost exactly at its geographical centre, lies Bolmsö, Småland's largest island, in Lake Bolmen.
 
 ## The villages and the fields
 
@@ -179,7 +192,7 @@ Imagine such a village on a summer day: the fields down in the valley, the anima
 
 ## The mounds
 
-Whoever travels through Finnveden sees mounds everywhere. During the Late Iron Age the old grave fields, with their standing stones, stone circles and round stone settings, were replaced by a burial custom in which almost everything was a mound: in many grave fields more than nine graves in ten are mounds, round and domed, often with a ditch round the edge. Finnveden, and Sunnerbo in particular, is among the parts of the country where the burial custom is most uniform. Kånna högar south of Ljungby is the county's largest grave field, with about 250 graves. At Hamneda 241 mounds lie in plain view along the water and along the road, and in the graves knives, whetstones and beads of glass and silver have been found. Kärda, further north, is the parish in Jönköping county with the most mounds.
+Whoever travels through Finnveden sees mounds everywhere. During the Late Iron Age the old grave fields, with their standing stones, stone circles and round stone settings, were replaced by a burial custom in which almost everything was a mound: in many grave fields more than nine graves in ten are mounds, around Trotteslöv round and domed, often with a ditch round the edge. Finnveden, and Sunnerbo in particular, is among the parts of the country where the burial custom is most uniform. Kånna högar south of Ljungby is the county's largest grave field, with about 250 graves. At Hamneda 241 mounds lie in plain view along the water and along the road, and in the graves knives, whetstones and beads of glass and silver have been found. Kärda, further north, is the parish in Jönköping county with the most mounds.
 
 ![The King's Mound on Bolmsö]({INFO[FK]['thumb']})
 The King's Mound on Bolmsö. Photo: Sven Rosborn, {LIC}, via [Wikimedia Commons]({PAGE}).
@@ -188,7 +201,7 @@ Some graves tell more. At Fallnaveka in Berga parish two people were buried toge
 
 ## Bolmsö
 
-In the middle of Bolmen lies the island where the land's chieftain probably sat. On Bolmsö Iron Age gold, older than the Viking Age, has been found: a bracteate, gold rods and two gold-foil figures, small thin plaques with pictures that by all appearances belonged to the heathen cult. A couple of kilometres away lies a place called Hov, a name that shows there was a cult place there. The place-names on the island – Husa, Bo, Hov, Tjust and Bollstad – together form a central place, and the place-name scholar Staffan Fridell sees in them a strong element from Svealand, perhaps a colonisation of the island. On Bolmsö some fifteen graves with slag from iron-making have also been found, as if the dead had had to do with iron.
+In the middle of Bolmen lies the island where the land's chieftain probably sat. In a woman's grave on Bolmsö gold has been found: two gold rings, one of them probably the loop of a gold bracteate, gold rods and two gold-foil figures, small thin plaques with pictures that by all appearances belonged to the heathen cult. A couple of kilometres away lies a place called Hov, a name that shows there was a cult place there. The place-names on the island – Husa, Bo, Hov, Tjust and Bollstad – together form a central place, and the place-name scholar Staffan Fridell sees in them a strong element from Svealand, perhaps a colonisation of the island. On Bolmsö some fifteen graves with slag from iron-making have also been found, as if the dead had had to do with iron.
 
 Many researchers think Bolmsö was Finnveden's centre and the place of the land assembly. The county board writes that Bolmsö was perhaps to Finnveden what Visingsö was to Götaland. But that is an interpretation, and Finnveden had, unlike Värend, no obvious centre.
 
@@ -201,9 +214,9 @@ In Finnveden iron was part of everyday life. Around Lake Rusken in Östbo lie pl
 
 ## The road and the border
 
-Lagastigen, the road along the Lagan, was from the early Middle Ages one of Sweden's most important routes between the Mälaren valley and the continent. Perhaps the very name Finnveden refers to that route, which on the gravel ridges linked southern Scandinavia with Uppsverige; that is one possible reading. The runestones of Tiohärad stand thickest in central Värend, in the Lagan valley north of Hamneda and in central Njudung. On Finnveden's stones the cross dominates, more often than in Uppland: two stones in three.
+Lagastigen, the road along the Lagan, was from the early Middle Ages one of Sweden's most important routes between the Mälaren valley and the continent. Perhaps the very name Finnveden refers to that route, which on the gravel ridges linked southern Scandinavia with Uppsverige; that is one possible reading. The runestones of Tiohärad stand thickest in central Värend, in the Lagan valley north of Hamneda and in central Njudung. How common the cross was on Finnveden's stones depends on how one counts. In Martin Hansson's book two stones in three bear a cross, more often than in Uppland (67 against 58 per cent). Vitki's own coding of the stones gives less: a cross on 13 of Finnveden's 30 stones, against 57 per cent in Uppland.
 
-Finnveden was long a border district towards Denmark, which began south and west of the land. Place-names in -löv, such as Trotteslöv in Berga, show that impulses came from the south. But that does not mean the land was Danish, writes Hansson. In the middle of the twelfth century the church at Hamneda was built, which has been read as the Swedish crown's outpost in the south-west.
+Finnveden was long a border district towards Denmark, which began south and west of the land. Place-names in -löv, such as Trotteslöv in Berga, show that impulses came from the south. But that does not mean the land was Danish, writes Hansson. Probably as early as the middle of the twelfth century the church at Hamneda was built, which has been read as the Swedish crown's outpost in the south-west.
 
 ## The assembly
 
