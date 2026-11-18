@@ -93,6 +93,12 @@ for nr, signa in (("Skalunda 3:1", {"Vg 44", "Vg 45"}), ("Ledberg 5:1", {"Ög 18
             if ((xy[0] - float(r["x"])) ** 2 + (xy[1] - float(r["y"])) ** 2) ** 0.5 <= 500}
     assert near == signa, (nr, near)
 
+# ---- the streets of Ättekulla (OpenStreetMap, within 1.2 km of the farm; downloads/hogar/gator_attekulla.csv)
+GATOR = {r["name"]: int(r["d"]) for r in csv.DictReader(open("/Volumes/2TB/Antigrvity/Runes/downloads/hogar/gator_attekulla.csv", encoding="utf-8"))}
+for g in ("Bifrostgatan", "Midgårdsgatan", "Utgårdsgatan", "Runristargatan", "Sven Tveskäggs gata", "Styrbjörn Starkes gata",
+          "Erik Rödes gata", "Bronsgatan", "Ättekullagatan"):
+    assert GATOR[g] < 1000, g
+
 # ---- the literature
 SOK = sqlite3.connect("/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite")
 
@@ -152,18 +158,24 @@ title = "Kullarna vid skogens rand – från Ättekulla till Sveriges största g
 title_en = "The mounds at the edge of the forest – from Ättekulla to Sweden's largest burial mounds"
 seo_title = "Gravhögar i Sverige: från bronsålder till runstenar"
 seo_title_en = "Burial mounds in Sweden: who lay in them?"
-summary = ("I Ättekulla i Helsingborg låg kullarna vid skogens rand: bronsåldersgravar som användes i tusen år. De flesta "
-           "är borta i dag. Vi följer högarna därifrån över hela landet – 76 000 i registret – och finner att vikingatidens "
+summary = ("Jag växte upp i Ättekulla i Helsingborg, bland gator med fornnordiska namn. Vid skogens rand låg kullarna: "
+           "bronsåldersgravar som användes i tusen år. De flesta är borta i dag. Vi följer högarna därifrån över hela landet – 76 000 i registret – och finner att vikingatidens "
            "runstenar sökte sig till de stora högarna: i Uppland och Södermanland står det en runsten vid var femte vanlig "
            "hög men vid nästan varannan stor.")
-summary_en = ("At Ättekulla in Helsingborg the mounds lay at the edge of the forest: Bronze Age graves used for a thousand years. "
-              "Most are gone today. We follow the mounds from there across the whole country – 76,000 in the register – and "
+summary_en = ("I grew up at Ättekulla in Helsingborg, among streets with Old Norse names. At the edge of the forest lay the mounds: "
+              "Bronze Age graves used for a thousand years. Most are gone today. We follow the mounds from there across the whole country – 76,000 in the register – and "
               "find that the Viking Age runestones sought out the large mounds: in Uppland and Södermanland a runestone stands "
               "by one ordinary mound in five but by almost every other large one.")
 
-body = f"""Den som växte upp i Ättekulla i Helsingborg, som personen bakom Vitki gjorde, minns kullarna vid skogens rand. Vad var de, och vilka låg där?
+body = f"""Den här artikeln börjar inte med en runsten utan med platsen där jag växte upp.
 
-Namnet berättade det. En *ättehög* är ett gammalt ord för en gravhög: släktens hög, där ätten låg. Riksantikvarieämbetets register har namnet Ättekulla, eller något liknande, på 97 platser i över femtio socknar. Det var bygdens eget ord för gravarna.
+Jag växte upp i ett område i Helsingborg som heter Ättekulla. Gatorna där har fornnordiskt inspirerade namn: Bifrostgatan, Midgårdsgatan, Utgårdsgatan, Runristargatan, Sven Tveskäggs gata, Styrbjörn Starkes gata, Erik Rödes gata. Och vid skogens rand låg kullarna.
+
+I [Korpen som heter Minne](/artiklar/korpen-som-heter-minne/) har jag berättat om boken *Gudar och hjältar i nordisk mytologi*, som jag läste många gånger under mina unga år. Där fanns Tor hos Utgårdaloke. I Ättekulla var Utgård också en gata.
+
+Det var där jag började, och det är där den här artikeln börjar. Vilka var kullarna, och vilka låg i dem? Gatunamnen pekar mot vikingatiden, mot kungar och sjöfarare som Sven Tveskägg och Erik Röde. Det visar sig att de pekar fel – med kanske ett undantag: Bronsgatan. Härifrån följer vi sedan kullarna över hela landet, med Vitki.
+
+Själva namnet berättade mer än gatorna. En *ättehög* är ett gammalt ord för en gravhög: släktens hög, där ätten låg. Riksantikvarieämbetets register har namnet Ättekulla, eller något liknande, på 97 platser i över femtio socknar. Det var bygdens eget ord för gravarna.
 
 ## Vilka låg i kullarna?
 
@@ -171,7 +183,7 @@ Arkeologen Otto Rydbeck skrev om just dessa högar i Fornvännen 1912. Vid väge
 
 I de åtta högarna fann Söderberg elva gravar från den äldre bronsåldern – skelettgravar, i kistor av sten eller trä – och femtiotre från den yngre, där de brända benen hade grävts ned i högarna som redan stod där. Man fyllde på med ny jord för att inte störa de gamla gravarna, och högarna växte (s. 89–90). Rydbeck förklarade skillnaden så: i början var det bara ”de förnämligare” som ”hade råd att bestå sina anhöriga ett så kostsamt eftermäle som en kista af sten eller trä med dyrbar utrustning i en svåruppförd grafhög” (s. 90). Senare ”jordades sannolikt rika och fattiga om hvarandra” (s. 91).
 
-Kullarna i Ättekulla var alltså inte vikingarnas. De var tusen år äldre, och de användes i nästan tusen år. Namnet hade rätt: det var släktens högar.
+Kullarna i Ättekulla var alltså inte vikingarnas. De var tusen år äldre, och de användes i nästan tusen år. Namnet hade rätt: det var släktens högar. Av gatorna var det bara Bronsgatan som träffade rätt tid.
 
 Den största undersöktes på nytt av Rolf Petré 1967–68. Den hade varit 25 meter bred och fyra meter hög, byggd av torv runt ett röse av sten. I mitten låg tre skelettgravar med spår av ekkistor, och i centralgraven en bronsdolk i sin slida, från bronsålderns tredje period. Sedan togs högen bort.
 
@@ -182,6 +194,8 @@ Den största undersöktes på nytt av Rolf Petré 1967–68. Den hade varit 25 m
 Inom en och en halv kilometer från Ättekulla gård har registret 54 högar. 39 av dem är borttagna eller förstörda. 1957 ritade G. A. Hellman in högarna på Riksantikvarieämbetets karta över ”Ättekulla området”; i dag står det om en av platserna: ”Området är nu utfyllt.” En boplats från stenåldern strax intill, med tolv härdar och spjutspetsar av flinta, undersöktes och togs bort 1974 i samband med att bostadsområdet planerades.
 
 Men minnet var långt. I Rannsakningarna 1667–68, rikets första stora inventering av fornminnen, berättade de äldsta i Raus att ett slag hade stått där, ”men mellan vem vet de icke”, och att de danska sagornas hjältar Sven Fælding och Starkodder skulle ligga begravda i högarna.
+
+Det finns något nästan försonande i det. Staden växte över platsen och kullarna försvann, de flesta av dem. Men gatorna fick namn efter forntiden, och området bär fortfarande gravhögarnas namn. I Grímnismál säger Oden att han fruktar för korpen Hugin, tanken, men ännu mer för Munin, minnet. Här klarade sig minnet bättre än kullarna.
 
 ## 76 000 kullar
 
@@ -230,14 +244,21 @@ Registret anger sällan när en hög byggdes, så stora och små högar kan vara
 
 - Riksantikvarieämbetet, Kulturmiljöregistret: lämningstypen Hög och högarna i gravfälten, uttag 2 november 2026. Beskrivningarna och sägnerna citeras kort.
 - Samnordisk runtextdatabas (Rundata), Uppsala universitet. Open Database License.
+- Gatunamnen: © OpenStreetMaps bidragsgivare, Open Database License.
 - Rydbeck, Otto 1912. Undersökning af bronsåldershögar i Köpinge, nära Ramlösa hälsobrunn i Skåne. *Fornvännen* 7, s. 81–132. CC BY 4.0.
 - Lindqvist, Sune 1917. Ottarshögen i Vendel. *Fornvännen* 12, s. 127–143. CC BY 4.0.
 - Stjerna, Knut 1906. Drakskatten i Beovulf. *Fornvännen* 1, s. 119–144. CC BY 4.0.
 - Analysplanen och koden: [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-18-hogarna.md)."""
 
-body_en = f"""Whoever grew up at Ättekulla in Helsingborg, as the person behind Vitki did, remembers the mounds at the edge of the forest. What were they, and who lay there?
+body_en = f"""This article does not begin with a runestone but with the place where I grew up.
 
-The name told. An *ättehög* is an old word for a burial mound: the family's mound, where the kin lay. The Swedish National Heritage Board's register has the name Ättekulla, or something like it, at 97 places in more than fifty parishes. It was the district's own word for the graves.
+I grew up in a part of Helsingborg called Ättekulla. Its streets have Old Norse-inspired names: Bifrostgatan, Midgårdsgatan, Utgårdsgatan, Runristargatan (Rune Carvers' Street), Sven Tveskäggs gata, Styrbjörn Starkes gata, Erik Rödes gata. And at the edge of the forest lay the mounds.
+
+In [The raven called Memory](/en/artiklar/korpen-som-heter-minne/) I have told of Brian Branston's *Gods and Heroes from Viking Mythology*, which I read again and again in my young years. Thor's visit to Utgarda-Loki was in it. At Ättekulla, Utgård was also a street.
+
+That is where I began, and that is where this article begins. Who were the mounds, and who lay in them? The street names point to the Viking Age, to kings and seafarers such as Sweyn Forkbeard and Erik the Red. They turn out to point the wrong way – with perhaps one exception: Bronsgatan, Bronze Street. From here we then follow the mounds across the whole country, with Vitki.
+
+The name itself told more than the streets. An *ättehög* is an old word for a burial mound: the family's mound, where the kin lay. The Swedish National Heritage Board's register has the name Ättekulla, or something like it, at 97 places in more than fifty parishes. It was the district's own word for the graves.
 
 ## Who lay in the mounds?
 
@@ -245,7 +266,7 @@ The archaeologist Otto Rydbeck wrote about these very mounds in Fornvännen in 1
 
 In the eight mounds Söderberg found eleven graves from the earlier Bronze Age – inhumations, in coffins of stone or wood – and fifty-three from the later, where the burnt bones had been dug down into the mounds that already stood there. New earth was heaped on so as not to disturb the old graves, and the mounds grew (pp. 89–90). Rydbeck explained the difference thus: at first only ”the more distinguished” could ”afford to give their kin so costly a memorial as a coffin of stone or wood with precious equipment in a laboriously built burial mound” (p. 90). Later ”rich and poor were probably buried side by side” (p. 91).
 
-So the mounds at Ättekulla were not the Vikings'. They were a thousand years older, and they were used for almost a thousand years. The name was right: they were the family's mounds.
+So the mounds at Ättekulla were not the Vikings'. They were a thousand years older, and they were used for almost a thousand years. The name was right: they were the family's mounds. Of the streets, only Bronsgatan hit the right age.
 
 The largest was examined again by Rolf Petré in 1967–68. It had been 25 metres across and four metres high, built of turf around a cairn of stone. In the middle lay three inhumation graves with traces of oak coffins, and in the central grave a bronze dagger in its sheath, from the third period of the Bronze Age. Then the mound was removed.
 
@@ -256,6 +277,8 @@ The largest was examined again by Rolf Petré in 1967–68. It had been 25 metre
 Within one and a half kilometres of Ättekulla farm the register has 54 mounds. 39 of them have been removed or destroyed. In 1957 G. A. Hellman marked the mounds on the Heritage Board's map of ”the Ättekulla area”; today the register says of one of the places: ”The area is now filled in.” A Stone Age settlement close by, with twelve hearths and flint spearheads, was excavated and removed in 1974 when the housing estate was being planned.
 
 But the memory was long. In the Rannsakningar of 1667–68, the kingdom's first great survey of ancient monuments, the oldest people in Raus said that a battle had been fought there, ”but between whom they do not know”, and that the Danish saga heroes Sven Fælding and Starkodder were buried in the mounds.
+
+There is something almost consoling in that. The town grew over the place and the mounds disappeared, most of them. But the streets were named after the ancient past, and the district still bears the burial mounds' name. In Grímnismál Odin says that he fears for the raven Huginn, thought, but even more for Muninn, memory. Here memory fared better than the mounds.
 
 ## 76,000 mounds
 
@@ -304,6 +327,7 @@ The register seldom says when a mound was built, so large and small mounds may b
 
 - Swedish National Heritage Board, Kulturmiljöregistret: the type Hög and the mounds in the grave fields, extract of 2 November 2026. The descriptions and legends are quoted briefly.
 - Scandinavian Runic-text Database (Rundata), Uppsala University. Open Database License.
+- Street names: © OpenStreetMap contributors, Open Database License.
 - Rydbeck, Otto 1912. Undersökning af bronsåldershögar i Köpinge, nära Ramlösa hälsobrunn i Skåne. *Fornvännen* 7, pp. 81–132. CC BY 4.0.
 - Lindqvist, Sune 1917. Ottarshögen i Vendel. *Fornvännen* 12, pp. 127–143. CC BY 4.0.
 - Stjerna, Knut 1906. Drakskatten i Beovulf. *Fornvännen* 1, pp. 119–144. CC BY 4.0.
@@ -318,6 +342,7 @@ for b, lang in ((body, "sv"), (body_en, "en")):
     imgs = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", b)
     assert len(imgs) == 2 and all(re.match(r"/api/blog/figures/[0-9a-f]{16}\.png$", u) for u in imgs), imgs
     assert not re.search(r"\bAI\b", b)
+    assert "personen bakom Vitki" not in b and "person behind Vitki" not in b
 labels = ["Forskning", "Geografi"]
 assert blog_labels.check(labels) is None
 assert len(seo_title) <= 52 and len(seo_title_en) <= 52
