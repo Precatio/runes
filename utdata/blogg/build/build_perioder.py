@@ -22,7 +22,7 @@ RF = json.load(open(os.path.join(ROOT, "utdata", "runform", "resultat.json"), en
 RD = {r["signum"]: r for r in json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["inscriptions"]}
 FIG = json.load(open(os.path.join(ROOT, "utdata", "blogg", "build", "perioder_figurer.json"), encoding="utf-8"))
 for v in FIG.values():
-    assert re.match(r"/api/blog/figures/[0-9a-f]{16}\.png$", v) and os.path.exists(os.path.join(ROOT, "data", "blog_figures", v.split("/")[-1])) or True
+    assert re.match(r"/api/blog/figures/[0-9a-f]{16}\.png$", v) and os.path.exists(os.path.join(ROOT, "data", "blog", "figures", v.split("/")[-1])), v
 
 # ---- the numbers ------------------------------------------------------------------------------------------------------
 A = {int(k): v for k, v in P["P1"]["andel"].items()}
@@ -44,7 +44,11 @@ assert "laid this vault" in RD["Ög 240"]["translation_en"] and "God help" in RD
 assert "Farþegn marked" in RD["M 1"]["translation_en"]
 from src import sri_fyndhistorik  # noqa: E402
 _s = sri_fyndhistorik.for_inscription({"signum": "Ög 240"})
-assert _s and _s["built_in"] and "1913" in (_s["built_in"]["quote"] or "") + " ".join((x.get("quote") or "") for x in _s["refound"]) + (_s["position"] or {}).get("quote", "") or True
+assert _s and _s["built_in"]
+_SRI = re.sub(r"\s+", " ", open("/Volumes/2TB/Antigrvity/Runes/downloads/sri/sri_ostergotland_b02_h03_text.txt", encoding="utf-8", errors="replace").read())
+for _f in ("upptäcktes vid kyrkans reparation 1913 och tillhöra enligt byggmästaren, som ledde reparationen, kyrkans ursprungliga grund",
+           "inmurad i kyrkans västra gavelvägg på insidan vid golvet", "löpa efter stenens kant", "Mittytan visar slingor"):
+    assert _f in _SRI, _f  # SRI II, s. 223 (Ög 240)
 
 # ---- the literature ---------------------------------------------------------------------------------------------------
 SOK = sqlite3.connect("/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite")
@@ -78,13 +82,15 @@ jcheck("futhark_9-10_7_1383036", 7, Q["holm"])                                 #
 jcheck("2013_263", 10, "inget direkt stöd för att", "klimathändelsen år 536", "efter digerdöden")  # Lagerås 2013, s. 271
 jcheck("2002_161", 2, Q["ros"], "under Olof Eriksson Skötkonung")                                                # Ros 2002, s. 161
 jcheck("1989_159", 2, Q["thun"])                                               # Thunmark-Nylén 1989, s. 159
-jcheck("1976_175", 9, "until about 800")                                       # Callmer 1976, s. 182
+jcheck("1981_008", 7, "införde Johannes Bröndsted 1934 termen", "1940, 1960", "Studier i norsk mero")  # Olsén s. 13
 jcheck("2016_007", 3, "occupational layers from the", "c. 750")                # Edberg & Karlsson 2016, s. 8
 LOW = "../period_lit/src/lowenborg_2012_jaah4.txt"
 check(LOW, Q["low"], 13)
 check(LOW, "Migration period 29", 13)
 check(LOW, "Vendel period: 82", 13)
 check("../period_lit/src/daly_2022_northern_emporium_ch9.txt", "winter AD 707-708", 10)
+check("../period_lit/src/daly_2022_northern_emporium_ch9.txt", "earliest exact date for felling activity on the site can now", 16)
+check("../period_lit/src/daly_2022_northern_emporium_ch9.txt", "be placed at winter AD 707-708", 16)  # tryckt s. 338
 
 # ---- pictures ---------------------------------------------------------------------------------------------------------
 INFO = json.load(open(os.path.join(ROOT, "utdata", "blogg", "build", "perioder_imgs.json"), encoding="utf-8"))
@@ -186,7 +192,7 @@ summary_en = ("The Viking Age began in 793 and ended in 1066 – in England. In 
               "when the runes moved from the runestone to the church and the grave, and use groove analysis to look at a grave "
               "slab that stands right in the shift.")
 
-body = f"""År 1913 reparerades Hovs kyrka i Östergötland. Inmurad i västra gaveln, nere vid golvet, hittade man en kalkhäll med runor längs kanterna och ett kors med slingor i mitten. *Ketill lade detta valv*, står det, och: *Gud hjälpe Tunnes själ*. Det är en del av ett tidigkristet gravmonument, och enligt byggmästaren hörde den till kyrkans ursprungliga grund.
+body = f"""År 1913 reparerades Hovs kyrka i Östergötland. Inmurad i västra gaveln, nere vid golvet, hittade man en kalkhäll med runor längs kanterna och slingor i mittytan. *Ketill lade detta valv*, står det, och: *Gud hjälpe Tunnes själ*. Det är en del av ett tidigkristet gravmonument, och enligt byggmästaren hörde den till kyrkans ursprungliga grund.
 
 Är den vikingatida eller medeltida? Rundata räknar den till vikingatiden. Den har runor som en runsten och en bön som många runstenar. Men den låg på en grav vid en kyrka, och det är ett medeltida sätt att minnas de döda.
 
@@ -204,7 +210,7 @@ Ordet vendeltid kommer från båtgravarna vid Vendels kyrka i Uppland, som gräv
 
 {pic("Vendel I", "sv", "Hjälmen ur båtgrav I i Vendel, fyndplatsen som gav perioden dess namn.")}
 
-Grannländerna valde andra namn för samma tid: i Danmark yngre germansk järnålder, i Norge merovingertid, båda från 1934 (Olsén s. 13). Samma århundraden heter alltså olika saker beroende på vilken sida av gränsen arkeologen står.
+Grannländerna valde andra namn för samma tid. I Danmark införde Johannes Brøndsted 1934 germansk järnålder för hela 400–800 och delade den 1940 i en äldre och en yngre del; i Norge infördes merovingertid samma år, 1934 (Olsén s. 13). Samma århundraden heter alltså olika saker beroende på vilken sida av gränsen arkeologen står.
 
 Ordet vikingatid finns redan i Fornvännens första årgång 1906. Men det blev ett huvudord först sent. Vi har räknat hur stor andel av Fornvännens sidor som nämner orden, decennium för decennium.
 
@@ -218,7 +224,7 @@ Om man släpper etiketterna och letar efter förändringar i det som finns kvar,
 
 **530–540-talen.** Vulkanutbrott gav kalla somrar. Vid mitten av 500-talet övergavs gårdar: ”{Q['holm']}”, skriver Per Holmberg och hans medförfattare (Futhark 9–10, 2020, s. 13). Daniel Löwenborg visar att bara 29 procent av gravfälten från folkvandringstiden fortsätter in i vendeltiden, mot 82 procent från vendeltid till vikingatid, även om han själv varnar för att siffrorna bara är en grov bild (2012, s. 13). Hur stor följden var är omstritt. Per Lagerås ser för det sydsvenska höglandet ”{Q['lageras']}” (Fornvännen 2013, s. 271); nedgången hade börjat långt tidigare.
 
-**Omkring 700–750.** Här börjar något nytt – ett halvt sekel före Lindisfarne. Ribe på Jylland anlades omkring 705–710; det tidigaste exakta fällningsåret för timret är vintern 707–708 (Daly 2022, s. 337). Birka har lager från mitten av 700-talet till slutet av 900-talet (Edberg och Karlsson, Fornvännen 2016, s. 8). Runraden krympte från 24 till 16 tecken omkring år 700, och Hanna Åkerström låter därför den vikingatida runtraditionen börja ”{Q['aker11']}” (Futhark 8, 2019, s. 11). Charlotta Hillerdal skriver om Ribes invånare att de ”{Q['hill']}” (Current Swedish Archaeology 2025, s. 166). Gränsen mellan vendeltid och vikingatid är suddig också i föremålen: Björn Ambrosiani konstaterade 1968 att man om övergångstidens föremål ”{Q['ambros']}” (Fornvännen 1968, s. 54).
+**Omkring 700–750.** Här börjar något nytt – ett halvt sekel före Lindisfarne. Ribe på Jylland anlades omkring 705–710; det tidigaste exakta fällningsåret för timret är vintern 707–708 (Daly 2022, s. 338). Birka har lager från mitten av 700-talet till slutet av 900-talet (Edberg och Karlsson, Fornvännen 2016, s. 8). Runraden krympte från 24 till 16 tecken omkring år 700, och Hanna Åkerström låter därför den vikingatida runtraditionen börja ”{Q['aker11']}” (Futhark 8, 2019, s. 11). Charlotta Hillerdal skriver om Ribes invånare att de ”{Q['hill']}” (Current Swedish Archaeology 2025, s. 166). Gränsen mellan vendeltid och vikingatid är suddig också i föremålen: Björn Ambrosiani konstaterade 1968 att man om övergångstidens föremål ”{Q['ambros']}” (Fornvännen 1968, s. 54).
 
 {pic("Birka", "sv", "Utgrävningen av Svarta jorden på Björkö 1991. Birka anlades vid mitten av 700-talet.")}
 
@@ -246,7 +252,7 @@ Runstenen från Nolby i Medelpad är en vanlig vikingatida minnessten: tre bröd
 
 ## En svensk vikingatid
 
-Om man ska sätta gränser utifrån det som syns i Sverige, börjar vikingatiden snarare omkring 700–750 än 793, och den slutar snarare omkring 1100 än 1050 eller 1066. Statens historiska museer anger 793–1050, Danmark och Norge oftast 800–1050. Gränserna är praktiska – de ordnar samlingar och läroböcker – men de är inte händelser. Löwenborgs siffror visar att de flesta gravfält användes vidare från vendeltid till vikingatid, och vi har tidigare visat att runstenarna står vid gravfälten lika ofta efter 1050 som före: släktens minnesplats överlevde kristnandet.
+Om man ska sätta gränser utifrån det som syns i Sverige, börjar vikingatiden snarare omkring 700–750 än 793, och den slutar snarare omkring 1100 än 1050 eller 1066. Gränserna är praktiska – de ordnar samlingar och läroböcker – men de är inte händelser. Löwenborgs siffror tyder på att de flesta gravfält användes vidare från vendeltid till vikingatid.
 
 ## Svagheterna
 
@@ -272,7 +278,6 @@ Om man ska sätta gränser utifrån det som syns i Sverige, börjar vikingatiden
 - Nicklasson, Påvel 2017. Sven Nilsson och Ledetraaden, Christian Thomsen och Ur-invånarna. *Fornvännen* 112, s. 137–153. CC BY 4.0.
 - Malmer, Mats P. 1968. De kronologiska grundbegreppen. *Fornvännen* 63, s. 81–91. CC BY 4.0.
 - Ambrosiani, Björn 1968. Vendeltid eller vikingatid? *Fornvännen* 63, s. 51–55. CC BY 4.0.
-- Callmer, Johan 1976. Oriental coins and the beginning of the Viking period. *Fornvännen* 71, s. 175–185. CC BY 4.0.
 - Holmberg, Per, Bo Gräslund, Olof Sundqvist och Henrik Williams 2020. The Rök Runestone and the End of the World. *Futhark* 9–10, s. 7–38. CC BY 4.0.
 - Löwenborg, Daniel 2012. An Iron Age Shock Doctrine. *Journal of Archaeology and Ancient History* 4, s. 3–29. CC BY 4.0.
 - Lagerås, Per 2013. Agrara fluktuationer och befolkningsutveckling på sydsvenska höglandet tolkade utifrån röjningsrösen. *Fornvännen* 108, s. 263–277. CC BY 4.0.
@@ -285,7 +290,7 @@ Om man ska sätta gränser utifrån det som syns i Sverige, börjar vikingatiden
 - Analysplanen (låst före räkningen) och koden finns öppet på [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-17-perioderna.md). Om runornas form: [Varför ser runorna ut som de gör?](/artiklar/varfor-ser-runorna-ut-som-de-gor)
 - Foton: Wikimedia Commons, med fotograf och licens i bildtexterna. Huggspårsbilderna: Vitki, efter de öppna skanningarna som anges i bildtexterna."""
 
-body_en = f"""In 1913 Hov church in Östergötland was being repaired. Built into the west gable, down by the floor, a limestone slab was found with runes along its edges and a cross with interlace in the middle. *Ketill laid this vault*, it says, and: *May God help Tunni's soul*. It is part of an early Christian grave monument, and according to the builder it belonged to the church's original foundation.
+body_en = f"""In 1913 Hov church in Östergötland was being repaired. Built into the west gable, down by the floor, a limestone slab was found with runes along its edges and interlace in the central field. *Ketill laid this vault*, it says, and: *May God help Tunni's soul*. It is part of an early Christian grave monument, and according to the builder it belonged to the church's original foundation.
 
 Is it Viking-age or medieval? Rundata counts it as Viking-age. It has runes like a runestone and a prayer like many runestones. But it lay on a grave by a church, and that is a medieval way of remembering the dead.
 
@@ -303,7 +308,7 @@ The word Vendel Period comes from the boat graves at Vendel church in Uppland, e
 
 {pic("Vendel I", "en", "The helmet from boat grave I at Vendel, the site that gave the period its name.")}
 
-The neighbouring countries chose other names for the same time: in Denmark the Late Germanic Iron Age, in Norway the Merovingian Period, both from 1934 (Olsén p. 13). The same centuries thus have different names depending on which side of the border the archaeologist stands.
+The neighbouring countries chose other names for the same time. In Denmark Johannes Brøndsted introduced the Germanic Iron Age for all of 400–800 in 1934 and divided it into an Early and a Late part in 1940; in Norway the Merovingian Period was introduced the same year, 1934 (Olsén p. 13). The same centuries thus have different names depending on which side of the border the archaeologist stands.
 
 The word Viking Age (*vikingatid*) is already in Fornvännen's first volume of 1906. But it became a key term only late. We have counted what share of Fornvännen's pages mention the words, decade by decade.
 
@@ -317,7 +322,7 @@ If one lets go of the labels and looks for changes in what remains, a few shifts
 
 **The 530s–540s.** Volcanic eruptions brought cold summers. Around the middle of the sixth century farms were abandoned: “{Q['holm']}”, write Per Holmberg and his co-authors (Futhark 9–10, 2020, p. 13). Daniel Löwenborg shows that only 29 per cent of the burial grounds of the Migration Period continue into the Vendel Period, against 82 per cent from the Vendel Period into the Viking Age, though he warns himself that the figures are only a rough picture (2012, p. 13). How large the consequences were is debated. For the South Swedish uplands Per Lagerås finds no direct support in cairn dates and pollen for the decline being caused by the climate event of 536 (Fornvännen 2013, p. 271); the decline had begun much earlier.
 
-**Around 700–750.** Here something new begins – half a century before Lindisfarne. Ribe in Jutland was founded around 705–710; the earliest exact felling year for its timber is the winter of 707–708 (Daly 2022, p. 337). Birka has layers from the middle of the eighth century to the end of the tenth (Edberg and Karlsson, Fornvännen 2016, p. 8). The rune row shrank from 24 to 16 signs around 700, and Hanna Åkerström therefore lets the Viking-age runic tradition begin about a century earlier than the traditional start of the Viking Age (Futhark 8, 2019, p. 11). Charlotta Hillerdal writes of Ribe's inhabitants that they “{Q['hill']}” (Current Swedish Archaeology 2025, p. 166). The boundary between the Vendel Period and the Viking Age is blurred in the objects too: Björn Ambrosiani noted in 1968 that the objects of the transition cannot by objective means be put in order (Fornvännen 1968, p. 54).
+**Around 700–750.** Here something new begins – half a century before Lindisfarne. Ribe in Jutland was founded around 705–710; the earliest exact felling year for its timber is the winter of 707–708 (Daly 2022, p. 338). Birka has layers from the middle of the eighth century to the end of the tenth (Edberg and Karlsson, Fornvännen 2016, p. 8). The rune row shrank from 24 to 16 signs around 700, and Hanna Åkerström therefore lets the Viking-age runic tradition begin about a century earlier than the traditional start of the Viking Age (Futhark 8, 2019, p. 11). Charlotta Hillerdal writes of Ribe's inhabitants that they “{Q['hill']}” (Current Swedish Archaeology 2025, p. 166). The boundary between the Vendel Period and the Viking Age is blurred in the objects too: Björn Ambrosiani noted in 1968 that the objects of the transition cannot by objective means be put in order (Fornvännen 1968, p. 54).
 
 {pic("Birka", "en", "The excavation of the Black Earth on Björkö in 1991. Birka was founded in the middle of the eighth century.")}
 
@@ -345,7 +350,7 @@ The runestone from Nolby in Medelpad is an ordinary Viking-age memorial: three b
 
 ## A Swedish Viking Age
 
-If one is to draw boundaries from what shows in Sweden, the Viking Age begins around 700–750 rather than 793, and ends around 1100 rather than 1050 or 1066. The Swedish History Museums give 793–1050, Denmark and Norway mostly 800–1050. The boundaries are practical – they order collections and textbooks – but they are not events. Löwenborg's figures show that most burial grounds stayed in use from the Vendel Period into the Viking Age, and we have shown earlier that runestones stand by burial grounds as often after 1050 as before: the family's place of memory outlived the conversion.
+If one is to draw boundaries from what shows in Sweden, the Viking Age begins around 700–750 rather than 793, and ends around 1100 rather than 1050 or 1066. The boundaries are practical – they order collections and textbooks – but they are not events. Löwenborg's figures suggest that most burial grounds stayed in use from the Vendel Period into the Viking Age.
 
 ## The weaknesses
 
@@ -371,7 +376,6 @@ If one is to draw boundaries from what shows in Sweden, the Viking Age begins ar
 - Nicklasson, Påvel 2017. Sven Nilsson och Ledetraaden, Christian Thomsen och Ur-invånarna. *Fornvännen* 112, pp. 137–153. CC BY 4.0.
 - Malmer, Mats P. 1968. De kronologiska grundbegreppen. *Fornvännen* 63, pp. 81–91. CC BY 4.0.
 - Ambrosiani, Björn 1968. Vendeltid eller vikingatid? *Fornvännen* 63, pp. 51–55. CC BY 4.0.
-- Callmer, Johan 1976. Oriental coins and the beginning of the Viking period. *Fornvännen* 71, pp. 175–185. CC BY 4.0.
 - Holmberg, Per, Bo Gräslund, Olof Sundqvist and Henrik Williams 2020. The Rök Runestone and the End of the World. *Futhark* 9–10, pp. 7–38. CC BY 4.0.
 - Löwenborg, Daniel 2012. An Iron Age Shock Doctrine. *Journal of Archaeology and Ancient History* 4, pp. 3–29. CC BY 4.0.
 - Lagerås, Per 2013. Agrara fluktuationer och befolkningsutveckling på sydsvenska höglandet tolkade utifrån röjningsrösen. *Fornvännen* 108, pp. 263–277. CC BY 4.0.

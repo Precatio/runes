@@ -292,7 +292,7 @@ De står vid kanten. {pct(SO['on_clay'])} procent av runstenarna står på lera,
 
 {chart_edge(True)}
 
-Det gäller inte bara Mälardalen. Gravfälten står vid lerans kant i hela landet: i Mälardalen, i Götalands inland och i de övriga landskapen från Östergötland till Medelpad. Runstenarna gör det i Mälardalen, och i de övriga landskapen – där de flesta står i Östergötland – står {pct(RO['on_clay'])} procent på leran mot {pct(RO['on_clay_random'])} och {pct(RO['edge'])} procent vid kanten mot {pct(RO['edge_random'])}. I Västergötland och Smålands små land pekar de åt samma håll, men där står bara {RG['n']} runstenar kvar på sin plats, för få för att säga något säkert.
+Det gäller inte bara Mälardalen. Gravfälten står vid lerans kant i hela landet: i Mälardalen, i Götalands inland och i de övriga landskapen från Östergötland till Medelpad. Runstenarna gör det i Mälardalen, och i de övriga landskapen – där de flesta står i Östergötland – står {pct(RO['on_clay'])} procent på leran mot {pct(RO['on_clay_random'])} och {pct(RO['edge'])} procent vid kanten mot {pct(RO['edge_random'])}. I Västergötland och Smålands små land ({RG['n']} runstenar kvar på sin plats) pekar de åt samma håll, men där når osäkerhetsintervallen ner till ingen skillnad alls, så där kunde vi inte se kanten säkert.
 
 Det är ingen ny iakttagelse, och just därför är den värd att mäta. Arkeologen Gunnar Ekholm skrev 1950, med runologen Otto von Friesen som stöd, att det i Uppland är så att det
 
@@ -304,7 +304,7 @@ Kartan nedan zoomar in på Täby och Vallentuna, där Jarlabanke och hans släkt
 
 {IMGZ[True]}
 
-Det svarar på en fråga som är lätt att missa. Leran var inte där man bodde. Gravarna – och gårdarna, som brukar ligga nära sina gravfält – låg på den torra marken intill, som Ekholm skrev; den som har grävt i Mälardalens lera vet varför. Leran var det man levde av, nedanför gården.
+Det svarar på en fråga som är lätt att missa. Leran var, så långt gravfälten visar, inte där man bodde. Gravarna – och gårdarna, som brukar ligga nära sina gravfält – låg på den torra marken intill, som Ekholm skrev; den som har grävt i Mälardalens lera vet varför. Leran var troligen det man levde av, nedanför gården.
 
 ## Varför just leran?
 
@@ -328,7 +328,7 @@ Räknat i hela modellen har Mälardalens bygder {f1(P2['unadjusted']['ratio'])} 
 
 Vi visar var stenarna står: i bygden, vid lerans kant, nära vattnet. Den bästa jorden hade de som hade råd att låta resa sten. Men i Mälardalen var de fler än jorden ensam räcker till för att förklara. Där fanns också vattenvägarna, handeln och de yrkesristare som levde av att hugga stenar åt dem som beställde. Eliten var, med Palms ord, bredare: det fanns fler av dem som litteraturforskaren Lars Lönnroth har kallat ”{Q['s255d'][0]}”.
 
-Det gör också Norges få runstenar lättare att förstå. Där är den bästa jorden smala dalgångar och kustremsor. Men jorden förklarar bara en del också där, och resten är samma fråga som i Götaland: vilka fler var det som hade både råd och anledning att resa sten i Mälardalen?
+Kanske gör det också Norges få runstenar lättare att förstå. Där är den bästa jorden smala dalgångar och kustremsor. Men Norge ingick inte i vår mätning, så hur mycket jorden förklarar där har vi inte prövat. Frågan som står kvar för Götaland är: vilka fler var det som hade både råd och anledning att resa sten i Mälardalen?
 
 Nästa gång du står vid en runsten i Uppland, se dig om. Ofta står den på en höjning vid kanten av den låga, flacka marken – med gravarna i backen bakom och åkern nedanför, där det för tusen år sedan var äng eller vatten.
 
@@ -343,7 +343,7 @@ Nästa gång du står vid en runsten i Uppland, se dig om. Ofta står den på en
 
 :::box Det viktigaste i korthet
 - Runstenarna står i bygden, vid den bästa jorden och nära vattnet – tre saker som var för sig betyder något. Bygden väger tyngst; leran och vattnet ungefär lika.
-- De står inte på leran utan vid dess kant, på den torra marken där gårdarna och gravfälten låg. Det gäller gravfälten i hela landet, och runstenarna överallt där tillräckligt många står kvar för att säga det.
+- De står inte på leran utan vid dess kant, på den torra marken där gårdarna och gravfälten låg. Det gäller gravfälten i hela landet och runstenarna i Mälardalen och de övriga landskapen; i Götalands inland pekar stenarna åt samma håll, men där kunde vi inte se det säkert.
 - Bygd, jord och vatten förklarar ungefär hälften av varför Mälardalen har sex gånger tätare med runstenar än Götalands inland. Den andra hälften står kvar, som Rune Palm skrev 1992.
 - Varför leran? Ängen och djuren gav rikedom, jorden gick i arv, och stenen restes där folk gick förbi. Det är tolkningar, som vi gör med Palm, Sawyer och Zachrisson.
 :::
@@ -412,7 +412,7 @@ They stand at the edge. {pct(SO['on_clay'])} percent of the runestones stand on 
 
 {chart_edge(False)}
 
-It is not only the Mälaren valley. The grave fields stand at the edge of the clay across the country: in the Mälaren valley, in inland Götaland and in the other provinces from Östergötland to Medelpad. The runestones do so in the Mälaren valley, and in the other provinces – where most of them stand in Östergötland – {pct(RO['on_clay'])} percent stand on the clay against {pct(RO['on_clay_random'])}, and {pct(RO['edge'])} percent at the edge against {pct(RO['edge_random'])}. In Västergötland and Småland's small lands they point the same way, but only {RG['n']} runestones still stand in place there, too few to say anything for certain.
+It is not only the Mälaren valley. The grave fields stand at the edge of the clay across the country: in the Mälaren valley, in inland Götaland and in the other provinces from Östergötland to Medelpad. The runestones do so in the Mälaren valley, and in the other provinces – where most of them stand in Östergötland – {pct(RO['on_clay'])} percent stand on the clay against {pct(RO['on_clay_random'])}, and {pct(RO['edge'])} percent at the edge against {pct(RO['edge_random'])}. In Västergötland and Småland's small lands ({RG['n']} runestones still in place) they point the same way, but there the uncertainty intervals reach down to no difference at all, so there we could not see the edge with certainty.
 
 It is not a new observation, and that is exactly why it is worth measuring. The archaeologist Gunnar Ekholm wrote in 1950, with the runologist Otto von Friesen as support, that in Uppland
 
@@ -424,7 +424,7 @@ The map below zooms in on Täby and Vallentuna, where Jarlabanke and his kin rai
 
 {IMGZ[False]}
 
-That answers a question that is easy to miss. The clay was not where people lived. The graves – and the farms, which usually lie close to their grave fields – lay on the dry ground beside it, as Ekholm wrote; anyone who has dug in the clay of the Mälaren valley knows why. The clay was what people lived from, below the farm.
+That answers a question that is easy to miss. The clay was, as far as the grave fields show, not where people lived. The graves – and the farms, which usually lie close to their grave fields – lay on the dry ground beside it, as Ekholm wrote; anyone who has dug in the clay of the Mälaren valley knows why. The clay was probably what people lived from, below the farm.
 
 ## Why the clay?
 
@@ -448,7 +448,7 @@ Counted in the full model, the Mälaren valley's settled districts have {P2['una
 
 We show where the stones stand: in the settled districts, at the edge of the clay, near the water. The best soil belonged to those who could afford to have a stone raised. But in the Mälaren valley they were more than the soil alone can explain. There were also the waterways, the trade and the professional carvers who lived by carving stones for those who commissioned them. The elite was, in Palm's words, broader: there were more of those whom the literary scholar Lars Lönnroth has called *runstensbönder*, "runestone farmers".
 
-It also makes Norway's few runestones easier to understand. There the best soil is narrow valleys and coastal strips. But the soil explains only part there too, and the rest is the same question as in Götaland: who were the many more who had both the means and a reason to raise a stone in the Mälaren valley?
+Perhaps it also makes Norway's few runestones easier to understand. There the best soil is narrow valleys and coastal strips. But Norway was not part of our measurement, so how much the soil explains there we have not tested. The question that remains for Götaland is: who were the many more who had both the means and a reason to raise a stone in the Mälaren valley?
 
 Next time you stand by a runestone in Uppland, look around. Often it stands on a rise at the edge of the low, flat land – with the graves on the slope behind and the field below, where a thousand years ago there was meadow or water.
 
@@ -463,7 +463,7 @@ Next time you stand by a runestone in Uppland, look around. Often it stands on a
 
 :::box The essentials in brief
 - The runestones stand in the settled districts, by the best soil and near the water – three things that each matter on their own. The settlement weighs most; the clay and the water about the same.
-- They do not stand on the clay but at its edge, on the dry ground where the farms and grave fields lay. That holds for the grave fields across the country, and for the runestones wherever enough of them still stand to tell.
+- They do not stand on the clay but at its edge, on the dry ground where the farms and grave fields lay. That holds for the grave fields across the country and for the runestones in the Mälaren valley and the other provinces; in inland Götaland the stones point the same way, but there we could not see it with certainty.
 - Settlement, soil and water explain roughly half of why the Mälaren valley has runestones six times as densely as inland Götaland. The other half remains, as Rune Palm wrote in 1992.
 - Why the clay? The meadows and the animals gave wealth, the land was inherited, and the stone was raised where people passed. These are interpretations, which we make with Palm, Sawyer and Zachrisson.
 :::

@@ -60,8 +60,9 @@ LAG = ("Hann setti þat í lögum at hefja jólahald þann tíma sem kristnir me
        "ok haldin þriggja nátta jól.")
 i_saga(HAKON, LAG, "15. Kristnihald Hákonar konungs.")
 i_saga("Haralds_saga_hins_hárfagra", "Úti vill jól drekka, ef skal einn ráða, fylkir framlyndi , ok Freys leik heyja")
-i_saga("Saga_Magnús_blinda_ok_Haralds_gilla", "ok vildi eigi berjast um jólin fyrir helgi sakir",
-       "eigi meir en 3 daga var heilagt haldit um jólin")
+i_saga("Saga_Magnús_blinda_ok_Haralds_gilla", "Haraldr konungr kom til Björgynjar jólaaptan, ok lagði liðinu í Flóruvága, ok vildi eigi berjast um jólin fyrir helgi sakir",
+       "En Magnús konungr lét búast við í bœnum", "ok eigi meir en 3 daga var heilagt haldit um jólin, at eigi væri smíðat",
+       "En affaradag jólanna þá lét Haraldr konungr blása til brautlögu liðinu")
 i_saga("Saga_Magnús_konungs_Erlingssonar", "Um nóttina eptir fimta dag jóla fór Erlingr út í eyna ok tók hús á Özuri ok brendi hann inni, ok alls drap hann tíu tigi manna")
 i_saga("Saga_Sigurðar_jórsalafara,_Eysteins_ok_Ólafs", "eigi er þat siðr í Noregi at eta slátr jólakveld")
 i_saga("Saga_Ólafs_hins_helga", "ok þá at jólagjöf sverð gullbúit af konungi, ok með bœ þann, er Vettaland hét",
@@ -79,11 +80,13 @@ jol_alla = sorted(s for s, r in recs.items() if re.search(r"\bjól", r.get("norm
 assert jol_alla == ["N 151", "N 368"], jol_alla
 assert recs["N 368"]["object"] == "träinskrift" and recs["N 368"]["place"] == "Borgund kirke"
 assert "sunnudag þann, er næstr er eptir jól" in recs["N 368"]["normalization"]
-assert "Iuli ræistu stæin æftiR \"Ingvar, broður sinn" in recs["Sö 362"]["normalization"]
+assert "\"Kulbæinn ok \"Iuli ræistu stæin æftiR \"Ingvar, broður sinn" in recs["Sö 362"]["normalization"]
+assert recs["Sö 362"]["translation_en"].startswith("Kolbeinn and Juli")
 assert recs["Sö 362"]["place"] == "Tumbo kyrka" and "Iula" in recs["Vg 184"]["normalization"]
 SV = [r for r in recs.values() if rg.is_runestone(r)]
 KORS = sum(bool((r.get("cross_form") or "").strip()) for r in SV)
 assert (len(SV), KORS) == (2321, 959)
+N_SV = f"{len(SV):,}".replace(",", " ")  # svensk tusentalsavgränsare: 2 321
 
 # ---- Peterson 2007 --------------------------------------------------------------------------------------------------------
 pt = flat(subprocess.run(["pdftotext", PETERSON, "-"], capture_output=True, text=True).stdout)
@@ -114,7 +117,7 @@ I Heimskringlas sexton kungasagor står ett ord som börjar på *jól-* {len(tra
 
 - **Tidsangivelse, {antal[T]} episoder.** "Fyrir jól", "eptir jól". Härar samlas efter julen, sändebud kommer fram strax före. Jól är årets fasta punkt, den tid allt annat räknas från.
 - **Gästabud och dryck, {antal[G]}.** *Jólaveizla* och *jólaboð*, kungens julgille, och *samburðaröl*, öl som bönderna bryggde tillsammans. I Olav den heliges saga ska två svågrar dricka halva julen hos den ene och halva hos den andre.
-- **Strid och dråp, {antal[S]}.** Natten efter femte juldagen bränner Erling skakke inne Özurr och dödar hundra man. Harald gille vill däremot inte strida under julen "för helgens skull", och han håller helgt i tre dagar – sedan anfaller han Bergen.
+- **Strid och dråp, {antal[S]}.** Natten efter femte juldagen bränner Erling skakke inne Özurr och dödar hundra man. Harald gille kommer till Bergen på julafton men vill inte strida under julen "för helgens skull". Inne i staden låter kung Magnus hålla helgt i bara tre dagar, så att arbetet med försvaret kan fortsätta. På julens sista dag anfaller Harald.
 - **Tro och kalender, {antal[R]}.** Håkons lag. Skalden Torbjörn hornklove om Harald hårfager, som hellre vill dricka jól ute på havet och "leka Frejs lek". Och Sigurd Jorsalafar, som en julafton vill äta kött – "det är inte sed i Norge att äta kött på julaftonen", säger hans män. Julafton var redan en fastedag.
 - **Gåvor och skatt, {antal[K]}.** Olav den helige ger Brynjolf ulvalde ett guldbeslaget svärd och gården Vettaland i julgåva, och delar ut gåvor den åttonde julkvällen. Och vid jul skulle kungen ha ett mått malt från varje härd och ett lår av en treårig oxe.
 
@@ -122,13 +125,13 @@ Olav den heliges saga står ensam för {ol} av de {len(traffar)} träffarna. Den
 
 ## Och runstenarna?
 
-Av de {len(SV):,} svenska vikingatida runstenarna nämner **ingen** jól. Inte heller någon annan runsten i Rundata gör det. Ordet står bara på två norska träinskrifter från medeltiden, och där som kalender igen: en man i Borgunds kyrka ristade sina runor "söndagen närmast efter jól" (N 368).
+Av de {N_SV} svenska vikingatida runstenarna nämner **ingen** jól. Inte heller någon annan runsten i Rundata gör det. Ordet står bara på två norska träinskrifter från medeltiden, och där som kalender igen: en man i Borgunds kyrka ristade sina runor "söndagen närmast efter jól" (N 368).
 
-Tystnaden är inte konstig. Runstenarna talar om döden, om släkten, om vem som ärvde och om själen. De handlar om en enda människa och den som blev kvar, inte om årets fester. Men samma skifte som Håkons lag beskriver syns ändå på dem: {KORS} av de {len(SV):,} stenarna, {round(100 * KORS / len(SV))} procent, bär ett kors. Midvinterns fest fick ett kristet datum, och minnesstenarna fick ett kristet tecken.
+Tystnaden är inte konstig. Runstenarna talar om döden, om släkten, om vem som ärvde och om själen. De handlar om en enda människa och den som blev kvar, inte om årets fester. Men kristnandet syns ändå på dem: {KORS} av de {N_SV} stenarna, {round(100 * KORS / len(SV))} procent, bär ett kors. I sagan fick midvinterns fest ett kristet datum; på stenarna fick många minnen ett kristet tecken.
 
 ## Mannen som hette Juli
 
-Det finns ett namn på stenarna som låter som julen. Vid Tumbo kyrka i Södermanland står en sten som Kolbjörn och *Iuli* reste efter sin bror Ingvar (Sö 362), och i Västergötland nämns en *Iula* (Vg 184).
+Det finns ett namn på stenarna som låter som julen. Vid Tumbo kyrka i Södermanland står en sten som Kolbein och *Iuli* reste efter sin bror Ingvar (Sö 362), och i Västergötland nämns en *Iula* (Vg 184).
 
 Men Juli har inget med julen att göra. Enligt Lena Petersons *Nordiskt runnamnslexikon* är det en kortform av namn som börjar på *Igul-*, och *Igull* kommer av ett ord som på fornvästnordiska betyder sjöborre, "här dock sannolikt med en ursprungligare betydelse 'igelkott'". Juli hette alltså ungefär Igelkotten.
 
@@ -173,7 +176,7 @@ In Heimskringla's sixteen kings' sagas a word beginning with *jól-* occurs {len
 
 - **A point in time, {antal[T]} episodes.** "Before Yule", "after Yule". Armies gather after Yule, envoys arrive just before. Yule is the fixed point of the year, the time everything else is reckoned from.
 - **Feasts and drink, {antal[G]}.** *Jólaveizla* and *jólaboð*, the king's Yule feast, and *samburðaröl*, ale the farmers brewed together. In the saga of Óláfr the Saint two brothers-in-law are to drink half the Yule at one's house and half at the other's.
-- **Fighting and killing, {antal[S]}.** On the night after the fifth day of Yule, Erlingr skakki burns Özurr in his house and kills a hundred men. Haraldr gilli, on the other hand, will not fight during Yule "for the holiness' sake", and he keeps three days holy – then he attacks Bergen.
+- **Fighting and killing, {antal[S]}.** On the night after the fifth day of Yule, Erlingr skakki burns Özurr in his house and kills a hundred men. Haraldr gilli reaches Bergen on Yule eve but will not fight during Yule "for the holiness' sake". Inside the town King Magnús keeps only three days holy, so that work on the defences can go on. On the last day of Yule Haraldr attacks.
 - **Faith and calendar, {antal[R]}.** Hákon's law. The skald Þorbjörn hornklofi on Haraldr Fairhair, who would rather drink Yule out at sea and "play Freyr's game". And Sigurðr the Crusader, who wants to eat meat one Yule eve – "it is not the custom in Norway to eat meat on Yule eve", his men say. Yule eve was already a fast day.
 - **Gifts and tribute, {antal[K]}.** Óláfr the Saint gives Brynjólfr úlfaldi a gold-mounted sword and the farm Vettaland as a Yule gift, and hands out gifts on the eighth evening of Yule. And at Yule the king was to have a measure of malt from every hearth and a leg of a three-year-old ox.
 
@@ -183,7 +186,7 @@ The saga of Óláfr the Saint alone accounts for {ol} of the {len(traffar)} hits
 
 Of the {len(SV):,} Swedish Viking-age runestones, **none** mentions jól. Nor does any other runestone in the runic database. The word occurs only on two Norwegian wooden inscriptions from the Middle Ages, and there as a calendar again: a man in Borgund church carved his runes "the Sunday next after Yule" (N 368).
 
-The silence is not strange. The runestones speak of death, of kin, of who inherited and of the soul. They are about one person and the one who was left behind, not about the feasts of the year. Yet the same shift that Hákon's law describes shows on them: {KORS} of the {len(SV):,} stones, {round(100 * KORS / len(SV))} per cent, carry a cross. The midwinter feast got a Christian date, and the memorial stones got a Christian sign.
+The silence is not strange. The runestones speak of death, of kin, of who inherited and of the soul. They are about one person and the one who was left behind, not about the feasts of the year. Yet the conversion does show on them: {KORS} of the {len(SV):,} stones, {round(100 * KORS / len(SV))} per cent, carry a cross. In the saga the midwinter feast got a Christian date; on the stones many memorials got a Christian sign.
 
 ## The man called Júli
 

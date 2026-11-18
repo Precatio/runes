@@ -70,6 +70,14 @@ Qt = {k: v[1] for k, v in Q.items()}
 assert "Alborga by, Valbo sn" in re.sub(r"\s+", " ", ART["Gs 9"]["text"]) and RD["Gs 10"]["place"] == "Alborga by"
 for s in ("Öl 37", "Öl 36", "Nä 8", "Vg 130", "Vg 116", "G 70", "U 705", "U 869", "Öl 47", "Sm 21", "Ög 200"):
     assert s in RD, s
+# Kohagen is SRI's own unnumbered entry right after Vg 116 (Hyringa sn), on p. 191; Vg 116 itself is the stone at Hyringa church
+_vg = ART["Vg 116"]["text"]
+_k = _vg.index("Hyringa sn, Kohagen")
+assert re.findall(r"\[\[sida ([^\]]+)\]\]", _vg[:_k])[-1] == "191" and letters(Qt["vg116"]) in letters(_vg[_k:])
+assert RD["Vg 116"]["place"] == "Hyringa kyrka" and not [r for r in RD.values() if "ohagen" in (r.get("place") or "")]
+# U 869: the carving was seen in 1934, when the cottage was repaired; the find was reported in 1938
+assert "då denna 1934 reparerades, iakttog man ristningen" in re.sub(r"\s+", " ", ART["U 869"]["text"])
+assert "Den 25 maj 1938 anmälde" in re.sub(r"\s+", " ", ART["U 869"]["text"])
 
 # ---- pictures ---------------------------------------------------------------------------------------------------------
 from PIL import Image  # noqa: E402
@@ -114,7 +122,7 @@ Det här är en samling av de stenar vi fastnade för. Hur vanligt det var att e
 
 ## Under landsvägen
 
-Den vanligaste andra användningen var kanske den mest praktiska: en flat, stor sten passar som bro över ett dike. På Öland noterade fornforskaren Johannes Rhezelius på 1630-talet flera stenar som hade legat i broar och som restes 1634. Om stenen i Bjärby står det kort: ”{Qt['ol36']}” (Ölands runinskrifter, Öl 36, s. 99).
+En av de mest praktiska användningarna var bron: en flat, stor sten passar som bro över ett dike. På Öland noterade fornforskaren Johannes Rhezelius på 1630-talet flera stenar som hade legat i broar och som restes 1634. Om stenen i Bjärby står det kort: ”{Qt['ol36']}” (Ölands runinskrifter, Öl 36, s. 99).
 
 {PIC("Öl 36", "sv")} Bjärbystenen, som låg i en bro och restes 1634.
 
@@ -126,7 +134,7 @@ I Närke låg Väsbystenen tvärs över landsvägen i Kräcklinge. När Celsius 
 
 ## Golv, trösklar och trappor
 
-I kyrkorna lades stenarna ofta i golvet eller som tröskel, och på gårdarna blev de trappsteg. Vid Skånum i Västergötland blev en runsten flyttad till säteriet Simonstorp och ”{Qt['vg130a']}”. Det gick inte bra. ”{Qt['vg130b'].capitalize()}”, står det i utgivarens källa, gjorde att stenen fördes tillbaka till sitt förra ställe, där den står än (Västergötlands runinskrifter, Vg 130, s. 250).
+I kyrkorna kunde stenarna läggas i golvet eller som tröskel, och på gårdarna blev en del trappsteg. Vid Skånum i Västergötland blev en runsten flyttad till säteriet Simonstorp och ”{Qt['vg130a']}”. Det gick inte bra. ”{Qt['vg130b'].capitalize()}”, står det i utgivarens källa, gjorde att stenen fördes tillbaka till sitt förra ställe, där den står än (Västergötlands runinskrifter, Vg 130, s. 250).
 
 {PIC("Vg 130", "sv")}
 
@@ -134,11 +142,11 @@ På Gotland gick en sten den omvända vägen, från finrummet till farstun. Den 
 
 ## Spisar och ugnar
 
-Bakhällen i Alborga var inte ensam. I Västergötland antecknade prästen Elaus Benedicti 1672: ”{Qt['vg116']}” (Vg 116). Torpet är rivet, och stenen har inte gått att hitta.
+Bakhällen i Alborga var inte ensam. I Västergötland antecknade prästen Elaus Benedicti 1672 om torpet Kohagen i Hyringa socken: ”{Qt['vg116']}”. Stenen har inget eget signum; *Västergötlands runinskrifter* tar upp den som en egen post efter Vg 116 (s. 191). Torpet är rivet, och stenen har inte gått att hitta.
 
 ## Kvarnstenar
 
-Den mest genomgripande förvandlingen var att hugga om stenen. På O. Hermelins teckning av en sten från Öster-Dalby i Uppland står att runorna satt ”på undre sidan af {Qt['u705a']}”, och 1926 hittades ”en mindre kvarnsten av grå sandsten, {Qt['u705b']}” (Upplands runinskrifter, U 705, s. 228–229). En annan kvarnsten med runslingor hittades 1938 i Gryta socken: ”{Qt['u869']}” (U 869, s. 536).
+Den mest genomgripande förvandlingen var att hugga om stenen. På O. Hermelins teckning av en sten från Öster-Dalby i Uppland står att runorna satt ”på undre sidan af {Qt['u705a']}”, och 1926 hittades ”en mindre kvarnsten av grå sandsten, {Qt['u705b']}” (Upplands runinskrifter, U 705, s. 228–229). En annan kvarnsten med runslingor kom fram i Gryta socken: ”{Qt['u869']}”. Ristningen sågs 1934, när stugan reparerades, och fyndet anmäldes 1938 (U 869, s. 536).
 
 ## Vid brunnen
 
@@ -152,7 +160,7 @@ En del stenar kom tillbaka för att någon letade. I Sya socken i Östergötland
 
 Runstenarna var under hundratals år byggmaterial, och det säger något om hur de sågs. En flat sten var värd mer som bro eller spishäll än som minne, så länge ingen kunde läsa runorna. Men redan på 1500- och 1600-talen fanns det de som tyckte annorlunda – Bielkes vrede och Rhezelius resta stenar på Öland är några av de tidigaste exemplen på att runstenar skulle skyddas.
 
-För oss betyder det också att en runsten sällan står där den restes. Det har vi skrivit om förut, och i januari mäter vi det i hela materialet.
+För oss betyder det också att många runstenar inte står där de restes. Hur många mäter vi i januari, i hela materialet.
 
 ## Svagheterna
 
@@ -172,7 +180,7 @@ För oss betyder det också att en runsten sällan står där den restes. Det ha
 
 - *Sveriges runinskrifter* (Kungl. Vitterhets Historie och Antikvitets Akademien), banden: Ölands runinskrifter (SRI I), Östergötlands runinskrifter (II), Smålands runinskrifter (IV), Västergötlands runinskrifter (V), Upplands runinskrifter 3 (VIII), Gotlands runinskrifter 1 (XI), Närkes runinskrifter (XIV:1) och Gästriklands runinskrifter (XV:1). [Digitala Sveriges runinskrifter](https://www.raa.se/kulturarv/runor-och-runstenar/digitala-sveriges-runinskrifter/), Riksantikvarieämbetet. Korta citat med sida.
 - Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.
-- Om metoden och kontrollen: analysplan A1, tillägg 1, på [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2027-01-A1-tillagg-1-sri-fyndhistorik.md). Om var runstenarna står: [Vendeltid, vikingatid, medeltid – fanns gränserna?](/artiklar/vendeltid-vikingatid-medeltid-fanns-granserna)
+- Om metoden och kontrollen: analysplan A1, tillägg 1, på [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2027-01-A1-tillagg-1-sri-fyndhistorik.md).
 - Foton och teckningar: Wikimedia Commons, med upphov och licens i bildtexterna."""
 
 body_en = f"""On 22 July 1726 Olof Celsius came to Alborga in Valbo parish in Gästrikland. He was looking for a runestone, and an old man, Lars Hansson, told him what had become of it. The stone had stood on a stony knoll opposite the churchwarden's farm, but Finnish soldiers billeted in the village had
@@ -189,7 +197,7 @@ This is a collection of the stones that caught our eye. How common it was for a 
 
 ## Under the highway
 
-The most common second use was perhaps the most practical: a large flat stone makes a good bridge over a ditch. On Öland the antiquarian Johannes Rhezelius recorded in the 1630s several stones that had lain in bridges and were raised in 1634. Of the stone at Bjärby it says briefly: “{Qt['ol36']}” – ‘lay as a bridge, raised up 1634’ (Ölands runinskrifter, Öl 36, p. 99).
+One of the most practical uses was the bridge: a large flat stone makes a good bridge over a ditch. On Öland the antiquarian Johannes Rhezelius recorded in the 1630s several stones that had lain in bridges and were raised in 1634. Of the stone at Bjärby it says briefly: “{Qt['ol36']}” – ‘lay as a bridge, raised up 1634’ (Ölands runinskrifter, Öl 36, p. 99).
 
 {PIC("Öl 36", "en")} The Bjärby stone, which lay in a bridge and was raised in 1634.
 
@@ -201,7 +209,7 @@ In Närke the Väsby stone lay across the highway at Kräcklinge. When Celsius's
 
 ## Floors, thresholds and steps
 
-In the churches the stones were often laid in the floor or as thresholds, and on the farms they became steps. At Skånum in Västergötland a runestone was moved to the manor of Simonstorp and laid as a floor slab in the cow barn (“{Qt['vg130a']}”). It did not go well. “{Qt['vg130b'].capitalize()}” – bad luck with the cattle – says the editor's source, caused the stone to be taken back to its former place, where it still stands (Västergötlands runinskrifter, Vg 130, p. 250).
+In the churches stones could be laid in the floor or as thresholds, and on the farms some became steps. At Skånum in Västergötland a runestone was moved to the manor of Simonstorp and laid as a floor slab in the cow barn (“{Qt['vg130a']}”). It did not go well. “{Qt['vg130b'].capitalize()}” – bad luck with the cattle – says the editor's source, caused the stone to be taken back to its former place, where it still stands (Västergötlands runinskrifter, Vg 130, p. 250).
 
 {PIC("Vg 130", "en")}
 
@@ -209,11 +217,11 @@ On Gotland a stone went the other way, from the best room to the porch. It had s
 
 ## Hearths and ovens
 
-The baking slab at Alborga was not alone. In Västergötland the priest Elaus Benedicti noted in 1672 that in the croft of Kohagen a runestone was built into its hearth or oven (“{Qt['vg116']}”, Vg 116). The croft is gone, and the stone has not been found.
+The baking slab at Alborga was not alone. In Västergötland the priest Elaus Benedicti noted in 1672 that in the croft of Kohagen in Hyringa parish a runestone was built into its hearth or oven (“{Qt['vg116']}”). The stone has no signum of its own; *Västergötlands runinskrifter* lists it as a separate entry after Vg 116 (p. 191). The croft is gone, and the stone has not been found.
 
 ## Millstones
 
-The most thorough transformation was to cut the stone down. O. Hermelin's drawing of a stone from Öster-Dalby in Uppland notes that the runes sat on the underside of the lower stone of a hand quern (“{Qt['u705a']}”), and in 1926 a small millstone of grey sandstone was found that had clearly been made from a runestone (Upplands runinskrifter, U 705, pp. 228–229). Another millstone with rune bands was found in 1938 in Gryta parish; it is said to have lain as a step at an old eighteenth-century cottage (U 869, p. 536).
+The most thorough transformation was to cut the stone down. O. Hermelin's drawing of a stone from Öster-Dalby in Uppland notes that the runes sat on the underside of the lower stone of a hand quern (“{Qt['u705a']}”), and in 1926 a small millstone of grey sandstone was found that had clearly been made from a runestone (Upplands runinskrifter, U 705, pp. 228–229). Another millstone with rune bands turned up in Gryta parish; it is said to have lain as a step at an old eighteenth-century cottage. The carving was noticed in 1934, when the cottage was repaired, and the find was reported in 1938 (U 869, p. 536).
 
 ## By the well
 
@@ -227,7 +235,7 @@ Some stones came back because someone looked. In Sya parish in Östergötland a 
 
 For hundreds of years runestones were building material, and that says something about how they were seen. A flat stone was worth more as a bridge or a hearth slab than as a memorial, as long as nobody could read the runes. But as early as the sixteenth and seventeenth centuries there were those who thought otherwise – Bielke's anger and Rhezelius's raised stones on Öland are among the earliest examples of the idea that runestones should be protected.
 
-For us it also means that a runestone seldom stands where it was raised. We have written about that before, and in January we measure it across the whole material.
+For us it also means that many runestones do not stand where they were raised. How many, we measure in January across the whole material.
 
 ## The weaknesses
 
@@ -247,7 +255,7 @@ For us it also means that a runestone seldom stands where it was raised. We have
 
 - *Sveriges runinskrifter* (Royal Swedish Academy of Letters, History and Antiquities), the volumes: Ölands runinskrifter (SRI I), Östergötlands runinskrifter (II), Smålands runinskrifter (IV), Västergötlands runinskrifter (V), Upplands runinskrifter 3 (VIII), Gotlands runinskrifter 1 (XI), Närkes runinskrifter (XIV:1) and Gästriklands runinskrifter (XV:1). [Digital Sveriges runinskrifter](https://www.raa.se/kulturarv/runor-och-runstenar/digitala-sveriges-runinskrifter/), Swedish National Heritage Board. Short quotations with page.
 - Scandinavian Runic-text Database (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.
-- On the method and the checks: analysis plan A1, addendum 1, on [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2027-01-A1-tillagg-1-sri-fyndhistorik.md). On where runestones stand: [Vendel Period, Viking Age, Middle Ages – were the boundaries real?](/en/artiklar/vendeltid-vikingatid-medeltid-fanns-granserna)
+- On the method and the checks: analysis plan A1, addendum 1, on [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2027-01-A1-tillagg-1-sri-fyndhistorik.md).
 - Photos and drawings: Wikimedia Commons, with author and licence in the captions."""
 
 # ---- checks ----------------------------------------------------------------------------------------------------------
