@@ -40,6 +40,11 @@ FOLK = "upplands-folkland-skiljer-runstenarna"
 published(FOLK, "av 999 slumpvisa sätt att dela Uppland i fyra lika stora, sammanhängande delar kom bara två upp i samma nivå som de verkliga folklanden")
 BLIND = "ristarforslag-blindprov"
 published(BLIND, "rätt på 248 av 302 (82 procent", "Närmaste ristare: 133 (44 procent)")
+# the limit of the blind test: the Runor 2020 same-hand test (plan 2026-11-08-samma-hand-runor.md, 32257107)
+published("fem-runstenar-soker-sin-ristare", "i 14 grupper fick 50 procent av stenparen samma förslag, mot 44 procent för grannarna")
+SH = json.load(open(os.path.join(ROOT, "utdata", "samma_hand", "resultat.json"), encoding="utf-8"))
+assert SH["plan_sha"] == "32257107" and not SH["H1"]["holds"] and SH["H1"]["groups"] == 14
+assert (round(100 * SH["H1"]["mean_obs"]), round(100 * SH["H1"]["mean_ctrl"])) == (50, 44)
 MALT = "maltstenen-raknad-i-stallet-for-tolkad"
 published(MALT, "Sju forskare har gett Maltstenen sju olika innebörder")
 
@@ -166,9 +171,9 @@ En humanist är skolad i källkritik: vem skrev, när, varför, och vad vet vi e
 
 **Vi prövar mot slumpen.** Uppland var på vikingatiden delat i folkland, och vi ville veta om gränserna mellan dem syns på runstenarna. Det gör de: stenarnas språk, sed och utförande skiljer sig mer över folklandsgränserna än inom dem. Men alla gränser skiljer något, eftersom stenar som står nära varandra liknar varandra. Därför drog vi 999 påhittade gränser genom samma bygder. Av 999 slumpvisa sätt att dela Uppland i fyra lika stora, sammanhängande delar kom bara två upp i samma nivå som de verkliga folklanden. Gränserna betydde alltså något.
 
-**Vi delar materialet i två.** Vi delar stenarna i två grupper, socken för socken, så att båda får stenar från samma trakter och ungefär samma tid, och gör om analysen i varje grupp. Syns mönstret i båda beror det inte på några enskilda socknar eller ristare.
+**Vi delar materialet i två.** Vi delar stenarna i två grupper, socken för socken, så att båda får stenar från samma trakter och ungefär samma tid, och gör om analysen i varje grupp. Syns mönstret i båda beror det inte på några enskilda socknar.
 
-**Vi prövar blint.** Vitkis modell föreslår vem som ristade en osignerad sten. För att pröva den dolde vi ristaren på stenar där svaret var känt och lät modellen gissa. Av 302 säkra förslag hade den rätt på 248, alltså 82 procent. Den enkla regeln att välja den kända ristare som arbetade närmast hade rätt på 44 procent.
+**Vi prövar blint.** Vitkis modell föreslår vem som ristade en osignerad sten. För att pröva den dolde vi ristaren på stenar där svaret var känt och lät modellen gissa. Av 302 säkra förslag hade den rätt på 248, alltså 82 procent. Den enkla regeln att välja den kända ristare som arbetade närmast hade rätt på 44 procent. Men blindprovet mäter hur ofta modellen kommer fram till samma ristare som Rundata, och Rundatas tillskrivningar bygger till stor del på samma slags spår som modellen följer: stil, stavning och plats. Därför prövade vi den också mot ett facit den aldrig hade sett, runologernas egna bedömningar i Runor 2020 av vilka stenar som är gjorda av samma hand. Det provet klarade den inte: i 14 grupper fick 50 procent av stenparen samma förslag, mot 44 procent för grannstenar på samma avstånd, en skillnad som slumpen lätt ger. Modellen kan bara välja bland ristare som har ett namn, och en hand utan namn hamnar hos någon av dem.
 
 När ett mönster inte håller redovisar vi det lika öppet som när det gör det. Det är inte en svaghet i metoden. Det är metoden.
 
@@ -207,7 +212,7 @@ Bakom Vitki står en digital analytiker som läste Eddan som ung och som har set
 
 - [Vi studerar de danska runstenarna](/artiklar/vi-studerar-de-danska-runstenarna/): félagi-stenarna och resten av det danska budskapet.
 - [Upplands folkland](/forskningsrapporter/upplands-folkland-skiljer-runstenarna/): prövningen mot 999 slumpvisa gränser.
-- [Ristarförslagen i blindprov](/forskningsrapporter/ristarforslag-blindprov/): hur modellen prövades.
+- [Ristarförslagen i blindprov](/forskningsrapporter/ristarforslag-blindprov/): hur modellen prövades, och var den inte räcker.
 - [Maltstenen – räknad i stället för tolkad](/artiklar/maltstenen-raknad-i-stallet-for-tolkad/).
 - [Korpen som heter Minne](/artiklar/korpen-som-heter-minne/): varför Vitki kom till.
 - Vitki, med Pröva en egen fråga och huggspårsanalysen, är fritt att ladda ned från [GitHub](https://github.com/Precatio/runes).
@@ -251,9 +256,9 @@ A humanist is trained in source criticism: who wrote, when, why, and what do we 
 
 **We test against chance.** In the Viking Age, Uppland was divided into folklands, and we wanted to know whether the borders between them show on the runestones. They do: the stones' language, customs and workmanship differ more across the folkland borders than within them. But every border separates something, because stones that stand close together resemble each other. So we drew 999 made-up borders through the same districts. Of 999 random ways of dividing Uppland into four equally large, connected parts, only two reached the level of the real folklands. The borders meant something.
 
-**We split the material in two.** We divide the stones into two groups, parish by parish, so that both get stones from the same areas and roughly the same time, and repeat the analysis in each group. If the pattern shows in both, it does not depend on a few parishes or carvers.
+**We split the material in two.** We divide the stones into two groups, parish by parish, so that both get stones from the same areas and roughly the same time, and repeat the analysis in each group. If the pattern shows in both, it does not depend on a few parishes.
 
-**We test blind.** Vitki's model suggests who carved an unsigned stone. To test it we hid the carver on stones where the answer was known and let the model guess. Of 302 confident suggestions it got 248 right, 82 per cent. The simple rule of picking the known carver who worked closest got 44 per cent right.
+**We test blind.** Vitki's model suggests who carved an unsigned stone. To test it we hid the carver on stones where the answer was known and let the model guess. Of 302 confident suggestions it got 248 right, 82 per cent. The simple rule of picking the known carver who worked closest got 44 per cent right. But the blind test measures how often the model arrives at the same carver as Rundata, and Rundata's attributions rest largely on the same kind of evidence the model follows: style, spelling and place. So we also tested it against an answer key it had never seen, the runologists' own judgements in Runor 2020 of which stones were made by the same hand. That test it did not pass: in 14 groups, 50 per cent of the pairs of stones got the same suggestion, against 44 per cent for neighbouring stones at the same distance, a difference chance easily produces. The model can only choose among carvers who have a name, and a hand without a name ends up with one of them.
 
 When a pattern does not hold we report it as openly as when it does. That is not a weakness in the method. It is the method.
 
@@ -292,7 +297,7 @@ Behind Vitki is a digital analyst who read the Edda as a young man and has seen 
 
 - [We study the Danish runestones](/en/artiklar/vi-studerar-de-danska-runstenarna/): the félagi stones and the rest of the Danish message.
 - [The folklands of Uppland](/en/forskningsrapporter/upplands-folkland-skiljer-runstenarna/): the test against 999 random borders.
-- [Carver suggestions in a blind test](/en/forskningsrapporter/ristarforslag-blindprov/): how the model was tested.
+- [Carver suggestions in a blind test](/en/forskningsrapporter/ristarforslag-blindprov/): how the model was tested, and where it falls short.
 - [The Malt stone – counted instead of interpreted](/en/artiklar/maltstenen-raknad-i-stallet-for-tolkad/).
 - [The raven called Memory](/en/artiklar/korpen-som-heter-minne/): why Vitki came about.
 - Vitki, with Test a question of your own and the groove analysis, is free to download from [GitHub](https://github.com/Precatio/runes).

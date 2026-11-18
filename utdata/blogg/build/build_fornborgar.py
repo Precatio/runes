@@ -49,6 +49,9 @@ N_UND = sum(1 for r in K if r["undersokningsstatus"] in ("Delundersökt", "Helt 
 N_NAMN = sum(1 for r in K if r["lamningsnamn"] not in ("", "NA"))
 N_TRAD = sum(1 for r in K if r["tradition"] not in ("", "NA"))
 assert (N_STUP, N_ING, N_HUS, N_UND, N_NAMN, N_TRAD) == (703, 563, 46, 73, 292, 79)
+N_DEL = sum(1 for r in K if r["undersokningsstatus"] == "Delundersökt")
+N_HELT = sum(1 for r in K if r["undersokningsstatus"] == "Helt undersökt")
+assert (N_DEL, N_HELT) == (70, 3) and N_DEL + N_HELT == N_UND
 BY = {r["lamningsnamn"]: r for r in K if r["lamningsnamn"] not in ("", "NA")}
 assert "Ringmuren har ni" in desc(BY["Ismantorps fornborg"]) or "ringmur kring ett närmast runt område" in desc(BY["Ismantorps fornborg"])
 assert "Murens omkrets är 411 m" in desc(BY["Ismantorps fornborg"]) and "bevarad höjd vanligen ca 2,5 m" in desc(BY["Ismantorps fornborg"])
@@ -57,6 +60,7 @@ HALLE = [r for r in K if "platåberget Halleberg" in desc(r)]
 assert len(HALLE) == 1 and round(float(HALLE[0]["area_m2"]) / 1e4) == 1745
 TORS = [r for r in K if r["socken"] == "Ardre,Kräklingbo" and "På 12 platser har branten förtäckts med stenmurar" in desc(r)]
 assert len(TORS) == 1 and round(float(TORS[0]["area_m2"]) / 1e4) == 124
+assert "bergsbranten, som är intill 10 m h" in desc(TORS[0])  # up to 10 m, not 10 m everywhere
 trad = {r["lamningsnamn"]: re.sub(r"\s+", " ", r["tradition"]) for r in K if r["tradition"] not in ("", "NA")}
 assert "kallat Jättetummen. För var gång kyrkklockorna ringde, skulle stenen ha vridit sig" in trad["Stenbyborg"]
 assert "skall det har bott en jätte i Bogstensberget" in trad["Bogsten"] and "kastat en sten mot Tumbo kyrka" in trad["Bogsten"]
@@ -73,8 +77,9 @@ def jcheck(key, page, *frags):
 
 
 jcheck("1924_129", 5, "132", "Götalands borgar väsentligen höra till början av folkvandringstiden, omkring 400 e. Kr.",
-       "de strider, som utkämpades mellan götar och svear")
-jcheck("1932_095", 9, "102", "en del äro tillflyktsorter, andra däremot mera strategiska borgar i mitten av bygden")
+       "de strider, som utkämpades mellan götar och svear", "läggning har ställts i samband med")
+jcheck("1932_095", 9, "102", "en del äro tillflyktsorter, andra däremot mera strategiska borgar i mitten av bygden",
+       "de finska fornborgarna helt säkert i likhet med de svenska")  # Tallgren writes about the Finnish forts
 jcheck("2011_290", 11, "299", "Fornborgar förekommer ofta nära brobyar eller vid farlederna")
 jcheck("2016_184", 4, "186", "muren avgränsade och kontrollerade ett", "område likt gården och inägorna", "frångick Birgitta", "Johansen en traditionell",
        "miniatyrisering av den vardagliga", "Åsa Wall (2002; 2003)", "Södermanlands romartida fornborgar", "hägnade berg",
@@ -108,17 +113,18 @@ def chart(sv):
                        "Per cent. Image: Vitki."), ":::"])
 
 
-SLUG = "borgarna-som-vaktade-vattnet"
-title = "Borgarna som vaktade vattnet – vad var fornborgarna?"
-title_en = "The forts that watched the water – what were the hillforts?"
+SLUG = "borgarna-vid-vattnet"
+title = "Borgarna vid vattnet – vad var fornborgarna?"
+title_en = "The forts by the water – what were the hillforts?"
 seo_title = "Fornborgar i Sverige: vad var de och vad finns kvar?"
 seo_title_en = "Swedish hillforts: what were they, what remains?"
-summary = ("Det finns över 1 300 fornborgar i Sverige: stenvallar på bergen från järnålderns mitt. Bara var "
-           "tjugonde är utgrävd, och ingen vet säkert vad de var till för. Vi har mätt var de ligger, och svaret är tydligt: "
-           "de låg vid vattnet.")
-summary_en = ("There are more than 1,300 hillforts in Sweden: stone ramparts on the hills from the middle of the Iron Age. "
-              "Only one in twenty has been excavated, and no one knows for certain what they were for. We measured where they "
-              "lie, and the answer is clear: they lay by the water.")
+summary = (f"Det finns över 1 300 fornborgar i Sverige: stenvallar på bergen från järnålderns mitt. Enligt registret "
+           f"är bara {N_UND} undersökta, {N_DEL} till en del och {N_HELT} helt, och ingen vet säkert vad de var till för. Vi har "
+           "mätt var de ligger, och svaret är tydligt: de låg närmare vattnet än bergen runt dem.")
+summary_en = (f"There are more than 1,300 hillforts in Sweden: stone ramparts on the hills from the middle of the Iron Age. "
+              f"According to the register only {N_UND} have been excavated, {N_DEL} in part and {N_HELT} in full, and no one "
+              "knows for certain what they were for. We measured where they lie, and the answer is clear: they lay closer to "
+              "the water than the hills around them.")
 
 pf = lambda v: f"{v:.0f}"  # noqa: E731
 body = f"""Den som går i skogen på ett berg i Mälardalen kan plötsligt kliva över en låg vall av sten, tvärs över krönet. Den är för lång för att vara ett röjningsröse och för rak för att vara naturens. Det är en fornborg. Det finns {len(K):,} av dem i Riksantikvarieämbetets register, de flesta i Södermanland, Uppland, Östergötland och Västergötland.
@@ -129,19 +135,19 @@ Vad var de? Borgar, säger namnet. Men den som letar efter en borg med torn och 
 
 Registrets beskrivningar ger en ganska enhetlig bild. Medianborgen innesluter ungefär {MED_HA:.0f} hektar, ett par fotbollsplaner. {N_STUP} av beskrivningarna nämner stup: man byggde där berget redan skyddade, och murade bara där det gick att ta sig upp. {N_ING} beskrivningar nämner en ingång, {N_HUS} spår av husgrunder innanför murarna.
 
-Några är väldiga. Halleberg i Västergötland är ett helt platåberg på över 1 700 hektar, där murarna bara stänger klyftorna. Torsburgen på Gotland omsluter 124 hektar; på tolv ställen har den tio meter höga branten förstärkts med stenmurar. Och på Öland står Ismantorp kvar som det kanske ser ut i fantasin: en ringmur som är 411 meter runt och fortfarande omkring två och en halv meter hög.
+Några är väldiga. Halleberg i Västergötland är ett helt platåberg på över 1 700 hektar, där murarna bara stänger klyftorna. Torsburgen på Gotland omsluter 124 hektar; på tolv ställen har den upp till tio meter höga branten förstärkts med stenmurar. Och på Öland står Ismantorp kvar som det kanske ser ut i fantasin: en ringmur som är 411 meter runt och fortfarande omkring två och en halv meter hög.
 
 ## Var de borgar?
 
-Det vet vi mindre om än man skulle tro. Av de {len(K):,} borgarna i registret är bara {N_UND} del- eller helt undersökta enligt registret, och inte ens den siffran går att lita på: Eketorp på Öland står som ”ej undersökt”, fast den grävdes ut från 1964 och framåt (Fornvännen 1965).
+Det vet vi mindre om än man skulle tro. Av de {len(K):,} borgarna i registret är bara {N_UND} undersökta enligt registret, {N_DEL} till en del och {N_HELT} helt, och inte ens den siffran går att lita på: Eketorp på Öland står som ”ej undersökt”, fast den grävdes ut från 1964 och framåt (Fornvännen 1965).
 
-Redan 1924 sammanfattade arkeologen Ture J. Arne Bror Schnittgers utgrävningar: ”Götalands borgar väsentligen höra till början av folkvandringstiden, omkring 400 e. Kr.” Han knöt dem till ”de strider, som utkämpades mellan götar och svear” (Fornvännen 1924, s. 132). Sedan dess har tolkningarna gått isär. Somliga var tillflyktsorter dit bygden flydde när fienden kom, andra ”mera strategiska borgar i mitten av bygden”, skrev A. M. Tallgren 1932 (Fornvännen 1932, s. 102). Senare har arkeologerna sökt andra svar än försvaret. Birgitta Johansen såg 1997 borgen som en miniatyr av vardagen: ”muren avgränsade och kontrollerade ett område likt gården och inägorna”. Åsa Wall har kallat Södermanlands borgar, som hon för till romersk järnålder, för ”hägnade berg” (båda återgivna av Anders Bornfalk Back, Fornvännen 2016, s. 186). Borgarna hör alltså till järnålderns mitt, men alla är inte lika gamla.
+Redan 1924 sammanfattade arkeologen Ture J. Arne Bror Schnittgers utgrävningar: ”Götalands borgar väsentligen höra till början av folkvandringstiden, omkring 400 e. Kr.” Borgarnas anläggning hade, skrev han, ställts i samband med ”de strider, som utkämpades mellan götar och svear” (Fornvännen 1924, s. 132). Sedan dess har tolkningarna gått isär. A. M. Tallgren skrev 1932 om de finska fornborgarna att de, i likhet med de svenska, hade haft olika uppgifter: en del var tillflyktsorter, ”andra däremot mera strategiska borgar i mitten av bygden” (Fornvännen 1932, s. 102). Senare har arkeologerna sökt andra svar än försvaret. Birgitta Johansen såg 1997 borgen som en miniatyr av vardagen: ”muren avgränsade och kontrollerade ett område likt gården och inägorna”. Åsa Wall har kallat Södermanlands borgar, som hon för till romersk järnålder, för ”hägnade berg” (båda återgivna av Anders Bornfalk Back, Fornvännen 2016, s. 186). Borgarna hör alltså till järnålderns mitt, men alla är inte lika gamla.
 
 Ingen av tolkningarna går att avgöra utan att gräva. Men en sak går att mäta: var borgarna ligger.
 
-## De låg vid vattnet
+## Närmare vattnet
 
-För 1 500 år sedan låg havet flera meter högre än i dag. Mälaren var en havsvik, och många av dagens dalar var sund och vikar. Sveriges geologiska undersökning har räknat ut var stranden gick, århundrade för århundrade. Vi lade borgarna på den strand som gällde omkring år 450, borgarnas egen tid.
+För 1 500 år sedan låg havet flera meter högre än i dag. Mälaren var en havsvik, och många av dagens dalar var sund och vikar. Sveriges geologiska undersökning har räknat ut var stranden gick, århundrade för århundrade. Vi lade borgarna på den strand som gällde omkring år 450, mitt i borgarnas tid.
 
 {IMG['sv']}
 
@@ -151,7 +157,7 @@ Ett berg ligger ofta nära vatten, så vi jämförde varje borg med tio andra be
 
 Så var det inte. {pf(IN500[0])} procent av borgarna låg inom 500 meter från dåtidens vatten, mot {pf(IN500[1])} procent av bergen runt dem. I genomsnitt låg en borg närmare vattnet än {pf(CLOSER)} procent av de berg den hade kunnat byggas på. Mönstret är lika tydligt i båda halvorna när vi delar borgarna socken för socken, och det håller också när borgen jämförs med all mark runt den och inte bara med berg. Ett så tydligt mönster skulle uppstå av en slump i färre än ett fall på tusen.
 
-Det stämmer med vad Michael Schneider skrev 2011: ”Fornborgar förekommer ofta nära brobyar eller vid farlederna” (Fornvännen 2011, s. 299). Nu är det mätt för hela landet, mot vattnet som det låg då.
+Det stämmer med vad Michael Schneider skrev 2011: ”Fornborgar förekommer ofta nära brobyar eller vid farlederna” (Fornvännen 2011, s. 299). Nu är det mätt för hela landet.
 
 Vad det betyder kan kartan inte säga. Borgarna kan ha vaktat farlederna, som många har tänkt. Men vattnet var också vägen dit: en borg vid stranden var lätt att nå för den som kom med båt, och lätt att fly till.
 
@@ -166,15 +172,15 @@ Vi prövade två saker till. Låg borgarna i den täta bygden, med många gravf�
 Borgarna var redan gamla när kyrkorna byggdes. I sägnerna blev de jättarnas hem, och jättarna tålde inte klockorna. Det är kanske det närmaste vi kommer vad borgarna betydde för dem som levde bredvid dem senare: platser från en tid före den egna, som hörde till någon annan.
 
 :::box Det viktigaste i korthet
-- Sverige har över 1 300 fornborgar, de flesta stenvallar på bergskrön från järnålderns mitt. Bara ett par procent är ordentligt utgrävda.
-- Borgarna låg vid vattnet. Mätt mot stranden omkring år 450 låg nästan två av tre inom 500 meter från vattnet, mot hälften av bergen runt dem.
+- Sverige har över 1 300 fornborgar, de flesta stenvallar på bergskrön från järnålderns mitt. Enligt registret är bara {N_UND} undersökta, {N_DEL} till en del och {N_HELT} helt.
+- Borgarna låg närmare vattnet än bergen runt dem. Mätt mot stranden omkring år 450 låg nästan två av tre inom 500 meter från vattnet, mot hälften av bergen runt dem.
 - Vi kunde inte se att borgarna låg i den tätaste bygden eller vid gränserna mellan de gamla landen.
 - Vad de var till för – tillflykt, makt eller gräns – avgörs inte av läget. Men vattnet hörde till svaret.
 :::
 
 ## Så säkra är vi
 
-SGU:s strandmodell har en osäkerhet på några meter i höjd och några hundra år i tid, och borgarna är inte alla från samma århundrade; år 450 är ett mittvärde. Vi prövade också, i en egen låst plan, om borgarna passar bättre till stranden omkring år 450 än till senare stränder. Det gör de inte: jämfört med bergen runt omkring ligger de lika nära, ja något närmare, dagens vatten. Närheten till vattnet säger alltså inget om när borgarna byggdes – bara att vattnet var viktigt för dem som byggde. Varje borg är mätt från mitten av sin yta, och de stora borgarna sträcker sig långt ut över berget. Jämförelsebergen är tagna ur SGU:s jordartskarta, som inte täcker Skåne, Halland, Blekinge och Norrland; där räknades borgarna bara med all mark som jämförelse. Registrets uppgift om vilka borgar som är utgrävda är ofullständig. Planen låstes innan något räknades, och den ligger öppet på GitHub tillsammans med koden.
+SGU:s strandmodell har en osäkerhet på några meter i höjd och några hundra år i tid, och borgarna är inte alla från samma århundrade; år 450 är ett mittvärde. Vi prövade också, i en egen låst plan, om borgarna passar bättre till stranden omkring år 450 än till senare stränder. Det gör de inte: jämfört med bergen runt omkring ligger de lika nära, ja något närmare, dagens vatten. Närheten till vattnet säger alltså inget om när borgarna byggdes – bara att vattnet var viktigt för dem som byggde. Borgar som ligger nära varandra delar ofta samma vik och delvis samma jämförelseberg, men varje borg räknas för sig, och provet behandlar dem som oberoende. Att mönstret är lika tydligt i båda halvorna, där borgarna delades socken för socken, talar för att det inte beror på några enskilda grupper av borgar. Varje borg är mätt från mitten av sin yta, och de stora borgarna sträcker sig långt ut över berget. Jämförelsebergen är tagna ur SGU:s jordartskarta, som inte täcker Skåne, Halland, Blekinge och Norrland; där räknades borgarna bara med all mark som jämförelse. Registrets uppgift om vilka borgar som är utgrävda är ofullständig. Planen låstes innan något räknades, och den ligger öppet på GitHub tillsammans med koden.
 
 ## Se själv
 
@@ -200,19 +206,19 @@ What were they? Forts, says the name. But whoever looks for a castle with towers
 
 The register's descriptions give a fairly uniform picture. The median fort encloses about {MED_HA:.0f} hectare, a couple of football pitches. {N_STUP} of the descriptions mention cliffs: people built where the rock already protected them, and walled only where it could be climbed. {N_ING} descriptions mention an entrance, {N_HUS} traces of house foundations inside the walls.
 
-Some are enormous. Halleberg in Västergötland is a whole plateau mountain of more than 1,700 hectares, where the walls only close the clefts. Torsburgen on Gotland encloses 124 hectares; in twelve places the ten-metre cliff has been reinforced with stone walls. And on Öland, Ismantorp still stands as one might imagine it: a ring wall 411 metres round and still about two and a half metres high.
+Some are enormous. Halleberg in Västergötland is a whole plateau mountain of more than 1,700 hectares, where the walls only close the clefts. Torsburgen on Gotland encloses 124 hectares; in twelve places the cliff, up to ten metres high, has been reinforced with stone walls. And on Öland, Ismantorp still stands as one might imagine it: a ring wall 411 metres round and still about two and a half metres high.
 
 ## Were they forts?
 
-We know less about that than you might think. Of the {len(K):,} forts in the register only {N_UND} are partly or fully excavated according to the register, and not even that figure can be trusted: Eketorp on Öland is listed as ”not excavated”, although it was dug from 1964 onwards (Fornvännen 1965).
+We know less about that than you might think. Of the {len(K):,} forts in the register only {N_UND} have been excavated according to the register, {N_DEL} in part and {N_HELT} in full, and not even that figure can be trusted: Eketorp on Öland is listed as ”not excavated”, although it was dug from 1964 onwards (Fornvännen 1965).
 
-As early as 1924 the archaeologist Ture J. Arne summed up Bror Schnittger's excavations: the forts of Götaland belong ”essentially to the beginning of the Migration Period, around AD 400”. He linked them to the battles ”fought between Geats and Swedes” (Fornvännen 1924, p. 132). Since then the interpretations have diverged. Some were refuges where the district fled when the enemy came, others ”more strategic forts in the middle of the district”, wrote A. M. Tallgren in 1932 (Fornvännen 1932, p. 102). Later archaeologists have looked for answers other than defence. In 1997 Birgitta Johansen saw the fort as a miniature of everyday life: ”the wall delimited and controlled an area like the farm and the infields”. Åsa Wall has called the forts of Södermanland, which she places in the Roman Iron Age, ”fenced hills” (both as rendered by Anders Bornfalk Back, Fornvännen 2016, p. 186). So the forts belong to the middle of the Iron Age, but they are not all the same age.
+As early as 1924 the archaeologist Ture J. Arne summed up Bror Schnittger's excavations: the forts of Götaland belong ”essentially to the beginning of the Migration Period, around AD 400”. Their building, he wrote, had been linked to the battles ”fought between Geats and Swedes” (Fornvännen 1924, p. 132). Since then the interpretations have diverged. In 1932 A. M. Tallgren wrote of the Finnish hillforts that, like the Swedish ones, they had served different purposes: some were refuges, ”others, by contrast, more strategic forts in the middle of the district” (Fornvännen 1932, p. 102). Later archaeologists have looked for answers other than defence. In 1997 Birgitta Johansen saw the fort as a miniature of everyday life: ”the wall delimited and controlled an area like the farm and the infields”. Åsa Wall has called the forts of Södermanland, which she places in the Roman Iron Age, ”fenced hills” (both as rendered by Anders Bornfalk Back, Fornvännen 2016, p. 186). So the forts belong to the middle of the Iron Age, but they are not all the same age.
 
 None of the interpretations can be settled without digging. But one thing can be measured: where the forts lie.
 
-## They lay by the water
+## Closer to the water
 
-1,500 years ago the sea stood several metres higher than today. Lake Mälaren was a bay of the sea, and many of today's valleys were straits and inlets. The Geological Survey of Sweden has calculated where the shore ran, century by century. We laid the forts on the shore of around AD 450, the forts' own time.
+1,500 years ago the sea stood several metres higher than today. Lake Mälaren was a bay of the sea, and many of today's valleys were straits and inlets. The Geological Survey of Sweden has calculated where the shore ran, century by century. We laid the forts on the shore of around AD 450, in the middle of the forts' time.
 
 {IMG['en']}
 
@@ -222,7 +228,7 @@ A hill is often near water, so we compared each fort with ten other hills in the
 
 That was not the case. {pf(IN500[0])} per cent of the forts lay within 500 metres of the water of their time, against {pf(IN500[1])} per cent of the hills around them. On average a fort lay closer to the water than {pf(CLOSER)} per cent of the hills it could have been built on. The pattern is just as clear in both halves when we split the forts parish by parish, and it holds also when the fort is compared with all the land around it, not only with hills. A pattern this clear would arise by chance in fewer than one case in a thousand.
 
-That agrees with what Michael Schneider wrote in 2011: hillforts ”often occur near brobyar or by the fairways leading to them” (Fornvännen 2011, p. 299). Now it is measured for the whole country, against the water as it lay then.
+That agrees with what Michael Schneider wrote in 2011: hillforts ”often occur near brobyar or by the fairways leading to them” (Fornvännen 2011, p. 299). Now it is measured for the whole country.
 
 What it means the map cannot say. The forts may have watched the fairways, as many have thought. But the water was also the road there: a fort by the shore was easy to reach for those who came by boat, and easy to flee to.
 
@@ -237,15 +243,15 @@ We tested two more things. Did the forts lie in the dense settlement, with many 
 The forts were already old when the churches were built. In the legends they became the giants' homes, and the giants could not bear the bells. That is perhaps the closest we come to what the forts meant to those who later lived beside them: places from a time before their own, which belonged to someone else.
 
 :::box The essentials in brief
-- Sweden has more than 1,300 hillforts, most of them stone ramparts on hilltops from the middle of the Iron Age. Only a few per cent have been properly excavated.
-- The forts lay by the water. Measured against the shore around AD 450, almost two in three lay within 500 metres of the water, against half of the hills around them.
+- Sweden has more than 1,300 hillforts, most of them stone ramparts on hilltops from the middle of the Iron Age. According to the register only {N_UND} have been excavated, {N_DEL} in part and {N_HELT} in full.
+- The forts lay closer to the water than the hills around them. Measured against the shore around AD 450, almost two in three lay within 500 metres of the water, against half of the hills around them.
 - We could not see that the forts lay in the densest settlement or at the borders between the old lands.
 - What they were for – refuge, power or boundary – is not settled by their location. But the water was part of the answer.
 :::
 
 ## How sure we are
 
-SGU's shoreline model has an uncertainty of a few metres in height and a few hundred years in time, and the forts are not all from the same century; AD 450 is a middle value. We also tested, in a separate locked plan, whether the forts fit the shore of around AD 450 better than later shores. They do not: compared with the hills around them they lie as close to, indeed slightly closer to, today's water. So closeness to the water says nothing about when the forts were built – only that the water mattered to those who built them. Each fort is measured from the middle of its area, and the large forts stretch far across the hill. The comparison hills are taken from SGU's soil map, which does not cover Skåne, Halland, Blekinge and Norrland; there the forts were counted only with all land as the comparison. The register's information on which forts have been excavated is incomplete. The plan was locked before anything was counted, and it is open on GitHub with the code.
+SGU's shoreline model has an uncertainty of a few metres in height and a few hundred years in time, and the forts are not all from the same century; AD 450 is a middle value. We also tested, in a separate locked plan, whether the forts fit the shore of around AD 450 better than later shores. They do not: compared with the hills around them they lie as close to, indeed slightly closer to, today's water. So closeness to the water says nothing about when the forts were built – only that the water mattered to those who built them. Forts that lie close together often share the same bay and partly the same comparison hills, but each fort is counted on its own, and the test treats them as independent. That the pattern is just as clear in both halves, where the forts were split parish by parish, suggests it does not depend on a few groups of forts. Each fort is measured from the middle of its area, and the large forts stretch far across the hill. The comparison hills are taken from SGU's soil map, which does not cover Skåne, Halland, Blekinge and Norrland; there the forts were counted only with all land as the comparison. The register's information on which forts have been excavated is incomplete. The plan was locked before anything was counted, and it is open on GitHub with the code.
 
 ## See for yourself
 

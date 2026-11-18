@@ -27,12 +27,17 @@ assert (S["våld"]["n"], S["drunknad"]["n"], S["dopkläder"]["n"], S["sjukdom"][
 ABROAD = sum(v["utomlands"] for v in S.values())
 assert ABROAD == 74
 assert all(s.startswith("U ") for s in S["dopkläder"]["signa"])
+# battle against betrayal among the violent deaths, in Rundata's translation
+N_SVEK = sum(1 for s in S["våld"]["signa"] if re.search(r"\bbetray", RD[s]["translation_en"]))
+N_FOLL = sum(1 for s in S["våld"]["signa"] if re.search(r"\bfell\b", RD[s]["translation_en"]))
+assert (N_SVEK, N_FOLL) == (5, 13)
 L = R["A_landskap"]
 assert (L["G"]["k"], L["G"]["n"], L["Sö"]["k"], L["Sö"]["n"], L["Öl"]["k"], L["Öl"]["n"]) == (7, 42, 42, 363, 0, 154)
 B1, B2 = R["B1"], R["B2"]
 assert (B1["vald_berom"], B1["vald_n"], B1["ovriga_berom"], B1["ovriga_n"]) == (7, 37, 15, 107)
 assert not B1["haller"] and B1["p_holm"] > 0.5
 assert (B2["sen_k"], B2["sen_n"], B2["tidig_k"], B2["tidig_n"]) == (27, 480, 68, 586)
+assert B2["utan_ar"] == 1255 and B2["sen_n"] + B2["tidig_n"] == 1066
 assert B2["haller"] and B2["haller_halvor"] and B2["p_holm"] < 0.002 and round(B2["or_mh"], 2) == 0.36
 assert B2["utan_U_samma_riktning"] and B2["utan_U"]["p_mh"] > 0.05
 pc = lambda k, n: f"{100 * k / n:.0f}"  # noqa: E731
@@ -129,10 +134,10 @@ seo_title = "Döden på runstenarna: strid, drunkning och sotdöd"
 seo_title_en = "Death on the runestones: battle, drowning, sickness"
 summary = ("Bara var sextonde runsten berättar hur den döde dog. Men när de gör det får vi höra om svek och strid, om en knarr "
            "som sjönk och om en son som dog i sina vita dopkläder. Vi har läst alla 144 och räknat: det mesta handlar om var "
-           "döden kom, inte hur, och efter 1050 tystnar stenarna om döden.")
+           "döden kom, inte hur, och efter 1050 berättar stenarna om döden bara hälften så ofta.")
 summary_en = ("Only one runestone in sixteen tells how the dead person died. But when they do, we hear of betrayal and battle, "
               "of a cargo-ship that sank and of a son who died in his white christening robes. We read all 144 and counted: "
-              "most of them say where death came, not how, and after 1050 the stones fall silent about death.")
+              "most of them say where death came, not how, and after 1050 the stones tell of death only half as often.")
 
 body = f"""Den som skulle resa en sten efter en död hade bara några rader. Vad väljer man att säga om någon man har förlorat? De flesta valde det enkla: vem som reste stenen, efter vem, och hur de hörde ihop. Bara var sextonde svensk runsten, 144 av 2 321, berättar något om hur eller var den döde dog.
 
@@ -160,7 +165,7 @@ När stenarna säger hur, är det oftast våld: 37 av de 144. Någon föll, drä
 
 Han föll i strid österut i Gårdarike, hirdens ledare, den bäste av landmän.
 
-Men lika ofta som striden nämns sveket. I Söderby i Uppland står att en viss Sassur dräpte Helge:
+Sveket nämns mer sällan än striden: på {N_SVEK} av de 37 stenarna, mot {N_FOLL} där den döde föll. Men där det nämns, väger det tungt. I Söderby i Uppland står att en viss Sassur dräpte Helge:
 
 > *En Sassurr drap hann ok gærði niðingsverk, svæik felaga sinn.*
 
@@ -168,7 +173,7 @@ Men Sassur dräpte honom och gjorde ett nidingsverk, svek sin felag.
 
 På Aspö i Södermanland förklarar en far varför sonen Björn dog på Gotland: *Þy let fior sitt, flyðu gængiR* – därför miste han livet, följet flydde. Och på Gotland ber föräldrarna efter en son som sveks på en utfärd: *Guð sviki þa, eR hann sviku* – Gud svike dem som svek honom. Det är inte bara sorg. Det är en anklagelse, huggen i sten, där alla kunde läsa den.
 
-Skulle man vänta sig att den som dog i strid fick mer beröm än andra? Vi prövade det. Av dem som dog våldsamt får 7 av 37 ett berömmande ord, som god eller bäst, mot 15 av 107 bland övriga döda. Skillnaden är så liten att den lätt kan vara slumpen. Stenarna gör ingen skillnad: den som dog i strid hedras inte mer än den som dog på annat sätt.
+Skulle man vänta sig att den som dog i strid fick mer beröm än andra? Vi prövade det. Av dem som dog våldsamt får 7 av 37 ett berömmande ord, som god eller bäst, mot 15 av 107 bland övriga döda. Skillnaden är så liten att den lätt kan vara slumpen. Vi kunde inte se att stenarna gjorde någon skillnad: den som dog våldsamt hedras inte påvisbart mer än den som dog på annat sätt.
 
 ## Havet
 
@@ -204,7 +209,7 @@ som dog i vita kläder. Gud hjälpe hans själ.
 
 ## Hemma
 
-Några få säger att döden kom hemma. De är bland de mest gripande. På Gotland står om Heilfus att han *do hæima ok atti dottur æina* – dog hemma och hade en dotter. I Ardre minns Sibba sin hustru Rodtjud: *Do ung fran oformagum* – hon dog ung ifrån omyndiga barn.
+Några få säger att döden kom hemma. De är bland de mest gripande. På Gotland står om Heilfus att han *do hæima ok atti dottur æina* – dog hemma och hade en dotter. I Ardre minns Sibba sin hustru Rodtjud: *Do ung fran oformagum* – hon dog ung ifrån omyndiga barn. Stenen säger inte var hon dog, men den säger vad hon lämnade efter sig.
 
 Och i Bjudby i Södermanland reste Torsten en sten efter sig själv och sin son Hävne, som hade klarat resan:
 
@@ -222,26 +227,26 @@ Det är en omvänd berättelse mot Gripsholmsstenens. Sonen kom hem från Englan
 
 Hur ofta stenarna berättar om döden skiljer sig mellan landskapen. På Gotland gör var sjätte det, i Södermanland ungefär var nionde, i Uppland var tjugonde. På Öland gör ingen av 154.
 
-Det tydligaste mönstret är tiden. Bland stenar som stilen daterar före 1050 berättar {p1(68, 586)} procent, ungefär var nionde, om döden. Bland de senare bara {p1(27, 480)} procent, var artonde. Med landskapen hållna lika är oddsen för att stenen berättar om döden ungefär en tredjedel så stora efter 1050. Ett så tydligt mönster skulle uppstå av en slump i färre än ett fall på femhundra. Vi delade också stenarna i två grupper, socken för socken, så att båda fick stenar från samma trakter och ungefär samma tid. Mönstret syns i båda, så det beror inte på några enskilda socknar eller ristare. Utan Uppland pekar det åt samma håll men är för svagt för att stå på egna ben.
+Det tydligaste mönstret är tiden. Bland stenar som stilen daterar före 1050 berättar {p1(68, 586)} procent, ungefär var nionde, om döden. Bland de senare bara {p1(27, 480)} procent, var artonde. Med landskapen hållna lika är oddsen för att stenen berättar om döden ungefär en tredjedel så stora efter 1050. Ett så tydligt mönster skulle uppstå av en slump i färre än ett fall på femhundra. Vi delade också stenarna i två grupper, socken för socken, så att båda fick stenar från samma trakter och ungefär samma tid. Mönstret syns i båda, så det beror inte på några enskilda socknar. Utan Uppland pekar det åt samma håll men är för svagt för att stå på egna ben.
 
 Varför? Det prövade vi inte. Två förklaringar ligger nära till hands. De stora färderna, med Ingvar och till Grekland, hör till tiden före 1050, och färderna står för hälften av de döda som stenarna berättar om. Och samma sak hände med bönen: omkring år 1035 bad mer än var tredje runsten för den dödes själ, femtio år senare bara var tionde ([Bönen tystnade – men korset stod kvar](/artiklar/2026-10-bonen-tystnade-korset-stod-kvar/)). Kanske flyttade både döden och bönen in i kyrkan, till begravningen och mässan, och stenen fick säga mindre. Båda förklaringarna är läsningar, inte resultat.
 
 ## Den goda döden
 
-Vad var då en god död? Stenarna svarar inte på frågan, och kanske är det själva svaret. De berömmer inte den som föll mer än den som dog hemma. De skäms inte för sotdöden. De anklagar den som svek, och de sörjer den som drunknade. Det de oftast vill att vi ska veta är var det hände, och att någon mindes.
+Vad var då en god död? Stenarna svarar inte på frågan, och kanske är det själva svaret. Såvitt vi kan se berömmer de inte den som föll mer än den som dog hemma. De skäms inte för sotdöden. De anklagar den som svek, och de sörjer den som drunknade. Det de oftast vill att vi ska veta är var det hände, och att någon mindes.
 
 Den som läser stenarna i dag kan pröva samma sak: vad skulle du vilja att det stod om dig, om du bara fick fyra ord?
 
 :::box Det viktigaste i korthet
 - Bara var sextonde svensk runsten, 144 av 2 321, berättar hur eller var den döde dog. Hälften av dem dog utomlands, och de flesta stenar säger bara var.
-- När sättet nämns är det oftast våld, och lika ofta svek som strid. Drunkning, sjukdom och död i dopkläderna nämns på några få stenar.
-- Den som dog i strid fick inte mer beröm än andra döda.
+- När sättet nämns är det oftast våld: oftast strid eller dråp, mer sällan svek. Drunkning, sjukdom och död i dopkläderna nämns på några få stenar.
+- Vi kunde inte se att den som dog våldsamt fick mer beröm än andra döda.
 - Efter 1050 berättar stenarna om döden ungefär hälften så ofta som före. Kanske för att färderna tog slut, kanske för att döden, liksom bönen, flyttade in i kyrkan – men det har vi inte prövat.
 :::
 
 ## Så räknade vi
 
-Vi läste alla svenska vikingatida runstenar där Rundatas översättning säger att den döde dog, och sorterade dem efter regler som skrevs ned och låstes innan något räknades: våld (dräptes, föll, sveks, brändes), drunknad, sjukdom, dopkläder och utan sätt. Två prov var bestämda i förväg: om våldsam död får mer beröm, och om de sena stenarna berättar mer sällan om döden. Det första höll inte, det andra höll. En sten, Vg 40, säger att Gunne ”dog i strid när kungar stred” men räknas enligt planens ordlista som utan sätt, eftersom ordet strid inte stod med; det ändrar inget av proven. Planen och koden ligger öppet på GitHub.
+Vi läste alla svenska vikingatida runstenar där Rundatas översättning säger att den döde dog, och sorterade dem efter regler som skrevs ned och låstes innan något räknades: våld (dräptes, föll, sveks, brändes), drunknad, sjukdom, dopkläder och utan sätt. Två prov var bestämda i förväg: om våldsam död får mer beröm, och om de sena stenarna berättar mer sällan om döden. Det första höll inte, det andra höll. Tidsprovet bygger på de 1 066 stenar som går att datera; 1 255 stenar saknar år och räknas inte där. En sten, Vg 40, säger att Gunne ”dog i strid när kungar stred” men räknas enligt planens ordlista som utan sätt, eftersom ordet strid inte stod med; det ändrar inget av proven. Planen och koden ligger öppet på GitHub.
 
 ## Källor
 
@@ -276,7 +281,7 @@ When the stones do say how, it is usually violence: 37 of the 144. Someone fell,
 
 He fell in battle in the east in Garðar, leader of the retinue, the best of landholders.
 
-But betrayal is named as often as battle. At Söderby in Uppland it says that a certain Sassurr killed Helgi:
+Betrayal is named less often than battle: on {N_SVEK} of the 37 stones, against {N_FOLL} where the dead man fell. But where it is named, it weighs heavily. At Söderby in Uppland it says that a certain Sassurr killed Helgi:
 
 > *En Sassurr drap hann ok gærði niðingsverk, svæik felaga sinn.*
 
@@ -284,7 +289,7 @@ And Sassurr killed him and did a villainous deed, betrayed his partner.
 
 On Aspö in Södermanland a father explains why his son Bjôrn died on Gotland: *Þy let fior sitt, flyðu gængiR* – that is why he lost his life, his followers fled. And on Gotland the parents of a son betrayed on a voyage pray: *Guð sviki þa, eR hann sviku* – may God betray those who betrayed him. This is not only grief. It is an accusation, cut in stone, where everyone could read it.
 
-Would you expect those who died in battle to get more praise than others? We tested it. Of those who died violently, 7 of 37 get a word of praise, such as good or best, against 15 of 107 among the other dead. The difference is so small it could easily be chance. The stones make no distinction: those who died in battle are not honoured more than those who died in other ways.
+Would you expect those who died in battle to get more praise than others? We tested it. Of those who died violently, 7 of 37 get a word of praise, such as good or best, against 15 of 107 among the other dead. The difference is so small it could easily be chance. We could not see that the stones made any distinction: those who died violently are not honoured detectably more than those who died in other ways.
 
 ## The sea
 
@@ -320,7 +325,7 @@ who died in white clothes. May God help his soul.
 
 ## At home
 
-A few say that death came at home. They are among the most moving. On Gotland we read of Heilfúss that he *do hæima ok atti dottur æina* – died at home and had one daughter. At Ardre Sibba remembers his wife Hróðþjóð: *Do ung fran oformagum* – she died young, leaving children not yet grown.
+A few say that death came at home. They are among the most moving. On Gotland we read of Heilfúss that he *do hæima ok atti dottur æina* – died at home and had one daughter. At Ardre Sibba remembers his wife Hróðþjóð: *Do ung fran oformagum* – she died young, leaving children not yet grown. The stone does not say where she died, but it says what she left behind.
 
 And at Bjudby in Södermanland Þorsteinn raised a stone for himself and his son Hefnir, who had survived the journey:
 
@@ -338,26 +343,26 @@ It is the reverse of the Gripsholm stone. The son came home from England. It was
 
 How often the stones tell of death varies between provinces. On Gotland one in six does, in Södermanland about one in nine, in Uppland one in twenty. On Öland none of 154 does.
 
-The clearest pattern is time. Among stones that the style dates before 1050, {p1(68, 586, False)} per cent, about one in nine, tell of death. Among the later ones only {p1(27, 480, False)} per cent, one in eighteen. With the provinces held equal, the odds that a stone tells of death are about a third as large after 1050. A pattern this clear would arise by chance in fewer than one case in five hundred. We also split the stones into two groups, parish by parish, so that both got stones from the same areas and roughly the same time. The pattern shows in both, so it does not depend on a few parishes or carvers. Without Uppland it points the same way but is too weak to stand on its own.
+The clearest pattern is time. Among stones that the style dates before 1050, {p1(68, 586, False)} per cent, about one in nine, tell of death. Among the later ones only {p1(27, 480, False)} per cent, one in eighteen. With the provinces held equal, the odds that a stone tells of death are about a third as large after 1050. A pattern this clear would arise by chance in fewer than one case in five hundred. We also split the stones into two groups, parish by parish, so that both got stones from the same areas and roughly the same time. The pattern shows in both, so it does not depend on a few parishes. Without Uppland it points the same way but is too weak to stand on its own.
 
 Why? We did not test that. Two explanations lie close at hand. The great journeys, with Ingvarr and to Greece, belong to the time before 1050, and the journeys account for half of the deaths the stones tell of. And the same thing happened to the prayer: around 1035 more than one runestone in three prayed for the dead person's soul, fifty years later only one in ten ([The prayer fell silent – but the cross remained](/en/artiklar/2026-10-bonen-tystnade-korset-stod-kvar/)). Perhaps both death and prayer moved into the church, to the burial and the mass, and the stone was left to say less. Both explanations are readings, not results.
 
 ## The good death
 
-So what was a good death? The stones do not answer the question, and perhaps that is the answer. They do not praise the one who fell more than the one who died at home. They are not ashamed of the straw death. They accuse the one who betrayed, and they mourn the one who drowned. What they most often want us to know is where it happened, and that someone remembered.
+So what was a good death? The stones do not answer the question, and perhaps that is the answer. As far as we can see, they do not praise the one who fell more than the one who died at home. They are not ashamed of the straw death. They accuse the one who betrayed, and they mourn the one who drowned. What they most often want us to know is where it happened, and that someone remembered.
 
 Whoever reads the stones today can try the same thing: what would you want it to say about you, if you only had four words?
 
 :::box The essentials in brief
 - Only one Swedish runestone in sixteen, 144 of 2,321, tells how or where the dead person died. Half of those died abroad, and most stones say only where.
-- When the manner is given it is usually violence, and betrayal as often as battle. Drowning, sickness and death in christening robes appear on a few stones.
-- Those who died in battle did not get more praise than the other dead.
+- When the manner is given it is usually violence: mostly battle or killing, betrayal less often. Drowning, sickness and death in christening robes appear on a few stones.
+- We could not see that those who died violently got more praise than the other dead.
 - After 1050 the stones tell of death about half as often as before. Perhaps because the journeys ended, perhaps because death, like the prayer, moved into the church – but we have not tested that.
 :::
 
 ## How we counted
 
-We read every Swedish Viking-Age runestone where Rundata's translation says the dead person died, and sorted them by rules written down and locked before anything was counted: violence (killed, fell, betrayed, burned), drowned, sickness, christening robes and no manner. Two tests were fixed in advance: whether violent death gets more praise, and whether the late stones tell of death less often. The first did not hold, the second did. One stone, Vg 40, says that Gunni "died in battle when kings fought" but counts as no manner under the plan's word list, because the word battle was not on it; it changes neither test. The plan and the code are open on GitHub.
+We read every Swedish Viking-Age runestone where Rundata's translation says the dead person died, and sorted them by rules written down and locked before anything was counted: violence (killed, fell, betrayed, burned), drowned, sickness, christening robes and no manner. Two tests were fixed in advance: whether violent death gets more praise, and whether the late stones tell of death less often. The first did not hold, the second did. The test of time rests on the 1,066 stones that can be dated; 1,255 stones have no date and are not counted there. One stone, Vg 40, says that Gunni "died in battle when kings fought" but counts as no manner under the plan's word list, because the word battle was not on it; it changes neither test. The plan and the code are open on GitHub.
 
 ## Sources
 
