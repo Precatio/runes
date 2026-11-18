@@ -49,6 +49,22 @@ FAM = [set(f["stones"]) for f in F["families"]]
 assert any({"U 100", "U 160", "U 161", "U 225"} == fs for fs in FAM)              # Ulvs söner: fyra stenar i samma släkt
 assert any({"U 164", "U 165", "U 212", "U 261"} == fs for fs in FAM)              # Jarlabanke: fyra stenar, U 127 utanför
 assert any({"U 312", "U 313", "U 314", "U 315"} == fs for fs in FAM)              # Harg
+# Granskning 2026-11-18: Ulvs söners fjärde sten står i Sollentuna; U 941:s länkande namn är kompletterade inom hakparentes,
+# fragmentet lästes i SRI bara som "... fast... ajr..."; båda stenarna räknas till Åsmund; Larssons citat står på tryckt s. 144
+assert INS["U 100"]["parish"] == "Sollentuna sn" and {INS[s_]["parish"] for s_ in ("U 160", "U 161")} == {"Täby sn"} and INS["U 225"]["parish"] == "Vallentuna sn"
+assert "o[k \"S]igvaldi" in INS["U 941"]["normalization"] and "I[ngi]fastaR" in INS["U 941"]["normalization"]
+assert [c["name"] for c in INS["U 941"]["carvers"]] == ["Åsmund"] and "Asmundr risti" in INS["U 986"]["normalization"]
+_SRI = open("/Volumes/2TB/Antigrvity/Runes/downloads/sri/sri_uppland_b09_h01_text_1.txt", encoding="utf-8").read()
+_i = _SRI.index("941. Uppsala, K v a r t e r e t Torget.")
+assert ". . . fast... ajr..." in _SRI[_i:_i + 800]
+import sqlite3  # noqa: E402
+_t = sqlite3.connect("/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite").execute(
+    "select text from pages where key='1996_143' and page=3").fetchone()[0]
+assert _t.lstrip().startswith("144") and "delvis motsägelsefullt re" in _t and "Gräslund" in _t
+# Samma grupp ger flera länkar: Hargs fyra stenar fem, Jarlabankes fyra sex
+_npairs = lambda st: sum(1 for a_ in st for b_ in st if a_ < b_ and (a_, b_) in pairs)  # noqa: E731
+N_HARG, N_JARL = _npairs(("U 312", "U 313", "U 314", "U 315")), _npairs(("U 164", "U 165", "U 212", "U 261"))
+assert (N_HARG, N_JARL) == (5, 6) and INS["U 164"]["place"] == INS["U 165"]["place"]
 
 
 def q(sig, frag):
@@ -76,14 +92,14 @@ summary_en = ("The same people often stand on several runestones. We have linked
               "links already stand in the runologists' list. Three do not, and one of them is probably wrong.")
 MAP_SV = fig("slakter_karta_sv.png", f"De {F['n_families']} släkterna. Strecken förenar stenar som nämner samma personer oftare än slumpen ger på samma avstånd; {F['by_province']['U']} av släkterna finns i Uppland. Karta: Vitki, ur Samnordisk runtextdatabas; kustlinjer och sjöar: Natural Earth.")
 MAP_EN = fig("slakter_karta_en.png", f"The {F['n_families']} families. The lines join stones that name the same people more often than chance gives at the same distance; {F['by_province']['U']} of the families are in Uppland. Map: Vitki, from the Scandinavian Runic-text Database; coastlines and lakes: Natural Earth.")
-HARG_SV = fig("harg_sv.png", "Vem som står på vilken av de fyra stenarna vid Harg. Holmdis och Gunnar står på tre av dem, Jofurfast minns på tre och Tord på en. Illustration: Vitki, efter Samnordisk runtextdatabas.")
-HARG_EN = fig("harg_en.png", "Who stands on which of the four stones at Harg. Holmdís and Gunnarr stand on three of them, Jôfurfast is remembered on three and Þórðr on one. Illustration: Vitki, after the Scandinavian Runic-text Database.")
+HARG_SV = fig("harg_sv.png", "Vem som står på vilken av de fyra stenarna vid Harg. Holmdis och Gunnar reser tre av dem var, och Holmdis nämns som mor också på den fjärde; Jofurfast minns på tre och Tord på en. Illustration: Vitki, efter Samnordisk runtextdatabas.")
+HARG_EN = fig("harg_en.png", "Who stands on which of the four stones at Harg. Holmdís and Gunnarr each raise three of them, and Holmdís is named as mother on the fourth too; Jôfurfast is remembered on three and Þórðr on one. Illustration: Vitki, after the Scandinavian Runic-text Database.")
 
 body = f"""Den som har släktforskat vet hur det känns när samma namn dyker upp på två ställen: en farfar i en husförhörslängd, samma namn på samma gård i en bouppteckning. Det är så man vet att det är samma människa. Runstenarna går att läsa på samma sätt. Bara namnen är äldre.
 
-Vid gården Harg i Skånela socken i Uppland står fyra runstenar. På den ena står {q('U 313', 'Gunnarr let haggva stæin æftiR Iufurfast, stiupu sina, ok Holmdis æftiR')} – "Gunnar lät hugga stenen efter Jofurfast, sin styvdotter, och Holmdis efter sin dotter." På den andra står modern ensam: {q('U 314', 'Holmdis let gæra mærki at Iufurfast, dottur sina.')} – "Holmdis lät göra minnesmärket efter Jofurfast, sin dotter." På den tredje låter Gunnar göra ett minnesmärke {q('U 312', 'fyr sial IufurfastaR')}, "för Jofurfasts själ". Och på den fjärde står de båda igen, nu efter ett annat barn: {q('U 315', 'Gunnarr, sunn Farulfs, letu ok Holmdis gærðu mærki æftiR Þorð, sun sinn.')} – "Gunnar, Farulvs son, och Holmdis lät göra minnesmärket efter Tord, sin son."
+Vid gården Harg i Skånela socken i Uppland står fyra runstenar. På den ena står {q('U 313', 'Gunnarr let haggva stæin æftiR Iufurfast, stiupu sina, ok Holmdis æftiR')} – "Gunnar lät hugga stenen efter Jofurfast, sin styvdotter, och Holmdis efter sin dotter." På den andra står modern ensam: {q('U 314', 'Holmdis let gæra mærki at Iufurfast, dottur sina.')} – "Holmdis lät göra minnesmärket efter Jofurfast, sin dotter." På den tredje låter Gunnar göra ett minnesmärke {q('U 312', 'fyr sial IufurfastaR, stiupu sinnaR, dottur HolmdisaR.')} – "för Jofurfasts själ, sin styvdotters, Holmdis dotters." Och på den fjärde står de båda igen, nu efter ett annat barn: {q('U 315', 'Gunnarr, sunn Farulfs, letu ok Holmdis gærðu mærki æftiR Þorð, sun sinn.')} – "Gunnar, Farulvs son, och Holmdis lät göra minnesmärket efter Tord, sin son."
 
-Fyra stenar för två barn. Jofurfast var Holmdis dotter, som Gunnar kallar sin styvdotter, och Tord var deras gemensamma son. Ingen av stenarna berättar det ensam. Det är först när vi lägger dem bredvid varandra som en familj framträder, med en mor som sörjde två barn och en styvfar som reste stenar för båda. Vi har skrivit om döttrarna vid Harg tidigare, i [Döttrarna som runstenarna glömde]({DOTTRAR}).
+Fyra stenar för två barn. Jofurfast var Holmdis dotter, som Gunnar kallar sin styvdotter, och Tord var deras gemensamma son. Varje sten berättar en del. Det är först när vi lägger dem bredvid varandra som hela familjen framträder, med en mor som sörjde två barn och en styvfar som reste stenar för båda. Vi har skrivit om döttrarna vid Harg tidigare, i [Döttrarna som runstenarna glömde]({DOTTRAR}).
 
 {HARG_SV}
 
@@ -103,6 +119,7 @@ Så kommer vi fram till {len(sure)} länkar mellan svenska runstenar, och de kny
 - **Varje länk anger sin osäkerhet.** Vi räknar en länk som säker när högst var tionde lika stark länk på samma avstånd väntas vara slump.
 - **Runologernas förteckning bekräftar nio av tio.** {w2h} av {len(w2)} länkar står i Williams förteckning från 1990, som är gjord för hand och oberoende av vår modell.
 - **Räknesättet valdes efter att vi sett förteckningen.** Därför gjorde vi ett blint prov: de fem länkar som Williams saknar blandades med kända länkar och namnpar som modellen inte länkar, utan signum. Alla fem bedömdes som samma släkt, men provet var inte avgörande, eftersom bedömaren bara kände igen tre av fem kända länkar ur texterna.
+- **Stenar i samma grupp räknas var för sig.** Varje par av stenar är en länk, så Hargs fyra stenar står för {N_HARG} av länkarna och Jarlabankes fyra för {N_JARL} (två av hans stenar står vid samma bro). En del av samstämmigheten med Williams gäller alltså grupper som syns redan på platsen.
 - **Nätverket är tunt.** Bara 4 procent av runstenarna ingår, och par med bara vanliga namn prövas inte alls.
 :::
 
@@ -112,7 +129,7 @@ Så kommer vi fram till {len(sure)} länkar mellan svenska runstenar, och de kny
 
 **Malsta och Sunnå i Hälsingland.** Hróðmundr reste två stenar efter sin far, och på den ena räknar han upp faderns släkt: {q('Hs 14', 'En Brisi vas Lina sunn. En Lini vas UnaR sunn.')} – "Och Brise var Lines son. Och Line var Unns son." Så fortsätter det bakåt i sex led, och han berättar varifrån stenen kom: {q('Hs 14', 'ViR sottum stæin þenna norðr i Balas[tæ]in.')} – "Vi hämtade denna sten norrut i Balasten."
 
-**Ulvs söner i Täby och Vallentuna.** Om fadern står det {q('U 160', 'Hann byggi i Skulhambri.')} – "Han bodde i Skålhamra." Sönerna byggde en tingsplats och skröt: {q('U 225', 'þan Ulfs syniR æftiR gær[ðu]')}, att inga minnesmärken skulle bli större "än dem som Ulvs söner gjorde efter" honom. Fyra stenar hänger ihop i den släkten.
+**Ulvs söner i Täby, Vallentuna och Sollentuna.** Om fadern står det {q('U 160', 'Hann byggi i Skulhambri.')} – "Han bodde i Skålhamra." Sönerna byggde en tingsplats och skröt: {q('U 225', 'þan Ulfs syniR æftiR gær[ðu]')}, att inga minnesmärken skulle bli större "än dem som Ulvs söner gjorde efter" honom. Fyra stenar hänger ihop i den släkten.
 
 **Jarlabanke.** Fyra av Jarlabankes stenar, i Täby, Vallentuna och Fresta, hänger ihop, de där han säger att han {q('U 164', 'æinn atti allan Tæby')}, "ensam ägde hela Täby". En femte, U 127 i Danderyd, står mer än en mil bort. Där ger slumpen för många namnpar för att länken ska bli säker, fast den är äkta.
 
@@ -122,15 +139,15 @@ Den som reser en sten lever när den reses. Står samma person sedan som död p�
 
 På gården Råsta i Spånga socken reste två bröder en sten efter sin far: {q('U 77', 'Holmstæinn ok Hosvi letu ræisa stæin æftiR Iobiorn, faður sinn')} – "Holmsten och Hosve lät resa stenen efter Jobjörn, sin far." På en annan sten vid samma gård är Holmsten själv död: {q('U 78', 'Hosvi ok Sigriðr ok Kætiløy letu ræisa stæin þenna æftiR Holmstæin, broður sinn.')} – "Hosve och Sigrid och Kättilö lät resa denna sten efter Holmsten, sin bror." Den andra stenen är ristad i en yngre stil än den första, som den ska.
 
-Vi har räknat på alla sådana fall i släkterna som runologerna och vår modell har knutit ihop. {GP['n']} personer reser först en sten och står sedan som döda på en annan, och båda stenarna har en stilgrupp. För {GP['ties']} av dem är stilen densamma, vilket är väntat, eftersom en stilgrupp spänner över ungefär en generation. Av de övriga {GP['later'] + GP['earlier']} är den senare stenen ristad i en yngre stil i {GP['later']} fall och i en äldre i {GP['earlier']}. Om stilen inte sade något om tiden skulle en så sned fördelning uppstå ungefär sex gånger på tusen. Gräslund prövade själv sin datering mot Jarlabankes släkt och fick ett delvis motsägelsefullt resultat (Larsson 1996). Utan Jarlabankes stenar blir det {GJ['later']} mot {GJ['earlier']}.
+Vi har räknat på alla sådana fall i släkterna som runologerna och vår modell har knutit ihop. {GP['n']} personer reser först en sten och står sedan som döda på en annan, och båda stenarna har en stilgrupp. För {GP['ties']} av dem är stilen densamma, vilket är väntat, eftersom en stilgrupp spänner över ungefär en generation. Av de övriga {GP['later'] + GP['earlier']} är den senare stenen ristad i en yngre stil i {GP['later']} fall och i en äldre i {GP['earlier']}. Om stilen inte sade något om tiden skulle en så sned fördelning uppstå ungefär sex gånger på tusen. Gräslund prövade själv sin datering mot Jarlabankes släkt och fick ett delvis motsägelsefullt resultat (Larsson 1996, s. 144). Utan Jarlabankes stenar blir det {GJ['later']} mot {GJ['earlier']}.
 
 Det är ändå en antydan och inget prövat fynd. När vi delar släkterna i två halvor håller det tydligt bara i den ena; i den andra är fallen för få, {GH[0]['later']} mot {GH[0]['earlier']}. Och de fall som går åt fel håll är värda att läsa. Vid Viggby bro i Dalby socken reste tre bröder en sten efter sin far: {q('U 844', 'Gisl ok Biorn ok AsgæiRR letu ræisa stæin at Þorstæin, faður sinn.')} – "Gisl och Björn och Asger lät resa stenen efter Torsten, sin far." Sedan dog Björn, och på en annan sten vid samma bro står {q('U 845', 'Gisl ok AsgæiRR ræistu stæin þenna æftiR Biorn, broður sinn, annan æftiR faður sinn.')} – "Gisl och Asger reste denna sten efter Björn, sin bror, den andra efter sin far." Texten säger alltså själv i vilken ordning stenarna kom. Ändå räknas Björns sten, som ristaren Arbjörn gjorde, till en stilgrupp som dateras ungefär femtio år före faderns. Antingen ristade Arbjörn i en äldre stil än sin samtid, eller så behöver dateringen ses över.
 
-## Tre länkar som ingen har gjort – och en som troligen är fel
+## Tre länkar som inte står i förteckningarna – och en som troligen är fel
 
 Tre av länkarna står varken i Rundata, hos Williams eller i Petersons lexikon. Vi har inte gått igenom all senare litteratur, så de är förslag att pröva, inte fynd.
 
-**U 941 och U 986, fem kilometer isär.** På U 986 står {q('U 986', 'Ali/Alli ok Sigvaldi ok Ingifast letu retta stæin þenna')} – "Ale och Sigvalde och Ingefast lät resa denna sten", efter Ingefasts make och Ales far. Den skadade stenen U 941 i Uppsala börjar med samma tre namn och nämner också {q('U 941', '[boa]nda I[ngi]fastaR')}, "Ingefasts make". Samma mor och samma två söner, som troligen reste två stenar efter samme man.
+**U 941 och U 986, fem kilometer isär.** På U 986 står {q('U 986', 'Ali/Alli ok Sigvaldi ok Ingifast letu retta stæin þenna')} – "Ale och Sigvalde och Ingefast lät resa denna sten", efter Ingefasts make och Ales far. Den skadade stenen U 941 i Uppsala börjar med samma tre namn och nämner också {q('U 941', '[boa]nda I[ngi]fastaR')}, "Ingefasts make". Det ser ut som samma änka och samma söner, som reste två stenar efter samme man. Men U 941 är ett fragment, och i Rundatas läsning är just de namn som länkar delvis ifyllda inom hakparentes, *[S]igvaldi* och *I[ngi]fastaR*. När fragmentet gavs ut i Sveriges runinskrifter gick bara *... fast... ajr...* att läsa. Kompletteringen är troligen gjord efter U 986, och båda stenarna räknas till ristaren Åsmund. Länken kan alltså redan finnas i den litteratur som gjorde kompletteringen.
 
 **U 1027 och U 1047, en mil isär.** Ígull och Gísl står på båda: på den skadade U 1027 tillsammans med en tredje man, kanske Eyndr, och på U 1047 med Eygeirr och Ketilbjôrn, efter sin far Eybjôrn. Gísl är osäkert läst på U 1047, så länken vilar mest på det ovanliga namnet Ígull.
 
@@ -145,8 +162,8 @@ Det modellen ger är inte en ny förteckning som ersätter runologernas. Det är
 :::box Det viktigaste i korthet
 - Samma människor står ofta på flera runstenar, och när stenarna läggs bredvid varandra framträder familjer: en mor vid Harg som sörjde två barn, en änkling i Ardre som förlorade hustru och dotter.
 - Släkterna höll sig nära sina gårdar. Därför går de att skilja från slumpen när namnen prövas på samma avstånd.
-- Släktleden och dateringen pekar oftast åt samma håll: den som först reser en sten får sin egen i en yngre stil. Det talar för att både länkarna och stilgrupperna håller, men underlaget är litet, och där texten säger emot stilen, som vid Viggby bro, behövs en runolog.
-- Nio av tio av våra länkar har runologerna redan gjort för hand. Tre är nya förslag, och en av dem är troligen fel, vilket visar att en modell inte ersätter den som läser.
+- Släktleden och dateringen pekar oftast åt samma håll: den som först reser en sten får sin egen i en yngre stil. Det stämmer med att både länkarna och stilgrupperna håller, men det är en antydan: underlaget är litet, och där texten säger emot stilen, som vid Viggby bro, behövs en runolog.
+- Nio av tio av våra länkar har runologerna redan gjort för hand. Tre står inte i förteckningarna; en av dem bygger troligen på en kompletterad läsning och en är troligen fel, vilket visar att en modell inte ersätter den som läser.
 :::
 
 ## Källor
@@ -162,9 +179,9 @@ Det modellen ger är inte en ny förteckning som ersätter runologernas. Det är
 
 body_en = f"""Anyone who has done family history knows the feeling when the same name turns up in two places: a grandfather in a parish register, the same name on the same farm in an estate inventory. That is how you know it is the same person. The runestones can be read the same way. Only the names are older.
 
-At the farm of Harg in Skånela parish in Uppland stand four runestones. On one of them it says {q('U 313', 'Gunnarr let haggva stæin æftiR Iufurfast, stiupu sina, ok Holmdis æftiR')} – "Gunnarr had the stone cut in memory of Jôfurfast, his stepdaughter, and Holmdís in memory of her daughter." On the second the mother stands alone: {q('U 314', 'Holmdis let gæra mærki at Iufurfast, dottur sina.')} – "Holmdís had the landmark made in memory of Jôfurfast, her daughter." On the third Gunnarr has a landmark made {q('U 312', 'fyr sial IufurfastaR')}, "for Jôfurfast's soul". And on the fourth both stand again, now for another child: {q('U 315', 'Gunnarr, sunn Farulfs, letu ok Holmdis gærðu mærki æftiR Þorð, sun sinn.')} – "Gunnarr, Farulfr's son, and Holmdís had the landmark made in memory of Þórðr, their son."
+At the farm of Harg in Skånela parish in Uppland stand four runestones. On one of them it says {q('U 313', 'Gunnarr let haggva stæin æftiR Iufurfast, stiupu sina, ok Holmdis æftiR')} – "Gunnarr had the stone cut in memory of Jôfurfast, his stepdaughter, and Holmdís in memory of her daughter." On the second the mother stands alone: {q('U 314', 'Holmdis let gæra mærki at Iufurfast, dottur sina.')} – "Holmdís had the landmark made in memory of Jôfurfast, her daughter." On the third Gunnarr has a landmark made {q('U 312', 'fyr sial IufurfastaR, stiupu sinnaR, dottur HolmdisaR.')} – "for the soul of Jôfurfast, his stepdaughter, Holmdís's daughter." And on the fourth both stand again, now for another child: {q('U 315', 'Gunnarr, sunn Farulfs, letu ok Holmdis gærðu mærki æftiR Þorð, sun sinn.')} – "Gunnarr, Farulfr's son, and Holmdís had the landmark made in memory of Þórðr, their son."
 
-Four stones for two children. Jôfurfast was Holmdís's daughter, whom Gunnarr calls his stepdaughter, and Þórðr was their shared son. None of the stones tells it alone. Only when we lay them side by side does a family appear, with a mother who mourned two children and a stepfather who raised stones for both. We have written about the daughters at Harg before, in Swedish, in [Döttrarna som runstenarna glömde]({DOTTRAR}).
+Four stones for two children. Jôfurfast was Holmdís's daughter, whom Gunnarr calls his stepdaughter, and Þórðr was their shared son. Each stone tells a part. Only when we lay them side by side does the whole family appear, with a mother who mourned two children and a stepfather who raised stones for both. We have written about the daughters at Harg before, in Swedish, in [Döttrarna som runstenarna glömde]({DOTTRAR}).
 
 {HARG_EN}
 
@@ -184,6 +201,7 @@ That gives us {len(sure)} links between Swedish runestones, and they tie togethe
 - **Every link states its uncertainty.** We count a link as sure when at most one in ten equally strong links at the same distance is expected to be chance.
 - **The runologists' list confirms nine in ten.** {w2h} of {len(w2)} links stand in Williams's list of 1990, made by hand and independent of our model.
 - **The way of counting was chosen after we saw the list.** So we ran a blind test: the five links Williams lacks were mixed with known links and with name pairs the model does not link, without signa. All five were judged the same family, but the test was not decisive, since the judge recognised only three of five known links from the texts.
+- **Stones of the same group are counted one by one.** Each pair of stones is a link, so Harg's four stones account for {N_HARG} of the links and Jarlabanke's four for {N_JARL} (two of his stones stand at the same bridge). Part of the agreement with Williams therefore concerns groups that can be seen on the spot.
 - **The network is thin.** Only 4 per cent of the runestones are in it, and pairs with only common names are not tested at all.
 :::
 
@@ -193,7 +211,7 @@ That gives us {len(sure)} links between Swedish runestones, and they tie togethe
 
 **Malsta and Sunnå in Hälsingland.** Hróðmundr raised two stones for his father, and on one he lists his father's line: {q('Hs 14', 'En Brisi vas Lina sunn. En Lini vas UnaR sunn.')} – "And Brísi was Lini's son. And Lini was Unn's son." It goes back six generations, and he tells where the stone came from: {q('Hs 14', 'ViR sottum stæin þenna norðr i Balas[tæ]in.')} – "We fetched this stone in the north at Balasteinn."
 
-**Ulfr's sons in Täby and Vallentuna.** Of the father it says {q('U 160', 'Hann byggi i Skulhambri.')} – "He lived in Skolhamarr." The sons made an assembly place and boasted {q('U 225', 'þan Ulfs syniR æftiR gær[ðu]')}, that no landmarks would be greater "than those Ulfr's sons made in memory" of him. Four stones hang together in that family.
+**Ulfr's sons in Täby, Vallentuna and Sollentuna.** Of the father it says {q('U 160', 'Hann byggi i Skulhambri.')} – "He lived in Skolhamarr." The sons made an assembly place and boasted {q('U 225', 'þan Ulfs syniR æftiR gær[ðu]')}, that no landmarks would be greater "than those Ulfr's sons made in memory" of him. Four stones hang together in that family.
 
 **Jarlabanke.** Four of Jarlabanke's stones, in Täby, Vallentuna and Fresta, hang together, those where he says that he {q('U 164', 'æinn atti allan Tæby')}, "alone owned all of Täby". A fifth, U 127 in Danderyd, stands more than ten kilometres away. There chance gives too many name pairs for the link to be sure, though it is real.
 
@@ -203,15 +221,15 @@ Whoever raises a stone is alive when it is raised. If the same person later stan
 
 At the farm of Råsta in Spånga parish two brothers raised a stone for their father: {q('U 77', 'Holmstæinn ok Hosvi letu ræisa stæin æftiR Iobiorn, faður sinn')} – "Holmsteinn and Hôsvi had the stone raised in memory of Jóbjôrn, their father." On another stone at the same farm Holmsteinn himself is dead: {q('U 78', 'Hosvi ok Sigriðr ok Kætiløy letu ræisa stæin þenna æftiR Holmstæin, broður sinn.')} – "Hôsvi and Sigríðr and Ketiley had this stone raised in memory of Holmsteinn, their brother." The second stone is carved in a younger style than the first, as it should be.
 
-We have counted every such case in the families that the runologists and our model have joined. {GP['n']} people first raise a stone and then stand as dead on another, and both stones have a style group. For {GP['ties']} of them the style is the same, which is expected, since a style group spans about a generation. Of the other {GP['later'] + GP['earlier']}, the later stone is carved in a younger style in {GP['later']} cases and in an older one in {GP['earlier']}. If the style said nothing about time, so lopsided a split would arise about six times in a thousand. Gräslund herself tested her dating against Jarlabanke's family and got a partly contradictory result (Larsson 1996). Without Jarlabanke's stones it is {GJ['later']} to {GJ['earlier']}.
+We have counted every such case in the families that the runologists and our model have joined. {GP['n']} people first raise a stone and then stand as dead on another, and both stones have a style group. For {GP['ties']} of them the style is the same, which is expected, since a style group spans about a generation. Of the other {GP['later'] + GP['earlier']}, the later stone is carved in a younger style in {GP['later']} cases and in an older one in {GP['earlier']}. If the style said nothing about time, so lopsided a split would arise about six times in a thousand. Gräslund herself tested her dating against Jarlabanke's family and got a partly contradictory result (Larsson 1996, p. 144). Without Jarlabanke's stones it is {GJ['later']} to {GJ['earlier']}.
 
 It is still an indication, not a tested finding. When we split the families into two halves, it holds clearly in only one; in the other the cases are too few, {GH[0]['later']} to {GH[0]['earlier']}. And the cases that go the wrong way are worth reading. At Viggby bridge in Dalby parish three brothers raised a stone for their father: {q('U 844', 'Gisl ok Biorn ok AsgæiRR letu ræisa stæin at Þorstæin, faður sinn.')} – "Gísl and Bjôrn and Ásgeirr had the stone raised in memory of Þorsteinn, their father." Then Bjôrn died, and on another stone at the same bridge stands {q('U 845', 'Gisl ok AsgæiRR ræistu stæin þenna æftiR Biorn, broður sinn, annan æftiR faður sinn.')} – "Gísl and Ásgeirr raised this stone in memory of Bjôrn, their brother, the other in memory of their father." The text itself says in which order the stones came. Yet Bjôrn's stone, made by the carver Arbjôrn, belongs to a style group dated about fifty years before the father's. Either Arbjôrn carved in an older style than his contemporaries, or the dating needs another look.
 
-## Three links nobody has made – and one that is probably wrong
+## Three links not in the lists – and one that is probably wrong
 
 Three of the links stand neither in Rundata, in Williams nor in Peterson's lexicon. We have not gone through all later literature, so they are proposals to test, not findings.
 
-**U 941 and U 986, five kilometres apart.** On U 986 it says {q('U 986', 'Ali/Alli ok Sigvaldi ok Ingifast letu retta stæin þenna')} – "Áli and Sigvaldi and Ingifast had this stone erected", in memory of Ingifast's husband and Áli's father. The damaged stone U 941 in Uppsala begins with the same three names and also names {q('U 941', '[boa]nda I[ngi]fastaR')}, "Ingifast's husband". The same mother and the same two sons, who probably raised two stones for the same man.
+**U 941 and U 986, five kilometres apart.** On U 986 it says {q('U 986', 'Ali/Alli ok Sigvaldi ok Ingifast letu retta stæin þenna')} – "Áli and Sigvaldi and Ingifast had this stone erected", in memory of Ingifast's husband and Áli's father. The damaged stone U 941 in Uppsala begins with the same three names and also names {q('U 941', '[boa]nda I[ngi]fastaR')}, "Ingifast's husband". It looks like the same widow and the same sons, who raised two stones for the same man. But U 941 is a fragment, and in Rundata's reading the very names that link are partly filled in within brackets, *[S]igvaldi* and *I[ngi]fastaR*. When the fragment was published in Sveriges runinskrifter only *... fast... ajr...* could be read. The restoration was probably made after U 986, and both stones are attributed to the carver Ásmundr. The link may thus already be in the literature that made the restoration.
 
 **U 1027 and U 1047, ten kilometres apart.** Ígull and Gísl stand on both: on the damaged U 1027 together with a third man, perhaps Eyndr, and on U 1047 with Eygeirr and Ketilbjôrn, in memory of their father Eybjôrn. Gísl is an uncertain reading on U 1047, so the link rests mostly on the uncommon name Ígull.
 
@@ -226,8 +244,8 @@ What the model gives is not a new list that replaces the runologists'. It is a l
 :::box The essentials in brief
 - The same people often stand on several runestones, and when the stones are laid side by side families appear: a mother at Harg who mourned two children, a widower at Ardre who lost wife and daughter.
 - The families stayed close to their farms. That is why they can be told apart from chance when the names are tested at the same distance.
-- The family lines and the dating mostly point the same way: whoever first raises a stone gets their own in a younger style. That suggests both the links and the style groups hold, but the evidence is small, and where the text contradicts the style, as at Viggby bridge, a runologist is needed.
-- Nine in ten of our links the runologists had already made by hand. Three are new proposals, and one of them is probably wrong, which shows that a model does not replace the reader.
+- The family lines and the dating mostly point the same way: whoever first raises a stone gets their own in a younger style. That fits both the links and the style groups holding, but it is an indication: the evidence is small, and where the text contradicts the style, as at Viggby bridge, a runologist is needed.
+- Nine in ten of our links the runologists had already made by hand. Three are not in the lists; one of them probably rests on a restored reading and one is probably wrong, which shows that a model does not replace the reader.
 :::
 
 ## Sources
