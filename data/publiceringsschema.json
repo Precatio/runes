@@ -45,7 +45,7 @@
    "titel": "Runstenarna stod vid lerans kant – men halva gåtan är olöst",
    "spar": "P",
    "bluesky": {
-    "text": "We laid the soil map over every runestone still in place. The stones stand not on the clay but at its edge, on dry ground by farms and graves. And half of the Mälaren valley's lead is explained by neither soil, settlement nor water.",
+    "text": "We laid the soil map over every runestone still in place. The stones stand not on the clay but at its edge, on dry ground near the grave fields. And half of the Mälaren valley's lead is explained by neither soil, settlement nor water.",
     "tags": [
      "runestones",
      "Skystorians",
@@ -54,7 +54,7 @@
      "Vikings"
     ]
    },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:41+01:00"
   },
   {
    "datum": "2026-11-27",
@@ -63,7 +63,7 @@
    "titel": "Fyra stenar för två barn – släkterna som går att följa över runstenarna",
    "spar": "P",
    "bluesky": {
-    "text": "Four stones for two children. Testing names against chance, we linked 42 families across 95 runestones. Nine in ten links are already in the runologists' list; three are not, and one of those is probably wrong.",
+    "text": "Four stones for two children. Testing names against chance, we linked 42 families across 95 runestones. Nine in ten links are already in the runologists' list. Of three new ones, one is probably wrong.",
     "tags": [
      "runology",
      "MedievalSky",
@@ -73,28 +73,58 @@
      "Vikings"
     ]
    },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:41+01:00"
   },
   {
-   "datum": "2026-12-01",
+   "datum": "2026-11-30",
    "tid": "07:00",
-   "id": "huv62lUJokN4dgHRDHvW",
-   "titel": "De gamla landen: Gotland – ett eget land mitt i havet",
+   "id": "zaaTGjAWLaZz7jBamwKm",
+   "titel": "De gamla landen: Attundaland – där man gjorde sina tingsplatser",
    "spar": "P",
    "bluesky": {
-    "text": "New in the series The old lands: Gotland around AD 1000. A land of its own in the sea: farms that moved about their land, harbours along the whole coast, more silver in the ground than anywhere else, one assembly for the island.",
+    "text": "Gerlög outlived her daughter Inga and inherited from her. Who inherited from whom is cut into a rock at Hillersjö, the longest runic text in Uppland. The old lands: Attundaland around AD 1000, where great men wrote in stone that they had made the assembly place.",
     "tags": [
      "runestones",
-     "MedievalSky",
-     "archaeology",
      "VikingAge",
-     "Vikings"
+     "MedievalSky"
     ]
    },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:42+01:00"
   },
   {
-   "datum": "2026-12-04",
+   "datum": "2026-12-03",
+   "tid": "07:00",
+   "id": "BJGtUnkrmlXLSw47hJPX",
+   "titel": "Den goda döden – vad runstenarna säger om hur de dog",
+   "spar": "P",
+   "bluesky": {
+    "text": "Only one Swedish runestone in sixteen says how the dead died. Those that do tell of battle, betrayal, a ship that sank, a mother who left small children, and sons who died in white christening robes. After 1050 the stones tell of death half as often.",
+    "tags": [
+     "runestones",
+     "VikingAge",
+     "MedievalSky"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:42+01:00"
+  },
+  {
+   "datum": "2026-12-06",
+   "tid": "07:00",
+   "id": "g9idmDpqOdMUwhPydrmV",
+   "titel": "De gamla landen: Fjädrundaland – folklandet längst in i havsviken",
+   "spar": "P",
+   "bluesky": {
+    "text": "In Fjädrundaland in western Uppland only one runestone in three bears a cross, against six in ten in the rest of Uppland. Balle carved a stone for Brune, who \"died in christening robes in Denmark\", and that stone has no cross either.",
+    "tags": [
+     "runestones",
+     "VikingAge",
+     "MedievalSky"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:43+01:00"
+  },
+  {
+   "datum": "2026-12-09",
    "tid": "07:00",
    "id": "pcm3u3oFyziU2vzixpYR",
    "titel": "Döda i vita kläder – sju runstenar över dem som dog nydöpta",
@@ -109,10 +139,10 @@
      "Vikings"
     ]
    },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:43+01:00"
   },
   {
-   "datum": "2026-12-08",
+   "datum": "2026-12-12",
    "tid": "07:00",
    "id": "heW9W2pFX8bBiB0GCgPD",
    "titel": "Vikingarnas österled – eller bara Ingvars?",
@@ -127,43 +157,24 @@
      "Vikings"
     ]
    },
-   "godkand": null
-  },
-  {
-   "datum": "2026-12-11",
-   "tid": "07:00",
-   "id": "vrcJRTfxrl9nHFGJ0lP4",
-   "titel": "De gamla landen: Värend – sjöbygden mitt i skogen",
-   "spar": "P",
-   "bluesky": {
-    "text": "New in the series The old lands: Värend, the largest of Småland's small lands. A lake country ringed by forest around AD 1000: large villages, a great mound at Ingelstad and perhaps an assembly by Helgasjön.",
-    "tags": [
-     "runestones",
-     "MedievalSky",
-     "archaeology",
-     "VikingAge",
-     "Vikings"
-    ]
-   },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:44+01:00"
   },
   {
    "datum": "2026-12-15",
    "tid": "07:00",
-   "id": "3DWc4WX5usii0K4zB0Oh",
-   "titel": "Läs om du kan – kunde vikingatidens folk läsa runstenarna?",
+   "id": "EjZIbq8IOAE2Qec8TSGA",
+   "titel": "Asatron i landskapet – gudarnas socknar var gravarnas socknar",
    "spar": "P",
    "bluesky": {
-    "text": "Could Viking-age people read the runestones? One in three Swedish runestones points at itself – 'this stone' – and one in nine names its carver. But only ten of 2,321 ask outright for a reader: interpret, he who can.",
+    "text": "Odensvi, Torsåker, Ullvi: the old gods live on in Swedish place names. We went through the whole national place-name dictionary. Cult-place names are thickest around Lake Mälaren, and hardly any parish with one lacks an Iron Age grave field.",
     "tags": [
-     "runology",
-     "Skystorians",
      "OldNorse",
+     "MedievalSky",
      "VikingAge",
      "Vikings"
     ]
    },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:45+01:00"
   },
   {
    "datum": "2026-12-15",
@@ -186,11 +197,11 @@
   {
    "datum": "2026-12-18",
    "tid": "07:00",
-   "id": "71Vv1GCp3TriruXWktTq",
-   "titel": "De gamla landen: Möre – kusten vid sundet",
+   "id": "huv62lUJokN4dgHRDHvW",
+   "titel": "De gamla landen: Gotland – ett eget land mitt i havet",
    "spar": "P",
    "bluesky": {
-    "text": "New in the series The old lands: Möre, the coast by the Kalmar Sound around AD 1000. Fertile clay between forest and sea, villages by the rivers, ships offshore – a land that followed Östergötland's law, not Småland's.",
+    "text": "New in the series The old lands: Gotland around AD 1000. A land of its own in the sea: farms that moved about their land, harbours along the whole coast, more silver in the ground than anywhere else, one assembly for the island.",
     "tags": [
      "runestones",
      "MedievalSky",
@@ -199,25 +210,25 @@
      "Vikings"
     ]
    },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:45+01:00"
   },
   {
-   "datum": "2026-12-22",
+   "datum": "2026-12-21",
    "tid": "07:00",
-   "id": "ii1mWcI1HiFygVB1SARd",
-   "titel": "Mö, dotter eller flicka? Ordet som kunde betyda ogift",
+   "id": "3DWc4WX5usii0K4zB0Oh",
+   "titel": "Läs om du kan – kunde vikingatidens folk läsa runstenarna?",
    "spar": "P",
    "bluesky": {
-    "text": "On a grave slab in Skänninge, Åsa is called both daughter and maiden. The rare runic word for maiden appears on just 4 of 2,320 Swedish runestones – and it seems to have meant an unmarried woman, not a young girl.",
+    "text": "Could Viking-age people read the runestones? One in three Swedish runestones points at itself – 'this stone' – and one in nine names its carver. But only ten of 2,321 ask outright for a reader: interpret, he who can.",
     "tags": [
      "runology",
-     "MedievalSky",
+     "Skystorians",
      "OldNorse",
      "VikingAge",
      "Vikings"
     ]
    },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:46+01:00"
   },
   {
    "datum": "2026-12-24",
@@ -235,7 +246,194 @@
      "Vikings"
     ]
    },
-   "godkand": null
+   "godkand": "2026-11-18T18:52:46+01:00"
+  },
+  {
+   "datum": "2027-01-02",
+   "tid": "07:00",
+   "id": "vrcJRTfxrl9nHFGJ0lP4",
+   "titel": "De gamla landen: Värend – sjöbygden mitt i skogen",
+   "spar": "P",
+   "bluesky": {
+    "text": "New in the series The old lands: Värend, the largest of Småland's small lands. A lake country ringed by forest around AD 1000: large villages, a great mound at Ingelstad and perhaps an assembly by Helgasjön.",
+    "tags": [
+     "runestones",
+     "MedievalSky",
+     "archaeology",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:47+01:00"
+  },
+  {
+   "datum": "2027-01-05",
+   "tid": "07:00",
+   "id": "ii1mWcI1HiFygVB1SARd",
+   "titel": "Mö, dotter eller flicka? Ordet som kunde betyda ogift",
+   "spar": "P",
+   "bluesky": {
+    "text": "On a grave slab in Skänninge, Åsa is called both daughter and maiden. The rare runic word for maiden appears on just 4 of 2,320 Swedish runestones – and it seems to have meant an unmarried woman, not a young girl.",
+    "tags": [
+     "runology",
+     "MedievalSky",
+     "OldNorse",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:47+01:00"
+  },
+  {
+   "datum": "2027-01-08",
+   "tid": "07:00",
+   "id": "ZbDwd0yeLt4Qkr0N2Md5",
+   "titel": "Borgarna vid vattnet – vad var fornborgarna?",
+   "spar": "P",
+   "bluesky": {
+    "text": "Sweden has 1,304 Iron Age hillforts; the register lists only 73 as excavated. Against the shore of around AD 450, 64% lay within 500 m of the water, against 48% of the hills around them. In the legends they became homes of giants who hated church bells.",
+    "tags": [
+     "archaeology",
+     "IronAge",
+     "Skystorians"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:48+01:00"
+  },
+  {
+   "datum": "2027-01-11",
+   "tid": "07:00",
+   "id": "71Vv1GCp3TriruXWktTq",
+   "titel": "De gamla landen: Möre – kusten vid sundet",
+   "spar": "P",
+   "bluesky": {
+    "text": "New in the series The old lands: Möre, the coast by the Kalmar Sound around AD 1000. Fertile clay between forest and sea, villages by the rivers, ships offshore – a land judged by Östergötland's law, not by that of Småland's Tiohärad.",
+    "tags": [
+     "runestones",
+     "MedievalSky",
+     "archaeology",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:48+01:00"
+  },
+  {
+   "datum": "2027-01-14",
+   "tid": "07:00",
+   "id": "k176HOYcqRbSNTkIwJIk",
+   "titel": "Hundra år av runfrågor I: Grundläggarna som ställde frågorna vi fortfarande ställer",
+   "spar": "P",
+   "bluesky": {
+    "text": "We read Fornvännen from its first volume in 1906. Part I follows the founders – von Friesen, Brate, Lindqvist, Wessén, Jansson, Svärdström – who mended the stones, hunted lost ones in church walls and asked the questions we still ask.",
+    "tags": [
+     "runestones",
+     "runology",
+     "VikingAge",
+     "MedievalSky"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:49+01:00"
+  },
+  {
+   "datum": "2027-01-17",
+   "tid": "07:00",
+   "id": "kziZHbeTbk7WfCkrdXWH",
+   "titel": "Bakhäll, bro och kvarnsten – runstenarnas andra liv",
+   "spar": "P",
+   "bluesky": {
+    "text": "A runestone became a baking slab for billeted soldiers and cracked in the rain. Another lay under a highway as a bridge for 200 years, a third was cut into a millstone. What the old editions recorded about the stones' second lives.",
+    "tags": [
+     "runestones",
+     "VikingAge",
+     "Skystorians",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:49+01:00"
+  },
+  {
+   "datum": "2027-01-20",
+   "tid": "07:00",
+   "id": "Y4kbanxo29XOS364C89i",
+   "titel": "De gamla landen: Finnveden – landet längs Lagan",
+   "spar": "P",
+   "bluesky": {
+    "text": "Along the river Lagan in Finnveden almost every grave was a mound. At Fallnaveka two people were buried with two horses, two dogs, two pigs, sheep and goat. The old lands: western Småland around AD 1000.",
+    "tags": [
+     "archaeology",
+     "VikingAge",
+     "MedievalSky"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:50+01:00"
+  },
+  {
+   "datum": "2027-01-23",
+   "tid": "07:00",
+   "id": "fN835GYBvYc3a7ckpvnF",
+   "titel": "Hundra år av runfrågor II: När forskarna började räkna",
+   "spar": "P",
+   "bluesky": {
+    "text": "From 1970 runologists began to count – and to argue about how to count. Part II: a Varangian's name in Hagia Sophia, Larsson, Orsenmark and Herschend's generous quarrel over statistics, Futhark as a journal of its own, and the Rök stone read anew.",
+    "tags": [
+     "runestones",
+     "runology",
+     "VikingAge",
+     "Skystorians"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:51+01:00"
+  },
+  {
+   "datum": "2027-01-26",
+   "tid": "07:00",
+   "id": "WNIyUpl9tj2kcaXoytdp",
+   "titel": "Vendeltid, vikingatid, medeltid – fanns gränserna?",
+   "spar": "P",
+   "bluesky": {
+    "text": "Did the Viking Age really end in 1066? In Sweden, runestones went on being raised for decades: nearly a third of those with a firm style group are later. Around 1100 the runes moved into the churches and onto grave slabs instead.",
+    "tags": [
+     "runestones",
+     "VikingAge",
+     "MedievalSky",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:51+01:00"
+  },
+  {
+   "datum": "2027-01-29",
+   "tid": "07:00",
+   "id": "muGHCwlG7TRFYgp77pAN",
+   "titel": "Prickarna, åsrunan och tiden",
+   "spar": "P",
+   "bluesky": {
+    "text": "Viking-age carvers had 16 runes for some 30 sounds, so some added a dot: i became e. In Götaland the dotted runes go with crosses on the same stones. In Uppland the dots stayed rare, while the ós-rune for o spread on the late stones.",
+    "tags": [
+     "runestones",
+     "VikingAge",
+     "MedievalSky"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:52+01:00"
+  },
+  {
+   "datum": "2027-02-01",
+   "tid": "07:00",
+   "id": "L0F7koRe7afGqjJ4PCxV",
+   "titel": "Kan man räkna sig fram till vikingarna?",
+   "spar": "P",
+   "bluesky": {
+    "text": "Can you count your way to the Vikings? One runestone cannot tell you whether it is unusual; only all 2,321 together can. How Vitki reads them all at once, locks its questions before counting, and says openly where the numbers fall short.",
+    "tags": [
+     "runology",
+     "DigitalHumanities",
+     "VikingAge",
+     "Skystorians"
+    ]
+   },
+   "godkand": "2026-11-18T18:52:52+01:00"
   }
  ]
 }

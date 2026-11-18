@@ -583,6 +583,19 @@
   },
   {
    "date": "2026-11-24",
+   "slug": "runstenarna-foljde-leran",
+   "en": true,
+   "text": "We laid the soil map over every runestone still in place. The stones stand not on the clay but at its edge, on dry ground near the grave fields. And half of the Mälaren valley's lead is explained by neither soil, settlement nor water.",
+   "tags": [
+    "runestones",
+    "Skystorians",
+    "archaeology",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2026-11-24",
    "slug": "skanningen-som-ledtrad",
    "en": true,
    "text": "Can a 3D scan help read a damaged runestone? With scan traces our language model got 60% of hidden words right instead of 54%. But the pairing of scan and text saw the answer, so the real gain is unproven.",
@@ -622,6 +635,20 @@
     "MedievalSky",
     "runestones",
     "VikingAge"
+   ]
+  },
+  {
+   "date": "2026-11-27",
+   "slug": "slakterna-pa-runstenarna",
+   "en": true,
+   "text": "Four stones for two children. Testing names against chance, we linked 42 families across 95 runestones. Nine in ten links are already in the runologists' list. Of three new ones, one is probably wrong.",
+   "tags": [
+    "runology",
+    "MedievalSky",
+    "runestones",
+    "DigitalHumanities",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -668,6 +695,17 @@
   },
   {
    "date": "2026-11-30",
+   "slug": "de-gamla-landen-attundaland",
+   "en": true,
+   "text": "Gerlög outlived her daughter Inga and inherited from her. Who inherited from whom is cut into a rock at Hillersjö, the longest runic text in Uppland. The old lands: Attundaland around AD 1000, where great men wrote in stone that they had made the assembly place.",
+   "tags": [
+    "runestones",
+    "VikingAge",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2026-11-30",
    "en": true,
    "slug": "r-for-yr-runan-vastra-uppland",
    "tags": [
@@ -706,6 +744,17 @@
     "EarlyMedieval"
    ],
    "text": "Methods report v4: in a locked blind test, carver suggestions from runic texts matched Rundata's carver on 82 % of the confident ones (nearest stone: 44 %). Against runologists' same-hand groups: no better than neighbours."
+  },
+  {
+   "date": "2026-12-03",
+   "slug": "den-goda-doden",
+   "en": true,
+   "text": "Only one Swedish runestone in sixteen says how the dead died. Those that do tell of battle, betrayal, a ship that sank, a mother who left small children, and sons who died in white christening robes. After 1050 the stones tell of death half as often.",
+   "tags": [
+    "runestones",
+    "VikingAge",
+    "MedievalSky"
+   ]
   },
   {
    "date": "2026-12-03",
@@ -751,6 +800,17 @@
   },
   {
    "date": "2026-12-06",
+   "slug": "de-gamla-landen-fjadrundaland",
+   "en": true,
+   "text": "In Fjädrundaland in western Uppland only one runestone in three bears a cross, against six in ten in the rest of Uppland. Balle carved a stone for Brune, who \"died in christening robes in Denmark\", and that stone has no cross either.",
+   "tags": [
+    "runestones",
+    "VikingAge",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2026-12-06",
    "en": true,
    "slug": "runstenarna-vid-sin-tids-vatten",
    "tags": [
@@ -793,6 +853,19 @@
   },
   {
    "date": "2026-12-09",
+   "slug": "doda-i-vita-klader",
+   "en": true,
+   "text": "Seven runestones, all in Uppland, say the dead man died 'in white clothes' – in his baptismal robes, newly baptised. On four of the five where the raisers can be read, a woman is among them: his mother or his wife.",
+   "tags": [
+    "runestones",
+    "MedievalSky",
+    "OldNorse",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2026-12-09",
    "slug": "varfor-har-norge-bara-66-runstenar",
    "en": true,
    "text": "Why does Viking-age Norway have only 66 runestones, and Sweden more than 2,300? Norwegians almost never wrote that they had a stone raised; around Lake Mälaren professional carvers worked for patrons. And the Norwegian stones remember women more often.",
@@ -828,6 +901,202 @@
     "archaeology"
    ],
    "text": "I grew up at Ättekulla in Helsingborg, where burial mounds lay at the edge of the forest. Who lay in them? Bronze Age families, for almost a thousand years – the mounds were already ancient when the Vikings raised their runestones. Most are gone now."
+  },
+  {
+   "date": "2026-12-12",
+   "slug": "osterled-eller-bara-ingvars",
+   "en": true,
+   "text": "25 Swedish runestones remember one journey: Ingvarr's expedition to Serkland. We took them out, under a plan locked in advance. About half of the stones' eastward lead vanished – yet they still look east more than the Icelanders' sagas.",
+   "tags": [
+    "runestones",
+    "Skystorians",
+    "OldNorse",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2026-12-15",
+   "slug": "asatron-i-landskapet",
+   "en": true,
+   "text": "Odensvi, Torsåker, Ullvi: the old gods live on in Swedish place names. We went through the whole national place-name dictionary. Cult-place names are thickest around Lake Mälaren, and hardly any parish with one lacks an Iron Age grave field.",
+   "tags": [
+    "OldNorse",
+    "MedievalSky",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2026-12-18",
+   "slug": "de-gamla-landen-gotland",
+   "en": true,
+   "text": "New in the series The old lands: Gotland around AD 1000. A land of its own in the sea: farms that moved about their land, harbours along the whole coast, more silver in the ground than anywhere else, one assembly for the island.",
+   "tags": [
+    "runestones",
+    "MedievalSky",
+    "archaeology",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2026-12-21",
+   "slug": "las-om-du-kan-kunde-folk-lasa-runstenarna",
+   "en": true,
+   "text": "Could Viking-age people read the runestones? One in three Swedish runestones points at itself – 'this stone' – and one in nine names its carver. But only ten of 2,321 ask outright for a reader: interpret, he who can.",
+   "tags": [
+    "runology",
+    "Skystorians",
+    "OldNorse",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2026-12-24",
+   "slug": "vikingarnas-jul",
+   "en": true,
+   "text": "Merry Christmas from Vitki! The word jól occurs 81 times in Heimskringla: feasts, gifts, killings and a king who moved Yule to the Christian date. On the runestones: not once. And Júli on Sö 362? Named after a hedgehog.",
+   "tags": [
+    "Yule",
+    "Skystorians",
+    "OldNorse",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2027-01-02",
+   "slug": "de-gamla-landen-varend",
+   "en": true,
+   "text": "New in the series The old lands: Värend, the largest of Småland's small lands. A lake country ringed by forest around AD 1000: large villages, a great mound at Ingelstad and perhaps an assembly by Helgasjön.",
+   "tags": [
+    "runestones",
+    "MedievalSky",
+    "archaeology",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2027-01-05",
+   "slug": "mo-dotter-eller-flicka",
+   "en": true,
+   "text": "On a grave slab in Skänninge, Åsa is called both daughter and maiden. The rare runic word for maiden appears on just 4 of 2,320 Swedish runestones – and it seems to have meant an unmarried woman, not a young girl.",
+   "tags": [
+    "runology",
+    "MedievalSky",
+    "OldNorse",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2027-01-08",
+   "slug": "borgarna-vid-vattnet",
+   "en": true,
+   "text": "Sweden has 1,304 Iron Age hillforts; the register lists only 73 as excavated. Against the shore of around AD 450, 64% lay within 500 m of the water, against 48% of the hills around them. In the legends they became homes of giants who hated church bells.",
+   "tags": [
+    "archaeology",
+    "IronAge",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2027-01-11",
+   "slug": "de-gamla-landen-more",
+   "en": true,
+   "text": "New in the series The old lands: Möre, the coast by the Kalmar Sound around AD 1000. Fertile clay between forest and sea, villages by the rivers, ships offshore – a land judged by Östergötland's law, not by that of Småland's Tiohärad.",
+   "tags": [
+    "runestones",
+    "MedievalSky",
+    "archaeology",
+    "VikingAge",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2027-01-14",
+   "slug": "hundra-ar-av-runfragor-grundlaggarna",
+   "en": true,
+   "text": "We read Fornvännen from its first volume in 1906. Part I follows the founders – von Friesen, Brate, Lindqvist, Wessén, Jansson, Svärdström – who mended the stones, hunted lost ones in church walls and asked the questions we still ask.",
+   "tags": [
+    "runestones",
+    "runology",
+    "VikingAge",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2027-01-17",
+   "slug": "bakhall-bro-och-kvarnsten-runstenarnas-andra-liv",
+   "en": true,
+   "text": "A runestone became a baking slab for billeted soldiers and cracked in the rain. Another lay under a highway as a bridge for 200 years, a third was cut into a millstone. What the old editions recorded about the stones' second lives.",
+   "tags": [
+    "runestones",
+    "VikingAge",
+    "Skystorians",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2027-01-20",
+   "slug": "de-gamla-landen-finnveden",
+   "en": true,
+   "text": "Along the river Lagan in Finnveden almost every grave was a mound. At Fallnaveka two people were buried with two horses, two dogs, two pigs, sheep and goat. The old lands: western Småland around AD 1000.",
+   "tags": [
+    "archaeology",
+    "VikingAge",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2027-01-23",
+   "slug": "hundra-ar-av-runfragor-nar-forskarna-borjade-rakna",
+   "en": true,
+   "text": "From 1970 runologists began to count – and to argue about how to count. Part II: a Varangian's name in Hagia Sophia, Larsson, Orsenmark and Herschend's generous quarrel over statistics, Futhark as a journal of its own, and the Rök stone read anew.",
+   "tags": [
+    "runestones",
+    "runology",
+    "VikingAge",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2027-01-26",
+   "slug": "vendeltid-vikingatid-medeltid-fanns-granserna",
+   "en": true,
+   "text": "Did the Viking Age really end in 1066? In Sweden, runestones went on being raised for decades: nearly a third of those with a firm style group are later. Around 1100 the runes moved into the churches and onto grave slabs instead.",
+   "tags": [
+    "runestones",
+    "VikingAge",
+    "MedievalSky",
+    "Vikings"
+   ]
+  },
+  {
+   "date": "2027-01-29",
+   "slug": "prickarna-asrunan-och-tiden",
+   "en": true,
+   "text": "Viking-age carvers had 16 runes for some 30 sounds, so some added a dot: i became e. In Götaland the dotted runes go with crosses on the same stones. In Uppland the dots stayed rare, while the ós-rune for o spread on the late stones.",
+   "tags": [
+    "runestones",
+    "VikingAge",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2027-02-01",
+   "slug": "kan-man-rakna-sig-fram-till-vikingarna",
+   "en": true,
+   "text": "Can you count your way to the Vikings? One runestone cannot tell you whether it is unusual; only all 2,321 together can. How Vitki reads them all at once, locks its questions before counting, and says openly where the numbers fall short.",
+   "tags": [
+    "runology",
+    "DigitalHumanities",
+    "VikingAge",
+    "Skystorians"
+   ]
   }
  ]
 }
