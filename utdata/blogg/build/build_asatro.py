@@ -123,7 +123,7 @@ jcheck(NB, 5, "79", "All these deities have a supra-regional,", "almost pan-Scan
        "cult at Uppsala appear", "to have been significant to all of Svithiod")
 jcheck(NB, 7, "81", "People from many parts of Scandinavia regu", "larly visited Uppsala")
 jcheck(NB, 2, "Religion was part of culture, and just like culture, it was shaped by the constant circular flow of tradition")
-jcheck("111_2023", 13, "Namn och bygd 110 (2022), 13–60", "Eva Nyman")
+jcheck("111_2023", 13, "Eva Nyman")  # the article's first page misprints "110 (2022)"; the volume is 111 (2023)
 jcheck("111_2023", 20, "20 Eva Nyman", "Liksom t.ex. Odensvi, Torsvi och Frösvi är Ull(e)vi, fsv. *Ullarvi, typiskt för centrala Sverige")
 jcheck("111_2023", 19, "i Ångermanland det nordligaste ortnamn, som säkert innehåller gudanamnet")
 _SOL_ALL = {}
@@ -205,19 +205,19 @@ def chart_graves(sv):
 p1 = lambda x, sv=True: f"{x:.1f}".replace(".", ",") if sv else f"{x:.1f}"  # noqa: E731
 
 SLUG = "asatron-i-landskapet"
-title = "Asatron i landskapet – gudarnas platser låg bland förfädernas gravar"
-title_en = "The old faith in the landscape – the places of the gods lay among the graves of the ancestors"
+title = "Asatron i landskapet – gudarnas socknar var gravarnas socknar"
+title_en = "The old faith in the landscape – the parishes of the gods were the parishes of the graves"
 seo_title = "Asatron i ortnamnen: heliga platser och gravfält"
 seo_title_en = "Old Norse religion in place names and graves"
 summary = ("Runstenarna är nästan alla kristna, men asatron finns kvar i landskapet: i Odensvi, Torsåker, Ullvi och hundra "
            "andra namn. Vi har gått igenom hela Svenskt ortnamnslexikon och lagt namnen bredvid Riksantikvarieämbetets register "
-           "över fornlämningar. De heliga platserna låg tätast kring Mälaren, och de låg där gravarna låg: nästan ingen "
-           "socken med ett kultplatsnamn saknar gravfält. Runstenarna följde däremot inte efter.")
+           "över fornlämningar. Kultplatsnamnen är tätast kring Mälaren, och nästan ingen socken med ett kultplatsnamn saknar "
+           "gravfält. Att runstenarna skulle ha sökt sig till de gamla platserna kunde vi däremot inte se.")
 summary_en = ("The runestones are almost all Christian, but the old faith survives in the landscape: in Odensvi, Torsåker, "
               "Ullvi and a hundred other names. We went through the whole Swedish place-name dictionary and laid the names "
-              "beside the national register of ancient remains. The sacred places lay thickest around Lake Mälaren, and they "
-              "lay where the graves lay: hardly any parish with a cult-place name lacks a grave field. The runestones, on "
-              "the other hand, did not follow.")
+              "beside the national register of ancient remains. Cult-place names are thickest around Lake Mälaren, and hardly "
+              "any parish with a cult-place name lacks a grave field. That the runestones sought out the old places, on the "
+              "other hand, we could not see.")
 
 body = f"""Den som tar tåget från Stockholm till Uppsala passerar Odensala och Ultuna utan att tänka på det. Namnen är så vanliga att de har slutat betyda något. Men en gång betydde de något mycket bestämt: Odensala var Odens harg, en kultplats, och Ultuna var Ulls tuna.
 
@@ -227,19 +227,19 @@ Vi vet att det fanns en asatro. Det berättar de isländska dikterna, Adam av Br
 
 Många svenska ortnamn innehåller ord som bara går att förstå om man vet vad människorna trodde på. Det vanligaste är *vi*, som i Odensvi, Torsvi och Ullvi. *Svenskt ortnamnslexikon* förklarar ordet kort: vi ’helig plats, kultplats’ (SOL, art. Odensvi). Andra ord för en kultplats är *harg*, *hov* och *al*, och ibland en lund, en åker eller en ö som har helgats åt en gud.
 
-Vi har gått igenom alla 6 045 uppslag i lexikonet. Ett namn räknas bara om lexikonets egen tolkning säger att det rör en förkristen kultplats eller en gud – det är namnforskarnas läsning, inte vår. Frösunda räknas inte, för lexikonet förklarar det med dialektordet *frö*, bördig. Inte heller Torsby, som har fått sitt namn efter en man som hette Tore. Två läsare gick igenom namnen var för sig, utan att se varandras svar. Kvar blev 128 kultplatser, varav 50 med en säker tolkning, och 52 tingsplatser.
+Vi har gått igenom alla 6 045 uppslag i lexikonet. Ett namn räknas bara om lexikonets egen tolkning säger att det rör en förkristen kultplats eller en gud – det är namnforskarnas läsning, inte vår. Frösunda räknas inte, för lexikonet förklarar det med dialektordet *frö*, bördig. Inte heller Torsby, som har fått sitt namn efter en man som hette Tore. Två läsare – två separata körningar av Anthropics språkmodell Claude Opus, med lexikonets tolkning framför sig – gick igenom namnen var för sig, utan att se varandras svar. Kvar blev 128 kultplatser, varav 50 med en säker tolkning, och 52 tingsplatser.
 
 {MAP['sv']}
 
 ## Samma gudar överallt
 
-Det första kartan visar är att gudarna fanns i hela landet. Tor finns i alla sju landsdelar vi delade in landet i: från Torsburgen på Gotland till Torsåker i Ångermanland, enligt namnforskaren Eva Nyman det nordligaste svenska ortnamn ”som säkert innehåller gudanamnet” (Namn och bygd 110, s. 19). Oden finns i Götaland, kring Mälaren och i de skånska och halländska bygder som då hörde till det danska riket. Frö finns i Mälarlanden, i Västergötland och Småland, och på Frösön i Storsjön.
+Det första kartan visar är att gudarna fanns i hela landet. Tor finns i alla sju landsdelar vi delade in landet i: från Torsburgen på Gotland till Torsåker i Ångermanland, enligt namnforskaren Eva Nyman det nordligaste svenska ortnamn ”som säkert innehåller gudanamnet” (Namn och bygd 111, s. 19). Oden finns i Götaland, kring Mälaren och i de skånska och halländska bygder som då hörde till det danska riket. Frö finns i Mälarlanden, i Västergötland och Småland, och på Frösön i Storsjön.
 
 Vi prövade om gudarna hörde hemma i olika delar av landet: om Tor hörde till en bygd och Oden till en annan. Det gick inte att se. Med bara 32 namn för de tre stora gudarna kan bara mycket stora skillnader upptäckas, så det betyder inte att tron var likadan överallt. Men det stämmer med vad religionshistorikern Andreas Nordberg skriver, med stöd av Stefan Brink: de gudar som syns i de skandinaviska ortnamnen har en spridning som är ”supra-regional, almost pan-Scandinavian” – över landsgränserna, nästan över hela Skandinavien (Fornvännen 113, s. 79).
 
-## Men de heliga platserna låg tätast kring Mälaren
+## Men kultplatsnamnen är tätast kring Mälaren
 
-Gudarna var gemensamma. Platserna där de dyrkades var det inte i samma mått.
+Gudarnas namn fanns i hela landet. Kultplatsnamnen gjorde det inte i samma mått.
 
 {chart(True)}
 
@@ -249,9 +249,9 @@ Och där kultplatserna låg tätast låg också tingen. Av de 52 tingsplatserna 
 
 Vi prövade också om olika slags kultplatser hörde till olika landsdelar – vi i en, harg i en annan. Det gick inte att se. Vi-namnen finns från Gotland till Västergötland.
 
-## Bland förfädernas gravar
+## Socknar med gamla gravar
 
-Var i bygden låg då de heliga platserna? För att se det lade vi namnen bredvid något helt annat: Riksantikvarieämbetets register över fornlämningar, där gravfält, högar, fornborgar, hamnar, vägar och broar är inmätta, och kartor över jordarterna och de medeltida kyrkorna. Tretton drag i allt. Vi lät dem tävla på ett sätt som skyddar mot att vi lurar oss själva: vi delade landets socknar i två halvor och letade fritt i den ena. Det som stack ut där låstes, och fick sedan visa sig i den andra halvan, där vi inte hade tittat.
+Vilka bygder hade då kultplatsnamnen? För att se det lade vi namnen bredvid något helt annat: Riksantikvarieämbetets register över fornlämningar, där gravfält, högar, fornborgar, hamnar, vägar och broar är inmätta, och kartor över jordarterna och de medeltida kyrkorna. Tretton drag i allt. Vi lät dem tävla på ett sätt som skyddar mot att vi lurar oss själva: vi delade landets socknar i två halvor och letade fritt i den ena. Det som stack ut där låstes, och fick sedan visa sig i den andra halvan, där vi inte hade tittat.
 
 Två drag klarade det, och de klarade det åt båda hållen: gravfälten och gravhögarna.
 
@@ -259,19 +259,19 @@ Två drag klarade det, och de klarade det åt båda hållen: gravfälten och gra
 
 Bara {NO_GRAVE[0]:.0f} procent av socknarna med ett kultplatsnamn saknar registrerade gravfält, mot {NO_GRAVE[1]:.0f} procent av de andra. Räknat mot landskapets genomsnitt har de en tredjedel fler gravfält och {p1(R_MOUND)} gånger så många gravhögar. Det håller när socknens storlek hålls lika – stora socknar har förstås fler gravar – och när bara de namn som lexikonet tolkar säkert räknas.
 
-De heliga platserna låg alltså där de döda låg, i de bygder där människor hade bott och begravt sina föräldrar i generationer. Det säger inte att kulten utövades vid gravarna. Men det säger att gudarnas platser hörde till de gamla, tätt bebodda bygderna, inte till utmarkerna eller de nya gårdarna.
+Socknarna med gudarnas namn är alltså socknar där människor hade bott och begravt sina föräldrar i generationer. Det säger inte var i socknen den heliga platsen låg, och inte att kulten utövades vid gravarna – vi har bara socknens mittpunkt. Men det säger att gudarnas platser hörde till de gamla, tätt bebodda bygderna, inte till utmarkerna eller de nya gårdarna.
 
 Lika viktigt är det som inte höll. Socknar med ett kultplatsnamn har inte påvisbart oftare en hamn, en väg eller ett Husby, och de ligger inte på någon särskild jord. Fornborgarna, tingen och de tidiga kyrkorna syntes bara i den ena halvan, och det räcker inte.
 
-## Runstenarna följde inte efter
+## Följde runstenarna efter?
 
-Om de gamla gudarna hade sina platser i de gamla bygderna, borde väl den nya trons första monument ha sökt sig dit? Vi prövade det också, med en plan som låstes innan vi räknade. Svaret är nej, så långt vi kan se. I socknar med ett kultplatsnamn restes inte fler runstenar än i grannsocknarna, de är inte senare, och de har inte säkert oftare en kristen text.
+Om de gamla gudarna hade sina platser i de gamla bygderna, borde väl den nya trons första monument ha sökt sig dit? Vi prövade det också, med en plan som låstes innan vi räknade. Vi kunde inte se det. I socknar med ett kultplatsnamn restes inte påvisbart fler runstenar än i landskapets övriga socknar, de är inte senare, och de har inte säkert oftare en kristen text.
 
-Två stenar är ändå värda att stanna vid. Av de sju svenska runstenar som har hedniska drag står två i en socken med ett kultplatsnamn. Vid Korpbron i Ludgo i Södermanland står en sten som slutar med orden *Siði Þorr*, som Rundata läser som ”Tor vige” – med frågetecken. Ludgo innehåller enligt lexikonet *vi*, helig plats, och kanske namnet på en växtlighetsgudinna. Och i Altuna kyrka i Uppland står stenen där Tor fiskar efter Midgårdsormen, i en socken vars namn oftast förs till *al*, helgedom. Med så få stenar kan det lätt vara en slump, ungefär en chans på elva. Men den som vill se de gamla gudarna i landskapet kan börja där.
+Två stenar är ändå värda att stanna vid. Av de sju svenska runstenar som Vitkis textmönster märker som hedniska står två i en socken med ett kultplatsnamn. Vid Korpbron i Ludgo i Södermanland står en sten som slutar med orden *Siði Þorr*, som Rundata i den ena av sina två läsningar läser som ”Tor vige” – med frågetecken. Ludgo innehåller enligt lexikonet *vi*, helig plats, och kanske namnet på en växtlighetsgudinna. Och i Altuna kyrka i Uppland står stenen där Tor fiskar efter Midgårdsormen, i en socken vars namn oftast förs till *al*, helgedom. Med så få stenar kan det lätt vara en slump, ungefär en chans på elva. Men den som vill se de gamla gudarna i landskapet kan börja där.
 
 ## Det namnforskarna redan visste
 
-Det här är inte en upptäckt i den meningen att ingen har sett det förut. Per Vikstrand skrev 2001 en hel avhandling om *Gudarnas platser* i Mälarlandskapen, och Eva Nyman konstaterar att namn som Odensvi, Torsvi, Frösvi och Ullvi är ”typiskt för centrala Sverige” (Namn och bygd 110, s. 20). Att kultplatserna låg i de gamla centralbygderna har de också skrivit. Det nya här är måttet och kombinationen: hela landet räknat med samma lexikon och två läsare, och lagt mot ett helt annat register – de inmätta gravarna – och mot runstenarna. Det namnforskarna har sett i trakt efter trakt syns då som mönster i siffror, och runstenarnas tystnad om de gamla platserna har ingen visat förut.
+Det här är inte en upptäckt i den meningen att ingen har sett det förut. Per Vikstrand skrev 2001 en hel avhandling om *Gudarnas platser* i Mälarlandskapen, och Eva Nyman konstaterar att namn som Odensvi, Torsvi, Frösvi och Ullvi är ”typiskt för centrala Sverige” (Namn och bygd 111, s. 20). Att kultplatserna låg i de gamla centralbygderna har de också skrivit. Det nya här är måttet och kombinationen: hela landet räknat med samma lexikon och två läsare, och lagt mot ett helt annat register – de inmätta gravarna – och mot runstenarna. Det namnforskarna har sett i trakt efter trakt syns då som mönster i siffror.
 
 ## Hur hölls tron ihop?
 
@@ -287,10 +287,10 @@ Vi letade också efter namn med troll, jättar, alver och vättar. Lexikonet har
 
 :::box Det viktigaste i korthet
 - Asatron syns i landskapet: 128 ortnamn tolkas av namnforskarna som förkristna kultplatser, och ytterligare några bär en guds namn.
-- Gudarna var gemensamma. Tor finns i alla delar av landet, från Gotland till Ångermanland, och vi kunde inte se att olika gudar hörde till olika bygder.
-- De heliga platserna låg tätast kring Mälaren, tre gånger tätare än i norr, och där låg också tingen. Tron hade ett centrum.
-- De heliga platserna låg där gravarna låg: bara 5 procent av socknarna med ett kultplatsnamn saknar gravfält, mot 28 procent av de andra. Gudarnas platser hörde till de gamla bygderna.
-- Runstenarna följde inte efter. Kristendomens första monument restes inte oftare eller senare vid de gamla platserna.
+- Tor finns i ortnamnen i alla delar av landet, från Gotland till Ångermanland.
+- Kultplatsnamnen är tätast kring Mälaren, tre gånger tätare än i norr, och där finns också flest tingsnamn.
+- Bara 5 procent av socknarna med ett kultplatsnamn saknar gravfält, mot 28 procent av de andra: gudarnas platser hörde till de gamla bygderna.
+- Att kristendomens första monument sökte sig till de gamla platserna kunde vi inte se.
 :::
 
 ## Så säkra är vi
@@ -304,7 +304,7 @@ Lexikonet täcker främst socknar, härader, städer och sjöar, inte enskilda g
 - Riksantikvarieämbetet, Kulturmiljöregistret: gravfält, högar och andra fornlämningar.
 - Samnordisk runtextdatabas (Rundata), Uppsala universitet. Open Database License.
 - Nordberg, Andreas 2018. Circular flow of tradition in Old Norse religion. *Fornvännen* 113, s. 76 ff. CC BY 4.0.
-- Nyman, Eva 2022. Sakrala ortnamn av förkristen nordisk typ i de nordliga delarna av Norge och Sverige. *Namn och bygd* 110, s. 13–60. CC BY 4.0.
+- Nyman, Eva 2023. Sakrala ortnamn av förkristen nordisk typ i de nordliga delarna av Norge och Sverige. *Namn och bygd* 111, s. 13–60. CC BY 4.0.
 - Vikstrand, Per 2001. *Gudarnas platser. Förkristna sakrala ortnamn i Mälarlandskapen*. Uppsala.
 - Analysplanerna och koden: [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-17-gudarna-pa-kartan.md)."""
 
@@ -316,17 +316,17 @@ We know there was an Old Norse faith. The Icelandic poems tell us, Adam of Breme
 
 Many Swedish place names contain words that can only be understood if you know what people believed. The most common is *vi*, as in Odensvi, Torsvi and Ullvi. *Svenskt ortnamnslexikon*, the Swedish place-name dictionary, explains the word briefly: vi ’helig plats, kultplats’, a holy place, a cult place (SOL, entry Odensvi). Other words for a cult place are *harg*, *hov* and *al*, and sometimes a grove, a field or an island hallowed to a god.
 
-We went through all 6,045 entries in the dictionary. A name counts only if the dictionary's own interpretation says it concerns a pre-Christian cult place or a god – it is the place-name scholars' reading, not ours. Frösunda does not count, because the dictionary explains it with the dialect word *frö*, fertile. Nor does Torsby, named after a man called Tore. Two readers went through the names separately, without seeing each other's answers. What remained were 128 cult places, 50 of them with a secure interpretation, and 52 thing (assembly) places.
+We went through all 6,045 entries in the dictionary. A name counts only if the dictionary's own interpretation says it concerns a pre-Christian cult place or a god – it is the place-name scholars' reading, not ours. Frösunda does not count, because the dictionary explains it with the dialect word *frö*, fertile. Nor does Torsby, named after a man called Tore. Two readers – two separate runs of Anthropic's language model Claude Opus, with the dictionary's interpretation in front of them – went through the names separately, without seeing each other's answers. What remained were 128 cult places, 50 of them with a secure interpretation, and 52 thing (assembly) places.
 
 {MAP['en']}
 
 ## The same gods everywhere
 
-The first thing the map shows is that the gods were found across the whole country. Thor is in all seven regions we divided the country into: from Torsburgen on Gotland to Torsåker in Ångermanland, according to the place-name scholar Eva Nyman the northernmost Swedish place name that certainly contains the god's name (Namn och bygd 110, p. 19). Odin is in Götaland, around Lake Mälaren and in the districts of Skåne and Halland that then belonged to the Danish realm. Frey is in the Mälar lands, in Västergötland and Småland, and on Frösön in Lake Storsjön.
+The first thing the map shows is that the gods were found across the whole country. Thor is in all seven regions we divided the country into: from Torsburgen on Gotland to Torsåker in Ångermanland, according to the place-name scholar Eva Nyman the northernmost Swedish place name that certainly contains the god's name (Namn och bygd 111, p. 19). Odin is in Götaland, around Lake Mälaren and in the districts of Skåne and Halland that then belonged to the Danish realm. Frey is in the Mälar lands, in Västergötland and Småland, and on Frösön in Lake Storsjön.
 
 We tested whether the gods belonged to different parts of the country: whether Thor belonged to one district and Odin to another. It could not be seen. With only 32 names for the three great gods, only very large differences can be detected, so this does not mean that the faith was the same everywhere. But it agrees with what the historian of religion Andreas Nordberg writes, citing Stefan Brink: the gods seen in Scandinavian place names have a distribution that is ”supra-regional, almost pan-Scandinavian” (Fornvännen 113, p. 79).
 
-## But the sacred places lay thickest around Lake Mälaren
+## But the cult-place names are thickest around Lake Mälaren
 
 The gods were shared. The places where they were worshipped were not shared to the same degree.
 
@@ -338,9 +338,9 @@ And where the cult places lay thickest, the assemblies lay too. Of the 52 thing 
 
 We also tested whether different kinds of cult place belonged to different regions – vi in one, harg in another. It could not be seen. The vi names run from Gotland to Västergötland.
 
-## Among the graves of the ancestors
+## Parishes with old graves
 
-Where in the district, then, did the sacred places lie? To see that, we laid the names beside something quite different: the national register of ancient remains, where grave fields, mounds, hillforts, harbours, roads and bridges are surveyed, and maps of the soils and the medieval churches. Thirteen traits in all. We let them compete in a way that guards against fooling ourselves: we split the country's parishes into two halves and searched freely in one. What stood out there was locked, and then had to show itself in the other half, where we had not looked.
+Which districts, then, had the cult-place names? To see that, we laid the names beside something quite different: the national register of ancient remains, where grave fields, mounds, hillforts, harbours, roads and bridges are surveyed, and maps of the soils and the medieval churches. Thirteen traits in all. We let them compete in a way that guards against fooling ourselves: we split the country's parishes into two halves and searched freely in one. What stood out there was locked, and then had to show itself in the other half, where we had not looked.
 
 Two traits passed, and they passed both ways: the grave fields and the burial mounds.
 
@@ -348,19 +348,19 @@ Two traits passed, and they passed both ways: the grave fields and the burial mo
 
 Only {NO_GRAVE[0]:.0f} per cent of the parishes with a cult-place name lack a registered grave field, against {NO_GRAVE[1]:.0f} per cent of the others. Counted against the province's average they have a third more grave fields and {p1(R_MOUND, False)} times as many mounds. It holds when the size of the parish is held equal – large parishes of course have more graves – and when only the names the dictionary interprets with certainty are counted.
 
-So the sacred places lay where the dead lay, in the districts where people had lived and buried their parents for generations. That does not say the cult was practised at the graves. But it says that the places of the gods belonged to the old, densely settled districts, not to the outlands or the new farms.
+So the parishes with the gods' names are parishes where people had lived and buried their parents for generations. That does not say where in the parish the sacred place lay, nor that the cult was practised at the graves – we only have the parish centre. But it says that the places of the gods belonged to the old, densely settled districts, not to the outlands or the new farms.
 
 What did not hold matters just as much. Parishes with a cult-place name do not demonstrably more often have a harbour, a road or a Husby, and they do not lie on any particular soil. The hillforts, the assemblies and the early churches showed only in one half, and that is not enough.
 
-## The runestones did not follow
+## Did the runestones follow?
 
-If the old gods had their places in the old districts, surely the first monuments of the new faith would have sought them out? We tested that too, with a plan locked before we counted. The answer is no, as far as we can see. In parishes with a cult-place name no more runestones were raised than in the neighbouring parishes, they are not later, and they do not with any certainty more often have a Christian text.
+If the old gods had their places in the old districts, surely the first monuments of the new faith would have sought them out? We tested that too, with a plan locked before we counted. We could not see it. In parishes with a cult-place name no demonstrably more runestones were raised than in the province's other parishes, they are not later, and they do not with any certainty more often have a Christian text.
 
-Two stones are still worth pausing at. Of the seven Swedish runestones with pagan features, two stand in a parish with a cult-place name. At Korpbron in Ludgo in Södermanland stands a stone that ends with the words *Siði Þorr*, which Rundata reads as ”may Thor hallow” – with a question mark. Ludgo contains, according to the dictionary, *vi*, a holy place, and perhaps the name of a goddess of growth. And in Altuna church in Uppland stands the stone where Thor fishes for the Midgard serpent, in a parish whose name is most often linked to *al*, sanctuary. With so few stones it could easily be chance, about one chance in eleven. But whoever wants to see the old gods in the landscape can start there.
+Two stones are still worth pausing at. Of the seven Swedish runestones that Vitki's text patterns mark as pagan, two stand in a parish with a cult-place name. At Korpbron in Ludgo in Södermanland stands a stone that ends with the words *Siði Þorr*, which Rundata in one of its two readings reads as ”may Thor hallow” – with a question mark. Ludgo contains, according to the dictionary, *vi*, a holy place, and perhaps the name of a goddess of growth. And in Altuna church in Uppland stands the stone where Thor fishes for the Midgard serpent, in a parish whose name is most often linked to *al*, sanctuary. With so few stones it could easily be chance, about one chance in eleven. But whoever wants to see the old gods in the landscape can start there.
 
 ## What the place-name scholars already knew
 
-This is not a discovery in the sense that no one has seen it before. In 2001 Per Vikstrand wrote a whole dissertation on *Gudarnas platser*, the places of the gods, in the Mälar provinces, and Eva Nyman notes that names such as Odensvi, Torsvi, Frösvi and Ullvi are ”typiskt för centrala Sverige”, typical of central Sweden (Namn och bygd 110, p. 20). They have also written that the cult places lay in the old central districts. What is new here is the measure and the combination: the whole country counted with the same dictionary and two readers, and laid against an entirely different register – the surveyed graves – and against the runestones. What the scholars have seen district by district then shows as patterns in numbers, and no one has shown before that the runestones were silent about the old places.
+This is not a discovery in the sense that no one has seen it before. In 2001 Per Vikstrand wrote a whole dissertation on *Gudarnas platser*, the places of the gods, in the Mälar provinces, and Eva Nyman notes that names such as Odensvi, Torsvi, Frösvi and Ullvi are ”typiskt för centrala Sverige”, typical of central Sweden (Namn och bygd 111, p. 20). They have also written that the cult places lay in the old central districts. What is new here is the measure and the combination: the whole country counted with the same dictionary and two readers, and laid against an entirely different register – the surveyed graves – and against the runestones. What the scholars have seen district by district then shows as patterns in numbers.
 
 ## How was the faith held together?
 
@@ -376,10 +376,10 @@ We also looked for names with trolls, giants, elves and wights. The dictionary h
 
 :::box The essentials in brief
 - The old faith can be seen in the landscape: 128 place names are interpreted by the place-name scholars as pre-Christian cult places, and a few more carry a god's name.
-- The gods were shared. Thor is in every part of the country, from Gotland to Ångermanland, and we could not see different gods belonging to different districts.
-- The sacred places lay thickest around Lake Mälaren, three times as thick as in the north, and that is where the assemblies lay too. The faith had a centre.
-- The sacred places lay where the graves lay: only 5 per cent of the parishes with a cult-place name lack a grave field, against 28 per cent of the others. The places of the gods belonged to the old districts.
-- The runestones did not follow. The first monuments of Christianity were not raised more often or later at the old places.
+- Thor is in the place names of every part of the country, from Gotland to Ångermanland.
+- Cult-place names are thickest around Lake Mälaren, three times as thick as in the north, and that is also where most assembly names are.
+- Only 5 per cent of the parishes with a cult-place name lack a grave field, against 28 per cent of the others: the places of the gods belonged to the old districts.
+- That the first monuments of Christianity sought out the old places we could not see.
 :::
 
 ## How sure we are
@@ -393,7 +393,7 @@ The dictionary covers mainly parishes, hundreds, towns and lakes, not single far
 - Swedish National Heritage Board, Kulturmiljöregistret: grave fields, mounds and other ancient remains.
 - Scandinavian Runic-text Database (Rundata), Uppsala University. Open Database License.
 - Nordberg, Andreas 2018. Circular flow of tradition in Old Norse religion. *Fornvännen* 113, pp. 76 ff. CC BY 4.0.
-- Nyman, Eva 2022. Sakrala ortnamn av förkristen nordisk typ i de nordliga delarna av Norge och Sverige. *Namn och bygd* 110, pp. 13–60. CC BY 4.0.
+- Nyman, Eva 2023. Sakrala ortnamn av förkristen nordisk typ i de nordliga delarna av Norge och Sverige. *Namn och bygd* 111, pp. 13–60. CC BY 4.0.
 - Vikstrand, Per 2001. *Gudarnas platser. Förkristna sakrala ortnamn i Mälarlandskapen*. Uppsala.
 - The analysis plans and the code: [GitHub](https://github.com/Precatio/runes/blob/main/analysplaner/2026-11-17-gudarna-pa-kartan.md)."""
 
