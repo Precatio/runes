@@ -98,6 +98,26 @@ for g in ("Bifrostgatan", "Midgårdsgatan", "Utgårdsgatan", "Runristargatan", "
           "Erik Rödes gata", "Bronsgatan", "Ättekullagatan"):
     assert GATOR[g] < 1000, g
 
+# ---- the Scanian coastal band (descriptive; distance to today's sea from SGU issjohav_1, code 1, computed by
+# scratch script into downloads/hogar/hogar_kust.csv; province = nearest ISOF parish, as in analys.py)
+KU = list(csv.DictReader(open("/Volumes/2TB/Antigrvity/Runes/downloads/hogar/hogar_kust.csv", encoding="utf-8")))
+assert len(KU) == 17531
+KBIG = collections.Counter(r["land"] for r in KU if r["big"] == "TRUE")
+assert (KBIG["Skåne"], KBIG["Halland"], sum(KBIG.values())) == (1386, 219, 2017)
+def _share(land):
+    sz = [r for r in KU if r["land"] == land and r["d"] != "NA"]
+    return 100 * sum(r["big"] == "TRUE" for r in sz) / len(sz)
+assert round(_share("Skåne")) == 46 and round(_share("Uppland")) == 5
+import statistics as _st  # noqa: E402
+assert _st.median(float(r["d"]) for r in KU if r["land"] == "Skåne" and r["d"] != "NA") == 18
+assert _st.median(float(r["d"]) for r in KU if r["land"] == "Uppland" and r["d"] != "NA") == 9
+def _near(land, big):
+    v = [float(r["sea"]) for r in KU if r["land"] == land and r["d"] != "NA" and (r["big"] == "TRUE") == big]
+    return 100 * sum(x <= 3000 for x in v) / len(v)
+assert round(_near("Skåne", True)) == 36 and round(_near("Skåne", False)) == 41
+GF = collections.Counter(r["province"] for r in csv.DictReader(open(os.path.join(ROOT, "data", "raa", "lamningar.csv"), encoding="utf-8")) if r["type"] == "gravfält")
+assert (GF["Uppland"], GF["Skåne"]) == (5307, 359)
+
 # ---- the runestones that speak of mounds, and our earlier measurements
 RDS = {r["signum"]: r for r in RD}
 assert "i þæimsi haugi" in RDS["Öl 1"]["normalization"] and RDS["Öl 1"]["dating"] == "V s 900-t"
@@ -217,7 +237,11 @@ Raus är ett namn jag bär med mig. I mitt pass står det som min födelseort, o
 
 {IMG_SE['sv']}
 
-Kartan visar två högbygder. I söder och väster, längs Skånes och Hallands kuster, ligger de stora runda högarna tätt – många av dem från bronsåldern, som i Ättekulla. Längre norrut, i Mälardalen, i Västergötland och längs Norrlandskusten, är högarna oftare från järnåldern, upp till vikingatiden.
+Det som slår en först är det röda bandet längs Skånes kuster, som fortsätter upp längs Halland. Ättekulla ligger mitt i det. Av landets 2 017 högar som är minst 20 meter breda ligger 1 386 i Skåne och 219 i Halland – fyra av fem. I Skåne är nästan varannan hög med känd storlek så stor; i Uppland är det var tjugonde. Den typiska skånska högen är 18 meter bred, den uppländska nio. Det är bronsålderns stora högar, som i Ättekulla.
+
+Bandet följer kusten, men högbyggarna sökte sig inte till själva stranden. Inom Skåne ligger de stora högarna inte närmare havet än de mindre: ungefär fyra av tio ligger inom tre kilometer från dagens strand, bland de stora som bland de små. Det är bygden som ligger vid kusten, på de öppna slätterna, och där ligger högarna. Det mönstret har vi räknat men inte prövat.
+
+Längre norrut, i Mälardalen, i Västergötland och längs Norrlandskusten, är högarna oftare från järnåldern, upp till vikingatiden. Där ligger de flesta i gravfält, och de syns inte på kartan: Uppland har 5 307 gravfält i registret, Skåne 359. Kontrasten på kartan är alltså också en skillnad i sed – bronsålderns stora, ensamma högar i söder, järnålderns gravfält i norr.
 
 Högarna har också burit berättelser. {N_KUNG} av dem heter Kungshögen, och i Stora Fulhög i Borrby i Skåne ska det finnas ”en guldvagga” och en prins begraven.
 
@@ -328,7 +352,11 @@ Raus is a name I carry with me. My passport gives it as my place of birth, and I
 
 {IMG_SE['en']}
 
-The map shows two mound landscapes. In the south and west, along the coasts of Skåne and Halland, the large round mounds lie close together – many of them from the Bronze Age, as at Ättekulla. Further north, in the Mälar valley, in Västergötland and along the Norrland coast, the mounds are more often from the Iron Age, up to the Viking Age.
+What strikes one first is the red band along the coasts of Skåne, continuing up along Halland. Ättekulla lies in the middle of it. Of the country's 2,017 mounds at least 20 metres across, 1,386 lie in Skåne and 219 in Halland – four in five. In Skåne almost every other mound of known size is that large; in Uppland it is one in twenty. The typical Scanian mound is 18 metres across, the typical Uppland mound nine. These are the great mounds of the Bronze Age, as at Ättekulla.
+
+The band follows the coast, but the mound builders did not seek out the shore itself. Within Skåne the large mounds lie no closer to the sea than the smaller ones: about four in ten lie within three kilometres of today's shore, among the large as among the small. It is the settled land that lies along the coast, on the open plains, and that is where the mounds are. We have counted this pattern but not tested it.
+
+Further north, in the Mälar valley, in Västergötland and along the Norrland coast, the mounds are more often from the Iron Age, up to the Viking Age. There most lie in grave fields, and they do not show on the map: Uppland has 5,307 grave fields in the register, Skåne 359. So the contrast on the map is also a difference in custom – the Bronze Age's great solitary mounds in the south, the Iron Age's grave fields in the north.
 
 The mounds have carried stories too. {N_KUNG} of them are called Kungshögen, the king's mound, and in Stora Fulhög at Borrby in Skåne there is said to be ”a golden cradle” and a prince buried.
 
