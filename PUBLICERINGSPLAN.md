@@ -112,6 +112,16 @@ Status per rad: planerad → plan låst → körd → rapport → publicerad.
 
 ## 2. Populärspåret
 
+**Ny takt från 18 november 2026 (Viktor: ”en var tredje dag”, inga dubbla publiceringar i veckan).** De 22 utkast som
+granskades 18 november (fem oberoende granskare mot byggarna och källorna, felen rättade) är godkända av Viktor och
+schemalagda kl. 07, en var tredje dag, 24 nov 2026 – 1 feb 2027, med juluppehåll 25 dec – 1 jan; Bluesky samma dag.
+Planen står i `data/publiceringsschema.json`. **Hålls tillbaka:** ”Vem höll i mejseln?” (skrivs om efter Runor-provet 8 nov),
+”Så gör du: mät runorna, inte ormen” (gjord på groove-6; görs om på groove-7), ”Tegnar i söder, böner i norr” och ”Möjliga
+ristare utan namn” (ersatta i praktiken av publicerade artiklar). Rapportutkasten publicerar Viktor själv; rapporten om
+storhögarna är tillbakadragen (grupperna håller inte). Från 4 feb 2027 behövs nya texter: de ”nya” ämnena i tabellen nedan
+(väderstrecken, änkorna, väringarna, kumbl/stæin/kross …) skrivs i januari, en var tredje dag. Tabellen nedan är den
+gamla tisdag–fredag-kalendern och gäller inte längre för datumen.
+
 **Första kalendern, november 2026 – februari 2027.** ”Utkast” betyder klar text i appen. ”Ny” skrivs fyra veckor före och
 är beskrivande, ur frågelistans reservdel; den som prövar mot slumpen får en kort låst plan.
 
@@ -166,6 +176,13 @@ Kalendern för nästa period skrivs vid månadsgenomgången i februari.
 | Nr 3, juni 2027 | *Platserna* | Gravar, vägar eller gränser?; Runstenarna stod vid lerans kant – men halva gåtan är olöst; De gamla landen. **Också:** Norgeartikeln, efter litteraturtilläggen i `build_norge.py` (Viktor 13 nov: inte i nr 2). Metodhörnan: slumpen inom bygden | Kartan med de gamla landen, strandlinjen och jordarterna |
 | Nr 4, september 2027 | *Hur gamla är runstenarna?* | Dateringens ankare; Prickarna, åsrunan och tiden; Döda i vita kläder. Metodhörnan: varför vi låser planen | Ristarna, en i taget |
 | Nr 5, december 2027 | *Människorna* | Var det de rika?; Hur många stenar reste kvinnor?; Änkorna; Mild i ord och god på mat – den goda människan och eftermälet (Viktor 13 nov). Verkstaden: huvudrapporten | Pröva en egen fråga |
+
+**Förslag 18 nov 2026: de nya artiklarna i numren** (fördjupning i `utdata/tidskrift/FORDELNING.md`): nr 3 *Platserna* –
+Asatron i landskapet och Borgarna vid vattnet som kandidater bredvid lerkanten och De gamla landen (Attundaland eller
+Värend); nr 4 *Hur gamla är runstenarna?* – Vendeltid, vikingatid, medeltid; nr 5 *Människorna* (december) – Den goda
+döden, Fyra stenar för två barn, Mö, dotter eller flicka? och Vikingarnas jul som julsida; Verkstaden – Hundra år av
+runfrågor I–II; Metodhörnan eller redaktörens sida – Kan man räkna sig fram till vikingarna? Nr 2:s utlovade innehåll är
+orört; Bakhäll, bro och kvarnsten kan bli en ruta i ”Stenarna som flyttades” om det finns plats.
 
 Fler funktioner att förklara: 3D-huggspårsanalysen, Namn och släkt, Runbiblioteket, Stenanalys och Jämför stenar.
 Numren byggs med `utdata/tidskrift/bygg_tidskrift.py` (sv + en) och läggs upp på /tidskrift.
