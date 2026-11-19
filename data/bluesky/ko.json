@@ -1097,6 +1097,17 @@
     "VikingAge",
     "Skystorians"
    ]
+  },
+  {
+   "date": "2027-02-04",
+   "slug": "vem-holl-i-mejseln",
+   "en": true,
+   "text": "Who held the chisel? 3 in 4 Swedish runestones have no known carver. Vitki learns each carver's traits from signed stones only and is right first on 71 % of them. But a hand with no name still gets pushed into a known workshop. What it sees, and what not.",
+   "tags": [
+    "runology",
+    "MedievalSky",
+    "VikingAge"
+   ]
   }
  ]
 }
