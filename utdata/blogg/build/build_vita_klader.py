@@ -503,7 +503,7 @@ De vita kläderna hör alltså till andra halvan av 1000-talet. Men det är ocks
 
 **Bilder.** Domkyrkostenen har, enligt Svärdström och Gustavson, ”en framställning av en ryttare till häst” ovanför runslingan.
 
-**Ristarna.** Ingen enskild ristare står bakom orden. Rundata för Molnbystenen och Unas sten till Visäte, utan signatur men med hans stil. Ingileifs sten är signerad av Balle. Hågastenen bär signaturen *Reð runaR ØpiR*, ’Öpir ordnade runorna’, och Helgas sten är tillskriven Öpir, men Rundata noterar för båda att de inte verkar vara den kände Öpirs verk (för Helgas sten med hänvisning till Åhlén 1997). Magnus Källström har prövat frågan på nytt och skriver om en grupp stenar kring Uppsala, bland dem Helgas:
+**Ristarna.** Ingen enskild ristare står bakom orden. Rundata för Molnbystenen och Unas sten till Visäte, utan signatur men i Visätes stil. Ingileifs sten är signerad av Balle. Hågastenen bär signaturen *Reð runaR ØpiR*, ’Öpir ordnade runorna’, och Helgas sten är tillskriven Öpir, men Rundata noterar för båda att de inte verkar vara den kände Öpirs verk (för Helgas sten med hänvisning till Åhlén 1997). Magnus Källström har prövat frågan på nytt och skriver om en grupp stenar kring Uppsala, bland dem Helgas:
 
 > {KALL}
 
@@ -518,7 +518,7 @@ Ingileif lät resa stenen efter Brúni, sin make. Han dog i Danmark i vita kläd
 ![Runstenen U 699]({IMG['U 699']['thumb']})
 U 699 från Amnö i Veckholm, i dag i Ekholmens park. {credit('U 699', 'sv')}
 
-Balle var en flitig ristare: Rundata räknar {len(BALLE_S)} runstenar som han signerade och {len(BALLE_A)} som tillskrivs honom. Här skrev han in en enda omständighet om Brúnis död: var och i vad. Stenen säger inte om han döptes i Danmark eller redan hemma, och inte heller hur han dog. Den säger att hans hustru ville att det skulle stå.
+Balle var en flitig ristare: Rundata räknar {len(BALLE_S)} runstenar som Balle signerade och {len(BALLE_A)} som tillskrivs Balle. Här skrev Balle in en enda omständighet om Brúnis död: var och i vad. Stenen säger inte om han döptes i Danmark eller redan hemma, och inte heller hur han dog. Den säger att hans hustru ville att det skulle stå.
 
 *{Q613}*
 
@@ -681,7 +681,7 @@ The white clothes thus belong to the second half of the eleventh century. But th
 
 **Pictures.** The cathedral stone has, according to Svärdström and Gustavson, “en framställning av en ryttare till häst”, a rider on horseback, above the rune band.
 
-**The carvers.** No single carver stands behind the words. Rundata attributes the Molnby stone and Una's stone to Visäte, unsigned but in his style. Ingileif's stone is signed by Balli. The Håga stone bears the signature *Reð runaR ØpiR*, ‘Øpir arranged the runes’, and Helga's stone is attributed to Øpir, but Rundata notes for both that they do not seem to be the work of the well-known Øpir (for Helga's stone citing Åhlén 1997). Magnus Källström has taken up the question again and writes of a group of stones around Uppsala, Helga's among them:
+**The carvers.** No single carver stands behind the words. Rundata attributes the Molnby stone and Una's stone to Visäte, unsigned but in Visäte's style. Ingileif's stone is signed by Balli. The Håga stone bears the signature *Reð runaR ØpiR*, ‘Øpir arranged the runes’, and Helga's stone is attributed to Øpir, but Rundata notes for both that they do not seem to be the work of the well-known Øpir (for Helga's stone citing Åhlén 1997). Magnus Källström has taken up the question again and writes of a group of stones around Uppsala, Helga's among them:
 
 > {KALL}
 
@@ -696,7 +696,7 @@ Ingileif had the stone raised in memory of Brúni, her husband. He died in Denma
 ![The runestone U 699]({IMG['U 699']['thumb']})
 U 699 from Amnö in Veckholm, today in Ekholmen park. {credit('U 699', 'en')}
 
-Balli was a busy carver: Rundata counts {len(BALLE_S)} runestones he signed and {len(BALLE_A)} attributed to him. Here he wrote down a single circumstance of Brúni's death: where, and in what. The stone does not say whether he was baptised in Denmark or already at home, nor how he died. It says that his wife wanted it written.
+Balli was a busy carver: Rundata counts {len(BALLE_S)} runestones that Balli signed and {len(BALLE_A)} attributed to Balli. Here Balli wrote down a single circumstance of Brúni's death: where, and in what. The stone does not say whether he was baptised in Denmark or already at home, nor how he died. It says that his wife wanted it written.
 
 *{Q613}*
 

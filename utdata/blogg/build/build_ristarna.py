@@ -440,7 +440,7 @@ The page is at [vitkirunor.se/ristarna](/ristarna/) and in the app under Corpus 
 
 We have written before about [stones looking for their carver](/en/artiklar/fem-runstenar-soker-sin-ristare/) and about [the carvers no one remembered](/en/artiklar/ristarna-som-aldrig-blev-ihagkomna/).
 
-:::box In short
+:::box The essentials in brief
 - The page The carvers shows each known carver's fingerprint, built only from the stones the carver signed.
 - It tests research's attributions against the fingerprint. For most carvers they fit, and the few stones that do not deserve a fresh look.
 - It suggests stones without a carver, with a model that is right on seven in ten signed stones. But against the runologists' groups of unnamed hands the model does no better than geography: a hand without a name ends up with a known workshop.

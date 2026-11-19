@@ -141,8 +141,15 @@ def pagemap(key):
         seq = [n for a, b in re.findall(r"(\d+)\s*-\s*(\d+)", tail) for n in range(int(a), int(b) + 1)]
         return {p: (seq[p - 2] if 0 <= p - 2 < len(seq) else None) for p, _ in ps}, ps
     if key.startswith("futhark_"):
+        # the printed page from each page's running head ("22 • Michael P. Barnes" / "… • 13"); the article PDFs can
+        # carry front pages, so start page + pdf page − 1 was off by two (corrected 2026-11-19 after the lint check)
         s = int(key.split("_")[2])
-        return {p: s + p - 1 for p, _ in ps}, ps
+        out = {}
+        for p, t in ps:
+            head = t.strip().split("\n")[0]
+            m = re.match(r"\s*(\d{1,3})\s*•", head) or re.search(r"•\s*(\d{1,3})\s*$", head)
+            out[p] = int(m.group(1)) if m else s + p - 1
+        return out, ps
     s = int(re.findall(r"\b(\d{1,3})\b", t1.split("\n")[0])[-1])
     return {p: s + p - 1 for p, _ in ps}, ps
 
@@ -257,13 +264,13 @@ Q = {
     "zilmer2010": ("futhark_1_123_381124", 131, "We have to reckon with the possibility of both regional and carver-related variation here", None),
     "larsson2010": ("futhark_1_249_381135", 250, "Klos börjar sin undersökning med en noggrann och kritisk utsortering av de runstenar som kan antas stå på ursprunglig plats, 730 stenar, vilket givetvis är en utmärkt grund för det fortsatta arbetet.", None),
     "kitzler2011": ("futhark_2_145_512979", 176, "The underlying hypothesis is that carving techniques may reflect the mobility patterns and contacts of the rune carvers.", None),
-    "kallstrom2011": ("futhark_2_242_512988", 246, "Av dessa menar han endast ca 10 % kan vara primärt knutna till gränser (utan att samtidigt vara brostenar), medan 45 % hör samman med bylägen eller byägorna.", None),
-    "barnes2013a": ("futhark_4_7_682689", 12, "The reading must be done first and must be undertaken by someone with experience in the field.", None),
-    "barnes2013b": ("futhark_4_7_682689", 15, "What we suffer from both here and in the case of the Manx crosses is lack of data, not lack of theory.", None),
-    "barnes2013c": ("futhark_4_7_682689", 24, "the rush to embrace “magic” in the inter-war years", None),
-    "williams2013": ("futhark_4_61_682691", 68, "men veterligen har ännu inget riktigt försök gjorts att relatera observationerna till sociala faktorer.", None),
-    "jesch2013": ("futhark_4_77_682692", 88, "Were these people good husbands or good farmers?", None),
-    "zilmer2013": ("futhark_4_129_682695", 139, "close to 70 per cent of this material originates from two central Swedish provinces", None),
+    "kallstrom2011": ("futhark_2_242_512988", 243, "Av dessa menar han endast ca 10 % kan vara primärt knutna till gränser (utan att samtidigt vara brostenar), medan 45 % hör samman med bylägen eller byägorna.", None),
+    "barnes2013a": ("futhark_4_7_682689", 10, "The reading must be done first and must be undertaken by someone with experience in the field.", None),
+    "barnes2013b": ("futhark_4_7_682689", 13, "What we suffer from both here and in the case of the Manx crosses is lack of data, not lack of theory.", None),
+    "barnes2013c": ("futhark_4_7_682689", 22, "the rush to embrace “magic” in the inter-war years", None),
+    "williams2013": ("futhark_4_61_682691", 66, "men veterligen har ännu inget riktigt försök gjorts att relatera observationerna till sociala faktorer.", None),
+    "jesch2013": ("futhark_4_77_682692", 86, "Were these people good husbands or good farmers?", None),
+    "zilmer2013": ("futhark_4_129_682695", 137, "close to 70 per cent of this material originates from two central Swedish provinces", None),
     "stille2014": ("futhark_5_137_799768", 148, "This is contrary to the commonly held notion that the relation to graves is prototypical.", None),
     "akerstrom2017": ("futhark_8_7_1333693", 55, "Att vi inte kan veta i hur stor utsträckning inskrifter har gått förlorade fram till idag gör det givetvis svårt att avgöra detta.", None),
     "krakow2021": ("37d3b87e-51fd-4a87-af76-294ffc35901a", 102, "Denna isländska sagas datering av Ingvars död har övertagits av många historiker och runologer som utgångspunkt för att datera Ingvarståget",
@@ -308,7 +315,7 @@ has("2008_litt_d", "Steenholt Olesen")
 has("futhark_9-10_7_1383036", "The Rök Runestone and the End of the World")
 has("futhark_9-10_7_1383036", "semiotics, philology, archaeology, and history of religion")
 assert 89 in pages_with("1907_020", "Rökstens-gruppens inskrifter äro så mycket ålderdomligare än de med samma slags runor på Man och i Norge")
-assert 24 in pages_with("futhark_4_7_682689", "He warns against basing conclusions") and 24 in pages_with("futhark_4_7_682689", "citing the rush to embrace")
+assert 22 in pages_with("futhark_4_7_682689", "He warns against basing conclusions") and 22 in pages_with("futhark_4_7_682689", "citing the rush to embrace")
 has("2008_245", "Places of assembly")
 has("1970_247", "Halvdan")
 has("1980_183", "Olof Celsius")
@@ -748,7 +755,7 @@ Elisabeth Svärdström öppnade decenniet med en ristning långt hemifrån: runo
 
 {pic('hagia', ('Runristningen i Hagia Sofia', 'The runic inscription in Hagia Sophia'), 'Runristningen på läktaren i Hagia Sofia, Istanbul, som Elisabeth Svärdström läste i Fornvännen 1970.', 'The runic inscription in the gallery of Hagia Sophia, Istanbul, which Elisabeth Svärdström read in Fornvännen in 1970.', 'sv')}
 
-Svärdström läste också medeltidsstadens vardag: runpinnar, karvstickor och redskap från Lödöse, där runorna användes av människor som inte alltid kunde dem. Om en av ristarna skrev hon att han förmodligen ”{'inte har varit runkunnig i vanlig bemärkelse'}” ({at('1972_094', '102', 'sv')}). Runfynd fortsatte att komma ut varje år, med Helmer Gustavson, Thorgunn Snædal, Jan Paul Strid och Marit Åhlén som medförfattare ({cite('kallstrom2021a')}).
+Svärdström läste också medeltidsstadens vardag: runpinnar, karvstickor och redskap från Lödöse, där runorna användes av människor som inte alltid kunde dem. Om en av ristarna skrev hon att ristaren förmodligen ”{'inte har varit runkunnig i vanlig bemärkelse'}” ({at('1972_094', '102', 'sv')}). Runfynd fortsatte att komma ut varje år, med Helmer Gustavson, Thorgunn Snædal, Jan Paul Strid och Marit Åhlén som medförfattare ({cite('kallstrom2021a')}).
 
 Ristarna själva blev en fråga. Runologen Claiborne W. Thompson prövade von Friesens tes att Öpir hade varit Visätes lärjunge. Han kallade den ”{q('thompson1')}” – men konstaterade: ”{q('thompson2')}” ({cite('thompson1')}). Det är ett mönster för hur fältet för samtalet vidare: med respekt för den äldre forskaren, och med stenarna som domare.
 
@@ -863,7 +870,7 @@ Elisabeth Svärdström opened the decade with an inscription far from home: rune
 
 {pic('hagia', ('Runic inscription in Hagia Sophia', 'The runic inscription in Hagia Sophia'), '', 'The runic inscription in the gallery of Hagia Sophia, Istanbul, which Elisabeth Svärdström read in Fornvännen in 1970.', 'en')}
 
-Svärdström also read the everyday life of a medieval town: rune-sticks, tally sticks and tools from Lödöse, where runes were used by people who did not always master them. Of one carver she wrote that he probably “inte har varit runkunnig i vanlig bemärkelse” (“was not rune-literate in the ordinary sense”; {at('1972_094', 102, 'en')}). Runfynd went on appearing every year, with Helmer Gustavson, Thorgunn Snædal, Jan Paul Strid and Marit Åhlén as co-authors ({cite('kallstrom2021a', 'en')}).
+Svärdström also read the everyday life of a medieval town: rune-sticks, tally sticks and tools from Lödöse, where runes were used by people who did not always master them. Of one carver she wrote that the carver probably “inte har varit runkunnig i vanlig bemärkelse” (“was not rune-literate in the ordinary sense”; {at('1972_094', 102, 'en')}). Runfynd went on appearing every year, with Helmer Gustavson, Thorgunn Snædal, Jan Paul Strid and Marit Åhlén as co-authors ({cite('kallstrom2021a', 'en')}).
 
 The carvers themselves became a question. The runologist Claiborne W. Thompson tested von Friesen's thesis that Öpir had been Visäte's pupil. He called it “{q('thompson1')}” – but noted: “{q('thompson2')}” ({cite('thompson1', 'en')}). It is a model of how the field carries the conversation on: with respect for the older scholar, and with the stones as judges.
 

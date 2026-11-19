@@ -206,7 +206,7 @@ We have counted runestones all autumn. It is perhaps fitting that the last text 
 
 Merry Christmas from Vitki.
 
-:::box The main points in brief
+:::box The essentials in brief
 - The word jól occurs {len(traffar)} times in Heimskringla, in {len(episoder)} episodes. Most often Yule is a point in time ({antal[T]}) or a feast ({antal[G]}); sometimes fighting ({antal[S]}), faith ({antal[R]}) and gifts ({antal[K]}).
 - According to the saga, Hákon the Good moved Yule to the Christians' date. Before, it began on midwinter night and lasted three nights.
 - No runestone mentions jól. The word occurs only on two Norwegian wooden inscriptions from the Middle Ages.

@@ -342,7 +342,7 @@ It also means that the runestone fashion lived on long after the English end poi
 
 {APP_M1("en")}
 
-The runestone from Nolby in Medelpad is an ordinary Viking-age memorial: three brothers raised it in memory of their father, and the carver signed his name, *Farþegn*. Compare it with the slab at Hov. The technique is the same, grooves carved in stone, but the place is different: the stone stood in the landscape, the slab lay in the church. That is the shift that separates the Viking Age from the Middle Ages in Sweden – and it did not happen on a given day, but over a few generations around 1100. Lena Thunmark-Nylén described a symposium on exactly this, and its theme was “the birth of the Middle Ages, c. 800–1200” (Fornvännen 1989, p. 159).
+The runestone from Nolby in Medelpad is an ordinary Viking-age memorial: three brothers raised it in memory of their father, and the carver signed the stone, *Farþegn*. Compare it with the slab at Hov. The technique is the same, grooves carved in stone, but the place is different: the stone stood in the landscape, the slab lay in the church. That is the shift that separates the Viking Age from the Middle Ages in Sweden – and it did not happen on a given day, but over a few generations around 1100. Lena Thunmark-Nylén described a symposium on exactly this, and its theme was “the birth of the Middle Ages, c. 800–1200” (Fornvännen 1989, p. 159).
 
 {pic("Sigtuna", "en", "The ruin of St Olof's church in Sigtuna, one of the town's twelfth-century stone churches.")}
 

@@ -132,7 +132,7 @@ Det mesta färdades på vattnet. Men landvägar fanns, och en av dem är märkli
 
 I Bro, Färingö och Sollentuna, med Adelsö, finns ett tjugotal fornborgar. Några ligger vid Mälarens vattenleder. Tunbergets borg vid Edsberg har ett strategiskt läge vid den smala landtungan mellan Edsviken och Norrviken. Längre norrut, i Lyhundra och Sjuhundra, ligger de flesta borgarna i skogen, en bit från bygden, och de flesta visar inga spår av att människor bott där länge. Kanske var de platser att fly till. En borg i Skederid, Darsgärde, har grävts ut helt; där fanns husgrunder och boplatslämningar från folkvandringstiden, flera hundra år före vikingatiden.
 
-Och västerut, där Attundaland tar slut, ligger Björkö och Adelsö. På Björkö låg staden Birka, med stadsvall, borg, hamnar och Skandinaviens största gravfält med högar. På Adelsö, vid Hovgården, låg fem storhögar och en kungsgård, och där står en sten som säger att Tole var kungens bryte, hans förvaltare, i ”Roðr” – kanske Roden. Men Adelsö räknades på medeltiden till Trögd i [Fjädrundaland]({FJAD}), inte till Attundaland. Det mest kända stället i trakten låg alltså precis utanför landets gräns.
+Och västerut, där Attundaland tar slut, ligger Björkö och Adelsö. På Björkö låg staden Birka, med stadsvall, borg, hamnar och Skandinaviens största gravfält med högar. På Adelsö, vid Hovgården, låg fem storhögar och en kungsgård, och där står en sten som säger att Tole var kungens bryte, hans förvaltare, i ”Roðr” – kanske Roden. Men Adelsö räknades på medeltiden till Trögd i Fjädrundaland, inte till Attundaland. Det mest kända stället i trakten låg alltså precis utanför landets gräns.
 
 ## Stenarna som står i grupp
 
@@ -210,7 +210,7 @@ Most travel went by water. But there were roads on land, and one of them is rema
 
 Bro, Färingö and Sollentuna, with Adelsö, have some twenty hillforts. Some lie by the waterways of Lake Mälaren. The fort on Tunberget at Edsberg has a strategic position on the narrow neck of land between Edsviken and Norrviken. Further north, in Lyhundra and Sjuhundra, most of the forts lie in the forest, some way from the settlement, and most show no sign that people lived there for long. Perhaps they were places to flee to. One fort in Skederid, Darsgärde, has been fully excavated; there were house foundations and settlement remains from the Migration Period, several hundred years before the Viking Age.
 
-And to the west, where Attundaland ends, lie Björkö and Adelsö. On Björkö lay the town of Birka, with a town rampart, a fort, harbours and Scandinavia's largest cemetery of mounds. On Adelsö, at Hovgården, lay five great mounds and a royal estate, and there stands a stone that says Toli was the king's bryti, his steward, in "Roðr" – perhaps Roden. But Adelsö was counted in the Middle Ages to Trögd in [Fjädrundaland]({FJAD}), not to Attundaland. The best-known place in the district lay just outside the land's border.
+And to the west, where Attundaland ends, lie Björkö and Adelsö. On Björkö lay the town of Birka, with a town rampart, a fort, harbours and Scandinavia's largest cemetery of mounds. On Adelsö, at Hovgården, lay five great mounds and a royal estate, and there stands a stone that says Toli was the king's bryti, his steward, in "Roðr" – perhaps Roden. But Adelsö was counted in the Middle Ages to Trögd in Fjädrundaland, not to Attundaland. The best-known place in the district lay just outside the land's border.
 
 ## The stones that stand in groups
 

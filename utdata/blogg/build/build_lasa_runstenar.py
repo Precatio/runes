@@ -460,7 +460,7 @@ Half of the ten stand in Uppland, and half were carved in the second half of the
 
 ## Gylla and Guðfríðr on Selaön
 
-Perhaps the most beautiful of them stands at Nybble on the island of Selaön in Lake Mälaren (Sö 213). Here the carver put his name first, not last:
+Perhaps the most beautiful of them stands at Nybble on the island of Selaön in Lake Mälaren (Sö 213). Here the carver's name comes first, not last:
 
 > *{ows('Sö 213')}*
 
@@ -498,9 +498,9 @@ The word *here* only means something to someone standing at the spot. Kristel Zi
 
 That fits something we have measured. In a [research report](/en{VAG_RAPP}) we found that half of the stones still in their place turn the inscription within 45 degrees of the road, against a quarter if the direction were random. The text was turned towards the passer-by. One reservation belongs here: the road we measured against is mostly the road as it runs today. Whether the Viking-age road ran in the same place we are now testing against old maps, and that work is not finished.
 
-## The carver who wrote his name
+## The carver who signed
 
-The most personal form of address is a name. On {N_SIGNED} of the stones, about one in nine, the carver wrote his own name, with a verb such as *risti* or *hjó*, carved or cut. How the name in time took the last word of the text we have written about in [The carver had the last word](/en{SIG_ART}). Here only one thing counts: a signature is written to be read. Whoever puts their name on a stone expects someone to see it.
+The most personal form of address is a name. On {N_SIGNED} of the stones, about one in nine, the carver wrote their own name, with a verb such as *risti* or *hjó*, carved or cut. How the name in time took the last word of the text we have written about in [The carver had the last word](/en{SIG_ART}). Here only one thing counts: a signature is written to be read. Whoever puts their name on a stone expects someone to see it.
 
 One carver even speaks in the first person. At Varpsund in Övergran parish (U 654), where five sons raised a stone for a father who died in the east with Ingvarr, it says: *Alríkr(?) reist-ek rúnar. Er kunni vel knerri stýra.* I, Alríkr, carved the runes. He could steer a cargo ship well. And in Hälsingland it is a woman who did the last work on the stone: *Gunnborga fáði stein þenna, hin góða* – Gunnborga the good coloured this stone (Hs 21).
 
