@@ -54,6 +54,11 @@ jobs:
         # src/lib/redaktion.ts (the fields /redaktion writes, Swedish time) and scripts/redaktion_csp.mjs, with Node's
         # own test runner (type stripping)
         run: node --test scripts/redaktion.test.mjs
+      - name: Artikelgranskningen och gränssnittets texter
+        # src/lib/articleLint.ts against the cases shared with src/article_lint.py; and, without a running app,
+        # Swedish interface texts without an English template in src/i18n/en.json (new ones only, against
+        # scripts/ui_texts_baseline.json) and gendered pronouns about carvers in web/src and en.json (scripts/ui_texts.mjs)
+        run: node --test scripts/article_lint.test.mjs scripts/ui_texts.test.mjs
 
   rules:
     name: Firestore-reglerna (emulatorn)

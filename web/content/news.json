@@ -2,6 +2,14 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "artikelgranskning-fore-publicering",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "kategori": "metod",
+   "title": "Varje artikel granskas automatiskt innan den godkänns",
+   "text": "Innan en artikel schemaläggs går en automatisk granskning igenom den svenska och den engelska texten. Den letar efter de fel som våra granskare oftast hittade: fel tryckt sida i citat ur Fornvännen och Futhark (citatet slås upp i tidskriftens text och jämförs med sidnumret i sidhuvudet), sammanfattningar med tal som inte står i artikeln, ord som visar eller bevisar där bara ett samband är prövat, länkar till artiklar som ännu inte är publicerade och han eller hans om en ristare, vars kön vi inte känner. Ett fel måste läsas och bekräftas innan artikeln kan godkännas. Granskningen ersätter inte läsningen; den fångar det som är lätt att missa."
+  },
+  {
    "id": "grupper-som-enhet",
    "date": "2026-11-19",
    "status": "nytt",

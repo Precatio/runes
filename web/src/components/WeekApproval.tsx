@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { dateLabel } from "@/components/BlogBody";
+import { ErrorConfirmation, QueueNotice, type Review, ReviewChip, ReviewList } from "@/components/ArticleReview";
 
 // One planned publication from data/publiceringsschema.json with its status (GET /api/admin/blog/week,
 // api/routers/blog_week.py)
@@ -12,9 +13,18 @@ interface WeekEntry {
   publishedAt: string | null; slug: string | null; title: string | null; title_en: boolean; body_en: boolean;
   labels: string[]; labels_problem: string | null; bluesky_length: number | null; bluesky_limit: number;
   can_approve: boolean; reason: string | null;
+  // The review before approval (src/article_lint.py); null when the article is missing
+  granskning: Review | null;
 }
-interface Week { from: string; to: string; week: number; entries: WeekEntry[] }
-interface Result { id: string; ok: boolean; reason?: string; titel?: string; slug?: string; publishedAt?: string; bluesky?: string | null }
+interface Week {
+  from: string; to: string; week: number; entries: WeekEntry[];
+  // How long the queue lasts (queue_end in api/routers/blog_week.py)
+  queue?: { until: string | null; days_left: number; alarm: boolean };
+}
+interface Result {
+  id: string; ok: boolean; reason?: string; titel?: string; slug?: string; publishedAt?: string; bluesky?: string | null;
+  granskning?: Review | null;
+}
 
 // "2026-11-16" moved a number of days, without the browser's time zone getting in the way
 const shift = (day: string, days: number) => {
@@ -49,6 +59,8 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
   const [busy, setBusy] = useState<"approve" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [results, setResults] = useState<Result[] | null>(null);
+  // The editor has read the review's errors and approves anyway (sent as confirm_errors)
+  const [errorsConfirmed, setErrorsConfirmed] = useState(false);
   // Bumped after an approval, so that the week is read again with its new status
   const [round, setRound] = useState(0);
 
@@ -70,6 +82,7 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
   };
 
   const chosen = (week?.entries ?? []).filter(e => e.can_approve && checked.has(e.id));
+  const withErrors = chosen.filter(e => (e.granskning?.fel ?? 0) > 0);
   const toggle = (id: string) => setChecked(s => {
     const next = new Set(s);
     if (next.has(id)) next.delete(id); else next.add(id);
@@ -80,14 +93,16 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
     if (!week) return;
     setBusy("approve"); setError(null);
     try {
-      const d = await call("/api/admin/blog/week/approve", { method: "POST", body: JSON.stringify({ from: week.from, ids: chosen.map(e => e.id) }) });
+      const d = await call("/api/admin/blog/week/approve", { method: "POST", body: JSON.stringify({
+        from: week.from, ids: chosen.map(e => e.id), confirm_errors: errorsConfirmed ? withErrors.map(e => e.id) : [],
+      }) });
       setResults(d.results);
       onChanged();
       setRound(r => r + 1);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Godkännandet misslyckades.");
     } finally {
-      setBusy(null); setConfirming(false);
+      setBusy(null); setConfirming(false); setErrorsConfirmed(false);
     }
   };
 
@@ -112,6 +127,7 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
         </div>
       </div>
 
+      {week?.queue && <QueueNotice until={week.queue.until} daysLeft={week.queue.days_left} alarm={week.queue.alarm} />}
       {error && <p className="text-sm font-semibold text-red-700">{error}</p>}
       {!week && !error && <p className="text-sm text-slate-500">Hämtar …</p>}
       {week && week.entries.length === 0 && (
@@ -143,8 +159,10 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
                     ? <span className={e.bluesky_length > e.bluesky_limit ? warn : good}>Bluesky {e.bluesky_length}/{e.bluesky_limit}</span>
                     : <span className={plain}>inget Bluesky-inlägg</span>}
                   {e.godkand && <span className={`${chip} border-[#b7410e]/40 bg-[#fbf3ee] text-[#9a350b]`}>godkänd {dateLabel(e.godkand, "sv", true)}</span>}
+                  <ReviewChip review={e.granskning} />
                   {e.slug && <span className="text-[11px] text-slate-400" translate="no">/artiklar/{e.slug}</span>}
                 </div>
+                <ReviewList review={e.granskning} />
                 {!e.can_approve && e.reason && <p className="text-xs text-slate-500">{e.reason}</p>}
                 {e.labels_problem && <p className="text-xs text-amber-700">{e.labels_problem}</p>}
                 {e.bluesky && (
@@ -162,7 +180,7 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
       )}
 
       {week && week.entries.length > 0 && !confirming && (
-        <button onClick={() => { setConfirming(true); setResults(null); }} disabled={chosen.length === 0 || busy !== null}
+        <button onClick={() => { setConfirming(true); setResults(null); setErrorsConfirmed(false); }} disabled={chosen.length === 0 || busy !== null}
           className="px-4 py-2 rounded-xl bg-[#b7410e] text-white text-sm font-bold disabled:opacity-40">
           Godkänn veckans publiceringar{chosen.length ? ` (${chosen.length})` : ""}
         </button>
@@ -180,8 +198,9 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
             ))}
           </ul>
           <p className="text-xs text-slate-600">Texterna ändras inte. Artiklarna går live av sig själva vid sin tid, så länge appen är igång.</p>
+          <ErrorConfirmation titles={withErrors.map(e => e.title || e.titel)} confirmed={errorsConfirmed} onChange={setErrorsConfirmed} />
           <div className="flex gap-2">
-            <button onClick={approve} disabled={busy !== null} className="px-4 py-2 rounded-xl bg-[#b7410e] text-white text-sm font-bold disabled:opacity-40">
+            <button onClick={approve} disabled={busy !== null || (withErrors.length > 0 && !errorsConfirmed)} className="px-4 py-2 rounded-xl bg-[#b7410e] text-white text-sm font-bold disabled:opacity-40">
               {busy === "approve" ? "Schemalägger …" : "Ja, schemalägg"}
             </button>
             <button onClick={() => setConfirming(false)} disabled={busy !== null} className="px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold disabled:opacity-40">
@@ -199,6 +218,9 @@ export default function WeekApproval({ call, onEdit, onChanged }: {
               {r.ok
                 ? <>schemalagd {dateLabel(r.publishedAt, "sv", true)}{r.bluesky ? `; Bluesky: ${r.bluesky}` : ""}.</>
                 : <>inte schemalagd – {r.reason}</>}
+              {r.granskning && (r.granskning.fel > 0 || r.granskning.varningar > 0) && (
+                <span className="text-slate-600"> Granskningen: {r.granskning.fel} fel, {r.granskning.varningar} varningar.</span>
+              )}
             </li>
           ))}
         </ul>

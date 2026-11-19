@@ -8,7 +8,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { User } from "firebase/auth";
 import BlogBody from "@/components/BlogBody";
-import RedaktionWeek from "@/components/RedaktionWeek";
+import RedaktionWeek, { QueueStatus, usePlan } from "@/components/RedaktionWeek";
 import { FIREBASE_CONFIGURED, firebaseAuth, firestoreLib } from "@/firebase/config";
 import { postPath } from "@/lib/blogSeo";
 import { reportPath } from "@/lib/report";
@@ -89,6 +89,8 @@ export default function Redaktion() {
           body: x.body ?? "", published: !!x.published, publishedAt: toDate(x.publishedAt), updatedAt: toDate(x.updatedAt),
           month: x.month, labels: Array.isArray(x.labels) ? x.labels : [], featured: !!x.featured,
           titleEn: !!x.title_en, bodyEn: !!x.body_en,
+          titleEnText: x.title_en ?? "", summaryEn: x.summary_en ?? "", bodyEnText: x.body_en ?? "",
+          seoTitle: x.seo_title ?? "", seoTitleEn: x.seo_title_en ?? "",
         };
       }));
       setNow(new Date());
@@ -201,10 +203,12 @@ function NotActive({ text }: { text: string }) {
 
 function Overview({ posts, now }: { posts: AdminPost[]; now: Date }) {
   const next = upcoming(posts, now);
+  const plan = usePlan();
   const drafts = posts.filter(p => status(p, now) === "utkast").length;
   const latest = latestPublished(posts, now);
   return (
     <div className="grid gap-6 md:grid-cols-2">
+      {plan && <div className="md:col-span-2"><QueueStatus plan={plan} posts={posts} now={now} /></div>}
       <Card title="Schemalagt de närmaste fyra veckorna">
         {next.length ? (
           <ul className="divide-y divide-slate-100">

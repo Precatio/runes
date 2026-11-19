@@ -22,6 +22,12 @@ export interface AdminPost {
   /** Whether the article has an English title and text (the Bluesky post links to the English edition). */
   titleEn?: boolean;
   bodyEn?: boolean;
+  /** The English texts and the search titles themselves, for the review before approval (lib/articleLint.ts). */
+  titleEnText?: string;
+  summaryEn?: string;
+  bodyEnText?: string;
+  seoTitle?: string;
+  seoTitleEn?: string;
 }
 
 /** The fields one publication change writes, apart from updatedAt (serverTimestamp() in the page). */
@@ -269,4 +275,36 @@ export function weekRefusal(row: PlanRow, post: Pick<AdminPost, "published" | "p
 export function blueskyRequest(row: PlanRow, slug: string, uid: string) {
   if (!row.bluesky) throw new Error("Raden har inget Bluesky-inlägg.");
   return { slug, datum: row.datum, text: row.bluesky.text, tags: [...(row.bluesky.tags ?? [])], en: true as const, by: uid };
+}
+
+// ---- Hur länge kön räcker (as queue_end in api/routers/blog_week.py) -------------------------------------------------
+
+/** Fewer days left than this, and the editors are warned (three weeks). */
+export const QUEUE_ALARM_DAYS = 21;
+export interface QueueEnd { until: string | null; daysLeft: number; alarm: boolean }
+
+const daysBetween = (a: string, b: string) => Math.round((Date.UTC(+b.slice(0, 4), +b.slice(5, 7) - 1, +b.slice(8, 10))
+  - Date.UTC(+a.slice(0, 4), +a.slice(5, 7) - 1, +a.slice(8, 10))) / 86_400_000);
+
+/** The last day with a popular article that is scheduled, or planned with a draft that exists; reports (track F, the
+ *  label Rapport) do not count. */
+export function queueEnd(plan: PlanRow[], posts: AdminPost[], now: Date): QueueEnd {
+  const today = todayStockholm(now);
+  const byId = new Map(posts.map(p => [p.id, p]));
+  const days: string[] = [];
+  for (const p of posts) {
+    if (isReport(p) || !p.published || !p.publishedAt) continue;
+    const d = todayStockholm(p.publishedAt);
+    if (d >= today) days.push(d);
+  }
+  for (const r of plan) {
+    const p = byId.get(r.id);
+    if (!p || r.spar === "F" || isReport(p) || !/^\d{4}-\d{2}-\d{2}$/.test(r.datum) || r.datum < today) continue;
+    if (p.published && p.publishedAt && todayStockholm(p.publishedAt) < today) continue;
+    days.push(r.datum);
+  }
+  if (!days.length) return { until: null, daysLeft: 0, alarm: true };
+  const until = days.sort().at(-1)!;
+  const daysLeft = daysBetween(today, until);
+  return { until, daysLeft, alarm: daysLeft < QUEUE_ALARM_DAYS };
 }

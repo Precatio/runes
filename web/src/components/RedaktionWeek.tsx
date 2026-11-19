@@ -7,12 +7,14 @@
 // bluesky_forfragningar. The export in GitHub Actions puts the request into data/bluesky/ko.json within about half an
 // hour (scripts/ci_publicera.py). Whether a row is approved is read from the article itself: scheduled or published.
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { ErrorConfirmation, QueueNotice, type Review, ReviewChip, ReviewList } from "@/components/ArticleReview";
+import { type LinkTarget, lintArticle, lintSummary } from "@/lib/articleLint";
 import { checkLabels } from "@/lib/labels";
 import { firestoreLib } from "@/firebase/config";
 import {
   type AdminPost, BLUESKY_LIMIT, blueskyRequest, composedLength, explainError, formatStockholm, inWeek, isoWeek,
-  type PlanRow, planTime, type PublicationFields, schedule, shiftDay, todayStockholm, weekOf, weekRefusal, weekState,
-  type WeekState,
+  type PlanRow, planTime, type PublicationFields, queueEnd, schedule, shiftDay, todayStockholm, weekOf, weekRefusal,
+  weekState, type WeekState,
 } from "@/lib/redaktion";
 
 const RUST = "#b7410e";
@@ -53,6 +55,38 @@ function toPost(id: string, x: Record<string, unknown>): AdminPost {
   };
 }
 
+/** The review before approval (lib/articleLint.ts, the same rules as src/article_lint.py), apart from the journal page
+ *  check, which needs the local journal database: that one runs in the local Admin. */
+function reviewOf(post: AdminPost, posts: AdminPost[], at: Date, now: Date): Review {
+  const targets: LinkTarget[] = posts.map(p => ({ slug: p.slug, published: p.published, publishedAt: p.publishedAt, hasEnglish: !!p.bodyEn }));
+  const fynd = lintArticle({
+    slug: post.slug, title: post.title, summary: post.summary, body: post.body, title_en: post.titleEnText,
+    summary_en: post.summaryEn, body_en: post.bodyEnText, seo_title: post.seoTitle, seo_title_en: post.seoTitleEn,
+    labels: post.labels, published: post.published, publishedAt: post.publishedAt,
+  }, targets, Number.isNaN(at.getTime()) ? null : at, now);
+  return { ...lintSummary(fynd), fynd };
+}
+
+/** The plan (publiceringsschema) as Firestore has it, or null until it has been read. */
+export function usePlan(): PlanRow[] | null {
+  const [plan, setPlan] = useState<PlanRow[] | null>(null);
+  useEffect(() => {
+    let alive = true;
+    firestoreLib().then(async ({ db, collection, getDocs }) => {
+      const rows = await getDocs(collection(db, "publiceringsschema"));
+      if (alive) setPlan(rows.docs.map(d => toRow(d.data())));
+    }).catch(() => { /* the week tab shows the error */ });
+    return () => { alive = false; };
+  }, []);
+  return plan;
+}
+
+/** "Kön räcker till …" from the plan and the scheduled articles, with an alarm under three weeks. */
+export function QueueStatus({ plan, posts, now }: { plan: PlanRow[]; posts: AdminPost[]; now: Date }) {
+  const q = queueEnd(plan, posts, now);
+  return <QueueNotice until={q.until} daysLeft={q.daysLeft} alarm={q.alarm} />;
+}
+
 /** posts: the articles as /redaktion has read them; save: the same write as "Schemalägg"; reload: read the articles again. */
 export default function RedaktionWeek({ posts, now, uid, save, reload }: {
   posts: AdminPost[]; now: Date; uid: string;
@@ -67,6 +101,7 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const [results, setResults] = useState<Result[] | null>(null);
+  const [errorsConfirmed, setErrorsConfirmed] = useState(false);
 
   const loadPlan = useCallback(async () => {
     try {
@@ -88,13 +123,17 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
   const rows = useMemo(() => (plan ? inWeek(plan, week.from, week.to) : []).map(r => {
     const post = byId.get(r.id) ?? null;
     const labelsProblem = post ? checkLabels(post.labels ?? []) : null;
-    return { row: r, post, labelsProblem, state: weekState(post, now), reason: weekRefusal(r, post, now, labelsProblem) };
-  }), [plan, week.from, week.to, byId, now]);
+    const review = post ? reviewOf(post, posts, planTime(r), now) : null;
+    return { row: r, post, labelsProblem, review, state: weekState(post, now), reason: weekRefusal(r, post, now, labelsProblem) };
+  }), [plan, week.from, week.to, byId, posts, now]);
   // By default every row that can be approved is ticked; the editor's own choice wins once made
   const isChecked = (key: string, can: boolean) => can && (checked ? checked.has(key) : true);
   const chosen = rows.filter(x => isChecked(rowKey(x.row), x.reason === null));
+  const withErrors = chosen.filter(x => (x.review?.fel ?? 0) > 0);
 
-  const go = (days: number) => { setStart(shiftDay(week.from, days)); setChecked(null); setResults(null); setConfirming(false); };
+  const go = (days: number) => {
+    setStart(shiftDay(week.from, days)); setChecked(null); setResults(null); setConfirming(false); setErrorsConfirmed(false);
+  };
   const toggle = (key: string) => setChecked(() => {
     const next = new Set(rows.filter(x => isChecked(rowKey(x.row), x.reason === null)).map(x => rowKey(x.row)));
     if (next.has(key)) next.delete(key); else next.add(key);
@@ -121,6 +160,16 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
         const at = new Date();
         const why = weekRefusal(fresh, post, at, post ? checkLabels(post.labels ?? []) : null);
         if (why || !post) { res.text = why ?? "Artikeln finns inte."; continue; }
+        // The review again, on the article as Firestore has it now: errors need the editor's confirmation
+        const d = snap.data()!;
+        const review = reviewOf({
+          ...post, summary: d.summary ?? "", body: d.body ?? "", titleEnText: d.title_en ?? "", summaryEn: d.summary_en ?? "",
+          bodyEnText: d.body_en ?? "", seoTitle: d.seo_title ?? "", seoTitleEn: d.seo_title_en ?? "",
+        }, posts, planTime(fresh), at);
+        if (review.fel && !errorsConfirmed) {
+          res.text = `Granskningen hittade ${review.fel} fel; läs dem och bekräfta godkännandet (eller rätta artikeln först).`;
+          continue;
+        }
         res.titel = post.title || fresh.titel;
         await save(post.id, schedule(planTime(fresh), at, uid));
         res.ok = true;
@@ -144,6 +193,7 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
     }
     setResults(out);
     setConfirming(false);
+    setErrorsConfirmed(false);
     setChecked(null);
     await Promise.all([reload(), loadPlan()]);
     setBusy(false);
@@ -167,6 +217,7 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
         </div>
       </div>
 
+      {plan && <QueueStatus plan={plan} posts={posts} now={now} />}
       {error && <div role="alert" className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-800">{error}</div>}
       {!plan && !error && <p className="text-sm text-slate-500">Hämtar …</p>}
       {plan && rows.length === 0 && (
@@ -178,7 +229,7 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
 
       {rows.length > 0 && (
         <ul className="divide-y divide-slate-100">
-          {rows.map(({ row, post, labelsProblem, state, reason }) => {
+          {rows.map(({ row, post, labelsProblem, review, state, reason }) => {
             const key = rowKey(row);
             const n = composedLength(row.bluesky);
             const english = !!(post?.titleEn && post?.bodyEn);
@@ -202,7 +253,9 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
                       ? <span className={n > BLUESKY_LIMIT ? warn : good}>Bluesky {n}/{BLUESKY_LIMIT}</span>
                       : <span className={plain}>inget Bluesky-inlägg</span>}
                     {post?.slug && requested.has(post.slug) && <span className={good}>Bluesky-förfrågan skickad</span>}
+                    <ReviewChip review={review} />
                   </div>
+                  <ReviewList review={review} />
                   {post?.slug && <div className="text-xs text-slate-400 break-all" translate="no">/artiklar/{post.slug}</div>}
                   {reason && <p className="text-xs text-slate-600">{reason}</p>}
                   {row.bluesky && (
@@ -221,7 +274,7 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
       )}
 
       {rows.length > 0 && !confirming && (
-        <button onClick={() => { setConfirming(true); setResults(null); }} disabled={chosen.length === 0 || busy}
+        <button onClick={() => { setConfirming(true); setResults(null); setErrorsConfirmed(false); }} disabled={chosen.length === 0 || busy}
           className="w-full sm:w-auto px-4 py-3 rounded-xl text-white font-semibold disabled:opacity-40" style={{ background: RUST }}>
           Godkänn veckans publiceringar{chosen.length ? ` (${chosen.length})` : ""}
         </button>
@@ -239,10 +292,12 @@ export default function RedaktionWeek({ posts, now, uid, save, reload }: {
             ))}
           </ul>
           <p className="text-xs text-slate-600">
-            Texterna ändras inte. Artiklarna går ut på webbplatsen inom ungefär en halvtimme efter sin tid.
+            Texterna ändras inte. Artiklarna går ut på webbplatsen inom ungefär en halvtimme efter sin tid. Sidhänvisningarna
+            till Fornvännen och Futhark prövas bara i den lokala Admin, som har tidskrifterna.
           </p>
+          <ErrorConfirmation titles={withErrors.map(x => x.post?.title || x.row.titel)} confirmed={errorsConfirmed} onChange={setErrorsConfirmed} />
           <div className="grid grid-cols-2 sm:flex gap-2">
-            <button onClick={approve} disabled={busy} className="px-4 py-2.5 rounded-xl text-white font-semibold disabled:opacity-40" style={{ background: RUST }}>
+            <button onClick={approve} disabled={busy || (withErrors.length > 0 && !errorsConfirmed)} className="px-4 py-2.5 rounded-xl text-white font-semibold disabled:opacity-40" style={{ background: RUST }}>
               {busy ? "Schemalägger …" : "Ja, schemalägg"}
             </button>
             <button onClick={() => setConfirming(false)} disabled={busy} className="px-4 py-2.5 rounded-xl border border-slate-300 bg-white font-semibold disabled:opacity-40">

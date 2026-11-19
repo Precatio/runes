@@ -3012,6 +3012,56 @@ veckans artikel ligger då först. Kan räkningen inte läsas behålls föregåe
 en gång om dygnet om ordningen "mest lästa" har ändrats och publicerar då webbplatsen om; annars inte. Antalen visas inte
 för läsarna, bara ordningen.
 
+### 15h. Granskning före publicering
+
+Varje artikel granskas automatiskt innan den godkänns för publicering (src/article_lint.py; i webbens /redaktion samma
+regler i web/src/lib/articleLint.ts, utom källkontrollen). Granskningen gäller rubrik, ingress, söktitel och brödtext på
+svenska och engelska och ger fynd av två slag: **FEL**, som måste läsas och bekräftas innan artikeln kan schemaläggas
+(Admin → Veckans publiceringar och /redaktion → Veckan; i API:t `confirm_errors` i POST /api/admin/blog/week/approve),
+och **VARNING**, som bara visas.
+
+| Kontroll | Nivå |
+|---|---|
+| Platshållare som står kvar (`{COVER}`, `{FIG_1}` …) | FEL |
+| Ordet "AI" (husregeln: namnge modellen) | FEL |
+| han/hans/honom (he/his/him) inom tolv ord efter ristare/carver i samma mening; "hans eller hennes" räknas inte | FEL; namngiven ristare ("Balle var en flitig ristare … han") och pronomen först i nästa mening VARNING |
+| "visar", "bevisar", "beror på", "orsakade" (shows, proves, due to, caused) i en mening med statistik (procent, p-värde, samband, slumpen …); inte efter "inte/kan/kunde", "kartan/figuren …" eller "to show" | VARNING |
+| Rutan "Det viktigaste i korthet" saknas i en artikel på minst 3 000 tecken (inte serien De gamla landen, Personligt eller rapporter) | FEL |
+| Tal i rutan som inte står i resten av texten (ett runt tal som "över 1 300" godtas om texten har ett tal inom en tiondel) | FEL |
+| seo_title eller seo_title_en över 52 tecken | FEL; ingen söktitel och rubriken över 52 tecken VARNING |
+| Länk till en artikel eller rapport som inte finns, är ett utkast eller publiceras efter den här artikeln | FEL |
+| Fornvännen- och Futhark-hänvisningar: årgång och år som inte går ihop (Fornvännen årgång = år − 1905; Futhark enligt tidskriftens register, ±1 år) | FEL |
+| Citat före en hänvisning: tryckt sida där citatet står ≠ angiven sida | FEL |
+| Litteraturlistans sidor utanför artikelns tryckta sidor | FEL |
+| Citat eller artikel som inte går att hitta i tidskriftstexten (OCR i två spalter, citat i översättning, årgång som saknas) | VARNING |
+
+**Källkontrollen.** Tidskrifterna finns lokalt som text sida för sida (downloads/tidskrifter/sok.sqlite: Fornvännen
+1906–2023, Futhark 1–15). Citatet jämförs bokstav för bokstav (utdata/norge/citat.py `letters`: gemener, utan diakritiska
+tecken och mellanrum, så att avstavning och radbrytning i OCR inte stör), också över en sidbrytning. Den tryckta sidan
+läses ur sidhuvudet: det vanligaste avståndet mellan sidnumret först eller sist på sidhuvudets eller sidfotens rader och
+pdf-sidan, följt sida för sida så att en pdf som hoppar över sidor (en recensionsavdelning) behåller rätt nummer. Bara när
+sidhuvudena har för få nummer (gammal OCR) används nyckelns startsida (Fornvännen `ÅÅÅÅ_START` med försättsblad, Futhark
+`futhark_VOL_START`); nyckeln ensam räcker inte, eftersom några nycklar har en annan startsida än den tryckta (Brate 1907,
+nyckel 1907_020, är tryckt i två delar, s. 20–34 och 77–95). Länkar till pub.raa.se/dokumentation/<id> och DiVA (diva2:<id>) pekar ut
+exakt vilken text som avses. Försättsblad och tidskriftsomslag räknas inte. Saknas databasen (som i GitHub Actions) ger
+källkontrollen en enda varning.
+
+**Prövning.** De två genomförandena prövas mot samma fall (tests/fixtures/article_lint_cases.json) i
+tests/test_article_lint.py och web/scripts/article_lint.test.mjs; på de 25 schemalagda utkasten 2026-11-19 gav de samma
+fynd. Källkontrollen prövas mot kända sidor (Brate 1907 s. 90, Barnes 2013 s. 22, Ekholm 1950 s. 137–147).
+
+**Kön.** Admin och /redaktion visar hur länge kön av populärartiklar räcker: den sista dagen med en schemalagd artikel
+eller en planerad rad i publiceringsschemat vars utkast finns (rapporter, spår F och etiketten Rapport, räknas inte). Under
+tre veckor kvar visas ett larm.
+
+**Gränssnittets texter.** web/scripts/ui_texts.mjs läser källkoden med TypeScript-kompilatorn utan att appen körs och
+(1) slår upp de svenska texter som sidöversättaren ser precis som de står (element med bara text, en ensam sträng,
+attributen title, placeholder, aria-label och alt; inte translate="no", inte /redaktion) i en.json på samma sätt som
+src/i18n/core.ts; texter som saknades 2026-11-19 står i web/scripts/ui_texts_baseline.json och bara nya fäller testet;
+text blandad med uttryck lämnas åt scripts/i18n_crawl.mjs. (2) letar efter han/hans/honom om ristare i alla strängar i
+web/src och efter he/his/him om carver i en.json, där den svenska mallen saknar pronomen. Båda körs i CI
+(.github/workflows/ci.yml).
+
 ## 16. Jämförbarhet med tidigare forskning
 
 Laila Kitzler Åhfeldts metod (Arkeologiska forskningslaboratoriet, Stockholms universitet; Kitzler Åhfeldt

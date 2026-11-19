@@ -1,0 +1,404 @@
+{
+ "_om": "Gemensamma fall för artikelgranskningen: src/article_lint.py (tests/test_article_lint.py) och web/src/lib/articleLint.ts (web/scripts/article_lint.test.mjs) ska ge samma fynd (nivå, kod, språk). Källkontrollen ingår inte; den finns bara i Python.",
+ "fall": [
+  {
+   "name": "ren kort text",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Stenen står vid vägen."
+   },
+   "expect": []
+  },
+  {
+   "name": "platshållare och AI",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Bilden {COVER} visar stenen. Texten lästes av AI-läsaren.",
+    "summary": "Om {FIG_1}."
+   },
+   "expect": [
+    [
+     "FEL",
+     "ai",
+     "sv"
+    ],
+    [
+     "FEL",
+     "platshallare",
+     "sv"
+    ],
+    [
+     "FEL",
+     "platshallare",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "AI i länkadress och i RAID räknas inte",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Se [källan](https://example.org/AI/x). Ordet RAID och AIDS är inga problem, men en AI-läsare är det."
+   },
+   "expect": [
+    [
+     "FEL",
+     "ai",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "han om ristaren",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Ristaren skrev sitt namn, och han högg det sist. Den ristaren var flitig.\nHan arbetade länge."
+   },
+   "expect": [
+    [
+     "FEL",
+     "pronomen",
+     "sv"
+    ],
+    [
+     "VARNING",
+     "pronomen",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "namngiven ristare",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Balle var en flitig ristare som han själv skrev."
+   },
+   "expect": [
+    [
+     "VARNING",
+     "pronomen",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "ristarna i plural och ristarens utan pronomen",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Ristarna högg. Ristarens namn står sist, och de reste stenen."
+   },
+   "expect": []
+  },
+  {
+   "name": "engelska his om carver",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Stenen.",
+    "body_en": "The carver signed his name on 12 stones."
+   },
+   "expect": [
+    [
+     "FEL",
+     "pronomen",
+     "en"
+    ]
+   ]
+  },
+  {
+   "name": "visar med statistik",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Testet visar att 31 procent står vid leran. Kartan visar 31 procent. Det säger inte vilket som orsakade vilket i 31 procent."
+   },
+   "expect": [
+    [
+     "VARNING",
+     "orsak",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "shows with statistics",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Stenen.",
+    "body_en": "This proves that 31 per cent stood there. Ten stones are too few to show 31 per cent."
+   },
+   "expect": [
+    [
+     "VARNING",
+     "orsak",
+     "en"
+    ]
+   ]
+  },
+  {
+   "name": "orsak utan statistik",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Kartan visar vägen. Det beror på vädret."
+   },
+   "expect": []
+  },
+  {
+   "name": "lång text utan ruta",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. ",
+    "body_en": "The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. "
+   },
+   "expect": [
+    [
+     "FEL",
+     "korthet_saknas",
+     "en"
+    ],
+    [
+     "FEL",
+     "korthet_saknas",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "De gamla landen behöver ingen ruta",
+   "post": {
+    "slug": "den-har",
+    "title": "De gamla landen: Möre",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. "
+   },
+   "expect": []
+  },
+  {
+   "name": "ruta med tal ur brödtexten",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Av stenarna står 31 procent vid leran, mot 12 i resten; 1 352 borgar.\n\n:::box Det viktigaste i korthet\n- 31 procent av stenarna, mot 12 i resten.\n:::\n",
+    "body_en": "The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. Of the stones 31 per cent stand at the clay, against 12 elsewhere.\n\n:::box The essentials in brief\n- 31 per cent of the stones, against 12 elsewhere.\n:::\n"
+   },
+   "expect": []
+  },
+  {
+   "name": "ruta med nytt tal",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Av stenarna står 31 procent vid leran.\n\n:::box Det viktigaste i korthet\n- 31 procent av stenarna, mot 12 i resten.\n:::\n",
+    "body_en": "The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. The runestones stood near the clay. Of the stones 31 per cent stand at the clay, against 12 elsewhere.\n\n:::box The essentials in brief\n- 31 per cent of the stones, against 12 elsewhere.\n:::\n"
+   },
+   "expect": [
+    [
+     "FEL",
+     "korthet_tal",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "avrundat tal i rutan",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Runstenarna stod nära leran. Sverige har 1 352 fornborgar och 31 procent mot 12.\n\n:::box Det viktigaste i korthet\n- över 1 300 borgar, 31 procent av stenarna, mot 12 i resten.\n:::\n"
+   },
+   "expect": []
+  },
+  {
+   "name": "söktitel för lång",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "seo_title": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "seo_title_en": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    "body": "Text."
+   },
+   "expect": [
+    [
+     "FEL",
+     "seo_titel",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "lång rubrik utan söktitel",
+   "post": {
+    "slug": "den-har",
+    "title": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "Text."
+   },
+   "expect": [
+    [
+     "VARNING",
+     "seo_titel",
+     "sv"
+    ]
+   ]
+  },
+  {
+   "name": "länkar",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "[a](/artiklar/publicerad) [b](/artiklar/utkast/) [c](https://vitkirunor.se/artiklar/okand) [d](/artiklar/senare) [e](/en/artiklar/tidigare) [f](/forskningsrapporter/begrepp) [g](/artiklar/den-har)"
+   },
+   "expect": [
+    [
+     "FEL",
+     "lank_okand",
+     "sv"
+    ],
+    [
+     "FEL",
+     "lank_opublicerad",
+     "sv"
+    ],
+    [
+     "FEL",
+     "lank_opublicerad",
+     "sv"
+    ],
+    [
+     "VARNING",
+     "lank_okand",
+     "sv"
+    ]
+   ],
+   "posts": [
+    {
+     "slug": "publicerad",
+     "published": true,
+     "publishedAt": "2026-10-01T06:00:00+00:00",
+     "hasEnglish": true
+    },
+    {
+     "slug": "utkast",
+     "published": false,
+     "publishedAt": null,
+     "hasEnglish": true
+    },
+    {
+     "slug": "senare",
+     "published": true,
+     "publishedAt": "2026-12-20T06:00:00+00:00",
+     "hasEnglish": true
+    },
+    {
+     "slug": "tidigare",
+     "published": true,
+     "publishedAt": "2026-12-01T06:00:00+00:00",
+     "hasEnglish": false
+    }
+   ],
+   "publish_at": "2026-12-10T06:00:00+00:00",
+   "now": "2026-11-19T12:00:00+00:00"
+  },
+  {
+   "name": "länk till artikel som går ut före",
+   "post": {
+    "slug": "den-har",
+    "title": "Kort rubrik",
+    "labels": [
+     "Forskning"
+    ],
+    "body": "[d](/artiklar/senare)"
+   },
+   "expect": [],
+   "posts": [
+    {
+     "slug": "publicerad",
+     "published": true,
+     "publishedAt": "2026-10-01T06:00:00+00:00",
+     "hasEnglish": true
+    },
+    {
+     "slug": "utkast",
+     "published": false,
+     "publishedAt": null,
+     "hasEnglish": true
+    },
+    {
+     "slug": "senare",
+     "published": true,
+     "publishedAt": "2026-12-20T06:00:00+00:00",
+     "hasEnglish": true
+    },
+    {
+     "slug": "tidigare",
+     "published": true,
+     "publishedAt": "2026-12-01T06:00:00+00:00",
+     "hasEnglish": false
+    }
+   ],
+   "publish_at": "2026-12-24T06:00:00+00:00",
+   "now": "2026-11-19T12:00:00+00:00"
+  }
+ ]
+}

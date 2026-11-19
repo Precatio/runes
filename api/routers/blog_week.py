@@ -90,7 +90,59 @@ def refusal(entry: dict, post: dict | None, now: dt.datetime) -> str | None:
     return None
 
 
-def status(entry: dict, post: dict | None, now: dt.datetime) -> dict:
+def review(entry: dict, post: dict | None, posts: list[dict] | None, now: dt.datetime) -> dict | None:
+    """The review before approval (src/article_lint.py): placeholders, "AI", pronouns for carvers, causal words by
+    statistics, the korthet box, the search titles, links and the journal pages. None when there is no article; a
+    review that fails is a warning, never a stop."""
+    if not post:
+        return None
+    from src import article_lint
+    try:
+        when = publish_time(entry["datum"], entry.get("tid") or "07:00")
+    except (KeyError, ValueError):
+        when = None
+    try:
+        return article_lint.summary(article_lint.lint(post, posts, publish_at=when, now=now))
+    except Exception as e:  # noqa: BLE001 - the review must never stop the week view or the approval
+        return article_lint.summary([article_lint.finding(article_lint.VARNING, "granskning", "sv",
+                                                          f"Granskningen kunde inte köras: {e}")])
+
+
+# How far ahead the queue must reach before the editors are warned (PUBLICERINGSPLAN.md: drafts stay weeks ahead)
+QUEUE_ALARM_DAYS = 21
+
+
+def queue_end(schema: dict, posts: dict[str, dict], today: dt.date) -> dict:
+    """How long the queue of popular articles lasts: the last day with an article that is scheduled, or planned in
+    publiceringsschema.json with a draft that exists. Reports (track F, the label Rapport) do not count. alarm when
+    fewer than three weeks remain."""
+    def report(p: dict | None) -> bool:
+        return bool(p and "Rapport" in (p.get("labels") or []))
+    days = []
+    for p in posts.values():
+        t = blog._ts(p.get("publishedAt")) if p.get("published") else None
+        if t and not report(p):
+            d = t.astimezone(TZ).date()
+            if d >= today:
+                days.append(d)
+    for e in schema.get("poster", []):
+        p = posts.get(e.get("id"))
+        try:
+            d = dt.date.fromisoformat(str(e.get("datum")))
+        except ValueError:
+            continue
+        if p and e.get("spar") != "F" and not report(p) and d >= today:
+            t = blog._ts(p.get("publishedAt")) if p.get("published") else None
+            if not t or t.astimezone(TZ).date() >= today:
+                days.append(d)
+    if not days:
+        return {"until": None, "days_left": 0, "alarm": True}
+    until = max(days)
+    left = (until - today).days
+    return {"until": until.isoformat(), "days_left": left, "alarm": left < QUEUE_ALARM_DAYS}
+
+
+def status(entry: dict, post: dict | None, now: dt.datetime, posts: list[dict] | None = None) -> dict:
     """What the week's card shows for one entry."""
     published = bool(post and post.get("published"))
     t = blog._ts(post.get("publishedAt")) if post else None
@@ -109,7 +161,7 @@ def status(entry: dict, post: dict | None, now: dt.datetime) -> dict:
             "labels": (post or {}).get("labels") or [],
             "labels_problem": blog_labels.check((post or {}).get("labels") or []) if post else None,
             "bluesky_length": composed_length(entry.get("bluesky")), "bluesky_limit": LIMIT,
-            "can_approve": reason is None, "reason": reason}
+            "can_approve": reason is None, "reason": reason, "granskning": review(entry, post, posts, now)}
 
 
 def _parse_from(value: str | None) -> dt.date | None:
@@ -128,19 +180,24 @@ def _today() -> dt.date:
 @router.get("/admin/blog/week")
 def week(start: str | None = Query(None, alias="from"), _: dict = Depends(require_admin)):
     """Veckans planerade publiceringar (måndag–söndag; utan from den kommande veckan) med läget för var och en:
-    finns utkastet, är det redan publicerat eller schemalagt, adress, engelsk rubrik, etiketter och Bluesky-textens
-    längd."""
+    finns utkastet, är det redan publicerat eller schemalagt, adress, engelsk rubrik, etiketter, Bluesky-textens
+    längd och granskningen (granskning: antal fel och varningar och fynden). queue: hur länge kön räcker."""
     monday, sunday = week_of(_parse_from(start), _today())
-    rows = in_week(load_schema(), monday, sunday)
-    posts = {p["id"]: p for p in blog._all()} if rows else {}
+    schema = load_schema()
+    rows = in_week(schema, monday, sunday)
+    every = blog._all()
+    posts = {p["id"]: p for p in every}
     now = dt.datetime.now(dt.timezone.utc)
     return {"from": monday.isoformat(), "to": sunday.isoformat(), "week": monday.isocalendar().week,
-            "entries": [status(e, posts.get(e.get("id")), now) for e in rows]}
+            "entries": [status(e, posts.get(e.get("id")), now, every) for e in rows],
+            "queue": queue_end(schema, posts, _today())}
 
 
 class ApproveRequest(BaseModel):
     start: str = Field(..., alias="from", max_length=10)
     ids: list[str] = Field(default_factory=list, max_length=20)
+    # The articles whose review found errors (FEL) and that the editor approves anyway, after reading them
+    confirm_errors: list[str] = Field(default_factory=list, max_length=20)
 
 
 def _fresh(post_id: str) -> dict | None:
@@ -153,13 +210,16 @@ def _fresh(post_id: str) -> dict | None:
 def approve(req: ApproveRequest, admin: dict = Depends(require_admin)):
     """Godkänner veckans valda artiklar: var och en schemaläggs till sin tid i planen (samma väg som Schemalägg, med
     säkerhetskopia), Bluesky-inlägget läggs i kön med publiceringsdagen som datum (om adressen inte redan står där) och
-    godkand skrivs i planen. Redan publicerade eller schemalagda artiklar och sådana vars tid har passerat avvisas."""
+    godkand skrivs i planen. Redan publicerade eller schemalagda artiklar och sådana vars tid har passerat avvisas.
+    Varje artikel granskas först (src/article_lint.py) och fynden följer med i svaret; en artikel med FEL schemaläggs
+    bara om dess id står i confirm_errors (redaktören har läst felen och bekräftat)."""
     monday, sunday = week_of(_parse_from(req.start), _today())
     schema = load_schema()
     rows = {e["id"]: e for e in in_week(schema, monday, sunday)}
     blog._forget()
     now = dt.datetime.now(dt.timezone.utc)
     results, ko, ko_changed, scheduled = [], None, False, 0
+    every: list[dict] | None = None
     for post_id in dict.fromkeys(req.ids):
         entry = rows.get(post_id)
         if not entry:
@@ -172,6 +232,14 @@ def approve(req: ApproveRequest, admin: dict = Depends(require_admin)):
             continue
         if (why := refusal(entry, post, now)):
             results.append({"id": post_id, "ok": False, "reason": why, "titel": entry.get("titel")})
+            continue
+        if every is None:
+            every = blog._all()
+        granskning = review(entry, post, every, now)
+        if granskning and granskning["fel"] and post_id not in req.confirm_errors:
+            results.append({"id": post_id, "ok": False, "titel": entry.get("titel"), "granskning": granskning,
+                            "reason": f"Granskningen hittade {granskning['fel']} fel; läs dem och bekräfta godkännandet "
+                                      "(eller rätta artikeln först)."})
             continue
         when = publish_time(entry["datum"], entry.get("tid") or "07:00")
         try:
@@ -186,7 +254,7 @@ def approve(req: ApproveRequest, admin: dict = Depends(require_admin)):
             continue
         scheduled += 1
         out = {"id": post_id, "ok": True, "titel": entry.get("titel"), "slug": data["slug"],
-               "publishedAt": data["publishedAt"].isoformat(), "bluesky": None}
+               "publishedAt": data["publishedAt"].isoformat(), "bluesky": None, "granskning": granskning}
         if entry.get("bluesky"):
             if not post.get("body_en"):
                 out["bluesky"] = "inget inlägg: artikeln har ingen engelsk utgåva"
