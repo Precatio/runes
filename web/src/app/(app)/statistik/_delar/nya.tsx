@@ -12,9 +12,9 @@ import { SEGMENT } from "@/lib/tone";
 
 type State = "bekräftat" | "obekräftat" | "ändrat";
 const STATE: Record<State, { label: string; help: string; pill: string; dot: string; short: string }> = {
-  "bekräftat": { label: "Nytt · bekräftat", help: "Nytt och bekräftat: håller i båda halvorna av korpusen och klarar den gemensamma justeringen över alla mönster.",
+  "bekräftat": { label: "Nytt · bekräftat", help: "Nytt och bekräftat: håller i båda halvorna av korpusen och klarar den gemensamma justeringen över alla mönster; ett mönster i landskapet håller också när stenar som står tillsammans räknas som en enhet.",
     pill: "border-[#b7410e]/40 bg-[#b7410e] text-white", dot: "bg-[#b7410e]", short: "Bekräftade" },
-  "obekräftat": { label: "Nytt · obekräftat", help: "Nytt men inte bekräftat: håller inte i båda halvorna, klarar inte den gemensamma justeringen, eller går inte att pröva i halvor.",
+  "obekräftat": { label: "Nytt · obekräftat", help: "Nytt men inte bekräftat: håller inte i båda halvorna, klarar inte den gemensamma justeringen, går inte att pröva i halvor, eller (i landskapet) håller inte med grupperna som enheter.",
     pill: "border-dashed border-[#b7410e]/40 bg-white text-[#9a350b]", dot: "bg-[#b7410e]/40", short: "Obekräftade" },
   "ändrat": { label: "Ändrad status", help: "Mönstret fanns redan men har bytt status de senaste 30 dagarna.",
     pill: "border-slate-300 bg-slate-50 text-slate-700", dot: "bg-slate-400", short: "Ändrade" },
@@ -128,7 +128,8 @@ export function NewPatterns({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) =
           <h3 className="text-sm font-bold uppercase tracking-wider text-[#7c2d0a]">Nya mönster i datan</h3>
           <p className="text-xs text-[#7c2d0a]/80 mt-1 max-w-3xl">
             Mönster som dykt upp eller bytt status de senaste 30 dagarna. Ett nytt mönster är <strong>bekräftat</strong> när det håller i båda
-            halvorna av korpusen och klarar den gemensamma justeringen över alla mönster.
+            halvorna av korpusen och klarar den gemensamma justeringen över alla mönster – och, för ett mönster i landskapet, också när
+            stenar som står tillsammans räknas som en enhet.
           </p>
         </div>
         <button type="button" onClick={() => setCollapsed(!collapsed)} aria-expanded={!collapsed}

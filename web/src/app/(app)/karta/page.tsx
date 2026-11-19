@@ -46,7 +46,7 @@ interface Trait { key: string; label: string; definition: string; values: Record
 // The filters, as they appear in the address bar (so a map view can be shared)
 const FILTER_KEYS = ["q", "region", "province", "period", "style", "carver", "category", "material", "status", "cross", "trait", "value",
   "overview", "runestones", "measured", "color", "view", "pattern", "split", "hex", "places", "near", "km", "nearonly",
-  "mode", "year", "borders", "npattern", "grouping"] as const;
+  "mode", "year", "borders", "npattern", "grouping", "grupper"] as const;
 type FilterKey = typeof FILTER_KEYS[number];
 type Filters = Record<FilterKey, string>;
 const EMPTY: Filters = Object.fromEntries(FILTER_KEYS.map(k => [k, ""])) as Filters;

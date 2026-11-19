@@ -30,6 +30,12 @@ interface PatternDef { key: string; label: string; group: string; help: string }
 interface PlaceTest {
   km: number; n_near: number; n_far: number; k_near: number; k_far: number; share_near: number; share_far: number;
   or_crude: number; p_crude: number; or_mh: number | null; p_mh: number | null; strata: number;
+  // Stones in groups as units (src/spatial_groups.py); missing when the user has switched the protection off
+  groups?: {
+    n_groups: number; n_groups_near: number; n_groups_far: number; link_km: number; design_effect: number | null;
+    effective_n: number | null; p_stone: number | null; p_group: number | null; df: number | null; ci_group: number[] | null;
+    verdict: "båda" | "bara stenar" | "ingen" | "för få grupper" | "saknas";
+  };
 }
 interface HotCluster {
   center: string; lat: number; lon: number; radius_km: number; n: number; cases: number; rate_in: number; rate_out: number;
@@ -100,6 +106,8 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
   const hexKm = Number(f.hex) || 20;
   const nearKind = mode === "plats" ? f.near : "";
   const nearKm = Number(f.km) || 2;
+  // Stones in groups count as one unit in the place test unless the user switches it off (?grupper=0)
+  const groupsOn = f.grupper !== "0";
   const splitYear = splitOf(Number(f.year) || 1050).year;
   const nearDef = data?.placeKinds.find(k => k.key === nearKind);
   const hp = hot?.available ? hot.patterns.find(x => x.key === patternKey) : undefined;
@@ -117,11 +125,11 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
   }, [shownKinds, layers, onError]);
   const overlays = shownKinds.map(k => layers[k]).filter(Boolean);
 
-  const testKey = nearKind && patternKey ? `${patternKey}|${nearKind}|${nearKm}` : "";
+  const testKey = nearKind && patternKey ? `${patternKey}|${nearKind}|${nearKm}|${groupsOn ? 1 : 0}` : "";
   useEffect(() => {
     if (!testKey) return;
-    const [pt, kind, km] = testKey.split("|");
-    fetch(`${API_URL}/api/research/place-test?pattern=${encodeURIComponent(pt)}&kind=${encodeURIComponent(kind)}&km=${km}`)
+    const [pt, kind, km, grp] = testKey.split("|");
+    fetch(`${API_URL}/api/research/place-test?pattern=${encodeURIComponent(pt)}&kind=${encodeURIComponent(kind)}&km=${km}&groups=${grp === "1"}`)
       .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
       .then(d => setPlaceTest({ key: testKey, result: d.result }))
       .catch(() => setPlaceTest({ key: testKey, result: null }));
@@ -271,6 +279,17 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
                       <input type="checkbox" checked={f.nearonly === "1"} onChange={e => set("nearonly", e.target.checked ? "1" : "")} />
                       Visa bara stenarna nära på kartan
                     </label>
+                    <label className="flex items-start gap-1.5 text-xs text-slate-700">
+                      <input type="checkbox" className="mt-0.5" checked={groupsOn} onChange={e => set("grupper", e.target.checked ? "" : "0")} />
+                      <span>
+                        <span className="font-semibold">Grupper som enhet</span>
+                        <span className="block text-[11px] text-slate-500">
+                          Stenar som står tillsammans räknas som en enhet när provet bedömer hur säker skillnaden är: de
+                          delar samma plats och ofta samma familj, och är inte oberoende. Stäng av bara för att se hur
+                          mycket grupperna betyder.
+                        </span>
+                      </span>
+                    </label>
                   </>
                 )}
               </div>
@@ -382,6 +401,37 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
     </div>
   );
 
+  // The place test with stones in groups as units: the number of groups next to the number of stones, both p-values and,
+  // in plain words, whether the answer changes when the groups count as units (src/spatial_groups.py)
+  function groupLines(t: PlaceTest, g: NonNullable<PlaceTest["groups"]>) {
+    const verdict = {
+      "båda": "Skillnaden håller också när stenarna i samma grupp räknas som en enhet.",
+      "bara stenar": "Skillnaden håller om varje sten räknas för sig, men inte när stenarna i samma grupp räknas som en enhet. Den kan bero på några få platser med många stenar – räkna den inte som ett resultat.",
+      "för få grupper": `Stenarna nära står i för få grupper (${g.n_groups_near}) för att pröva skillnaden med grupperna som enheter; den kan bero på en enda plats.`,
+      "ingen": "Ingen säker skillnad, varken sten för sten eller med grupperna som enheter.",
+      "saknas": "Inget landskap har stenar både nära och längre bort.",
+    }[g.verdict];
+    return (
+      <>
+        <p>{`Stenarna står i ${g.n_groups_near} grupper nära och ${g.n_groups_far} övriga grupper.`}</p>
+        <p>
+          {g.p_group != null
+            ? `Oddskvot ${n2(t.or_mh)} med landskapet konstant: p ${pText(g.p_group)} med grupperna som enheter (p ${pText(t.p_mh)} om varje sten räknas för sig).`
+            : `Oddskvot ${n2(t.or_mh)} med landskapet konstant (p ${pText(t.p_mh)} om varje sten räknas för sig).`}
+        </p>
+        {g.design_effect != null && g.effective_n != null && g.design_effect > 1.005 && (
+          <p className="text-xs text-slate-600">
+            {`Stenarna i samma grupp liknar varandra, så de ${t.n_near + t.n_far} stenarna väger som ungefär ${Math.round(g.effective_n)} oberoende stenar (designeffekt ${n2(g.design_effect)}: osäkerheten är så många gånger större än om varje sten vore en egen iakttagelse).`}
+          </p>
+        )}
+        <p className={g.verdict === "bara stenar" || g.verdict === "för få grupper" ? "font-semibold text-[#9a350b]" : ""}>{verdict}</p>
+        <p className="text-xs text-slate-500">
+          {`En grupp är stenar inom ${kmText(g.link_km)} från varandra (två gånger radien, högst 2 km), i en kedja, eller stenar vars närmaste plats av sorten är densamma.`}
+        </p>
+      </>
+    );
+  }
+
   // The answer for exactly what the map shows, in words
   function result() {
     if (!patternDef || !periods) return null;
@@ -404,7 +454,16 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
       return (
         <div className="text-sm text-slate-700 space-y-1.5">
           <p>{`${pct(test.share_near)} av de ${test.n_near} stenarna inom ${kmText(test.km)} har mönstret, mot ${pct(test.share_far)} av ${test.n_far} övriga stenar.`}</p>
-          <p>{`Oddskvot ${n2(test.or_mh)} med landskapet konstant (p ${pText(test.p_mh)}).`}</p>
+          {groupsOn && test.groups ? groupLines(test, test.groups) : (
+            <>
+              <p>{`Oddskvot ${n2(test.or_mh)} med landskapet konstant (p ${pText(test.p_mh)}), varje sten räknad för sig.`}</p>
+              <p className="text-xs text-slate-500">
+                Skyddet är avstängt: varje sten räknas som en oberoende iakttagelse. Stenar som står i grupper vid samma
+                plats delar samma omgivning och ofta samma familj, så p blir för litet. Slå på ”Grupper som enhet” för
+                det försiktigare provet.
+              </p>
+            </>
+          )}
           <p className="text-xs text-slate-500">
             Ett utforskande prov: flyttade stenar räknas inte, men tiden hålls inte konstant och den som prövar många
             kombinationer hittar några skillnader av en slump. Pröva hellre under ”Alla samband med platserna runt stenarna” nedan, där alla

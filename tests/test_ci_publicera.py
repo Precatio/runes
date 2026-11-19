@@ -256,7 +256,7 @@ def test_merge_requests_uses_the_same_insertion_as_the_local_approval():
                               posts, handled, "2026-11-16T08:07:00+00:00")
     assert [i["slug"] for i in ko["items"]] == ["gammal", "ny", "v2", "v3"]       # before the day's other post
     assert ko["items"][1] == {"date": "2026-11-17", "slug": "ny", "en": True, "text": "New article.",
-                              "tags": ["runestones", "VikingAge"]}
+                              "tags": ["runestones", "VikingAge"], "artikel": True}  # an article's own post (2026-11-19)
     assert handled["ny"]["utfall"] == "i kön 2026-11-17 kl. 13"
     assert handled["gammal"]["utfall"] == "stod redan i kön"                      # posted counts as queued
     assert "engelsk" in handled["svensk"]["utfall"] and "300" in handled["lang"]["utfall"]

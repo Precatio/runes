@@ -2,6 +2,14 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "grupper-som-enhet",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "kategori": "metod",
+   "title": "Stenar som står tillsammans räknas som en enhet",
+   "text": "Runstenar står ofta i grupper vid samma gravfält eller gård, och stenarna i en grupp delar samma omgivning och ofta samma familj. När appen prövar om ett mönster är vanligare nära en sorts plats räknade den tidigare varje sten för sig, och då blev p-värdet för litet. Nu räknas stenar som står tillsammans som en enhet när provet bedömer hur säker skillnaden är. Kartans prov Platser visar antalet grupper bredvid antalet stenar och säger i klartext om svaret ändras när grupperna räknas som enheter. Skyddet är påslaget från början och kan stängas av för att se hur mycket grupperna betyder. Robusthetstrappan i Statistik har fått ett nytt steg, Grupper som enhet, för hot spots och samband med platser, och ett sådant mönster räknas som bekräftat bara om det håller också där. De fyra rumsliga mönster som finns i dag håller alla."
+  },
+  {
    "id": "3d-bakifran-varning",
    "date": "2026-11-19",
    "status": "nytt",

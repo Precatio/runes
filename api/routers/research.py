@@ -356,11 +356,13 @@ def stone_landscape(signum: str):
 
 
 @router.get("/place-test")
-def place_test(pattern: str, kind: str, km: float = 2.0, moved: bool = False):
+def place_test(pattern: str, kind: str, km: float = 2.0, moved: bool = False, groups: bool = True):
     """Utforskande prov: andelen stenar med mönstret nära en sorts plats mot övriga, okontrollerat och med landskapet
-    konstant (Mantel–Haenszel). Flyttade stenar räknas inte om inte moved=true."""
+    konstant (Mantel–Haenszel). Flyttade stenar räknas inte om inte moved=true. Med groups (påslaget från början)
+    räknas stenar som står i grupper och delar samma plats som en enhet när osäkerheten bedöms (src/spatial_groups.py);
+    groups=false stänger av skyddet."""
     from fastapi import HTTPException
-    from src import places
+    from src import places, spatial_groups
     data = _pattern_map()
     keys = [p["key"] for p in data["patterns"]]
     kinds = [k["key"] for k in data["place_kinds"]]
@@ -369,9 +371,11 @@ def place_test(pattern: str, kind: str, km: float = 2.0, moved: bool = False):
     if not 0.2 <= km <= 20:
         raise HTTPException(status_code=422, detail="Radien ska vara mellan 0,2 och 20 km.")
     i, j = keys.index(pattern), kinds.index(kind)
-    rows = [(st["p"], st["v"][i], st["d"][j]) for st in data["stones"]
-            if st["v"][i] is not None and (moved or not st["m"])]
-    return {"pattern": pattern, "kind": kind, "moved_included": moved, "result": places.near_test(rows, km)}
+    used = [st for st in data["stones"] if st["v"][i] is not None and (moved or not st["m"])]
+    rows = [(st["p"], st["v"][i], st["d"][j]) for st in used]
+    grp = spatial_groups.groups_latlon([st["lat"] for st in used], [st["lon"] for st in used], km, kind) if groups else None
+    return {"pattern": pattern, "kind": kind, "moved_included": moved, "groups": groups,
+            "result": places.near_test(rows, km, grp)}
 
 
 def _stone_size_path(mtime: float) -> str:

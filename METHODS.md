@@ -771,6 +771,13 @@ Stegen:
    vilka riktningen vänder. Steget görs inte för hot spots, eftersom varje kluster ligger inom ett landskap.
 8. **Utan flyttade stenar:** dels enligt Rundatas placering (1c), dels också enligt Runor 2020:s uppgift om
    ursprunglig plats (original = nej; punkt 7). Steget görs för mönster som hänger på platsen.
+9. **Grupper som enhet** (2026-11-19, 1å): för rumsliga mönster (hot spots, kultnamnen, genomsökningens samband och
+   brostenarna vid färdvägar) räknas det justerade steget om med stenar som står tillsammans som en enhet. Stenar inom
+   2 × radien, högst 2 km, eller med samma närmaste plats inom radien länkas; för hot spots gäller 1 km. Modellen räknas
+   med klusterrobusta standardfel per grupp, aldrig mindre än modellens egna, och t med grupperna på den mindre sidan
+   minus ett som frihetsgrader. Färre än fem grupper på någon sida: kan inte prövas. Genomsökningens samband och
+   brostenarna trappas från 2026-11-19 när de visas. De räknas som utvalda, så det största av trappans p och mönstrets
+   eget q används i den gemensamma justeringen.
 
 Ett steg håller när p < 0,05 och riktningen är densamma som i det justerade steget. Kortet visar ”Robust *k*/*n*”.
 
@@ -793,7 +800,8 @@ q tas med som q, vilket är försiktigt. Där jämförelsen själv valdes ur dat
 sig mest – vet trappans p inget om valet. Där används det största av trappans p och mönstrets eget, till exempel
 scanstatistikens p för ett kluster.
 
-Ett mönster är bekräftat när det håller i båda halvorna och *q_global* < 0,05. Mönster utan trappa bedöms på sin egen
+Ett mönster är bekräftat när det håller i båda halvorna och *q_global* < 0,05. Ett rumsligt mönster måste dessutom
+hålla i steget Grupper som enhet (1å). Mönster utan trappa bedöms på sin egen
 halvprovning. Ett mönster med status ”begränsning” (ett nollresultat) märks aldrig Nytt. Hot spots har från 2026-10-29
 nyckeln hotspot_<drag>_<landskap> i stället för klustrets mittsten, så att ett kluster vars mitt flyttar en sten
 förblir samma mönster (registret flyttades över). Mönsterregistret märker nu ett nytt mönster ”Nytt” först när det är bekräftat; innan dess märks det
@@ -966,6 +974,134 @@ anpassning.
 arv med omblandning inom den gamla regionen, grannar som delar ovanliga namn per avståndsband, namnens geografi per region
 (Fisher, BH, båda halvorna), namnskicket per region och släktmönstren ur länkmodellen (1r).
 
+
+### 1å. Rumslig statistik: grupper som enhet (2026-11-19)
+
+**Problemet.** Ett prov av formen ”står stenen nära X?” räknar varje sten för sig. Men runstenar står ofta i grupper,
+två, fem eller tio stenar vid samma gravfält eller gård (Familjens plats, 2026-10-29). Stenarna i en grupp delar
+samma X och liknar varandra i det mesta annat: samma familj, ofta samma ristare och samma tid. Femtio stenar är då inte
+femtio oberoende iakttagelser, och p-värdet blir för litet (pseudoreplikation). Den 18 november 2026 föll resultatet
+”runstenar står oftare vid stora gravhögar” när högarna i grupper räknades som en enhet. 47 stora högar var bara 21
+grupper med 34 stenar. Avsnittet i artikeln ströks och rapporten drogs tillbaka (`utdata/hogar/grupper.py`, plan
+6870d6cd).
+
+**Var appen prövar närhet.** Genomgången av `r/`, `src/`, `api/` och `web/src` gav följande:
+
+- Kartans prov **Platser** (`GET /api/research/place-test`, `src/places.near_test`, `PatternExplorer`): andelen stenar
+  med ett mönster inom en vald radie från en sorts plats mot övriga, med Mantel–Haenszel per landskap. Här är skyddet
+  nu påslaget från början.
+- **Robusthetstrappan** (1v): hot spots (inom klustret mot utanför) och kultnamnen (bön inom 2 km från ett teoforiskt
+  namn). Två sorters mönster trappas nu också när de visas. Det ena är genomsökningens samband (1e): inom 2 km för
+  ortnamn och kyrkor och inom 500 m för lämningar, mot längre bort. Det andra är brostenarna vid färdvägar (1c), när
+  mönstret visas som funnet. Alla dessa får det nya steget **Grupper som enhet**.
+- **Pröva en egen fråga** (1y) jämför drag, landskap, tid och bergart. Ingen av jämförelserna gäller närhet till en
+  plats, så skyddet behövs inte där. Kontrollen ”platsen som yta” (mgcv) är en justering för läget, inget närhetsprov.
+- Utanför skyddet, se nedan: stenar mot slumppunkter (1c, gravfälten), vattnet i `r/geography.R`, grannparen i
+  `r/names.R` och de låsta studierna i `utdata/`.
+
+**Grupperna.** Stenarna länkas med enkel länkning. Två stenar hör till samma grupp om en kedja av stenar går mellan
+dem och varje steg i kedjan är kortare än länkavståndet. Länkavståndet är 2 × provets radie, som i
+`utdata/hogar/grupper.py`. Två stenar inom radien från samma X ligger högst 2 × radien från varandra, så de hamnar
+alltid i samma grupp.
+
+Enkel länkning kedjar dock ihop täta trakter. Bland de 1 097 runstenarna på ursprunglig plats i Sverige ger 4 km
+(radien 2 km) en enda grupp på 424 stenar genom halva Uppland. Vid 6 km är den största gruppen 537 stenar och vid 10 km
+674. Länkavståndet stannar därför vid 2 km. Därutöver länkas stenar som har samma närmaste plats av sorten inom radien.
+Det som regeln 2 × radien ska garantera, att stenar som delar samma X räknas som en grupp, gäller då också för större
+radier. Den största gruppen blir 38–98 stenar i stället för 424–674. För radier upp till 1 km är regeln exakt 2 ×
+radien. Hot spots har ingen plats och ingen radie som passar, eftersom klustrets radie är 10–50 km. Där länkas stenar
+inom 1 km, den skala där stenarna i en grupp står vid samma gravfält eller gård. Koden finns i
+`src/spatial_groups.py` (`link`, `groups_latlon`). Avstånden räknas i SWEREF 99 TM.
+
+**Metoden.** Det finns tre sätt att låta gruppen vara enheten:
+
+1. *Hela grupper som enheter.* En grupp räknas som ”nära” om någon sten är nära och som ”med mönstret” om någon sten
+   har det. Det var test G1 i `grupper.py`.
+2. *Klusterrobust varians.* Samma oddskvot som sten för sten, men osäkerheten räknas med grupperna som de oberoende
+   enheterna.
+3. *Blandmodell* med gruppen som slumpeffekt.
+
+Vi valde det andra sättet, av tre skäl.
+
+- **Frågan står kvar.** Oddskvoten blir densamma som sten för sten. Det enda som ändras är hur säker den är, så en
+  skillnad mellan sten- och gruppnivå beror bara på att stenarna inte är oberoende.
+- **Det första sättet byter fråga.** Stora grupper får oftare både en sten nära och en sten med mönstret, så gruppens
+  storlek blir en ny störfaktor. `grupper.py` fick skikta efter storleksklass för att hantera det.
+- **Det tredje sättet höll inte i provet.** Blandmodellen skattar en annan sorts oddskvot (inom gruppen). Den kan inte
+  räknas i appen utan R och konvergerar dåligt när de flesta grupper är en enda sten. I det syntetiska fallet nedan
+  höll den dessutom (socknen = gruppen som slumpeffekt: p 0,012, oddskvot 15), medan den klusterrobusta variansen
+  inte gjorde det (p 0,063). Den hade alltså inte skyddat.
+
+**I appen (Python, `cluster_cmh`).** CMH-provets täljare är en summa över stenarna,
+*U* = Σ (*x* − *x̄*)(*y* − *ȳ*) inom varje landskap. Bidragen summeras per grupp, och variansen skattas som
+*G*/(*G* − 1) · Σ_g (Σ_{i∈g} *u_i*)². Designeffekten DE är kvoten mellan den variansen och samma skattning med varje sten
+som sin egen grupp. Den säger hur många gånger större osäkerheten blir när grupperna räknas in. CMH-χ² delas med DE.
+Det är Rao–Scotts korrektion, och Donald & Donner (1987) gav den för just Mantel–Haenszel med klustrade data. p läses
+mot F(1, df), där df är antalet grupper på den mindre sidan (med stenar nära, eller utan) minus ett: det är de grupperna
+som bär jämförelsen. Två regler gör att grupperna bara kan göra provet försiktigare, aldrig djärvare:
+
+- DE sätts aldrig under 1. Med varje sten i en egen grupp blir svaret därför detsamma som det vanliga provet.
+- Med färre än fem grupper på någon sida redovisas ”för få grupper”, och inget gruppnivåsvar ges.
+
+Oddskvotens 95 %-intervall vidgas med √DE. Det effektiva antalet stenar är stenarna delade med DE.
+
+**I trappan (R, steget Grupper som enhet).** Den justerade modellen räknas om med klusterrobusta standardfel per grupp
+(`sandwich::vcovCL`, HC1). Standardfelet får aldrig vara mindre än modellens eget. Provet läses mot t med samma
+frihetsgrader som ovan, och kravet är minst fem grupper på var sida. Grupperna skickas från `src/robustness.py` som
+kolumnen `sgroup`.
+
+**Bekräftelsen.** Ett rumsligt mönster räknas som bekräftat bara om också steget Grupper som enhet håller, det vill
+säga p < 0,05 i samma riktning. Kan steget inte prövas (för få grupper, eller ett fel) räknas mönstret inte som
+bekräftat.
+
+**I gränssnittet.** Provet Platser visar antalet grupper nära och övriga bredvid antalet stenar. Båda p-värdena står
+bredvid varandra, med designeffekten och det effektiva antalet stenar förklarade i ord. När svaret skiljer sig sägs det
+i klartext: ”Skillnaden håller om varje sten räknas för sig, men inte när stenarna i samma grupp räknas som en enhet.”
+
+Skyddet kan stängas av med rutan Grupper som enhet (adressen `?grupper=0`). Då visas bara provet sten för sten, med
+en förklaring till varför p blir för litet. I trappan visas steget med antalet oberoende grupper på var sida, och ett
+stycke i klartext säger om mönstret håller med grupperna. Där finns ingen avstängning, eftersom stegen sten för sten
+visas bredvid.
+
+**Prövning.** Testerna finns i `tests/test_spatial_groups.py`.
+
+- *Syntetiskt fall:* 40 grupper om 8 stenar. Närheten och mönstret är gemensamma inom gruppen, och 12 av 20 grupper
+  nära har mönstret mot 8 av 20 längre bort. Sten för sten är det 96 av 160 mot 64 av 160 stenar, p < 0,001.
+  Grupperna ger DE 8 (varje grupp väger som en sten), effektivt 40 stenar och p > 0,05.
+- *Samma fall i R:* det justerade steget ger p 3,5 · 10⁻⁶, steget Grupper som enhet p 0,063 (DE 5,5).
+- *Kalibrering utan något samband:* 1 000 simulerade korpusar med grupper om 1–12 stenar och stark likhet inom
+  grupperna. Provet sten för sten larmar falskt i 27,7 % av dem, gruppnivån i 3,4 %, alltså nära de väntade 5 %.
+
+**På riktiga data.**
+
+- *Provet Platser:* designeffekterna är små för stenar, 1,0–1,6. Ett exempel vänder: brobyggen inom 500 m från en
+  färdväg ger p 0,044 sten för sten och 0,056 med 132 grupper nära, ”bara stenar”.
+- *Trappan:* den räknades om för den nuvarande korpusen (fingeravtryck 510ebfb3acc9a229, 109 sekunder). Alla fyra
+  rumsliga mönster håller med grupperna. Bönen nära teofora namn går från p 0,0074 till 0,021 (DE 1,18, 25 grupper nära
+  av 421). De tre hot spots (monoftong i Västergötland, r för ʀ i Uppland, utlandsfärd i Södermanland) har DE 1,0–1,06
+  och 31–52 grupper inne i klustret. Ingen bekräftelse ändrades.
+
+**Gravhögarna igen.** Den klusterjusterade metoden kördes på högarnas T1: stora mot mindre högar, sten inom 500 m,
+landskapet konstant, högarnas grupper vid 1 km. Den ger DE 3,1 och p 0,0003, oddskvot 2,98 (1,62–5,50). Det stämmer
+med klusterbootstrapen i `grupper.py` (1,61–4,76). Testet med hela grupper som enheter (G1) gav däremot p 0,08, och
+samma test inom socknen p 0,46.
+
+Metoderna svarar på olika frågor:
+
+- *Den klusterrobusta* frågar om stora högar oftare har en sten nära än små, med hänsyn till att högarna i en grupp
+  inte är oberoende. Svaret bärs till stor del av jämförelser inom samma gravfält.
+- *G1* frågar om platser med en stor hög oftare har stenar än andra platser.
+
+Tillbakadragandet vilade på G1 och socknen. Det klusterrobusta skyddet i appen hade alltså inte ensamt fällt
+påståendet. Om tillbakadragandet ska omprövas är Viktors sak att avgöra, inte metodens.
+
+**Utanför skyddet.**
+
+- Stenarna mot slumppunkter i 1c (gravfälten, Wilcoxon). Det behöver en omräkning av `r/remains.R`, med till exempel
+  en punkt per grupp, och ändrar korpusens fingeravtryck.
+- Vattnet i `r/geography.R`.
+- Grannparen i `r/names.R`, ett permutationsprov inom region.
+- De låsta studierna i `utdata/`. Enligt den stående regeln ska de ha ett gruppsteg i planen från början.
 
 ## 2. Huggspårsmått (mätmetod `groove-6`)
 

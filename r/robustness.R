@@ -1,7 +1,7 @@
 # Robusthetstrappan: samma steg för varje mönster i korpusanalyserna (METHODS.md 1v, src/robustness.py).
 #   Rscript --vanilla r/robustness.R params.json utmapp
-# params: data (CSV: pattern, y, x, province, epoch, half, hand, parish, xk, yk, moved, moved_runor), specs (ett per
-# mönster: id, adjust, x_lo, x_hi, lopo, place, moved, coding) och seed.
+# params: data (CSV: pattern, y, x, province, epoch, half, hand, parish, xk, yk, moved, moved_runor, sgroup), specs (ett
+# per mönster: id, adjust, x_lo, x_hi, lopo, place, moved, coding, groups) och seed.
 #
 # Varje mönster är ett samband mellan ett utfall y (0/1) och en jämförelse x (0/1, eller tiden i 50-årssteg) på
 # stenarna. Stegen, i ordning:
@@ -19,6 +19,10 @@
 #             de landskap utan vilka riktningen vänder
 #   moved     den justerade modellen utan de stenar som Rundatas placering anger som flyttade, och utan dem som
 #             Riksantikvarieämbetets Runor 2020 anger som inte på ursprunglig plats; för mönster som hänger på platsen
+#   groups    för rumsliga mönster (hot spots, nära en sorts plats): den justerade modellen med stenar som står
+#             tillsammans som en enhet – klusterrobusta standardfel per grupp (sandwich::vcovCL, HC1), aldrig mindre än
+#             modellens egna, och t-fördelningen med grupperna på den mindre sidan minus ett som frihetsgrader. Grupperna
+#             (kolumnen sgroup) länkas i src/spatial_groups.py. Färre än fem grupper på var sida: kan inte prövas.
 # Ett steg håller när p < 0,05 och riktningen är densamma som i det justerade steget. Därtill:
 #   effect    skillnaden i procentenheter mellan x_lo och x_hi (marginaleffects::avg_comparisons på den justerade
 #             modellen, medelvärdet över stenarna som de är), med andelarna på var sida
@@ -29,6 +33,7 @@
 suppressPackageStartupMessages({ library(jsonlite); library(lme4); library(mgcv) })
 has_me <- requireNamespace("marginaleffects", quietly = TRUE)
 has_dh <- requireNamespace("DHARMa", quietly = TRUE)
+has_sw <- requireNamespace("sandwich", quietly = TRUE)
 options(warn = 1)
 
 args <- commandArgs(TRUE)
@@ -58,6 +63,32 @@ glm_rung <- function(dd, adjust) {
   if (nrow(dd) < 20 || length(unique(dd$y)) < 2 || length(unique(dd$x)) < 2) return(list(skipped = "för få stenar", n = nrow(dd)))
   safe(c(coef_x(fit_glm(dd, adjust)), list(n = nrow(dd))))
 }
+# Stones that stand together as one unit (src/spatial_groups.py): the adjusted model with cluster-robust standard errors
+# per group. The robust error is never allowed below the model's own (groups can only make the test more cautious), and
+# the degrees of freedom are the groups on the smaller side minus one: those groups carry the comparison.
+group_rung <- function(dd, adjust, gs) {
+  if (!has_sw) return(list(skipped = "paketet sandwich saknas", n = nrow(dd)))
+  dd <- dd[!is.na(dd$sgroup), ]
+  if (nrow(dd) < 20 || length(unique(dd$y)) < 2 || length(unique(dd$x)) < 2) return(list(skipped = "för få stenar", n = nrow(dd)))
+  min_g <- if (is.null(gs$min_groups)) 5 else gs$min_groups
+  G <- length(unique(dd$sgroup))
+  binary <- all(dd$x %in% c(0, 1))
+  g1 <- length(unique(dd$sgroup[dd$x == 1])); g0 <- length(unique(dd$sgroup[dd$x == 0]))
+  side <- if (binary) min(g1, g0) else G
+  base <- list(n = nrow(dd), groups = G, groups_x1 = if (binary) g1 else NULL, groups_x0 = if (binary) g0 else NULL,
+               link_km = gs$link_km)
+  if (side < min_g) return(c(list(skipped = sprintf("för få grupper (%d)", side)), base))
+  m <- fit_glm(dd, adjust)
+  if (!"x" %in% names(coef(m)) || is.na(coef(m)[["x"]])) return(c(list(error = "x saknas i modellen"), base))
+  est <- coef(m)[["x"]]
+  se_m <- sqrt(vcov(m)["x", "x"])
+  se_cl <- sqrt(sandwich::vcovCL(m, cluster = dd$sgroup, type = "HC1")["x", "x"])
+  se <- max(se_m, se_cl)
+  df <- side - 1
+  c(list(or = exp(est), ci = exp(est + c(-1, 1) * qt(0.975, df) * se), p = 2 * pt(-abs(est / se), df),
+         direction = sign(est), design_effect = (se / se_m)^2, df = df), base)
+}
+
 holds <- function(r, direction) {
   if (is.null(r) || !is.null(r$error) || !is.null(r$skipped) || is.null(r$p) || is.na(r$p)) return(NULL)
   r$p < ALPHA && r$direction == direction
@@ -163,6 +194,7 @@ ladder <- function(sp) {
                         list(all_hold = all(ok), n_provinces = length(provs), flips = as.list(provs[flips])))
     }
   }
+  if (!is.null(sp$groups) && "sgroup" %in% names(dd)) o$rungs$groups <- safe(group_rung(dd, adjust, sp$groups))
   if (isTRUE(sp$moved)) {
     o$rungs$moved_rundata <- glm_rung(dd[dd$moved == 0, ], adjust)
     o$rungs$moved_runor <- glm_rung(dd[dd$moved == 0 & dd$moved_runor == 0, ], adjust)
@@ -185,5 +217,5 @@ res <- lapply(P$specs, function(sp) safe(ladder(sp)))
 names(res) <- vapply(P$specs, function(sp) sp$id, character(1))
 dir.create(out, showWarnings = FALSE, recursive = TRUE)
 write_json(list(patterns = res, alpha = ALPHA, min_province = MIN_PROVINCE,
-                packages = list(marginaleffects = has_me, DHARMa = has_dh)),
+                packages = list(marginaleffects = has_me, DHARMa = has_dh, sandwich = has_sw)),
            file.path(out, "robustness.json"), auto_unbox = TRUE, digits = NA, null = "null", na = "null")

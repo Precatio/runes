@@ -13,11 +13,21 @@ Varje mönster blir ett samband y ~ x på stenarna:
   Samband           draget mot stentypen (själsbön på brostenar), justerat för landskap och tid
   hot spot          draget inom klustrets radie mot utanför, justerat för tiden
   cult_prayer       bön inom 2 km från ett teoforiskt ortnamn, justerat för landskap och tid
+  Genomsökningen    draget inom radien (2 km för ortnamn och kyrkor, 500 m för lämningar) från en sorts plats, justerat
+                    för landskap och tid (genomsökningen själv använder avståndet direkt, utan radie)
+  remains_bridges   stenen inom 500 m från en registrerad färdväg mot brostenarna, justerat för landskap och tid (bara
+                    när mönstret visas som funnet)
   Budskap           budskapet i Götaland mot Svealand, justerat för tiden
   Människorna       som i r/people.R, justerat för landsdel och tid
 Trappan använder samma tidsskikt för alla mönster (src/question.EPOCHS), så de justerade stegen kan skilja sig något
 från modulens egen siffra. Mönster som prövas på annat sätt (avstånd mot slumppunkter, attribueringar, seriation,
 kluster av ristare) får ingen trappa och behåller sitt eget test.
+
+Rumsliga mönster (hot spots, kultnamnen, genomsökningen, brostenarna) får därtill steget "grupper som enhet"
+(src/spatial_groups.py, METHODS.md om rumslig statistik): stenar som står tillsammans länkas till grupper (2 × radien,
+högst 2 km, och stenar med samma närmaste plats inom radien; för hot spots 1 km), och den justerade modellen räknas med
+klusterrobusta standardfel per grupp. Ett rumsligt mönster är bara bekräftat om det också håller med grupperna som
+enheter.
 
 Två saker läggs på alla mönster (annotate):
   * En gemensam Benjamini–Hochberg över alla visade mönster: trappans justerade p där trappan finns, annars mönstrets
@@ -38,12 +48,16 @@ import math
 import os
 import threading
 
-from src import question
+from src import question, spatial_groups
 from src.stone_size import bh
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ALPHA = 0.05
 CULT_KM = 2.0  # radien i r/geography.R (vald i förväg)
+NEAR_KM = 0.5  # radien för lämningarna i r/remains.R (NEAR_KM)
+# Genomsökningens läsradie per sorts plats, som SCAN_RADIUS i r/remains.R
+SCAN_RADIUS = {"cult_a": 2.0, "cult_b": 2.0, "central": 2.0, "church": 2.0, "gravfalt": 0.5, "hog": 0.5, "vag": 0.5,
+               "bro": 0.5, "fornborg": 0.5}
 N_SIM = 200
 _lock = threading.Lock()
 
@@ -80,6 +94,7 @@ RUNG_LABELS = {
     "lopo": "Utan ett landskap i taget",
     "moved_rundata": "Utan flyttade stenar (Rundata)",
     "moved_runor": "Utan flyttade stenar (Rundata och Runor 2020)",
+    "groups": "Grupper som enhet (stenar som står tillsammans)",
 }
 
 
@@ -199,7 +214,7 @@ def _line(b: dict, y, x) -> dict:
             "hand": b["hand"], "parish": b["parish"], "xk": b["xk"], "yk": b["yk"], "moved": b["moved"],
             "moved_runor": b["moved_runor"],
             # The Viking Age region (src/regions.py), the ladder's regional term since 2026-11-02 (plan 13084e18)
-            "region_old": b["row"].get("region_old") or b["province"]}
+            "region_old": b["row"].get("region_old") or b["province"], "sgroup": b.get("sgroup")}
 
 
 def _region(province: str) -> str:
@@ -227,13 +242,24 @@ def build(rows: list[dict], patterns: list[dict], hotspots: dict | None, msg_row
     specs: list[dict] = []
 
     def add(pid: str, pairs, adjust, *, x_lo=0, x_hi=1, lopo=True, place=True, moved=False, coding=None, note=None,
-            selected=False):
+            selected=False, spatial=None):
         pairs = [(b, y, x) for b, y, x in pairs if y is not None and x is not None]
         if not pairs:
             return
+        groups = None
+        if spatial is not None:
+            # stones that stand together count as one unit (src/spatial_groups.py): linked over this pattern's stones
+            radius, kind = spatial
+            lab = spatial_groups.groups_latlon([b["row"].get("lat") for b, _, _ in pairs],
+                                               [b["row"].get("lon") for b, _, _ in pairs], radius, kind)
+            pairs = [({**b, "sgroup": g}, y, x) for (b, y, x), g in zip(pairs, lab)]
+            groups = {"link_km": spatial_groups.link_km(radius), "radius_km": radius, "kind": kind,
+                      "min_groups": spatial_groups.MIN_GROUPS}
         lines.extend({"pattern": pid, **_line(b, y, x)} for b, y, x in pairs)
         sp = {"id": pid, "adjust": adjust, "x_lo": x_lo, "x_hi": x_hi, "lopo": lopo, "place": place, "moved": moved,
               "selected": selected}
+        if groups:
+            sp["groups"] = groups
         if coding:
             sp["coding"] = {**coding, "n_sim": N_SIM}
         if note:
@@ -267,7 +293,7 @@ def build(rows: list[dict], patterns: list[dict], hotspots: dict | None, msg_row
             inside = lambda b: None if b["row"].get("lat") is None else int(  # noqa: E731
                 _haversine(c["lat"], c["lon"], b["row"]["lat"], b["row"]["lon"]) <= c["radius_km"])
             add(pid, [(b, fn(b["row"]), inside(b)) for b in base.values() if not b["moved"]], ["epoch"],
-                lopo=False, place=False, moved=True, selected=True,
+                lopo=False, place=False, moved=True, selected=True, spatial=(None, None),
                 note="klustret valdes på hela korpusen; trappan prövar inte valet av kluster")
         elif key == "cult_prayer":
             if cult is None:
@@ -277,7 +303,25 @@ def build(rows: list[dict], patterns: list[dict], hotspots: dict | None, msg_row
                 cult = {b["signum"]: d for b, d in zip(stones, dist)}
             f = _feature("bon")
             add(pid, [(b, f(b["row"]), None if cult.get(b["signum"]) is None else int(cult[b["signum"]] <= CULT_KM))
-                      for b in base.values() if not b["moved"]], ["province", "epoch"], place=False, moved=True)
+                      for b in base.values() if not b["moved"]], ["province", "epoch"], place=False, moved=True,
+                spatial=(CULT_KM, "cult_a"))
+        elif topic == "Geografi" and key.startswith("scan_") and _scan_parts(key):
+            feat, kind = _scan_parts(key)
+            radius = SCAN_RADIUS[kind]
+            dist = _distances(kind, base)
+            pm = lambda b: None if b["row"].get(f"pm_{feat}") in (None, "") else int(b["row"][f"pm_{feat}"])  # noqa: E731
+            add(pid, [(b, pm(b), None if dist.get(b["signum"]) is None else int(dist[b["signum"]] < radius))
+                      for b in base.values() if not b["moved"]], ["province", "epoch"], place=False, moved=True,
+                selected=True, spatial=(radius, kind),
+                note=(f"inom {_km_text(radius)} mot längre bort; kombinationen valdes ur genomsökningen av alla mönster "
+                      "och platser, som själv använder avståndet direkt"))
+        elif topic == "Geografi" and key == "remains_bridges" and p.get("status") != "begränsning":
+            # only when the pattern is shown as found; one of several tests in r/remains.R, so its own q counts too
+            dist = _distances("vag", base)
+            fb = _feature("bro")
+            add(pid, [(b, None if dist.get(b["signum"]) is None else int(dist[b["signum"]] < NEAR_KM), fb(b["row"]))
+                      for b in base.values() if not b["moved"]], ["province", "epoch"], place=False, moved=True,
+                selected=True, spatial=(NEAR_KM, "vag"))
         elif topic == "Budskap" and key in ("messages_praise", "messages_travel_less", "messages_travel_death"):
             def got(b):
                 return int(_region(b["province"]) == "Götaland") if _region(b["province"]) in ("Götaland", "Svealand") else None
@@ -324,9 +368,37 @@ def build(rows: list[dict], patterns: list[dict], hotspots: dict | None, msg_row
     return lines, specs, {"messages": mfac, "people": pfac}
 
 
+def _scan_parts(key: str) -> tuple[str, str] | None:
+    """scan_<drag>_<sorts plats> -> (drag, sorts plats); dragen och platserna kan själva innehålla understreck."""
+    for kind in sorted(SCAN_RADIUS, key=len, reverse=True):
+        if key.startswith("scan_") and key.endswith(f"_{kind}") and len(key) > len(kind) + 6:
+            return key[5:-len(kind) - 1], kind
+    return None
+
+
+def _km_text(km: float) -> str:
+    return f"{round(km * 1000)} m" if km < 1 else f"{km:g} km".replace(".", ",")
+
+
+_dist_cache: dict = {}
+
+
+def _distances(kind: str, base: dict[str, dict]) -> dict[str, float | None]:
+    """Avståndet (km) från varje sten med läge till närmaste plats av sorten (src/places.py, samma register som
+    r/remains.R läser)."""
+    from src import places
+    key = (kind, places._mtimes(), tuple(base))
+    if key not in _dist_cache:
+        stones = [b for b in base.values() if b["row"].get("lat") is not None]
+        dist, _ = places.nearest(kind, [b["row"]["lat"] for b in stones], [b["row"]["lon"] for b in stones])
+        _dist_cache.clear()
+        _dist_cache[key] = {b["signum"]: d for b, d in zip(stones, dist)}
+    return _dist_cache[key]
+
+
 def _csv(lines: list[dict]) -> bytes:
     cols = ["pattern", "signum", "y", "x", "province", "region_old", "epoch", "half", "hand", "parish", "xk", "yk", "moved",
-            "moved_runor"]
+            "moved_runor", "sgroup"]
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=cols, lineterminator="\n")
     w.writeheader()
@@ -431,6 +503,9 @@ def summarize(r: dict, spec: dict | None) -> dict | None:
             item["flips"] = x.get("flips") or []
         if k in ("carver", "parish"):
             item["singular"] = x.get("singular")
+        if k == "groups":
+            for f in ("groups", "groups_x1", "groups_x0", "design_effect", "link_km"):
+                item[f] = x.get(f)
         rungs.append(item)
     tested = [x for x in rungs if x["holds"] is not None]
     halves = [x for x in rungs if x["key"] in ("half_A", "half_B")]
@@ -442,6 +517,16 @@ def summarize(r: dict, spec: dict | None) -> dict | None:
            "selected": bool((spec or {}).get("selected"))}
     first = next((x for x in rungs if x["holds"] is False), None)
     out["first_fail"] = first["key"] if first else None
+    # Spatial patterns: does the answer change when the stones that stand together count as one unit? "håller" (also
+    # in groups), "bara stenar" (holds stone by stone, not in groups), "för få grupper", None for other patterns
+    g = next((x for x in rungs if x["key"] == "groups"), None)
+    if g is None and (spec or {}).get("groups"):
+        out["groups"] = "kunde inte räknas"
+    elif g is not None:
+        adj_holds = adj["p"] < ALPHA
+        out["groups"] = ("för få grupper" if str(g.get("skipped") or "").startswith("för få grupper")
+                         else "kunde inte räknas" if g.get("error") or g.get("skipped")
+                         else "håller" if g["holds"] else "bara stenar" if adj_holds else "ingen")
     return out
 
 
@@ -470,6 +555,9 @@ def annotate(patterns: list[dict], rob: dict | None) -> list[dict]:
         q["q_global"] = qv
         if q.get("ladder"):
             q["confirmed"] = bool(q["ladder"]["halves"] and qv is not None and qv < ALPHA)
+            # a spatial pattern is confirmed only if it also holds with the stones that stand together as one unit
+            if q["ladder"].get("groups") is not None and q["ladder"]["groups"] != "håller":
+                q["confirmed"] = False
         elif q.get("replicated") is not None and qv is not None:
             q["confirmed"] = bool(q["replicated"] and qv < ALPHA)
         else:

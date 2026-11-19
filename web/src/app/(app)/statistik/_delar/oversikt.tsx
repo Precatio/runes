@@ -45,8 +45,10 @@ function SignificantBox({ patterns, onOpen, robust }: { patterns: Pattern[]; onO
           <strong>Alla mönster samtidigt:</strong> med en gemensam justering (Benjamini–Hochberg) över alla {robust.n_fdr} mönster
           med ett p-värde klarar {robust.fdr_ok} q under 0,05. {robust.n_ladder} mönster går att räkna om sten för sten i
           robusthetstrappan – samma kontroller för alla: ristaren och socknen som slumpeffekter, platsen som yta, båda halvorna,
-          utan ett landskap i taget och utan flyttade stenar – och {robust.all_rungs} av dem håller i varje steg.
-          {" "}{robust.confirmed} mönster är bekräftade (båda halvorna och den gemensamma justeringen); bara de märks <em>Nytt</em> när de dyker upp.
+          utan ett landskap i taget, utan flyttade stenar och, för mönster i landskapet, med stenar som står tillsammans som en
+          enhet – och {robust.all_rungs} av dem håller i varje steg.
+          {" "}{robust.confirmed} mönster är bekräftade (båda halvorna och den gemensamma justeringen, och för mönster i landskapet
+          också med grupperna som enheter); bara de märks <em>Nytt</em> när de dyker upp.
         </p>
       ) : robust && (
         <p className="text-xs text-slate-500 mt-2">Robusthetstrappan räknas i bakgrunden och visas här när den är klar.</p>

@@ -43,6 +43,12 @@ export interface LadderRung {
   n_provinces?: number;
   flips?: string[];
   singular?: boolean;
+  // The rung "grupper som enhet" for spatial patterns (src/spatial_groups.py): independent groups next to the stones
+  groups?: number | null;
+  groups_x1?: number | null;
+  groups_x0?: number | null;
+  design_effect?: number | null;
+  link_km?: number | null;
 }
 
 export interface Ladder {
@@ -56,6 +62,8 @@ export interface Ladder {
   halves: boolean;
   first_fail: string | null;
   time: boolean;
+  // Spatial patterns: does the answer change when the stones that stand together count as one unit?
+  groups?: "håller" | "bara stenar" | "ingen" | "för få grupper" | "kunde inte räknas";
   note?: string | null;
   effect?: { share_lo?: number; share_hi?: number; diff?: number; diff_ci?: number[]; error?: string } | null;
   check?: { uniformity_p?: number; dispersion_p?: number; spatial_p?: number; ok?: boolean; error?: string } | null;
@@ -101,12 +109,16 @@ export function LadderDetails({ pt }: { pt: Pattern }) {
               </span>
               <span className="text-slate-800">{r.label}{r.without ? ` (sämst utan ${r.without})` : ""}{r.flips?.length ? ` – riktningen vänder utan ${r.flips.join(", ")}` : ""}</span>
               <span className="text-slate-500">
-                {r.error ? "kunde inte räknas" : r.skipped ? r.skipped
-                  : `oddskvot ${num(r.or)}${r.ci ? ` (${num(r.ci[0])}–${num(r.ci[1])})` : ""}, p ${pv(r.p)}${r.n ? `, ${r.n} stenar` : ""}${r.singular ? ", slumpeffekten skattas till noll" : ""}`}
+                {(r.error ? "kunde inte räknas" : r.skipped ? r.skipped
+                  : `oddskvot ${num(r.or)}${r.ci ? ` (${num(r.ci[0])}–${num(r.ci[1])})` : ""}, p ${pv(r.p)}${r.n ? `, ${r.n} stenar` : ""}${r.singular ? ", slumpeffekten skattas till noll" : ""}`)
+                  + (r.key === "groups" && r.groups != null ? (r.groups_x1 != null
+                    ? ` – ${r.groups} oberoende grupper (${r.groups_x1} med jämförelsens ja, ${r.groups_x0} med dess nej)`
+                    : ` – ${r.groups} oberoende grupper`) : "")}
               </span>
             </li>
           ))}
         </ul>
+        {l.groups && <GroupsNote l={l} />}
         {pt.q_global != null && (
           <p>
             <span className="font-semibold text-slate-800">Alla mönster samtidigt: </span>
@@ -134,6 +146,28 @@ export function LadderDetails({ pt }: { pt: Pattern }) {
         )}
       </div>
     </details>
+  );
+}
+
+/** In plain words what the rung "grupper som enhet" says about a spatial pattern (src/robustness.summarize). */
+function GroupsNote({ l }: { l: Ladder }) {
+  const g = l.rungs.find(r => r.key === "groups");
+  const de = g?.design_effect != null && g.design_effect > 1.005
+    ? ` Stenarna i samma grupp liknar varandra: osäkerheten är ${num(g.design_effect)} gånger så stor som om varje sten vore en egen iakttagelse.`
+    : "";
+  const text = {
+    "håller": `Mönstret håller också när stenar som står tillsammans räknas som en enhet.${de}`,
+    "bara stenar": `Mönstret håller om varje sten räknas för sig, men inte när stenar som står tillsammans räknas som en enhet. Det kan bero på några få platser med många stenar, så det räknas inte som bekräftat.${de}`,
+    "ingen": "Mönstret håller inte i den justerade modellen, och grupperna ändrar inte det.",
+    "för få grupper": "Stenarna står i för få grupper för att pröva mönstret med grupperna som enheter, så det räknas inte som bekräftat.",
+    "kunde inte räknas": "Steget med grupperna som enheter kunde inte räknas, så mönstret räknas inte som bekräftat.",
+  }[l.groups!];
+  const km = g?.link_km != null ? String(g.link_km).replace(".", ",") : "2";
+  return (
+    <p>
+      <span className="font-semibold text-slate-800">Grupper som enhet: </span>
+      {`${text} Stenar inom ${km} km från varandra, eller nära samma plats, bildar en grupp. Steget visas bredvid de andra stegen, så att det går att se vad det betyder att räkna sten för sten.`}
+    </p>
   );
 }
 

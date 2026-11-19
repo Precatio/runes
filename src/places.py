@@ -7,7 +7,8 @@ hoppas den sortens platser över.
 
 Provet "nära mot övriga" i appen är ett utforskande verktyg: det jämför andelen stenar med ett mönster nära en sorts
 plats med övriga stenar, med landskapet konstant (Mantel–Haenszel), men utan tidsjustering och utan provet i två
-halvor; det fullständiga provet för kultnamnen finns i korpusanalysen.
+halvor; det fullständiga provet för kultnamnen finns i korpusanalysen. Stenar som står i grupper och delar samma
+plats räknas som en enhet när osäkerheten bedöms (src/spatial_groups.py), om inte den som prövar stänger av det.
 """
 from __future__ import annotations
 
@@ -137,9 +138,10 @@ def _fisher_p(a: int, b: int, c: int, d: int) -> float:
     return float(fisher_exact([[a, b], [c, d]])[1])
 
 
-def near_test(rows: list[tuple[str, int, float]], km: float) -> dict | None:
+def near_test(rows: list[tuple[str, int, float]], km: float, groups: list[int] | None = None) -> dict | None:
     """Nära mot övriga: rows är (landskap, har mönstret 0/1, avstånd i km). Andelar, oddskvot och Mantel–Haenszel per
-    landskap (oddskvot och CMH-test med kontinuitetskorrektion)."""
+    landskap (oddskvot och CMH-test med kontinuitetskorrektion). Med groups (en grupp per rad, src/spatial_groups.py)
+    också provet med grupperna som enheter: designeffekten, p på gruppnivå, antalet grupper och om svaret skiljer sig."""
     from scipy.stats import chi2
     near = [(p, y) for p, y, d in rows if d is not None and d < km]
     far = [(p, y) for p, y, d in rows if d is not None and d >= km]
@@ -174,4 +176,23 @@ def near_test(rows: list[tuple[str, int, float]], km: float) -> dict | None:
             "share_near": round(a / len(near), 3), "share_far": round(c / len(far), 3),
             "or_crude": round(crude, 2), "p_crude": round(_fisher_p(a, b, c, d), 4),
             "or_mh": None if mh is None or not math.isfinite(mh) else round(mh, 2),
-            "p_mh": None if cmh is None else round(float(chi2.sf(cmh, 1)), 4), "strata": strata}
+            "p_mh": None if cmh is None else round(float(chi2.sf(cmh, 1)), 4), "strata": strata,
+            **({"groups": _group_level(rows, km, groups)} if groups is not None else {})}
+
+
+def _group_level(rows, km: float, groups: list[int]) -> dict:
+    """Samma jämförelse med stenarna i grupper som enheter (src/spatial_groups.cluster_cmh), och antalet grupper bland
+    stenarna nära och övriga."""
+    from src import spatial_groups as sg
+    items = [(p, int(d < km), y, g) for (p, y, d), g in zip(rows, groups, strict=True) if d is not None]
+    res = sg.cluster_cmh(items)
+    near_g = {g for _, x, _, g in items if x == 1}
+    far_g = {g for _, x, _, g in items if x == 0}
+
+    def r(v, n=4):
+        return None if v is None else round(v, n)
+    return {"n_groups": len(near_g | far_g), "n_groups_near": len(near_g), "n_groups_far": len(far_g),
+            "link_km": sg.link_km(km), "design_effect": r(res["design_effect"], 2), "effective_n": r(res["effective_n"], 0),
+            "p_stone": r(res["p_stone"]), "p_group": r(res["p_group"]), "df": res["df"],
+            "ci_group": None if res["ci_group"] is None else [round(v, 2) for v in res["ci_group"]],
+            "verdict": sg.verdict(res)}
