@@ -84,7 +84,8 @@ def test_the_post_goes_into_the_queue_on_its_publication_day_and_only_once():
     b = {"text": " Hello. ", "tags": ["runology", "MedievalSky"]}
     assert bw.queue_bluesky(ko, "ny", "2026-11-17", b)
     assert [i["slug"] for i in ko["items"]] == ["gammal", "v1", "ny", "v2", "v3", "borttagen"]
-    assert ko["items"][2] == {"date": "2026-11-17", "slug": "ny", "en": True, "text": "Hello.", "tags": ["runology", "MedievalSky"]}
+    assert ko["items"][2] == {"date": "2026-11-17", "slug": "ny", "en": True, "text": "Hello.", "tags": ["runology", "MedievalSky"],
+                           "artikel": True}
     assert not bw.queue_bluesky(ko, "ny", "2026-11-17", b)            # no duplicate
     assert not bw.queue_bluesky(ko, "gammal", "2026-11-20", b)        # already posted counts as queued
     assert bw.queue_bluesky(ko, "borttagen", "2026-12-31", b)         # a removed row does not
@@ -221,3 +222,13 @@ def test_the_endpoints_are_admin_only():
     c = TestClient(app)
     assert c.get("/api/admin/blog/week").status_code in (401, 403)
     assert c.post("/api/admin/blog/week/approve", json={"from": "2026-11-16", "ids": ["a"]}).status_code in (401, 403)
+
+
+def test_an_article_post_goes_before_older_posts_on_a_posting_day():
+    """Viktor 2026-11-19 "Artiklarna först": today's post first, then the earliest article post, then the oldest."""
+    from src.bluesky_queue import pick_due
+    items = [{"date": "2026-11-14", "slug": "gammal"}, {"date": "2026-11-20", "slug": "artikel", "artikel": True},
+             {"date": "2026-11-24", "slug": "idag"}]
+    assert pick_due(items, "2026-11-24")["slug"] == "idag"
+    assert pick_due(items[:2], "2026-11-24")["slug"] == "artikel"
+    assert pick_due(items[:1], "2026-11-24")["slug"] == "gammal"

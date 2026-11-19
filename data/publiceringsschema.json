@@ -82,11 +82,13 @@
    "titel": "De gamla landen: Attundaland – där man gjorde sina tingsplatser",
    "spar": "P",
    "bluesky": {
-    "text": "Gerlög outlived her daughter Inga and inherited from her. Who inherited from whom is cut into a rock at Hillersjö, the longest runic text in Uppland. The old lands: Attundaland around AD 1000, where great men wrote in stone that they had made the assembly place.",
+    "text": "Gerlög outlived her daughter Inga and inherited from her – cut into the rock at Hillersjö. The old lands: Attundaland around AD 1000, where great men wrote in stone that they had made the assembly place.",
     "tags": [
      "runestones",
+     "MedievalSky",
+     "OldNorse",
      "VikingAge",
-     "MedievalSky"
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:42+01:00"
@@ -98,11 +100,13 @@
    "titel": "Den goda döden – vad runstenarna säger om hur de dog",
    "spar": "P",
    "bluesky": {
-    "text": "Only one Swedish runestone in sixteen says how the dead died. Those that do tell of battle, betrayal, a ship that sank, a mother who left small children, and sons who died in white christening robes. After 1050 the stones tell of death half as often.",
+    "text": "Only one Swedish runestone in sixteen says how the dead died: battle, betrayal, a sinking ship, a mother of small children, men in white christening robes. After 1050 the stones tell of death half as often.",
     "tags": [
      "runestones",
+     "Skystorians",
+     "OldNorse",
      "VikingAge",
-     "MedievalSky"
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:42+01:00"
@@ -114,11 +118,13 @@
    "titel": "De gamla landen: Fjädrundaland – folklandet längst in i havsviken",
    "spar": "P",
    "bluesky": {
-    "text": "In Fjädrundaland in western Uppland only one runestone in three bears a cross, against six in ten in the rest of Uppland. Balle carved a stone for Brune, who \"died in christening robes in Denmark\", and that stone has no cross either.",
+    "text": "In Fjädrundaland, western Uppland, one runestone in three bears a cross, against six in ten in the rest of Uppland. Balle's stone for Brune, who \"died in christening robes\", has none either.",
     "tags": [
      "runestones",
+     "MedievalSky",
+     "runology",
      "VikingAge",
-     "MedievalSky"
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:43+01:00"
@@ -166,10 +172,11 @@
    "titel": "Asatron i landskapet – gudarnas socknar var gravarnas socknar",
    "spar": "P",
    "bluesky": {
-    "text": "Odensvi, Torsåker, Ullvi: the old gods live on in Swedish place names. We went through the whole national place-name dictionary. Cult-place names are thickest around Lake Mälaren, and hardly any parish with one lacks an Iron Age grave field.",
+    "text": "Odensvi, Torsåker, Ullvi: the old gods live on in Swedish place names. Cult-place names are thickest around Lake Mälaren, and hardly any parish with one lacks an Iron Age grave field.",
     "tags": [
      "OldNorse",
-     "MedievalSky",
+     "Skystorians",
+     "archaeology",
      "VikingAge",
      "Vikings"
     ]
@@ -291,11 +298,13 @@
    "titel": "Borgarna vid vattnet – vad var fornborgarna?",
    "spar": "P",
    "bluesky": {
-    "text": "Sweden has 1,304 Iron Age hillforts; the register lists only 73 as excavated. Against the shore of around AD 450, 64% lay within 500 m of the water, against 48% of the hills around them. In the legends they became homes of giants who hated church bells.",
+    "text": "Sweden has 1,304 Iron Age hillforts; only 73 are listed as excavated. 64% lie within 500 m of the water, against 48% of the hills around them. In the legends they became homes of giants.",
     "tags": [
      "archaeology",
+     "MedievalSky",
      "IronAge",
-     "Skystorians"
+     "VikingAge",
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:48+01:00"
@@ -325,12 +334,13 @@
    "titel": "Hundra år av runfrågor I: Grundläggarna som ställde frågorna vi fortfarande ställer",
    "spar": "P",
    "bluesky": {
-    "text": "We read Fornvännen from its first volume in 1906. Part I follows the founders – von Friesen, Brate, Lindqvist, Wessén, Jansson, Svärdström – who mended the stones, hunted lost ones in church walls and asked the questions we still ask.",
+    "text": "We read Fornvännen from its first volume in 1906. Part I: the founders – von Friesen, Brate, Lindqvist, Wessén, Jansson – who mended stones, hunted lost ones in church walls and asked our questions.",
     "tags": [
-     "runestones",
      "runology",
+     "Skystorians",
+     "runestones",
      "VikingAge",
-     "MedievalSky"
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:49+01:00"
@@ -342,11 +352,12 @@
    "titel": "Bakhäll, bro och kvarnsten – runstenarnas andra liv",
    "spar": "P",
    "bluesky": {
-    "text": "A runestone became a baking slab for billeted soldiers and cracked in the rain. Another lay under a highway as a bridge for 200 years, a third was cut into a millstone. What the old editions recorded about the stones' second lives.",
+    "text": "A runestone became a baking slab for soldiers and cracked in the rain. Another lay as a bridge for 200 years, a third was cut into a millstone. The stones' second lives, from the old editions.",
     "tags": [
      "runestones",
+     "MedievalSky",
+     "archaeology",
      "VikingAge",
-     "Skystorians",
      "Vikings"
     ]
    },
@@ -362,8 +373,10 @@
     "text": "Along the river Lagan in Finnveden almost every grave was a mound. At Fallnaveka two people were buried with two horses, two dogs, two pigs, sheep and goat. The old lands: western Småland around AD 1000.",
     "tags": [
      "archaeology",
+     "Skystorians",
+     "runestones",
      "VikingAge",
-     "MedievalSky"
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:50+01:00"
@@ -375,12 +388,13 @@
    "titel": "Hundra år av runfrågor II: När forskarna började räkna",
    "spar": "P",
    "bluesky": {
-    "text": "From 1970 runologists began to count – and to argue about how to count. Part II: a Varangian's name in Hagia Sophia, Larsson, Orsenmark and Herschend's generous quarrel over statistics, Futhark as a journal of its own, and the Rök stone read anew.",
+    "text": "From 1970 runologists began to count – and to argue about how. Part II: a Varangian's name in Hagia Sophia, a generous quarrel over statistics, Futhark as a journal, and the Rök stone read anew.",
     "tags": [
-     "runestones",
      "runology",
+     "MedievalSky",
+     "runestones",
      "VikingAge",
-     "Skystorians"
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:51+01:00"
@@ -392,11 +406,12 @@
    "titel": "Vendeltid, vikingatid, medeltid – fanns gränserna?",
    "spar": "P",
    "bluesky": {
-    "text": "Did the Viking Age really end in 1066? In Sweden, runestones went on being raised for decades: nearly a third of those with a firm style group are later. Around 1100 the runes moved into the churches and onto grave slabs instead.",
+    "text": "Did the Viking Age end in 1066? In Sweden runestones went on for decades: nearly a third of those with a firm style group are later. Around 1100 the runes moved into the churches and onto grave slabs.",
     "tags": [
      "runestones",
+     "Skystorians",
+     "EarlyMedieval",
      "VikingAge",
-     "MedievalSky",
      "Vikings"
     ]
    },
@@ -409,11 +424,13 @@
    "titel": "Prickarna, åsrunan och tiden",
    "spar": "P",
    "bluesky": {
-    "text": "Viking-age carvers had 16 runes for some 30 sounds, so some added a dot: i became e. In Götaland the dotted runes go with crosses on the same stones. In Uppland the dots stayed rare, while the ós-rune for o spread on the late stones.",
+    "text": "Viking-age carvers had 16 runes for some 30 sounds, so some added a dot: i became e. In Götaland dotted runes go with crosses. In Uppland dots stayed rare, while the ós-rune spread on the late stones.",
     "tags": [
-     "runestones",
+     "runology",
+     "MedievalSky",
+     "OldNorse",
      "VikingAge",
-     "MedievalSky"
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:52+01:00"
@@ -425,12 +442,13 @@
    "titel": "Kan man räkna sig fram till vikingarna?",
    "spar": "P",
    "bluesky": {
-    "text": "Can you count your way to the Vikings? One runestone cannot tell you whether it is unusual; only all 2,321 together can. How Vitki reads them all at once, locks its questions before counting, and says openly where the numbers fall short.",
+    "text": "Can you count your way to the Vikings? One runestone cannot tell you whether it is unusual; all 2,321 together can. How Vitki locks its questions before counting, and says where the numbers fall short.",
     "tags": [
      "runology",
+     "Skystorians",
      "DigitalHumanities",
      "VikingAge",
-     "Skystorians"
+     "Vikings"
     ]
    },
    "godkand": "2026-11-18T18:52:52+01:00"
@@ -442,11 +460,13 @@
    "titel": "Vem höll i mejseln? Vad Vitki ser av ristarnas handlag – och vad den inte ser",
    "spar": "P",
    "bluesky": {
-    "text": "Who held the chisel? 3 in 4 Swedish runestones have no known carver. Vitki learns each carver's traits from signed stones only and is right first on 71 % of them. But a hand with no name still gets pushed into a known workshop. What it sees, and what not.",
+    "text": "Who held the chisel? 3 in 4 Swedish runestones have no known carver. Vitki learns carvers' traits from signed stones only, right first on 71 % of them – but a hand with no name still lands in a known workshop.",
     "tags": [
      "runology",
      "MedievalSky",
-     "VikingAge"
+     "runestones",
+     "VikingAge",
+     "Vikings"
     ]
    },
    "godkand": "2026-11-19T08:20:00+01:00"

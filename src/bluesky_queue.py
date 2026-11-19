@@ -29,9 +29,13 @@ def post_day(d) -> bool:
 
 def pick_due(items: list[dict], today: str, fits=lambda i: True) -> dict | None:
     """The one post to send on a posting day: a post dated today first (the day's article, approved in the week
-    schedule), otherwise the earliest unposted, not removed post whose date has come, in list order."""
+    schedule), then the earliest post about a new article (artikel: true, set when an article is approved; Viktor
+    2026-11-19: "Artiklarna först" – articles now go out every third day while the queue posts on Tuesdays and Fridays,
+    so an article's post must not wait behind older posts), otherwise the earliest unposted, not removed post whose
+    date has come, in list order."""
     open_ = [i for i in items if not i.get("posted") and not i.get("removed") and str(i.get("date", "")) <= today and fits(i)]
-    return next((i for i in open_ if i.get("date") == today), open_[0] if open_ else None)
+    return next((i for i in open_ if i.get("date") == today),
+                next((i for i in open_ if i.get("artikel")), open_[0] if open_ else None))
 
 
 def composed_length(b: dict | None) -> int | None:
@@ -50,7 +54,8 @@ def queue_bluesky(ko: dict, slug: str, datum: str, b: dict) -> bool:
     items = ko.setdefault("items", [])
     if any(i.get("slug") == slug and not i.get("removed") for i in items):
         return False
-    item = {"date": datum, "slug": slug, "en": True, "text": b["text"].strip(), "tags": list(b.get("tags") or [])}
+    item = {"date": datum, "slug": slug, "en": True, "text": b["text"].strip(), "tags": list(b.get("tags") or []),
+            "artikel": True}  # an approved article's own post: goes before older posts (pick_due)
     at = next((n for n, i in enumerate(items)
                if not i.get("posted") and not i.get("removed") and str(i.get("date", "")) >= datum), len(items))
     items.insert(at, item)
