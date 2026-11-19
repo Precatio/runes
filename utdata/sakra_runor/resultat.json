@@ -1,0 +1,1415 @@
+{
+ "plan_sha256": "fb4a444ad663bbc5af605c6b6d9c551da8f466ef86219b8bb8cdbd4aeb146f5a",
+ "addendum_sha256": "e7dd8b3d78c4f07154c1a1c0d42ad4959de3bad141449f416bfe3be596f38016",
+ "metrics": [
+  "apex_vinkel_deg",
+  "spårdjup_mm",
+  "spårbredd_mm"
+ ],
+ "d0_check": {
+  "rows": {
+   "Sö 112": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 348,
+    "n_now": 348
+   },
+   "Sö 113": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 496,
+    "n_now": 496
+   },
+   "Sö 128": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 517,
+    "n_now": 517
+   },
+   "Sö 129": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 316,
+    "n_now": 316
+   },
+   "Sö 131": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 371,
+    "n_now": 371
+   },
+   "Sö 134": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 710,
+    "n_now": 710
+   },
+   "Sö 137A": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 549,
+    "n_now": 549
+   },
+   "Sö 137B": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 693,
+    "n_now": 693
+   },
+   "Sö 143": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 950,
+    "n_now": 950
+   },
+   "Sö 149": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 120,
+    "n_now": 120
+   },
+   "Sö 160": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 373,
+    "n_now": 373
+   },
+   "Sö 161": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 716,
+    "n_now": 716
+   },
+   "Sö 162": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 154,
+    "n_now": 154
+   },
+   "Sö 163": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 205,
+    "n_now": 205
+   },
+   "Sö 164": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 561,
+    "n_now": 561
+   },
+   "Sö 165": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 382,
+    "n_now": 382
+   },
+   "Sö 166": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 503,
+    "n_now": 503
+   },
+   "Sö 184": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 129,
+    "n_now": 129
+   },
+   "Sö 205": {
+    "saved_bands": "ritade",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.0,
+     "spårdjup_mm": 0.0,
+     "spårbredd_mm": 0.0
+    },
+    "within": true,
+    "n_saved": 73,
+    "n_now": 73
+   },
+   "Sö 206": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -0.0555831331131742,
+     "spårdjup_mm": -0.04336702022796324,
+     "spårbredd_mm": -0.21151686421226756
+    },
+    "within": false,
+    "n_saved": 200,
+    "n_now": 206
+   },
+   "Sö 207": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -0.4225366085375697,
+     "spårdjup_mm": 0.005356021749092221,
+     "spårbredd_mm": -0.026670868101303924
+    },
+    "within": true,
+    "n_saved": 571,
+    "n_now": 460
+   },
+   "Sö 208": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -1.3294749395048626,
+     "spårdjup_mm": 0.0018330101198733573,
+     "spårbredd_mm": -0.4291796297244055
+    },
+    "within": false,
+    "n_saved": 271,
+    "n_now": 250
+   },
+   "Sö 211": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.996999886619875,
+     "spårdjup_mm": -0.08157762677808567,
+     "spårbredd_mm": -0.08247701528300766
+    },
+    "within": false,
+    "n_saved": 854,
+    "n_now": 723
+   },
+   "Sö 307": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.8075903384883247,
+     "spårdjup_mm": -0.011167441313206572,
+     "spårbredd_mm": -0.07318265814060787
+    },
+    "within": false,
+    "n_saved": 344,
+    "n_now": 319
+   },
+   "Sö 319": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -0.7132553965245734,
+     "spårdjup_mm": -0.03106091132515454,
+     "spårbredd_mm": -0.32030678081496156
+    },
+    "within": false,
+    "n_saved": 756,
+    "n_now": 647
+   },
+   "Sö 333": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.08894449156568385,
+     "spårdjup_mm": 0.014556016167624808,
+     "spårbredd_mm": 0.05522821014040069
+    },
+    "within": true,
+    "n_saved": 720,
+    "n_now": 707
+   },
+   "Sö 360": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -3.4795049062647934,
+     "spårdjup_mm": 0.11489769430185026,
+     "spårbredd_mm": -0.4051559291861917
+    },
+    "within": false,
+    "n_saved": 190,
+    "n_now": 260
+   },
+   "Sö 367": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -0.2665144492563911,
+     "spårdjup_mm": 0.024989353388524815,
+     "spårbredd_mm": 0.08286232137625937
+    },
+    "within": true,
+    "n_saved": 1935,
+    "n_now": 1528
+   },
+   "Sö 370": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -3.3591021799567926,
+     "spårdjup_mm": 0.03431841701689908,
+     "spårbredd_mm": -0.3712568814177484
+    },
+    "within": false,
+    "n_saved": 210,
+    "n_now": 173
+   },
+   "Sö 45": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.3408695314374768,
+     "spårdjup_mm": -0.058539104312343326,
+     "spårbredd_mm": -0.1361911821101156
+    },
+    "within": false,
+    "n_saved": 454,
+    "n_now": 374
+   },
+   "Sö 52": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.7921500365268628,
+     "spårdjup_mm": -0.0055827124900533764,
+     "spårbredd_mm": 0.14647330536950953
+    },
+    "within": false,
+    "n_saved": 467,
+    "n_now": 447
+   },
+   "Sö 75": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.2996215293829607,
+     "spårdjup_mm": 0.017894541191723956,
+     "spårbredd_mm": 0.2247577038728199
+    },
+    "within": false,
+    "n_saved": 749,
+    "n_now": 641
+   },
+   "Sö Fv1948;282": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 1.097063297834893,
+     "spårdjup_mm": -0.1129668578991474,
+     "spårbredd_mm": -0.12629990962626003
+    },
+    "within": false,
+    "n_saved": 726,
+    "n_now": 555
+   },
+   "Sö Fv1954;19": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -0.9252093671888417,
+     "spårdjup_mm": 0.08872780513959189,
+     "spårbredd_mm": 0.025121020148713313
+    },
+    "within": false,
+    "n_saved": 161,
+    "n_now": 158
+   },
+   "Sö Fv1954;20": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": -1.8869402257882086,
+     "spårdjup_mm": 0.07339977968617095,
+     "spårbredd_mm": -0.19070365328295757
+    },
+    "within": false,
+    "n_saved": 84,
+    "n_now": 79
+   },
+   "Sö Fv1973;189": {
+    "saved_bands": "modellen",
+    "bands": "ritade",
+    "diff": {
+     "apex_vinkel_deg": 0.4341274746649759,
+     "spårdjup_mm": -0.05545349230303698,
+     "spårbredd_mm": -0.03185902906211169
+    },
+    "within": true,
+    "n_saved": 630,
+    "n_now": 741
+   }
+  },
+  "same_bands": [
+   "Sö 112",
+   "Sö 113",
+   "Sö 128",
+   "Sö 129",
+   "Sö 131",
+   "Sö 134",
+   "Sö 137A",
+   "Sö 137B",
+   "Sö 143",
+   "Sö 149",
+   "Sö 160",
+   "Sö 161",
+   "Sö 162",
+   "Sö 163",
+   "Sö 164",
+   "Sö 165",
+   "Sö 166",
+   "Sö 184",
+   "Sö 205"
+  ],
+  "same_bands_within": [
+   "Sö 112",
+   "Sö 113",
+   "Sö 128",
+   "Sö 129",
+   "Sö 131",
+   "Sö 134",
+   "Sö 137A",
+   "Sö 137B",
+   "Sö 143",
+   "Sö 149",
+   "Sö 160",
+   "Sö 161",
+   "Sö 162",
+   "Sö 163",
+   "Sö 164",
+   "Sö 165",
+   "Sö 166",
+   "Sö 184",
+   "Sö 205"
+  ],
+  "other_bands": [
+   "Sö 206",
+   "Sö 207",
+   "Sö 208",
+   "Sö 211",
+   "Sö 307",
+   "Sö 319",
+   "Sö 333",
+   "Sö 360",
+   "Sö 367",
+   "Sö 370",
+   "Sö 45",
+   "Sö 52",
+   "Sö 75",
+   "Sö Fv1948;282",
+   "Sö Fv1954;19",
+   "Sö Fv1954;20",
+   "Sö Fv1973;189"
+  ]
+ },
+ "R1": {
+  "units": [
+   "Sö 112",
+   "Sö 113",
+   "Sö 128",
+   "Sö 129",
+   "Sö 131",
+   "Sö 134",
+   "Sö 137A",
+   "Sö 137B",
+   "Sö 143",
+   "Sö 161",
+   "Sö 163",
+   "Sö 164",
+   "Sö 165",
+   "Sö 166",
+   "Sö 206",
+   "Sö 207",
+   "Sö 208",
+   "Sö 211",
+   "Sö 319",
+   "Sö 333",
+   "Sö 360",
+   "Sö 367",
+   "Sö 370",
+   "Sö 45",
+   "Sö 52",
+   "Sö 75",
+   "Sö Fv1948;282",
+   "Sö Fv1954;19",
+   "Sö Fv1973;189"
+  ],
+  "n_units": 29,
+  "n_stones": 29,
+  "stat": -0.006338414894684797,
+  "ci95": [
+   -0.02030797124764835,
+   0.003307089929445963
+  ],
+  "per_metric": {
+   "apex_vinkel_deg": -0.024071949262678676,
+   "spårdjup_mm": -0.012172404840074091,
+   "spårbredd_mm": 0.017229109418698374
+  },
+  "metrics_positive": 1,
+  "metrics_negative": 2,
+  "holds": false,
+  "icc": {
+   "apex_vinkel_deg|D1|H": 0.9839940037883599,
+   "apex_vinkel_deg|D1|S": 0.9592522681326965,
+   "apex_vinkel_deg|D2|H": 0.9782912937665319,
+   "apex_vinkel_deg|D2|S": 0.9521706470217752,
+   "apex_vinkel_deg|D3|H": 0.9849439858032896,
+   "apex_vinkel_deg|D3|S": 0.9635905204156736,
+   "spårdjup_mm|D1|H": 0.9910046440376006,
+   "spårdjup_mm|D1|S": 0.9639990830370959,
+   "spårdjup_mm|D2|H": 0.9921977855884616,
+   "spårdjup_mm|D2|S": 0.9841979457995048,
+   "spårdjup_mm|D3|H": 0.9672224381964377,
+   "spårdjup_mm|D3|S": 0.9657106244656769,
+   "spårbredd_mm|D1|H": 0.9724880369855747,
+   "spårbredd_mm|D1|S": 0.9661227924306712,
+   "spårbredd_mm|D2|H": 0.9321071603582183,
+   "spårbredd_mm|D2|S": 0.9598057796476581,
+   "spårbredd_mm|D3|H": 0.9518017507072581,
+   "spårbredd_mm|D3|S": 0.9821557042288169
+  },
+  "boot": 2000,
+  "seed": 4215948362
+ },
+ "R2": {
+  "stones": [
+   "Sö 112",
+   "Sö 129",
+   "Sö 143",
+   "Sö 149",
+   "Sö 160",
+   "Sö 162",
+   "Sö 164",
+   "Sö 211",
+   "Sö 333",
+   "Sö 45"
+  ],
+  "carvers": {
+   "Sö 112": [
+    "Traen"
+   ],
+   "Sö 129": [
+    "Traen"
+   ],
+   "Sö 143": [
+    "Tore 1"
+   ],
+   "Sö 149": [
+    "Tore 1"
+   ],
+   "Sö 160": [
+    "Gunnlev 2",
+    "Sigmund"
+   ],
+   "Sö 162": [
+    "Gunnlev 2",
+    "Sigmund"
+   ],
+   "Sö 164": [
+    "Traen"
+   ],
+   "Sö 211": [
+    "Äskil 1"
+   ],
+   "Sö 333": [
+    "Äsger",
+    "Äskil 1"
+   ],
+   "Sö 45": [
+    "Traen"
+   ]
+  },
+  "rock": {
+   "Sö 112": [
+    "gnejs",
+    "granitoid"
+   ],
+   "Sö 129": [
+    "gnejs",
+    "granitoid"
+   ],
+   "Sö 143": [
+    "gnejs",
+    "granitoid"
+   ],
+   "Sö 149": [
+    "gnejs",
+    "granitoid"
+   ],
+   "Sö 160": [
+    "sandsten"
+   ],
+   "Sö 162": [
+    "sandsten"
+   ],
+   "Sö 164": [
+    "gnejs",
+    "granitoid"
+   ],
+   "Sö 211": [
+    "granitoid"
+   ],
+   "Sö 333": [
+    "granitoid"
+   ],
+   "Sö 45": [
+    "gnejs"
+   ]
+  },
+  "dropped_no_rock": [
+   "Sö 206",
+   "Sö 208"
+  ],
+  "n_pairs": 12,
+  "perm": 10000,
+  "seed": 4215948362,
+  "S": {
+   "delta": -0.9571432990785063,
+   "n_same": 6,
+   "n_diff": 6,
+   "p": 0.10208979102089791,
+   "smallest_p": 0.10208979102089791,
+   "n_distinct": 10
+  },
+  "H": {
+   "delta": -0.717849877768383,
+   "n_same": 6,
+   "n_diff": 6,
+   "p": 0.10208979102089791,
+   "smallest_p": 0.10208979102089791,
+   "n_distinct": 10
+  },
+  "holds_for_S": false,
+  "holds_for_H": false,
+  "S_worse": false
+ },
+ "descriptive": {
+  "n_units": 36,
+  "n_safe": {
+   "Sö 112": 30,
+   "Sö 113": 44,
+   "Sö 128": 43,
+   "Sö 129": 32,
+   "Sö 131": 37,
+   "Sö 134": 51,
+   "Sö 137A": 39,
+   "Sö 137B": 65,
+   "Sö 143": 53,
+   "Sö 149": 12,
+   "Sö 160": 32,
+   "Sö 161": 52,
+   "Sö 162": 16,
+   "Sö 163": 22,
+   "Sö 164": 50,
+   "Sö 165": 38,
+   "Sö 166": 40,
+   "Sö 184": 9,
+   "Sö 205": 5,
+   "Sö 206": 20,
+   "Sö 207": 44,
+   "Sö 208": 21,
+   "Sö 211": 64,
+   "Sö 307": 34,
+   "Sö 319": 58,
+   "Sö 333": 82,
+   "Sö 360": 18,
+   "Sö 367": 115,
+   "Sö 370": 13,
+   "Sö 45": 37,
+   "Sö 52": 37,
+   "Sö 75": 46,
+   "Sö Fv1948;282": 32,
+   "Sö Fv1954;19": 16,
+   "Sö Fv1954;20": 3,
+   "Sö Fv1973;189": 51
+  },
+  "n_with_S": 34,
+  "without_S": [
+   "Sö 205",
+   "Sö Fv1954;20"
+  ],
+  "spearman_brown": {
+   "apex_vinkel_deg": {
+    "n_stones": 36,
+    "icc_median": 0.33876775550071975,
+    "icc_range": [
+     0.05890684219639485,
+     0.610457268202168
+    ],
+    "curve_k1_30": [
+     0.33876775550071975,
+     0.5060887734997161,
+     0.605830944645991,
+     0.6720569119715336,
+     0.7192301978332473,
+     0.7545387959127556,
+     0.7819588619856335,
+     0.8038683987665641,
+     0.8217768811534916,
+     0.836688599911688,
+     0.8492976851804395,
+     0.8600992601871066,
+     0.8694559903776082,
+     0.8776396013391601,
+     0.8848577017421599,
+     0.8912716413348398,
+     0.8970087152524079,
+     0.902170698203149,
+     0.9068399347155686,
+     0.9110837647681211,
+     0.9149577924863734,
+     0.9185083360241879,
+     0.9217742883395433,
+     0.9247885477643604,
+     0.9275791301023546,
+     0.9301700420099681,
+     0.9325819733774763,
+     0.9348328510114081,
+     0.9369382849860306,
+     0.9389119311778948
+    ]
+   },
+   "spårdjup_mm": {
+    "n_stones": 36,
+    "icc_median": 0.44290346554401505,
+    "icc_range": [
+     0.24205039641706128,
+     0.9166203792081614
+    ],
+    "curve_k1_30": [
+     0.44290346554401505,
+     0.6138991419695754,
+     0.7045754699609129,
+     0.7607607400571978,
+     0.7989897086081907,
+     0.8266844163637099,
+     0.8476717954497884,
+     0.8641253122857364,
+     0.8773709119209989,
+     0.8882634276499213,
+     0.8973787462301721,
+     0.9051190071820004,
+     0.911773532452501,
+     0.9175557963215606,
+     0.922626751607933,
+     0.9271100461838646,
+     0.9311022390005622,
+     0.9346798332271591,
+     0.9379042263243278,
+     0.9408252629794536,
+     0.9434838302937671,
+     0.9459137834759208,
+     0.9481433952337457,
+     0.9501964608661329,
+     0.9520931508401596,
+     0.953850675700442,
+     0.9554838097991851,
+     0.957005307624111,
+     0.9584262375710151,
+     0.9597562516485727
+    ]
+   },
+   "spårbredd_mm": {
+    "n_stones": 36,
+    "icc_median": 0.32034675829821807,
+    "icc_range": [
+     0.07445555624276647,
+     0.7668147640923719
+    ],
+    "curve_k1_30": [
+     0.32034675829821807,
+     0.48523928194241883,
+     0.5857413313082471,
+     0.6534090462434727,
+     0.7020739006745045,
+     0.7387551437057442,
+     0.7673939680120363,
+     0.7903740502490901,
+     0.8092217679057851,
+     0.8249598200439765,
+     0.8382991518511965,
+     0.8497493348235536,
+     0.8596851504192429,
+     0.8683883934942013,
+     0.8760750265751633,
+     0.8829133435777907,
+     0.8890364341767085,
+     0.8945509315195721,
+     0.8995432750220723,
+     0.9040842745433458,
+     0.9082324901872059,
+     0.9120367714255755,
+     0.9155381897913182,
+     0.9187715276479902,
+     0.921766437610116,
+     0.9245483545942187,
+     0.9271392199603098,
+     0.9295580614118135,
+     0.931821461096917,
+     0.9339439362743926
+    ]
+   }
+  },
+  "shift": {
+   "H|D1|apex_vinkel_deg": {
+    "n": 36,
+    "mean": -1.5443804223339752,
+    "mean_abs": 1.8640442854715664
+   },
+   "H|D1|spårdjup_mm": {
+    "n": 36,
+    "mean": 0.06278592608924165,
+    "mean_abs": 0.10099348732859101
+   },
+   "H|D1|spårbredd_mm": {
+    "n": 36,
+    "mean": -0.4200441813087155,
+    "mean_abs": 0.5268826324486985
+   },
+   "H|D2|apex_vinkel_deg": {
+    "n": 36,
+    "mean": 1.8697866900506632,
+    "mean_abs": 1.8860393349115714
+   },
+   "H|D2|spårdjup_mm": {
+    "n": 36,
+    "mean": 0.10168019997231896,
+    "mean_abs": 0.10545198847876498
+   },
+   "H|D2|spårbredd_mm": {
+    "n": 36,
+    "mean": 0.9481510092437964,
+    "mean_abs": 0.9481510092437964
+   },
+   "H|D3|apex_vinkel_deg": {
+    "n": 36,
+    "mean": 0.6366845447547966,
+    "mean_abs": 1.862738574961785
+   },
+   "H|D3|spårdjup_mm": {
+    "n": 36,
+    "mean": 0.1944076576315845,
+    "mean_abs": 0.22505612697733987
+   },
+   "H|D3|spårbredd_mm": {
+    "n": 36,
+    "mean": 0.6400675019055573,
+    "mean_abs": 0.7335020597994895
+   },
+   "S|D1|apex_vinkel_deg": {
+    "n": 32,
+    "mean": -1.8579976358277377,
+    "mean_abs": 2.7331988947796435
+   },
+   "S|D1|spårdjup_mm": {
+    "n": 32,
+    "mean": 0.05075800973939643,
+    "mean_abs": 0.19240216330904553
+   },
+   "S|D1|spårbredd_mm": {
+    "n": 32,
+    "mean": -0.46514862307151417,
+    "mean_abs": 0.5063909957590609
+   },
+   "S|D2|apex_vinkel_deg": {
+    "n": 33,
+    "mean": 1.6966038030247088,
+    "mean_abs": 2.5354716373184796
+   },
+   "S|D2|spårdjup_mm": {
+    "n": 33,
+    "mean": 0.02104319784109472,
+    "mean_abs": 0.13161128682084114
+   },
+   "S|D2|spårbredd_mm": {
+    "n": 33,
+    "mean": 0.5896509623641255,
+    "mean_abs": 0.6509039071183533
+   },
+   "S|D3|apex_vinkel_deg": {
+    "n": 30,
+    "mean": 0.8571395887772236,
+    "mean_abs": 2.414086518779464
+   },
+   "S|D3|spårdjup_mm": {
+    "n": 30,
+    "mean": 0.09310922360394355,
+    "mean_abs": 0.2065646030014182
+   },
+   "S|D3|spårbredd_mm": {
+    "n": 30,
+    "mean": 0.1716912103603309,
+    "mean_abs": 0.4072262059466612
+   }
+  },
+  "example": {
+   "unit": "Sö 137A",
+   "signum": "Sö 137A",
+   "score": 1.1852054542602835,
+   "H": {
+    "apex_vinkel_deg": 119.4937067271343,
+    "spårdjup_mm": 5.611511750133946,
+    "spårbredd_mm": 19.58480112567406
+   },
+   "S": {
+    "apex_vinkel_deg": 114.23936873298506,
+    "spårdjup_mm": 6.19447966298089,
+    "spårbredd_mm": 19.362662183357088
+   },
+   "n_safe": 39,
+   "n_slices": 549
+  }
+ },
+ "zedig": {
+  "R1z": {
+   "units": [
+    "HS_11_thin03",
+    "HS_12_thin03",
+    "HS_14_0_40_runes_thin03",
+    "HS_15_0_40_thin03",
+    "HS_16_thin03",
+    "HS_21_thin01",
+    "HS_2_thin01",
+    "HS_6_thin03",
+    "M_11_Högom_thin03",
+    "M_15_Sköns_kyrka_thin02",
+    "M_1_Nolby_thin03",
+    "M_3_Berga_thin02",
+    "M_4_Attmarby_thin02",
+    "M_5_Attmar_thin02",
+    "M_7_Tuna_kyrka_thin03",
+    "M_8_Sköle_thin03"
+   ],
+   "n_units": 16,
+   "n_stones": 16,
+   "stat": -0.01088491231092307,
+   "ci95": [
+    -0.030014151240603235,
+    0.00870596160987494
+   ],
+   "per_metric": {
+    "apex_vinkel_deg": -0.008380179326412255,
+    "spårdjup_mm": -0.02901901110846446,
+    "spårbredd_mm": 0.004744453502107504
+   },
+   "metrics_positive": 1,
+   "metrics_negative": 2,
+   "holds": false,
+   "icc": {
+    "apex_vinkel_deg|D1|H": 0.9775126498202829,
+    "apex_vinkel_deg|D1|S": 0.9692209314520588,
+    "apex_vinkel_deg|D2|H": 0.9819251595188773,
+    "apex_vinkel_deg|D2|S": 0.9821716249778004,
+    "apex_vinkel_deg|D3|H": 0.9845734438518055,
+    "apex_vinkel_deg|D3|S": 0.9674781587818696,
+    "spårdjup_mm|D1|H": 0.9921491156625944,
+    "spårdjup_mm|D1|S": 0.9779478851633345,
+    "spårdjup_mm|D2|H": 0.982146461839238,
+    "spårdjup_mm|D2|S": 0.968825537512144,
+    "spårdjup_mm|D3|H": 0.9446760105324827,
+    "spårdjup_mm|D3|S": 0.8851411320334434,
+    "spårbredd_mm|D1|H": 0.9679069235955451,
+    "spårbredd_mm|D1|S": 0.9518867546820776,
+    "spårbredd_mm|D2|H": 0.9166144653240811,
+    "spårbredd_mm|D2|S": 0.9604644270751809,
+    "spårbredd_mm|D3|H": 0.9394837569008468,
+    "spårbredd_mm|D3|S": 0.925887324569537
+   },
+   "boot": 2000,
+   "seed": 3890055997
+  },
+  "descriptive": {
+   "n_units": 27,
+   "n_safe": {
+    "HS_11_thin03": 25,
+    "HS_12_thin03": 28,
+    "HS_14_0_40_runes_thin03": 32,
+    "HS_14_1mm_complete_thin03": 1,
+    "HS_15_0_40_thin03": 19,
+    "HS_16_thin03": 16,
+    "HS_1A_thin02": 0,
+    "HS_21_thin01": 38,
+    "HS_2_thin01": 132,
+    "HS_3_thin01": 2,
+    "HS_6_thin03": 81,
+    "HS_9_thin03": 25,
+    "M_10_Selånger_thin03": 17,
+    "M_11_Högom_thin03": 75,
+    "M_13_Oxsta_thin03": 2,
+    "M_14_020_Byn_thin02": 7,
+    "M_14_040_Byn_thin03": 5,
+    "M_15_Sköns_kyrka_thin02": 44,
+    "M_16_Sköns_kyrka_thin03": 16,
+    "M_1_Nolby_thin03": 39,
+    "M_2_Svala_thin03": 5,
+    "M_3_Berga_thin02": 18,
+    "M_4_Attmarby_thin02": 31,
+    "M_5_Attmar_thin02": 64,
+    "M_6_Målsta_thin02": 12,
+    "M_7_Tuna_kyrka_thin03": 23,
+    "M_8_Sköle_thin03": 22
+   },
+   "n_with_S": 20,
+   "without_S": [
+    "HS_14_1mm_complete_thin03",
+    "HS_1A_thin02",
+    "HS_3_thin01",
+    "M_13_Oxsta_thin03",
+    "M_14_020_Byn_thin02",
+    "M_14_040_Byn_thin03",
+    "M_2_Svala_thin03"
+   ],
+   "spearman_brown": {
+    "apex_vinkel_deg": {
+     "n_stones": 27,
+     "icc_median": 0.2603279527378426,
+     "icc_range": [
+      -0.08810823791634839,
+      0.6183320311092765
+     ],
+     "curve_k1_30": [
+      0.2603279527378426,
+      0.4131114479724512,
+      0.5135835499676856,
+      0.5846834636647921,
+      0.6376486711662992,
+      0.678632573641079,
+      0.7112875222745932,
+      0.737918299863663,
+      0.7600511324163548,
+      0.7787368345765873,
+      0.7947225460467378,
+      0.808554038921185,
+      0.820639275443204,
+      0.8312893222398662,
+      0.8407455051733045,
+      0.8491979167508065,
+      0.8567983269050242,
+      0.8636693768923508,
+      0.8699112475463692,
+      0.8756065759013292,
+      0.8808241344783055,
+      0.8856216219017085,
+      0.8900478055726363,
+      0.8941441853774998,
+      0.8979462988556046,
+      0.9014847548462703,
+      0.9047860593071712,
+      0.9078732804744462,
+      0.9107665886837188,
+      0.9134836975675777
+     ]
+    },
+    "spårdjup_mm": {
+     "n_stones": 27,
+     "icc_median": 0.46729512948368845,
+     "icc_range": [
+      0.23380163976708662,
+      0.8642822172501179
+     ],
+     "curve_k1_30": [
+      0.46729512948368845,
+      0.6369477006962058,
+      0.7246420175812047,
+      0.778213867706717,
+      0.8143355333739146,
+      0.8403390503004313,
+      0.859953477283361,
+      0.875275895480834,
+      0.8875761330798302,
+      0.8976680645829462,
+      0.9060974010122135,
+      0.9132437309997284,
+      0.9193792628955002,
+      0.9247042872700287,
+      0.929369456310185,
+      0.9334902641154111,
+      0.9371567374737548,
+      0.9404400887731426,
+      0.9433973869108296,
+      0.9460749024937913,
+      0.9485105464797239,
+      0.9507356764990496,
+      0.9527764542148989,
+      0.9546548787305112,
+      0.95638958279502,
+      0.9579964529871609,
+      0.9594891176635344,
+      0.9608793344369957,
+      0.9621773005192693,
+      0.9633919032672507
+     ]
+    },
+    "spårbredd_mm": {
+     "n_stones": 27,
+     "icc_median": 0.35593015262225564,
+     "icc_range": [
+      0.057594428431881395,
+      0.9196237093170625
+     ],
+     "curve_k1_30": [
+      0.35593015262225564,
+      0.5249977691460235,
+      0.6237602768143226,
+      0.6885226716626799,
+      0.7342639887656881,
+      0.7682910904041652,
+      0.7945931345142558,
+      0.8155326347909738,
+      0.8325978720958815,
+      0.8467730328509895,
+      0.8587349742776575,
+      0.8689644986319109,
+      0.8778125453229564,
+      0.885541261952202,
+      0.8923504154487816,
+      0.8983949053439824,
+      0.9037966905376218,
+      0.9086531036333321,
+      0.9130427680074117,
+      0.9170298870389808,
+      0.9206674050674558,
+      0.9239993717892778,
+      0.92706273484314,
+      0.9298887156690203,
+      0.9325038774486819,
+      0.9349309626344896,
+      0.9371895560508319,
+      0.9392966145279192,
+      0.9412668933921154,
+      0.9431132925105266
+     ]
+    }
+   },
+   "shift": {
+    "H|D1|apex_vinkel_deg": {
+     "n": 27,
+     "mean": -2.311837477257848,
+     "mean_abs": 2.681184418833981
+    },
+    "H|D1|spårdjup_mm": {
+     "n": 27,
+     "mean": 0.0692289425379003,
+     "mean_abs": 0.15408869952459647
+    },
+    "H|D1|spårbredd_mm": {
+     "n": 27,
+     "mean": -0.49747854440644873,
+     "mean_abs": 0.7045950057921638
+    },
+    "H|D2|apex_vinkel_deg": {
+     "n": 27,
+     "mean": 2.8458116500857256,
+     "mean_abs": 3.044967502800927
+    },
+    "H|D2|spårdjup_mm": {
+     "n": 27,
+     "mean": 0.08062619683090828,
+     "mean_abs": 0.246156553456105
+    },
+    "H|D2|spårbredd_mm": {
+     "n": 27,
+     "mean": 1.1321854794034907,
+     "mean_abs": 1.2418719013336987
+    },
+    "H|D3|apex_vinkel_deg": {
+     "n": 27,
+     "mean": 1.9078067476581824,
+     "mean_abs": 3.904147047102463
+    },
+    "H|D3|spårdjup_mm": {
+     "n": 27,
+     "mean": 0.24110608361345254,
+     "mean_abs": 0.380181387791066
+    },
+    "H|D3|spårbredd_mm": {
+     "n": 27,
+     "mean": 1.188339416086178,
+     "mean_abs": 1.3253717899010242
+    },
+    "S|D1|apex_vinkel_deg": {
+     "n": 18,
+     "mean": -2.055318779980039,
+     "mean_abs": 2.7705334105342123
+    },
+    "S|D1|spårdjup_mm": {
+     "n": 18,
+     "mean": 0.10011638644313813,
+     "mean_abs": 0.1713076438251183
+    },
+    "S|D1|spårbredd_mm": {
+     "n": 18,
+     "mean": -0.4841233922013055,
+     "mean_abs": 0.5692775067487809
+    },
+    "S|D2|apex_vinkel_deg": {
+     "n": 20,
+     "mean": 2.180033402513099,
+     "mean_abs": 2.688932632344506
+    },
+    "S|D2|spårdjup_mm": {
+     "n": 20,
+     "mean": 0.047789604211834334,
+     "mean_abs": 0.18447576415918987
+    },
+    "S|D2|spårbredd_mm": {
+     "n": 20,
+     "mean": 0.7366515957117676,
+     "mean_abs": 0.7472276134557048
+    },
+    "S|D3|apex_vinkel_deg": {
+     "n": 17,
+     "mean": -0.35395456853943585,
+     "mean_abs": 2.824918768398047
+    },
+    "S|D3|spårdjup_mm": {
+     "n": 17,
+     "mean": 0.20992652111956195,
+     "mean_abs": 0.3278073146347631
+    },
+    "S|D3|spårbredd_mm": {
+     "n": 17,
+     "mean": 0.4869855729085773,
+     "mean_abs": 0.5760164067227516
+    }
+   },
+   "example": {
+    "unit": "M_4_Attmarby_thin02",
+    "signum": "M 4",
+    "score": 0.7987825311025772,
+    "H": {
+     "apex_vinkel_deg": 131.45930228919565,
+     "spårdjup_mm": 2.3749012836806793,
+     "spårbredd_mm": 12.216125726011407
+    },
+    "S": {
+     "apex_vinkel_deg": 136.46970707822933,
+     "spårdjup_mm": 2.2736118311790574,
+     "spårbredd_mm": 12.849053451919966
+    },
+    "n_safe": 31,
+    "n_slices": 343
+   }
+  },
+  "carvers_with_several_stones": {},
+  "units": {
+   "HS_11_thin03": {
+    "signum": "Hs 11",
+    "file": "HS_11 thin03.stl"
+   },
+   "HS_12_thin03": {
+    "signum": "Hs 12",
+    "file": "HS_12 thin03.stl"
+   },
+   "HS_14_0_40_runes_thin03": {
+    "signum": "Hs 14",
+    "file": "HS_14_0_40 runes thin03.stl"
+   },
+   "HS_14_1mm_complete_thin03": {
+    "signum": "Hs 14",
+    "file": "HS_14_1mm_complete thin03.stl"
+   },
+   "HS_15_0_40_thin03": {
+    "signum": "Hs 15",
+    "file": "HS_15_0_40 thin03.stl"
+   },
+   "HS_16_thin03": {
+    "signum": "Hs 16",
+    "file": "HS_16 thin03.stl"
+   },
+   "HS_1A_thin02": {
+    "signum": "Hs 1",
+    "file": "HS_1A_thin02.stl"
+   },
+   "HS_21_thin01": {
+    "signum": "Hs 21",
+    "file": "HS_21 thin01.stl"
+   },
+   "HS_2_thin01": {
+    "signum": "Hs 2",
+    "file": "HS_2 thin01.stl"
+   },
+   "HS_3_thin01": {
+    "signum": "Hs 3",
+    "file": "HS_3 thin01.stl"
+   },
+   "HS_6_thin03": {
+    "signum": "Hs 6",
+    "file": "HS_6 thin03.stl"
+   },
+   "HS_9_thin03": {
+    "signum": "Hs 9",
+    "file": "HS_9 thin03.stl"
+   },
+   "M_10_Selånger_thin03": {
+    "signum": "M 10",
+    "file": "M 10 Selånger thin03.stl"
+   },
+   "M_11_Högom_thin03": {
+    "signum": "M 11",
+    "file": "M 11 Högom thin03.stl"
+   },
+   "M_13_Oxsta_thin03": {
+    "signum": "M 13",
+    "file": "M 13 Oxsta thin03.stl"
+   },
+   "M_14_020_Byn_thin02": {
+    "signum": "M 14",
+    "file": "M 14_020 Byn thin02.stl"
+   },
+   "M_14_040_Byn_thin03": {
+    "signum": "M 14",
+    "file": "M 14_040 Byn thin03.stl"
+   },
+   "M_15_Sköns_kyrka_thin02": {
+    "signum": "M 15",
+    "file": "M 15 Sköns kyrka thin02.stl"
+   },
+   "M_16_Sköns_kyrka_thin03": {
+    "signum": "M 16",
+    "file": "M 16 Sköns kyrka thin03.stl"
+   },
+   "M_1_Nolby_thin03": {
+    "signum": "M 1",
+    "file": "M 1 Nolby thin03.stl"
+   },
+   "M_2_Svala_thin03": {
+    "signum": "M 2",
+    "file": "M 2 Svala thin03.stl"
+   },
+   "M_3_Berga_thin02": {
+    "signum": "M 3",
+    "file": "M 3 Berga thin02.stl"
+   },
+   "M_4_Attmarby_thin02": {
+    "signum": "M 4",
+    "file": "M 4 Attmarby thin02.stl"
+   },
+   "M_5_Attmar_thin02": {
+    "signum": "M 5",
+    "file": "M 5 Attmar thin02.stl"
+   },
+   "M_6_Målsta_thin02": {
+    "signum": "M 6",
+    "file": "M 6 Målsta thin02.stl"
+   },
+   "M_7_Tuna_kyrka_thin03": {
+    "signum": "M 7",
+    "file": "M 7 Tuna kyrka thin03.stl"
+   },
+   "M_8_Sköle_thin03": {
+    "signum": "M 8",
+    "file": "M 8 Sköle thin03.stl"
+   }
+  }
+ },
+ "decision": {
+  "R1_holds": false,
+  "R1z_holds": false,
+  "R2_S_worse": false,
+  "main_plan_rule": "H",
+  "addendum_rule": "H"
+ }
+}
