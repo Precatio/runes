@@ -66,10 +66,47 @@ TH = next(c for c in LK["confirmed"] if c["utslag"] == "bekräftad")
 assert (TH["feature"], TH["center"], round(TH["radius"] / 1000), TH["O"], TH["OB"], d2(TH["ratio"]), d2(TH["ratioB"]), TH["holm"]) == \
     ("ord_þennsa", "Sö 190", 21, 11, 7, "4,01", "3,13", 0.047)
 assert len(TH["carvers"]) == 13
+# granskning 2026-11-19: one v2 candidate (cross dividers × ræisa) could not be estimated in half B (resultat.md,
+# Avvikelser: "redovisas som ej prövad, räknas inte i Holm"); the JSON labels it "höll inte" but it has no half-B estimate.
+NOEST = [r for r in M2["results"] if "or2" not in r]
+assert [(r["a"], r["b"], r["utslag"]) for r in NOEST] == [("skilj_kryss", "ord_ræisa", "höll inte")]
+C2 = Counter(r["utslag"] for r in M2["results"] if "or2" in r)
+assert C2 == {"höll inte": 1, "bekräftad": 2, "mönster att pröva": 1}
+_RES2 = re.sub(r"\s+", " ", open(os.path.join(ROOT, "utdata", "upptackt_v2", "resultat.md"), encoding="utf-8").read())
+assert "Kryss × *ræisa* kunde inte skattas i halva B" in _RES2 and "redovisas som ej prövad, räknas inte i Holm" in _RES2
 N_CAND = M["n_cand"] + M2["n_cand"] + len(LK["confirmed"])
-N_OK = C1["bekräftad"] + 2 + LC["bekräftad"]
-N_FAIL = C1["höll inte"] + 2 + LC["höll inte"]
-assert (N_CAND, N_OK, N_FAIL) == (43, 17, 18)
+N_OK = C1["bekräftad"] + C2["bekräftad"] + LC["bekräftad"]
+N_FAIL = C1["höll inte"] + C2["höll inte"] + LC["höll inte"]
+N_PAT = C1["mönster att pröva"] + C2["mönster att pröva"] + LC["mönster att pröva"]
+assert (N_CAND, N_OK, N_FAIL, N_PAT, len(NOEST)) == (43, 17, 17, 8, 1) and N_OK + N_FAIL + N_PAT + len(NOEST) == N_CAND
+assert round(10 * N_OK / (N_CAND - len(NOEST))) == 4 and LC["höll inte"] == 8 and len(LK["confirmed"]) == 10  # "fyra av tio", "åtta av tio"
+# the þennsa stones as groups (stones within 1 km linked; METHODS 1å, hot spots): close stones barely matter here
+from src import places, spatial_groups  # noqa: E402
+_DR = {r["signum"]: r for r in json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["inscriptions"]}
+_ft = {}
+for _r in __import__("csv").DictReader(open(os.path.join(ROOT, "utdata", "upptackt_v2", "drag.csv"), encoding="utf-8")):
+    _ft[_r["signum"]] = _r["ord_þennsa"]
+TH_G = {}
+for _h, _key in (("A", "stones"), ("B", "stonesB")):
+    _pos = [s_ for s_ in TH[_key] if _ft.get(s_) in ("1", "1.0")]
+    _xy = places._xy([_DR[s_]["lat"] for s_ in _pos], [_DR[s_]["lon"] for s_ in _pos])
+    TH_G[_h] = (len(_pos), len(set(spatial_groups.link(_xy, 1000.0))))
+assert TH_G == {"A": (11, 11), "B": (7, 6)} and (TH["O"], TH["OB"]) == (11, 7)
+# the corpus and the release: the corpus folder 3f58e9339191761e is no longer kept in data/cache/r/corpus/, but the
+# result files and the trait table (drag.csv) are in utdata/ and in the Vitki 3.1.0 release
+FP = "3f58e9339191761e"
+assert f"korpus {FP}" in open(os.path.join(ROOT, "utdata", "upptackt", "resultat.md"), encoding="utf-8").read()
+assert f"korpus {FP}" in _RES2
+from src.about import VERSION_DOIS  # noqa: E402
+DOI_310 = VERSION_DOIS["3.1.0"]
+assert DOI_310 == "10.5281/zenodo.24004432"
+if os.path.isdir(os.path.join(ROOT, ".git")):
+    import subprocess
+    for _f in ("utdata/upptackt/upptackt.json", "utdata/upptackt_v2/upptackt.json", "utdata/upptackt_v2/lokala.json",
+               "utdata/upptackt_v2/drag.csv"):
+        _c = subprocess.run(["git", "-C", ROOT, "log", "-1", "--format=%h", "--", _f], capture_output=True, text=True).stdout.strip()
+        assert subprocess.run(["git", "-C", ROOT, "merge-base", "--is-ancestor", _c, "v3.1.0"]).returncode == 0, _f
+        assert not subprocess.run(["git", "-C", ROOT, "status", "--porcelain", "--", _f], capture_output=True, text=True).stdout.strip(), _f
 
 SLUG = "upptacktsmotorn"
 title = "En upptäcktsmotor som inte lurar sig själv: av 28 samband som hittades i ena halvan av runstenarna höll 14 i den andra"
@@ -88,13 +125,15 @@ CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report (methods repor
 
 def chart(sv):
     rows = [":::chart Kandidater från första halvan och hur de gick i den andra" if sv else ":::chart Candidates from the first half and how they fared in the second"]
-    lab = ("Bekräftade", "Mönster att pröva", "Höll inte") if sv else ("Confirmed", "Patterns to test", "Did not hold")
+    lab = ("Bekräftade", "Mönster att pröva", "Höll inte", "Kunde inte prövas") if sv else \
+        ("Confirmed", "Patterns to test", "Did not hold", "Could not be tested")
     for g_sv, g_en, c in (("Parskanning, version 1", "Pair scan, version 1", C1),
-                          ("Parskanning, version 2", "Pair scan, version 2", Counter(r["utslag"] for r in M2["results"])),
+                          ("Parskanning, version 2", "Pair scan, version 2", C2 + Counter({"ej prövad": len(NOEST)})),
                           ("Lokala bygder, version 2", "Local districts, version 2", LC)):
         rows.append(f"# {g_sv if sv else g_en}")
-        for k, lb in zip(("bekräftad", "mönster att pröva", "höll inte"), lab):
-            rows.append(f"{'+' if k == 'bekräftad' else ''}{lb} | {c.get(k, 0)} |")
+        for k, lb in zip(("bekräftad", "mönster att pröva", "höll inte", "ej prövad"), lab):
+            if k != "ej prövad" or c.get(k):
+                rows.append(f"{'+' if k == 'bekräftad' else ''}{lb} | {c.get(k, 0)} |")
     rows += ["Källa: Rundata; antal kandidater." if sv else "Source: Rundata; number of candidates.", ":::"]
     return "\n".join(rows)
 
@@ -107,8 +146,8 @@ body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapp
 **Bakgrund och syfte.** Den som söker igenom många samband hittar alltid några som ser starka ut av en slump. Frågan här är om en sökning i två steg, där upptäckten görs på ena halvan av materialet och prövas på den andra, skiljer verkliga samband från slumpens.
 **Material.** {U1['n_stones']} svenska vikingatida runstenar med minst fyra läsbara ord i Samnordisk runtextdatabas (Rundata), delade socken för socken i två halvor; {U1['n_features']} drag i version 1 och {U2['n_features']} i version 2.
 **Metod.** I första halvan prövas alla tillåtna par av drag med logistisk regression, med landskap, tid och textlängd konstanta; de starkaste blir kandidater. Listan fryses med en kontrollsumma innan den andra halvan läses, och varje kandidat prövas där med ristaren som slumpeffekt och Holm-korrigering. Version 2 lägger till en sökning efter bygder där ett drag är ovanligt vanligt.
-**Resultat.** Version 1 prövade {M['tested']} par och gav {M['n_cand']} kandidater; {C1['bekräftad']} bekräftades, {C1['mönster att pröva']} blev mönster att pröva och {C1['höll inte']} höll inte. Åtta av de bekräftade är kända familjemönster, ett är en följd av hur ett drag mäts, och fem är nya. Version 2 prövade {M2['tested']} par och gav {M2['n_cand']} kandidater, varav 2 bekräftades: sökningen efter par var uttömd. Av {len(LK['confirmed'])} bygder som stack ut i första halvan höll en.
-**Slutsats.** Hälften av sambanden från första halvan höll på stenar som sökningen aldrig sett, och för bygderna en av tio. Metoden gör det möjligt att låta datorn föreslå frågor utan att rapportera slumpens träffar som fynd.
+**Resultat.** Version 1 prövade {M['tested']} par och gav {M['n_cand']} kandidater; {C1['bekräftad']} bekräftades, {C1['mönster att pröva']} blev mönster att pröva och {C1['höll inte']} höll inte. Åtta av de bekräftade är kända familjemönster, ett är en följd av hur ett drag mäts, och fem hade vi inte väntat oss. Version 2 prövade {M2['tested']} par och gav {M2['n_cand']} kandidater, varav {C2['bekräftad']} bekräftades: sökningen efter par var uttömd. Av {len(LK['confirmed'])} bygder som stack ut i första halvan höll en.
+**Slutsats.** Hälften av sambanden från första halvan höll på stenar som sökningen aldrig sett, och för bygderna en av tio. Metoden gör det möjligt att låta datorn föreslå frågor utan att rapportera träffar som inte håller som fynd.
 
 ## 1. Inledning
 
@@ -143,27 +182,27 @@ Planerna bestämde vad som räknas som en bekräftad kandidat, men inte hur mån
 
 ## 5. Resultat
 
-**5.1 Version 1.** {M['tested']} par prövades i halva A och gav {M['n_cand']} kandidater. I halva B bekräftades {C1['bekräftad']}, {C1['mönster att pröva']} blev mönster att pröva och {C1['höll inte']} höll inte. Med halvorna bytta gav {SW['tested']} par {SW['n_cand']} kandidater, och {len(U1['stable_both_ways'])} par bekräftades åt båda hållen. I klartext: hälften av det som såg ut som fynd i första halvan höll när det prövades på stenar som sökningen aldrig hade sett; den andra hälften hade varit falska fynd om vi hade stannat efter första steget.
+**5.1 Version 1.** {M['tested']} par prövades i halva A och gav {M['n_cand']} kandidater. I halva B bekräftades {C1['bekräftad']}, {C1['mönster att pröva']} blev mönster att pröva och {C1['höll inte']} höll inte. Med halvorna bytta gav {SW['tested']} par {SW['n_cand']} kandidater, och {len(U1['stable_both_ways'])} par bekräftades åt båda hållen. I klartext: hälften av det som såg ut som fynd i första halvan höll när det prövades på stenar som sökningen aldrig hade sett; den andra hälften höll inte eller bara svagt, och hade rapporterats som fynd om vi hade stannat efter första steget.
 
 {chart(True)}
 
 **5.2 Vad som bekräftades.**
 
-- **Kända familjemönster (8).** Kvinnor reser stenar efter sina män (oddskvot {d2(R1[('kvinna_resare', 'rel_make')]['or2'])} i halva B), flera resare efter fäder och färre efter söner, kvinnor oftare efter söner och mer sällan efter fäder. Sanna men kända: de beskriver vem som fanns kvar att resa stenen. Att motorn hittar dem visar att den hittar det som finns.
+- **Kända familjemönster (8).** Kvinnor reser stenar efter sina män (oddskvot {d2(R1[('kvinna_resare', 'rel_make')]['or2'])} i halva B), flera resare efter fäder och färre efter söner, kvinnor oftare efter söner och mer sällan efter fäder. Sanna men kända: de beskriver vem som fanns kvar att resa stenen. Att motorn hittar dem tyder på att den hittar det som finns.
 - **En mätartefakt (1).** o-runan står sällan på stenar efter söner (oddskvot {d2(ART['or2'])}). Draget mäts bara i några bestämda ord, och en sten efter en son har ordet *sun*, som skrivs med u-runa. Sambandet kommer av vilka ord som finns, inte av en sed; version 2 slutade därför para sådana drag med relationer.
-- **Nya (5).** Resestenar reses av färre personer (oddskvot {d2(NEW['resa']['or2'])}; med utlandsfärd {d2(NEW['fard']['or2'])}). Stenar efter fäder säger sällan hur eller var han dog ({d2(NEW['dod_far']['or2'])}) och sällan att han dog borta ({d2(NEW['borta_far']['or2'])}): fäderna dog hemma, och en död hemma var inget att berätta. Kors och apostrofliknande skiljetecken följs åt ({d2(NEW['kors_apostrof']['or2'])}, med landskap, tid, textlängd och ristare konstanta), ett hantverksdrag som ingen fråga hade ställts om.
+- **Oväntade (5).** Resestenar reses av färre personer (oddskvot {d2(NEW['resa']['or2'])}; med utlandsfärd {d2(NEW['fard']['or2'])}). Stenar efter fäder säger sällan hur eller var han dog ({d2(NEW['dod_far']['or2'])}) och sällan att han dog borta ({d2(NEW['borta_far']['or2'])}). En möjlig förklaring, som inte är prövad, är att fäderna oftare dog hemma, och att en död hemma inte var något att berätta. Kors och apostrofliknande skiljetecken följs åt ({d2(NEW['kors_apostrof']['or2'])}, med landskap, tid, textlängd och ristare konstanta), ett hantverksdrag som vi inte hade frågat efter.
 
 **5.3 Vad som inte höll.** Alla {C1['höll inte']} kandidater som föll klarade justeringen i halva A, och några såg starka ut: ristarsignatur och plustecken som skiljetecken hade oddskvoten {d2(SIGPLUS['or'])} i halva A och {d2(SIGPLUS['or2'])} i halva B.
 
-**5.4 Version 2.** Med fler drag och fler förbjudna par prövades {M2['tested']} par. Bara {M2['n_cand']} blev kandidater och 2 bekräftades: att stenar efter fäder sällan berättar hur han dog (redan i version 1) och sällan nämner en resa ({d2(R2[('msg_resa', 'rel_foralder')]['or2'])}). Med halvorna bytta bekräftades ett: monoftongen i *ok* följer apostrofliknande skiljetecken ({d2(OK2['or2'])}). Sökningen efter par var uttömd på det här materialet.
+**5.4 Version 2.** Med fler drag och fler förbjudna par prövades {M2['tested']} par. Bara {M2['n_cand']} blev kandidater; {C2['bekräftad']} bekräftades, {C2['höll inte']} höll inte och {len(NOEST)} kunde inte skattas i halva B. De bekräftade är att stenar efter fäder sällan berättar hur han dog (redan i version 1) och sällan nämner en resa ({d2(R2[('msg_resa', 'rel_foralder')]['or2'])}). Med halvorna bytta bekräftades ett: monoftongen i *ok* följer apostrofliknande skiljetecken ({d2(OK2['or2'])}). Sökningen efter par var uttömd på det här materialet.
 
-**5.5 Bygderna.** {len(LK['scanned'])} drag söktes igenom i halva A ({LK['n_A']} stenar), och {len(LK['confirmed'])} cirklar blev kandidater. I halva B ({LK['n_B']} stenar) höll en: formen *þennsa* (’denna’) i en cirkel om {round(TH['radius'] / 1000)} km kring Sö 190 i Ytterenhörna, {TH['O']} stenar mot {d2(TH['E'])} väntade i halva A och {TH['OB']} mot {d2(TH['EB'])} i halva B, Holm-korrigerat p = {str(TH['holm']).replace('.', ',')}. Formen går över gränsen mellan Södermanland och Uppland och används av {len(TH['carvers'])} ristare: en bygdens form snarare än en ristares vana. En cirkel blev mönster att pröva, och {LC['höll inte']} höll inte.
+**5.5 Bygderna.** {len(LK['scanned'])} drag söktes igenom i halva A ({LK['n_A']} stenar), och {len(LK['confirmed'])} cirklar blev kandidater. I halva B ({LK['n_B']} stenar) höll en: formen *þennsa* (’denna’) i en cirkel om {round(TH['radius'] / 1000)} km kring Sö 190 i Ytterenhörna, {TH['O']} stenar mot {d2(TH['E'])} väntade i halva A och {TH['OB']} mot {d2(TH['EB'])} i halva B, Holm-korrigerat p = {str(TH['holm']).replace('.', ',')}. Formen går över gränsen mellan Södermanland och Uppland och används av {len(TH['carvers'])} ristare: en bygdens form snarare än en ristares vana. Räknas stenar inom en kilometer från varandra som en grupp står de {TH_G['B'][0]} stenarna i halva B i {TH_G['B'][1]} grupper och de {TH_G['A'][0]} i halva A i {TH_G['A'][1]}, så närliggande stenar bär inte fyndet; ett prov med grupperna som enhet är ändå inte gjort. En cirkel blev mönster att pröva, och {LC['höll inte']} höll inte.
 
 ## 6. Diskussion
 
-**Vad metoden klarar.** Av {N_CAND} kandidater sammanlagt bekräftades {N_OK} och {N_FAIL} höll inte. Det betyder att ungefär varannan träff från en sökning som redan var justerad för många test inte håller på nytt material, och att bygder som sticker ut nästan alltid är slump. Tvåstegsförfarandet gör det möjligt att låta datorn föreslå frågor och ändå bara rapportera det som håller. Det hittade det kända, vilket visar att det fungerar, och några saker som ingen hade frågat om.
+**Vad metoden klarar.** Av {N_CAND} kandidater sammanlagt bekräftades {N_OK}, {N_PAT} blev mönster att pröva, {N_FAIL} höll inte och {len(NOEST)} kunde inte prövas. Bara ungefär fyra av tio träffar från en sökning som redan var justerad för många test bekräftades alltså på nytt material, och åtta av tio bygder som stack ut höll inte. Tvåstegsförfarandet gör det möjligt att låta datorn föreslå frågor och ändå bara rapportera det som håller. Att det hittade det kända tyder på att det inte missar starka samband; det hittade också några saker som vi inte hade frågat efter.
 
-**Mot tidigare forskning.** Faran med att välja bland många prövningar efter att resultaten är kända är väl beskriven (Ioannidis 2005; Gelman & Loken 2014). Här syns den i siffror på ett humanistiskt material: utan den andra halvan hade arton träffar rapporterats som inte höll på nytt material.
+**Mot tidigare forskning.** Faran med att välja bland många prövningar efter att resultaten är kända är väl beskriven (Ioannidis 2005; Gelman & Loken 2014). Här syns den i siffror på ett humanistiskt material: utan den andra halvan hade sjutton träffar rapporterats som inte höll på nytt material.
 
 **Svagheter, i ordning efter vikt.**
 
@@ -178,11 +217,11 @@ Planerna bestämde vad som räknas som en bekräftad kandidat, men inte hur mån
 
 ## 7. Slutsats
 
-En upptäcktsmotor som söker i ena halvan av runstenarna och prövar i den andra fann {N_OK} samband som höll av {N_CAND} kandidater. Den visar både vad datorn kan hitta och hur mycket av det som är slump. Nästa steg är att pröva de nya sambanden under egna planer och att använda samma förfarande på Danmarks och Norges runstenar.
+En upptäcktsmotor som söker i ena halvan av runstenarna och prövar i den andra fann {N_OK} samband som höll av {N_CAND} kandidater. Den visar både vad datorn kan hitta och hur mycket av det som inte håller. Nästa steg är att pröva de nya sambanden under egna planer och att använda samma förfarande på Danmarks och Norges runstenar.
 
 ## Data och kod
 
-Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)), med de ändringar som gjorts efter den versionen fram till den 31 oktober 2026. Någon release med DOI finns ännu inte; när den görs hänvisar rapporten till den. All kod, analysplanerna och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)), med de ändringar som gjorts efter den versionen fram till den 31 oktober 2026, på Rundata fryst som korpus {FP} (den mappen sparas inte längre, men dragtabellen och resultaten finns i `utdata/upptackt/` och `utdata/upptackt_v2/`). Koden och resultatfilerna ingår oförändrade i Vitki 3.1.0 (doi:{DOI_310}). All kod, analysplanerna och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
 
 - Planerna: `analysplaner/2026-10-28-upptacktsmotorn.md` och `analysplaner/2026-10-29-upptacktsmotorn-v2.md`, med kontrollsummorna i `.sha256`-filerna bredvid.
 - Version 1: `src/discovery.py`, `r/discovery.R`; resultat och frysta listor i `utdata/upptackt/`.
@@ -201,9 +240,9 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Wood, S. N. 2017. *Generalized Additive Models: An Introduction with R*. 2 uppl. Boca Raton: Chapman & Hall/CRC.
 
 :::box Det viktigaste i korthet
-- En dator kan föreslå frågor om runstenarna som ingen har ställt, men ungefär hälften av det den hittar är slump.
+- En dator kan föreslå frågor om runstenarna som ingen har ställt, men mycket av det den hittar håller inte när det prövas på nytt.
 - Genom att söka i ena halvan och pröva i den andra kan man skilja de två åt innan något rapporteras.
-- Det som höll var mest det kända, och några nya ting: fäderna dog hemma, och korsen följer ett visst skiljetecken.
+- Det som höll var mest det kända, och några oväntade samband: stenar efter fäder berättar sällan om döden, och korsen följer ett visst skiljetecken.
 :::
 """
 
@@ -215,8 +254,8 @@ body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially t
 **Background and aim.** Whoever searches through many associations always finds some that look strong by chance. The question here is whether a search in two steps, with the discovery made on one half of the material and tested on the other, tells real associations from chance ones.
 **Material.** {U1['n_stones']:,} Swedish Viking-Age runestones with at least four legible words in the Scandinavian Runic-text Database (Rundata), divided parish by parish into two halves; {U1['n_features']} traits in version 1 and {U2['n_features']} in version 2.
 **Method.** In the first half all permitted pairs of traits are tested by logistic regression, with province, time and text length held constant; the strongest become candidates. The list is frozen with a checksum before the second half is read, and each candidate is tested there with the carver as a random effect and Holm correction. Version 2 adds a search for districts where a trait is unusually common.
-**Results.** Version 1 tested {M['tested']} pairs and gave {M['n_cand']} candidates; {C1['bekräftad']} were confirmed, {C1['mönster att pröva']} became patterns to test and {C1['höll inte']} did not hold. Eight of the confirmed are known family patterns, one follows from how a trait is measured, and five are new. Version 2 tested {M2['tested']:,} pairs and gave {M2['n_cand']} candidates, of which 2 were confirmed: the search for pairs was exhausted. Of {len(LK['confirmed'])} districts that stood out in the first half, one held.
-**Conclusion.** Half of the associations from the first half held on stones the search had never seen, and for the districts one in ten. The method makes it possible to let the computer suggest questions without reporting the hits of chance as findings.
+**Results.** Version 1 tested {M['tested']} pairs and gave {M['n_cand']} candidates; {C1['bekräftad']} were confirmed, {C1['mönster att pröva']} became patterns to test and {C1['höll inte']} did not hold. Eight of the confirmed are known family patterns, one follows from how a trait is measured, and five we had not expected. Version 2 tested {M2['tested']:,} pairs and gave {M2['n_cand']} candidates, of which {C2['bekräftad']} were confirmed: the search for pairs was exhausted. Of {len(LK['confirmed'])} districts that stood out in the first half, one held.
+**Conclusion.** Half of the associations from the first half held on stones the search had never seen, and for the districts one in ten. The method makes it possible to let the computer suggest questions without reporting hits that do not hold as findings.
 
 ## 1. Introduction
 
@@ -251,31 +290,31 @@ The plans fixed what counts as a confirmed candidate, but not how many candidate
 
 ## 5. Results
 
-**5.1 Version 1.** {M['tested']} pairs were tested in half A and gave {M['n_cand']} candidates. In half B {C1['bekräftad']} were confirmed, {C1['mönster att pröva']} became patterns to test and {C1['höll inte']} did not hold. With the halves swapped, {SW['tested']} pairs gave {SW['n_cand']} candidates, and {len(U1['stable_both_ways'])} pairs were confirmed both ways. In plain words: half of what looked like findings in the first half held when tested on stones the search had never seen; the other half would have been false findings had we stopped after the first step.
+**5.1 Version 1.** {M['tested']} pairs were tested in half A and gave {M['n_cand']} candidates. In half B {C1['bekräftad']} were confirmed, {C1['mönster att pröva']} became patterns to test and {C1['höll inte']} did not hold. With the halves swapped, {SW['tested']} pairs gave {SW['n_cand']} candidates, and {len(U1['stable_both_ways'])} pairs were confirmed both ways. In plain words: half of what looked like findings in the first half held when tested on stones the search had never seen; the other half did not hold or held only weakly, and would have been reported as findings had we stopped after the first step.
 
 {chart(False)}
 
 **5.2 What was confirmed.**
 
-- **Known family patterns (8).** Women raise stones for their husbands (odds ratio {R1[('kvinna_resare', 'rel_make')]['or2']:.2f} in half B), several sponsors for fathers and fewer for sons, women more often for sons and less often for fathers. True but known: they describe who was left to raise the stone. That the engine finds them shows that it finds what is there.
+- **Known family patterns (8).** Women raise stones for their husbands (odds ratio {R1[('kvinna_resare', 'rel_make')]['or2']:.2f} in half B), several sponsors for fathers and fewer for sons, women more often for sons and less often for fathers. True but known: they describe who was left to raise the stone. That the engine finds them suggests that it finds what is there.
 - **A measurement artefact (1).** The ós-rune rarely stands on stones for sons (odds ratio {ART['or2']:.2f}). The trait is measured only in a few particular words, and a stone for a son has the word *sun*, which is written with the u-rune. The association comes from which words are present, not from a custom; version 2 therefore stopped pairing such traits with relations.
-- **New (5).** Travel stones are raised by fewer people (odds ratio {NEW['resa']['or2']:.2f}; with a journey abroad {NEW['fard']['or2']:.2f}). Stones for fathers rarely say how or where he died ({NEW['dod_far']['or2']:.2f}) and rarely that he died abroad ({NEW['borta_far']['or2']:.2f}): the fathers died at home, and a death at home was nothing to tell. Crosses and apostrophe-like word dividers go together ({NEW['kors_apostrof']['or2']:.2f}, with province, time, text length and carver constant), a craft trait nobody had asked about.
+- **Unexpected (5).** Travel stones are raised by fewer people (odds ratio {NEW['resa']['or2']:.2f}; with a journey abroad {NEW['fard']['or2']:.2f}). Stones for fathers rarely say how or where he died ({NEW['dod_far']['or2']:.2f}) and rarely that he died abroad ({NEW['borta_far']['or2']:.2f}). One possible explanation, not tested, is that the fathers more often died at home, and that a death at home was nothing to tell. Crosses and apostrophe-like word dividers go together ({NEW['kors_apostrof']['or2']:.2f}, with province, time, text length and carver constant), a craft trait we had not asked about.
 
 **5.3 What did not hold.** All {C1['höll inte']} candidates that failed passed the adjustment in half A, and some looked strong: carver's signature and the plus sign as word divider had the odds ratio {SIGPLUS['or']:.2f} in half A and {SIGPLUS['or2']:.2f} in half B.
 
-**5.4 Version 2.** With more traits and more forbidden pairs, {M2['tested']:,} pairs were tested. Only {M2['n_cand']} became candidates and 2 were confirmed: that stones for fathers rarely tell how he died (already in version 1) and rarely mention a journey ({R2[('msg_resa', 'rel_foralder')]['or2']:.2f}). With the halves swapped one was confirmed: the monophthong in *ok* goes with apostrophe-like word dividers ({OK2['or2']:.2f}). The search for pairs was exhausted on this material.
+**5.4 Version 2.** With more traits and more forbidden pairs, {M2['tested']:,} pairs were tested. Only {M2['n_cand']} became candidates; {C2['bekräftad']} were confirmed, {C2['höll inte']} did not hold and {len(NOEST)} could not be estimated in half B. The confirmed ones are that stones for fathers rarely tell how he died (already in version 1) and rarely mention a journey ({R2[('msg_resa', 'rel_foralder')]['or2']:.2f}). With the halves swapped one was confirmed: the monophthong in *ok* goes with apostrophe-like word dividers ({OK2['or2']:.2f}). The search for pairs was exhausted on this material.
 
-**5.5 The districts.** {len(LK['scanned'])} traits were searched in half A ({LK['n_A']} stones), and {len(LK['confirmed'])} circles became candidates. In half B ({LK['n_B']} stones) one held: the form *þennsa* ('this') in a circle of {round(TH['radius'] / 1000)} km around Sö 190 at Ytterenhörna, {TH['O']} stones against {TH['E']:.2f} expected in half A and {TH['OB']} against {TH['EB']:.2f} in half B, Holm-corrected p = {TH['holm']}. The form crosses the border between Södermanland and Uppland and is used by {len(TH['carvers'])} carvers: a form of the district rather than a carver's habit. One circle became a pattern to test, and {LC['höll inte']} did not hold.
+**5.5 The districts.** {len(LK['scanned'])} traits were searched in half A ({LK['n_A']} stones), and {len(LK['confirmed'])} circles became candidates. In half B ({LK['n_B']} stones) one held: the form *þennsa* ('this') in a circle of {round(TH['radius'] / 1000)} km around Sö 190 at Ytterenhörna, {TH['O']} stones against {TH['E']:.2f} expected in half A and {TH['OB']} against {TH['EB']:.2f} in half B, Holm-corrected p = {TH['holm']}. The form crosses the border between Södermanland and Uppland and is used by {len(TH['carvers'])} carvers: a form of the district rather than a carver's habit. Counting stones within one kilometre of each other as a group, the {TH_G['B'][0]} stones in half B stand in {TH_G['B'][1]} groups and the {TH_G['A'][0]} in half A in {TH_G['A'][1]}, so neighbouring stones do not carry the finding; a test with the groups as units has still not been made. One circle became a pattern to test, and {LC['höll inte']} did not hold.
 
 ## 6. Discussion
 
-**What the method can do.** Of {N_CAND} candidates in all, {N_OK} were confirmed and {N_FAIL} did not hold. That means that roughly every other hit from a search already adjusted for multiple testing does not hold on new material, and that districts that stand out are almost always chance. The two-step procedure makes it possible to let the computer suggest questions and still report only what holds. It found the known, which shows that it works, and a few things nobody had asked about.
+**What the method can do.** Of {N_CAND} candidates in all, {N_OK} were confirmed, {N_PAT} became patterns to test, {N_FAIL} did not hold and {len(NOEST)} could not be tested. Only about four in ten hits from a search already adjusted for multiple testing were thus confirmed on new material, and eight in ten districts that stood out did not hold. The two-step procedure makes it possible to let the computer suggest questions and still report only what holds. That it found the known suggests that it does not miss strong associations; it also found a few things we had not asked about.
 
-**Against earlier research.** The danger of choosing among many tests after the results are known is well described (Ioannidis 2005; Gelman & Loken 2014). Here it shows in numbers on a humanistic material: without the second half, eighteen hits would have been reported that did not hold on new material.
+**Against earlier research.** The danger of choosing among many tests after the results are known is well described (Ioannidis 2005; Gelman & Loken 2014). Here it shows in numbers on a humanistic material: without the second half, seventeen hits would have been reported that did not hold on new material.
 
 **Weaknesses, in order of weight.**
 
-1. **The halves are not new material.** They are two parts of the same corpus, divided parish by parish. An association found in only one region shows in both halves. The test protects against chance, not against errors in Rundata present throughout the material.
+1. **The halves are not new material.** They are two parts of the same corpus, divided parish by parish. An association found in only one region appears in both halves. The test protects against chance, not against errors in Rundata present throughout the material.
 2. **The measurement shows too.** The ós-rune and the sons show that the engine finds structure in how the traits are measured, not only in what they measure. Every confirmed association must be read against how the traits are defined.
 3. **No limit for the method.** The plan did not fix in advance how many candidates should hold.
 4. **Diminishing returns.** Version 2 found almost no new pairs; most of what can be found this way in this material has been found.
@@ -286,11 +325,11 @@ The plans fixed what counts as a confirmed candidate, but not how many candidate
 
 ## 7. Conclusion
 
-A discovery engine that searches one half of the runestones and tests in the other found {N_OK} associations that held out of {N_CAND} candidates. It shows both what the computer can find and how much of it is chance. The next step is to test the new associations under plans of their own and to use the same procedure on the runestones of Denmark and Norway.
+A discovery engine that searches one half of the runestones and tests in the other found {N_OK} associations that held out of {N_CAND} candidates. It shows both what the computer can find and how much of it does not hold. The next step is to test the new associations under plans of their own and to use the same procedure on the runestones of Denmark and Norway.
 
 ## Data and code
 
-The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)), with the changes made after that version up to 31 October 2026. No release with a DOI exists yet; when one is made, the report will refer to it. All code, the analysis plans and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)), with the changes made after that version up to 31 October 2026, on Rundata frozen as corpus {FP} (that folder is no longer kept, but the trait table and the results are in `utdata/upptackt/` and `utdata/upptackt_v2/`). The code and the result files are included unchanged in Vitki 3.1.0 (doi:{DOI_310}). All code, the analysis plans and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
 
 - The plans: `analysplaner/2026-10-28-upptacktsmotorn.md` and `analysplaner/2026-10-29-upptacktsmotorn-v2.md`, with their checksums in the `.sha256` files beside them.
 - Version 1: `src/discovery.py`, `r/discovery.R`; results and frozen lists in `utdata/upptackt/`.
@@ -309,9 +348,9 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - Wood, S. N. 2017. *Generalized Additive Models: An Introduction with R*. 2nd ed. Boca Raton: Chapman & Hall/CRC.
 
 :::box The essentials
-- A computer can suggest questions about the runestones that nobody has asked, but roughly half of what it finds is chance.
+- A computer can suggest questions about the runestones that nobody has asked, but much of what it finds does not hold when tested anew.
 - By searching one half and testing in the other, the two can be told apart before anything is reported.
-- What held was mostly the known, and a few new things: the fathers died at home, and the crosses follow a particular word divider.
+- What held was mostly the known, and a few unexpected associations: stones for fathers rarely tell of the death, and the crosses follow a particular word divider.
 :::
 """
 
