@@ -154,7 +154,7 @@ export default function Ristare({ src }: { src: string }) {
           </section>
           <section className={panel}>
             <h2 id="rp-nb-h" className={h2} />
-            <p className="rp-note">Stenar inom 30 km som inte tillskrivs ristaren men följer profilen bäst. Inget förslag om att han
+            <p className="rp-note">Stenar inom 30 km som inte tillskrivs ristaren men följer profilen bäst. Inget förslag om att ristaren
               ristade dem – bara de stenar som borde granskas först.</p>
             <div id="rp-nb" />
           </section>

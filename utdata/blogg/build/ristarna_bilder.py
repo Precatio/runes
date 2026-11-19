@@ -23,7 +23,7 @@ with sync_playwright() as p:
     errs = []
     pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.goto("http://localhost:3000/ristare#balle", wait_until="networkidle", timeout=300000)
-    pg.get_by_role("heading", name="Balle – vilka stenar följer hans drag?").wait_for(timeout=120000)
+    pg.get_by_role("heading", name="Balle – vilka stenar följer ristarens drag?").wait_for(timeout=120000)
     pg.wait_for_timeout(2500)
     pg.add_style_tag(content=".rp-root .sticky { position: static !important; }")  # the picker bar must not cover the panels
     pg.wait_for_timeout(300)
@@ -51,7 +51,7 @@ with sync_playwright() as p:
     # suggestions (down to its eighth row)
     pg = b.new_page(viewport={"width": 1400, "height": 2400}, device_scale_factor=2)  # fresh page, scrolled to the top
     pg.goto("http://localhost:3000/ristare#asmund", wait_until="networkidle", timeout=300000)
-    pg.get_by_role("heading", name="Åsmund – vilka stenar följer hans drag?").wait_for(timeout=120000)
+    pg.get_by_role("heading", name="Åsmund – vilka stenar följer ristarens drag?").wait_for(timeout=120000)
     pg.wait_for_timeout(2500)
     pg.add_style_tag(content=".rp-root .sticky { position: static !important; }")
     pg.wait_for_timeout(500)

@@ -63,20 +63,20 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
 
   function header() {
     const n = D.n, sg = n["signerad"] || 0, at = n["attribuerad"] || 0, us = n["osäker"] || 0;
-    $("rp-h1").textContent = `${WHO} – vilka stenar följer hans drag?`;
-    const per = D.period && D.period[0] != null ? ` Hans stenar dateras efter stil till omkring ${D.period[0]}–${D.period[1]}.` : "";
+    $("rp-h1").textContent = `${WHO} – vilka stenar följer ristarens drag?`;
+    const per = D.period && D.period[0] != null ? ` Stenarna dateras efter stil till omkring ${D.period[0]}–${D.period[1]}.` : "";
     $("rp-lede").textContent =
-      `${WHO} har ${sg + at} stenar med säker ristare i Rundata (${sg} signerade, ${at} attribuerade) och ${us} som han delar med någon annan eller som är osäkra.${per} ` +
-      `Här jämförs hans stenar med samtida grannstenar inom ${D.km} km, och varje sten prövas: ligger den mitt i hans sätt att skriva, i ytterkanten eller bland grannarna?`;
+      `${WHO} har ${sg + at} stenar med säker ristare i Rundata (${sg} signerade, ${at} attribuerade) och ${us} som ristaren delar med någon annan eller som är osäkra.${per} ` +
+      `Här jämförs ristarens stenar med samtida grannstenar inom ${D.km} km, och varje sten prövas: ligger den mitt i ristarens sätt att skriva, i ytterkanten eller bland grannarna?`;
     $("rp-warn").innerHTML = D.profil === "signerade" ? "" :
-      `<div class="rp-warnbox"><b>Profilen bygger på attribuerade stenar.</b> ${esc(WHO)} har ${sg === 0 ? "inga signerade stenar" : sg >= 5 ? sg + " signerade stenar, men de skiljer sig från grannarna i färre än åtta drag" : "bara " + sg + " signerade stenar, färre än fem"}. Profilen byggs därför av alla hans säkra stenar, också dem som forskningen tillskrivit honom efter stil och stavning. Sidan visar då hur samstämmig den gruppen är och vilka stenar som skiljer sig, men den prövar inte attribueringarna mot ett facit.</div>`;
+      `<div class="rp-warnbox"><b>Profilen bygger på attribuerade stenar.</b> ${esc(WHO)} har ${sg === 0 ? "inga signerade stenar" : sg >= 5 ? sg + " signerade stenar, men de skiljer sig från grannarna i färre än åtta drag" : "bara " + sg + " signerade stenar, färre än fem"}. Profilen byggs därför av alla ristarens säkra stenar, också dem som forskningen tillskrivit ristaren efter stil och stavning. Sidan visar då hur samstämmig den gruppen är och vilka stenar som skiljer sig, men den prövar inte attribueringarna mot ett facit.</div>`;
     const meas = own().filter(s => s.klass !== "kan inte avgöras" && !inProfile(s) && s.set === "attribuerad");
     const inner = meas.filter(s => s.klass === "kärna" || s.klass === "inom spannet").length;
     const F = carver.forslag;
     const items = [[D.profil === "signerade" ? sg : sg + at, D.profil === "signerade" ? "signerade stenar bygger profilen" : "säkra stenar bygger profilen"],
       [D.traits.length, "drag i fingeravtrycket"]];
     if (D.profil === "signerade") items.push([inner + " av " + meas.length, "mätbara attribuerade i kärnan eller inom spannet"]);
-    if (F && F.rows.length) items.push([F.rows.length, "stenar utan ristare som appen tror är hans"]);
+    if (F && F.rows.length) items.push([F.rows.length, "stenar utan ristare som appen tror är ristarens"]);
     items.push([n["granne"] || 0, "grannstenar att jämföra med"]);
     $("rp-facts").innerHTML = items.map(([b, s]) => `<div class="rp-fact"><b>${b}</b><span>${s}</span></div>`).join("");
     const vs = Object.keys(carver.variants), box = $("rp-variants");
@@ -84,8 +84,8 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
     box.innerHTML = vs.map(v => `<button type="button" data-v="${v}" aria-pressed="${v === V}">${VARIANTS[v] || v}</button>`).join("");
     box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setVariant(b.dataset.v)));
     $("rp-fp-note").textContent = D.profil === "signerade"
-      ? `De drag där de signerade stenarna skiljer sig tydligast från grannarna: andelen hos ristaren (rost) mot andelen hos grannstenarna (grå). Överst det han gör oftare, nederst det han gör mer sällan.`
-      : `De drag där ristarens stenar skiljer sig tydligast från grannarna: andelen hos ristaren (rost) mot andelen hos grannstenarna (grå). Överst det han gör oftare, nederst det han gör mer sällan.`;
+      ? `De drag där de signerade stenarna skiljer sig tydligast från grannarna: andelen hos ristaren (rost) mot andelen hos grannstenarna (grå). Överst det ristaren gör oftare, nederst det ristaren gör mer sällan.`
+      : `De drag där ristarens stenar skiljer sig tydligast från grannarna: andelen hos ristaren (rost) mot andelen hos grannstenarna (grå). Överst det ristaren gör oftare, nederst det ristaren gör mer sällan.`;
     $("rp-map-note").textContent = `Ristarens stenar färgade efter klass; ring = signerad, romb = delad eller osäker; streckad rostring = sten som appen föreslår; små grå prickar är grannstenarna inom ${D.km} km. Streckade linjer är de gamla landens gränser där Vitki har dem.`;
     $("rp-nb-h").textContent = `Grannar som liknar ${WHO}`;
   }
@@ -95,7 +95,7 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
     $("rp-sg-h").textContent = `Stenar som appen tror att ${WHO} ristade`;
     const inModel = AUDIT.q2.per_carver.some(r => r.carver === WHO);
     $("rp-sg-note").innerHTML = !inModel
-      ? `${esc(WHO)} har färre än åtta säkra stenar och finns inte i attribueringsmodellen, så appen kan inte föreslå stenar åt honom än.`
+      ? `${esc(WHO)} har färre än åtta säkra stenar och finns inte i attribueringsmodellen, så appen kan inte föreslå stenar åt ristaren än.`
       : `Runstenar utan säker ristare där Vitkis attribueringsmodell sätter ${esc(WHO)} främst. Procenten är omkalibrerade efter provningen mot de signerade stenarna, där modellen hade rätt först på ${pct(AUDIT.q1.top1[0])} av dem. ` +
         `Stenar där modellen är så osäker att det lika gärna kan vara en ristare den inte känner är bortsorterade${F && F.n_blocked ? ` (${F.n_blocked} stenar)` : ""}. ` +
         `Kolumnen <b>Profilen</b> visar hur stenen ligger mot fingeravtrycket nedan, en andra och delvis oberoende bedömning.`;
@@ -128,7 +128,7 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
     box.hidden = false;
     const T = PAGE.bygd_test, t = T && T.per_carver[WHO];
     const test = T ? `I provningen höjde den träffen i medel per ristare från ${pct(T.half2_macro[0])} till ${pct(T.half2_macro[1])}` +
-      (t ? `; för ${esc(WHO)} hade den rätt på ${pct(t.bygd)} av hans ${t.n} signerade stenar, huvudmodellen på ${pct(t.main)}.` : ".") : "";
+      (t ? `; för ${esc(WHO)} hade den rätt på ${pct(t.bygd)} av ristarens ${t.n} signerade stenar, huvudmodellen på ${pct(t.main)}.` : ".") : "";
     const tr = r => `<tr><td class="rp-mono">${esc(r.id)}</td><td translate="no">${esc(r.place)}${r.parish ? `<br><span class="rp-dim rp-small">${esc(r.parish)}</span>` : ""}</td>` +
       `<td><span class="rp-barp" style="width:${Math.round(r.p * 60)}px;background:var(--rp-sand)"></span>${pct(r.p)}</td>` +
       `<td>${r.main_top ? `<span translate="no">${esc(r.main_top)}</span> <span class="rp-dim">${pct(r.main_p)}</span>${r.main_blocked ? ` <span class="rp-dim rp-small">(spärrad)</span>` : ""}` : "–"}</td>` +
@@ -268,7 +268,7 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
     const svg = $("rp-sc"); svg.innerHTML = "";
     const S = own().filter(s => s.score != null && s.modell != null);
     const a = AUDIT.q1.per_carver.find(r => r.carver === WHO), b = AUDIT.q2.per_carver.find(r => r.carver === WHO);
-    $("rp-audit").innerHTML = b ? `I provningen mot facit (hela socknar utelämnade) hade modellen rätt ristare först på ${a ? `<b>${pct(a.top1)}</b> av hans ${a.n} signerade stenar och ` : ""}<b>${pct(b.top1_attr)}</b> av hans ${b.n_attr} attribuerade. Över alla 117 signerade stenar: ${pct(AUDIT.q1.top1[0])}.` :
+    $("rp-audit").innerHTML = b ? `I provningen mot facit (hela socknar utelämnade) hade modellen rätt ristare först på ${a ? `<b>${pct(a.top1)}</b> av ristarens ${a.n} signerade stenar och ` : ""}<b>${pct(b.top1_attr)}</b> av ristarens ${b.n_attr} attribuerade. Över alla 117 signerade stenar: ${pct(AUDIT.q1.top1[0])}.` :
       `${esc(WHO)} har färre än åtta säkra stenar och finns inte i attribueringsmodellen.`;
     if (!S.length) { size(svg, 10, 10); return; }
     const W = avail(svg, 300), H = Math.round(Math.min(460, Math.max(300, W * 0.8))), L = 54, B = 46, T = 14, R = 14;
@@ -327,13 +327,13 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
       D.profil === "signerade"
         ? `<b>Profilen byggs bara av de signerade stenarna.</b> De attribuerade har runologerna tillskrivit ${esc(WHO)} efter drag som ornamentik och stavning; att använda dem i profilen vore att låta svaret bestämma frågan.`
         : `<b>Profilen byggs av alla säkra stenar</b> (signerade och attribuerade), eftersom de signerade är för få (färre än fem, eller för få drag som skiljer dem från grannarna). Det är ett mått på hur samstämmig gruppen är, inte en oberoende prövning.`,
-      `<b>Grannarna</b> är alla andra stenar inom ${D.km} km från någon av ristarens stenar${D.period && D.period[0] != null ? `, med en stildatering som överlappar hans (${D.period[0]}–${D.period[1]})` : ""}.`,
+      `<b>Grannarna</b> är alla andra stenar inom ${D.km} km från någon av ristarens stenar${D.period && D.period[0] != null ? `, med en stildatering som överlappar ristarens (${D.period[0]}–${D.period[1]})` : ""}.`,
       `<b>Ett drag kommer med</b> om det går att avläsa på tillräckligt många av profilens stenar, skiljer sig med minst dubbla eller halva oddsen från grannarna och inte är en ren slump (Fishers test, p &lt; 0,10). Drag som nästan alltid följs åt räknas en gång.${dups ? `<br><span class="rp-dim">${dups}</span>` : ""}`,
       `<b>Värdet per sten</b> är medelvärdet av hur mycket varje avläsbart drag talar för ${esc(WHO)} mot grannarna. Noll betyder att stenen inte lutar åt något håll.`,
       `<b>Appens förslag</b> kommer från attribueringsmodellen (random forest över plats, stil, stavning, formler och runpar), omkalibrerad efter provningen mot de signerade stenarna; spärren för okända ristare sorterar bort stenar där förstavalet är för svagt.`,
       `<b>Ornamentiken ingår inte</b> utöver stilgruppen, och runformerna inte alls: forskarnas viktigaste belägg för attribueringarna saknas alltså här. En attribuerad sten bland ”som grannarna” är ett skäl att titta igen, inte ett bevis för att attribueringen är fel.`,
     ];
-    if (WHO === "Balle") items.push(`<b>Röd-Balle:</b> Vs 15 och Vs 24 är signerade <i>roþbaliʀ</i>, och en del runologer tvivlar på att han är samma person som Balle. Vs 15 är den signerade sten som följer Balles drag sämst av alla och hamnar bland grannarna, med eller utan de två i profilen; Vs 24 ligger i ytterkanten, liksom tre signerade stenar i Uppland och Södermanland. Mätningen pekar alltså ut den ena, inte båda. De står i Västmanland och tillhör den senare stilgruppen Pr4, så skillnaden kan också vara bygdens och tidens.`);
+    if (WHO === "Balle") items.push(`<b>Röd-Balle:</b> Vs 15 och Vs 24 är signerade <i>roþbaliʀ</i>, och en del runologer tvivlar på att det är samma person som Balle. Vs 15 är den signerade sten som följer Balles drag sämst av alla och hamnar bland grannarna, med eller utan de två i profilen; Vs 24 ligger i ytterkanten, liksom tre signerade stenar i Uppland och Södermanland. Mätningen pekar alltså ut den ena, inte båda. De står i Västmanland och tillhör den senare stilgruppen Pr4, så skillnaden kan också vara bygdens och tidens.`);
     if (cant) items.push(`${cant} av stenarna har för lite läsbar text för att mätas.`);
     $("rp-method").innerHTML = items.map(s => `<li>${s}</li>`).join("");
   }
