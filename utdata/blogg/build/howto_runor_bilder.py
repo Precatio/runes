@@ -104,7 +104,7 @@ with sync_playwright() as p:
     panel = pg.get_by_text(T("Vad ska mätas?")).locator("..").locator("..")
     shot(panel, "01_vad_ska_matas.png")
 
-    view3d = pg.get_by_text(T("Dra: rotera", exact=False)).first.locator("..").locator("..")
+    view3d = pg.get_by_text(re.compile(r"Dra: rotera|Drag: rotate")).first.locator("..").locator("..")
     if STARTVY:  # the page's starting view, as a user who does not turn the stone sees it
         pg.wait_for_timeout(3000)
         shot(view3d, "01a_startvy.png")
