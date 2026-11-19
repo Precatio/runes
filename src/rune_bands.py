@@ -6,7 +6,8 @@ studie 1b).
 Slingorna kommer från, i den ordningen:
   1. ritade och granskade slingor (sidan Runmodell, data/runmodell/band/) när skanningen är en av de öppna filerna;
      slingorna förs över från djupbildens rutnät till analysens genom stenens yta i 3D, så att de gäller även när
-     stenen är vriden något annorlunda än när djupbilden gjordes (högst 20° mellan normalerna);
+     stenen är vriden något annorlunda än när djupbilden gjordes (högst 20° mellan normalerna, och bara framifrån:
+     ses stenen bakifrån mäts inget och analysen säger varför, från 2026-11-19);
   2. slingmodellen (data/runmodell/slingmodell.pt, ett U-nät tränat på 95 granskade stenar; mitten av provstenarnas
      överlapp med de ritade slingorna 59 %), som föreslår slingorna på analysens egen djupbild.
 Utan PyTorch eller modell finns inga slingor, och analysen faller tillbaka på den gamla streckklassningen.
@@ -32,6 +33,12 @@ ALONG_DEG = 25.0    # a groove within this angle of the band runs along it
 EDGE_MM = 8.0       # the edge zone just outside a band
 SMOOTH_MM = 12.0    # window for the band's direction
 MAX_TILT_DEG = 20.0  # drawn bands are carried over when the analysis normal is within this of the depth image's
+# The view looks at the scan from behind (2026-11-19): the drawn bands belong to the carved side, which the depth
+# image's normal faces; from behind they were carried over all the same (the angle test ignored the side), and the
+# analysis measured junk (M 15 from the 3D page's starting view: 91 cross-sections on the wrong side)
+BEHIND_NOTE = ("du ser stenen bakifrån, och de ritade slingorna gäller den ristade sidan, så inget har mätts. "
+               "Tryck på Vänd ristade sidan mot mig i 3D-vyn så att du ser rakt mot den ristade sidan, och kör analysen igen")
+BEHIND_REASON = "stenen sedd bakifrån"
 
 
 def _unet():
@@ -140,7 +147,8 @@ def drawn_labels(sha256: str | None, hf) -> np.ndarray | None:
             return None
         from src.auto_grooves import basis
         u0, v0, n0 = basis(meta["normal"], meta.get("up"))
-        if float(np.degrees(np.arccos(np.clip(abs(n0 @ hf.n), -1, 1)))) > MAX_TILT_DEG:
+        # the side matters: from behind the angle is over 90° (before 2026-11-19 abs() let the back side through)
+        if float(np.degrees(np.arccos(np.clip(n0 @ hf.n, -1, 1)))) > MAX_TILT_DEG:
             return None
         shape0, res0 = meta["shape"], float(meta["res_mm"])
         mask0 = _drawn_on_depth_grid(b, shape0, labels=True)
@@ -207,12 +215,36 @@ def drawn_problem(sha256: str | None, hf) -> str | None:
             return "de ritade slingorna kunde inte föras över: djupbildens origo saknas"
         from src.auto_grooves import basis
         _, _, n0 = basis(meta["normal"], meta.get("up"))
-        tilt = float(np.degrees(np.arccos(np.clip(abs(n0 @ hf.n), -1, 1))))
+        if float(n0 @ hf.n) < 0:
+            return BEHIND_NOTE
+        tilt = float(np.degrees(np.arccos(np.clip(n0 @ hf.n, -1, 1))))
         if tilt > MAX_TILT_DEG:
             return (f"de ritade slingorna gäller en vy {tilt:.0f}° från den här (högst {MAX_TILT_DEG:.0f}°); "
                     "vrid stenen så att den ristade sidan vetter rakt mot dig")
         return None
     return None
+
+
+def seen_from_behind(sha256: str | None, hf) -> bool:
+    """True when this exact file has checked bands (drawn on the carved side, which the depth image's normal faces) and
+    the analysis looks at it from the other side: more than 90° from the depth image's normal. The analysis then
+    measures nothing and says why (BEHIND_NOTE), instead of carrying the bands over to the back or falling back on the
+    band model there."""
+    if not sha256 or not os.path.isdir(DEPTH_DIR):
+        return False
+    e = depth_image_entry(sha256)
+    if e is None:
+        return False
+    series, stem, meta = e
+    bp = os.path.join(BAND_DIR, series, stem + ".json")
+    if not os.path.exists(bp) or not meta.get("normal"):
+        return False
+    b = json.load(open(bp, encoding="utf-8"))
+    if b.get("status") != "granskad" or not b.get("bands"):
+        return False
+    from src.auto_grooves import basis
+    _, _, n0 = basis(meta["normal"], meta.get("up"))
+    return float(n0 @ np.asarray(hf.n, float)) < 0
 
 
 def band_field(mask: np.ndarray, res: float) -> dict:

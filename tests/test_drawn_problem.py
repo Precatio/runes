@@ -31,3 +31,16 @@ def test_a_view_too_far_off_is_said_and_a_good_one_is_not(tmp_path, monkeypatch)
     tilted = np.array([0.0, np.sin(np.radians(35)), np.cos(np.radians(35))])
     assert "35°" in rune_bands.drawn_problem("abc", SimpleNamespace(n=tilted))
     assert rune_bands.drawn_problem("abc", SimpleNamespace(n=np.array([0.0, 0.0, 1.0]))) is None
+
+
+def test_seen_from_behind_is_said(tmp_path, monkeypatch):
+    """The drawn bands belong to the carved side, which the depth image's normal faces. From behind they were carried
+    over all the same before 2026-11-19 (the angle test ignored the side) and the analysis measured junk."""
+    _setup(tmp_path, monkeypatch, {"a0": 0.0, "b0": 0.0})
+    behind = SimpleNamespace(n=np.array([0.0, np.sin(np.radians(15)), -np.cos(np.radians(15))]))
+    front = SimpleNamespace(n=np.array([0.0, np.sin(np.radians(15)), np.cos(np.radians(15))]))
+    assert rune_bands.seen_from_behind("abc", behind) and not rune_bands.seen_from_behind("abc", front)
+    assert not rune_bands.seen_from_behind("annan", behind) and not rune_bands.seen_from_behind(None, behind)
+    assert rune_bands.drawn_problem("abc", behind) == rune_bands.BEHIND_NOTE
+    assert "Vänd ristade sidan mot mig" in rune_bands.BEHIND_NOTE
+    assert rune_bands.drawn_problem("abc", front) is None

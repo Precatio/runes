@@ -1200,6 +1200,13 @@ missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmä
   Förut skedde det tyst: 47 djupbilder gjorda före 2026-11-08 saknade origo, bland dem 29 av de 95 med granskade
   slingor, så analysen använde modellens slingor för dem. `scripts/depth_dataset.py` skriver nu origo, och de 47 är
   ifyllda (`--origin`, som kontrollerar att rutnätet blir djupbildens).
+* **Bara framifrån (från 2026-11-19).** De ritade slingorna gäller den ristade sidan, den som djupbildens normal
+  pekar mot. Förut jämfördes normalerna utan tecken, så slingorna fördes över också när analysen såg stenen bakifrån,
+  och analysen mätte skräp: M 15 från 3D-sidans startvy, bakifrån och 15° snett, gav 91 godkända snitt. Nu mäts
+  ingenting när en fil med granskade slingor ses mer än 90° från djupbildens normal. Varje snitt sorteras bort som
+  *stenen sedd bakifrån*, och analysrutan säger efter ett *Obs* att stenen ska vändas med *Vänd ristade sidan mot mig*
+  (`rune_bands.seen_from_behind`, `BEHIND_NOTE`; `bands.behind` i svaret; tester i `tests/test_drawn_problem.py` och
+  `tests/test_auto_grooves.py`). Runigenkänningens regler (`RULES_SHA256`) är oförändrade.
 * **Begränsningar:** slingmodellen är tränad på öppna skanningar från två skannertyper och sex serier; stavlösa runor
   och små fragment hittar den dåligt. Slingorna är förslag som användaren ska granska i granskningsbilden.
 

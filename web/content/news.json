@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "3d-bakifran-varning",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "title": "Huggspårsanalysen mäter inte längre stenen bakifrån",
+   "text": "När 3D-sidan visar stenen bakifrån räknade huggspårsanalysen tidigare ändå med de ritade runslingorna och gav snitt som inte var verkliga. Nu mäts ingenting från baksidan. I stället visar sidan en varning och ber dig trycka på Vänd ristade sidan mot mig. Ritade slingor används bara när du ser rakt mot den ristade sidan."
+  },
+  {
    "id": "sri-fyndhistorik-stensidan",
    "date": "2026-11-17",
    "status": "nytt",

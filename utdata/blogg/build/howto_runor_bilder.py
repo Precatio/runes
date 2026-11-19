@@ -4,7 +4,8 @@ servrarna (web :3000, api :8000), skanningen laddas upp och den automatiska anal
 precis som en användare gör det.
 
 Fyra omgångar:
-  0. --startvy: analysen körs från sidans startvy, utan att stenen vrids (analys_startvy.json).
+  0. --startvy: analysen körs från sidans startvy, utan att stenen vrids (analys_startvy.json): den ser skanningen
+     bakifrån, så sedan 2026-11-19 mäts inget och raden under knappen säger varför (01c_bakifran_obs.png).
   1. svenska: analysen efter knappen Vänd ristade sidan mot mig (analys.json); slutar efter granskningsbilden
      eftersom klick.json saknas. Sedan räknar howto_runor_klick.py klicken ur de granskade runslingorna (klick.json).
   2. svenska: samma analys, runorna som resultat med appens egen indelning (resultat_auto.json), klicken
@@ -108,7 +109,10 @@ with sync_playwright() as p:
     if STARTVY:  # the page's starting view, as a user who does not turn the stone sees it
         pg.wait_for_timeout(3000)
         shot(view3d, "01a_startvy.png")
-        json.dump(keep(run_analysis(pg)), open(os.path.join(OUT, "analys_startvy.json"), "w"), ensure_ascii=False, indent=1)
+        json.dump(keep(run_analysis(pg)), open(fil("analys_startvy.json"), "w"), ensure_ascii=False, indent=1)
+        # seen from behind nothing is measured (since 2026-11-19); the line under the run button says why
+        pg.wait_for_timeout(2000)
+        shot(pg.locator("p[role=status]").first, "01c_bakifran_obs.png")
         # the page now draws every measured point in the software-rendered 3D view and has no frames to spare, so
         # the run with the button starts afresh
         b.close()

@@ -148,7 +148,7 @@ export interface AutoAnalysisResult {
   parameters: Record<string, number | number[] | boolean | string | null>;
   // Where the runic bands came from ("ritade": drawn and checked by hand; "modellen": the band model's proposal) and how
   // much of the scan they cover; source null when the old stroke classification decided
-  bands?: { source: "ritade" | "modellen" | null; coverage?: number; note?: string };
+  bands?: { source: "ritade" | "modellen" | null; coverage?: number; note?: string; behind?: boolean }; // behind: seen from behind, nothing measured
   summary?: Record<Metric, import("@/lib/metrics").Summary>;
   // Stone means with the rune as unit (n = runes), present when only runes were measured
   rune_summary?: { n_runes: number; metrics: Record<Metric, import("@/lib/metrics").Summary & { n_slices: number; icc: number | null }> };

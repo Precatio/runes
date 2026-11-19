@@ -30,7 +30,7 @@ from src import blog_figures, blog_labels, limitations, rune_links  # noqa: E402
 
 D = os.path.join(ROOT, "utdata", "blogg", "howto_runor")
 load = lambda name: json.load(open(os.path.join(D, name), encoding="utf-8"))  # noqa: E731
-A0 = load("analys_startvy.json")
+A0, A0_EN = load("analys_startvy.json"), load("analys_startvy_en.json")
 A, A_EN = load("analys.json"), load("analys_en.json")
 RA, RA_EN = load("resultat_auto.json"), load("resultat_auto_en.json")
 KLICK = load("klick.json")
@@ -44,7 +44,7 @@ en_int = lambda n: f"{n:,}"  # noqa: E731
 
 # ---- the analysis of M 15 (Vitki protocol), before and after Vänd ristade sidan mot mig ---------------------------
 assert METHOD_VERSION == "groove-7"
-for a in (A0, A, A_EN):
+for a in (A0, A0_EN, A, A_EN):
     assert a["provenance"]["mesh"]["filename"].startswith("M 15 Sköns kyrka")
     assert a["provenance"]["method_version"] == METHOD_VERSION, a["provenance"].get("method_version")
     assert a["parameters"]["measure"] == "runes" and a["parameters"]["runes_only"] is True
@@ -56,13 +56,20 @@ C = A["counts"]
 ACC, CAND = C["accepted"], C["candidates"]
 RUNES_MEASURED, RUNES_FOUND = C["runes_measured"], C["runes_identified"]
 COVER = round(A["bands"]["coverage"] * 100)
-TILT_ACC = A0["counts"]["accepted"]
+# from the starting view (behind) nothing is measured since 2026-11-19: every cross-section is rejected as seen from
+# behind, and the line under the run button says why (rune_bands.BEHIND_NOTE)
+from src import rune_bands  # noqa: E402
+for a0 in (A0, A0_EN):
+    assert a0["counts"]["accepted"] == 0 and a0["bands"].get("behind") is True and a0["bands"]["note"] == rune_bands.BEHIND_NOTE
+    assert a0["counts"]["rejection_reasons"] == {rune_bands.BEHIND_REASON: a0["counts"]["candidates"]}
+assert A0["counts"] == A0_EN["counts"]
+CAND0 = A0["counts"]["candidates"]
 # the starting view looks at the scan from behind (the open scan is a shell: from the back only its edges show) and
 # at an angle to the stone's axis; the angle is taken between the two lines of sight, the side from the sign
 COS0 = float(np.dot(A0["parameters"]["normal"], A["parameters"]["normal"]))
 FROM_BEHIND = COS0 < 0
 TILT_DEG = round(math.degrees(math.acos(min(1.0, abs(COS0)))))
-assert FROM_BEHIND and TILT_DEG >= 5 and TILT_ACC < ACC, (COS0, TILT_DEG, TILT_ACC, ACC)
+assert FROM_BEHIND and TILT_DEG >= 5 and ACC > 0, (COS0, TILT_DEG, ACC)
 REASONS = C["rejection_reasons"]
 OUT_BANDS = REASONS.get("utanför runslingorna", 0)
 BAND_EDGE = REASONS.get("slingkant, inte runa", 0)
@@ -164,9 +171,11 @@ Vi använder M 15 vid Sköns kyrka i Medelpad. Björn reste stenen efter två s�
 
 Analysen mäter det som vetter mot dig på skärmen. Ser du stenen snett blir spåren snedskurna, och många snitt sorteras bort som för grunda eller för otydliga. Därför finns knappen **Vänd ristade sidan mot mig** nere till vänster i 3D-vyn. Den vrider vyn så att du ser rakt på stenens bredaste sida. Är det fel sida trycker du en gång till.
 
-Skillnaden är stor. När M 15 laddats ser sidans startvy på skanningen bakifrån och {TILT_DEG}° snett. Skanningen är bara stenens yta, ett tunt skal, så bakifrån syns nästan bara kanterna. Körde vi analysen därifrån godkändes {TILT_ACC} snitt. Efter ett tryck på knappen godkändes {ACC}.
+Det spelar roll. När M 15 laddats ser sidans startvy på skanningen bakifrån och {TILT_DEG}° snett. Skanningen är bara stenens yta, ett tunt skal, så bakifrån syns nästan bara kanterna. De ritade slingorna gäller den ristade sidan, så kör du analysen därifrån mäts ingenting: alla {sv_int(CAND0)} snitt sorteras bort som *stenen sedd bakifrån*, och raden under knappen säger efter ett **Obs** vad du ska göra. Efter ett tryck på knappen godkändes {ACC} snitt.
 
-{bild("01a_startvy.png", "M 15 i startvyn, sedd bakifrån så att bara kanterna syns", f"M 15 i sidans startvy: skanningen sedd bakifrån och {TILT_DEG}° snett. Analysen godkände härifrån {TILT_ACC} snitt.")}
+{bild("01a_startvy.png", "M 15 i startvyn, sedd bakifrån så att bara kanterna syns", f"M 15 i sidans startvy: skanningen sedd bakifrån och {TILT_DEG}° snett.")}
+
+{bild("01c_bakifran_obs.png", "Varningen under knappen Kör automatisk analys när stenen ses bakifrån", "Bakifrån mäter analysen ingenting och säger varför.", scan=False)}
 
 {bild("01b_vy.png", "M 15 i 3D-vyn med knappen Vänd ristade sidan mot mig", f"Samma skanning efter ett tryck på knappen: vyn ser rakt på den ristade sidan, och analysen godkände {ACC} snitt.")}
 
@@ -236,7 +245,7 @@ Vitki läser inte runorna. Analysens indelning och dina markeringar säger var e
 
 :::box Det viktigaste i korthet
 - Runor och ornamentik huggs ofta olika. Vitki skiljer dem efter var texten står, inte efter hur strecken ser ut, och du ser själv i bilden var gränsen gick.
-- Vänd den ristade sidan mot dig innan du mäter. På M 15 var det skillnaden mellan {TILT_ACC} och {ACC} godkända snitt.
+- Vänd den ristade sidan mot dig innan du mäter. Bakifrån mäter Vitki ingenting och säger till; rakt framifrån godkändes {ACC} snitt på M 15.
 - Runan, inte snittet, är den ärliga enheten. Vitki delar nu själv in runorna längs slingan; vill du ha indelningen exakt markerar du dem med ett klick var.
 - Allt detta beskriver huggningen. Vem som högg är en annan fråga.
 :::
@@ -269,9 +278,11 @@ We use M 15 at Skön church in Medelpad. Bjôrn raised the stone in memory of tw
 
 The analysis measures what faces you on the screen. Seen at an angle, the grooves are cut obliquely, and many cross-sections are rejected as too shallow or too unclear. That is why there is a button, **Turn the carved side towards me**, at the bottom left of the 3D view. It turns the view so that you look straight at the stone's broadest side. If it is the wrong side, press it once more.
 
-The difference is large. Once M 15 has loaded, the page's starting view looks at the scan from behind and {TILT_DEG}° off. The scan is only the stone's surface, a thin shell, so from behind little more than its edges shows. Run from there, the analysis accepted {TILT_ACC} cross-sections. After one press of the button, it accepted {ACC}.
+It matters. Once M 15 has loaded, the page's starting view looks at the scan from behind and {TILT_DEG}° off. The scan is only the stone's surface, a thin shell, so from behind little more than its edges shows. The drawn bands belong to the carved side, so if you run the analysis from there nothing is measured: all {en_int(CAND0)} cross-sections are rejected as *stone seen from behind*, and the line under the button tells you after a **Note** what to do. After one press of the button, {ACC} cross-sections were accepted.
 
-{bild("01a_startvy.png", "M 15 in the starting view, seen from behind so that only the edges show", f"M 15 in the page's starting view: the scan seen from behind and {TILT_DEG}° off. From here the analysis accepted {TILT_ACC} cross-sections.", en=True)}
+{bild("01a_startvy.png", "M 15 in the starting view, seen from behind so that only the edges show", f"M 15 in the page's starting view: the scan seen from behind and {TILT_DEG}° off.", en=True)}
+
+{bild("01c_bakifran_obs.png", "The warning under the button Run automatic analysis when the stone is seen from behind", "From behind the analysis measures nothing and says why.", en=True, scan=False)}
 
 {bild("01b_vy.png", "M 15 in the 3D view with the button Turn the carved side towards me", f"The same scan after one press of the button: the view looks straight at the carved side, and the analysis accepted {ACC} cross-sections.", en=True)}
 
@@ -339,7 +350,7 @@ Vitki does not read the runes. The analysis's division and your marks say where 
 
 :::box The essentials in brief
 - Runes and ornament are often cut differently. Vitki tells them apart by where the text stands, not by what the strokes look like, and you can see for yourself in the image where the line was drawn.
-- Turn the carved side towards you before you measure. On M 15 it was the difference between {TILT_ACC} and {ACC} accepted cross-sections.
+- Turn the carved side towards you before you measure. From behind Vitki measures nothing and tells you so; straight on, {ACC} cross-sections were accepted on M 15.
 - The rune, not the cross-section, is the honest unit. Vitki now divides the runes along the band itself; if you want the division exact, mark them with one click each.
 - All of this describes the carving. Who carved is another question.
 :::
@@ -363,12 +374,12 @@ for b in (body, body_en, summary, summary_en):
     assert not re.search(r"\b(hans|hon|honom|hennes|his|her|him)\b", b.split("## Om skanningen")[0].split("## About the scan")[0])
 for b in (body, body_en):
     assert b.count(":::box") == 1 and b.count("\n:::\n") == 1 and "Kitzler Åhfeldt" in b and "Zedig" in b
-    assert b.count("/api/blog/figures/") == 10, b.count("/api/blog/figures/")
+    assert b.count("/api/blog/figures/") == 11, b.count("/api/blog/figures/")
 out = {"slug": "sa-gor-du-mat-runorna-inte-ormen", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en, "labels": labels}
 json.dump(out, open(os.path.join(ROOT, "utdata", "blogg", "howto_runor.json"), "w"), ensure_ascii=False, indent=1)
 print(os.path.join(ROOT, "utdata", "blogg", "howto_runor.json"), len(body.split()), "ord,", len(body_en.split()), "words")
-print(f"startvy {TILT_DEG}° {TILT_ACC} snitt → {ACC} av {CAND}; runor {RUNES_MEASURED}/{RUNES_FOUND}, auto {AUTO_RUNES}, "
+print(f"startvy bakifrån {TILT_DEG}°, 0 av {CAND0} snitt → {ACC} av {CAND}; runor {RUNES_MEASURED}/{RUNES_FOUND}, auto {AUTO_RUNES}, "
       f"markerade {MARKED} ({MARKS} klick); slingor {COVER} %; Runor och ornamentik {IN_BANDS} % i {BAND_SHARE} %")
 
 if "--update" in sys.argv or "--write" in sys.argv:

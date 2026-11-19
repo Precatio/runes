@@ -665,7 +665,16 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
     noise = 1.4826 * float(np.median(np.abs(d_in - np.median(d_in))))
     threshold = max(min_depth_mm, sensitivity * noise)
     band = None
-    if bands and measure in ("runes", "ornament"):
+    # Checked bands belong to the carved side: seen from behind nothing is measured, and the result says why
+    # (rune_bands.seen_from_behind, 2026-11-19)
+    behind = False
+    if bands and measure in ("runes", "ornament") and sha256:
+        from src import rune_bands
+        try:
+            behind = rune_bands.seen_from_behind(sha256, hf)
+        except Exception:  # the check must never stop an analysis
+            behind = False
+    if bands and measure in ("runes", "ornament") and not behind:
         from src import rune_bands
         try:
             band = rune_bands.bands_for(-residual, hf.region, res, hf, sha256)
@@ -758,6 +767,10 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         sid, stroke = stroke_at(iy, ix)
         old = stroke["kind"] if stroke else "irregular"
         rec["feature"] = old
+        if behind:
+            reject(rec, rune_bands.BEHIND_REASON)
+            slices.append(rec)
+            continue
         if use_band:
             # The groove's direction from the centre line around the point, against the band's direction there
             near = skel_coords[tree.query_ball_point([iy, ix], max(3.0, 2.0 * hw) / res)].astype(float) if tree is not None else []
@@ -886,8 +899,9 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                              "edge_zone_contrast": round(EDGE_ZONE_CONTRAST, 4)},
         # Where the runic bands came from (ritade, modellen) and how much of the scan they cover; None when the
         # stroke classification decided (measure all, no bands, or no band model)
-        "bands": ({"source": band["source"], "coverage": round(band["coverage"], 4),
-                   **({"note": drawn_note} if drawn_note else {})} if use_band
+        "bands": ({"source": None, "behind": True, "note": rune_bands.BEHIND_NOTE} if behind
+                  else {"source": band["source"], "coverage": round(band["coverage"], 4),
+                        **({"note": drawn_note} if drawn_note else {})} if use_band
                   else {"source": None, "note": (band or {}).get("error") or ("inga slingor hittades" if band else
                         "slingorna användes inte")}),
         "image_width": width,

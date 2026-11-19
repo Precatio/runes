@@ -238,6 +238,30 @@ def test_drawn_bands_follow_the_stone_when_it_is_turned(tmp_path, monkeypatch):
         assert abs(np.median(y)) < 3 and np.abs(y).max() < 25
     assert rune_bands.drawn("abc", Heightfield.from_mesh(mesh, [np.sin(0.6), 0, np.cos(0.6)], resolution=res, up=up)) is None
     assert rune_bands.drawn("other", hf0) is None
+    # from behind (2026-11-19): the bands belong to the carved side and are not carried over to the back
+    assert rune_bands.drawn("abc", Heightfield.from_mesh(mesh, [np.sin(0.2), 0, -np.cos(0.2)], resolution=res, up=up)) is None
+
+
+def test_seen_from_behind_nothing_is_measured(tmp_path, monkeypatch):
+    """A file with checked bands, analysed from behind: no cross-section is accepted, every one is rejected as seen
+    from behind, and the result says why (bands.behind, bands.note); from the front the analysis measures as before."""
+    import json
+    from src import rune_bands
+    mesh = rune_stone(size=(420, 240), resolution=0.6, segments=band_segments(), depth_mm=3.0, opening_angle_deg=80)
+    (tmp_path / "djup" / "s").mkdir(parents=True)
+    (tmp_path / "band" / "s").mkdir(parents=True)
+    json.dump({"sha256": "abc", "normal": [0, 0, 1], "up": [0, 1, 0], "res_mm": 1.0, "shape": [10, 10], "a0": 0.0,
+               "b0": 0.0}, open(tmp_path / "djup" / "s" / "x.json", "w"))
+    json.dump({"status": "granskad", "scale": 2, "bands": [{"points": [[1, 1], [5, 5]], "height": 2}]},
+              open(tmp_path / "band" / "s" / "x.json", "w"))
+    monkeypatch.setattr(rune_bands, "DEPTH_DIR", str(tmp_path / "djup"))
+    monkeypatch.setattr(rune_bands, "BAND_DIR", str(tmp_path / "band"))
+    back = analyze_grooves(mesh, [0, np.sin(np.radians(15)), -np.cos(np.radians(15))], sha256="abc")
+    assert back["counts"]["accepted"] == 0 and back["slices"]
+    assert set(back["counts"]["rejection_reasons"]) == {rune_bands.BEHIND_REASON}
+    assert back["bands"] == {"source": None, "behind": True, "note": rune_bands.BEHIND_NOTE}
+    front = analyze_grooves(mesh, [0, 0, 1], sha256="abc")
+    assert not front["bands"].get("behind") and rune_bands.BEHIND_REASON not in front["counts"]["rejection_reasons"]
 
 
 def test_runes_are_split_along_the_band(monkeypatch):

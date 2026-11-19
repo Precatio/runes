@@ -459,7 +459,7 @@ function ThreeDPageContent() {
       // In facit mode nothing is pre-marked, so that the program's suggestion does not steer the researcher
       setAutoLabels(data.slices.map(sl => (!sl.accepted ? "excluded" : facitMode ? "unknown"
         : sl.feature === "rune" ? "rune" : sl.feature === "ornament" ? "ornament" : "unknown")));
-      if (data.counts.accepted === 0) {
+      if (data.counts.accepted === 0 && !data.bands?.behind) { // seen from behind: the status line says why
         setAutoError("Inga spår kunde mätas på den sida som vetter mot dig. Kontrollera att den ristade sidan är vänd mot kameran, eller prova högre känslighet.");
       }
     } catch (err) {

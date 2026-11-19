@@ -111,7 +111,12 @@ export default function AutoAnalysisOptions({
       </button>
       {autoError && <p className="text-xs text-amber-800">{autoError}</p>}
       {autoResult && !facitMode && (
-        autoResult.bands?.source ? (
+        autoResult.bands?.behind ? (
+          // the checked bands belong to the carved side; seen from behind nothing is measured (src/rune_bands.py)
+          <p className="text-[11px] text-amber-800" role="status">
+            <strong>Obs:</strong> {autoResult.bands.note}.
+          </p>
+        ) : autoResult.bands?.source ? (
           <p className="text-[11px] text-slate-600" role="status">
             <strong>Runslingor:</strong>{" "}
             {autoResult.bands.source === "ritade" ? "ritade och granskade för hand" : "föreslagna av slingmodellen – kontrollera dem i granskningsbilden"}
