@@ -13,6 +13,8 @@ import { FEATURE_TYPES, METRICS, METRIC_DIGITS, METRIC_LABELS, formatSummary, ty
 import { rundata, type Carver } from "@/lib/rundata";
 import { stats, type ClusterResult } from "@/lib/stats";
 import ExportTable from "@/components/ExportTable";
+import { GRID_REMEDY_TEXT, gridLabel, gridMix, gridMixWarning, gridOf } from "@/lib/analysisGrid";
+import { SCAN_CLASS_STYLE, scanQuality } from "@/lib/scanQuality";
 
 // Carver per signum according to Rundata: only one certain signed/attributed carver counts as a label
 function labelFrom(carvers: Carver[]): string | null {
@@ -51,6 +53,9 @@ export default function CorpusPage() {
     () => entries.filter(e => !featureFilter || e.feature_type === featureFilter),
     [entries, featureFilter],
   );
+
+  // Measurements made on different analysis grids are not directly comparable (the test of 2026-11-19)
+  const gridWarning = useMemo(() => gridMixWarning(gridMix(visible.map(e => gridOf(e.provenance?.parameters)))), [visible]);
 
   const profiles = useMemo(() => {
     const groups: Record<string, CorpusEntry[]> = {};
@@ -172,6 +177,11 @@ export default function CorpusPage() {
         </div>
       </div>
       {error && <p className="text-red-700 font-semibold">{error}</p>}
+      {gridWarning && (
+        <div className="rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          <strong>Olika analysrutnät.</strong> {gridWarning} Ristarprofilerna och klustringen nedan blandar dem. {GRID_REMEDY_TEXT}
+        </div>
+      )}
 
       <div className="liquid-glass-island rounded-[32px] p-4 overflow-x-auto">
         {!loaded ? <p className="p-4 text-slate-500">Läser korpusen...</p> : visible.length === 0 ? (
@@ -207,6 +217,15 @@ export default function CorpusPage() {
                           {badge(q.scan, "Skanning", "Instrument och upplösning/noggrannhet angivna")}
                           {badge(q.enoughSlices, "≥5 snitt", "Minst fem tvärsnitt")}
                           {badge(q.currentMethod, e.method_version, `Aktuell metod är ${CURRENT_METHOD}`)}
+                          {(() => {
+                            const g = gridOf(e.provenance?.parameters);
+                            return badge(g.resolution_mm !== null && g.fixed !== false && Math.abs(g.resolution_mm - 0.6) < 0.01,
+                              `Rutnät ${gridLabel(g)}`, "Analysrutnätet. Jämför bara mätningar med samma rutnät: ett grövre rutnät flyttar V-vinkeln omkring 2° (provet 2026-11-19).");
+                          })()}
+                          {(() => {
+                            const sq = scanQuality(e.provenance?.parameters);
+                            return <span title={sq.text} className={`inline-block mr-1 mb-1 px-1.5 py-0.5 rounded text-[10px] font-bold ${SCAN_CLASS_STYLE[sq.klass]}`}>{`Skanning: ${sq.label}`}</span>;
+                          })()}
                           {badge(q.verified, `Verifierad ${e.verifications?.length ?? 0}`, (e.verifications ?? []).map(v => `${v.name}: ${v.comment ?? ""}`).join("\n") || "Inte verifierad av någon annan")}
                           {(e.rune_forms ?? 0) > 0 && badge(true, `${e.rune_forms} runformer`, "Runformer från 2D-analysen")}
                         </div>
@@ -247,6 +266,15 @@ export default function CorpusPage() {
             </tbody>
           </table></ExportTable>
         )}
+        {visible.length > 0 && (
+          <p className="text-[11px] text-slate-500 px-2 pt-2">
+            Skanning (God, Godtagbar, Svag) är den sämsta av två delar: punktavståndet (god högst 0,5 mm, protokollets
+            rekommendation; godtagbar högst 1,0 mm, eftersom ett fördubblat punktavstånd tydligt försämrade måtten i
+            robusthetsprovet) och andelen hål i stenytan (god högst 2 %, godtagbar högst 10 %; runda gränser, inte
+            kalibrerade). Ytans brus visas men betygsätts inte, eftersom det mest mäter stenens egen ojämnhet. Håll musen
+            över betyget för värdena. Poster utan uppmätta hål betygsätts på punktavståndet ensamt.
+          </p>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -279,6 +307,7 @@ export default function CorpusPage() {
             Hierarkisk klustring på standardiserade medelvärden (Wards metod, euklidiska avstånd), som i Kitzler Åhfeldts
             studier av huggteknik. Jämför helst en spårtyp i taget.
           </p>
+          {gridWarning && <p className="text-xs text-amber-900 mb-3">Obs: stenarna är mätta med olika analysrutnät, så en del av avstånden kan komma av rutnätet (se ovan).</p>}
           {clusterError && <p className="text-sm text-red-700">{clusterError}</p>}
           {cluster && (
             <div className="h-[360px]">

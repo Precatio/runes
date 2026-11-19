@@ -137,7 +137,8 @@ def _reference(corpus: list[dict], lookup, signum: str, feature_type: str):
     return ref, stones
 
 
-def groove(query_slices: list[dict], feature_type: str, corpus: list[dict], lookup, signum: str) -> dict:
+def groove(query_slices: list[dict], feature_type: str, corpus: list[dict], lookup, signum: str,
+           query_params: dict | None = None) -> dict:
     q = means(query_slices)
     if not q:
         return {"ranking": [], "note": "Stenen har inga fullständiga tvärsnitt av vald spårtyp."}
@@ -148,7 +149,22 @@ def groove(query_slices: list[dict], feature_type: str, corpus: list[dict], look
     # referensmaterialet med kända ristare (METHODS.md 13) nådde huggtekniken inte över materialets nivå
     reliability = technique_reliability(ev)
     return {"ranking": res.get("ranking", [])[:5], "evaluation": ev, "reference_size": len(ref),
-            "reliability": round(reliability, 3), "note": res.get("note"), "_stones": stones}
+            "reliability": round(reliability, 3), "note": res.get("note"), "_stones": stones,
+            "grid": _grid(query_params, corpus, lookup, signum, feature_type)}
+
+
+def _grid(query_params: dict | None, corpus: list[dict], lookup, signum: str, feature_type: str) -> dict | None:
+    """The stone's analysis grid against the grids of the corpus stones it is weighed against (src/analysis_grid.py):
+    a coarser grid moves the levels (about 2° in V-angle, the test of 2026-11-19)."""
+    from src.analysis_grid import reference_check
+    own = lookup(signum)
+    params = []
+    for e in corpus:
+        rec = lookup(e.get("signum") or "")
+        if not rec or (own and rec["signum"] == own["signum"]) or (e.get("feature_type") or "unknown") != feature_type:
+            continue
+        params.append(e.get("parameters"))
+    return reference_check(query_params, params) if params else None
 
 
 def stone_tests(query_slices: list[dict], stones: list[dict], max_stones: int = 5, n_perm: int = 1000) -> dict:

@@ -414,6 +414,9 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
                 {g.evaluation ? `Korsvaliderad träffsäkerhet ${pct(g.evaluation.top1_accuracy)} (${g.evaluation.n_stones} stenar, ${g.evaluation.n_groups} ristare; slumpnivå ${pct(g.evaluation.chance_top1)}${g.evaluation.material_top1 != null ? `, en gissning efter bergart ensam ${pct(g.evaluation.material_top1)}` : ""}). ` : ""}
                 Tillförlitlighet över den högre av de två nivåerna: {num(g.reliability ?? 0)}. Kortare avstånd = mer lik.
               </p>
+              {g.grid?.warning && (
+                <p className="text-[11px] text-amber-900 bg-amber-50 rounded-lg px-2 py-1.5 mt-2">{g.grid.warning}</p>
+              )}
             </>
           ) : <p className="text-sm text-slate-500">Ingen jämförelse – se &quot;Belägg som saknas&quot;.</p>}
         </div>

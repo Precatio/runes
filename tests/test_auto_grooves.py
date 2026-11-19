@@ -307,3 +307,72 @@ def test_rune_detection_rules_are_locked_for_the_facit_evaluation():
     and facits already evaluated count as development stones for the new rules."""
     from scripts.evaluate_rune_detection import RULES_SHA256, rules_fingerprint
     assert rules_fingerprint() == RULES_SHA256
+
+
+def _fake_bands_between_lines(rune_bands):
+    """The band between the band lines at ±45 mm of band_segments, as drawn bands would be given."""
+    def fake_bands(depth, region, res, hf, sha256):
+        H, W = depth.shape
+        wy = (hf.a0 + np.arange(W) * res)[None, :] * hf.u[1] + (hf.b0 + np.arange(H) * res)[:, None] * hf.v[1]
+        mask = (np.abs(wy) <= 42) & region
+        f = rune_bands.band_field(mask, res)
+        f.update({"source": "ritade", "empty": False, "coverage": float(mask[region].mean())})
+        return f
+    return fake_bands
+
+
+def test_every_rune_slice_knows_its_stroke_and_type(monkeypatch):
+    """2026-11-19: each accepted rune slice carries the id of the stroke it measures (the centre-line branch) and, where
+    the direction against the band tells, whether it is a stave (across the band) or a side branch. On band_segments
+    the staves stand upright across a level band and the twigs run at about 40°."""
+    from src import rune_bands
+    from src.auto_grooves import STROKE_ACROSS_DEG
+    mesh = rune_stone(size=(420, 240), resolution=0.6, segments=band_segments(), depth_mm=3.0, opening_angle_deg=80)
+    monkeypatch.setattr(rune_bands, "bands_for", _fake_bands_between_lines(rune_bands))
+    r = analyze_grooves(mesh, [0, 0, 1])
+    acc = [s for s in r["slices"] if s["accepted"] and s.get("rune_id") is not None]
+    assert acc and all(isinstance(s["stroke_id"], int) for s in acc)
+    assert {s["stroke_type"] for s in acc} <= {"stav", "bistav", None}
+    # the direction of the slice's own groove (the tangent the cut is square to) agrees with the stroke's type where it
+    # is clearly upright or clearly slanting (the twigs run at about 40°, the band is level)
+    for s in acc:
+        if s["stroke_type"] is None:
+            continue
+        along_y = abs(np.asarray(s["direction"])[1])
+        if along_y > np.cos(np.radians(10)) or along_y < np.cos(np.radians(40)):
+            assert (s["stroke_type"] == "stav") == (along_y > np.cos(np.radians(STROKE_ACROSS_DEG))), s
+    staves = [s for s in acc if s["stroke_type"] == "stav"]
+    assert len(staves) > len(acc) / 2  # the staves are the long strokes and carry most slices
+    # the same stroke has one id, and strokes belong to one rune
+    by_stroke = {}
+    for s in acc:
+        by_stroke.setdefault(s["stroke_id"], set()).add(s["rune_id"])
+    assert all(len(v) == 1 for v in by_stroke.values())
+    detail = [d for rr in r["runes"] for d in rr["strokes_detail"]]
+    assert all("id" in d and d["type"] in ("stav", "bistav", None) for d in detail)
+
+
+def test_facit_analysis_gets_a_rune_proposal_without_changing_its_slices(monkeypatch):
+    """Runa för runa, faster: when everything is measured (facit) the bands give a proposal of runes in band order,
+    but the slices, their labels and rune numbers stay exactly as without bands."""
+    from src import rune_bands
+    mesh = rune_stone(size=(420, 240), resolution=0.6, segments=band_segments(), depth_mm=3.0, opening_angle_deg=80)
+    plain = analyze_grooves(mesh, [0, 0, 1], measure="all", bands=False)
+    monkeypatch.setattr(rune_bands, "bands_for", _fake_bands_between_lines(rune_bands))
+    with_bands = analyze_grooves(mesh, [0, 0, 1], measure="all")
+    assert plain["rune_proposal"] is None
+    prop = with_bands["rune_proposal"]
+    assert prop and prop["source"] == "ritade" and 5 <= len(prop["runes"]) <= 8
+    assert all(len(x["box"]) == 4 and 0 <= x["box"][0] <= x["box"][2] <= 1 for x in prop["runes"])
+    strip = lambda r: [{k: v for k, v in s.items()} for s in r["slices"]]  # noqa: E731
+    assert strip(plain) == strip(with_bands)
+    assert plain["runes"] == with_bands["runes"]
+    # in the ordinary analysis the proposal is the grouping itself
+    runes = analyze_grooves(mesh, [0, 0, 1])
+    assert [x["id"] for x in runes["rune_proposal"]["runes"]] == [x["id"] for x in runes["runes"]]
+
+
+def test_hole_fraction_is_recorded():
+    mesh = rune_stone(size=(200, 120), resolution=0.6, segments=band_segments(n_runes=2, crack=False), depth_mm=3.0)
+    r = analyze_grooves(mesh, [0, 0, 1], bands=False)
+    assert 0.0 <= r["parameters"]["hole_fraction"] < 0.02

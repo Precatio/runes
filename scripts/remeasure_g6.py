@@ -135,7 +135,7 @@ def measure_local(g5_name: str):
     else:
         out["error"] = "inga godkända snitt"
     out["slices"] = [{**{m: x[m] for m in METRICS}, "position_mm": x["position_mm"], "fit_r2": x.get("fit_r2"),
-                      "rune_id": x.get("rune_id"), "feature": x.get("feature"), "stroke_id": x.get("stroke_id"),
+                      "rune_id": x.get("rune_id"), "feature": x.get("feature"), "stroke_id": x.get("stroke_id"), "stroke_type": x.get("stroke_type"),
                       "profile": x.get("profile"), "point": x.get("point"), "direction": x.get("direction"),
                       "up": x.get("up")} for x in acc]
     png = os.path.join(OUT, "sodermanland", os.path.splitext(g5_name)[0] + "_granskning.png")

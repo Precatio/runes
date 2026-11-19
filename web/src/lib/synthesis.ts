@@ -45,7 +45,9 @@ export interface SynthesisResult {
     orthography?: { ranking: OrthographyItem[]; n_words: number; usable: boolean; source?: string;
       evaluation: { top1_accuracy: number; top3_accuracy: number; chance_top1: number; n_carvers: number; signed_top1: number | null } } | null;
     groove?: { ranking: { group: string; n: number; distance: number }[]; evaluation?: { top1_accuracy: number; chance_top1: number; material_top1?: number | null; n_stones: number; n_groups: number } | null;
-      reference_size?: number; reliability?: number } | null;
+      reference_size?: number; reliability?: number;
+      // the analysis grids of the stone and of the corpus stones it is weighed against (src/analysis_grid.py)
+      grid?: { query: string; reference: { label: string; n: number }[]; mixed: boolean; warning: string | null } | null } | null;
     measurements_by_feature?: Record<string, { n: number; summary: Record<Metric, Summary> }> | null;
     reading_check?: { char_agreement: number; word_agreement: number; coverage: number; summary: string };
     geology?: Omit<Geology, "signum" | "place"> | null;
@@ -54,6 +56,9 @@ export interface SynthesisResult {
 }
 
 // Only the metrics travel to the server – raw profiles and positions are not needed here
+// The analysis grid travels too, so that the server can warn when the stone and the corpus were measured on different grids
+const gridParams = (p: Record<string, unknown> | undefined) =>
+  ({ resolution_mm: p?.resolution_mm ?? null, fixed_resolution: p?.fixed_resolution ?? null, harmonize_mm: p?.harmonize_mm ?? null });
 const metricsOnly = (slices: GrooveAnalysisRecord["slices"]) =>
   slices.map(s => ({ ...Object.fromEntries(METRICS.map(m => [m, s[m]])), position_mm: s.position_mm }));
 
@@ -81,11 +86,13 @@ export async function runSynthesis(project: ProjectData, analysisId: string | nu
       location: project.location || null,
       ornamentation: project.metaOrnamentation || null,
       period: project.metaPeriod || null,
-      analyses: (project.grooveAnalyses ?? []).map(a => ({ id: a.id, feature_type: a.feature_type, savedAt: a.savedAt, slices: metricsOnly(a.slices) })),
+      analyses: (project.grooveAnalyses ?? []).map(a => ({ id: a.id, feature_type: a.feature_type, savedAt: a.savedAt, slices: metricsOnly(a.slices),
+        parameters: gridParams(a.provenance?.parameters) })),
       analysis_id: analysisId,
       // Fallback for projects saved before full analyses were kept
       slices: project.grooveAnalyses?.length ? [] : project.slices,
-      corpus: (corpusEntries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means, slices: metricsOnly(e.slices) })),
+      corpus: (corpusEntries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means, slices: metricsOnly(e.slices),
+        parameters: gridParams(e.provenance?.parameters) })),
       corpus_note: corpusEntries === null ? "logga in för att jämföra med den delade mätkorpusen." : null,
       reading,
       use_ai: !!opts.useAI,

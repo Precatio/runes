@@ -2,6 +2,41 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "runa-for-runa-forslag",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "title": "Runa för runa går snabbare med ett förslag",
+   "text": "I Runa för runa kan Vitki nu föreslå vilken runa i Rundatas translitterering var och en av analysens runor är, i ordning längs runslingan. Du går igenom förslagen och trycker Stämmer eller Inte en runa, och du kan vända ordningen eller klicka in en runa som analysen missat. Förslagen är tydligt märkta, och ett facit kan inte sparas förrän varje förslag är bekräftat eller avvisat."
+  },
+  {
+   "id": "skanningens-kvalitet",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "title": "Ett kvalitetsbetyg för varje skanning",
+   "text": "Varje skanning får nu betyget God, Godtagbar eller Svag. Betyget bygger på två saker: hur tätt skanningens punkter ligger och hur stor del av stenytan som saknas i skanningen (hål). Gränserna och skälen till dem står bredvid betyget. Betyget visas i huggspårsanalysen på 3D-sidan, i mätkorpusen, i stenrapporten och i exporten."
+  },
+  {
+   "id": "samma-rutnat-varning",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "title": "Varning när stenar är mätta med olika rutnät",
+   "text": "Jämför stenar, mätkorpusen och syntesen varnar nu när mätningarna är gjorda med olika analysrutnät. Ett prov den 19 november visade att ett grövre rutnät (1,2 mm i stället för 0,6 mm) gör V-vinkeln omkring 2° större och spåret omkring 1 mm bredare på samma skanning. Varningen föreslår att stenen mäts om med Vitki-protokollets fasta rutnät på 0,6 mm."
+  },
+  {
+   "id": "streck-per-snitt",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "title": "Varje snitt vet vilket streck det mäter",
+   "text": "Huggspårsanalysen sparar nu för varje snitt i en runa vilket streck det ligger på, och om strecket är en stav (tvärs över runslingan) eller en bistav (snett eller längs slingan). Uppgifterna finns i exporten av snitten (kolumnerna stroke_id och stroke_type). Själva måtten är oförändrade."
+  },
+  {
+   "id": "korpus-17-ritade-slingor",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "title": "Sjutton stenar i mätkorpusen mätta om med de ritade runslingorna",
+   "text": "Sjutton av Kitzler Åhfeldts skanningar av Södermanlands runstenar (bland dem Sö 206, Sö 333 och Sö 367) hade mätts med slingmodellens förslag i stället för de runslingor som ritats och granskats för hand. De är nu mätta om med de ritade slingorna, och posterna i den delade mätkorpusen är ersatta. Stenarnas medelvärden ändrades lite: V-vinkeln i median 0,8° åt något håll och spårbredden 0,14 mm. På Sö 360 och Sö 370 ändrades vinkeln mest, omkring 3,5°."
+  },
+  {
    "id": "artikelgranskning-fore-publicering",
    "date": "2026-11-19",
    "status": "nytt",

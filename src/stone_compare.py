@@ -169,6 +169,12 @@ def comparability(a: dict, b: dict, ga: dict, rec_a: dict | None, rec_b: dict | 
         out.append({"key": "enhet", "ok": False,
                     "text": f"Snitten saknar runnummer ({na} och {nb} snitt), så snitten jämförs som om de vore oberoende – "
                             "p-värdena blir för små. Analysera stenarna automatiskt för att jämföra runa mot runa."})
+    # The analysis grid: a coarser grid moves the levels (about 2° in V-angle in the test of 2026-11-19,
+    # src/analysis_grid.py), so two stones are compared on the same grid
+    from src.analysis_grid import comparability_check
+    grid = comparability_check(pa.get("parameters"), pb.get("parameters"))
+    if grid:
+        out.append(grid)
     sa = ((pa.get("parameters") or {}).get("mesh_point_spacing_mm"))
     sb = ((pb.get("parameters") or {}).get("mesh_point_spacing_mm"))
     if sa and sb and sa == sa and sb == sb:

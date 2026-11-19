@@ -622,6 +622,40 @@ def _groove_map_png(hf: Heightfield, residual: np.ndarray, inner: np.ndarray, th
     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii"), ref_depth
 
 
+# Stave or side branch, for each stroke of a rune grouped along the band (stroke_type on the slices, 2026-11-19). Read
+# from the stroke's direction against the band where it stands: within STROKE_ACROSS_DEG of square to the band it is a
+# stave (stav), otherwise a side branch (bistav). The angle mirrors staveless.ALONG_DEG (a stroke within 25° of the
+# band's direction runs along it). A stroke shorter than STROKE_MIN_BANDS band heights – the same share under which
+# group_runes keeps even strokes along the band – gets no type: its direction says too little. Strokes are the centre
+# line's branches between junctions, so a stave crossed by a twig is two strokes, both staves. Only labels: nothing
+# here decides which slices are measured or accepted.
+STROKE_ACROSS_DEG = 25.0
+STROKE_MIN_BANDS = 0.25
+
+
+def stroke_types(grouping: dict, field: dict) -> dict[int, str | None]:
+    """stav, bistav or None for every stroke (branch) of the runes grouped along the band (src/staveless.group_runes)."""
+    piece_of = {b: r["piece"] for r in grouping["runes"] for b in r["branches"]}
+    heights = grouping.get("heights") or {}
+    ty, tx = field["ty"], field["tx"]
+    out: dict[int, str | None] = {}
+    limit = math.sin(math.radians(STROKE_ACROSS_DEG))  # |cos| of the angle to the band at most this: across it
+    for b, st in grouping["strokes"].items():
+        h = heights.get(piece_of.get(b), 0.0)
+        p0, p1 = np.asarray(st["p0"], float), np.asarray(st["p1"], float)
+        d = p1 - p0
+        n = float(np.hypot(*d))
+        r = min(max(int(round((p0[0] + p1[0]) / 2)), 0), ty.shape[0] - 1)
+        c = min(max(int(round((p0[1] + p1[1]) / 2)), 0), ty.shape[1] - 1)
+        t = np.array([float(ty[r, c]), float(tx[r, c])])
+        tn = float(np.hypot(*t))
+        if h <= 0 or st["length_mm"] < STROKE_MIN_BANDS * h or n == 0 or tn == 0:
+            out[int(b)] = None
+            continue
+        out[int(b)] = "stav" if abs(float(d @ t)) / (n * tn) <= limit else "bistav"
+    return out
+
+
 def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 3.0,
                     min_depth_mm: float = 0.3, scale_mm: float = 20.0, edge_margin_mm: float = 5.0,
                     min_fit_r2: float = 0.8, max_cells: int = 6_000_000, face_tree: cKDTree | None = None,
@@ -734,9 +768,11 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
     # called runes itself, and on the 34 KÅ stones with readable text it measured a median 0.36 of the text's runes
     # against 0.98 with the grouping along the band (utdata/stavlosa/ka_tabell.json)
     grouping = None
+    kinds_of_stroke: dict[int, str | None] = {}
     if use_band and measure == "runes":
         from src.staveless import group_runes
         grouping = group_runes(branch_labels, band, res)
+        kinds_of_stroke = stroke_types(grouping, band)
 
     def branch_at(iy, ix):
         b = int(branch_labels[iy, ix])
@@ -784,9 +820,13 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             rec["feature"] = {"runa": "rune", "slingkant": "band", "gräns": "border"}.get(
                 kind, "ornament" if old in ("ornament", "rune") else old)
         if grouping is not None:
-            g_id = grouping["branch_rune"].get(branch_at(iy, ix)) if rec["feature"] == "rune" else None
+            b_here = branch_at(iy, ix) if rec["feature"] == "rune" else 0
+            g_id = grouping["branch_rune"].get(b_here) if rec["feature"] == "rune" else None
             if g_id is not None:
                 rec["rune_id"] = int(g_id)
+                # the stroke this slice measures (the centre-line branch, numbered within the analysis) and its type
+                rec["stroke_id"] = int(b_here)
+                rec["stroke_type"] = kinds_of_stroke.get(int(b_here))
         elif rec["feature"] == "rune" and stroke and stroke["kind"] == "rune":
             rec["rune_id"] = int(stroke["rune"])
             rec["stroke_id"] = int(sid)
@@ -861,6 +901,27 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                "depth": -residual, "res": res, "region": hf.region, "inner": inner, "a0": hf.a0, "b0": hf.b0,
                "bands": band["mask"] if use_band else None} if keep_arrays else None)
     measured_runes = sorted({s["rune_id"] for s in accepted if "rune_id" in s})
+    # A proposal for Runa för runa (web/src/lib/runeProposal.ts): the runes along the bands in band order. When
+    # everything is measured (facit) the bands are not used for the slices, so they are read here for the proposal
+    # only; the slices, their labels and the rune list stay as before.
+    proposal_grouping, proposal_source = grouping, (band or {}).get("source") if grouping is not None else None
+    if proposal_grouping is None and bands and measure == "all":
+        try:
+            from src import rune_bands
+            from src.staveless import group_runes
+            if not (sha256 and rune_bands.seen_from_behind(sha256, hf)):
+                pb = rune_bands.bands_for(-residual, hf.region, res, hf, sha256)
+                if pb and not pb.get("empty"):
+                    proposal_grouping, proposal_source = group_runes(branch_labels, pb, res), pb["source"]
+        except Exception:  # the proposal must never stop an analysis
+            proposal_grouping = None
+    rune_proposal = ({"source": proposal_source, "order": "längs slingan (slingdel och avstånd längs den, från en godtycklig ände)",
+                      "runes": [{"id": int(r["id"]), "box": _rune_box(r["extent"], hf.H.shape, res),
+                                 "n_strokes": len(r["branches"])} for r in proposal_grouping["runes"]]}
+                     if proposal_grouping is not None and proposal_grouping["runes"] else None)
+    # The scan's quality (src/scan_quality.py): holes inside the outline on this grid, beside the point spacing
+    from src import scan_quality
+    holes = scan_quality.hole_fraction(hf.valid)
     kinds = {}
     for st in strokes["strokes"].values():
         kinds[st["kind"]] = kinds.get(st["kind"], 0) + 1
@@ -869,7 +930,8 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                       "height_mm": float(max(r["extent"][2] - r["extent"][0], r["extent"][3] - r["extent"][1]) * res),
                       "n_slices": sum(1 for s in accepted if s.get("rune_id") == r["id"]),
                       "box": _rune_box(r["extent"], hf.H.shape, res),
-                      "strokes_detail": [{"length_mm": float(grouping["strokes"][b]["length_mm"]),
+                      "strokes_detail": [{"id": int(b), "type": kinds_of_stroke.get(int(b)),
+                                          "length_mm": float(grouping["strokes"][b]["length_mm"]),
                                           "p0_mm": [float(v) * res for v in grouping["strokes"][b]["p0"]],
                                           "p1_mm": [float(v) * res for v in grouping["strokes"][b]["p1"]]}
                                          for b in r["branches"]]}
@@ -927,11 +989,13 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                           "p0_mm": [float(v) * res for v in st["p0"]], "p1_mm": [float(v) * res for v in st["p1"]]}
                          for st in strokes["strokes"].values()],
         "runes": rune_list,
+        "rune_proposal": rune_proposal,
         "parameters": {
             "normal": [float(v) for v in hf.n],
             "up": [float(v) for v in hf.v],
             "resolution_mm": res,
             "mesh_point_spacing_mm": mesh_spacing,
+            "hole_fraction": round(holes, 5) if math.isfinite(holes) else None,
             "harmonize_mm": harmonize_mm,
             "fixed_resolution": resolution_mm is not None,
             "reference_scale_mm": scale_mm,

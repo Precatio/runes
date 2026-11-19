@@ -29,6 +29,7 @@ for f in (".env", "api/.env"):
             os.environ.setdefault(k, v or "")
 
 from api.config import APP_VERSION  # noqa: E402
+from src import scan_quality  # noqa: E402
 from src.stats import METRICS  # noqa: E402
 
 from api.config import METHOD_VERSION  # noqa: E402
@@ -63,7 +64,10 @@ def entry(d: dict, uid: str, name: str, now: str) -> dict:
     sig = d["signum"]
     slices_all = [s for s in d["slices"] if all(s.get(m) is not None for m in METRICS)]
     slices = [{**{m: float(s[m]) for m in METRICS}, "position_mm": float(s.get("position_mm") or 0),
-               **({"rune_id": int(s["rune_id"])} if s.get("rune_id") is not None else {})} for s in thin(slices_all)]
+               **({"rune_id": int(s["rune_id"])} if s.get("rune_id") is not None else {}),
+               # the stroke each slice measures and its type (groove-7 with stroke ids, 2026-11-19)
+               **({"stroke_id": int(s["stroke_id"])} if s.get("stroke_id") is not None else {}),
+               **({"stroke_type": s["stroke_type"]} if s.get("stroke_type") else {})} for s in thin(slices_all)]
     summary = {m: {k: d["summary"][m].get(k) for k in ("n", "mean", "sd", "ci95", "min", "max")} for m in METRICS}
     n_runes = (d.get("rune_summary") or {}).get("n_runes")
     notes = (f"Skanning av Laila Kitzler Åhfeldt (RAÄ), Zenodo {SCAN['url']}, CC BY 4.0. Mätt i Vitki med protokollet "
@@ -81,7 +85,9 @@ def entry(d: dict, uid: str, name: str, now: str) -> dict:
                        "mesh": {"mock": False, "filename": d.get("file"), "sha256": d.get("sha256")},
                        "parameters": d.get("parameters") or {}},
         "scanner": SCAN["scanned_by"], "notes": notes,
-        "scan": {**SCAN, "resolution_mm": (d.get("parameters") or {}).get("mesh_point_spacing_mm")},
+        "scan": {**SCAN, "resolution_mm": (d.get("parameters") or {}).get("mesh_point_spacing_mm"),
+                 # the scan's quality class and what it is built on (src/scan_quality.py)
+                 "quality": {k: v for k, v in scan_quality.grade(d.get("parameters")).items() if k != "parts"}},
         "raw_profile_chunks": 0, "rune_forms": 0, "verifications": [],
     }
 

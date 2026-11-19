@@ -657,6 +657,8 @@ def validate_result(result) -> dict:
             for k in ("rune_id", "stroke_id"):
                 if s.get(k) is not None and (not isinstance(s[k], int) or isinstance(s[k], bool)):
                     raise BadInput(f"Snitt {i + 1}: {k} måste vara ett heltal.")
+            if s.get("stroke_type") is not None and s["stroke_type"] not in ("stav", "bistav"):
+                raise BadInput(f"Snitt {i + 1}: stroke_type måste vara stav, bistav eller tomt.")
             p = s.get("profile")
             if p is not None:
                 if not isinstance(p, dict) or not isinstance(p.get("x"), list) or not isinstance(p.get("z"), list):
@@ -914,6 +916,8 @@ class _Context:
             ("Mätmetod", f"{method}" + (f" (analysen gjord {when} med {self.prov.get('software', APP_NAME)} "
                                         f"{self.prov.get('version', '')})".replace(" )", ")") if when else "")),
             ("Parametrar", json.dumps(self.params, ensure_ascii=False, separators=(",", ":"))),
+            ("Skanningens kvalitet", _scan_quality_text(self.params)),
+            ("Analysrutnät", _grid_text(self.params)),
             ("Koordinater", COORDS + (f" {json.dumps(m['centered_by'])}" if m.get("centered_by") else "")),
         ]
         return lines + [("Not", n) for n in notes]
@@ -1072,7 +1076,19 @@ def _profiles_figure(ctx):
     return [(f"{ctx.sig}_tvarsnittsprofiler.png", png, "image/png")]
 
 
-SLICE_COLUMNS = ["slice", "mode", "feature_type", "label", "accepted", "reason", "rune_id", "stroke_id", "feature",
+def _scan_quality_text(params: dict) -> str:
+    """The scan's quality class in plain words (src/scan_quality.py)."""
+    from src.scan_quality import grade
+    return grade(params)["text"]
+
+
+def _grid_text(params: dict) -> str:
+    """The analysis grid, and why it matters when stones are compared (src/analysis_grid.py)."""
+    from src.analysis_grid import GRID_EFFECT_TEXT, grid_label, grid_of
+    return f"{grid_label(grid_of(params))}. Jämför bara med mätningar gjorda med samma rutnät. {GRID_EFFECT_TEXT}"
+
+
+SLICE_COLUMNS = ["slice", "mode", "feature_type", "label", "accepted", "reason", "rune_id", "stroke_id", "stroke_type", "feature",
                  "position_mm", *METRICS, "fit_r2", "halfwidth_mm", "point_x", "point_y", "point_z", "dir_x", "dir_y",
                  "dir_z", "up_x", "up_y", "up_z", "img_x", "img_y", "method_version", "mesh_sha256"]
 
@@ -1095,7 +1111,7 @@ def _slices_csv(ctx):
         # what it measured (runes only or all grooves), so it is not written per slice next to the label
         rows.append([i + 1, ctx.mode, None if ctx.auto else ctx.feature_type, _label(ctx, i), s.get("accepted", True),
                      s.get("reason"),
-                     s.get("rune_id"), s.get("stroke_id"), s.get("feature"), s.get("position_mm"),
+                     s.get("rune_id"), s.get("stroke_id"), s.get("stroke_type"), s.get("feature"), s.get("position_mm"),
                      *[s.get(m) for m in METRICS], s.get("fit_r2"), s.get("halfwidth_mm"),
                      *_xyz(s.get("point")), *_xyz(s.get("direction")), *_xyz(s.get("up")),
                      s.get("img_x"), s.get("img_y"), method, sha])
@@ -1423,6 +1439,8 @@ def readme_text(ctx: _Context, items, files, skipped) -> str:
     if ctx.mesh.get("filename") or ctx.mesh.get("sha256"):
         out.append(f"Skanningsfil: {ctx.mesh.get('filename') or 'okänt namn'}"
                    + (f", SHA-256 {ctx.mesh['sha256']}" if ctx.mesh.get("sha256") else ""))
+    out.append(_wrap_text(f"Skanningens kvalitet: {_scan_quality_text(ctx.params)}"))
+    out.append(_wrap_text(f"Analysrutnät: {_grid_text(ctx.params)}"))
     out += ["", _wrap_text(README_INTRO), "", "SKANNINGEN – VEM SOM SKA KREDITERAS", "-" * 40,
             _wrap_text(credit_line(ctx.credit, FILES_NOTE))]
     ds = ctx.credit.get("dataset") if ctx.credit.get("known") else None

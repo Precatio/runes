@@ -11,6 +11,8 @@ import { useSettings } from "@/components/SettingsContext";
 import ExportTable from "@/components/ExportTable";
 import RuneLinkPanel, { type MarkMode } from "@/components/RuneLinkPanel";
 import { buildEdition, followingToken, linksOf, marksOf, markOfToken, nextToken, type MarkStep, type RuneAnchor, type TransliterationState } from "@/lib/runeLinks";
+import { confirmStep, facitAllowed, pendingPoints, proposalPoints, proposedTokens } from "@/lib/runeProposal";
+import { SCAN_CLASS_STYLE, scanQuality } from "@/lib/scanQuality";
 
 const LABELS: Record<AutoLabel, { name: string; color: string }> = {
   rune: { name: "Runa", color: "#b7410e" },
@@ -56,6 +58,20 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
   const [section, setSection] = useState<string | null>(null);
   const [hoverMark, setHoverMark] = useState<number | null>(null);
   const [savingFacit, setSavingFacit] = useState(false);
+  // Proposed links (lib/runeProposal.ts): the analysis' runes along the band tied to the transliteration in order;
+  // nothing is linked until the user confirms each one
+  const [proposalOn, setProposalOn] = useState(false);
+  const [proposalReverse, setProposalReverse] = useState(false);
+  const [rejected, setRejected] = useState<number[]>([]);
+  const [proposalHistory, setProposalHistory] = useState<("confirm" | "reject")[]>([]);
+  // A new analysis starts without a proposal (the old one's runes belong to the old review image)
+  const [proposalFor, setProposalFor] = useState(result.rune_proposal);
+  if (proposalFor !== result.rune_proposal) {
+    setProposalFor(result.rune_proposal);
+    setProposalOn(false);
+    setRejected([]);
+    setProposalHistory([]);
+  }
   const runeMarks = marksOf(markSteps);
   const tr = translit.status === "ok" ? translit.data : null;
   const tokenMark = markOfToken(markSteps);
@@ -65,6 +81,44 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
   const range = result.angle_color_range;
   const W = result.image_width;
   const H = result.image_height;
+  const proposalRunes = useMemo(() => result.rune_proposal?.runes ?? [], [result.rune_proposal]);
+  const canPropose = !!tr && proposalRunes.length > 0 && !!onMarkStepsChange;
+  const points = useMemo(() => (proposalOn ? proposalPoints(proposalRunes, W, H, proposalReverse) : []),
+    [proposalOn, proposalRunes, W, H, proposalReverse]);
+  const rejectedSet = useMemo(() => new Set(rejected), [rejected]);
+  const pending = useMemo(() => pendingPoints(points, markSteps, rejectedSet), [points, markSteps, rejectedSet]);
+  const pendingTokens = tr ? proposedTokens(tr.tokens, markSteps, pending, section) : [];
+  const current = pending[0] ?? null;
+  const currentToken = pendingTokens[0] ?? null;
+  const charOf = (i: number | null) => (i === null || !tr ? "" : tr.tokens.find(t => t.i === i)?.char ?? "");
+  const confirmCurrent = () => {
+    if (!current || currentToken === null || !tr || !onMarkStepsChange) return;
+    const second = bindNext ? followingToken(tr.tokens, currentToken, section) : null;
+    onMarkStepsChange([...markSteps, confirmStep(current, currentToken, second)]);
+    setProposalHistory(h => [...h, "confirm"]);
+    setBindNext(false);
+  };
+  const rejectCurrent = () => {
+    if (!current) return;
+    setRejected(r => [...r, current.rune]);
+    setProposalHistory(h => [...h, "reject"]);
+  };
+  const undoProposal = () => {
+    const last = proposalHistory.at(-1);
+    if (!last) return;
+    setProposalHistory(h => h.slice(0, -1));
+    if (last === "reject") setRejected(r => r.slice(0, -1));
+    else if (onMarkStepsChange) onMarkStepsChange(markSteps.slice(0, -1));
+  };
+  const startProposal = (reverse: boolean) => {
+    setProposalOn(true);
+    setProposalReverse(reverse);
+    setRejected([]);
+    setProposalHistory([]);
+    setMarkMode("linked");
+  };
+  const facitOk = facitAllowed(pending, proposalOn);
+  const quality = scanQuality(result.parameters as Record<string, unknown>);
 
   const toImage = (e: React.PointerEvent) => {
     const rect = svgRef.current!.getBoundingClientRect();
@@ -291,6 +345,50 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
           hoverMark={hoverMark} onHoverMark={setHoverMark} assigned={assigned} runeSlices={runeSlices.length} emptyMarks={emptyMarks} />
       )}
 
+      {onMarkStepsChange && tr && (markMode === "linked" || proposalOn) && (
+        <div className="rounded-xl border border-dashed border-[#b7410e] bg-white px-4 py-3 text-xs text-slate-700 space-y-2">
+          {!proposalOn ? (
+            canPropose ? (
+              <div className="flex flex-wrap items-center gap-2">
+                <span><strong>Förslag:</strong>{` analysen har delat in ${proposalRunes.length} runor längs slingan. Vitki kan föreslå `
+                  + "vilken runa i translittereringen var och en är, i slingans ordning, så att du bara bekräftar eller rättar."}</span>
+                <button type="button" onClick={() => startProposal(false)}
+                  className="px-2.5 py-1 rounded-lg border border-[#b7410e] text-[#b7410e] font-bold">Föreslå kopplingen</button>
+              </div>
+            ) : (
+              <p className="text-slate-500">Inget förslag: analysen har inga runor indelade längs runslingorna (det kräver ritade slingor eller
+                slingmodellen och en analys gjord efter 2026-11-19). Klicka runorna en och en i stället.</p>
+            )
+          ) : (
+            <div className="space-y-2">
+              <p><strong>Förslag, inte facit.</strong>{" Streckade ringar är analysens runor i slingans ordning med den runa ur "
+                + "translittereringen de föreslås vara. Inget är kopplat förrän du bekräftar: knappen Stämmer kopplar den "
+                + "markerade ringen, Inte en runa stryker den, Hoppa över (syns inte) ovan går vidare i texten, och ett eget "
+                + "klick i bilden lägger till en runa som analysen missade. Börjar förslaget i fel ände, vänd ordningen."
+                + (result.rune_proposal?.source === "modellen" ? " Slingorna är slingmodellens förslag, inte ritade för hand." : "")}</p>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-semibold">
+                  {current
+                    ? `Föreslagen runa: ${charOf(currentToken) || "– (translittereringen är slut)"} · ${pending.length} förslag kvar`
+                    : "Alla förslag är bekräftade eller avvisade."}
+                </span>
+                <button type="button" disabled={!current || currentToken === null} onClick={confirmCurrent}
+                  className="px-2.5 py-1 rounded-lg bg-[#b7410e] text-white font-bold disabled:opacity-40">Stämmer</button>
+                <button type="button" disabled={!current} onClick={rejectCurrent}
+                  className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white font-bold disabled:opacity-40">Inte en runa</button>
+                <button type="button" disabled={!proposalHistory.length} onClick={undoProposal}
+                  className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white font-bold disabled:opacity-40">Ångra</button>
+                <button type="button" disabled={markSteps.length > 0 || proposalHistory.length > 0} onClick={() => startProposal(!proposalReverse)}
+                  title="Läs slingan från andra änden (bara innan något är bekräftat)"
+                  className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white font-bold disabled:opacity-40">Vänd ordningen</button>
+                <button type="button" onClick={() => setProposalOn(false)}
+                  className="px-2.5 py-1 rounded-lg text-slate-500 font-bold hover:text-slate-900">Stäng förslaget</button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {facitMode && (
         <div className="rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-xs text-slate-700 space-y-2">
           <p><strong>Facit-läge.</strong> Alla spår är mätta och inget är förmärkt. Märk med rutor: <em>Runa</em> för runor,
@@ -299,10 +397,17 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
           <div className="flex flex-wrap items-center gap-2">
             <span>{nUnmarked} omärkta punkter.</span>
             {tr && <span>{linksOf(markSteps).length} klick kopplade till runor (Runa för runa).</span>}
-            <button type="button" onClick={saveFacit} disabled={savingFacit} className="px-3 py-1.5 bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-lg disabled:opacity-40">
+            <button type="button" onClick={saveFacit} disabled={savingFacit || !facitOk}
+              title={facitOk ? undefined : "Bekräfta eller avvisa varje föreslagen runa först"}
+              className="px-3 py-1.5 bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-lg disabled:opacity-40">
               {savingFacit ? "Räknar fram 3D-punkterna …" : "Spara facit (JSON)"}
             </button>
           </div>
+          {!facitOk && (
+            <p className="text-amber-900 font-semibold">
+              {`${pending.length} föreslagna runor är inte bekräftade. Ett facit sparas först när du har bekräftat eller avvisat varje förslag.`}
+            </p>
+          )}
         </div>
       )}
 
@@ -319,6 +424,17 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
               stroke={LABELS[labels[i]].color} strokeWidth={labels[i] === "unknown" ? 1 : 2.5}
               opacity={runeMarks.length && labels[i] === "rune" && s.rune_id == null ? 0.3 : 1} />
           ))}
+          {proposalOn && pending.map((p, k) => {
+            const now = k === 0;
+            return (
+              <g key={`p${p.rune}`} pointerEvents="none">
+                <circle cx={p.xy[0]} cy={p.xy[1]} r={now ? 14 : 10} fill={now ? "#fff7ed" : "rgba(255,255,255,0.7)"}
+                  stroke="#b7410e" strokeWidth={now ? 3 : 1.5} strokeDasharray="4 3" />
+                <text x={p.xy[0]} y={p.xy[1]} textAnchor="middle" dominantBaseline="central" fontSize={now ? 12 : 10}
+                  fontWeight={700} fill="#b7410e" fontStyle="italic">{charOf(pendingTokens[k]) || "?"}</text>
+              </g>
+            );
+          })}
           {runeMarks.map(([x, y], k) => {
             const hot = hoverMark === k;
             const label = tr ? [...tokenMark].filter(([, m]) => m === k).map(([t]) => tr.tokens.find(o => o.i === t)?.char ?? "").join("") : "";
@@ -343,9 +459,13 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
         <span>{range[0]}° – {range[1]}°</span>
         <span className="ml-auto">
           Upplösning {Number(result.parameters.resolution_mm).toFixed(2)} mm · brus {Number(result.parameters.noise_mm).toFixed(2)} mm ·
-          tröskel {Number(result.parameters.threshold_mm).toFixed(2)} mm
+          tröskel {Number(result.parameters.threshold_mm).toFixed(2)} mm ·{" "}
+          <span title={quality.text} className={`px-1.5 py-0.5 rounded font-bold ${SCAN_CLASS_STYLE[quality.klass]}`}>
+            {`Skanningens kvalitet: ${quality.label}`}
+          </span>
         </span>
       </div>
+      <p className="text-[11px] text-slate-500 -mt-3">{quality.text}</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div className="overflow-x-auto">

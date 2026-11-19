@@ -409,6 +409,9 @@ def auto_analyze(
     params = {"mode": "automatic", **result["parameters"], "meta_stone": meta_stone, "meta_weathering": meta_weathering}
     result["provenance"] = provenance(entry.info, params, {"runes": "rune", "ornament": "ornament"}.get(measure, "unknown"))
     result["provenance"]["protocol"] = protocol_spec.compliance(result["parameters"], METHOD_VERSION)
+    # the scan's quality class (point spacing and holes; src/scan_quality.py), shown with the analysis
+    from src.scan_quality import grade
+    result["scan_quality"] = {k: v for k, v in grade(result["parameters"]).items() if k != "parts"}
     return result
 
 

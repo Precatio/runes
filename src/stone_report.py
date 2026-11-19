@@ -994,8 +994,10 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         ["Kontrollsumma (SHA-256)", pm.get("sha256") or "–"],
         ["Publicerad skanning", (f"{scan['url']} ({f['scan_source']['short']})" if f.get("scan_source") else scan.get("url")) or "–"],
         ["Licens för skanningen", scan.get("license") or "–"],
+        ["Skanningens kvalitet (Vitki)", _scan_quality(f["provenance"].get("parameters"))],
     ]
-    blocks.append(tab(["", ""], scan_rows, "3D-dokumentation och paradata."))
+    blocks.append(tab(["", ""], scan_rows, "3D-dokumentation och paradata. Skanningens kvalitet är Vitkis enkla klass "
+                      "(God, Godtagbar, Svag): den sämsta av punktavståndet och andelen hål, med gränserna i METHODS.md 2e."))
     blocks.append(p("Bilderna av ytan i figurerna är räknade direkt ur 3D-modellen: modellen projiceras på den ristade "
                     "sidans plan till ett höjdfält, som belyses digitalt (strykljus) eller jämförs med en rekonstruerad "
                     "stenyta (morfologisk stängning med 20 mm skala) för att visa djupet. Ingen bild är retuscherad."))
@@ -1359,3 +1361,9 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
             k += 1
             b["text"] = re.sub(r"^4\.\d+", f"4.{k}", b["text"])
     return blocks
+
+
+def _scan_quality(params: dict | None) -> str:
+    """The scan's quality class with what it is built on (src/scan_quality.py)."""
+    from src.scan_quality import grade
+    return grade(params)["text"]

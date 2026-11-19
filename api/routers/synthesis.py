@@ -219,7 +219,8 @@ def collect_evidence(req: SynthesisRequest) -> dict:
     if req.include_geology:
         evidence["geology"] = syn.site_geology(rec)
     if req.corpus and query_slices:
-        g = syn.groove(query_slices, feature_type, req.corpus, s.get, req.signum)
+        g = syn.groove(query_slices, feature_type, req.corpus, s.get, req.signum,
+                       query_params=(selected or {}).get("parameters"))
         evidence["_candidate_stones"] = g.pop("_stones", {})
         evidence["groove"] = g
     elif (req.groove_attribution or {}).get("ranking"):

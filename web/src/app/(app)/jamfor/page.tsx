@@ -13,6 +13,8 @@ import { db } from "@/lib/db";
 import { FEATURE_TYPES, METRIC_DIGITS, formatSummary, type FeatureType, type SliceMetrics } from "@/lib/metrics";
 import { formatP, stats, type ComparisonResult } from "@/lib/stats";
 import ExportTable from "@/components/ExportTable";
+import Link from "next/link";
+import { GRID_REMEDY_TEXT } from "@/lib/analysisGrid";
 
 interface StoneOption {
   key: string;
@@ -207,6 +209,13 @@ export default function ComparePage() {
                   </li>
                 ))}
               </ul>
+              {result.comparability.some(c => c.key === "rutnät" && !c.ok) && (
+                <p className="mt-3 text-sm text-amber-900">
+                  {GRID_REMEDY_TEXT}{" "}
+                  <Link href="/3d" className="font-semibold text-[#b7410e] hover:underline">Öppna 3D-vyn</Link>
+                  {" "}(korpusposter kan bara mätas om av den som har skanningen).
+                </p>
+              )}
             </div>
           )}
 

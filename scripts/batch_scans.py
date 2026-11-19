@@ -138,7 +138,7 @@ def measure(api: str, key: str, f: dict, path: str, normals: dict, all_grooves: 
             "protocol": (d.get("provenance") or {}).get("protocol"), "provenance": d["provenance"],
             "means": {m: d["summary"][m]["mean"] for m in METRICS}, "rune_summary": d.get("rune_summary"),
             "slices": [{**{m: x[m] for m in METRICS}, "position_mm": x["position_mm"], "fit_r2": x.get("fit_r2"),
-                        "rune_id": x.get("rune_id"), "feature": x.get("feature"), "stroke_id": x.get("stroke_id"),
+                        "rune_id": x.get("rune_id"), "feature": x.get("feature"), "stroke_id": x.get("stroke_id"), "stroke_type": x.get("stroke_type"),
                         "profile": x.get("profile"), "point": x.get("point"),
                         "direction": x.get("direction"), "up": x.get("up")} for x in acc],
             "review_png": os.path.relpath(png, ROOT)}

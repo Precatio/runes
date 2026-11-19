@@ -1412,6 +1412,33 @@ från snittets punkt i planet (95:e percentilen 1,1 mm, största 2,7 mm; snittet
 och den anpassade ramen avvek högst 0,3 mm från analysens egen. Varje klick får också en kameravy rakt mot den
 ristade ytan (analysens normal, bildens uppåt). Det ändrar ingenting i runigenkänningen.
 
+**Streck per snitt (2026-11-19, `src/auto_grooves.py`).** Varje snitt i en runa som delats in längs slingan får
+`stroke_id`, numret på det streck det mäter: en gren av spårets mittlinje mellan två korsningar
+(`classify_strokes`, `branch_labels`), numrerad inom analysen. En stav som korsas av en bistav blir därför två
+streck. Strecket får också `stroke_type`: *stav* om det står högst 25° från vinkelrätt mot slingans riktning där
+strecket står (samma vinkel som `staveless.ALONG_DEG`, gränsen för ett streck som går längs slingan), annars
+*bistav*. Ett streck kortare än en fjärdedel av slinghöjden får ingen typ (`None`), eftersom riktningen hos ett så
+kort streck säger lite; det är samma andel som `group_runes` använder för streck längs slingan. Typen är en etikett
+ur strecket längd och riktning, inte en runläsning. Snitt som är godkända som runa men inte ligger på något av
+slingindelningens streck får varken runnummer eller streck-id, som förut. Utan slingor (streckklassningen ensam) är
+`stroke_id` streckklassningens sammanslagna streck och typen anges inte. Ingen regel för vilka snitt som godkänns är
+ändrad: runigenkänningens fingeravtryck (`RULES_SHA256`) och metodversionen `groove-7` är desamma, och de 37
+referensmätningarna i `utdata/Rak/referenser_g7/` gjordes om med streck-id och gav exakt samma snitt och mått som
+före ändringen. I de 37 mätningarna har 14 123 av 16 436 godkända snitt (86 %) streck-id; av dem ligger 8 697 (62 %) på
+staver, 2 163 (15 %) på bistavar och 3 263 (23 %) på streck utan typ. Fyra av de 37 filerna skiljer i sista
+decimalen (omkring 10⁻¹⁴, eftersom upp-riktningen läses om ur den förra filen); stenarnas medelvärden är exakt
+desamma. Strecken och typerna står i exportens snittabell (kolumnerna `stroke_id`, `stroke_type`) och
+i korpusposternas snitt.
+
+**Förslag till Runa för runa (2026-11-19, `web/src/lib/runeProposal.ts`).** Analysen lämnar `rune_proposal`: runorna
+som delats in längs slingorna, i slingans ordning (slingdel och avstånd längs den, från en godtycklig ände), med
+sina rutor i granskningsbilden. När allt mäts (facit) används slingorna inte för snitten, så de läses då bara för
+förslaget; snitten, deras etiketter och runlistan är desamma som utan slingor (testat). I Runa för runa kan
+användaren be om förslaget: varje runa föreslås vara nästa runa i Rundatas translitterering, i tur och ordning.
+Förslagen ritas streckade och kopplas inte förrän användaren trycker Stämmer; Inte en runa stryker förslaget, Hoppa
+över går vidare i texten, ett eget klick lägger till en runa som analysen missade, och ordningen kan vändas innan
+något är bekräftat. Ett facit kan inte sparas så länge något förslag varken är bekräftat eller avvisat.
+
 *Facit version 2.* Facit-läget sparar nu version 2 (version 1 läses som förut): utöver märkningen `rune_links`
 (klickets nummer, de en eller två runornas tokenindex, tecknet, pixeln, 3D-punkten och normal/vy), `skipped_tokens`,
 `transliteration` (Rundatas sträng ordagrant med källa: Samnordisk runtextdatabas, version 2014 med RUNDATA.xls
@@ -1535,6 +1562,37 @@ ytnormalen (0,37 mm på samma ställe vid 5° lutning) och glesa skanningar (en 
 tydligt sämre resultat. **För jämförelser mellan stenar ska därför samma rutnät och känslighet användas, och
 skanningar med mycket olika punkttäthet jämföras med försiktighet.** Studien är inte ett test–omtest med
 oberoende skanningar av samma sten.
+
+**Samma rutnät vid jämförelse (2026-11-19, `src/analysis_grid.py`).** I det låsta provet
+(`utdata/sakra_runor/resultat.md`, planerna `analysplaner/2026-11-19-sakra-runor-*.md`) följde stenarnas medelvärden
+varandra väl när skanningarna försämrades (ICC 0,93–0,99), men ett grövre rutnät (1,2 mm i stället för 0,6 mm)
+flyttade nivån: V-vinkeln i medel +1,9° och spårbredden +0,95 mm på Kitzler Åhfeldts skanningar, +2,9° och +1,1 mm på
+Zedigs. Jämför stenar (`stone_compare.comparability`, kontrollen "rutnät"), mätkorpusen (en varning ovanför tabellen
+och vid klustringen, och ett märke per post) och syntesen (huggtekniken mot korpusen) varnar därför när mätningarna
+har olika analysrutnät (`parameters.resolution_mm`, och harmonisering `harmonize_mm`; skillnad under 0,01 mm räknas
+som samma). Varningen säger vad provet visade och föreslår att stenen mäts om med protokollets fasta rutnät 0,6 mm i
+3D-vyn. Korpusposter kan bara mätas om av den som har skanningen; äldre mätningar utan uppgift om rutnät varnar inte.
+
+**Skanningens kvalitet (2026-11-19, `src/scan_quality.py`, `web/src/lib/scanQuality.ts`).** Varje skanning får en
+enkel klass: God, Godtagbar eller Svag, den sämsta av två delar.
+* *Punktavstånd* (`mesh_point_spacing_mm`, medianlängden på meshens kanter): God högst 0,5 mm, protokollets
+  rekommendation sedan tidigare (`protocol.MAX_MESH_SPACING_MM`); Godtagbar högst 1,0 mm, det dubbla. Skälet till den
+  övre gränsen är robusthetsprovet ovan: en skanning glesad till hälften av trianglarna (ungefär 1,4 gånger
+  punktavståndet) flyttade stenens V-vinkel i median 0,9°, en fjärdedel (ungefär dubbla punktavståndet) 2,8°, som
+  mest 9,1°.
+* *Hål* (`hole_fraction`, ny parameter i analysen): andelen av stenytans kontur i analysens rutnät som saknar punkter
+  efter samma stängning (två steg) som höjdfältet använder. Glapp på någon enstaka ruta, som glesa punkter ger,
+  räknas alltså inte. God högst 2 %, Godtagbar högst 10 %: runda konventionsgränser, inte kalibrerade. Varje hål tar
+  dessutom analysens kantzon (10 mm) runt sig ur mätningen.
+* *Brus* (`noise_mm`) visas men betygsätts inte. Det är ytans spridning kring referensytan i 20 mm skala
+  (1,4826 × MAD) och mäter mest stenens egen ojämnhet: i provet 2026-11-19 höjde 0,15 mm extra skannerbrus det med i
+  median 0,045 mm på Kitzler Åhfeldts skanningar och 0,068 mm på Zedigs, medan det skiljer 0,07–0,83 mm mellan
+  skanningarna. Det bestämmer ändå spårtröskeln (3 × bruset) och står därför bredvid betyget.
+Gränserna sattes innan någon andel hål räknades och är inte valda efter provets resultat. På de 37 skanningarna av
+Södermanlands runstenar blev fördelningen 4 God (Sö 75, 113, 166, 307), 31 Godtagbar och 2 Svag (Sö 128 och 143,
+punktavstånd 1,13 och 1,12 mm). Hålen är små på alla: som mest 3,0 % (Sö 128), annars högst 1,4 %. Betyget visas i den automatiska analysen på 3D-sidan, i
+stenrapporten (3.1), i exportens tabellhuvud och README och i mätkorpusen; äldre analyser utan `hole_fraction`
+betygsätts på punktavståndet ensamt, och det sägs i texten.
 
 ### 2f. Export från huggspårsanalysen
 
@@ -1741,6 +1799,17 @@ Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför st
   metodversion och verifiering.
 * Korpusen kan exporteras som ett **datapaket** (JSON med licens, citering, bidragsgivare och alla poster,
   valfritt med råprofiler) för arkivering.
+
+* **Referensmätningarna ersatta (2026-11-19).** Sjutton av de 36 KÅ-posterna (`c_ka_groove-7_*`: Sö 206, 207, 208,
+  211, 307, 319, 333, 360, 367, 370, 45, 52, 75, Fv1948;282, Fv1954;19, Fv1954;20, Fv1973;189) var mätta 2026-11-03
+  med slingmodellens förslag, eftersom djupbildernas rutnätsorigo saknades före rättelsen 2026-11-08. De är mätta om
+  med de ritade, granskade slingorna (`scripts/remeasure_g6.py --en`, samma normal och upp-riktning som förut) och
+  ger exakt samma värden som provets D0-mätningar. Stenarnas V-vinkel ändrades i median 0,8° åt något håll (som mest
+  3,5°, Sö 360), djupet 0,03 mm och bredden 0,14 mm; antalet runor steg i median från 51 till 68. Posterna ersattes
+  med `scripts/corpus_seed_ka.py --skriv` (samma id, så inget annat i korpusen rördes). Alla 37 referensmätningar
+  gjordes samtidigt om med streck-id och andel hål, utan ändrade mått. Posterna har nu också streck-id och streckets
+  typ per snitt och skanningens kvalitetsklass (`scan.quality`). Sö 371 är fortfarande mätt med slingmodellen: den
+  har inga ritade slingor.
 
 ## 6. Klustring
 

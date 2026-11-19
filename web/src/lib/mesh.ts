@@ -109,7 +109,8 @@ export interface AutoSlice extends Partial<SliceMetrics> {
   feature?: GrooveKind; // what the groove at this point was recognised as
   band?: "runa" | "slingkant" | "gräns" | "utanför"; // its place relative to the runic bands, when they decided
   rune_id?: number;
-  stroke_id?: number;
+  stroke_id?: number; // the stroke (centre-line branch) the slice measures, numbered within the analysis
+  stroke_type?: "stav" | "bistav" | null; // across the band (stav) or not (bistav); null when it cannot be told
   halfwidth_mm: number;
   position_mm: number;
   fit_r2?: number;
@@ -154,6 +155,11 @@ export interface AutoAnalysisResult {
   rune_summary?: { n_runes: number; metrics: Record<Metric, import("@/lib/metrics").Summary & { n_slices: number; icc: number | null }> };
   // n_strokes and height_mm are null for runes marked by hand (withMarkedRunes)
   runes?: { id: number; n_strokes: number | null; height_mm: number | null; n_slices: number; box?: number[] }[];
+  // The runes grouped along the bands, as a PROPOSAL for Runa för runa (lib/runeProposal.ts): in band order, boxes as
+  // fractions of the review image; also computed when everything is measured (facit), without touching the slices
+  rune_proposal?: { source: "ritade" | "modellen" | null; order: string; runes: { id: number; box: number[]; n_strokes: number }[] } | null;
+  // The scan's quality class (src/scan_quality.py, lib/scanQuality.ts)
+  scan_quality?: { klass: "god" | "godtagbar" | "svag" | "okänd"; label: string; text: string };
   provenance: import("@/lib/db").AnalysisProvenance;
 }
 

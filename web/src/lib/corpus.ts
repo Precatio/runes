@@ -10,6 +10,8 @@ import { currentUser, firestoreLib } from "@/firebase/config";
 import { API_URL } from "@/lib/api";
 import { METRICS, type FeatureType, type Metric, type SliceMetrics, type Summary } from "@/lib/metrics";
 import type { AnalysisProvenance, GrooveSummaryLite, PaleographicCrop } from "@/lib/db";
+import { gridLabel, gridOf } from "@/lib/analysisGrid";
+import { scanQuality } from "@/lib/scanQuality";
 
 export const CORPUS_LICENSE = "CC-BY-4.0";
 export const CURRENT_METHOD = "groove-7";
@@ -273,6 +275,12 @@ export function corpusToRows(entries: CorpusEntry[]) {
     scan_resolution_mm: e.scan?.resolution_mm,
     scan_accuracy_mm: e.scan?.accuracy_mm,
     scan_url: e.scan?.url,
+    analysis_grid_mm: gridOf(e.provenance?.parameters).resolution_mm,
+    analysis_grid: gridLabel(gridOf(e.provenance?.parameters)),
+    scan_point_spacing_mm: e.provenance?.parameters?.mesh_point_spacing_mm,
+    scan_hole_fraction: e.provenance?.parameters?.hole_fraction,
+    scan_noise_mm: e.provenance?.parameters?.noise_mm,
+    scan_quality: scanQuality(e.provenance?.parameters).label,
     weathering: e.condition?.weathering,
     lichen: e.condition?.lichen,
     repainted: e.condition?.paint,
