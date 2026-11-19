@@ -20,7 +20,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")
 sys.path.insert(0, ROOT)
 from src import blog_figures, blog_labels  # noqa: E402
 
-FP = "82193667b35e54a7"
+FP = "510ebfb3acc9a229"  # the corpus the app runs on (2026-11-19); was 82193667 when the draft was first written
 RUN = os.path.join(ROOT, "data", "cache", "r", "corpus", FP)
 OLD = os.path.join(ROOT, "data", "cache", "r", "corpus", "7b9061c9a1c12c73")  # before the cross forms
 BILDER = os.path.join(ROOT, "utdata", "blogg", "ristarna")
@@ -32,7 +32,6 @@ RD = json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"
 REC = {r["signum"]: r for v in RD.values() if isinstance(v, list) for r in v if isinstance(r, dict) and "signum" in r}
 csv.field_size_limit(10 ** 9)
 CORPUS = list(csv.DictReader(open(os.path.join(RUN, "corpus.csv"), encoding="utf-8")))
-SUGG = list(csv.DictReader(open(os.path.join(ROOT, "utdata", "ristare", "modellforslag.csv"), encoding="utf-8")))
 pr = lambda x: round(100 * x)  # noqa: E731
 sv = lambda n: f"{n:,}".replace(",", " ")  # noqa: E731
 en_ = lambda n: f"{n:,}"  # noqa: E731
@@ -70,16 +69,16 @@ T = {t["id"]: t for t in BV["traits"]}
 tr = lambda k: (T[k]["kc"], T[k]["nc"], T[k]["kn"], T[k]["nn"])  # noqa: E731
 assert tr("msg_gard") == (5, 20, 8, 478) and tr("ord_goðan") == (7, 20, 23, 480) and tr("pm_kors") == (6, 20, 305, 480)
 B_IN, B_MEAS, _ = measured("Balle")
-assert (B_IN, B_MEAS) == (26, 38)
+assert (B_IN, B_MEAS) == (25, 38)
 prov = Counter(s["prov"] for s in BV["stones"] if s["set"] in ("signerad", "attribuerad"))
 assert prov.most_common(2) == [("U", 54), ("Sö", 13)]
 st = {s["id"]: s for s in BV["stones"]}
 stu = {s["id"]: s for s in BU["stones"]}
 signed = sorted((s for s in BV["stones"] if s["set"] == "signerad"), key=lambda s: s["score"])
 assert signed[0]["id"] == "Vs 15" and st["Vs 15"]["klass"] == "som grannarna" and stu["Vs 15"]["klass"] == "som grannarna"
-assert st["Vs 24"]["klass"] == "ytterkant" and stu["Vs 24"]["klass"] == "ytterkant"
+assert st["Vs 24"]["klass"] == "ytterkant" and stu["Vs 24"]["klass"] == "som grannarna"
 assert REC["Vs 15"]["style"] == REC["Vs 24"]["style"] == "Pr4"
-assert 'Balli hi[nn] "Rauði' in REC["Vs 15"]["normalization"]
+assert 'Balli hi[nn] "Rauði' in REC["Vs 15"]["normalization"] and 'Rauð-BalliR' in REC["Vs 24"]["normalization"]
 assert REC["Vs 15"]["place"] == "Lilla Kyringe" and REC["Vs 24"]["place"] == "Hassmyra"
 # Åsmund
 AV = CARVER["Åsmund"]["variants"]["med"]
@@ -87,7 +86,7 @@ assert (AV["n"]["signerad"], AV["n"]["attribuerad"], len(AV["traits"])) == (16, 
 A_IN, A_MEAS, _ = measured("Åsmund")
 assert (A_IN, A_MEAS) == (25, 29)
 AS = CARVER["Åsmund"]["forslag"]
-assert (len(AS["rows"]), AS["n_blocked"]) == (18, 21)
+assert (len(AS["rows"]), AS["n_blocked"]) == (17, 23)
 assert (AS["rows"][0]["id"], AS["rows"][0]["place"], pr(AS["rows"][0]["p"])) == ("U 1149", "Fleräng", 96)
 # Visäte
 _, _, VIS = measured("Visäte")
@@ -103,15 +102,29 @@ ZERO = sorted(c for c, r in PC.items() if r["top1"] == 0)
 assert len(ZERO) == 6 and max(PC[c]["n"] for c in ZERO) == 4 and min(PC[c]["n"] for c in ZERO) == 1
 ABL = {x["features"]: pr(x["accuracy"]) for x in ATT["ablation"]}
 ABL_OLD = {x["features"]: pr(x["accuracy"]) for x in ATT_OLD["ablation"]}
-assert (ABL["Stil"], ABL_OLD["Stil"], ABL["Alla"], ABL["Geografi"], ABL["Språk och innehåll"], ABL["Bergart"]) == (54, 33, 74, 44, 61, 19)
+assert (ABL["Stil"], ABL_OLD["Stil"], ABL["Alla"], ABL["Geografi"], ABL["Språk och innehåll"], ABL["Bergart"]) == (54, 33, 74, 44, 62, 19)
 assert (ATT["n_train"], len(ATT["carvers"])) == (497, 18)
 CAL = ATT["calibration"]["grouped"]
-assert abs(CAL["ece_before"] - 0.295) < 1e-3 and abs(CAL["ece_after"] - 0.047) < 1e-3
+assert abs(CAL["ece_before"] - 0.302) < 1e-3 and abs(CAL["ece_after"] - 0.051) < 1e-3
 
 # ---- förslagen ---------------------------------------------------------------------------------------
-OK = [r for r in SUGG if r["someone_else"] == "FALSE"]
-N70 = sum(float(r["p_cal"]) >= 0.7 for r in OK)
-assert (len(SUGG), len(OK), N70) == (923, 385, 219)
+OK = [r for c in PAGE["carvers"] if c.get("forslag") for r in c["forslag"]["rows"]]
+N70 = sum(r["p"] >= 0.7 for r in OK)
+assert (len(OK), N70, len({r["id"] for r in OK})) == (374, 228, 374)
+# ---- the external test against Runor 2020 (plan 32257107) and what the text features see (plans add8ff31, 9e0037d5, 15c2f757)
+SH = json.load(open(os.path.join(ROOT, "utdata", "samma_hand", "resultat.json"), encoding="utf-8"))
+TD = json.load(open(os.path.join(ROOT, "utdata", "textdrag_hand", "resultat.json"), encoding="utf-8"))
+NH = json.load(open(os.path.join(ROOT, "utdata", "nya_hander", "resultat.json"), encoding="utf-8"))
+_SHM = open(os.path.join(ROOT, "utdata", "samma_hand", "resultat.md"), encoding="utf-8").read()
+_TDM = open(os.path.join(ROOT, "utdata", "textdrag_hand", "resultat.md"), encoding="utf-8").read()
+_NHM = open(os.path.join(ROOT, "utdata", "nya_hander", "resultat.md"), encoding="utf-8").read()
+assert "## H1: **håller inte**" in _SHM and "i 0,50 av paren" in _SHM and "mot 0,44 för grannstenar" in _SHM and "14 grupper" in _SHM
+assert "45 % av gruppernas stenar får förslaget Öpir" in _SHM and "U 1015–1024" in _SHM
+_G1015 = [g for g in SH["groups"] if "U 1015" in str(g)]
+assert len(_G1015) == 1 and "U 1016" not in str(_G1015[0]) and str(_G1015[0]).count("U 10") >= 9
+assert "## T (huvudprov): **håller**" in _TDM and "16 av 18 grupper" in _TDM
+assert "## N1 (huvudprov): **håller**" in _NHM and "i medel 89 % av paren, mot 33 %" in _NHM and "## N2 (beskrivande): grupperingen räcker inte" in _NHM
+assert 'Rauð-BalliR' in REC["Vs 24"]["normalization"]
 
 # ---- bilderna ----------------------------------------------------------------------------------------
 
@@ -213,10 +226,10 @@ Language and content | {ABL['Språk och innehåll']} |
 Source: Vitki. Share of stones where the model put the right carver first, among {ATT['n_train']} runestones with a certain carver by {len(ATT['carvers'])} carvers; each stone tested against a model that had not seen it. After Rundata and the Swedish National Heritage Board's Runor.
 :::"""
 
-title = "Vem höll i mejseln? Vitki lär sig känna igen ristarnas handlag"
+title = "Vem höll i mejseln? Vad Vitki ser av ristarnas handlag – och vad den inte ser"
 summary = ("Tre av fyra svenska runstenar saknar ristare. Vitkis nya sida Ristarna går igenom de kända ristarna en i taget: "
            "vad som skiljer var och en från grannarna, vilka av stenarna som ligger mitt i stilen och vilka i ytterkanten, "
-           "och vilka stenar utan ristare som kan vara deras.")
+           "och vilka stenar utan ristare som kan vara deras – men också var modellen ännu inte räcker till.")
 
 body = f"""Den som står framför en runsten läser oftast tre saker: vem som reste den, efter vem och varför. Vem som höll i mejseln står sällan där. Av de {sv(N_ALL)} vikingatida runstenarna i Vitkis svenska korpus har {sv(N_NONE)} ingen säker ristare i Rundata, nästan tre av fyra. Bara {N_SIGNED} är signerade, oftast med ett enda ord efter namnet: *risti*, ristade. Resten har forskarna fått tillskriva en ristare efter stil, stavning och plats, eller lämna öppna.
 
@@ -263,19 +276,19 @@ Varje sten får ett värde för hur mycket dess drag talar för ristaren mot gra
 
 För de flesta ristare passar forskningens attribueringar. Av Balles attribuerade stenar som går att mäta ligger {B_IN} av {B_MEAS} i kärnan eller inom spannet, av Åsmunds {A_IN} av {A_MEAS}. Hos Visäte är det annorlunda: {VIS['som grannarna']} av de 23 attribuerade stenarna liknar grannarna mer än Visätes signerade stenar. Det är inget bevis för att attribueringarna är fel, men det är ett skäl att se på dem igen.
 
-Sidan kan också ställa gamla frågor på nytt. Två av Balles signerade stenar står i Västmanland, och på den ena, vid Lilla Kyringe, kallar sig ristaren *Balli hi[nn] Rauði*, Balle den röde. *Sveriges runinskrifter* räknar båda till Balles stenar. På sidan är Lilla Kyringe-stenen den signerade sten som minst liknar Balles övriga, medan Hassmyrastenen bara hamnar i ytterkanten. Det kan vara en tidig sten, en annan bygd med en senare stil, eller en annan ristare. En knapp bygger om Balles avtryck utan de två, så att man kan se skillnaden själv.
+Sidan kan också ställa gamla frågor på nytt. Två av Balles signerade stenar står i Västmanland, och på båda kallar sig ristaren Balle den röde: *Balli hi[nn] Rauði* vid Lilla Kyringe och *Rauð-BalliR* vid Hassmyra. *Sveriges runinskrifter* räknar båda till Balles stenar. På sidan är Lilla Kyringe-stenen den signerade sten som minst liknar Balles övriga, medan Hassmyrastenen bara hamnar i ytterkanten. Det kan vara en tidig sten, en annan bygd med en senare stil, eller en annan ristare. En knapp bygger om Balles avtryck utan de två; då liknar båda grannarna mer än Balle. Man kan se skillnaden själv.
 
 ## Stenar som kan vara deras
 
-Det är därför sidan finns. Rutan överst samlar de runstenar utan säker ristare där Vitkis attribueringsmodell sätter den här ristaren först. Över alla ristare gäller det {sv(len(OK))} stenar, och för {N70} av dem säger modellen minst 70 procent. För Åsmund föreslår den {len(AS['rows'])} stenar, starkast U 1149 vid Fleräng med {pr(AS['rows'][0]['p'])} procent. Där modellen är så osäker att det lika gärna kan vara en ristare den inte känner, säger den ingenting. För Åsmund sorterades {AS['n_blocked']} sådana stenar bort.
+Det är därför sidan finns. Rutan överst samlar de runstenar utan säker ristare där Vitkis attribueringsmodell sätter den här ristaren först. Över alla ristare gäller det {sv(len(OK))} stenar, och för {N70} av dem säger modellen minst 70 procent. För Åsmund föreslår den {len(AS['rows'])} stenar, starkast U 1149 vid Fleräng med {pr(AS['rows'][0]['p'])} procent. Där modellen är så osäker att det lika gärna kan vara en ristare den inte känner, sorteras förslaget bort; för Åsmund gäller det {AS['n_blocked']} stenar. Det skyddar mot de svagaste förslagen, men inte mot det största problemet, som vi kommer till nedan.
 
-Bredvid modellens procent står den näst troligaste ristaren och hur stenen ligger mot fingeravtrycket, en andra och delvis oberoende bedömning. För de tio små ristarna finns ytterligare en, en modell som väger in var och när ristaren verkade. Den hittar oftare rätt för små verkstäder men klarade inte vår låsta prövning, och den står därför tydligt märkt under huvudmodellens förslag. Allt är förslag, inte attribueringar.
+Bredvid modellens procent står den näst troligaste ristaren och hur stenen ligger mot fingeravtrycket, en andra och delvis oberoende bedömning. För de tio små ristarna finns ytterligare en, en modell som väger in var och när ristaren verkade. Den hittar oftare rätt för små verkstäder men klarade inte vår låsta prövning, och den står därför tydligt märkt under huvudmodellens förslag. I appens stenöversikt heter de därför *förslag bland kända* ristare. Allt är förslag, inte attribueringar.
 
 ## Hur bra är maskinen?
 
-Vitkis attribueringsmodell väger samman plats, stil, korsets form, stavning, formler och runpar. Vi prövade den den 4 november mot det enda facit som finns, de {Q1['n']} signerade stenarna av de {len(ATT['carvers'])} ristare som har minst åtta stenar. Varje gång hölls hela socknen utanför, som om stenen kom från en bygd modellen aldrig sett.
+Vitkis attribueringsmodell väger samman plats, stil, korsets form, stavning, formler och runpar. Vi prövade den först den 4 november mot de {Q1['n']} signerade stenarna av de {len(ATT['carvers'])} ristare som har minst åtta stenar. Varje gång hölls hela socknen utanför, som om stenen kom från en bygd modellen aldrig sett.
 
-Modellen satte rätt ristare först på {pr(Q1['top1'][0])} procent av de signerade stenarna (mellan {pr(Q1['top1'][1])} och {pr(Q1['top1'][2])} procent om man räknar med slumpen) och hade rätt ristare bland sina tre första på {pr(Q1['top3'][0])} procent. Bara platsen ger {pr(AUD['q4']['geografi'][0])} procent. De attribuerade stenarna var inte lättare för modellen än de signerade, så den gör mer än att upprepa forskarnas bedömningar.
+Modellen satte rätt ristare först på {pr(Q1['top1'][0])} procent av de signerade stenarna (mellan {pr(Q1['top1'][1])} och {pr(Q1['top1'][2])} procent om man räknar med slumpen) och hade rätt ristare bland sina tre första på {pr(Q1['top3'][0])} procent. Bara platsen ger {pr(AUD['q4']['geografi'][0])} procent. Att modellen så ofta håller med betyder ändå inte att den känner igen en hand. Den kan ha lärt sig samma tecken som forskarna en gång använde – plats, stil och formler.
 
 Men den känner de stora verkstäderna mycket bättre än de små. Öpir fick rätt på {pr(PC['Öpir 1']['top1'])} procent av sina {PC['Öpir 1']['n']} signerade stenar, Balle på {pr(PC['Balle']['top1'])} procent av {PC['Balle']['n']}, Åsmund på {pr(PC['Åsmund']['top1'])} procent av {PC['Åsmund']['n']}. Sex små ristare med mellan en och fyra signerade stenar fick inte en enda rätt.
 
@@ -283,7 +296,17 @@ Det nya är korsets form. Riksantikvarieämbetets Runor beskriver korsen enligt 
 
 {CHART}
 
+Siffrorna i diagrammet är högre än i provet ovan, {ABL['Alla']} mot {pr(Q1['top1'][0])} procent och för platsen {ABL['Geografi']} mot {pr(AUD['q4']['geografi'][0])}. Det är två olika prov: diagrammet kommer ur appens egen körning på alla {ATT['n_train']} stenar med säker ristare, där en sten i taget hålls utanför, medan provet ovan bara gällde de signerade stenarna och höll hela socknen utanför. Det strängare provet ger de lägre talen.
+
 Modellen säger också hur säker den är, och det ska gå att lita på. Förut var den för försiktig. Nu är procenten justerade efter provningen, så att ett förslag på 80 procent stämmer ungefär så ofta.
+
+## Provet som modellen inte klarade
+
+Den 8 november prövade vi modellen mot ett facit som den aldrig hade sett. Riksantikvarieämbetets register Runor har anteckningar av formen ”samma som gjort U 1016”: runologer har sett att två stenar är gjorda av samma hand, också där ingen vet vad ristaren hette. Det gav 14 grupper med en sådan onämnd hand. Om modellen kände igen en hand borde den ge stenarna i en grupp samma ristare oftare än stenar som bara står lika nära varandra.
+
+Det gjorde den inte. Inom runologernas grupper gav modellen samma ristare i hälften av paren, och bland grannstenar på samma avstånd i 44 procent – ingen säker skillnad. Felet är tydligt i Uppland: nio stenar, U 1015 och U 1017–1024, som runologerna håller för en och samma onämnda ristare, får alla förslaget Öpir. Men det får deras grannar också. Modellen måste välja bland de ristare den känner, och en hand utan namn pressas in hos den största verkstaden i trakten.
+
+Det betyder inte att stenarna saknar spår av sina ristare. När vi jämförde stenarnas stavning och formler direkt, utan att fråga efter något namn, var stenarna i runologernas grupper mer lika varandra än grannarna i 16 av 18 grupper. En regel som länkar stenar par för par känner igen 89 procent av runologernas par, mot 33 procent av grannparen. Det som inte går än är att samla paren till hela grupper: länkarna kedjar ihop sig över halva landskap. Appen märker därför en sten vars närmaste motsvarighet i stavning och formler själv saknar ristare som *möjlig onämnd hand* – ett tecken att titta närmare, inte en ny ristare.
 
 ## Vad sidan inte ser
 
@@ -302,8 +325,8 @@ Tidigare har vi skrivit om [stenar som söker sin ristare](/artiklar/fem-runsten
 :::box Det viktigaste i korthet
 - Sidan Ristarna visar varje känd ristares fingeravtryck, byggt bara av de stenar ristaren själv signerade.
 - Den prövar forskningens attribueringar mot avtrycket. För de flesta ristare passar de, och de få stenar som inte gör det förtjänar en ny blick.
-- Den föreslår stenar utan ristare, med en modell som har rätt på sju av tio signerade stenar och säger till när den inte vet.
-- Maskinen känner de stora verkstäderna men knappt de små. Nästa steg är ornamentiken.
+- Den föreslår stenar utan ristare, med en modell som har rätt på sju av tio signerade stenar. Men mot runologernas grupper av onämnda händer klarar modellen sig inte bättre än geografin: en hand utan namn hamnar hos en känd verkstad.
+- Stavningen och formlerna bär ändå spår av en hand, par för par. Att samla dem till nya ristare, och att läsa ornamentiken, är nästa steg.
 :::
 
 ## Så har vi gjort
@@ -321,10 +344,10 @@ Avtrycken bygger på de drag som skiljer ristarens signerade stenar från samtid
 - Samnordisk runtextdatabas, version 3.1 (ODbL).
 - Bilder: skärmbilder ur Vitki."""
 
-title_en = "Who Held the Chisel? Vitki Learns to Recognise the Carvers' Hands"
+title_en = "Who Held the Chisel? What Vitki Sees of the Carvers' Hands – and What It Does Not"
 summary_en = ("Three in four Swedish runestones have no known carver. Vitki's new page The carvers goes through the known carvers one "
               "at a time: what sets each apart from the neighbours, which of the stones lie at the heart of the style and which "
-              "at the edge, and which stones without a carver could be theirs.")
+              "at the edge, and which stones without a carver could be theirs – but also where the model does not yet reach.")
 
 body_en = f"""Standing in front of a runestone, you usually read three things: who raised it, for whom, and why. Who held the chisel is seldom there. Of the {en_(N_ALL)} Viking Age runestones in Vitki's Swedish corpus, {en_(N_NONE)} have no certain carver in Rundata, nearly three in four. Only {N_SIGNED} are signed, usually with a single word after the name: *risti*, carved. For the rest, researchers have had to attribute a carver from style, spelling and place, or leave the question open.
 
@@ -371,19 +394,19 @@ Each stone gets a value for how much its traits speak for the carver against the
 
 For most carvers, research's attributions fit. Of Balle's measurable attributed stones, {B_IN} of {B_MEAS} lie in the core or within the span; of Åsmund's, {A_IN} of {A_MEAS}. Visäte is different: {VIS['som grannarna']} of the 23 attributed stones resemble the neighbours more than Visäte's signed stones. That does not prove the attributions wrong, but it is a reason to look at them again.
 
-The page can also put old questions anew. Two of Balle's signed stones stand in Västmanland, and on one, at Lilla Kyringe, the carver is called *Balli hi[nn] Rauði*, Balle the Red. *Sveriges runinskrifter* counts both among Balle's stones. On the page, the Lilla Kyringe stone is the signed stone least like Balle's others, while the Hassmyra stone ends up only at the edge. It may be an early stone, another district with a later style, or another carver. A button rebuilds Balle's fingerprint without the two, so you can see the difference yourself.
+The page can also put old questions anew. Two of Balle's signed stones stand in Västmanland, and on both the carver is called Balle the Red: *Balli hi[nn] Rauði* at Lilla Kyringe and *Rauð-BalliR* at Hassmyra. *Sveriges runinskrifter* counts both among Balle's stones. On the page, the Lilla Kyringe stone is the signed stone least like Balle's others, while the Hassmyra stone ends up only at the edge. It may be an early stone, another district with a later style, or another carver. A button rebuilds Balle's fingerprint without the two; then both resemble the neighbours more than Balle. You can see the difference yourself.
 
 ## Stones that could be theirs
 
-That is why the page exists. The box at the top gathers the runestones without a certain carver where Vitki's attribution model puts this carver first. Across all carvers that is {en_(len(OK))} stones, and for {N70} of them the model says at least 70 per cent. For Åsmund it suggests {len(AS['rows'])} stones, the strongest U 1149 at Fleräng at {pr(AS['rows'][0]['p'])} per cent. Where the model is so unsure that it could just as well be a carver it does not know, it says nothing. For Åsmund, {AS['n_blocked']} such stones were left out.
+That is why the page exists. The box at the top gathers the runestones without a certain carver where Vitki's attribution model puts this carver first. Across all carvers that is {en_(len(OK))} stones, and for {N70} of them the model says at least 70 per cent. For Åsmund it suggests {len(AS['rows'])} stones, the strongest U 1149 at Fleräng at {pr(AS['rows'][0]['p'])} per cent. Where the model is so unsure that it could just as well be a carver it does not know, the suggestion is left out; for Åsmund that applies to {AS['n_blocked']} stones. That guards against the weakest suggestions, but not against the biggest problem, which we come to below.
 
-Beside the model's percentage stands the next most likely carver and where the stone lies against the fingerprint, a second and partly independent judgement. For the ten small carvers there is yet another, a model that weighs in where and when the carver worked. It finds the right carver more often for small workshops but did not pass our locked test, so it stands clearly marked below the main model's suggestions. All of these are suggestions, not attributions.
+Beside the model's percentage stands the next most likely carver and where the stone lies against the fingerprint, a second and partly independent judgement. For the ten small carvers there is yet another, a model that weighs in where and when the carver worked. It finds the right carver more often for small workshops but did not pass our locked test, so it stands clearly marked below the main model's suggestions. In the app's stone overview they are therefore called *suggestions among known* carvers. All of these are suggestions, not attributions.
 
 ## How good is the machine?
 
-Vitki's attribution model weighs together place, style, the form of the cross, spelling, formulas and rune pairs. On 4 November we tested it against the only reference there is, the {Q1['n']} signed stones of the {len(ATT['carvers'])} carvers with at least eight stones. Each time the whole parish was left out, as if the stone came from a district the model had never seen.
+Vitki's attribution model weighs together place, style, the form of the cross, spelling, formulas and rune pairs. On 4 November we first tested it against the {Q1['n']} signed stones of the {len(ATT['carvers'])} carvers with at least eight stones. Each time the whole parish was left out, as if the stone came from a district the model had never seen.
 
-The model put the right carver first for {pr(Q1['top1'][0])} per cent of the signed stones (between {pr(Q1['top1'][1])} and {pr(Q1['top1'][2])} per cent allowing for chance) and had the right carver among its first three for {pr(Q1['top3'][0])} per cent. The place alone gives {pr(AUD['q4']['geografi'][0])} per cent. The attributed stones were no easier for the model than the signed ones, so it does more than repeat the researchers' judgements.
+The model put the right carver first for {pr(Q1['top1'][0])} per cent of the signed stones (between {pr(Q1['top1'][1])} and {pr(Q1['top1'][2])} per cent allowing for chance) and had the right carver among its first three for {pr(Q1['top3'][0])} per cent. The place alone gives {pr(AUD['q4']['geografi'][0])} per cent. That the model agrees so often still does not mean that it recognises a hand. It may have learnt the same signs that the researchers once used – place, style and formulas.
 
 But it knows the large workshops far better than the small ones. Öpir was right for {pr(PC['Öpir 1']['top1'])} per cent of {PC['Öpir 1']['n']} signed stones, Balle for {pr(PC['Balle']['top1'])} per cent of {PC['Balle']['n']}, Åsmund for {pr(PC['Åsmund']['top1'])} per cent of {PC['Åsmund']['n']}. Six small carvers with between one and four signed stones did not get a single one right.
 
@@ -391,7 +414,17 @@ What is new is the form of the cross. The Swedish National Heritage Board's Runo
 
 {CHART_EN}
 
+The figures in the chart are higher than in the test above, {ABL['Alla']} against {pr(Q1['top1'][0])} per cent, and for the place {ABL['Geografi']} against {pr(AUD['q4']['geografi'][0])}. They are two different tests: the chart comes from the app's own run on all {ATT['n_train']} stones with a certain carver, leaving out one stone at a time, while the test above concerned only the signed stones and left out the whole parish. The stricter test gives the lower figures.
+
 The model also says how sure it is, and that should be something to rely on. It used to be too cautious. Now the percentages are adjusted after the test, so that a suggestion of 80 per cent is right about that often.
+
+## The test the model failed
+
+On 8 November we tested the model against a reference it had never seen. The Swedish National Heritage Board's register Runor has notes of the form ”same as made U 1016”: runologists have seen that two stones were made by the same hand, also where no one knows the carver's name. That gave 14 groups with such an unnamed hand. If the model recognised a hand, it should give the stones within a group the same carver more often than stones that merely stand as close to each other.
+
+It did not. Within the runologists' groups the model gave the same carver in half of the pairs, and among neighbouring stones at the same distance in 44 per cent – no certain difference. The fault is plain in Uppland: nine stones, U 1015 and U 1017–1024, which the runologists hold to be one and the same unnamed carver, are all suggested as Öpir. But so are their neighbours. The model has to choose among the carvers it knows, and a hand without a name is pressed into the largest workshop in the district.
+
+That does not mean the stones bear no trace of their carvers. When we compared the stones' spelling and formulas directly, without asking for any name, the stones in the runologists' groups were more alike than the neighbours in 16 of 18 groups. A rule that links stones pair by pair recognises 89 per cent of the runologists' pairs, against 33 per cent of the neighbouring pairs. What does not yet work is gathering the pairs into whole groups: the links chain together across half provinces. The app therefore marks a stone whose closest match in spelling and formulas itself lacks a carver as a *possible unnamed hand* – a sign to look closer, not a new carver.
 
 ## What the page does not see
 
@@ -410,8 +443,8 @@ We have written before about [stones looking for their carver](/en/artiklar/fem-
 :::box In short
 - The page The carvers shows each known carver's fingerprint, built only from the stones the carver signed.
 - It tests research's attributions against the fingerprint. For most carvers they fit, and the few stones that do not deserve a fresh look.
-- It suggests stones without a carver, with a model that is right on seven in ten signed stones and says when it does not know.
-- The machine knows the large workshops but hardly the small ones. The next step is the ornament.
+- It suggests stones without a carver, with a model that is right on seven in ten signed stones. But against the runologists' groups of unnamed hands the model does no better than geography: a hand without a name ends up with a known workshop.
+- The spelling and formulas still carry traces of a hand, pair by pair. Gathering them into new carvers, and reading the ornament, is the next step.
 :::
 
 ## How we did it
