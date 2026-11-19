@@ -1,0 +1,163 @@
+{
+ "plan": "analysplaner/2026-11-19-sjalvkontroll-tillagg-grupper.md",
+ "sha256": "c1e3d2abff1be5309d73f4116309fd6c1615517220b4272f8958415c5dc26392",
+ "slumpfro": 3252933291,
+ "lankning_m": 1000.0,
+ "gravfalt_grupper": {
+  "stenar": 657,
+  "grupper": 545,
+  "grupper_med_stenar_i_grupp": 73,
+  "grupper_med_ensamma": 472,
+  "blandade_grupper": 0
+ },
+ "prov": {
+  "S0": {
+   "stenar": 120,
+   "grupper": 101,
+   "en_sten_per_grupp": {
+    "grupper": 101,
+    "dragningar": 1000,
+    "omblandningar": 999,
+    "median_medel_cos": 0.33750167942037157,
+    "median_vantat": 0.014440925426254504,
+    "median_p": 0.001,
+    "andel_dragningar_p_under_005": 1.0,
+    "median_andel_inom_45": 0.4752475247524752,
+    "p_kvartiler": [
+     0.001,
+     0.001
+    ]
+   },
+   "gruppmedel": {
+    "medel_av_gruppmedel": 0.3379433473757387,
+    "vantat": 0.014209085544111568,
+    "p": 0.0001
+   },
+   "haller": true
+  },
+  "S2": {
+   "stenar": 118,
+   "grupper": 100,
+   "en_sten_per_grupp": {
+    "grupper": 100,
+    "dragningar": 1000,
+    "omblandningar": 999,
+    "median_medel_cos": 0.34565764334600657,
+    "median_vantat": 0.014049399492514623,
+    "median_p": 0.001,
+    "andel_dragningar_p_under_005": 1.0,
+    "median_andel_inom_45": 0.48,
+    "p_kvartiler": [
+     0.001,
+     0.001
+    ]
+   },
+   "gruppmedel": {
+    "medel_av_gruppmedel": 0.3448583147554289,
+    "vantat": 0.014586451442196011,
+    "p": 0.0001
+   }
+  },
+  "S3": {
+   "stenar": 75,
+   "grupper": 64,
+   "en_sten_per_grupp": {
+    "grupper": 64,
+    "dragningar": 1000,
+    "omblandningar": 999,
+    "median_medel_cos": 0.30904718693912164,
+    "median_vantat": 0.017898948576278793,
+    "median_p": 0.001,
+    "andel_dragningar_p_under_005": 1.0,
+    "median_andel_inom_45": 0.453125,
+    "p_kvartiler": [
+     0.001,
+     0.002
+    ]
+   },
+   "gruppmedel": {
+    "medel_av_gruppmedel": 0.3090475626278645,
+    "vantat": 0.0028500655338670397,
+    "p": 0.0001
+   }
+  },
+  "L1": {
+   "stenar": 34,
+   "grupper": 25,
+   "grupper_bara_1km": 25,
+   "en_sten_per_grupp": {
+    "grupper": 25,
+    "dragningar": 1000,
+    "omblandningar": 999,
+    "median_medel_cos": 0.08934785081349947,
+    "median_vantat": -0.0989053470257574,
+    "median_p": 0.101,
+    "andel_dragningar_p_under_005": 0.0,
+    "median_andel_inom_45": 0.24,
+    "p_kvartiler": [
+     0.084,
+     0.14425
+    ]
+   },
+   "gruppmedel": {
+    "medel_av_gruppmedel": 0.06371323506754029,
+    "vantat": -0.06610794735656444,
+    "p": 0.1331
+   },
+   "holm_ovre": 0.202,
+   "haller": false,
+   "registerobjekt": {
+    "stenar_med_objekt": 34,
+    "olika_objekt": 26
+   }
+  },
+  "L1b": {
+   "stenar": 21,
+   "grupper": 15,
+   "grupper_bara_1km": 15,
+   "en_sten_per_grupp": {
+    "grupper": 15,
+    "dragningar": 1000,
+    "omblandningar": 999,
+    "median_medel_cos": 0.24747673285984514,
+    "median_vantat": 0.03235036653340305,
+    "median_p": 0.074,
+    "andel_dragningar_p_under_005": 0.002,
+    "median_andel_inom_45": 0.26666666666666666,
+    "p_kvartiler": [
+     0.066,
+     0.082
+    ]
+   },
+   "gruppmedel": {
+    "medel_av_gruppmedel": 0.21354429289659477,
+    "vantat": 0.01629507336109242,
+    "p": 0.0873
+   }
+  },
+  "L0": {
+   "stenar": 213,
+   "grupper": 177,
+   "en_sten_per_grupp": {
+    "grupper": 177,
+    "dragningar": 1000,
+    "omblandningar": 999,
+    "median_medel_cos": 0.3758426409803416,
+    "median_vantat": 0.013301120247317772,
+    "median_p": 0.001,
+    "andel_dragningar_p_under_005": 1.0,
+    "median_andel_inom_45": 0.4971751412429379,
+    "p_kvartiler": [
+     0.001,
+     0.001
+    ]
+   },
+   "gruppmedel": {
+    "medel_av_gruppmedel": 0.37534330758586554,
+    "vantat": 0.013485084770033212,
+    "p": 0.0001
+   }
+  }
+ },
+ "not": "S0 och L1 avgörs av en sten per grupp; S2, S3, L1b, L0 och gruppmedlen är beskrivande. Varje prov har sin egen slumpström med samma frö."
+}
