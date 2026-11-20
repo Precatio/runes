@@ -968,15 +968,18 @@ class Model:
             self._doc_cache[key_] = {w: c / tot for w, c in out.items()} if tot else {}
         return self._doc_cache[key_]
 
+    near_scale = 5.0  # km at which a neighbour's names weigh half (1 / (1 + d / near_scale)); textmodel-24 candidate tests others
+
     def names_near(self, lat, lon, km=20.0, sites=None):
         """Names on stones within km of a place: {normalized name: weight}, {carved spelling}; nearer weighs more.
         sites: other (lat, lon, name, spelling) to look among instead of the stones the model learned from."""
         out, spell = defaultdict(float), set()
+        scale = self.near_scale
         for la, lo, nm, ck in (self.name_sites if sites is None else sites):
             d = 6371.0 * math.acos(max(-1.0, min(1.0, math.sin(math.radians(lat)) * math.sin(math.radians(la)) +
                                    math.cos(math.radians(lat)) * math.cos(math.radians(la)) * math.cos(math.radians(lo - lon)))))
             if d <= km:
-                out[nm] += 1.0 / (1.0 + d / 5.0)
+                out[nm] += 1.0 / (1.0 + d / scale)
                 spell.add(ck)
         tot = sum(out.values())
         return ({k: v / tot for k, v in out.items()} if tot else {}), spell

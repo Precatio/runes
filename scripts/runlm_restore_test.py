@@ -36,6 +36,7 @@ ap.add_argument("--area_lm", action="store_true", help="ordföljd efter trakt (f
 ap.add_argument("--by_word", action="store_true", help="välj ordet (summerat över stavningar), sedan stavningen")
 ap.add_argument("--near", type=float, default=0.0, help="namn från stenar i närheten (vikt)")
 ap.add_argument("--near_km", type=float, default=20.0)
+ap.add_argument("--near_scale", type=float, default=5.0, help="km där grannstenens namn väger hälften (plan fe998288)")
 ap.add_argument("--trace", default="none", choices=["none", "halv", "tredjedel", "blandad"],
                 help="vad som syns av de dolda runorna (data/rune_traces.json): halva runan, en tredjedel, eller blandat "
                      "(för varje runa lika ofta inget, en tredjedel eller hälften)")
@@ -150,6 +151,7 @@ for k in folds:
     m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class, tolerance=args.tolerance,
               lam_doc=args.lam_doc, area_lm=args.area_lm, lit_tokens=LIT, lam_lit=args.lit, lex_words=LEX, lam_lex=args.lex, extra_names=xnames,
               **(dict(contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0) if args.contexts else {}))
+    m.near_scale = args.near_scale
     for i_, (r, (groups, gw)) in enumerate(test, 1):
         if i_ == 1 or i_ % 10 == 0 or i_ == len(test):  # progress: the fold runs for hours and wrote nothing until done (tm21)
             print(f"veck {k}: sten {i_} av {len(test)} ({r['signum']}), {time.time() - t0:.0f} s", file=sys.stderr, flush=True)
