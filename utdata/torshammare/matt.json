@@ -1,0 +1,512 @@
+{
+ "poster": 494,
+ "föremål": 620,
+ "bort_vid_grinden": [
+  "35525_HST",
+  "991854_HST"
+ ],
+ "D1_per_landskap": {
+  "Uppland": {
+   "poster": 372,
+   "föremål": 461,
+   "ring": 313,
+   "hänge": 59,
+   "gjutform": 0
+  },
+  "Södermanland": {
+   "poster": 88,
+   "föremål": 124,
+   "ring": 76,
+   "hänge": 12,
+   "gjutform": 0
+  },
+  "Östergötland": {
+   "poster": 7,
+   "föremål": 8,
+   "ring": 1,
+   "hänge": 6,
+   "gjutform": 0
+  },
+  "Skåne": {
+   "poster": 7,
+   "föremål": 7,
+   "ring": 0,
+   "hänge": 7,
+   "gjutform": 0
+  },
+  "Öland": {
+   "poster": 5,
+   "föremål": 5,
+   "ring": 1,
+   "hänge": 4,
+   "gjutform": 0
+  },
+  "Gotland": {
+   "poster": 5,
+   "föremål": 5,
+   "ring": 0,
+   "hänge": 5,
+   "gjutform": 0
+  },
+  "Västmanland": {
+   "poster": 3,
+   "föremål": 3,
+   "ring": 3,
+   "hänge": 0,
+   "gjutform": 0
+  },
+  "okänt": {
+   "poster": 2,
+   "föremål": 2,
+   "ring": 2,
+   "hänge": 0,
+   "gjutform": 0
+  },
+  "Halland": {
+   "poster": 2,
+   "föremål": 2,
+   "ring": 0,
+   "hänge": 2,
+   "gjutform": 0
+  },
+  "Gästrikland": {
+   "poster": 1,
+   "föremål": 1,
+   "ring": 1,
+   "hänge": 0,
+   "gjutform": 0
+  },
+  "Dalarna": {
+   "poster": 1,
+   "föremål": 1,
+   "ring": 1,
+   "hänge": 0,
+   "gjutform": 0
+  },
+  "Småland": {
+   "poster": 1,
+   "föremål": 1,
+   "ring": 0,
+   "hänge": 1,
+   "gjutform": 0
+  }
+ },
+ "D1_per_typ": {
+  "ring": 398,
+  "hänge": 96
+ },
+ "D2_sammanhang": {
+  "ring": {
+   "n": 398,
+   "andelar": {
+    "grav": 84.7,
+    "okänt": 9.8,
+    "boplats": 5.5
+   },
+   "antal": {
+    "grav": 337,
+    "okänt": 39,
+    "boplats": 22
+   }
+  },
+  "hänge": {
+   "n": 96,
+   "andelar": {
+    "boplats": 33.3,
+    "grav": 31.2,
+    "okänt": 24.0,
+    "skatt": 11.5
+   },
+   "antal": {
+    "boplats": 32,
+    "grav": 30,
+    "okänt": 23,
+    "skatt": 11
+   }
+  },
+  "gjutform": {
+   "n": 0,
+   "andelar": {},
+   "antal": {}
+  }
+ },
+ "D3_period": {
+  "ring": {
+   "n": 398,
+   "andelar": {
+    "Vikingatid": 60.3,
+    "Järnålder": 21.6,
+    "Yngre järnålder": 5.0,
+    "tom": 4.8,
+    "Vendeltid|Vikingatid": 4.8,
+    "Vendeltid": 2.3,
+    "Folkvandringstid|Vikingatid": 1.3
+   },
+   "antal": {
+    "Vikingatid": 240,
+    "Järnålder": 86,
+    "Yngre järnålder": 20,
+    "tom": 19,
+    "Vendeltid|Vikingatid": 19,
+    "Vendeltid": 9,
+    "Folkvandringstid|Vikingatid": 5
+   }
+  },
+  "hänge": {
+   "n": 96,
+   "andelar": {
+    "Vikingatid": 58.3,
+    "Järnålder": 25.0,
+    "tom": 6.2,
+    "Yngre järnålder": 2.1,
+    "Medeltid": 2.1,
+    "Vendeltid|Vikingatid": 2.1,
+    "Folkvandringstid|Vikingatid": 1.0,
+    "1500-tal|1600-tal": 1.0,
+    "Odaterad": 1.0,
+    "Folkvandringstid": 1.0
+   },
+   "antal": {
+    "Vikingatid": 56,
+    "Järnålder": 24,
+    "tom": 6,
+    "Yngre järnålder": 2,
+    "Medeltid": 2,
+    "Vendeltid|Vikingatid": 2,
+    "Folkvandringstid|Vikingatid": 1,
+    "1500-tal|1600-tal": 1,
+    "Odaterad": 1,
+    "Folkvandringstid": 1
+   }
+  },
+  "gjutform": {
+   "n": 0,
+   "andelar": {},
+   "antal": {}
+  }
+ },
+ "D4_material": {
+  "ring": {
+   "n": 398,
+   "andelar": {
+    "järn": 99.5,
+    "annat/tomt": 0.3,
+    "brons/kopparlegering": 0.3
+   },
+   "antal": {
+    "järn": 396,
+    "annat/tomt": 1,
+    "brons/kopparlegering": 1
+   }
+  },
+  "hänge": {
+   "n": 96,
+   "andelar": {
+    "järn": 70.8,
+    "silver": 22.9,
+    "annat/tomt": 5.2,
+    "brons/kopparlegering": 1.0
+   },
+   "antal": {
+    "järn": 68,
+    "silver": 22,
+    "annat/tomt": 5,
+    "brons/kopparlegering": 1
+   }
+  },
+  "gjutform": {
+   "n": 0,
+   "andelar": {},
+   "antal": {}
+  }
+ },
+ "D2_sammanhang_per_landskap": {
+  "Uppland": {
+   "grav": 277,
+   "boplats": 53,
+   "okänt": 42
+  },
+  "Södermanland": {
+   "grav": 82,
+   "okänt": 5,
+   "boplats": 1
+  }
+ },
+ "D6_malardalen": {
+  "ring": {
+   "n": 398,
+   "mälardalen": 392,
+   "andel": 98.5
+  },
+  "hänge": {
+   "n": 96,
+   "mälardalen": 71,
+   "andel": 74.0
+  }
+ },
+ "D7_socknar": [
+  {
+   "socken": "Adelsö socken",
+   "landskap": "Uppland",
+   "poster": 82
+  },
+  {
+   "socken": "Ekerö socken",
+   "landskap": "Uppland",
+   "poster": 56
+  },
+  {
+   "socken": "Sollentuna socken",
+   "landskap": "Uppland",
+   "poster": 55
+  },
+  {
+   "socken": "Lovö socken",
+   "landskap": "Uppland",
+   "poster": 48
+  },
+  {
+   "socken": "Botkyrka socken",
+   "landskap": "Södermanland",
+   "poster": 32
+  }
+ ],
+ "gotland": {
+  "poster": 5,
+  "typ": {
+   "hänge": 5
+  },
+  "sammanhang": {
+   "okänt": 4,
+   "skatt": 1
+  },
+  "material": {
+   "annat/tomt": 1,
+   "silver": 4
+  },
+  "period": {
+   "1500-tal|1600-tal": 1,
+   "Vikingatid": 4
+  }
+ },
+ "gotland_ksamsok_andra": {
+  "poster_gotland_andra": 1,
+  "torshammare": 1
+ },
+ "T1_underlag": {
+  "härader_med_exponering_minst_5": 57,
+  "hammare_i_dem": 423,
+  "hammare_kopplade_totalt": 446,
+  "exponering_poster": 6394,
+  "runstenar_i_dem": 1306,
+  "runstenar_kopplade_totalt": 2169,
+  "runstenar_totalt_utom_gotland": 2279,
+  "okopplade_socknar": 80,
+  "okopplade_poster": 745,
+  "okopplade_vanligaste": [
+   "Södermanland: Eskilstuna socken (89)",
+   "Norrbotten: Piteå socken (68)",
+   "Östergötland: Linköping socken (59)",
+   ":  (45)",
+   "Uppland: Sigtuna (39)",
+   "Uppland: Stockholm stad(0091) (36)",
+   "Uppland: Uppsala (33)",
+   "Lappland: Gällivare socken (31)",
+   "Uppland: Ed socken (27)",
+   "Västmanland: Västerås socken (24)",
+   "Södermanland: Nyköping socken (23)",
+   "Uppland: Uppsala socken (20)",
+   "Västmanland: Köping socken (20)",
+   "Östergötland: Norrköping socken (19)",
+   "Uppland: Sundbyberg socken (13)"
+  ]
+ },
+ "D5_harad": [
+  {
+   "harad": "Färentuna härad",
+   "hammare": 187,
+   "runstenar": 48,
+   "exponering": 2632
+  },
+  {
+   "harad": "Sollentuna härad",
+   "hammare": 64,
+   "runstenar": 74,
+   "exponering": 142
+  },
+  {
+   "harad": "Danderyds skeppslag",
+   "hammare": 53,
+   "runstenar": 45,
+   "exponering": 81
+  },
+  {
+   "harad": "Svartlösa härad",
+   "hammare": 38,
+   "runstenar": 31,
+   "exponering": 44
+  },
+  {
+   "harad": "Öknebo härad",
+   "hammare": 26,
+   "runstenar": 18,
+   "exponering": 50
+  },
+  {
+   "harad": "Vallentuna härad",
+   "hammare": 20,
+   "runstenar": 119,
+   "exponering": 42
+  },
+  {
+   "harad": "Sotholms härad",
+   "hammare": 11,
+   "runstenar": 53,
+   "exponering": 3
+  },
+  {
+   "harad": "Ärlinghundra härad",
+   "hammare": 7,
+   "runstenar": 75,
+   "exponering": 102
+  },
+  {
+   "harad": "Håbo härad",
+   "hammare": 4,
+   "runstenar": 69,
+   "exponering": 12
+  },
+  {
+   "harad": "Luggude härad",
+   "hammare": 4,
+   "runstenar": 0,
+   "exponering": 6
+  },
+  {
+   "harad": "Lysings härad",
+   "hammare": 3,
+   "runstenar": 13,
+   "exponering": 6
+  },
+  {
+   "harad": "Slättbo härad",
+   "hammare": 3,
+   "runstenar": 77,
+   "exponering": 16
+  },
+  {
+   "harad": "Seminghundra härad",
+   "hammare": 2,
+   "runstenar": 81,
+   "exponering": 1
+  },
+  {
+   "harad": "Österrekarne härad",
+   "hammare": 2,
+   "runstenar": 31,
+   "exponering": 8
+  },
+  {
+   "harad": "Selebo härad",
+   "hammare": 2,
+   "runstenar": 38,
+   "exponering": 17
+  },
+  {
+   "harad": "Rasbo härad",
+   "hammare": 2,
+   "runstenar": 24,
+   "exponering": 8
+  },
+  {
+   "harad": "Oppunda härad",
+   "hammare": 2,
+   "runstenar": 37,
+   "exponering": 4
+  },
+  {
+   "harad": "Aska härad",
+   "hammare": 2,
+   "runstenar": 4,
+   "exponering": 7
+  },
+  {
+   "harad": "Torna härad",
+   "hammare": 2,
+   "runstenar": 0,
+   "exponering": 3
+  },
+  {
+   "harad": "Värmdö skeppslag",
+   "hammare": 1,
+   "runstenar": 2,
+   "exponering": 3
+  },
+  {
+   "harad": "Trögds härad",
+   "hammare": 1,
+   "runstenar": 56,
+   "exponering": 7
+  },
+  {
+   "harad": "Gästriklands östra tingslag",
+   "hammare": 1,
+   "runstenar": 10,
+   "exponering": 102
+  },
+  {
+   "harad": "Långhundra härad",
+   "hammare": 1,
+   "runstenar": 30,
+   "exponering": 3
+  },
+  {
+   "harad": "Ingelstads härad",
+   "hammare": 1,
+   "runstenar": 0,
+   "exponering": 1
+  },
+  {
+   "harad": "Runstens härad",
+   "hammare": 1,
+   "runstenar": 14,
+   "exponering": 21
+  },
+  {
+   "harad": "Gräsgårds härad",
+   "hammare": 1,
+   "runstenar": 11,
+   "exponering": 13
+  },
+  {
+   "harad": "Bankekinds härad",
+   "hammare": 1,
+   "runstenar": 2,
+   "exponering": 1
+  },
+  {
+   "harad": "Frötuna och Länna skeppslag",
+   "hammare": 1,
+   "runstenar": 10,
+   "exponering": 1
+  },
+  {
+   "harad": "Ulleråkers härad",
+   "hammare": 1,
+   "runstenar": 29,
+   "exponering": 6
+  },
+  {
+   "harad": "Vemmenhögs härad",
+   "hammare": 1,
+   "runstenar": 0,
+   "exponering": 0
+  },
+  {
+   "harad": "Allbo härad",
+   "hammare": 1,
+   "runstenar": 4,
+   "exponering": 9
+  }
+ ]
+}

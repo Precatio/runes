@@ -1,0 +1,3 @@
+# Bort vid kvalitetsgrinden (regel 2, bara möjliga hammare), 2026-11-20
+991854_HST
+35525_HST
