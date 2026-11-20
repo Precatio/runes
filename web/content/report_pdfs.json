@@ -13,14 +13,14 @@
    }
   },
   "familjegrupper-vid-gravfalten": {
-   "version": 4,
+   "version": 5,
    "sv": {
-    "url": "/forskningsrapporter-pdf/familjegrupper-vid-gravfalten-v4-sv.pdf",
-    "bytes": 703690
+    "url": "/forskningsrapporter-pdf/familjegrupper-vid-gravfalten-v5-sv.pdf",
+    "bytes": 737338
    },
    "en": {
-    "url": "/forskningsrapporter-pdf/familjegrupper-vid-gravfalten-v4-en.pdf",
-    "bytes": 697483
+    "url": "/forskningsrapporter-pdf/familjegrupper-vid-gravfalten-v5-en.pdf",
+    "bytes": 722210
    }
   },
   "kvinnor-bland-resarna-svealand-gotaland": {
@@ -79,14 +79,14 @@
    }
   },
   "runstenarna-vid-sin-tids-vatten": {
-   "version": 3,
+   "version": 4,
    "sv": {
-    "url": "/forskningsrapporter-pdf/runstenarna-vid-sin-tids-vatten-v3-sv.pdf",
-    "bytes": 1110622
+    "url": "/forskningsrapporter-pdf/runstenarna-vid-sin-tids-vatten-v4-sv.pdf",
+    "bytes": 1120681
    },
    "en": {
-    "url": "/forskningsrapporter-pdf/runstenarna-vid-sin-tids-vatten-v3-en.pdf",
-    "bytes": 1123773
+    "url": "/forskningsrapporter-pdf/runstenarna-vid-sin-tids-vatten-v4-en.pdf",
+    "bytes": 1134729
    }
   },
   "seriationen-foljer-stilkronologin": {

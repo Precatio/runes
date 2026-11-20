@@ -178,6 +178,8 @@ def main(argv=None) -> int:
     for f in os.listdir(os.path.join(ROOT, "utdata", "rapporter")):
         if f.startswith("rapport") and f.endswith(".json"):
             d = json.load(open(os.path.join(ROOT, "utdata", "rapporter", f), encoding="utf-8"))
+            if not isinstance(d, dict) or "body_en" not in d or "slug" not in d:
+                continue  # internal working files (rapport0_*: the question list) are not reports
             local[d["slug"]] = (f, int(header(d["body_en"])["version"]))
     stale = [f"{p['slug']} (publicerad v{header(p['body_en'])['version']}, {local[p['slug']][0]} v{local[p['slug']][1]})"
              for p in rs if p["slug"] in local and local[p["slug"]][1] > int(header(p["body_en"])["version"])]
