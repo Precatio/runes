@@ -10,11 +10,12 @@ import VitkiFills, { FILL_STYLE } from "@/components/VitkiFills";
 import { TRACE_RUNES, textmodel, type ScanTraceEntry, type ScanTraces, type TextModelBoundary, type TextModelGap, type TextModelReading, type VitkiFill } from "@/lib/textmodel";
 
 // 100 % only for certainty: 0.996 is shown as 99 %, not as if nothing could be wrong
-const pct = (p: number) => `${p < 1 ? Math.min(99, Math.round(p * 100)) : 100} %`;
-const tone = (p: number) =>
-  p >= 0.9 ? "bg-emerald-50 border-emerald-300" : p >= 0.5 ? "bg-amber-50 border-amber-300" : "bg-slate-50 border-slate-300";
+const pct = (p: number | null) => p == null ? "–" : `${p < 1 ? Math.min(99, Math.round(p * 100)) : 100} %`;
+const tone = (p: number | null) =>
+  p == null ? "bg-slate-50 border-slate-300" : p >= 0.9 ? "bg-emerald-50 border-emerald-300" : p >= 0.5 ? "bg-amber-50 border-amber-300" : "bg-slate-50 border-slate-300";
 
-function Bar({ p }: { p: number }) {
+function Bar({ p }: { p: number | null }) {
+  if (p == null) return null;
   return (
     <div className="h-1.5 w-full rounded-full bg-slate-200 overflow-hidden">
       <div className="h-full bg-[#b7410e]" style={{ width: `${Math.max(2, p * 100)}%` }} />

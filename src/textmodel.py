@@ -477,7 +477,9 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
         filled = any(i < e_ and a_ < j for a_, e_ in spans)
         pf = p_filled(i, j, w) if filled else None
         reading.append({"runes": text[i:j], "word": w.lstrip("§"), "name": w.startswith("§"), "unknown": w == "<unk>",
-                        "p": round(pf if pf is not None else recal(b, p, w, text[i:j], d["B"]), 4), "filled": filled,
+                        # an unknown word is no claim about a word: no probability (plan b18f81cd, 2026-11-20)
+                        "p": None if w == "<unk>" else round(pf if pf is not None else recal(b, p, w, text[i:j], d["B"]), 4),
+                        "filled": filled,
                         "break_after": j in ends})
     prior = {e: (m.epoch_prior[e] or 1) for e in rl.EPOCHS}
     dating = rl.epoch_posterior(ll, prior, d["T"] or 1.0)
@@ -491,9 +493,10 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
                   "fills": [{"fill": f, "p": round(p, 4), "word": (w or "").lstrip("§") or None}
                             for f, p, w in details.get(n, [])[:8]],
                   # the model's six best words, shown most probable first by their calibrated percentage
-                  "words": sorted(({"word": w.lstrip("§"), "p": round(cd[w], 4), "p_model": round(p, 4)}
+                  "words": sorted(({"word": w.lstrip("§"), "p": None if w == "<unk>" else round(cd[w], 4), "p_model": round(p, 4)}
                                    for cd in [cal_dist(words.get(n, {}), len(lost[(gi, a, e)]), whole[n])]
-                                   for w, p in list(words.get(n, {}).items())[:6]), key=lambda x: -x["p"]),
+                                   for w, p in list(words.get(n, {}).items())[:6]),
+                                  key=lambda x: (x["p"] is None, -(x["p"] or 0.0))),
                   "traces": user.get((gi, a, e))}
                  for n, (gi, a, e) in enumerate(gaps)],
         "open_gaps": [{"group": gi, "start": a, "end": e, "n": len(lost[(gi, a, e)])} for gi, a, e in runs

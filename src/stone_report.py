@@ -1221,8 +1221,9 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
             rows = []
             for g in tgaps:
                 ws = g["words"]
-                first = f"{ws[0]['word']} ({round(100 * ws[0]['p'])} %)"
-                second = f"{ws[1]['word']} ({round(100 * ws[1]['p'])} %)" if len(ws) > 1 else "–"
+                wf = lambda x: "ett okänt ord" if x["p"] is None else f"{x['word']} ({round(100 * x['p'])} %)"  # noqa: E731
+                first = wf(ws[0])
+                second = wf(ws[1]) if len(ws) > 1 else "–"
                 rows.append([str(g["number"] + 1), g["carved"], str(g["n"]), first, second])
             blocks.append(tab(["Lucka", "Ristat (– = förlorad runa)", "Förlorade runor", "Modellens ord", "Närmaste alternativ"],
                               rows, f"Modellens förslag för luckorna i {signum}, med kalibrerad procent. Det som inget "

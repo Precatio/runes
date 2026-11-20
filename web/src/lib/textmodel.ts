@@ -6,7 +6,7 @@ export interface TextModelWord {
   word: string;
   name: boolean;
   unknown: boolean;
-  p: number;
+  p: number | null;  // null for an unknown word (no claim about a word)
   filled: boolean;
   break_after: boolean;
 }
@@ -20,7 +20,7 @@ export interface TextModelGap {
   n: number;
   best: string | null;
   fills: { fill: string; p: number; word: string | null }[];
-  words: { word: string; p: number; p_model?: number }[];
+  words: { word: string; p: number | null; p_model?: number }[];
   traces: (string | null)[] | null;
 }
 

@@ -99,10 +99,12 @@ def run(fold: int, out_path: str, own_d: bool = False, name_scale: float = 1.0):
             word = x["word"]
             # textmodel-17: read_stone chooses by the joint calibration and gives its percentage (p_cal)
             p = x["p_cal"] if x.get("p_cal") is not None else (tm.calibrate_gap(x["p"], word, gp[2] - gp[1], G_cal) if word else 0.0)
+            if word == "<unk>":
+                p = None  # an unknown word is no claim about a word (plan b18f81cd): no probability, outside the bins
             rows.append({"sig": r["signum"], "kind": rl.object_kind(r), "carved": w, "lost": gp[2] - gp[1], "truth": t,
                          "fill": x["fill"], "rune_ok": x["fill"] == t, "word": word, "gold_word": gold,
                          "word_ok": bool(gold and word and word != "<unk>" and rl.same_word(word.lstrip("§"), gold)),
-                         "p": round(p, 4), "p_model": x["p"], "div_rate": x.get("div_rate"),
+                         "p": None if p is None else round(p, 4), "p_model": x["p"], "div_rate": x.get("div_rate"),
                          "alts": x.get("alts"),
                          "alts_ok": [bool(gold and w_ and w_ != "<unk>" and rl.same_word(w_.lstrip("§"), gold)) for w_, _ in x.get("alts") or []]})
         if i % 10 == 0:
@@ -119,13 +121,14 @@ def summary(prefix: str):
         if not xs:
             continue
         with_gold = [x for x in xs if x["gold_word"]]
+        n_unknown = sum(1 for x in with_gold if x["p"] is None)
         bins = []
         for lo, hi in ((0, .5), (.5, .8), (.8, .95), (.95, 1.01)):
-            ys = [x for x in with_gold if lo <= x["p"] < hi]
+            ys = [x for x in with_gold if x["p"] is not None and lo <= x["p"] < hi]
             bins.append({"lo": lo, "hi": hi, "n": len(ys), "said": sum(x["p"] for x in ys) / max(1, len(ys)),
                          "right": sum(x["word_ok"] for x in ys) / max(1, len(ys))})
         out[kind] = {"gaps": len(xs), "stones": len({x["sig"] for x in xs}), "rune_ok": sum(x["rune_ok"] for x in xs) / len(xs),
-                     "word_n": len(with_gold), "word_ok": sum(x["word_ok"] for x in with_gold) / max(1, len(with_gold)),
+                     "word_n": len(with_gold), "unknown_words": n_unknown, "word_ok": sum(x["word_ok"] for x in with_gold) / max(1, len(with_gold)),
                      "bins": bins}
         print(f"{kind}: {len(xs)} luckor på {out[kind]['stones']} föremål; rätt runor {out[kind]['rune_ok']:.1%}; "
               f"rätt ord {out[kind]['word_ok']:.1%} (av {len(with_gold)})")
