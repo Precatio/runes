@@ -1,0 +1,873 @@
+{
+ "n_stones": 2128,
+ "n_journal_pairs": 1814,
+ "n_thesis_pairs": 4434,
+ "n_journal_texts": 245,
+ "land_stones": {
+  "Öl": 53,
+  "Ög": 204,
+  "Sö": 349,
+  "Sm": 119,
+  "Vg": 130,
+  "U": 1128,
+  "Vs": 24,
+  "Nä": 19,
+  "Vr": 2,
+  "Gs": 21,
+  "Hs": 18,
+  "M": 18,
+  "D": 1,
+  "G": 42
+ },
+ "n_all": 2321,
+ "unmeasurable": {
+  "Öl": 101,
+  "Ög": 18,
+  "Sö": 14,
+  "Sm": 2,
+  "Vg": 1,
+  "U": 50,
+  "D": 1,
+  "J": 1,
+  "Bo": 4,
+  "SE": 1
+ },
+ "m1": {
+  "2020-talet": {
+   "texts": 41,
+   "pairs": 293,
+   "stones": 243,
+   "share": {
+    "Öl": 0.0273,
+    "Ög": 0.1195,
+    "Sö": 0.1638,
+    "Sm": 0.0887,
+    "Vg": 0.0546,
+    "U": 0.4437,
+    "Vs": 0.0512,
+    "Nä": 0.0034,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0137,
+    "M": 0.0,
+    "D": 0.0034,
+    "G": 0.0307
+   },
+   "ratio": {
+    "Öl": 1.1,
+    "Ög": 1.25,
+    "Sö": 1.0,
+    "Sm": 1.59,
+    "Vg": 0.89,
+    "U": 0.84,
+    "Vs": 4.54,
+    "Nä": 0.38,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 1.61,
+    "M": 0.0,
+    "D": 7.26,
+    "G": 1.56
+   }
+  },
+  "2010-talet": {
+   "texts": 78,
+   "pairs": 783,
+   "stones": 546,
+   "share": {
+    "Öl": 0.0319,
+    "Ög": 0.083,
+    "Sö": 0.1699,
+    "Sm": 0.1405,
+    "Vg": 0.06,
+    "U": 0.4342,
+    "Vs": 0.0204,
+    "Nä": 0.0064,
+    "Vr": 0.0038,
+    "Gs": 0.0089,
+    "Hs": 0.0077,
+    "M": 0.0038,
+    "D": 0.0,
+    "G": 0.0294
+   },
+   "ratio": {
+    "Öl": 1.28,
+    "Ög": 0.87,
+    "Sö": 1.04,
+    "Sm": 2.51,
+    "Vg": 0.98,
+    "U": 0.82,
+    "Vs": 1.81,
+    "Nä": 0.72,
+    "Vr": 4.08,
+    "Gs": 0.91,
+    "Hs": 0.91,
+    "M": 0.45,
+    "D": 0.0,
+    "G": 1.49
+   }
+  },
+  "1906–1949": {
+   "texts": 18,
+   "pairs": 58,
+   "stones": 56,
+   "share": {
+    "Öl": 0.0172,
+    "Ög": 0.0345,
+    "Sö": 0.6034,
+    "Sm": 0.0172,
+    "Vg": 0.0172,
+    "U": 0.2414,
+    "Vs": 0.0,
+    "Nä": 0.0,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 0.069,
+    "D": 0.0,
+    "G": 0.0
+   },
+   "ratio": {
+    "Öl": 0.69,
+    "Ög": 0.36,
+    "Sö": 3.68,
+    "Sm": 0.31,
+    "Vg": 0.28,
+    "U": 0.46,
+    "Vs": 0.0,
+    "Nä": 0.0,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 8.15,
+    "D": 0.0,
+    "G": 0.0
+   }
+  },
+  "1950-talet": {
+   "texts": 12,
+   "pairs": 82,
+   "stones": 76,
+   "share": {
+    "Öl": 0.0122,
+    "Ög": 0.0122,
+    "Sö": 0.2073,
+    "Sm": 0.0488,
+    "Vg": 0.061,
+    "U": 0.6341,
+    "Vs": 0.0,
+    "Nä": 0.0122,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 0.0122,
+    "D": 0.0,
+    "G": 0.0
+   },
+   "ratio": {
+    "Öl": 0.49,
+    "Ög": 0.13,
+    "Sö": 1.26,
+    "Sm": 0.87,
+    "Vg": 1.0,
+    "U": 1.2,
+    "Vs": 0.0,
+    "Nä": 1.37,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 1.44,
+    "D": 0.0,
+    "G": 0.0
+   }
+  },
+  "1960-talet": {
+   "texts": 17,
+   "pairs": 75,
+   "stones": 65,
+   "share": {
+    "Öl": 0.0,
+    "Ög": 0.0133,
+    "Sö": 0.0933,
+    "Sm": 0.08,
+    "Vg": 0.0667,
+    "U": 0.72,
+    "Vs": 0.0,
+    "Nä": 0.0,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 0.0267,
+    "D": 0.0,
+    "G": 0.0
+   },
+   "ratio": {
+    "Öl": 0.0,
+    "Ög": 0.14,
+    "Sö": 0.57,
+    "Sm": 1.43,
+    "Vg": 1.09,
+    "U": 1.36,
+    "Vs": 0.0,
+    "Nä": 0.0,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 3.15,
+    "D": 0.0,
+    "G": 0.0
+   }
+  },
+  "1970-talet": {
+   "texts": 21,
+   "pairs": 181,
+   "stones": 168,
+   "share": {
+    "Öl": 0.011,
+    "Ög": 0.105,
+    "Sö": 0.0773,
+    "Sm": 0.0331,
+    "Vg": 0.0331,
+    "U": 0.7072,
+    "Vs": 0.0055,
+    "Nä": 0.011,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 0.011,
+    "D": 0.0,
+    "G": 0.0055
+   },
+   "ratio": {
+    "Öl": 0.44,
+    "Ög": 1.1,
+    "Sö": 0.47,
+    "Sm": 0.59,
+    "Vg": 0.54,
+    "U": 1.33,
+    "Vs": 0.49,
+    "Nä": 1.24,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 1.31,
+    "D": 0.0,
+    "G": 0.28
+   }
+  },
+  "1980-talet": {
+   "texts": 23,
+   "pairs": 123,
+   "stones": 116,
+   "share": {
+    "Öl": 0.0,
+    "Ög": 0.0081,
+    "Sö": 0.2846,
+    "Sm": 0.0407,
+    "Vg": 0.0407,
+    "U": 0.5691,
+    "Vs": 0.0163,
+    "Nä": 0.0081,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 0.0081,
+    "D": 0.0,
+    "G": 0.0244
+   },
+   "ratio": {
+    "Öl": 0.0,
+    "Ög": 0.08,
+    "Sö": 1.74,
+    "Sm": 0.73,
+    "Vg": 0.67,
+    "U": 1.07,
+    "Vs": 1.44,
+    "Nä": 0.91,
+    "Vr": 0.0,
+    "Gs": 0.0,
+    "Hs": 0.0,
+    "M": 0.96,
+    "D": 0.0,
+    "G": 1.24
+   }
+  },
+  "1990-talet": {
+   "texts": 18,
+   "pairs": 125,
+   "stones": 120,
+   "share": {
+    "Öl": 0.024,
+    "Ög": 0.024,
+    "Sö": 0.136,
+    "Sm": 0.024,
+    "Vg": 0.008,
+    "U": 0.704,
+    "Vs": 0.016,
+    "Nä": 0.008,
+    "Vr": 0.0,
+    "Gs": 0.04,
+    "Hs": 0.0,
+    "M": 0.008,
+    "D": 0.0,
+    "G": 0.008
+   },
+   "ratio": {
+    "Öl": 0.96,
+    "Ög": 0.25,
+    "Sö": 0.83,
+    "Sm": 0.43,
+    "Vg": 0.13,
+    "U": 1.33,
+    "Vs": 1.42,
+    "Nä": 0.9,
+    "Vr": 0.0,
+    "Gs": 4.05,
+    "Hs": 0.0,
+    "M": 0.95,
+    "D": 0.0,
+    "G": 0.41
+   }
+  },
+  "2000-talet": {
+   "texts": 17,
+   "pairs": 94,
+   "stones": 88,
+   "share": {
+    "Öl": 0.0106,
+    "Ög": 0.0213,
+    "Sö": 0.1277,
+    "Sm": 0.0319,
+    "Vg": 0.0,
+    "U": 0.6915,
+    "Vs": 0.0213,
+    "Nä": 0.0,
+    "Vr": 0.0,
+    "Gs": 0.0319,
+    "Hs": 0.0213,
+    "M": 0.0,
+    "D": 0.0,
+    "G": 0.0426
+   },
+   "ratio": {
+    "Öl": 0.43,
+    "Ög": 0.22,
+    "Sö": 0.78,
+    "Sm": 0.57,
+    "Vg": 0.0,
+    "U": 1.3,
+    "Vs": 1.89,
+    "Nä": 0.0,
+    "Vr": 0.0,
+    "Gs": 3.23,
+    "Hs": 2.52,
+    "M": 0.0,
+    "D": 0.0,
+    "G": 2.16
+   }
+  }
+ },
+ "m2": {
+  "never_journal": 1122,
+  "top5pct_n": 106,
+  "top5pct_share": 0.2878,
+  "median": 0,
+  "top10": [
+   [
+    "Ög 136",
+    24,
+    "Röks kyrkogård"
+   ],
+   [
+    "Vg 119",
+    13,
+    "Sparlösa kyrka"
+   ],
+   [
+    "U 729",
+    12,
+    "Ågersta"
+   ],
+   [
+    "U 1161",
+    11,
+    "Altuna kyrka"
+   ],
+   [
+    "U 323",
+    9,
+    "Sälna"
+   ],
+   [
+    "Ög 8",
+    8,
+    "Västra Stenby kyrka, Kälvestenstenen"
+   ],
+   [
+    "Öl 1",
+    8,
+    "Karlevi"
+   ],
+   [
+    "Vs 15",
+    7,
+    "Lilla Kyringe"
+   ],
+   [
+    "Sö 179",
+    7,
+    "Gripsholm"
+   ],
+   [
+    "U 127",
+    7,
+    "Danderyds kyrka"
+   ]
+  ],
+  "named_once": 582
+ },
+ "m3": {
+  "landskap": {
+   "U": {
+    "n": 1128,
+    "never_j": 605,
+    "never_jt": 164
+   },
+   "Sö": {
+    "n": 349,
+    "never_j": 181,
+    "never_jt": 63
+   },
+   "Ög": {
+    "n": 204,
+    "never_j": 128,
+    "never_jt": 45
+   },
+   "Vg": {
+    "n": 130,
+    "never_j": 77,
+    "never_jt": 9
+   },
+   "Sm": {
+    "n": 119,
+    "never_j": 26,
+    "never_jt": 6
+   },
+   "Öl": {
+    "n": 53,
+    "never_j": 29,
+    "never_jt": 16
+   },
+   "G": {
+    "n": 42,
+    "never_j": 22,
+    "never_jt": 10
+   },
+   "Vs": {
+    "n": 24,
+    "never_j": 8,
+    "never_jt": 3
+   },
+   "Gs": {
+    "n": 21,
+    "never_j": 13,
+    "never_jt": 2
+   },
+   "Nä": {
+    "n": 19,
+    "never_j": 11,
+    "never_jt": 4
+   },
+   "Hs": {
+    "n": 18,
+    "never_j": 12,
+    "never_jt": 6
+   },
+   "M": {
+    "n": 18,
+    "never_j": 10,
+    "never_jt": 0
+   },
+   "Vr": {
+    "n": 2,
+    "never_j": 0,
+    "never_jt": 0
+   },
+   "D": {
+    "n": 1,
+    "never_j": 0,
+    "never_jt": 0
+   }
+  },
+  "stil": {
+   "ingen säker": {
+    "n": 1097,
+    "never_j": 659,
+    "never_jt": 270
+   },
+   "Pr4": {
+    "n": 248,
+    "never_j": 118,
+    "never_jt": 10
+   },
+   "RAK": {
+    "n": 224,
+    "never_j": 106,
+    "never_jt": 21
+   },
+   "Fp": {
+    "n": 173,
+    "never_j": 74,
+    "never_jt": 9
+   },
+   "Pr1–Pr2": {
+    "n": 168,
+    "never_j": 72,
+    "never_jt": 5
+   },
+   "Pr3": {
+    "n": 138,
+    "never_j": 55,
+    "never_jt": 7
+   },
+   "Pr5": {
+    "n": 50,
+    "never_j": 20,
+    "never_jt": 3
+   },
+   "KB": {
+    "n": 30,
+    "never_j": 18,
+    "never_jt": 3
+   }
+  },
+  "forlorad": {
+   "kvar": {
+    "n": 1720,
+    "never_j": 850,
+    "never_jt": 197
+   },
+   "förlorad": {
+    "n": 408,
+    "never_j": 272,
+    "never_jt": 131
+   }
+  },
+  "ristare": {
+   "ingen": {
+    "n": 1361,
+    "never_j": 794,
+    "never_jt": 299
+   },
+   "ristare": {
+    "n": 767,
+    "never_j": 328,
+    "never_jt": 29
+   }
+  },
+  "langd": {
+   "Q1": {
+    "n": 550,
+    "never_j": 426,
+    "never_jt": 244
+   },
+   "Q2": {
+    "n": 532,
+    "never_j": 301,
+    "never_jt": 54
+   },
+   "Q4": {
+    "n": 524,
+    "never_j": 144,
+    "never_jt": 8
+   },
+   "Q3": {
+    "n": 522,
+    "never_j": 251,
+    "never_jt": 22
+   }
+  },
+  "langd_granser": [
+   22,
+   42,
+   62
+  ],
+  "alla": {
+   "alla": {
+    "n": 2128,
+    "never_j": 1122,
+    "never_jt": 328
+   }
+  }
+ },
+ "m5": [
+  {
+   "landskap": "Öl",
+   "harad": "Gräsgårds hd",
+   "n": 10,
+   "never": 9
+  }
+ ],
+ "m5_all": 58,
+ "m6": {
+  "by_decade": {
+   "1970-talet": [
+    {
+     "id": "salberger1978",
+     "author": "Salberger, Evert",
+     "year": 1978,
+     "title": "Runsvenska namnstudier",
+     "topic": "personnamn"
+    }
+   ],
+   "1990-talet": [
+    {
+     "id": "williams1990",
+     "author": "Williams, Henrik",
+     "year": 1990,
+     "title": "Åsrunan. Användning och ljudvärde i runsvenska steninskrifter",
+     "topic": "åsrunan"
+    },
+    {
+     "id": "lagman1990",
+     "author": "Lagman, Svante",
+     "year": 1990,
+     "title": "De stungna runorna. Användning och ljudvärde i runsvenska steninskrifter",
+     "topic": "stungna runor"
+    },
+    {
+     "id": "zachrisson1998",
+     "author": "Zachrisson, Torun",
+     "year": 1998,
+     "title": "Gård, gräns, gravfält. Sammanhang kring ädelmetalldepåer och runstenar från vikingatid och tidig medeltid i Uppland och Gästrikland",
+     "topic": "runstenarnas plats, odal"
+    },
+    {
+     "id": "stille1999",
+     "author": "Stille, Per",
+     "year": 1999,
+     "title": "Runstenar och runristare i det vikingatida Fjädrundaland. En studie i attribuering",
+     "topic": "attribuering"
+    },
+    {
+     "id": "ahlen1997",
+     "author": "Åhlén, Marit",
+     "year": 1997,
+     "title": "Runristaren Öpir. En monografi",
+     "topic": "Öpir"
+    },
+    {
+     "id": "palm1992",
+     "author": "Palm, Rune",
+     "year": 1992,
+     "title": "Runor och regionalitet. Studier av variation i de nordiska minnesinskrifterna",
+     "topic": "regional variation"
+    },
+    {
+     "id": "larssonmg1990",
+     "author": "Larsson, Mats G.",
+     "year": 1990,
+     "title": "Runstenar och utlandsfärder",
+     "topic": "utlandsfärder"
+    }
+   ],
+   "2000-talet": [
+    {
+     "id": "kallstrom2007",
+     "author": "Källström, Magnus",
+     "year": 2007,
+     "title": "Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden",
+     "topic": "ristarsignaturer"
+    },
+    {
+     "id": "zilmer2005",
+     "author": "Zilmer, Kristel",
+     "year": 2005,
+     "title": "\"He drowned in Holmr's sea – his cargo-ship drifted to the sea-bottom, only three came out alive.\" Records and representations of Baltic traffic in the Viking Age and the Early Middle Ages in early Nordic sources",
+     "topic": "resor österut"
+    },
+    {
+     "id": "larsson2002",
+     "author": "Larsson, Patrik",
+     "year": 2002,
+     "title": "Yrrunan. Användning och ljudvärde i nordiska runinskrifter",
+     "topic": "yrrunan"
+    },
+    {
+     "id": "kitzlerahfeldt2002",
+     "author": "Kitzler Åhfeldt, Laila",
+     "year": 2002,
+     "title": "Work and Worship. Laser scanner analysis of Viking Age rune stones",
+     "topic": "huggteknik, ristare"
+    },
+    {
+     "id": "lager2002",
+     "author": "Lager, Linn",
+     "year": 2002,
+     "title": "Den synliga tron. Runstenskors som en spegling av kristnandet i Sverige",
+     "topic": "kors, kristnande"
+    },
+    {
+     "id": "snaedal2002",
+     "author": "Snædal, Thorgunn",
+     "year": 2002,
+     "title": "Medan världen vakar. Studier i de gotländska runinskrifternas språk och kronologi",
+     "topic": "Gotland"
+    },
+    {
+     "id": "imer2007",
+     "author": "Imer, Lisbeth M.",
+     "year": 2007,
+     "title": "Runer og runeindskrifter. Kronologi, kontekst og funktion i Skandinaviens jernalder og vikingetid",
+     "topic": "kronologi"
+    }
+   ],
+   "2010-talet": [
+    {
+     "id": "stern2013",
+     "author": "Stern, Marjolein",
+     "year": 2013,
+     "title": "Runestone images and visual communication in Viking Age Scandinavia",
+     "topic": "bilder på runstenar"
+    },
+    {
+     "id": "bianchi2010",
+     "author": "Bianchi, Marco",
+     "year": 2010,
+     "title": "Runor som resurs. Vikingatida skriftkultur i Uppland och Södermanland",
+     "topic": "skriftkultur, textens layout"
+    },
+    {
+     "id": "pereswetoff2017",
+     "author": "Pereswetoff-Morath, Sofia",
+     "year": 2017,
+     "title": "Vikingatida runbleck. Läsningar och tolkningar",
+     "topic": "runbleck (inte runstenar)"
+    },
+    {
+     "id": "nordby2018",
+     "author": "Nordby, K. Jonas",
+     "year": 2018,
+     "title": "Lønnruner. Kryptografi i runeinnskrifter fra vikingtid og middelalder",
+     "topic": "lönnrunor"
+    }
+   ],
+   "2020-talet": [
+    {
+     "id": "akerstrom2020",
+     "author": "Åkerström, Hanna",
+     "year": 2020,
+     "title": "Visuella textkonventioner i den tidiga vikingatidens runristningar",
+     "topic": "tidig vikingatid, layout"
+    },
+    {
+     "id": "muellervollmer2021",
+     "author": "Mueller-Vollmer, Tristan",
+     "year": 2021,
+     "title": "Personal Names on Swedish Viking Age Runestones",
+     "topic": "personnamn"
+    }
+   ]
+  },
+  "indexed": {
+   "akerstrom2020": {
+    "G": 3,
+    "Sm": 2,
+    "Vg": 1,
+    "Ög": 2
+   },
+   "kallstrom2007": {
+    "G": 18,
+    "Gs": 12,
+    "Hs": 11,
+    "M": 15,
+    "Nä": 3,
+    "Sm": 19,
+    "Sö": 90,
+    "U": 396,
+    "Vg": 24,
+    "Vs": 11,
+    "Ög": 35,
+    "Öl": 8
+   },
+   "lagman1990": {
+    "Gs": 11,
+    "M": 3,
+    "Nä": 11,
+    "Sm": 64,
+    "Sö": 155,
+    "U": 499,
+    "Vg": 70,
+    "Vs": 16,
+    "Ög": 72,
+    "Öl": 13
+   },
+   "larsson2002": {
+    "G": 25,
+    "Gs": 17,
+    "Hs": 11,
+    "M": 15,
+    "Nä": 11,
+    "Sm": 80,
+    "Sö": 198,
+    "U": 716,
+    "Vg": 103,
+    "Vr": 1,
+    "Vs": 14,
+    "Ög": 115,
+    "Öl": 9
+   },
+   "pereswetoff2017": {
+    "G": 1,
+    "Gs": 2,
+    "Hs": 5,
+    "M": 1,
+    "Sm": 4,
+    "Sö": 19,
+    "U": 49,
+    "Vg": 13,
+    "Vs": 3,
+    "Ög": 11,
+    "Öl": 3
+   },
+   "stern2013": {
+    "G": 4,
+    "Gs": 5,
+    "Nä": 3,
+    "Sm": 5,
+    "Sö": 61,
+    "U": 101,
+    "Vg": 24,
+    "Vs": 2,
+    "Ög": 11,
+    "Öl": 4
+   },
+   "williams1990": {
+    "Gs": 11,
+    "M": 7,
+    "Nä": 4,
+    "Sm": 37,
+    "Sö": 119,
+    "U": 497,
+    "Vg": 51,
+    "Vs": 12,
+    "Ög": 38,
+    "Öl": 13
+   },
+   "zilmer2005": {
+    "G": 11,
+    "Gs": 7,
+    "Hs": 3,
+    "M": 2,
+    "Nä": 1,
+    "Sm": 30,
+    "Sö": 104,
+    "U": 208,
+    "Vg": 22,
+    "Vs": 9,
+    "Ög": 32,
+    "Öl": 6
+   }
+  }
+ }
+}

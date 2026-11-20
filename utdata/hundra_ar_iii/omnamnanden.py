@@ -8,6 +8,8 @@ Regeln (låst i analysplaner/2026-11-20-hundra-ar-III.md):
 - ordet "run" (runsten, runinskrift, runor, rune, runic …) måste stå inom 300 tecken från signumet, annars är det
   oftast ett museinummer, en tand (M 2) eller en sidhänvisning;
 - ett signum som följs av komma eller punkt och en siffra ("St. H. M. 8,756") är ett inventarienummer;
+- OCR med uppdelade siffror (tillägg 2): ett signum som följs av mellanslag och en siffra ("U 1 29"), eller vars prefix
+  föregås av en ensam bokstav ("(S M 3 9"), räknas inte;
 - spärrad OCR-text ("U 11 s t r ö m", "G 1 o b") räknas inte: ett signum som följs eller föregås av ensamma bokstäver
   med mellanslag emellan stryks.
 Texterna läses ur sökindexet /Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite (utanför repot).
@@ -32,7 +34,7 @@ DB = "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/sok.sqlite"
 OUT = os.path.join(ROOT, "data", "cache", "hundra_ar_iii", "omnamnanden.csv")
 RUN = re.compile(r"run", re.I)
 SPACED_AFTER = re.compile(r"^\s?[^\W\d_]\s[^\W\d_]\s")
-SPACED_BEFORE = re.compile(r"(?:^|\s)[^\W\d_]\s[^\W\d_]\s$")
+SPACED_BEFORE = re.compile(r"(?:^|\s)[^\W\d_]\s[^\W\d_]\s$|(?:^|[\s(])[^\W\d_]\s$")  # tillägg 2: "(S M 3 9"
 WINDOW = 300
 
 
@@ -48,6 +50,8 @@ def mentions(flat: str, rx, keep: dict) -> list[tuple[str, str]]:
         if k not in keep:
             continue
         if SPACED_AFTER.match(flat[m.end():m.end() + 8]) or SPACED_BEFORE.search(flat[max(0, m.start() - 6):m.start()]):
+            continue
+        if re.match(r" \d", flat[m.end():m.end() + 2]):  # tillägg 2: "U 1 29" = U 129
             continue
         if re.match(r"[.,]\d", flat[m.end():m.end() + 2]):  # "St. H. M. 8,756", "U 1.2"
             continue
