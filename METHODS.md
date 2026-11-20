@@ -2218,6 +2218,11 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     drygt 1 procent av orden. En grammatikmodell kan därför vinna högst omkring en procentenhet; spår ur skanningarna
     väger tyngre (simulerat: hela ord 56 → 81 procent).
 
+* **Petersons namnlexikon nyinläst (textmodel-23, plan 321c3a6d, 2026-11-20): negativt.** Lexikonet lästes in på nytt
+  (tesseract, 97,7 % av beläggen kontrollerade mot Rundata) och prövades som namn i namnmodellen på samma sätt som i
+  textmodel-22. På veck 0–4 vann och förlorade modellen inga luckor alls (281 namnluckor, 110 rätt före och efter;
+  sannolikheterna ändrades i 695 luckor men inget val gick från fel till rätt eller tvärtom). Namnen förblir av
+  (`utdata/runlm_forfining/tm23_resultat.md`).
 * **Läsningen sammanställd och jämförd med Rundata (2026-11-20, `src/textmodel.py`: `word_forms`, `compare_rundata`):**
   * **Läsningen och översättningarna.** Panelen visar modellens läsning ord för ord på runsvenska/rundanska (som
     modellen läser) och på fornvästnordiska (den form Rundatas `normalization_ows` oftast ger ordet,
