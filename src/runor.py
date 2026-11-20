@@ -124,4 +124,6 @@ def for_inscription(rec: dict) -> dict | None:
         "notes": [n for n in notes if isinstance(n, str)],
         "reading": reading or None,
         "reading_changed": bool(reading) and bool(ours) and runes(reading) != runes(ours),
+        # the editors' translation into modern Swedish (Runor has it for about a third of the Swedish runestones)
+        "translation_sv": r.get("translation_sv") or None,
     }

@@ -219,6 +219,15 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
           <Field label="Normalisering (runsvenska/rundanska/fornvästnordiska)"><em translate="no">{rec.normalization}</em></Field>
           <Field label="Fornvästnordisk normalisering"><em translate="no">{rec.normalization_ows}</em></Field>
           <Field label="Översättning (engelska)"><span translate="no">{rec.translation_en}</span></Field>
+          {rec.runor?.translation_sv && (
+            <Field label="Översättning (svenska)">
+              <span translate="no">{rec.runor.translation_sv}</span>
+              <div className="text-[11px] text-slate-500 mt-0.5">
+                Utgivarnas översättning i Runor 2020 (Riksantikvarieämbetet), Samnordisk runtextdatabas, Uppsala universitet (ODbL).
+                Finns för ungefär en tredjedel av de svenska runstenarna.
+              </div>
+            </Field>
+          )}
           <Field label="Övrigt"><span translate="no">{rec.other}</span></Field>
           <Field label="Referenser">{rec.references}</Field>
           {rec.runor && (

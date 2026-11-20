@@ -40,7 +40,7 @@ export interface Inscription {
   // Runor 2020 (RAÄ) beside Rundata 2018, when the harvest is on the machine (src/runor.py); shown, not computed on
   runor?: {
     edition: string; url: string | null; signum: string; extant: boolean | null; original_location: boolean | null;
-    placement: string | null; dating: string | null; notes: string[]; reading: string | null; reading_changed: boolean;
+    placement: string | null; dating: string | null; notes: string[]; reading: string | null; reading_changed: boolean; translation_sv?: string | null;
   } | null;
   // SRI:s fyndhistorik (src/sri_fyndhistorik.py, A1 tillägg 1), when the extraction is on the machine; shown, not computed on
   sri?: SriFindHistory | null;

@@ -74,6 +74,12 @@ def _interpretation(texts: list, code: str) -> str:
                     if (i.get("language") or {}).get("language_code") == code)
 
 
+def _translation(texts: list, code: str) -> str:
+    """Runor's translation in one language (sv-se, en-gb, nb-no), all text parts joined."""
+    return " ".join(t["translation"] for x in texts for t in x.get("translations") or []
+                    if (t.get("language") or {}).get("language_code") == code and t.get("translation"))
+
+
 def compact(d: dict) -> dict:
     """De fält appen använder, i platt form."""
     pos = d.get("position") or {}
@@ -94,6 +100,8 @@ def compact(d: dict) -> dict:
         "readings": [{"reading": t.get("reading"), "reference": t.get("reference")} for t in texts],
         "normalization_rsv": _interpretation(texts, "RSV") or _interpretation(texts, "RDA"),
         "normalization_ows": _interpretation(texts, "FVN"),
+        # the editors' translation into modern Swedish (2026-11-20); Rundata 2018 has only English
+        "translation_sv": _translation(texts, "sv-se") or None,
         "period": (d.get("period") or {}).get("period"), "dating": d.get("dating"),
         "termini": d.get("termini"),
         "material": (d.get("material") or {}).get("material_free_text"),
