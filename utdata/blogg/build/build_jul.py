@@ -133,6 +133,9 @@ Tystnaden är inte konstig. Runstenarna talar om döden, om släkten, om vem som
 
 Det finns ett namn på stenarna som låter som julen. Vid Tumbo kyrka i Södermanland står en sten som Kolbein och *Iuli* reste efter sin bror Ingvar (Sö 362), och i Västergötland nämns en *Iula* (Vg 184).
 
+![Runstenen Sö 362 vid Tumbo kyrka](https://upload.wikimedia.org/wikipedia/commons/3/38/S%C3%B6_362%2C_Tumbo.JPG)
+Sö 362 vid Tumbo kyrka i Södermanland, som Kolbein och Juli reste efter sin bror Ingvar. Foto: Berig, [CC BY 2.5](https://creativecommons.org/licenses/by/2.5), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:S%C3%B6_362,_Tumbo.JPG).
+
 Men Juli har inget med julen att göra. Enligt Lena Petersons *Nordiskt runnamnslexikon* är det en kortform av namn som börjar på *Igul-*, och *Igull* kommer av ett ord som på fornvästnordiska betyder sjöborre, "här dock sannolikt med en ursprungligare betydelse 'igelkott'". Juli hette alltså ungefär Igelkotten.
 
 ## Det vi inte vet
@@ -191,6 +194,9 @@ The silence is not strange. The runestones speak of death, of kin, of who inheri
 ## The man called Júli
 
 There is a name on the stones that sounds like Yule. At Tumbo church in Södermanland stands a stone that Kolbeinn and *Iuli* raised for their brother Ingvarr (Sö 362), and in Västergötland an *Iula* is named (Vg 184).
+
+![The runestone Sö 362 at Tumbo church](https://upload.wikimedia.org/wikipedia/commons/3/38/S%C3%B6_362%2C_Tumbo.JPG)
+Sö 362 at Tumbo church in Södermanland, which Kolbeinn and Júli raised for their brother Ingvarr. Photo: Berig, [CC BY 2.5](https://creativecommons.org/licenses/by/2.5), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:S%C3%B6_362,_Tumbo.JPG).
 
 But Júli has nothing to do with Yule. According to Lena Peterson's *Nordiskt runnamnslexikon* it is a short form of names beginning with *Igul-*, and *Igull* comes from a word that in Old West Norse means sea urchin, "here, however, probably with an older meaning 'hedgehog'". So Júli was called something like the Hedgehog.
 
