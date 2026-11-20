@@ -113,7 +113,7 @@ export function Score({ value }: { value: number }) {
 export const pct = (n: number, d: number) => (d ? Math.round((100 * n) / d) : 0);
 export const fmt = (v: number | null | undefined, digits = 2) => (v == null ? "–" : v.toFixed(digits).replace(".", ","));
 
-function Bar({ value, total, color }: { value: number; total: number; color: string }) {
+export function Bar({ value, total, color }: { value: number; total: number; color: string }) {
   return (
     <div className="flex items-center gap-2 min-w-[110px]">
       <div className="h-2 flex-1 bg-slate-200 rounded-full overflow-hidden">

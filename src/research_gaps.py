@@ -72,7 +72,11 @@ def uncertain_interpretation(rec: dict) -> bool:
     return not n or n.startswith("?") or "(?)" in n
 
 
-def coverage(inscriptions: list[dict], measured: set[str]) -> dict:
+def coverage(inscriptions: list[dict], measured: set[str], journals: set[str] | None = None) -> dict:
+    """Täckningen per landskap. journals är de stenar (vikt signum, src/signum.fold_signum) som någon artikel i
+    Fornvännen, Futhark, Namn och bygd eller Current Swedish Archaeology nämner i löptext (src/redan_kant.journal_signa);
+    utan den saknas kolumnen."""
+    from src.signum import fold_signum
     stones = [r for r in inscriptions if is_runestone(r)]
     rows = defaultdict(Counter)
     for r in stones:
@@ -85,6 +89,8 @@ def coverage(inscriptions: list[dict], measured: set[str]) -> dict:
         c["uncertain_interpretation"] += uncertain_interpretation(r)
         c["lost"] += r["flags"]["lost"]
         c["measured"] += r["signum"] in measured
+        if journals is not None:
+            c["journals"] += fold_signum(r["signum"]) in journals
     per_province = sorted(
         ({"code": p, "name": PROVINCE_NAMES.get(p, p), "axelson": p in AXELSON_PROVINCES, **dict(c)}
          for p, c in rows.items()),

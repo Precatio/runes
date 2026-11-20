@@ -153,7 +153,7 @@ interface LitWork {
   pages: string[]; n: number; snippets: LitSnippet[]; entry_pages: string[]; list_pages: string[];
 }
 interface JournalArticle { key: string; journal: string; year: string; title: string; author: string; url?: string;
-  pages: string[]; list_pages: string[]; n: number; snippets: LitSnippet[] }
+  pages: string[]; printed?: (string | null)[]; list_pages: string[]; n: number; snippets: LitSnippet[] }
 interface LitCatalogWork { id: string; author: string; year: number; title: string; access: string; indexed: boolean; n_stones: number; url?: string }
 
 const ACCESS: Record<string, string> = { "öppen": "fri fulltext", "sverige": "fulltext inom Sverige", "tryck": "bara tryckt" };
@@ -242,7 +242,9 @@ export function LiteratureBox({ signum }: { signum: string }) {
                     <span className="text-[11px] text-slate-500" translate="no">{a.journal}</span>
                   </div>
                   <div className="text-slate-700">
-                    {a.pages.length > 0 && <span>pdf-sida</span>}{a.pages.length > 0 && <span translate="no">{" " + a.pages.map(p => p.slice(4)).join(", ")}</span>}
+                    {a.pages.length > 0 && (a.printed?.some(Boolean)
+                      ? <><span>s.</span><span translate="no">{" " + a.pages.map((p, i) => a.printed?.[i] ?? `pdf ${p.slice(4)}`).join(", ")}</span></>
+                      : <><span>pdf-sida</span><span translate="no">{" " + a.pages.map(p => p.slice(4)).join(", ")}</span></>)}
                     {a.list_pages.length > 0 && <span className="text-slate-500">{a.pages.length ? "; " : ""}<span>i register eller listor</span><span translate="no">{" " + a.list_pages.map(p => p.slice(4)).join(", ")}</span></span>}
                     {a.url && <> · <a href={a.url} target="_blank" rel="noreferrer" className="text-[#b7410e] underline">fri fulltext</a></>}
                   </div>

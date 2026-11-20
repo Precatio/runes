@@ -6,7 +6,7 @@ import { fmtP } from "@/lib/significance";
 import { DocsNote } from "@/components/KnownLimitations";
 import ExportTable from "@/components/ExportTable";
 import type { CategoryStats, ProvinceRow, SizeStats, SortValue } from "./typer";
-import { BarLink, CELL_LINK, TH_ROW, fmt, gapHref, signaHref, useSorted } from "./gemensamt";
+import { Bar, BarLink, CELL_LINK, TH_ROW, fmt, gapHref, signaHref, useSorted } from "./gemensamt";
 
 export function SizePanel() {
   const [data, setData] = useState<SizeStats | null>(null);
@@ -165,14 +165,25 @@ export function ProvinceTable({ rows, measuredSigna }: { rows: ProvinceRow[]; me
   const { sorted, header } = useSorted(rows, {
     name: r => r.name, total: r => r.total, carver: r => r.carver / r.total, style: r => r.style / r.total,
     uncertain: r => r.uncertain_interpretation, lost: r => r.lost, measured: r => r.measured,
+    journals: r => (r.journals == null ? null : r.journals / r.total),
   }, { key: "total", desc: true });
+  const withJournals = rows.some(r => r.journals != null);
   return (
     <div className="liquid-glass-island rounded-[32px] p-4 overflow-x-auto">
+      {withJournals && (
+        <p className="text-xs text-slate-600 mb-3 max-w-4xl">
+          <strong>I tidskrifterna</strong> är andelen av landskapets runstenar som minst en artikel i Fornvännen (1906–2023),
+          Futhark (1–15), Namn och bygd (2010–2025) eller Current Swedish Archaeology (28–) nämner i löptext. Register och
+          listor räknas inte. En låg andel betyder att stenarna sällan har tagits upp i artiklar, inte att de saknar forskning:
+          utgåvorna (Sveriges runinskrifter) och avhandlingarna räknas inte här.
+        </p>
+      )}
       <ExportTable><table className="w-full text-sm">
         <thead>
           <tr className={TH_ROW}>
             {header("name", "Landskap")}{header("total", "Runstenar")}{header("carver", "Med ristare")}
-            {header("style", "Säker stilgrupp")}{header("uncertain", "Osäkert tolkade")}{header("lost", "Försvunna")}{header("measured", "Uppmätta")}
+            {header("style", "Säker stilgrupp")}{withJournals && header("journals", "I tidskrifterna", "Andelen runstenar som minst en artikel i Fornvännen, Futhark, Namn och bygd eller Current Swedish Archaeology nämner i löptext.")}
+            {header("uncertain", "Osäkert tolkade")}{header("lost", "Försvunna")}{header("measured", "Uppmätta")}
           </tr>
         </thead>
         <tbody>
@@ -185,6 +196,11 @@ export function ProvinceTable({ rows, measuredSigna }: { rows: ProvinceRow[]; me
               <td className="p-2"><Link href={gapHref("runestone", r.code)} className={CELL_LINK}>{r.total}</Link></td>
               <td className="p-2"><BarLink value={r.carver} total={r.total} color="#b7410e" has={gapHref("carver", r.code)} missing={gapHref("no_carver", r.code)} /></td>
               <td className="p-2"><BarLink value={r.style} total={r.total} color="#0369a1" has={gapHref("style", r.code)} missing={gapHref("no_style", r.code)} /></td>
+              {withJournals && (
+                <td className="p-2" title={r.journals != null ? `${r.journals} av ${r.total} runstenar` : undefined}>
+                  {r.journals != null ? <Bar value={r.journals} total={r.total} color="#64748b" /> : "–"}
+                </td>
+              )}
               <td className="p-2"><Link href={gapHref("uncertain_interpretation", r.code)} className={CELL_LINK}>{r.uncertain_interpretation}</Link></td>
               <td className="p-2"><Link href={gapHref("lost", r.code)} className={CELL_LINK}>{r.lost}</Link></td>
               <td className="p-2">

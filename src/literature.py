@@ -104,6 +104,9 @@ def journals_for(signum: str) -> dict:
         out.append({"key": key, "journal": a["journal"], "year": a["year"], "title": a["title"],
                     "author": "; ".join(x.split(",")[0] for x in a["authors"][:3]) + (" m.fl." if len(a["authors"]) > 3 else ""),
                     "url": a.get("url"), "pages": sorted({h["page"] for h in text}, key=order),
+                    # the printed pages where they can be worked out (scripts/build_journal_index.py), in the same order
+                    "printed": [next((h.get("printed") for h in text if h["page"] == p and h.get("printed")), None)
+                                for p in sorted({h["page"] for h in text}, key=order)],
                     "list_pages": sorted({h["page"] for h in hs if h.get("list")}, key=order),
                     "n": len(text), "snippets": text[:3]})
     out.sort(key=lambda x: (x["n"] == 0, -int(x["year"] or 0)))
@@ -199,6 +202,51 @@ def fill_pages(pages: list[str]) -> list[str]:
         if out[i].startswith("pdf") and a.isdigit() and b.isdigit() and int(b) - int(a) == 2:
             out[i] = str(int(a) + 1)
     return out
+
+
+_EDGE_NUMBER = re.compile(r"^(\d{1,4})\b|\b(\d{1,4})$")
+
+
+def journal_page_offset(pages: list[tuple[int, str]], first_page: int | None = None,
+                        cover: bool = False) -> int | None:
+    """Skillnaden mellan tryckt sida och pdf-sida i en tidskriftsartikel (tryckt = pdf + skillnaden), eller None.
+
+    Sidnumret står först eller sist på någon av de två första eller två sista raderna (Fornvännen: "137" ensamt längst
+    ned, Futhark: "208 • Eric T. Lander" eller "… U 924 • 209"). Den skillnad som flest sidor ger vinner, om minst två
+    sidor ger den (eller en, när artikeln har högst två sidor). När artikelns första tryckta sida är känd ur metadata
+    (Fornvännens nyckel år_sida, Futharks sidintervall) vinner den över en avvikande räkning, eftersom årtal och
+    figurnummer annars kan ta sidnumrets plats; Fornvännens pdf:er har ett omslag som pdf-sida 1 (cover=True).
+    Mätt 2026-11-19 på Fornvännens 3 015 artiklar med känd första sida: 2 664 med omslaget, 19 utan, 58 avvikande
+    (årtal och liknande) och 274 utan läsbara sidnummer."""
+    from collections import Counter
+    c: Counter = Counter()
+    for no, text in pages:
+        lines = [ln.strip() for ln in (text or "").splitlines() if ln.strip()]
+        cands = {int(m.group(1) or m.group(2)) for ln in lines[:2] + lines[-2:] for m in _EDGE_NUMBER.finditer(ln)}
+        for v in cands:
+            if v >= no:
+                c[v - no] += 1
+    found = None
+    if c:
+        o, n = c.most_common(1)[0]
+        if n >= 2 or (n >= 1 and len(pages) <= 2):
+            found = o
+    if first_page is None:
+        return found
+    expected = first_page - (2 if cover else 1)
+    if found is not None and found in (first_page - 1, first_page - 2):
+        return found
+    return expected
+
+
+def journal_printed(pdf_page: int, offset: int | None, first_page: int | None = None) -> str:
+    """Den tryckta sidan som text ("137"), eller "pdf N" när den inte går att räkna ut (omslaget före första sidan)."""
+    if offset is None:
+        return f"pdf {pdf_page}"
+    p = pdf_page + offset
+    if p < 1 or (first_page is not None and p < first_page):
+        return f"pdf {pdf_page}"
+    return str(p)
 
 
 def page_label(p: str) -> str:

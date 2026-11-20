@@ -12,6 +12,8 @@ import { gapHref, pct, signaHref } from "./_delar/gemensamt";
 import { BriefTable, Freshness, HypothesisTable, PrioritiesPanel, TextGapsPanel } from "./_delar/ovriga";
 import { FindingsPanel } from "./_delar/fynd";
 import { CategoryPanel, ProvinceTable, SizePanel } from "./_delar/tackning";
+import { QuestionsPanel } from "./_delar/fragor";
+import { SriRundataPanel } from "./_delar/sri";
 
 export default function GapsPage() {
   // Wait until Firebase has restored the session, so the heavy requests run once with the settled user's corpus
@@ -71,6 +73,8 @@ export default function GapsPage() {
     { key: "size", topic: "Storlek", question: "Restes större stenar för större syften?", note: "höjd mot syfte" },
     { key: "uninterpreted", topic: "Tolkning", question: "Vilka inskrifter är osäkert tolkade?", note: `${data.open_questions.uninterpreted.count} inskrifter` },
     { key: "style", topic: "Stilgrupp", question: "Vilka stenar har osäker stilgrupp?", note: `${data.open_questions.uncertain_style.count} stenar` },
+    { key: "sri", topic: "SRI mot Rundata", question: "Var säger SRI och Rundata olika om stenens plats?", note: "fyndhistorik med sida" },
+    { key: "questions", topic: "Öppna frågor · internt", question: "Vilka frågor i forskningen kan Vitki hjälpa till att besvara?", note: "frågelistan, bara i den lokala appen" },
     { key: "textgaps", topic: "Luckor i texten", question: "Vilka förlorade runor kan sannolikhetsmodellen fylla i?", note: textGaps?.counts ? (textGaps.counts.runsten ? `${textGaps.counts.runsten.sure ?? 0} luckor ≥ 80 % på runstenar` : `${textGaps.counts.candidates} luckor`) : "beräknas" },
   ];
   const c = found.summary.counts;
@@ -100,7 +104,8 @@ export default function GapsPage() {
       topic: "Luckor", question: "Var saknas uppgifter om runstenarna?",
       why: "Där uppgifter saknas kan nya analyser och mätningar göra mest nytta.",
       headline: { value: `${pct(t.total - t.carver, t.total)} %`, label: "av runstenarna saknar ristare i Rundata" },
-      answer: <>Av {t.total} svenska vikingatida runstenar saknar {t.total - t.carver} ristare och {t.total - t.style} säker stilgrupp; {t.dated} är daterade med årtal och {t.measured} är uppmätta i 3D.{lowest && <> Lägst andel med ristare bland landskap med minst 30 stenar har {lowest.name} ({pct(lowest.carver, lowest.total)} %).</>}</>,
+      answer: <>Av {t.total} svenska vikingatida runstenar saknar {t.total - t.carver} ristare och {t.total - t.style} säker stilgrupp; {t.dated} är daterade med årtal och {t.measured} är uppmätta i 3D.{lowest && <> Lägst andel med ristare bland landskap med minst 30 stenar har {lowest.name} ({pct(lowest.carver, lowest.total)} %).</>}
+        {t.journals != null && <> {t.journals} av stenarna ({pct(t.journals, t.total)} %) nämns i löptext i minst en artikel i Fornvännen, Futhark, Namn och bygd eller Current Swedish Archaeology.</>}</>,
       interpretation: [
         "Landskap med få attribueringar är där nya ristarförslag och skrivmiljöerna gör mest nytta.",
         "Uppland och Södermanland har flest attribueringar, främst genom Axelsons arbete (1993); i andra landskap kan attribueringar finnas i litteraturen utan att stå i Rundata.",
@@ -204,6 +209,8 @@ export default function GapsPage() {
         )}
         {tab === "priorities" && <PrioritiesPanel rows={data.measurement_priorities} />}
         {tab === "textgaps" && <TextGapsPanel data={textGaps} />}
+        {tab === "sri" && <SriRundataPanel />}
+        {tab === "questions" && <QuestionsPanel />}
         {(tab === "uninterpreted" || tab === "style") && (
           <BriefTable key={tab} uninterpreted={tab === "uninterpreted"}
             rows={(tab === "uninterpreted" ? data.open_questions.uninterpreted : data.open_questions.uncertain_style).items} />

@@ -107,8 +107,9 @@ def research_gaps(req: GapsRequest):
     s = store()
     # Normalise measured signa through Rundata (e.g. "So 113" -> "Sö 113")
     measured = {rec["signum"] for rec in (s.get(x) for x in req.measured_signa) if rec}
+    from src import redan_kant  # the stones that a journal article discusses in running text (the coverage column)
     return {
-        "coverage": gaps.coverage(s.inscriptions, measured),
+        "coverage": gaps.coverage(s.inscriptions, measured, redan_kant.journal_signa() or None),
         "hypotheses": _hypotheses(),
         "open_questions": _open_questions(),
         "measurement_priorities": gaps.measurement_priorities(s.inscriptions, measured),
@@ -143,9 +144,9 @@ def findings_key(req: FindingsRequest) -> str:
     body = hashlib.sha256(req.model_dump_json().encode()).hexdigest()[:16]
     # The stone findings' input files (own findings, links, gap candidates, Runor) are part of the key, so that an edit
     # to data/stone_findings.json shows without restarting the API (the same key part as /api/r/corpus)
-    from src import literature
+    from src import literature, redan_kant
     return (f"findings|{body}|{_fp()}|{dir_version(crosscheck.CACHE)}|{id(store().inscriptions)}"
-            f"|{findings_version()}|{literature.version()}")
+            f"|{findings_version()}|{literature.version()}|{redan_kant.version()}")
 
 
 def research_findings(req: FindingsRequest):
@@ -159,6 +160,11 @@ def research_findings(req: FindingsRequest):
     items = rstats._with_crosscheck(list(_orthographic_findings())) + extra + r_items + stone_findings.all_findings(s.get, s.inscriptions)
     from src import literature  # where dissertations and editions discuss the stone (src/literature.py)
     literature.annotate_findings(items)
+    # Redan känt? The claim of each finding looked up in SRI's article on the stone, the journals and the register
+    # (src/redan_kant.py, METHODS.md 14b); a claim already in print no longer counts as likely new knowledge
+    from src import redan_kant
+    likely_before = findings.summarize(items)["likely_new"]
+    redan_kant.annotate(items, s.get, s.inscriptions)
     from src.r_findings import finding_significance
     for f in items:
         f["significance"] = finding_significance(f)
@@ -167,7 +173,8 @@ def research_findings(req: FindingsRequest):
     return {
         "r_patterns": r_patterns, "r_ready": rstats.corpus_ready(),
         "findings": items,
-        "summary": findings.summarize(items),
+        "summary": {**findings.summarize(items),
+                    "known": {**redan_kant.summary(items), "likely_new_before": likely_before}},
         "technique_note": technique_note,
         "method_note": findings.__doc__.split("\n\n", 1)[1].strip(),
         "source_note": gaps.SOURCE_NOTE,
@@ -223,6 +230,23 @@ def _add_levels(items: list[dict]) -> list[dict]:
     if changed:
         write_json(path, cache)
     return items
+
+
+@router.get("/questions")
+def research_questions():
+    """Öppna frågor i forskningen: frågelistan ur litteraturgenomgången med källa och tryckt sida, relevansklass och
+    den kopplade studiens läge (src/fragelista.py). INTERNT styrdokument (PUBLICERINGSPLAN.md): bara i den lokala
+    appen, och utan relevansmotiveringar och prövningssätt."""
+    from src import fragelista
+    return fragelista.questions()
+
+
+@router.get("/sri-rundata")
+def sri_rundata_disagreements():
+    """Stenar där SRI:s fyndhistorik (läget när bandet skrevs, försvunnen och återfunnen) inte stämmer med Rundata
+    och appens flyttregel (src/sri_rundata.py). En lista att granska, inget prov; is_moved ändras inte."""
+    from src import sri_rundata
+    return sri_rundata.disagreements(store().inscriptions)
 
 
 @router.get("/geology/{signum:path}")

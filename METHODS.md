@@ -840,7 +840,15 @@ och OCR-fel gör att enstaka omnämnanden missas; registret visar var en sten n�
 `scripts/build_journal_index.py` ur litteraturgenomgångens sökindex (`sok.sqlite`, text sida för sida) till
 `data/cache/literature/journals.json`: per sten artiklarna, pdf-sidorna och korta utdrag, per artikel tidskrift, år,
 författare, titel och länk. Futharks helvolymer och Fornvännens årsregister räknas inte, eftersom de dubblerar artiklarna.
-Sidnumren är pdf-sidor, inte tryckta sidor. Samma signumregler och listgräns som ovan; 2 043 stenar nämns i 920 artiklar.
+Samma signumregler och listgräns som ovan. Indexet omfattar också Namn och bygd 2010–2025 och Current Swedish Archaeology från volym 28 (båda CC BY 4.0); 2 125
+stenar nämns i 952 artiklar. **Tryckta sidor (från 2026-11-19).** Varje omnämnande får den tryckta sidan där den går att
+räkna ut (`src/literature.journal_page_offset`): sidnumret står först eller sist på någon av sidans två första eller två
+sista rader, och den skillnad mellan tryckt sida och pdf-sida som flest sidor ger (minst två) gäller hela artikeln. När
+artikelns första sida står i metadata (Fornvännens nyckel år_sida, Futharks sidintervall) vinner den över en avvikande
+räkning, eftersom årtal och figurnummer annars kan ta sidnumrets plats; Fornvännens pdf:er har ett omslag som pdf-sida 1,
+som inte får någon tryckt sida. På Fornvännens 3 015 artiklar med känd första sida gav räkningen omslagsskillnaden i 2 664,
+skillnaden utan omslag i 19, något annat (årtal och liknande, där metadata vinner) i 58 och inga läsbara sidnummer i 274.
+7 314 av 7 458 omnämnanden har nu en tryckt sida; resten visas som pdf-sida.
 Stenens sida visar listan under Litteratur ("I Fornvännen och Futhark"), öppen när en till fem artiklar nämner stenen.
 
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
@@ -2469,6 +2477,11 @@ Källkod: `src/research_gaps.py`. Underlag: Rundatas svenska vikingatida runsten
 * **Täckning** per landskap: andel med ristare, säker stilgrupp, datering, osäker tolkning, försvunna stenar
   och stenar i mätkorpusen. Ristaruppgifterna för Sö, U, Vs och Gs bygger främst på Axelson (1993); i andra
   landskap kan attribueringar finnas i litteraturen utan att stå i Rundata.
+* **I tidskrifterna** (från 2026-11-19): andelen av landskapets runstenar som minst en artikel i Fornvännen, Futhark,
+  Namn och bygd eller Current Swedish Archaeology nämner i löptext (register och listor räknas inte;
+  `src/redan_kant.journal_signa`). 1 111 av 2 321 runstenar (48 %); Uppland 48 %, Södermanland 50 %, Östergötland 44 %,
+  Öland 17 %, Västergötland 46 %, Småland 74 %. En låg andel betyder att stenarna sällan tagits upp i artiklar, inte att
+  forskning saknas: utgåvorna och avhandlingarna räknas inte här.
 * **Ortografiska hypoteser:** stenar utan ristare i Rundata vars stavning liknar en ristares profil
   (cosinus ≥ 0,6, marginal ≥ 0,05 till nästa, minst åtta läsbara ord). Förslagen rangordnas efter den
   ristarens korsvaliderade träffsäkerhet × likhet, och nedvärderas om stenen ligger utanför ristarens
@@ -2540,6 +2553,57 @@ Runors hänvisningar av typen "Samma som gjort U 1015, 1017–1024" följs till 
 *samma som* (samma namnlösa ristare som en annan sten) och *saknas*. Runors litteraturhänvisningar för stenen
 visas så att de kan kontrolleras. Svaren cachas i `data/cache/crosscheck/`. Avstämningen ersätter inte en
 genomgång av litteraturen: Runor 2020 har inte heller alla senare attribueringar.
+
+**Redan känt? (från 2026-11-19, `src/redan_kant.py`).** Varje fynd om en sten prövas också mot det forskningen redan
+skrivit om stenen, i tre slags källor: utgivarnas artikel om stenen i Sveriges runinskrifter (hela artikeln sida för
+sida, `scripts/sri_artiklar.py` → `scripts/build_sri_mentions.py` → `data/cache/literature/sri_mentions.json`; 2 494
+stenar har en artikel), sidorna i Fornvännen, Futhark, Namn och bygd och Current Swedish Archaeology som nämner stenen i
+löptext (avsnitt 1w), och utdragen ur litteraturregistrets avhandlingar och utgåvor, tillsammans med litteraturens
+ristarattribueringar (`data/carver_literature.json`). Filerna ligger i den git-ignorerade cachen (avsnitt 17).
+
+Regeln söker efter fyndets påstående, inte bara efter stenen:
+
+* **Ristarförslag.** Ristarens namn utan Rundatas löpnummer ("Öpir 1" → Öpir) ska stå som ristare i en av fyra fasta
+  vändningar: namnet följt av *ristade, högg, risti, hiogg* ("Öpir ristade"); *ristad, utförd, huggen, signerad,
+  attribuerad, tillskriven* eller *hänförd* av, till eller åt namnet ("utförd av Öpir", "hänför den … till Fot"); namnet
+  i genitiv följt av *ristningar, stenar, verk, skola, stil, hand, ornamentik, runformer, signatur* eller *verkstad*
+  ("Gudfasts ristningar"); eller *ristaren, runristaren, mästaren* följt av namnet – och motsvarande på engelska
+  (*carved by, attributed to, the carver, Öpir's stones*). Vändningen ska gälla stenen själv: i tidskrifterna (inom 300
+  tecken från stenens signum) och i registrets utdrag ska stenens signum vara det signum som står närmast vändningen, och
+  i SRI:s artikel får ingen annan stens signum stå inom 100 tecken från den ("Även U 269 är säkerligen ristad av Fot" i
+  en annan stens artikel gäller U 269). Dessutom räknas att SRI skriver att stenen är gjord av "samme ristare (man,
+  hand)" som en sten som Rundata ger åt samma ristare, och att litteraturens attribuering anger samma ristare.
+* **Släktlänk.** Den andra stenens signum står i SRI:s artikel om stenen, eller inom 300 tecken från stenens signum på en
+  tidskriftssida.
+* **Flyttad sten** (Runor 2020:s ursprungliga plats). SRI:s fyndhistorik (A1 tillägg 1) säger att stenen var flyttad när
+  bandet skrevs.
+
+Utfallet visas som märket *Redan känt?* med tre lägen: **nämns** (påståendet står i minst en källa), **diskuteras**
+(stenen tas upp i SRI, tidskrifterna eller registret, men inte påståendet) och **inte diskuterad**. Vid *nämns* sänks
+nyheten till högst 0,3 (samma tak som när Runor 2020 nämner förslaget), uppskattningen räknas om och ett fynd som var
+"nytt" med bedömningen "Sannolikt ny …" eller "Möjlig ny …" får bedömningen "Nämns redan i litteraturen – läs där innan
+fyndet kallas nytt". Det räknas då inte längre som sannolikt ny kunskap. Bekräftelser och fynd som redan "finns i nyare
+källa" ändras inte. Fyndet visar verket, året, den tryckta sidan och ett kort utdrag (citaträtten), SRI-artikelns sidor
+och de nyaste tidskriftsartiklarna om stenen. Seriationen, skrivmiljöerna och luckorna i texten har inget bestämt
+påstående att söka efter och får bara *diskuteras* eller *inte diskuterad*.
+
+*Utfallet 2026-11-19:* av 809 fynd har 302 läget *nämns* (de flesta är Runor 2020:s flyttade stenar, där SRI säger detsamma
+– 103), 483 *diskuteras* och 24 *inte diskuterad*. Två fynd byter bedömning: U 411 (ortografin föreslår Fot; Floderus 1945
+i Fornvännen, s. 128: "Denna sten är sannolikt ristad av Fot") och M 5 (Åsmund; Källström 2007). Antalet sannolikt nya
+fynd går därmed från 117 till 116. Av de 116 diskuteras stenen i minst en tidskriftsartikel för 46 och i en SRI-artikel för
+91; för 14 nämner ingen av källorna stenen.
+
+*Hur mycket regeln missar.* Prövad på Rundatas egna ristare (som om de vore förslag) hittar regeln ristaren i källorna för
+159 av 237 signerade runstenar (67 %) och 136 av 524 attribuerade (26 %). För de signerade, där namnet står i själva
+inskriften, missas en tredjedel – oftast för att utgåvan stavar namnet annorlunda än Rundata, eller för att SRI-artikeln
+bara säger "samme ristare som" om en sten utan ristare i Rundata. De attribuerade bygger mest på Axelson (1993), som inte
+finns bland källorna. Regeln är alltså försiktig åt ett håll: en vändning räcker, också när texten avvisar attribueringen,
+men den hittar bara det som står i de verk appen har. *Diskuteras* är därför en uppmaning att läsa sidorna, och *inte
+diskuterad* betyder inte att ingen forskning finns.
+
+SRI-artiklarna delas ibland fel (nästa artikels rubrik missas, så att den följer med). `scripts/build_sri_mentions.py`
+skär därför artikeln vid den första bildtexten eller rubriken för någon av de tre följande stenarna i samma serie; det
+gällde 425 av 2 494 artiklar.
 
 **Mönster i korpusen** (avsnitt 1) visas överst i fliken: "bekräftar" när de stämmer med vad forskningen redan
 utgår från, "mönster att pröva" när appen inte kan knyta dem till tid, geografi eller något den känner till ur
@@ -2868,6 +2932,38 @@ gränsen där sju av tio namngivna stenar delar ristare med sin mest lika sten (
 väljs på de namngivna ristarna, inte på Runor 2020. Kategorin är en hypotes att pröva med ornamentik, runformer och
 huggteknik, inte en tillskrivning. Förslagen bland kända ristare får inte längre nivån *starkt* utan ett oberoende
 belägg (avsnitt 14d), och texterna säger att ortografins signifikanstest jämför med andra ristare, inte med grannstenar.
+
+### 14j. Rundata och SRI säger olika (2026-11-19)
+
+Källkod: `src/sri_rundata.py`, `GET /api/research/sri-rundata`. SRI:s fyndhistorik (`src/sri_fyndhistorik.py`, A1 tillägg
+1, noterna 1–9) ställs mot Rundata och appens flyttregel (`src/r_bridge.is_moved`) för de 1 733 svenska vikingatida
+runstenar som har en granskad fyndhistorik. Bara de fältgrupper som klarade granskningen används: läget när bandet skrevs
+och försvunnen/återfunnen (flyttningarnas detaljer höll inte, not 7). Fyra slags oenighet:
+
+| Slag | Villkor | Antal |
+|---|---|---|
+| SRI flyttad, Rundata på plats | SRI:s läge "flyttad", flyttregeln säger på plats | 289 |
+| SRI på plats, Rundata flyttad | SRI:s läge "ursprunglig plats", flyttregeln säger flyttad | 9 |
+| SRI försvunnen, Rundata finns | försvunnen när bandet skrevs, ingen återfinning i SRI, inte försvunnen i Rundata | 45 |
+| SRI finns, Rundata försvunnen | inte försvunnen enligt SRI (läget inte "försvunnen"), försvunnen i Rundata | 63 |
+
+Varje rad visar SRI:s band, år, sida och korta citat, Rundatas plats och placering, flyttregelns utfall och Runor 2020:s
+uppgift om ursprunglig plats där den finns. Banden skrevs 1900–1981 och Rundata är från 2018, så en del av oenigheten är
+händelser efter bandet. Listan är ett förslag att granska och inget prov: `is_moved` ändras inte (A1 tillägg 1, "Vad som
+inte får göras"), och inga av talen används i någon beräkning. De första två raderna motsvarar `scripts/sri_kvalitet.py`
+(kappa 0,40 mellan SRI:s läge och `is_moved`); de två sista skiljer sig från den skriptets korstabell genom att en
+återfinning som SRI själv nämner inte räknas som oenighet.
+
+### 14k. Öppna frågor i forskningen (internt, bara i den lokala appen) (2026-11-19)
+
+Källkod: `src/fragelista.py`, `GET /api/research/questions`, `scripts/build_fragelista_sidor.py`. Kortet visar
+frågelistan ur litteraturgenomgången (301 frågor) med relevansklass (avgörande 22, betydande 65, användbar 193, begränsad
+21), påståendena som frågan bygger på med författare, år, tidskrift, sida och det korta citatet, och den kopplade studiens
+läge ur tabellen i `PUBLICERINGSPLAN.md` (körd 3, låst plan 15, planerad 62, reservlista 221), med analysplanerna och, som
+ordlikhet (minst fem gemensamma innehållsord), publicerade artiklar som kan beröra frågan. Sidan räknas fram genom att
+citatet letas upp i artikelns text: för 4 466 av 4 985 källrader hittades det (oftast med tryckt sida). Frågelistan är
+ett internt styrdokument: kortet finns bara under `web/src/app/(app)`, som den publika byggen tar bort, och svaret
+innehåller inte relevansmotiveringarna eller hur frågan ska prövas.
 
 ## 15. Rapporter
 

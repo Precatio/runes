@@ -9,7 +9,7 @@ import { DocsNote } from "@/components/KnownLimitations";
 import ExportTable from "@/components/ExportTable";
 import SavedQuestions from "@/components/SavedQuestions";
 import { useWrittenFilter } from "@/lib/patternArticles";
-import type { CrossCheck, Finding, Findings, Interpretation, RPattern, Verdict } from "./typer";
+import type { CrossCheck, Finding, Findings, Interpretation, Known, KnownHit, RPattern, Verdict } from "./typer";
 import { Chip, LEVELS, LEVEL_RANK, LanguageCell, LevelBadge, MaterialCell, Score, SortTh, StoneLinks, TH_ROW, VERDICT_STYLE, useSorted } from "./gemensamt";
 import { TONE, toggle } from "@/lib/tone";
 
@@ -34,6 +34,79 @@ function CrossCheckCell({ cc }: { cc?: CrossCheck }) {
   if (!cc) return <span className="text-slate-400" title="Inte avstämd mot nyare källor">–</span>;
   return <span className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold whitespace-nowrap ${CC_STYLE[cc.status] ?? ""}`}
     title={[cc.runor?.text, cc.wikidata?.text].filter(Boolean).join(" ")}>{cc.status}</span>;
+}
+
+// Redan känt? (src/redan_kant.py): is the finding's claim already in print – in SRI's article on the stone, in the journals
+// or in the register's works? "nämns" takes a new finding out of "likely new knowledge"
+const KNOWN_STYLE: Record<Known["status"], string> = {
+  "nämns": TONE.tint,
+  "diskuteras": TONE.neutral,
+  "inte diskuterad": TONE.outline,
+};
+const KNOWN_HELP: Record<Known["status"], string> = {
+  "nämns": "Påståendet (ristaren, sambandet eller flytten) står redan i SRI:s artikel om stenen, i en tidskrift eller i ett verk i litteraturregistret. Läs där innan fyndet kallas nytt.",
+  "diskuteras": "Stenen diskuteras i SRI eller i tidskrifterna, men påståendet står inte där i de vändningar regeln söker efter. Läs sidorna först.",
+  "inte diskuterad": "Ingen av källorna (SRI, Fornvännen, Futhark, Namn och bygd, Current Swedish Archaeology, litteraturregistret) nämner stenen i löptext.",
+};
+
+function KnownChip({ k }: { k?: Known }) {
+  if (!k) return null;
+  return (
+    <Chip label="Redan känt?" title={KNOWN_HELP[k.status]}>
+      <span className={`px-1.5 rounded border text-[11px] font-bold ${KNOWN_STYLE[k.status]}`}>{k.status}</span>
+    </Chip>
+  );
+}
+
+function hitSource(h: KnownHit): string {
+  return [h.author, h.year, h.work].filter(Boolean).join(" ");
+}
+
+function KnownBox({ k }: { k: Known }) {
+  return (
+    <div className="mt-3 pt-3 border-t border-slate-900/5 space-y-1.5">
+      <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Redan känt?</div>
+      <p>
+        <span className={`px-1.5 rounded border text-[11px] font-bold mr-1.5 ${KNOWN_STYLE[k.status]}`}>{k.status}</span>
+        {k.claim ? <>Prövat: <strong>{k.claim}</strong> – {k.status_text}.</> : <>Fyndet har inget bestämt påstående att söka efter; {k.status_text}.</>}
+        {k.changed && <> Fyndet räknas därför inte längre som sannolikt ny kunskap (tidigare: {k.was}).</>}
+      </p>
+      {k.hits.length > 0 && (
+        <ul className="space-y-1">
+          {k.hits.map((h, i) => (
+            <li key={i}>
+              <span className="font-semibold" translate="no">{hitSource(h)}</span>
+              {h.title && <span className="italic" translate="no">, {h.title}</span>}
+              {h.page && <span translate="no">, {h.page}</span>}
+              {h.via && <span className="text-slate-500"> (via <span translate="no">{h.via.toUpperCase()}</span>, som Rundata ger åt samma ristare)</span>}
+              {h.url && <> · <a href={h.url} target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">källan</a></>}
+              {h.text && <div className="text-slate-600 leading-relaxed" translate="no">{h.text}</div>}
+            </li>
+          ))}
+          {k.n_hits > k.hits.length && <li className="text-slate-500">och {k.n_hits - k.hits.length} ställen till</li>}
+        </ul>
+      )}
+      {k.sri && (
+        <p>SRI:s artikel om stenen: <span translate="no">{[k.sri.author, k.sri.year, k.sri.work].filter(Boolean).join(" ")}</span>
+          {k.sri.pages.length > 0 && <span translate="no">, {k.sri.pages.join(", ")}</span>}.</p>
+      )}
+      {k.journals.length > 0 && (
+        <div>
+          <p>{k.n_journals === 1 ? "En tidskriftsartikel nämner stenen i löptext:" : `${k.n_journals} tidskriftsartiklar nämner stenen i löptext (de nyaste):`}</p>
+          <ul className="list-disc pl-4 space-y-0.5">
+            {k.journals.map(a => (
+              <li key={a.key}>
+                <span className="font-semibold" translate="no">{a.author || a.journal} {a.year}</span>, <span className="italic" translate="no">{a.title}</span>{" "}
+                <span className="text-slate-500" translate="no">({a.journal}, {a.pages.filter(Boolean).join(", ")})</span>
+                {a.url && <> · <a href={a.url} target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">fri fulltext</a></>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {k.status === "inte diskuterad" && <p className="text-slate-500">Ingen av källorna nämner stenen. Det gäller bara de verk appen har, inte all forskning.</p>}
+    </div>
+  );
 }
 
 // Corpus-wide patterns from the R analyses: what confirms earlier research, what is worth testing, and the limits
@@ -142,6 +215,7 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
   const [onlyLikely, setOnlyLikely] = useState(false);
   const [onlySignificant, setOnlySignificant] = useState(false);
   const [notInLiterature, setNotInLiterature] = useState(false);
+  const [notInJournals, setNotInJournals] = useState(false);
   const [level, setLevel] = useState("");
   const [open, setOpen] = useState<string | null>(null);
   const methods = Object.keys(data.summary.by_method);
@@ -150,8 +224,9 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
     && (!onlyLikely || f.assessment.startsWith("Sannolikt ny") || f.assessment === "Värd en omprövning")
     && (!onlySignificant || f.significance?.significant === true)
     && (!notInLiterature || !f.literature)
+    && (!notInJournals || !f.known?.n_journals)
     && (!level || f.interpretation?.level === level)),
-  [data.findings, verdict, method, onlyLikely, onlySignificant, notInLiterature, level]);
+  [data.findings, verdict, method, onlyLikely, onlySignificant, notInLiterature, notInJournals, level]);
   const levelCounts = useMemo(() => {
     const c: Record<string, number> = {};
     for (const f of data.findings) if (f.interpretation) c[f.interpretation.level] = (c[f.interpretation.level] ?? 0) + 1;
@@ -178,7 +253,10 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
         Appens analyser ställda mot Rundata (version 3.1, 2018), som här står för den publicerade forskningen: ortografisk
         stilometri (alla inskrifter, stenen själv utesluten ur ristarprofilen), huggteknik i mätkorpusen och – när
         statistiken i R är beräknad – attribueringsmodellen, de okända ristarna och Upplands seriation.
-        Kolumnen <strong>Nyare källor</strong> visar om förslaget redan finns i Runor 2020 (RAÄ) eller Wikidata. <strong>Uppskattningen</strong> väger belägg × nyhet × relevans (0–100) och är en
+        Kolumnen <strong>Nyare källor</strong> visar om förslaget redan finns i Runor 2020 (RAÄ) eller Wikidata.
+        Märket <strong>Redan känt?</strong> visar om fyndets påstående redan står i SRI:s artikel om stenen, i Fornvännen,
+        Futhark, Namn och bygd eller Current Swedish Archaeology, eller i litteraturregistrets verk – då räknas fyndet inte
+        som sannolikt ny kunskap. <strong>Uppskattningen</strong> väger belägg × nyhet × relevans (0–100) och är en
         tumregel för att prioritera – inte en granskning av litteraturen. Klicka på en rad för att se skälen.
       </p>
       {data.r_patterns && data.r_patterns.length > 0 && <PatternsBox patterns={data.r_patterns} />}
@@ -195,6 +273,13 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
           className={`rounded-2xl border p-4 text-left bg-white border-slate-200 ${onlyLikely ? "ring-2 ring-slate-900" : ""}`}>
           <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Sannolikt ny kunskap</div>
           <div className="text-2xl font-bold text-slate-900">{data.summary.likely_new}</div>
+          {data.summary.known && data.summary.known.likely_new_before !== data.summary.likely_new && (
+            <div className="text-[11px] text-slate-500">
+              <Tip text="Fynd vars påstående redan står i SRI:s artikel om stenen, i en tidskrift eller i litteraturregistret räknas inte som sannolikt ny kunskap (METHODS.md 14b, Redan känt?).">
+                {data.summary.known.likely_new_before} före kontrollen mot SRI och tidskrifterna
+              </Tip>
+            </div>
+          )}
           <div className="text-[11px] text-slate-500">klicka för att visa dessa och omprövningar</div>
         </button>
       </div>
@@ -213,6 +298,11 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
           className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${notInLiterature ? "bg-[#b7410e] border-[#b7410e] text-white" : "bg-white border-slate-300 text-[#9a350b] hover:bg-[#b7410e]/5"}`}>
           <Tip text="Döljer fynd på stenar som diskuteras i någon avhandling eller utgåva i litteraturregistret. Det som blir kvar har ingen litteratur att läsa först – i de verk registret har.">
             Inte i litteraturen ({data.findings.filter(f => !f.literature).length})
+          </Tip>
+        </button>
+        <button onClick={() => setNotInJournals(!notInJournals)} aria-pressed={notInJournals} className={toggle(notInJournals)}>
+          <Tip text="Döljer fynd på stenar som någon artikel i Fornvännen, Futhark, Namn och bygd eller Current Swedish Archaeology nämner i löptext. Det som blir kvar har ingen tidskriftsartikel att läsa först.">
+            Inte i tidskrifterna ({data.findings.filter(f => !f.known?.n_journals).length})
           </Tip>
         </button>
         <span className="text-slate-500">{sorted.length} fynd</span>
@@ -339,6 +429,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
           <div className="text-[11px] text-slate-500 mt-0.5">Rundata: {f.existing}</div>
           <div className="flex flex-wrap gap-1.5 mt-1.5">
             {f.crosscheck && <Chip label="Nyare källor"><CrossCheckCell cc={f.crosscheck} /></Chip>}
+            <KnownChip k={f.known} />
             {f.literature && <Chip label="Litteratur" title="Stenen diskuteras i avhandlingar eller utgåvor i litteraturregistret – läs sidorna innan fyndet kallas nytt.">
               <span translate="no">{f.literature.carver ? `ristare: ${f.literature.carver.carver ?? "samme som " + f.literature.carver.same_as.join(", ")}` : ""}
                 {f.literature.carver && f.literature.n_works ? " · " : ""}
@@ -382,6 +473,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
                 {f.crosscheck.wikidata && <p>{f.crosscheck.wikidata.text}</p>}
               </div>
             )}
+            {f.known && <KnownBox k={f.known} />}
             {f.literature && (
               <div className="mt-3 pt-3 border-t border-slate-900/5 space-y-1">
                 <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Litteraturen om stenen</div>

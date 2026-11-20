@@ -2,6 +2,20 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "luckor-sri-mot-rundata",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "title": "Där Rundata och SRI säger olika om stenens plats",
+   "text": "Ett nytt kort i Forskningsluckor listar runstenarna där fyndhistoriken i Sveriges runinskrifter inte stämmer med Rundata: stenar som SRI säger var flyttade men som appen räknar som stående på sin plats, och stenar som är försvunna i den ena källan men bevarade i den andra. Varje rad har SRI:s band, sida och ett kort citat, och Runor 2020 bredvid där den har en uppgift. Listan är ett förslag att granska; appens flyttregel ändras inte av den."
+  },
+  {
+   "id": "luckor-redan-kant",
+   "date": "2026-11-19",
+   "status": "nytt",
+   "title": "Forskningsluckor prövar fynden mot SRI och tidskrifterna",
+   "text": "Varje fynd om en sten i Forskningsluckor prövas nu också mot utgivarnas artikel om stenen i Sveriges runinskrifter och mot Fornvännen, Futhark, Namn och bygd och Current Swedish Archaeology, sida för sida. Märket Redan känt? säger om fyndets påstående – ristaren, släktlänken eller flytten – redan står i tryck, och visar verket, året, den tryckta sidan och ett kort utdrag. Ett fynd vars påstående redan finns räknas inte längre som sannolikt ny kunskap. Tabellen över täckningen har fått en kolumn för hur stor andel av varje landskaps runstenar som tidskrifterna tar upp."
+  },
+  {
    "id": "runa-for-runa-forslag",
    "date": "2026-11-19",
    "status": "nytt",
