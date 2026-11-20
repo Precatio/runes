@@ -108,7 +108,7 @@ def main(argv):
     print(f"{len(keep)} runstenar; {len(rows)} omnämnanden i tidskrifterna, {len(th)} i avhandlingarna → {OUT}")
     if "--prov" in argv:
         n = int(argv[argv.index("--prov") + 1])
-        random.seed(20261120)
+        random.seed(int(argv[argv.index("--seed") + 1]) if "--seed" in argv else 20261120)
         for y, s, c in random.sample(ctx, n):
             print(f"{y} {s} | {c}")
 
