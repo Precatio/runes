@@ -277,7 +277,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["X-Content-Length", "Content-Encoding"],
+    expose_headers=["X-Content-Length", "Content-Encoding", "X-Depth-Field"],
 )
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=ALLOWED_HOSTS)
 

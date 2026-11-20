@@ -10,7 +10,7 @@ export function MeshModel({
   file, onVectorSelected, onPathSelected, onAutoSnapRequest, resetCounter, setDragging, setLoading, clearCounter, snapCounter, newLineCounter,
   topografyMode, planeNormal, topoOffset, topoSensitivity, topoOpacity, cutoffDepth, layerThickness,
   meshRotation, slicerMode = 'flat', preCentered = false,
-  clickMode = 'points', onSingleClick, markers, autoPoints, viewDirRef, faceCounter = 0
+  clickMode = 'points', onSingleClick, markers, autoPoints, viewDirRef, faceCounter = 0, depth, onDepthProbe
 }: ThreeDViewerProps & { 
   faceCounter?: number,
   resetCounter: number, setDragging: (d: boolean) => void, setLoading: (l: boolean) => void, clearCounter: number, snapCounter: number, newLineCounter: number,
@@ -250,6 +250,8 @@ export function MeshModel({
             slicerMode={slicerMode}
             relativeDepthRange={relativeDepthRange}
             meshRotation={meshRotation}
+            depth={depth}
+            onDepthProbe={onDepthProbe}
           />
         </Bounds>
       )}

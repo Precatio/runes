@@ -753,6 +753,7 @@ def _band_state(entry: MeshEntry, normal, up):
         surf = Surface(entry.mesh, normal, up, max_px=2400)
         bands, source = bands_on_surface(surf, entry.info.get("sha256"))
         bi = BandImage(-surf.residual, surf.region, surf.inner, surf.res, bands, source)
+        bi.surf = surf  # the frame (u, v, n, origin) for the depth colouring in the 3D view (/api/3d/depth_field)
         entry.band_image = (key, bi)
         return bi
 
@@ -794,6 +795,53 @@ def band_image(
         "source": layer["source"], "shown_share": r3(layer["shown_share"]), "band_share": r3(layer["band_share"]),
         "in_bands": r3(layer["in_bands"]), "view": _view_json(normal, up, kind), "drawable": _drawable(entry),
     }
+
+
+# Djupfärger i 3D-vyn (METHODS.md 2d4): the same depth below the reference surface as Runor och ornamentik and the groove
+# measurement (closing 20 mm), as a grid the viewer looks up per pixel on the GPU – colour bands, a peel slider and
+# depth contours then move in real time. uint16 in steps of DEPTH_SPAN/65534 from DEPTH_MIN; 0 = no depth (outside the
+# scan or within 10 mm of its edge, where the reference surface is unreliable).
+DEPTH_MIN, DEPTH_SPAN, DEPTH_MAX_PX = -5.0, 20.0, 2048
+
+
+@router.post("/depth_field")
+def depth_field(
+    file: UploadFile = File(None),
+    mesh_id: str = Form(None),
+    normal_x: float = Form(None),
+    normal_y: float = Form(None),
+    normal_z: float = Form(None),
+    up_x: float = Form(None),
+    up_y: float = Form(None),
+    up_z: float = Form(None),
+):
+    """Djupet under referensytan (mm, positivt nedåt) som ett rutnät för 3D-vyns djupfärger. Kroppen är uint16 rad för rad
+    (rad = v-axeln, kolumn = u-axeln); X-Depth-Field (JSON) ger rutnätets läge i modellens koordinater, kodningen, den
+    gemensamma nivån (70:e percentilen, som Runor och ornamentik) och djupets percentiler."""
+    entry = resolve_mesh(file, mesh_id)
+    if entry.info.get("mock"):
+        raise HTTPException(status_code=400, detail=NO_MESH)
+    normal, up, kind = _view_of(entry, normal_x, normal_y, normal_z, up_x, up_y, up_z)
+    try:
+        bi = _band_state(entry, normal, up)
+    except Exception as e:
+        raise server_error(e, "Djupet kunde inte räknas fram.", status_code=500) from e
+    surf = bi.surf
+    d = np.where(bi.use, bi.depth, np.nan)
+    step = max(1, int(np.ceil(max(d.shape) / DEPTH_MAX_PX)))
+    d = d[::step, ::step]
+    ok = np.isfinite(d)
+    q = np.zeros(d.shape, dtype="<u2")
+    q[ok] = 1 + np.round((np.clip(d[ok], DEPTH_MIN, DEPTH_MIN + DEPTH_SPAN) - DEPTH_MIN) / DEPTH_SPAN * 65534).astype(np.uint16)
+    vals = d[ok]
+    pct = {str(k): round(float(np.percentile(vals, k)), 3) for k in (50, 70, 90, 99)} if vals.size else {}
+    meta = {"width": int(q.shape[1]), "height": int(q.shape[0]), "res_mm": float(surf.res * step),
+            "origin": [float(surf.origin[0]), float(surf.origin[1])],
+            "u": [float(x) for x in surf.hf.u], "v": [float(x) for x in surf.hf.v], "n": [float(x) for x in surf.hf.n],
+            "depth_min": DEPTH_MIN, "depth_span": DEPTH_SPAN, "level_mm": round(float(bi.level), 3), "percentiles": pct,
+            "view": _view_json(normal, up, kind)}
+    return Response(content=q.tobytes(), media_type="application/octet-stream",
+                    headers={"X-Depth-Field": json.dumps(meta), "Access-Control-Expose-Headers": "X-Depth-Field"})
 
 
 UPLOAD_SERIES = "uppladdade"  # the depth cache's folder for uploads made drawable

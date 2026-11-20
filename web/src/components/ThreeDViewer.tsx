@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useMemo, Suspense } from "react";
+import type { DepthField, DepthSettings } from "@/lib/depthField";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import * as THREE from "three";
@@ -68,10 +69,13 @@ export interface ThreeDViewerProps {
   preCentered?: boolean;
   // Shown instead of the upload hint when no file is displayed yet
   emptyMessage?: string;
+  // Djupfärger (METHODS.md 2d4): the depth grid and the panel's settings; null/undefined = the ordinary stone
+  depth?: { field: DepthField; settings: DepthSettings } | null;
+  onDepthProbe?: (mm: number | null) => void;
 }
 
 export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, onAutoSnapRequest, cutoffDepth = 0, layerThickness = 100, slicerMode = 'flat', preCentered = false, emptyMessage,
-  clickMode = 'points', onSingleClick, onClearMarkers, markers, autoPoints, viewDirRef }: ThreeDViewerProps) {
+  clickMode = 'points', onSingleClick, onClearMarkers, markers, autoPoints, viewDirRef, depth, onDepthProbe }: ThreeDViewerProps) {
   const [resetCounter, setResetCounter] = useState(0);
   const [clearCounter, setClearCounter] = useState(0);
   const [snapCounter, setSnapCounter] = useState(0);
@@ -381,6 +385,8 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
               autoPoints={autoPoints}
               viewDirRef={viewDirRef}
               faceCounter={faceCounter}
+              depth={depth}
+              onDepthProbe={onDepthProbe}
             />
           )}
           </Suspense>

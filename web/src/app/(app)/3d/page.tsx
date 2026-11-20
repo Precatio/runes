@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useEffectEvent, useRef, Suspense } from "react";
+import { useState, useEffect, useEffectEvent, useRef, useCallback, useMemo, Suspense } from "react";
 import { useLanguage } from "@/components/LanguageContext";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useSettings } from "@/components/SettingsContext";
@@ -23,12 +23,16 @@ import { METRICS, type SliceMetrics } from "@/lib/metrics";
 import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
 import dynamic from 'next/dynamic';
 import { API_URL } from "@/lib/api";
+import { DEFAULT_DEPTH, fetchDepthField, type DepthField, type DepthSettings } from "@/lib/depthField";
+import type { ProbeChannel } from "@/components/threeD/DepthColorPanel";
 
 // The RTI and image tabs are opened on few visits (the mesh tab is the default), so their code loads with the tab
 const tabLoading = () => <div className="w-full py-12 text-center text-slate-500"><span>Laddar</span> …</div>;
 const RTIViewer = dynamic(() => import("@/components/RTIViewer"), { ssr: false, loading: tabLoading });
 // Runor och ornamentik (src/band_image.py): opened from "Bilder ur skanningen", loads with the dialog
 const BandImageDialog = dynamic(() => import("@/components/threeD/BandImageDialog"), { ssr: false });
+// Djupfärger i 3D-vyn (POST /api/3d/depth_field, METHODS.md 2d4)
+const DepthColorPanel = dynamic(() => import("@/components/threeD/DepthColorPanel"), { ssr: false });
 const TwoDAnalysis = dynamic(() => import("@/components/TwoDAnalysis"), { ssr: false, loading: tabLoading });
 
 // Disable SSR for ThreeDViewer since it uses browser APIs (window, DOM)
@@ -154,6 +158,16 @@ function ThreeDPageContent() {
 
   // The scan is uploaded once to the analysis engine and referred to by id
   const sessionRef = useRef<MeshSession | null>(null);
+  // Djupfärger: the depth grid of the current scan, the panel's settings, and the channel for the depth under the pointer
+  const [depthOn, setDepthOn] = useState(false);
+  const [depthField, setDepthField] = useState<DepthField | null>(null);
+  const [depthSettings, setDepthSettings] = useState<DepthSettings>(DEFAULT_DEPTH);
+  const [depthBusy, setDepthBusy] = useState(false);
+  const [depthError, setDepthError] = useState<string | null>(null);
+  const probeChannel: ProbeChannel = useRef<(mm: number | null) => void>(() => {});
+  const onDepthProbe = useCallback((v: number | null) => probeChannel.current(v), [probeChannel]);
+  const depthView = useMemo(() => (depthOn && depthField ? { field: depthField, settings: depthSettings } : null),
+    [depthOn, depthField, depthSettings]);
   const [meshInfo, setMeshInfo] = useState<MeshInfo | null>(null);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -626,6 +640,30 @@ function ThreeDPageContent() {
     }
   };
 
+  // Djupfärger: the depth grid from the fixed view (straight at the carved face), or from the camera's view
+  const loadDepth = async (fromView: boolean) => {
+    const session = sessionRef.current;
+    if (!session) return;
+    setDepthBusy(true);
+    setDepthError(null);
+    try {
+      const v = fromView ? viewDirRef.current : null;
+      const f = await fetchDepthField(session, v ? { toward: [...v.toward], up: [...v.up] } : null);
+      if (sessionRef.current !== session) return;
+      setDepthField(f);
+      setDepthOn(true);
+    } catch (e) {
+      setDepthError(errorText(e, "Djupet kunde inte räknas fram."));
+    } finally {
+      setDepthBusy(false);
+    }
+  };
+  const toggleDepth = () => {
+    if (depthOn) setDepthOn(false);
+    else if (depthField) setDepthOn(true);
+    else loadDepth(false);
+  };
+
   const handleFileUpload = async (selectedFile: File | null) => {
     setFile(selectedFile);
     setViewFile(null);
@@ -639,6 +677,9 @@ function ThreeDPageContent() {
     setClickSlices([]);
     setClickSelections([]);
     setAutoResult(null);
+    setDepthOn(false);
+    setDepthField(null);
+    setDepthError(null);
     sessionRef.current = null;
     if (!selectedFile) return;
 
@@ -984,8 +1025,15 @@ function ThreeDPageContent() {
               autoPoints={measureMode === "auto" ? autoPoints : undefined}
               viewDirRef={viewDirRef}
               onAutoSnapRequest={handleAutoSnapRequest}
+              depth={depthView}
+              onDepthProbe={onDepthProbe}
             />
           </div>
+          {meshInfo && (
+            <DepthColorPanel field={depthField} settings={depthSettings} onChange={setDepthSettings} busy={depthBusy}
+              error={depthError} probeChannel={probeChannel} on={depthOn} onToggle={toggleDepth}
+              onFromView={() => loadDepth(true)} />
+          )}
 
           {measureMode === "auto" && autoResult && autoResult.counts.accepted > 0 && (
             <AutoGrooveReview

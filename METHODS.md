@@ -1547,6 +1547,30 @@ prövstenarna är frysta (`data/runmodell/slingmodell_provstenar.json`, v1 media
 att läsaren kan se när modellens slingor missar text (på Sö 128 överlappar modellens och de ritade slingorna till 60 %,
 mätt som gemensam yta delat med sammanlagd yta).
 
+### 2d4. Djupfärger i 3D-vyn (från 2026-11-20)
+
+`POST /api/3d/depth_field` (`api/routers/threed.py`), `web/src/lib/depthField.ts`,
+`web/src/components/threeD/depthMaterial.ts`, `DepthColorPanel.tsx`.
+
+* **Samma djup som mätningen.** Djupet är detsamma som i Runor och ornamentik (2d3) och huggspårsmätningen: höjden under
+  en referensyta som följer stenens form (stängning med 20 mm), i millimeter längs den ristade sidans normal. Ytan
+  räknas på samma rutnät som 2d3 (högst 2 400 bildpunkter, nedskalat till högst 2 048 för visningen). Inom 10 mm från
+  skanningens kant är referensytan osäker; där färgas ingenting.
+* **Uppslag per bildpunkt.** Rutnätet skickas som 16-bitarstal (steg 0,0003 mm mellan −5 och 15 mm) med sitt läge i
+  modellens koordinater. 3D-vyns material slår upp djupet för varje bildpunkt på grafikkortet, så att färgbanden,
+  avskalningen och djupkurvorna ändras direkt när ett reglage flyttas. Ljuset och strykljuset ligger kvar under
+  färgen. Bara den ristade sidan färgas (ytans normal inom omkring 80° från mätriktningen).
+* **Färgband.** Fasta gränser 0,5, 1, 2 och 3 mm, eller gränser efter stenens eget djup: den gemensamma nivån (70:e
+  percentilen, som i 2d3), 90:e och 99:e percentilen och ett steg mellan dem.
+* **Skala av.** Längs stenytan: det som ligger grundare än en vald gräns under referensytan blir blekt, så att bara de
+  djupare spåren står kvar; ytan följer stenens form, också på en välvd sten. Plant snitt: ett plan vinkelrätt mot
+  mätriktningen skär bort allt ovanför, lager för lager som i ett program för 3D-utskrift; insidan syns mörkgrå. Det
+  plana snittet följer inte stenens form, så på en välvd eller lutande sten försvinner höga partier först oavsett
+  ristning.
+* **Djupkurvor** var 0,25, 0,5 eller 1 mm, och djupet under pekaren i mm.
+* **Vad det inte är.** Visningen är ett hjälpmedel för att se, inte ett mått på vad som är runor: grunda, vittrade
+  runor är inte djupare än vittringsgropar (se 2d2), och färgen skiljer inte på dem.
+
 ### 2e. Robusthet
 
 Källkod: `scripts/groove_robustness.py`, resultat i `utdata/groove_robustness/`. Åtta skanningar ur Kitzler Åhfeldts

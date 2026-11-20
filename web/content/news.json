@@ -2,6 +2,18 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "djupfarger-3d",
+   "date": "2026-11-20",
+   "status": "nytt",
+   "kategori": "verktyg",
+   "title": "Djupfärger och avskalning i 3D-vyn",
+   "text": "I 3D-huggspårsanalysen kan du nu färga stenen efter hur djupt varje punkt ligger under stenytan – i millimeter, med samma djup som huggspårsmätningen – och se det ändras direkt när du drar i reglagen. Skala av lager för lager längs stenytan, så att bara de djupare spåren står kvar, eller skär stenen med ett plant snitt som i ett program för 3D-utskrift. Djupkurvor och djupet under muspekaren gör det lätt att läsa av spårens botten. Färgen är ett hjälpmedel för ögat: vittrade runor kan vara lika grunda som gropar i ytan.",
+   "en": {
+    "title": "Depth colours and peeling in the 3D view",
+    "text": "In the 3D groove analysis you can now colour the stone by how deep each point lies below the stone surface – in millimetres, with the same depth as the groove measurement – and see it change at once as you move the sliders. Peel layer by layer along the stone surface, so that only the deeper grooves remain, or cut the stone with a flat plane as in a 3D-printing program. Depth contours and the depth under the pointer make the bottom of the grooves easy to read. The colour is an aid for the eye: weathered runes can be as shallow as pits in the surface."
+   }
+  },
+  {
    "id": "lasningen-sammanstalld",
    "date": "2026-11-20",
    "status": "nytt",

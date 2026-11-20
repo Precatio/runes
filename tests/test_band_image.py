@@ -126,3 +126,20 @@ def test_an_upload_made_drawable_gets_its_drawn_bands(client, tmp_path, monkeypa
     after = client.post("/api/3d/band_image", data={"mesh_id": mid}).json()
     assert after["view"]["kind"] == "ritbild" and after["source"] == "ritade"
     assert after["drawable"]["status"] == "granskad" and 0.05 < after["band_share"] < 0.6
+
+
+def test_depth_field_endpoint(client):
+    """Djupfärger i 3D-vyn: the depth grid (uint16) and its frame; the groove of the synthetic stone is ~4 mm deep."""
+    import json as _json
+    from src.synthetic import rune_stone
+    N = [0.0, -float(np.sin(np.radians(20))), float(np.cos(np.radians(20)))]
+    stl = rune_stone(opening_angle_deg=70, depth_mm=4, tilt_deg=20).export(file_type="stl")
+    mid = client.post("/api/3d/upload", files={"file": ("stone.stl", stl)}).json()["mesh_id"]
+    r = client.post("/api/3d/depth_field", data={"mesh_id": mid, "normal_x": N[0], "normal_y": N[1], "normal_z": N[2]})
+    assert r.status_code == 200, r.text
+    meta = _json.loads(r.headers["X-Depth-Field"])
+    q = np.frombuffer(r.content, dtype="<u2").reshape(meta["height"], meta["width"])
+    d = np.where(q > 0, meta["depth_min"] + (q.astype(float) - 1) / 65534 * meta["depth_span"], np.nan)
+    assert np.isfinite(d).mean() > 0.3
+    assert 3.0 < np.nanmax(d) < 5.0 and abs(np.nanmedian(d)) < 0.5
+    assert abs(np.dot(meta["n"], N)) > 0.99 and meta["res_mm"] > 0

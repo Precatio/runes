@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useBounds } from "@react-three/drei";
 import * as THREE from "three";
 import { peelingFragmentShader, peelingVertexShader, setUniforms } from "./shaders";
+import { applyDepth, depthTexture, heightRange, makeDepthMaterial } from "./depthMaterial";
+import { bandEdges, depthAt, type DepthField, type DepthSettings } from "@/lib/depthField";
 import type { Vec3, ViewDirection } from "../ThreeDViewer";
 
 export function StoneMesh({ geometry, onClick, resetCounter, topografyMode, planeNormal, offset, sensitivity,
@@ -11,7 +13,9 @@ export function StoneMesh({ geometry, onClick, resetCounter, topografyMode, plan
   layerThickness,
   slicerMode,
   relativeDepthRange,
-  meshRotation
+  meshRotation,
+  depth,
+  onDepthProbe,
 }: { 
   geometry: THREE.BufferGeometry, 
   onClick: (e: import('@react-three/fiber').ThreeEvent<MouseEvent>) => void, 
@@ -25,7 +29,10 @@ export function StoneMesh({ geometry, onClick, resetCounter, topografyMode, plan
   layerThickness: number,
   slicerMode: 'flat' | 'peeling',
   relativeDepthRange: { min: number, max: number },
-  meshRotation: [number, number, number]
+  meshRotation: [number, number, number],
+  // Djupfärger (src/lib/depthField.ts): the depth grid and the panel's settings; null = the ordinary stone
+  depth?: { field: DepthField; settings: DepthSettings } | null,
+  onDepthProbe?: (mm: number | null) => void,
 }) {
   const bounds = useBounds();
   useEffect(() => {
@@ -114,6 +121,38 @@ export function StoneMesh({ geometry, onClick, resetCounter, topografyMode, plan
   }, [customMaterial, planeNormal, offset, sensitivity, topoOpacity, depthRange, cutoffDepth, layerThickness, slicerMode, relativeDepthRange]);
 
   const isSlicing = cutoffDepth > 0;
+
+  // Djupfärger: one material, its uniforms set from the panel – the sliders move nothing but uniforms
+  const [{ material: depthMat, uniforms: du }] = useState(() => makeDepthMaterial());
+  useEffect(() => () => depthMat.dispose(), [depthMat]);
+  const field = depth?.field ?? null;
+  const settings = depth?.settings ?? null;
+  const tex = useMemo(() => (field ? depthTexture(field) : null), [field]);
+  useEffect(() => () => tex?.dispose(), [tex]);
+  const hRange = useMemo(() => (field ? heightRange(geometry, field.n) : [0, 1] as [number, number]), [geometry, field]);
+  useEffect(() => {
+    if (!field || !settings) return;
+    applyDepth(depthMat, du, {
+      tex, field, edges: bandEdges(field, settings.scheme), strength: settings.strength, peel: settings.peel,
+      plan: settings.peelMode === "plan", plane: hRange[1] - settings.plane * (hRange[1] - hRange[0]), contour: settings.contour,
+    });
+  }, [field, settings, tex, hRange, du, depthMat]);
+  const depthMesh = useRef<THREE.Mesh>(null);
+  const probe = (e: import('@react-three/fiber').ThreeEvent<PointerEvent>) => {
+    if (!onDepthProbe || !field || !depthMesh.current) return;
+    const p = depthMesh.current.worldToLocal(e.point.clone());
+    onDepthProbe(depthAt(field, [p.x, p.y, p.z]));
+  };
+
+  if (field && settings) {
+    return (
+      <group>
+        <mesh ref={depthMesh} geometry={geometry} onClick={onClick} onPointerMove={probe} onPointerOut={() => onDepthProbe?.(null)}>
+          <primitive object={depthMat} attach="material" />
+        </mesh>
+      </group>
+    );
+  }
 
   return (
     <group>
