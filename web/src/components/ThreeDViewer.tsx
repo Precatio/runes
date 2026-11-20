@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, Suspense } from "react";
+import React, { useState, useMemo, useEffect, Suspense } from "react";
 import type { DepthField, DepthSettings } from "@/lib/depthField";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
@@ -72,17 +72,17 @@ export interface ThreeDViewerProps {
   // Djupfärger (METHODS.md 2d4): the depth grid and the panel's settings; null/undefined = the ordinary stone
   depth?: { field: DepthField; settings: DepthSettings } | null;
   onDepthProbe?: (mm: number | null) => void;
-  // The toolbar's depth button (replaces the old grey "Topografi" mode when given) and the panel shown inside the view
+  // The toolbar's depth button (replaces the old grey "Topografi" mode when given) and a panel in a column beside the stone
   depthActive?: boolean;
   onDepthToggle?: () => void;
-  overlay?: React.ReactNode;
+  sidePanel?: React.ReactNode;
   // Bumped by the page to save the view as a high-resolution picture (the toolbar's download button does the same)
   snapshotTrigger?: number;
 }
 
 export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, onAutoSnapRequest, cutoffDepth = 0, layerThickness = 100, slicerMode = 'flat', preCentered = false, emptyMessage,
   clickMode = 'points', onSingleClick, onClearMarkers, markers, autoPoints, viewDirRef, depth, onDepthProbe,
-  depthActive = false, onDepthToggle, overlay, snapshotTrigger = 0 }: ThreeDViewerProps) {
+  depthActive = false, onDepthToggle, sidePanel, snapshotTrigger = 0 }: ThreeDViewerProps) {
   const [resetCounter, setResetCounter] = useState(0);
   const [clearCounter, setClearCounter] = useState(0);
   const [snapCounter, setSnapCounter] = useState(0);
@@ -129,6 +129,12 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
     else setTopografyMode(prev => !prev);
   };
   const topoActive = onDepthToggle ? depthActive : topografyMode;
+  // The side column narrows the canvas: fit the stone again once the canvas has its new size
+  const hasSide = !!sidePanel;
+  useEffect(() => {
+    const t = window.setTimeout(() => setResetCounter(c => c + 1), 200);
+    return () => window.clearTimeout(t);
+  }, [hasSide]);
   // the page asks for a picture of the view (Djupfärger's export button)
   const [lastSnap, setLastSnap] = useState(snapshotTrigger);
   if (snapshotTrigger !== lastSnap) {
@@ -138,7 +144,8 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
   }
 
   return (
-    <div className="w-full h-full rounded-[24px] overflow-hidden relative cursor-crosshair">
+    <div className="w-full h-full flex flex-col lg:flex-row gap-2">
+    <div className="relative flex-1 min-h-0 min-w-0 rounded-[24px] overflow-hidden cursor-crosshair">
       {!file && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-50/80 text-slate-400 font-medium rounded-[24px]">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 mb-3 opacity-50">
@@ -337,12 +344,6 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
               {snapMessage}
             </div>
           )}
-          {overlay && (
-            <div className="absolute bottom-3 left-3 z-20 w-[min(620px,calc(100%-24px))] max-h-[60%] overflow-auto rounded-2xl shadow-lg">
-              {overlay}
-            </div>
-          )}
-          {!overlay && (
           <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-end items-end gap-2 pointer-events-none">
             {clickMode === 'view' && file && (
               <button type="button" onClick={() => setFaceCounter(c => c + 1)}
@@ -360,7 +361,6 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
                 : <strong className="text-slate-800">Shift + klick: lägg till mätpunkt (Alt + Shift: ny linje)</strong>}
             </div>
           </div>
-          )}
         </>
       )}
 
@@ -417,6 +417,13 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
           <OrbitControls makeDefault enabled={!dragging} />
         </Canvas>
       </ErrorBoundary>
+    </div>
+      {/* A column beside the stone (below it on narrow screens): always in view, never over the model */}
+      {sidePanel && (
+        <aside className="lg:w-[300px] flex-shrink-0 max-h-[45%] lg:max-h-none overflow-y-auto rounded-[24px]">
+          {sidePanel}
+        </aside>
+      )}
     </div>
   );
 }

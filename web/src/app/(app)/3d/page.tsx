@@ -658,11 +658,9 @@ function ThreeDPageContent() {
       setDepthBusy(false);
     }
   };
-  const [depthPanel, setDepthPanel] = useState(false);
   const toggleDepth = () => {
-    if (depthOn || depthPanel) { setDepthOn(false); setDepthPanel(false); return; }
-    setDepthPanel(true);
-    if (depthField) setDepthOn(true);
+    if (depthOn) setDepthOn(false);
+    else if (depthField) setDepthOn(true);
     else loadDepth(false);
   };
   const [snapshotTrigger, setSnapshotTrigger] = useState(0);
@@ -700,7 +698,6 @@ function ThreeDPageContent() {
     setDepthOn(false);
     setDepthField(null);
     setDepthError(null);
-    setDepthPanel(false);
     sessionRef.current = null;
     if (!selectedFile) return;
 
@@ -1022,7 +1019,7 @@ function ThreeDPageContent() {
         <div className="lg:col-span-2 space-y-8 flex flex-col">
           
           {/* Interactive 3D Viewer */}
-          <div className="liquid-glass-island rounded-[36px] p-2 h-[600px] xl:h-[700px] flex-shrink-0 relative group shadow-sm border border-white/50">
+          <div className="liquid-glass-island rounded-[36px] p-2 h-[900px] lg:h-[600px] xl:h-[700px] flex-shrink-0 relative group shadow-sm border border-white/50">
             <ThreeDViewer 
               file={viewFile ?? (preparingView ? null : file)} 
               preCentered={!!viewFile}
@@ -1048,12 +1045,12 @@ function ThreeDPageContent() {
               onAutoSnapRequest={handleAutoSnapRequest}
               depth={depthView}
               onDepthProbe={onDepthProbe}
-              depthActive={depthOn || depthPanel}
+              depthActive={depthOn}
               onDepthToggle={meshInfo ? toggleDepth : undefined}
               snapshotTrigger={snapshotTrigger}
-              overlay={meshInfo && depthPanel ? (
-                <DepthColorPanel field={depthOn ? depthField : null} settings={depthSettings} onChange={setDepthSettings}
-                  busy={depthBusy} error={depthError} probeChannel={probeChannel} onClose={toggleDepth}
+              sidePanel={meshInfo ? (
+                <DepthColorPanel field={depthField} settings={depthSettings} onChange={setDepthSettings}
+                  busy={depthBusy} error={depthError} probeChannel={probeChannel} on={depthOn} onToggle={toggleDepth}
                   onFromView={() => loadDepth(true)} onSnapshot={() => setSnapshotTrigger(n => n + 1)}
                   onExportMap={exportDepthMap} />
               ) : undefined}

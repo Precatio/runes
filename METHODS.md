@@ -1574,8 +1574,9 @@ mätt som gemensam yta delat med sammanlagd yta).
   uppifrån (norr uppåt, u åt höger) sparas med samma färger, avskalning och djupkurvor över en skuggning av djupet
   självt och ett skalstreck, förstorad till omkring 3 000 bildpunkter; den verkliga upplösningen är rutnätets, ofta
   omkring 1 mm, och ingenting finare hittas på.
-* **Var den finns.** Knappen Djupfärger i 3D-fönstrets verktygsrad (som ersätter det äldre gråskaleläget
-  Topografi); reglagen ligger i fönstret.
+* **Var den finns.** En egen kolumn bredvid stenen i 3D-fönstret (under den på smala skärmar), synlig så snart en
+  skanning är inläst, med en strömbrytare överst; knappen Djupfärger i verktygsraden (som ersätter det äldre
+  gråskaleläget Topografi) gör detsamma.
 * **Vad det inte är.** Visningen är ett hjälpmedel för att se, inte ett mått på vad som är runor: grunda, vittrade
   runor är inte djupare än vittringsgropar (se 2d2), och färgen skiljer inte på dem.
 
