@@ -378,15 +378,71 @@ export default function TextModelPanel({ signum }: { signum: string }) {
               </section>
             )}
             {data.translation && (
-              <section className="space-y-2">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Översättningsutkast</div>
-                <p className="text-sm text-slate-900" translate="no">{data.translation.sv}</p>
-                <p className="text-xs text-slate-500" translate="no">{data.translation.en}</p>
+              <section className="space-y-3">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Läsningen sammanställd</div>
+                {data.translation.words && data.translation.words.length > 0 && (
+                  <>
+                    <div>
+                      <div className="text-[11px] text-slate-500">Runsvenska – modellens läsning</div>
+                      <p className="text-sm italic text-slate-900" translate="no">
+                        {data.translation.words.map((w, i) => (
+                          <span key={i} className={w.filled ? "underline decoration-dotted decoration-[#b7410e] underline-offset-4" : w.unknown ? "text-slate-400" : ""}>
+                            {w.rsv}{i < data.translation!.words!.length - 1 ? " " : ""}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
+                    <div>
+                      <div className="text-[11px] text-slate-500">Fornvästnordiska</div>
+                      <p className="text-sm italic text-slate-900" translate="no">
+                        {data.translation.words.map((w, i) => (
+                          <span key={i} className={w.filled ? "underline decoration-dotted decoration-[#b7410e] underline-offset-4" : w.unknown ? "text-slate-400" : ""}>
+                            {w.ows}{i < data.translation!.words!.length - 1 ? " " : ""}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
+                  </>
+                )}
+                <div>
+                  <div className="text-[11px] text-slate-500">Modern svenska – utkast</div>
+                  <p className="text-sm text-slate-900" translate="no">{data.translation.sv}</p>
+                </div>
+                <div>
+                  <div className="text-[11px] text-slate-500">Engelska – utkast</div>
+                  <p className="text-sm text-slate-700" translate="no">{data.translation.en}</p>
+                </div>
                 <p className="text-[11px] text-slate-500">
-                  Ord för ord ur modellens läsning, via de danska och engelska översättningarna i Danske Runeindskrifter och
-                  Rundata. Ett utkast, inte en tolkning.
+                  Ord med prickad understrykning innehåller runor som modellen har fyllt i. Fornvästnordiskan är den form
+                  Rundata oftast ger varje ord. Svenskan och engelskan är utkast ord för ord ur modellens läsning, via de
+                  danska och engelska översättningarna i Danske Runeindskrifter och Rundata – inte en tolkning.
                 </p>
               </section>
+            )}
+            {data.compare && data.compare.pairs.length > 0 && (
+              <details className="rounded-xl border border-slate-200 bg-white/70 p-3">
+                <summary className="cursor-pointer text-sm font-semibold text-slate-800">
+                  Jämför med Rundatas läsning
+                  <span className="ml-2 font-normal text-slate-500">
+                    samma ord i {data.compare.n_same} av {data.compare.n_pairs}
+                    {data.compare.filled > 0 && <> · ifyllda ord: {data.compare.filled_same} av {data.compare.filled} som Rundata</>}
+                  </span>
+                </summary>
+                <div className="mt-3 flex flex-wrap gap-1.5" translate="no">
+                  {data.compare.pairs.map((p, i) => (
+                    <span key={i} className={`inline-flex flex-col items-center rounded-lg border px-2 py-1 text-xs ${p.same ? "border-emerald-300 bg-emerald-50" : "border-amber-300 bg-amber-50"}`}>
+                      <span className={`text-slate-900 ${p.filled ? "underline decoration-dotted decoration-[#b7410e] underline-offset-4" : ""}`}>{p.model ?? "–"}</span>
+                      <span className="text-slate-500">{p.rundata ?? "–"}</span>
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-2 text-[11px] text-slate-500">
+                  Övre raden är modellens blinda läsning, undre Rundatas normalisering. Grönt är samma ord (också i annan
+                  böjning eller normalisering), gult skiljer sig. Jämförelsen görs efter läsningen: modellen ser aldrig
+                  Rundatas tolkning av stenen medan den läser. Rundatas ifyllningar av förlorade runor är också
+                  utgivarnas bedömningar.
+                </p>
+              </details>
             )}
           </div>
 

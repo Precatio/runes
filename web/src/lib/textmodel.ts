@@ -50,7 +50,16 @@ export interface TextModelReading {
   dating?: { epochs: { epoch: string; label: string; p: number }[]; calibrated: boolean; rundata: string };
   calibrated?: boolean;
   gap_calibrated?: boolean;
-  translation?: { sv: string; en: string };
+  translation?: {
+    sv: string; en: string; draft?: number;
+    // the reading word by word: runic Swedish/Danish as the model reads it, and standard Old West Norse
+    words?: { rsv: string; ows: string; filled: boolean; unknown: boolean }[];
+  };
+  // the blind reading set against Rundata's normalization of the stone, after reading (display only)
+  compare?: {
+    pairs: { model: string | null; rundata: string | null; same: boolean; filled: boolean }[];
+    n_same: number; n_pairs: number; filled_same: number; filled: number;
+  };
   validation: {
     inside_word: number; whole_word: number; sure_right: number; rundata_sure: number;
     with_traces: number; with_misread_traces?: number; dating_epoch: number; dating_near: number;

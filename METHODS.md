@@ -2194,6 +2194,23 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     drygt 1 procent av orden. En grammatikmodell kan därför vinna högst omkring en procentenhet; spår ur skanningarna
     väger tyngre (simulerat: hela ord 56 → 81 procent).
 
+* **Läsningen sammanställd och jämförd med Rundata (2026-11-20, `src/textmodel.py`: `word_forms`, `compare_rundata`):**
+  * **Fyra former.** Panelen visar modellens läsning ord för ord på runsvenska/rundanska (som modellen läser), på
+    fornvästnordiska (den form Rundatas `normalization_ows` oftast ger ordet, `rungloss.ows_map` över alla inskrifter;
+    en form räknas som namn när Rundata skriver den som namn oftare än inte) och som utkast på modern svenska och
+    engelska (ord för ord ur ordlistorna). Ord som rymmer runor modellen fyllt i markeras. Utkastets svenska ordlista
+    utökades med de vanligaste engelska glosorna som saknade svensk motsvarighet (`rungloss.SV_MORE`, utkast 2); den
+    strikta listan i Forskningsluckor använder bara de kontrollerade orden och är oförändrad.
+  * **Jämförelsen med Rundata görs efter läsningen.** Den blinda läsningen ställs mot Rundatas normalisering av
+    stenen ord för ord (difflib på orden i enkla bokstäver). Ett par räknas som samma ord när orden är lika i enkla
+    bokstäver, eller för ord om minst fem bokstäver när `same_word` säger ja (`same_word`:s likhetsmått låter annars
+    korta ord som *þoru* och *þry* passera). Modellen ser aldrig Rundatas tolkning medan den läser; jämförelsen
+    visas bara och räknas inte i något prov.
+  * **Utgivarnas svenska översättning.** Inskriftens sida visar översättningen till modern svenska ur Runor 2020
+    (Riksantikvarieämbetet, Samnordisk runtextdatabas, ODbL) där den finns: 1 439 av Rundatas inskrifter, 754 av
+    2 320 svenska vikingatida runstenar (Södermanland, Gotland, Västergötland, Småland och Öland väl täckta, Uppland
+    59 och Östergötland 13).
+
 * **Alla ord i en lucka (2026-11-20, `src/textmodel_overview.py`, `GET /api/textmodel/candidates/{signum}?gap=&n=&kind=`):**
   * **Vad som visas.** Panelen visar de bästa orden i en lucka; överblicken visar alla kandidater som modellen prövar
     där. Det är samma kandidater som förslagen räknas ur: ord vars stavning passar de bevarade runorna (ordförrådet),

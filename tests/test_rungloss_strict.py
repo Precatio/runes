@@ -22,5 +22,7 @@ def test_strict_keeps_untranslatable_words_and_names():
     words = ["æftiR", "faður", "§osunns", "hiortstaðum"]
     loose = rg.swedish(words, en, reorder=False)
     strict = rg.swedish(words, en, reorder=False, strict=True)
-    assert "people" in loose.lower()          # the default lets the English gloss through (unchanged behaviour)
+    # the default glosses the word through English: a gloss SV knows comes out in Swedish (people → folk, SV_MORE
+    # 2026-11-20), one it does not know stays English (runasteinn)
+    assert "folk" in loose.lower() and "runasteinn" in loose.lower()
     assert strict == "efter fader Osunns hiortstaðum"

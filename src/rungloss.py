@@ -56,6 +56,66 @@ SV = {"stone": "sten", "stones": "stenar", "raised": "reste", "raise": "resa", "
       "sister's": "systers", "bridges": "broar", "lies": "ligger", "buried": "begravd", "church": "kyrka",
       "everlasting": "evig", "mercy": "nåd", "living": "levande", "stood": "stod", "sat": "satt",
       "interpret": "tyda", "secure": "säkra", "rich": "rik", "fine": "fin", "brave": "modig", "generous": "givmild"}
+# More of the English glosses in Swedish (2026-11-20): the commonest lowercase words in Rundata's English translations
+# that SV lacked, so that the panel's Swedish draft does not leave English words (will, has, payment) in the text.
+# Used only by the default (loose) draft: strict mode keeps to the checked SV (Forskningsluckor's list is unchanged).
+SV_MORE = {
+    "to": "till", "monuments": "minnesmärken", "with": "med", "for": "för", "on": "på", "is": "är", "laid": "lade",
+    "will": "ska", "over": "över", "souls": "själar", "at": "vid", "him": "honom", "also": "också", "spirits": "andar",
+    "that": "det", "have": "ha", "end": "ände", "met": "mötte", "cross": "kors", "be": "vara",
+    "landmarks": "minnesmärken", "them": "dem", "retinue": "följe", "than": "än", "one": "en", "as": "som",
+    "better": "bättre", "while": "medan", "most": "mest", "two": "två", "able": "duglig", "called": "kallad",
+    "heir": "arvinge", "you": "du", "rock-slab": "berghäll", "did": "gjorde", "three": "tre", "alive": "levande",
+    "capable": "duglig", "food": "mat", "has": "har", "but": "men", "father's": "faders", "staff": "stav",
+    "which": "som", "came": "kom", "out": "ut", "got": "fick", "great": "stor", "now": "nu", "up": "upp",
+    "are": "är", "ordered": "lät", "married": "gift", "shall": "ska", "save": "frälse", "dead": "död",
+    "not": "inte", "betrayed": "sveks", "when": "när", "right": "rätt", "by": "av", "say": "säga",
+    "perished": "omkom", "free": "fri", "first": "först", "alone": "ensam", "wealth": "rikedom",
+    "arranged": "ordnade", "rightly": "rätt", "can": "kan", "relieve": "lindra", "five": "fem", "four": "fyra",
+    "could": "kunde", "route": "väg", "cargo-ship": "handelsskepp", "strength": "styrka", "before": "före",
+    "long": "länge", "captain": "skeppare", "south": "söderut", "those": "de", "brought": "förde", "or": "eller",
+    "so": "så", "christening": "dop", "robes": "kläder", "more": "mer", "me": "mig", "away": "bort",
+    "excellent": "utmärkt", "unvillainous": "oklandrad", "mother's": "moders", "down": "ned",
+    "brother's": "broders", "life": "liv", "lie": "ligga", "place": "plats", "maid": "mö", "vault": "valv",
+    "been": "varit", "valiantly": "tappert", "battle": "strid", "divided": "delade", "heirs": "arvingar",
+    "ounces": "örtugar", "silver": "silver", "time": "tid", "retainer": "huskarl", "whom": "som", "half": "halv",
+    "your": "din", "sun": "sol", "where": "där", "fled": "flydde", "sanctuary": "helgedom", "eastern": "östra",
+    "property": "egendom", "making": "gjorde", "fought": "stred", "other": "annan", "ever": "alltid",
+    "payment": "gäld", "my": "min", "among": "bland", "seaman": "sjöman", "viking": "viking",
+    "memento": "minne", "use": "bruk", "warlock": "trollkarl", "hallow": "vige", "themselves": "själva",
+    "inherit": "ärva", "after": "efter", "steered": "styrde", "comb": "kam", "people": "folk", "priest": "präst",
+    "wretched": "usel", "sword": "svärd", "name": "namn", "sits": "sitter", "only": "bara", "carve": "rista",
+    "lad": "dräng", "taken": "tagit", "second": "andra", "horse": "häst", "kings": "kungar", "born": "född",
+    "ford": "vad", "bound": "bunden", "another": "en annan", "third": "tredje", "couple": "par", "gentle": "mild",
+    "there": "där", "ship's": "skeppets", "seamen": "sjömän", "children": "barn", "eagle": "örn",
+    "stepson": "styvson", "cleared": "röjde", "betray": "svika", "estates": "gods", "took": "tog",
+    "traveller": "farman", "oxen": "oxar", "know": "veta", "therefore": "därför", "avenged": "hämnades",
+    "heath": "hed", "protect": "skydda", "misfortune": "olycka", "under": "under", "armed": "väpnad",
+    "commemorated": "hågkommen", "competent": "duglig", "cairn": "röse", "competently": "dugligt",
+    "followers": "följe", "commander": "anförare", "attacked": "anföll", "hospice": "härbärge", "said": "sade",
+    "deserve": "förtjäna", "sound": "ljud", "landholders": "jordägare", "powerful": "mäktig", "pray": "be",
+    "lads": "drängar", "kinsmen": "fränder", "belief": "tro", "no": "ingen", "breaks": "bryter", "boy": "pojke",
+    "lives": "lever", "herself": "själv", "foster-son": "fosterson", "broad": "bred", "slaughtered": "slaktade",
+    "paid": "betalade", "its": "dess", "brother-in-law": "svåger", "found": "fann", "giants": "jättar",
+    "fever": "feber", "ox": "oxe", "if": "om", "north": "norrut", "hill": "kulle", "won": "vann",
+    "memorial": "minnesmärke", "against": "mot", "pain": "smärta", "wound": "sår", "love": "kärlek",
+    "set": "satte", "followed": "följde", "greatest": "störst", "deeds": "dåd", "upon": "på", "rule": "råda",
+    "concealed": "dolde", "knew": "visste", "mighty": "mäktig", "dominion": "välde", "village": "by",
+    "evil": "ond", "whetstone": "brynsten", "saint": "helgon", "hold": "hålla", "get": "få", "gods": "gudar",
+    "bore": "bar", "renowned": "berömd", "twelve": "tolv", "nine": "nio", "lost": "förlorade", "shield": "sköld",
+    "twenty": "tjugo", "winters": "vintrar", "full": "full", "line": "rad", "wife's": "hustrus", "giant": "jätte",
+    "troop": "skara", "foot-bridges": "gångbroar", "raises": "reser", "maiden": "mö", "fair": "fager",
+    "guilty": "skyldig", "clearing": "röjning", "foster-father": "fosterfar", "steward": "bryte",
+    "rune-skilled": "runkunnig", "many": "många", "daughters": "döttrar", "western": "västra",
+    "rune-decorated": "runprydd", "townships": "byar", "siblings": "syskon", "wrought": "gjorde", "fall": "falla",
+    "speech": "tal", "heaven": "himmel", "bear": "bära", "stone-bridge": "stenbro", "true": "sann", "each": "var",
+    "far": "långt", "valued": "aktad", "death": "död", "housecarls": "huskarlar", "watch": "vakta",
+    "forfeited": "förverkade", "deceased": "avlidne", "own": "egen", "kinswoman": "frände", "wives": "hustrur",
+    "husbands": "makar", "fathers": "fäder", "mothers": "mödrar", "sisters": "systrar", "farms": "gårdar",
+    "travelled": "färdades", "journeyed": "färdades", "went": "for", "go": "fara", "come": "komma",
+    "make": "göra", "write": "skriva", "wrote": "skrev", "read": "läsa", "stands": "står", "standing": "stående",
+}
+SV_DRAFT = {**SV_MORE, **SV}  # SV wins where both have the word
 # a verb in the infinitive (ræisa, haggva, gæra …) after 'lät' is glossed by the translations' past participle
 INF = {"raised": "resa", "erected": "resa", "cut": "hugga", "made": "göra", "carved": "rista", "placed": "sätta",
        "coloured": "färga", "painted": "måla"}
@@ -254,9 +314,10 @@ class Glossary:
                 w0 = w.lstrip("§")
                 out.append(w0[:1].upper() + w0[1:])
                 continue
+            tab = SV if strict else SV_DRAFT
             if w.startswith("§") or w in self.names:  # a name: as the glossary knows it, or as read
                 e = self.best(w)
-                e = SV.get(e, e) if lang == "sv" else e
+                e = tab.get(e, e) if lang == "sv" else e
                 out.append(e[:1].upper() + e[1:] if e else w)
                 continue
             e = self.best(w)
@@ -267,7 +328,7 @@ class Glossary:
                 if strict and e not in SV and not (e and all(x in SV for x in e.split())):
                     out.append(w)  # no Swedish equivalent: the Old Norse word itself, not the English gloss
                     continue
-                out.append(SV.get(e, " ".join(SV.get(x, x) for x in e.split())))
+                out.append(tab.get(e, " ".join(tab.get(x, x) for x in e.split())))
             else:
                 out.append(e)
         return " ".join(x for x in out if x)

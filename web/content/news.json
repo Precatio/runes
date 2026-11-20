@@ -2,6 +2,18 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "lasningen-sammanstalld",
+   "date": "2026-11-20",
+   "status": "nytt",
+   "kategori": "verktyg",
+   "title": "Läsningen på fyra språk – och jämförd med Rundata",
+   "text": "Panelen Läsning och luckor sammanställer nu sannolikhetsmodellens läsning på runsvenska, fornvästnordiska, modern svenska och engelska, med de ord där modellen fyllt i förlorade runor markerade. Under läsningen kan du jämföra den blinda läsningen med Rundatas normalisering ord för ord: grönt där de säger samma ord, gult där de skiljer sig. Jämförelsen görs efteråt – modellen ser fortfarande aldrig Rundatas tolkning medan den läser. På inskriftens sida visas dessutom utgivarnas svenska översättning ur Riksantikvarieämbetets Runor, där den finns (ungefär en tredjedel av de svenska runstenarna).",
+   "en": {
+    "title": "The reading in four languages – and set against Rundata",
+    "text": "The panel Reading and gaps now puts the probability model's reading together in runic Swedish, Old West Norse, modern Swedish and English, with the words where the model filled lost runes marked. Below the reading you can compare the blind reading with Rundata's normalization word by word: green where they give the same word, yellow where they differ. The comparison is made afterwards – the model still never sees Rundata's interpretation while it reads. The inscription page also shows the editors' Swedish translation from the Swedish National Heritage Board's Runor, where there is one (about a third of the Swedish runestones)."
+   }
+  },
+  {
    "id": "luckor-alla-ord",
    "date": "2026-11-20",
    "status": "nytt",

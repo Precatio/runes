@@ -78,3 +78,16 @@ def test_the_words_of_a_gap_are_calibrated_together_and_names_keep_their_order()
     cd = calibrate_words({"guðlaug": 0.41, "gislaug": 0.29, "karl": 0.09}, 3, GL)
     assert sum(cd.values()) < 1 and cd["guðlaug"] > cd["gislaug"] > 0
     assert calibrate_words({}, 2, GL) == {} and calibrate_words({"x": 0.5}, 2, None) == {"x": 0.5}
+
+
+def test_compare_rundata_aligns_and_is_strict_on_short_words():
+    """The blind reading against Rundata's normalization (display only): aligned word by word, short words only when equal."""
+    from src import textmodel as tm
+    reading = [{"word": w, "unknown": w == "?", "filled": f} for w, f in
+               (("ulfR", False), ("hafiR", False), ("þoru", True), ("giald", False), ("was", False), ("?", False))]
+    c = tm.compare_rundata(reading, '§A "UlfR hafiR þry giald ... vas "Tosti')
+    got = [(p["model"], p["rundata"], p["same"]) for p in c["pairs"]]
+    assert ("ulfR", "ulfR", True) in got and ("giald", "giald", True) in got
+    assert ("þoru", "þry", False) in got        # same_word's ratio would let these pass; short words must be equal
+    assert ("was", "vas", True) in got          # w and v are one letter
+    assert c["filled"] == 1 and c["filled_same"] == 0

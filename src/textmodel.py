@@ -327,7 +327,14 @@ def analyze(signum: str, allowed: dict | None = None, loo: bool = False) -> dict
     if not allowed and os.path.exists(path):
         try:
             # the test figures describe the model, not the stone: always today's (a batch may have saved older ones)
-            return {**json.load(open(path, encoding="utf-8")), "validation": VALIDATION}
+            out = json.load(open(path, encoding="utf-8"))
+            if out.get("translation") is not None and out["translation"].get("draft") != DRAFT and out.get("reading"):
+                # a reading saved with an older draft glossary: the drafts again from the saved words (no new reading)
+                b = bundle_loo(signum) if loo else bundle(fold_of(signum))
+                vocab = ["<unk>" if x.get("unknown") else ("§" + x["word"] if x.get("name") else x["word"]) for x in out["reading"]]
+                out["translation"] = _drafts(vocab, b)
+                _save(path, out)
+            return _with_forms({**out, "validation": VALIDATION})
         except ValueError:
             pass
     groups, breaks = text_groups(r["transliteration"])
@@ -337,13 +344,64 @@ def analyze(signum: str, allowed: dict | None = None, loo: bool = False) -> dict
     with _compute:
         out = _read(r, groups, breaks, b, allowed, base, d)
     if not allowed:
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        # a temporary file of its own: two readings of the same stone at once must not share one
-        with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=os.path.dirname(path), suffix=".tmp",
-                                         delete=False) as fh:
-            json.dump(out, fh, ensure_ascii=False)
-        os.replace(fh.name, path)
+        _save(path, out)
+    return _with_forms(out)
+
+
+DRAFT = 2  # the draft glossary's version: 2 = SV_MORE in rungloss (2026-11-20)
+
+
+def _drafts(vocab: list, b: dict) -> dict:
+    return {"sv": rg.swedish(vocab, b["en"], b["da"], b["ows"]), "en": b["en"].translate(vocab), "draft": DRAFT}
+
+
+def _save(path: str, out: dict) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    # a temporary file of its own: two readings of the same stone at once must not share one
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=os.path.dirname(path), suffix=".tmp",
+                                     delete=False) as fh:
+        json.dump(out, fh, ensure_ascii=False)
+    os.replace(fh.name, path)
+
+
+def _with_forms(out: dict) -> dict:
+    """The reading's runic Swedish and Old West Norse forms beside the drafts, and the comparison with Rundata's reading
+    (computed on showing, also for cached readings saved before 2026-11-20)."""
+    if out.get("translation") is not None and out.get("reading"):
+        out = {**out, "translation": {**out["translation"], "words": word_forms(out["reading"])}}
+        r = _records()["by"].get(out.get("signum"))
+        if r is not None:
+            out["compare"] = compare_rundata(out["reading"], r.get("normalization") or "")
     return out
+
+
+def compare_rundata(reading: list[dict], normalization: str) -> dict:
+    """The blind reading set against Rundata's normalization of the same stone, word by word, AFTER the reading (the
+    model never sees it while reading). Aligned on the words in plain letters (difflib); a pair counts as the same word
+    when equal in plain letters, or for words of five letters or more by rl.same_word (another case form or
+    normalization of it). Display only; nothing is scored on it."""
+    import difflib
+    theirs = [rl.normtok(w.lstrip('"')) for _, sec in rl.sections(normalization) for w in rl.norm_words(sec)]
+    theirs = [w for w in theirs if w and w not in ("...", "…")]
+    mine = [x for x in reading]
+    a = [rl._fold("" if x.get("unknown") else x["word"]) for x in mine]
+    b = [rl._fold(w) for w in theirs]
+    pairs = []
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
+        n = max(i2 - i1, j2 - j1)
+        for k in range(n):
+            x = mine[i1 + k] if i1 + k < i2 else None
+            y = theirs[j1 + k] if j1 + k < j2 else None
+            m = None if x is None else ("…" if x.get("unknown") else x["word"])
+            fa = (rl._fold(x["word"]) if x is not None and not x.get("unknown") else "").replace("w", "v")
+            fb = rl._fold(y or "").replace("w", "v")
+            # short words only when equal: same_word's likeness ratio lets þoru pass for þry
+            same = bool(fa and fb and (fa == fb or (min(len(fa), len(fb)) >= 5 and rl.same_word(x["word"], y))))
+            pairs.append({"model": m, "rundata": y, "same": same, "filled": bool(x and x.get("filled"))})
+    both = [p for p in pairs if p["model"] and p["rundata"]]
+    return {"pairs": pairs, "n_same": sum(p["same"] for p in pairs), "n_pairs": len(both),
+            "filled_same": sum(1 for p in pairs if p["filled"] and p["same"]),
+            "filled": sum(1 for p in pairs if p["filled"])}
 
 
 def _offsets(groups):
@@ -503,10 +561,45 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
                       if (gi, a, e) not in fillable],
         "dating": {"epochs": [{"epoch": e, "label": EPOCH_LABEL[e], "p": round(dating[e], 4)} for e in rl.EPOCHS],
                    "calibrated": bool(d["T"]), "rundata": r.get("dating") or ""},
-        "translation": {"sv": rg.swedish(vocab, b["en"], b["da"], b["ows"]), "en": b["en"].translate(vocab)},
+        "translation": _drafts(vocab, b),
     }
     if alt and len(at_rune) == len(text):
         out["boundaries"] = _boundaries(r, groups, gaps, best, words, read, spans, at_rune, trace_at, b, base, d)
+    return out
+
+
+_forms_lock = threading.Lock()
+_forms: dict | None = None
+
+
+def _forms_maps() -> dict:
+    """Rundata's word forms for showing a reading: normalized word → commonest Old West Norse form (rg.ows_map over all
+    inscriptions), and the names (words Rundata marks with a quotation mark). Display only; nothing is scored on it."""
+    global _forms
+    with _forms_lock:
+        if _forms is None:
+            d = _records()
+            as_name, as_word = Counter(), Counter()  # a form is a name when Rundata writes it as one more often than not
+            for r in d["recs"]:
+                for t in re.findall(r'"?[^\s"„,.:;!?()\[\]…]+', r.get("normalization") or ""):
+                    (as_name if t.startswith('"') else as_word)[rl.normtok(t.lstrip('"'))] += 1
+            _forms = {"ows": rg.ows_map(d["recs"]), "names": {w for w, c in as_name.items() if c > as_word.get(w, 0)}}
+        return _forms
+
+
+def word_forms(reading: list[dict]) -> list[dict]:
+    """The reading word by word in runic Swedish/Danish (as the model reads it) and in standard Old West Norse, names
+    with a capital, '…' for a word not read; the words holding runes the model filled are marked (2026-11-20)."""
+    f = _forms_maps()
+    out = []
+    for x in reading:
+        if x.get("unknown"):
+            out.append({"rsv": "…", "ows": "…", "filled": bool(x.get("filled")), "unknown": True})
+            continue
+        w = x["word"]
+        name = bool(x.get("name")) or w in f["names"]
+        cap = (lambda t: t[:1].upper() + t[1:]) if name else (lambda t: t)  # noqa: E731
+        out.append({"rsv": cap(w), "ows": cap(f["ows"].get(w, w)), "filled": bool(x.get("filled")), "unknown": False})
     return out
 
 
