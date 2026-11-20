@@ -1,4 +1,4 @@
-"""Vitki's fillings in R: only as an opt-in check (with_vitki_fills in R/common.R), never in corpus.csv, and refused by
+"""Vitki's fillings in R: only as an opt-in check (with_vitki_fills in R/vitki_fills.R), never in corpus.csv, and refused by
 the modules that measure what the probability model builds its fillings on (METHODS 8.1)."""
 import csv
 import io
@@ -36,7 +36,7 @@ def test_corpus_has_no_fillings_column():
 
 def test_no_module_calls_with_vitki_fills_by_default():
     for f in os.listdir(os.path.join(ROOT, "R")):
-        if f.endswith(".R") and f != "common.R":
+        if f.endswith(".R") and f not in ("common.R", "vitki_fills.R"):
             assert "with_vitki_fills(" not in open(os.path.join(ROOT, "R", f), encoding="utf-8").read(), f
 
 
@@ -46,7 +46,7 @@ def test_r_adds_confirmed_words_once_and_refuses_forbidden_modules(tmp_path):
     fills.write_text(r_bridge._fills_csv(_store(tmp_path)), encoding="utf-8")
     script = tmp_path / "t.R"
     script.write_text(f'''
-source("{os.path.join(ROOT, "R", "common.R")}")
+source("{os.path.join(ROOT, "R", "vitki_fills.R")}")
 d <- data.frame(signum = c("U 657", "U 1"), normalization = c("... ok Gunnarr", NA), stringsAsFactors = FALSE)
 f <- read_vitki_fills("{fills}")
 stopifnot(nrow(f) == 1)                                   # förslag never counted

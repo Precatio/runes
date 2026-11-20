@@ -265,7 +265,7 @@ FILLS_COLUMNS = ["signum", "status", "gap", "fill", "word", "name", "method", "p
 
 def _fills_csv(path: str | None = None) -> str:
     """Vitki's fillings of lost runes (förslag and bekräftad), one row per filling, for R's read_vitki_fills()
-    (R/common.R): an opt-in robustness check, never part of corpus.csv (METHODS 8.1)."""
+    (R/vitki_fills.R): an opt-in robustness check, never part of corpus.csv (METHODS 8.1)."""
     from src import vitki_fills
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator="\n")
@@ -889,7 +889,7 @@ def _rerun_script(signum: str | None, candidates: list[str]) -> str:
         '               messages = opt("data/messages.csv"), people = opt("data/people.csv"), remains = opt("data/lamningar.csv"),',
         '               cult_names = opt("data/kultnamn.csv"), places = opt("data/platser.csv"),',
         '               churches = opt("data/kyrkor.csv"), pattern_labels = lab$pattern_labels, kind_labels = lab$kind_labels,',
-        '               vitki_fills = opt("data/vitki_ifyllningar.csv"))  # read only by with_vitki_fills() (r/common.R)',
+        '               vitki_fills = opt("data/vitki_ifyllningar.csv"))  # read only by with_vitki_fills() (r/vitki_fills.R)',
         'p <- file.path("om", "params.json"); jsonlite::write_json(params, p, auto_unbox = TRUE, null = "null")',
         f'for (m in c({modules}))',
         '  system2("Rscript", c("--vanilla", file.path("r", paste0(m, ".R")), p, "om"))',
