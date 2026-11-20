@@ -1,0 +1,38 @@
+{
+ "socknar_i_modellen": 94,
+ "kultsocknar_i_modellen": 7,
+ "saker_i_modellen": 2,
+ "hammare_i_modellen": 355,
+ "harad_okant": 4,
+ "hammarposter_okopplade": 106,
+ "landskap": [
+  "Skåne",
+  "Småland",
+  "Södermanland",
+  "Uppland",
+  "Västergötland",
+  "Västmanland",
+  "Öland",
+  "Östergötland"
+ ],
+ "hammare_i_kultsocknar_alla": [
+  {
+   "socken": "Österåkers sn",
+   "landskap": "Uppland",
+   "säker": false,
+   "poster": 2,
+   "ringar": 2,
+   "hängen": 0,
+   "exponering": 4
+  },
+  {
+   "socken": "Frötuna sn",
+   "landskap": "Uppland",
+   "säker": false,
+   "poster": 1,
+   "ringar": 0,
+   "hängen": 1,
+   "exponering": 0
+  }
+ ]
+}

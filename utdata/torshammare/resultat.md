@@ -88,3 +88,28 @@ Stockholm. Utanför Mälardalen finns för få hammare i SHM:s data för att sä
 - En torshammare i en grav visar en sed, inte vad den döde trodde.
 - Exponeringen (kammar och spännen) mäter registrerat vikingatida material, inte fyndförhållandena i övrigt.
   Uppdragsarkeologin runt Stockholm kan påverka båda sidor på sätt som exponeringen inte fångar.
+
+## T2 Kultplatssocknarna (tillägg 1, låst 5b64d88)
+Viktor 2026-11-21: "kultplatser?" Kultplatssocknarna är asatro-studiens blindkodade lista ur SOL (78 socknar, 30 med
+säkert namn). Gravfält och högar kontrollerades, eftersom kultplatssocknarna har fler gravar och ringarna är gravfynd.
+Räknat med `analys_t2.py` och `analys_t2.R`; siffrorna i `t2.csv` och `t2_beskrivning.json`.
+
+**Underlaget räcker inte.** 94 socknar har minst 3 vikingatida kammar eller spännen i SHM. Bara 7 av dem är
+kultplatssocknar, och bara 2 har ett säkert namn. I *alla* kultplatssocknar finns sammanlagt **3 hammarposter**:
+Österåker (U, osäkert namn) 2 ringar och Frötuna (U, osäkert namn) 1 hänge. Frötuna har ingen exponering och kommer
+därför inte med i modellen. Socknar som saknas i ISOF-tabellen (Ekerö 56 poster, städerna) ger 106 okopplade
+hammarposter. Ingen av dem är en kultplatssocken.
+
+| modell | kultsocknar | hammare i dem | kvot | 95 % |
+|---|---|---|---|---|
+| huvud | 7 | 2 | (konvergerar inte) | – |
+| utan Adelsö | 7 | 2 | 0,51 | 0,02–12,7 |
+| bara säkra namn | 2 | 0 | – | – |
+| sekundär: ringar | 7 | 2 | 0,76 | 0,02–27,8 |
+| sekundär: utan gravkontroller | 7 | 2 | 0,48 | 0,03–7,8 |
+
+**Utfall: T2 håller inte, men det betyder inte att det inte finns något samband.** SHM:s fynd och kultplatsnamnen
+överlappar nästan inte. Hammarna ligger i ett fåtal grävda socknar runt Stockholm (Adelsö, Ekerö, Sollentuna, Lovö,
+Botkyrka), och ingen av dem har ett kultplatsnamn. Frågan kan inte besvaras med det här materialet. Den kräver
+fynden från de grävda kultplatserna själva (t.ex. Uppåkra, Lunda i Strängnäs, Gamla Uppsala), som ligger i
+litteraturen och delvis hos andra museer.
