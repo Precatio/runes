@@ -18,9 +18,10 @@ from src import blog_figures, blog_labels  # noqa: E402
 
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 3  # version 1: 2026-11-01, publicerad samma dag; version 2: 2026-11-05 (granskningen); version 3: 2026-11-05
-# (den andra granskningen av det version 2 ändrade)
-TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
+REPORT_VERSION = 4  # version 1: 2026-11-01, publicerad samma dag; version 2: 2026-11-05 (granskningen); version 3: 2026-11-05
+# (den andra granskningen av det version 2 ändrade); version 4: 2026-11-20 (förbehållet vid familjegrupperna)
+TODAY = "2026-11-20"  # rapportversionens datum, fast i byggaren (mallen version 3)
+V3_DATE = "2026-11-05"
 V1_PUBLISHED = "2026-11-01"  # första versionens publiceringsdatum (behålls; asserteras mot webbplatsens export nedan)
 TL_SV = ("analysplanen låstes 2026-10-23; en provkörning av skriptet utan sparade resultat 2026-10-23; avstånden räknades "
          "2026-10-23; tillägget för flyttade stenar låstes 2026-10-31; statistiken kördes och lästes 2026-10-31; tilläggsplanen för "
@@ -267,6 +268,14 @@ FAM = "https://vitkirunor.se/forskningsrapporter/familjegrupper-vid-gravfalten"
 VAG = "https://vitkirunor.se/forskningsrapporter/ristningen-vand-mot-vagen"
 FAM_EN, VAG_EN = (u.replace("vitkirunor.se/", "vitkirunor.se/en/") for u in (FAM, VAG))
 assert FAM_EN == "https://vitkirunor.se/en/forskningsrapporter/familjegrupper-vid-gravfalten"
+# version 4: the family-groups report (version 5, 2026-11-20) tested with stones that stand together as one unit
+# (analysplaner/2026-11-19-sjalvkontroll-tillagg-grupper.md, c1e3d2ab…): weakened overall, holds for verified grave fields
+_GGU = json.load(open(os.path.join(ROOT, "utdata", "sjalvkontroll_grupper", "gravfalt.json"), encoding="utf-8"))
+assert _GGU["G0"]["bedomning"] == "försvagas" and _GGU["tests"]["K1"]["bedomning"] == "står sig" and _GGU["helhet"] == "försvagas"
+FAM_TITLE_SV = "Runstenarna samlas i familjegrupper – grannstenar nämner samma personnamn åtta gånger oftare, och grupperna står oftare än ensamma stenar vid granskade gravfält"
+FAM_TITLE_EN = "Runestones gather in family groups – neighbouring stones name the same personal names eight times as often, and the groups stand by verified grave fields more often than lone stones"
+_famsrc = open(os.path.join(ROOT, "utdata", "blogg", "build", "build_rapport_familjens_plats.py"), encoding="utf-8").read()
+assert f'title = "{FAM_TITLE_SV}"' in _famsrc and f'title_en = "{FAM_TITLE_EN}"' in _famsrc
 
 # The change log (mallen: a new version ends with what, why and when)
 LOG_SV = f"""## Ändringslogg
@@ -282,14 +291,16 @@ LOG_SV = f"""## Ändringslogg
 - **Vattnet och gravfälten.** Version 1 kallade sambanden oberoende, vilket säger mer än modellen visar; texten säger nu att vart och ett finns kvar när det andra hålls lika, och att oddskvoterna gäller en halvering av avståndet plus 250 meter.
 - **Källor och form.** Copernicus-attributionen följer licensens lydelse, kulturmiljöregistrets licens (CC0) anges, den ociterade referensen till projektets metodbeskrivning är struken (de två andra Kvant 2026 har fått bokstäverna a och b), de engelska länkarna går till de engelska sidorna, diagrammet anger att Vitki har gjort det, och Data och kod anger kodläget med en commit och att den låsta korpusens mapp saknas.
 
-**Version {REPORT_VERSION}, {TODAY}.** En andra granskning inför arkiveringen i Zenodo gick igenom det som version 2 ändrade. Analysen, resultatfilerna och kartorna är oförändrade.
+**Version 3, {V3_DATE}.** En andra granskning inför arkiveringen i Zenodo gick igenom det som version 2 ändrade. Analysen, resultatfilerna och kartorna är oförändrade.
 
 - **Källorna.** McLeod (2014) har sidorna {MCP}, inte 1–18. Ekholms (1950) invändning mot gravfälten börjar på s. {EK50['invändningen'][0]}, så sidorna anges nu som {EKO}. Stille (2014) återges nu med det som står på s. {ST14['citat'][0]['sida']}: {ST14['vid_vatten']} av de {ST14['med_bestämbar_plats']} stenar vars plats går att bestämma stod vid vatten; version 2 skrev ”en stor del”. Artikeln och referensen är kontrollerade mot tidskriften.
 - **Provkörningen den 23 oktober** skrev ut förloppet och antalet stenar, slumppunkter och gravfält, men inga provresultat; version 2 sade att den inte skrev ut några siffror. Tidslinjen har fått provkörningen.
 - **Figur 1.** Bildtexten säger att en av stenarna är både försvunnen och flyttad, så att {MO['lost']} och {MO['moved_corrected_rule']} blir {MO['lost_or_moved']}.
 - **Korthetsrutan** säger inte längre att en sten oftast restes där både vattnet och gravfälten fanns, vilket rapporten inte mäter; den säger det modellen visar, att de mest sannolika platserna för en runsten låg nära båda.
 - **Ändringar som version 2 gjorde men inte skrev in i loggen:** sidorna för Ekholm (1950, s. 137–147) och McLeod (2014) angavs, Rundatas licens (ODbL) lades till i diagrammets källrad, och diskussionen lade till att fyndet stämmer med det Ekholm (1950) menade utifrån enskilda stenar i Uppland.
-- **Data och kod** anger commit för kontrollfilen och byggskriptet för version 2 (6eae0af) och nämner filen med de citerade källställena."""
+- **Data och kod** anger commit för kontrollfilen och byggskriptet för version 2 (6eae0af) och nämner filen med de citerade källställena.
+
+**Version {REPORT_VERSION}, {TODAY}.** Ett förbehåll i diskussionen. Rapporten om familjegrupperna (Kvant 2026a) har prövats med stenar som står tillsammans räknade som en enhet: sambandet mellan grupper och gravfält håller i hela materialet men i båda halvorna bara för granskade gravfält. Meningen i 6 som hänvisar till den säger nu det, och referensen har rapportens nya titel. Denna rapports egna analyser, siffror och slutsatser är oförändrade."""
 LOG_EN = f"""## Change log
 
 **Version 1, {V1_PUBLISHED}.** Published {V1_PUBLISHED}. The same morning, before publication, the draft was changed (commit {CODE_COMMIT}, whose message mentions only the maps): the maps got the source line "Map: Vitki, after …", the sentence of aim in the introduction was shortened, and the sentence on the grave fields in the plan's test with other radii for the random points was removed from 5.2 without a reason being recorded. The published version therefore lacked the grave fields' result in that test, and the plan's comparison with the moved stones had never been included; the plan says that both are to be reported.
@@ -303,14 +314,16 @@ LOG_EN = f"""## Change log
 - **Water and grave fields.** Version 1 called the associations independent, which says more than the model shows; the text now says that each remains when the other is held equal, and that the odds ratios are per halving of the distance plus 250 metres.
 - **Sources and form.** The Copernicus attribution follows the wording of the licence, the register's licence (CC0) is given, the uncited reference to the project's method description is removed (the two other Kvant 2026 are now a and b), the English links go to the English pages, the chart says that Vitki made it, and Data and code gives the code state as a commit and says that the locked corpus's folder is missing.
 
-**Version {REPORT_VERSION}, {TODAY}.** A second review before archiving in Zenodo checked what version 2 changed. The analysis, the result files and the maps are unchanged.
+**Version 3, {V3_DATE}.** A second review before archiving in Zenodo checked what version 2 changed. The analysis, the result files and the maps are unchanged.
 
 - **Sources.** McLeod (2014) has pages {MCP}, not 1–18. Ekholm's (1950) objection to the grave fields begins on p. {EK50['invändningen'][0]}, so the pages are now given as {EKO}. Stille (2014) is now given with what p. {ST14['citat'][0]['sida']} says: {ST14['vid_vatten']} of the {ST14['med_bestämbar_plats']} stones whose place can be determined stood by water; version 2 wrote "a large share". The article and the reference have been checked against the journal.
 - **The test run of 23 October** printed its progress and the numbers of stones, random points and grave fields, but no test results; version 2 said that it printed no figures. The timeline now has the test run.
 - **Figure 1.** The caption says that one of the stones is both lost and moved, so that the {MO['lost']} and the {MO['moved_corrected_rule']} make {MO['lost_or_moved']}.
 - **The essentials box** no longer says that a stone was most often raised where both the water and the grave fields were, which the report does not measure; it says what the model shows, that the places most likely to have a runestone lay near both.
 - **Changes that version 2 made but did not log:** the pages of Ekholm (1950, pp. 137–147) and McLeod (2014) were given, the licence of Rundata (ODbL) was added to the chart's source line, and the discussion added that the finding fits what Ekholm (1950) argued from single stones in Uppland.
-- **Data and code** gives the commit of the check file and builder of version 2 (6eae0af) and lists the file with the quoted source passages."""
+- **Data and code** gives the commit of the check file and builder of version 2 (6eae0af) and lists the file with the quoted source passages.
+
+**Version {REPORT_VERSION}, {TODAY}.** A caveat in the discussion. The report on the family groups (Kvant 2026a) has been tested with stones that stand together counted as one unit: the association between groups and grave fields holds in the whole material but in both halves only for verified grave fields. The sentence in 6 that cites it now says so, and the reference has the report's new title. This report's own analyses, figures and conclusions are unchanged."""
 
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY} (första versionen publicerad {V1_PUBLISHED}). Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, placering, strandförskjutning, landhöjning, gravfält, rumslig statistik, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
@@ -411,7 +424,7 @@ Studien är fristående, så korrigeringen gäller inom planen och inte bland de
 
 **Dåtidens och dagens vatten.** Att dåtidens vatten stämmer bara lite bättre än dagens betyder inte att landhöjningen saknar betydelse. I de flesta trakter har stranden flyttat sig mindre än de hundratals meter som skiljer stenarna från punkterna (figur 2), och sjöarna ligger kvar. Modellen för år 1050 behövs främst för att fyndet inte ska vara ett resultat av dagens kust.
 
-**Mot tidigare forskning.** Att två av tre stenar står inom 500 meter från ett gravfält stöder Klos (2009) och stämmer med att stenar i familjegrupper oftare står vid gravfält än ensamma stenar ([Kvant 2026a]({FAM})). Att vattnet finns kvar när gravfälten hålls lika ger samtidigt Larsson (2010) och McLeod (2014) rätt i att gravfälten inte är hela svaret. Fyndet passar med att stenarnas text oftast vändes mot vägen ([Kvant 2026b]({VAG})): stenarna restes där människor färdades, till lands och till sjöss, som Ekholm (1950) menade utifrån enskilda stenar i Uppland. Det är en tolkning; studien visar var stenarna står, inte varför.
+**Mot tidigare forskning.** Att två av tre stenar står inom 500 meter från ett gravfält stöder Klos (2009) och stämmer med att stenar i familjegrupper oftare står vid gravfält än ensamma stenar ([Kvant 2026a]({FAM})); räknas stenar som står tillsammans som en enhet håller det sambandet i båda halvorna av materialet bara för granskade gravfält. Att vattnet finns kvar när gravfälten hålls lika ger samtidigt Larsson (2010) och McLeod (2014) rätt i att gravfälten inte är hela svaret. Fyndet passar med att stenarnas text oftast vändes mot vägen ([Kvant 2026b]({VAG})): stenarna restes där människor färdades, till lands och till sjöss, som Ekholm (1950) menade utifrån enskilda stenar i Uppland. Det är en tolkning; studien visar var stenarna står, inte varför.
 
 **Svagheter, i ordning efter vikt.**
 
@@ -449,7 +462,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Ekholm, G. 1950. Var restes runstenarna? *Fornvännen* 45, s. 137–147.
 - Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. I: M. Stoklund m.fl. (red.), *Runes and their Secrets: Studies in Runology*. Köpenhamn: Museum Tusculanum Press, s. 117–139.
 - Klos, L. 2009. *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion*. Ergänzungsbände zum Reallexikon der Germanischen Altertumskunde 64. Berlin: de Gruyter.
-- Kvant, V. 2026a. Runstenarna samlas i familjegrupper vid gravfälten. Forskningsrapport. {FAM}
+- Kvant, V. 2026a. {FAM_TITLE_SV}. Forskningsrapport. {FAM}
 - Kvant, V. 2026b. Runstenarna vände texten mot vägen. Forskningsrapport. {VAG}
 - Larsson, M. G. 1990. *Runstenar och utlandsfärder. Aspekter på det senvikingatida samhället med utgångspunkt i de fasta fornlämningarna*. Acta Archaeologica Lundensia, Series in 8°, 18. Stockholm: Almqvist & Wiksell International.
 - Larsson, M. G. 2010. Recension av L. Klos, *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion* (2009). *Futhark. International Journal of Runic Studies* 1, s. 249–253.
@@ -572,7 +585,7 @@ The study stands alone, so the correction applies within the plan and not among 
 
 **The water of the time and today's.** That the water of the time fits only slightly better than today's does not mean that the land uplift is unimportant. In most districts the shore has moved less than the hundreds of metres that separate the stones from the points (figure 2), and the lakes remain. The model for AD 1050 is needed above all so that the finding is not an artefact of today's coast.
 
-**Against earlier research.** That two in three stones stand within 500 metres of a grave field supports Klos (2009) and agrees with stones in family groups standing at grave fields more often than single stones ([Kvant 2026a]({FAM_EN})). That the water remains when the grave fields are held equal at the same time bears out Larsson's (2010) and McLeod's (2014) point that the grave fields are not the whole answer. The finding fits with the stones' text being turned mostly towards the road ([Kvant 2026b]({VAG_EN})): the stones were raised where people travelled, by land and by water, as Ekholm (1950) argued from single stones in Uppland. That is an interpretation; the study shows where the stones stand, not why.
+**Against earlier research.** That two in three stones stand within 500 metres of a grave field supports Klos (2009) and agrees with stones in family groups standing at grave fields more often than single stones ([Kvant 2026a]({FAM_EN})); with stones that stand together counted as one unit, that association holds in both halves of the material only for verified grave fields. That the water remains when the grave fields are held equal at the same time bears out Larsson's (2010) and McLeod's (2014) point that the grave fields are not the whole answer. The finding fits with the stones' text being turned mostly towards the road ([Kvant 2026b]({VAG_EN})): the stones were raised where people travelled, by land and by water, as Ekholm (1950) argued from single stones in Uppland. That is an interpretation; the study shows where the stones stand, not why.
 
 **Weaknesses, in order of importance.**
 
@@ -610,7 +623,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - Ekholm, G. 1950. Var restes runstenarna? *Fornvännen* 45, pp. 137–147.
 - Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. In: M. Stoklund et al. (eds), *Runes and their Secrets: Studies in Runology*. Copenhagen: Museum Tusculanum Press, pp. 117–139.
 - Klos, L. 2009. *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion*. Ergänzungsbände zum Reallexikon der Germanischen Altertumskunde 64. Berlin: de Gruyter.
-- Kvant, V. 2026a. Runestones gather in family groups by the grave fields. Research report. {FAM_EN}
+- Kvant, V. 2026a. {FAM_TITLE_EN}. Research report. {FAM_EN}
 - Kvant, V. 2026b. The runestones turned their text towards the road. Research report. {VAG_EN}
 - Larsson, M. G. 1990. *Runstenar och utlandsfärder. Aspekter på det senvikingatida samhället med utgångspunkt i de fasta fornlämningarna*. Acta Archaeologica Lundensia, Series in 8°, 18. Stockholm: Almqvist & Wiksell International.
 - Larsson, M. G. 2010. Review of L. Klos, *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion* (2009). *Futhark: International Journal of Runic Studies* 1, pp. 249–253.
@@ -643,8 +656,8 @@ for b in (body, body_en):
     assert not re.findall(JARGON, head), re.findall(JARGON, head)
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 3, 2026-11-05 (första versionen publicerad 2026-11-01). Tidslinje: ")
-assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 3, 2026-11-05 (first version published 2026-11-01). Timeline: ")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 4, 2026-11-20 (första versionen publicerad 2026-11-01). Tidslinje: ")
+assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 4, 2026-11-20 (first version published 2026-11-01). Timeline: ")
 # Rapportversion 2: header phrases the site parses (web/src/lib/report.ts) and the corrections of the review
 assert "Den engelska versionen är den kanoniska för citering: " in body and "This English version is the canonical one for citation: " in body_en
 assert re.search(r"(?:Tidslinje|Timeline):\s*(.+?)\.\s+(?:Analysen är gjord|The analysis was made)", body) and "avstånden räknades 2026-10-23" in body
