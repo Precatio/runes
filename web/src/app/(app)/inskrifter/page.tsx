@@ -5,6 +5,8 @@ import Link from "next/link";
 import { SOURCES, download, fileName, toCSV, toXLSX } from "@/lib/exportTable";
 import { GeologyBox, LanguageTraits, LiteratureBox } from "@/components/StoneContext";
 import TextModelPanel from "@/components/TextModelPanel";
+import VitkiFills from "@/components/VitkiFills";
+import { textmodel, type VitkiFill } from "@/lib/textmodel";
 import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -22,6 +24,8 @@ import {
 const PROVINCES = ["U", "Sö", "Ög", "Vg", "Sm", "Öl", "G", "Vs", "Nä", "Gs", "Hs", "M", "Ån", "J", "D", "Bo", "DR", "N"];
 const STYLES = ["RAK", "Fp", "KB", "Pr1", "Pr2", "Pr3", "Pr4", "Pr5"];
 const PAGE = 30;
+
+const VITKI_FILLS = "Kolumnen Vitkis ifyllningar: Vitkis eget lager ovanpå Rundata (data/vitki_ifyllningar.json), CC BY 4.0; Rundatas text är oförändrad.";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   if (!children) return null;
@@ -108,6 +112,9 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
   const [ranking, setRanking] = useState<CarverRanking | null>(null);
   const [similar, setSimilar] = useState<SimilarInscription[] | null>(null);
   const [orthoNote, setOrthoNote] = useState<string | null>(null);
+  // Vitki's own fillings of the stone's lost runes: a layer on top of Rundata's text, which is shown unchanged
+  const [fills, setFills] = useState<VitkiFill[]>([]);
+  const loadFills = (sig: string) => textmodel.fills(sig).then(x => setFills(x.fills)).catch(() => setFills([]));
 
   useEffect(() => {
     let cancelled = false;
@@ -116,6 +123,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
         const r = await rundata.inscription(signum);
         if (cancelled) return;
         setRec(r);
+        loadFills(r.signum);
         try {
           const [p, rk, sim] = await Promise.all([
             rundata.orthographyProfile(r.signum),
@@ -207,6 +215,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
 
         <div className="space-y-4">
           <Field label="Translitterering"><span className="font-mono" translate="no">{rec.transliteration}</span></Field>
+          {fills.length > 0 && <VitkiFills fills={fills} onChange={() => loadFills(rec.signum)} />}
           <Field label="Normalisering (runsvenska/rundanska/fornvästnordiska)"><em translate="no">{rec.normalization}</em></Field>
           <Field label="Fornvästnordisk normalisering"><em translate="no">{rec.normalization_ows}</em></Field>
           <Field label="Översättning (engelska)"><span translate="no">{rec.translation_en}</span></Field>
@@ -429,16 +438,25 @@ function InscriptionsContent() {
         if (off + 500 >= r.total || !r.results.length) break;
       }
       const dec = (v: number | null) => (v == null ? "" : String(v).replace(".", ","));
+      // Vitki's fillings (förslag and bekräftad) in a column of their own, with status and provenance; Rundata's text
+      // columns are unchanged
+      const vf = await textmodel.fills().catch(() => ({ fills: [] as VitkiFill[] }));
+      const provenance = new Map<string, string>();
+      for (const x of vf.fills) {
+        const cell = `${x.status}: ${x.gap.carved.slice(0, x.gap.start)}[${x.fill}]${x.gap.carved.slice(x.gap.end)} = ${x.word ?? "?"} (${x.label}${x.model_version ? `, ${x.model_version}` : ""})`;
+        provenance.set(x.signum, provenance.has(x.signum) ? `${provenance.get(x.signum)}; ${cell}` : cell);
+      }
       const rows = [
         ["Signum", "Plats", "Socken", "Härad", "Kommun", "Placering", "Latitud", "Longitud", "Datering", "Period", "Stilgrupp",
-         "Ristare", "Material", "Föremål", "Korsform", "Runtyper", "Translitterering", "Normalisering", "Översättning (engelska)", "Referenser"],
+         "Ristare", "Material", "Föremål", "Korsform", "Runtyper", "Translitterering", "Normalisering", "Översättning (engelska)", "Referenser",
+         "Vitkis ifyllningar (status och proveniens)"],
         ...all.map(r => [r.signum, r.place, r.parish, r.district, r.municipality, r.placement, dec(r.lat), dec(r.lon), r.dating,
                          r.period ?? "", r.style ?? "", r.carver_raw, r.material, r.object, r.cross_form, r.rune_types,
-                         r.transliteration, r.normalization, r.translation_en, r.references]),
+                         r.transliteration, r.normalization, r.translation_en, r.references, provenance.get(r.signum) ?? ""]),
       ];
       const date = new Date().toISOString().slice(0, 10);
       const title = `Inskrifter (${all.length} st.)`;
-      const meta = { title, sources: [SOURCES.RUNDATA], url: window.location.href, date };
+      const meta = { title, sources: provenance.size ? [SOURCES.RUNDATA, VITKI_FILLS] : [SOURCES.RUNDATA], url: window.location.href, date };
       download(kind === "csv" ? toCSV(rows, meta) : toXLSX(rows, meta), `${fileName("inskrifter", date)}.${kind}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Exporten misslyckades.");

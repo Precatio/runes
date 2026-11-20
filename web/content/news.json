@@ -2,6 +2,30 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "luckor-alla-ord",
+   "date": "2026-11-20",
+   "status": "nytt",
+   "kategori": "metod",
+   "title": "Alla ord som passar en lucka",
+   "text": "Klicka på en lucka i läsningen, på inskriftens sida eller i stenanalysen, så visar sannolikhetsmodellen alla ord den prövar där – inte bara de fem bästa. Varje ord har sin sannolikhet i sammanhanget, hur ofta det står på andra runstenar med några exempel, vilka bevarade runor runt luckan det stämmer med och varifrån kandidaten kom: ordförrådet, sammansatta namn, namn på närliggande stenar eller runa för runa. När Rundata är osäkert på hur många runor som fattas kan du välja ett annat antal och se den nya listan. Sannolikheterna är kalibrerade på samma sätt som appens förslag och prövade på kända texter.",
+   "en": {
+    "title": "Every word that fits a gap",
+    "text": "Click a gap in the reading, on the inscription page or in the stone analysis, and the probability model shows every word it tries there – not only the best five. Each word has its probability in the context, how often it stands on other runestones with a few examples, which preserved runes around the gap it fits and where the candidate came from: the vocabulary, composed names, names on nearby stones or rune by rune. When Rundata is unsure how many runes are lost, you can choose another number and see the new list. The probabilities are calibrated in the same way as the app's suggestions and tested on known texts."
+   }
+  },
+  {
+   "id": "vitkis-ifyllningar",
+   "date": "2026-11-20",
+   "status": "nytt",
+   "kategori": "metod",
+   "title": "Vitkis ifyllningar sparas i ett eget lager",
+   "text": "När en lucka har fyllts i och granskats sparas ifyllningen i Vitkis eget lager ovanpå Rundata, som aldrig ändras: luckans läge, runorna och ordet, metoden, modellversionen och sannolikheten, beläggen (SRI, skanning, Runor 2020) och status – förslag, bekräftad eller avvisad – med vem som bedömde, när och varför. På inskriftens sida visas bekräftade ifyllningar med heldragen ram och förslag med streckad. Exporten av inskrifterna har en egen kolumn för dem. Analyserna räknar med Rundata ensamt om inget annat väljs, och sannolikhetsmodellen tränas och prövas aldrig på Vitkis egna ifyllningar.",
+   "en": {
+    "title": "Vitki's fillings are kept in a layer of their own",
+    "text": "When a gap has been filled and reviewed, the filling is saved in Vitki's own layer on top of Rundata, which is never changed: where the gap is, the runes and the word, the method, the model version and the probability, the evidence (SRI, scan, Runor 2020) and a status – proposal, confirmed or rejected – with who judged it, when and why. On the inscription page confirmed fillings have a solid frame and proposals a dashed one. The export of the inscriptions has a column of its own for them. The analyses count with Rundata alone unless something else is chosen, and the probability model is never trained or tested on Vitki's own fillings."
+   }
+  },
+  {
    "id": "luckor-sri-mot-rundata",
    "date": "2026-11-19",
    "status": "nytt",

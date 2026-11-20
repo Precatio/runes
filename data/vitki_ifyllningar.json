@@ -1,0 +1,5 @@
+{
+ "_om": "Vitkis ifyllningar av förlorade runor (src/vitki_fills.py), ett eget lager ovanpå Rundata som aldrig ändras. Sannolikhetsmodellen tränas och prövas aldrig på dem.",
+ "licens": "CC BY 4.0",
+ "fills": []
+}

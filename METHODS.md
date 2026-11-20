@@ -2194,6 +2194,59 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     drygt 1 procent av orden. En grammatikmodell kan därför vinna högst omkring en procentenhet; spår ur skanningarna
     väger tyngre (simulerat: hela ord 56 → 81 procent).
 
+* **Alla ord i en lucka (2026-11-20, `src/textmodel_overview.py`, `GET /api/textmodel/candidates/{signum}?gap=&n=&kind=`):**
+  * **Vad som visas.** Panelen visar de bästa orden i en lucka; överblicken visar alla kandidater som modellen prövar
+    där. Det är samma kandidater som förslagen räknas ur: ord vars stavning passar de bevarade runorna (ordförrådet),
+    namn som sätts ihop av namnled, namn som de är huggna på stenar inom 10 km, och för luckor om en eller två runor
+    varje kombination av runor (för längre luckor 15 förslag runa för runa ur vokal–konsonantmodellen). Varje kandidat
+    redovisas med ordet den ger, de bevarade runorna i ordet före och efter luckan, varifrån den kom, och om ordet är ett
+    namn. `restore` tar emot två valfria ordböcker (`origins`, `word_runes`) som fylls med detta; de ändrar inte vad som
+    prövas eller hur det poängsätts (prövat i `tests/test_textmodel_overview.py`).
+  * **Samma modell och kalibrering som förslagen.** Luckan fylls av stenens del-modell med appens inställning
+    (`textmodel.MODEL`, `textmodel.FILL`), stenens egen andel skiljetecken och namnen på närliggande stenar, med de
+    andra luckorna fyllda med läsningens val. Orden kalibreras tillsammans som i appen (`calibrate_words`): de sex
+    troligaste orden får en kalibrerad sannolikhet, och övriga ord och möjligheten att inget av de prövade orden är
+    rätt delar på resten, som redovisas. För övriga ord visas modellens egen andel bland kandidaterna, okalibrerad. På
+    Sö 206 ger överblicken exakt samma kalibrerade procent för de sex första orden som panelen (*hrungnir* 29,8 %,
+    *roðnir* 17,5 % …; *guðlaug* 10,0 %, *gislaug* 7,9 % …). När inget ord når 45 % märks förslaget som osäkert: i
+    blindtestet bar fyra av fem felaktiga förslag den varningen.
+  * **Belägg i korpusen.** Ordet räknas i alla sina former (modellens lemma) i Rundatas normaliseringar av de
+    vikingatida inskrifterna: antal förekomster och antal runstenar, med upp till sex exempel, stenar i samma landskap
+    först. Stenen själv räknas inte, och andra föremål än runstenar redovisas för sig.
+  * **Osäker längd.** Användaren kan välja 1–6 förlorade runor i stället för Rundatas antal, när utgåvan är osäker. Då
+    prövas luckan med det antalet. Modellen är prövad på luckor om 1–4 runor; för 5–6 sägs det att sannolikheterna inte
+    är prövade och ska läsas som en rangordning. En lucka med bevarade runor inne i sig behåller sitt antal. De längre
+    luckor som läsningen lämnar öppna kan också prövas så.
+  * **Kostnad.** Ett anrop fyller en lucka en gång (100 ordkandidater, 40 namn och förslagen runa för runa), omkring
+    5–7 sekunder när del-modellen redan finns i minnet och 25–30 sekunder om den först måste byggas. Svaret sparas per
+    sten, lucka och antal runor i `data/cache/textmodel/textmodel-19-overview/`. Listan begränsas till 200 kandidater,
+    och svaret säger hur många som prövades.
+
+* **Vitkis ifyllningar (2026-11-20, `src/vitki_fills.py`, `data/vitki_ifyllningar.json`, `/api/textmodel/fills`):**
+  * **Ett eget lager.** Rundata ändras aldrig. En ifyllning som Vitki har granskat sparas i en egen fil (CC BY 4.0, i
+    git) med signum, luckans läge (grupp, början och slut i den huggna gruppen), de bevarade runorna och antalet
+    förlorade runor, ifyllningen och ordet, metoden (sannolikhetsmodellen, spår ur skanningen eller utgivarens läsning),
+    modellversion och kalibrerad sannolikhet, belägg (SRI-sida, skanning, Runor 2020, annat) och status: *förslag*,
+    *bekräftad* eller *avvisad*. Varje statusbyte sparas i en historik med vem, datum och en kommentar som krävs.
+  * **Vem som får spara.** Bara appens administratör, från överblicken över en lucka. Ordet, sannolikheten och
+    modellversionen hämtas på servern ur överblicken, inte ur anropet. Ifyllningen måste ha lika många runor som luckan
+    och behålla de bevarade runorna inne i den. En lucka kan ha högst en bekräftad ifyllning; en annan kan bekräftas
+    först när den första är avvisad. Avvisade ifyllningar visas inte men finns kvar i filen.
+  * **Märkning.** På inskriftens sida och i läsningen visas bekräftade ifyllningar med heldragen ram i egen färg och
+    förslag med streckad ram, med texten "ifyllt av Vitki (metod), 92 %, bekräftat 2026-11-20", beläggen och
+    modellversionen. Inskriftsexporten (CSV och Excel) får kolumnen *Vitkis ifyllningar (status och proveniens)*, och
+    R-paketet får filen `data/vitki_ifyllningar.csv` bredvid `corpus.csv`. Korpusfilen för R ändras inte: en bekräftad
+    ifyllning ska inte ändra korpusens fingeravtryck och tvinga fram en ny beräkning av alla R-resultat.
+  * **Analyserna.** Rundata är förvalet. Där det är meningsfullt kan de bekräftade ifyllningarna slås på, och resultatet
+    säger det; hittills gäller det ordräkningen (`GET /api/rundata/words?fills=true`, som anger hur många ord som lagts
+    till). Ett ord som Rundata redan har på stenen (en lucka som Rundata har fyllt med samma ord) räknas inte två
+    gånger. Förslag räknas aldrig.
+  * **Spärren mot träning.** Sannolikhetsmodellen tränas och prövas aldrig på Vitkis egna ifyllningar: modellen skulle
+    annars lära sig, och bedömas på, sina egna svar. Modellen läser bara Rundata (`rl.load_rundata`); en post som bär en
+    ifyllning märks (`vitki_fills.mark`), och `runlm.Model` vägrar ta emot den. `tests/test_vitki_fills.py` prövar
+    spärren och att varken modellen, textmodellen eller provskripten (`scripts/runlm_*.py`, `scripts/textmodel_*.py`,
+    `scripts/blindtest.py`) läser filen.
+
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 
 Källkod: `src/language_profile.py`, `GET /api/research/language/{signum}`. Dragen läses ur Rundata genom

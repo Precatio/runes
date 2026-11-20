@@ -83,6 +83,96 @@ export interface ScanTraces {
   quality?: { detected: number; text_runes: number; paired: number; lost_total: number; lost_with_proposal: number };
 }
 
+// Every candidate the model tries in one gap (api GET /textmodel/candidates, src/textmodel_overview.py): the
+// probability p is calibrated as the app's suggestions, for the kmax most probable words only; p_model is the model's
+// own share among the candidates tried, before calibration
+export type CandidateOrigin = "vocabulary" | "names" | "nearby" | "carver" | "stone" | "variant" | "runes";
+
+export interface GapCandidate {
+  fill: string;
+  p_model: number;
+  word: string | null;
+  unknown: boolean;
+  composed: boolean;
+  name: boolean;
+  p_word: number | null;
+  origins: CandidateOrigin[];
+  left: string;
+  right: string;
+}
+
+export interface GapWord {
+  word: string | null;
+  unknown: boolean;
+  composed: boolean;
+  name: boolean;
+  class: string | null;
+  p: number | null;
+  p_model: number;
+  fills: { fill: string; p_model: number; left: string; right: string }[];
+  n_fills: number;
+  origins: CandidateOrigin[];
+  corpus: { count: number; stones: number; examples: string[]; other_count: number; other_stones: number } | null;
+}
+
+export interface GapOverview {
+  signum: string;
+  version: string;
+  available: boolean;
+  reason?: string;
+  cached?: boolean;
+  seconds?: number;
+  gap?: {
+    number: number; kind: "gap" | "open"; group: number; start: number; end: number; carved: string;
+    rundata_n: number; n: number; adjustable: boolean; tested: boolean; min_n: number; max_n: number;
+  };
+  context?: { number: number; fill: string }[];
+  calibrated?: boolean;
+  kmax?: number;
+  candidates?: GapCandidate[];
+  words?: GapWord[];
+  n_tried?: number;
+  n_words?: number;
+  n_unknown_fills?: number;
+  unassigned?: number | null;
+  top_unsure?: boolean;
+  whole_word?: boolean;
+  limit?: number;
+  truncated?: boolean;
+  validation: TextModelReading["validation"];
+}
+
+// Vitki's own fillings of lost runes (api /textmodel/fills, src/vitki_fills.py): a layer on top of Rundata, which is
+// never changed; the model is never trained or tested on them
+export type FillStatus = "förslag" | "bekräftad" | "avvisad";
+export type FillMethod = "sannolikhetsmodellen" | "spår ur skanningen" | "utgivarens läsning";
+export type EvidenceKind = "sri" | "skanning" | "runor2020" | "annat";
+
+export interface VitkiFill {
+  id: string;
+  signum: string;
+  gap: { kind: "gap" | "open"; number: number; group: number; start: number; end: number; carved: string;
+         rundata_n: number; n: number; width: number; key: string };
+  fill: string;
+  word: string | null;
+  name: boolean;
+  method: FillMethod;
+  model_version: string | null;
+  p: number | null;
+  p_model: number | null;
+  evidence: { kind: EvidenceKind; ref: string }[];
+  status: FillStatus;
+  comment: string;
+  by: string;
+  date: string;
+  history: { status: FillStatus; by: string; date: string; comment: string }[];
+  label: string;
+}
+
+export const EVIDENCE_LABEL: Record<EvidenceKind, string> = {
+  sri: "SRI-sida", skanning: "Skanning", runor2020: "Runor 2020", annat: "Annat",
+};
+
 const enc = encodeURIComponent;
 
 async function json<T>(res: Response): Promise<T> {
@@ -93,7 +183,25 @@ async function json<T>(res: Response): Promise<T> {
   return res.json();
 }
 
+type Headers = Record<string, string>;
+
 export const textmodel = {
+  // n: another number of lost runes than Rundata's; kind "open": one of the longer gaps the reading leaves open
+  candidates: async (signum: string, gap: number, n?: number, kind: "gap" | "open" = "gap") =>
+    json<GapOverview>(await fetch(`${API_URL}/api/textmodel/candidates/${enc(signum)}?gap=${gap}&kind=${kind}${n ? `&n=${n}` : ""}`)),
+  fills: async (signum?: string) =>
+    json<{ license: string; fills: VitkiFill[] }>(await fetch(`${API_URL}/api/textmodel/fills${signum ? `?signum=${enc(signum)}` : ""}`)),
+  saveFill: async (headers: Headers, body: {
+    signum: string; gap: number; kind: "gap" | "open"; n?: number; fill: string; method: FillMethod;
+    status: "förslag" | "bekräftad"; comment: string; evidence: { kind: EvidenceKind; ref: string }[];
+  }) => json<VitkiFill>(await fetch(`${API_URL}/api/textmodel/fills`, {
+    method: "POST", headers: { ...headers, "Content-Type": "application/json" }, body: JSON.stringify(body),
+  })),
+  setFillStatus: async (headers: Headers, id: string, status: FillStatus, comment: string,
+                        evidence: { kind: EvidenceKind; ref: string }[] = []) =>
+    json<VitkiFill>(await fetch(`${API_URL}/api/textmodel/fills/${enc(id)}/status`, {
+      method: "POST", headers: { ...headers, "Content-Type": "application/json" }, body: JSON.stringify({ status, comment, evidence }),
+    })),
   read: async (signum: string) => json<TextModelReading>(await fetch(`${API_URL}/api/textmodel/${enc(signum)}`)),
   scanTraces: async (signum: string) =>
     json<ScanTraces>(await fetch(`${API_URL}/api/textmodel/scantraces/${enc(signum)}`)),

@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 from typing import Optional
 
@@ -130,20 +131,25 @@ def _words_common() -> list:
 
 
 @router.get("/words")
-def words(area: str = "", epoch: str = "", style: str = "", top: int = 400):
+def words(area: str = "", epoch: str = "", style: str = "", top: int = 400, fills: bool = False):
     """Ordmolnets underlag: orden på de vikingatida runstenarna, räknade per sten (hur många stenar ordet står
     på) och per förekomst. area är en trakt (runlm.AREAS) eller ett signumprefix; epoch 800/900/1000/1100 eller
-    'odaterad' (epoken ur Rundatas datering eller stilgruppen, som i modellen); style en stilgrupp."""
-    return _words(id(store().inscriptions), area, epoch, style, top)
+    'odaterad' (epoken ur Rundatas datering eller stilgruppen, som i modellen); style en stilgrupp.
+    fills: räkna också orden i Vitkis bekräftade ifyllningar av förlorade runor (src/vitki_fills.py); förvalt är
+    Rundata ensamt, och svaret säger hur många ifyllningar som räknats."""
+    from src import vitki_fills
+    stamp = os.path.getmtime(vitki_fills.FILE) if (fills and os.path.exists(vitki_fills.FILE)) else 0.0
+    return _words(id(store().inscriptions), area, epoch, style, top, fills, stamp)
 
 
 @lru_cache(maxsize=64)
-def _words(_stamp: int, area: str, epoch: str, style: str, top: int) -> dict:
-    """Counted once per Rundata version and choice."""
+def _words(_stamp: int, area: str, epoch: str, style: str, top: int, fills: bool = False, _fills_stamp: float = 0.0) -> dict:
+    """Counted once per Rundata version, version of the fillings file and choice."""
+    from src import vitki_fills
     from src import runlm as rl
     from src.research_gaps import PROVINCE_NAMES
     pres = set(rl.AREAS[area].split()) if area in rl.AREAS else {area} if area else None
-    stones = 0
+    stones = used = 0
     agg: dict = {}
     present: set = set()
     for rec in _viking_runestones():
@@ -158,6 +164,13 @@ def _words(_stamp: int, area: str, epoch: str, style: str, top: int) -> dict:
         if style and style not in _re.findall(r"RAK|Fp|KB|Pr\d", rec.get("style") or ""):
             continue
         toks = list(_word_tokens(rec.get("normalization")))
+        if fills:
+            # a word Rundata already has on the stone (a gap Rundata restored with the same word) is not counted twice
+            have = set(toks)
+            extra = [k for k in ((w[:1].upper() + w[1:] if nm else w, nm) for w, nm in vitki_fills.apply_words(rec["signum"]))
+                     if k not in have]
+            used += len(extra)
+            toks += extra
         if not toks:
             continue
         stones += 1
@@ -174,6 +187,8 @@ def _words(_stamp: int, area: str, epoch: str, style: str, top: int) -> dict:
     ranked = [kv for kv in order if not kv[0][1]][:lim] + [kv for kv in order if kv[0][1]][:lim // 2]
     names = {**PROVINCE_NAMES, **OTHER_REGIONS}
     return {"stones": stones,
+            "vitki_fills": ({"used": used, "note": f"Med Vitkis bekräftade ifyllningar ({used} ord); förvalt är Rundata ensamt."}
+                            if fills else None),
             "words": [{"w": w, "name": nm, "stones": s, "n": n} for (w, nm), (s, n) in ranked],
             "common": _words_common(),
             "areas": list(rl.AREAS),

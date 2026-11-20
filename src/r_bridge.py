@@ -260,6 +260,17 @@ def write_csv(rows: list[dict], path: str):
             w.writerow({k: ("" if row.get(k) is None else row[k]) for k in CSV_COLUMNS})
 
 
+def _fills_csv() -> str:
+    """signum, the status and provenance of Vitki's fillings (förslag and bekräftad), for the stones that have any."""
+    from src import vitki_fills
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator="\n")
+    w.writerow(["signum", "vitki_ifyllningar"])
+    for sig, cell in vitki_fills.provenance_map().items():
+        w.writerow([sig, cell])
+    return buf.getvalue()
+
+
 def csv_bytes(rows: list[dict]) -> bytes:
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=CSV_COLUMNS, lineterminator="\n")
@@ -831,6 +842,9 @@ def package(fp: str, signum: str | None = None, candidates: list[str] | None = N
             if name.endswith(".R") or name == "README.md":
                 z.write(os.path.join(R_DIR, name), f"r/{name}")
         z.write(os.path.join(d, "corpus.csv"), "data/corpus.csv")
+        # Vitki's own fillings of lost runes (src/vitki_fills.py) beside the corpus, never in it: corpus.csv is Rundata's
+        # text, and a confirmed filling must not change the corpus fingerprint (every R result would be recomputed)
+        z.writestr("data/vitki_ifyllningar.csv", _fills_csv())
         for inp in ("messages.csv", "people.csv"):  # inputs of messages.R and people.R, not only results
             if os.path.exists(os.path.join(d, inp)):
                 z.write(os.path.join(d, inp), f"data/{inp}")

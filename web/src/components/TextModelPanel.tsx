@@ -5,7 +5,9 @@
 // METHODS.md 8.1 for the model and the tests behind the numbers shown.
 import { useState } from "react";
 import Link from "next/link";
-import { TRACE_RUNES, textmodel, type ScanTraceEntry, type ScanTraces, type TextModelBoundary, type TextModelGap, type TextModelReading } from "@/lib/textmodel";
+import GapOverview from "@/components/GapOverview";
+import VitkiFills, { FILL_STYLE } from "@/components/VitkiFills";
+import { TRACE_RUNES, textmodel, type ScanTraceEntry, type ScanTraces, type TextModelBoundary, type TextModelGap, type TextModelReading, type VitkiFill } from "@/lib/textmodel";
 
 // 100 % only for certainty: 0.996 is shown as 99 %, not as if nothing could be wrong
 const pct = (p: number) => `${p < 1 ? Math.min(99, Math.round(p * 100)) : 100} %`;
@@ -157,12 +159,20 @@ export default function TextModelPanel({ signum }: { signum: string }) {
   const [open, setOpen] = useState<number | null>(null);
   const [withTraces, setWithTraces] = useState(false);
   const [scan, setScan] = useState<ScanTraces | null>(null);
+  // the overview of every candidate in a gap: "gap:<n>" or "open:<n>"
+  const [overview, setOverview] = useState<string | null>(null);
+  const [fills, setFills] = useState<VitkiFill[]>([]);
+  const loadFills = () => textmodel.fills(signum).then(r => setFills(r.fills)).catch(() => setFills([]));
+  const fillOf = (g: { group: number; start: number; end: number }, kind: "gap" | "open") =>
+    fills.find(x => x.gap.kind === kind && x.gap.key === `${g.group}:${g.start}:${g.end}` && x.status === "bekräftad")
+    ?? fills.find(x => x.gap.kind === kind && x.gap.key === `${g.group}:${g.start}:${g.end}`);
 
   const load = async () => {
     setBusy(true); setError(null);
     try {
       const d = await textmodel.read(signum);
       setData(d);
+      loadFills();
       setWithTraces(false);
       if (d.available && d.gaps && d.gaps.length > 0 && scan === null) {
         textmodel.scanTraces(signum).then(setScan).catch(() => setScan({ available: false }));
@@ -248,13 +258,31 @@ export default function TextModelPanel({ signum }: { signum: string }) {
                       <Carved gap={g} /> <span className="text-slate-500">· {g.n} {g.n === 1 ? "förlorad runa" : "förlorade runor"}</span>
                       {g.best && <> → <span className="font-mono font-bold" translate="no">{g.best}</span></>}
                     </div>
+                    <span className="flex flex-wrap gap-3">
+                    <button onClick={() => setOverview(overview === `gap:${g.number}` ? null : `gap:${g.number}`)}
+                      className="text-xs font-semibold text-[#b7410e] hover:underline" aria-expanded={overview === `gap:${g.number}`}>
+                      {overview === `gap:${g.number}` ? "Dölj alla ord" : "Alla ord som passar"}
+                    </button>
                     <button onClick={() => setOpen(open === g.number ? null : g.number)}
                       className="text-xs font-semibold text-[#b7410e] hover:underline">
                       {open === g.number ? "Dölj spåren"
                         : scan?.available && scan.gaps?.[String(g.number)] ? "Ange vad som syns · skannern har ett förslag"
                         : "Ange vad som syns"}
                     </button>
+                    </span>
                   </div>
+                  {(() => {
+                    const x = fillOf(g, "gap");
+                    return x ? (
+                      <p className={`text-xs rounded-lg border-2 px-2 py-1 ${FILL_STYLE[x.status === "bekräftad" ? "bekräftad" : "förslag"]}`}>
+                        <span className="font-mono font-bold" translate="no">{x.fill}</span>
+                        {x.word && <> = <span translate="no">{x.word}</span></>} · {x.label}
+                      </p>
+                    ) : null;
+                  })()}
+                  {overview === `gap:${g.number}` && (
+                    <GapOverview signum={data.signum} gap={g.number} onClose={() => setOverview(null)} onSaved={loadFills} />
+                  )}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <div className="text-[11px] text-slate-500">Ordet i luckan{data.gap_calibrated && " · kalibrerat per ordklass"}</div>
@@ -313,11 +341,24 @@ export default function TextModelPanel({ signum }: { signum: string }) {
             </section>
           )}
           {data.open_gaps && data.open_gaps.length > 0 && (
-            <p className="text-xs text-slate-500">
-              {data.open_gaps.length} längre {data.open_gaps.length === 1 ? "lucka" : "luckor"} (fler än fyra förlorade runor)
-              lämnas öppna: där har modellen inte prövats.
-            </p>
+            <div className="space-y-2">
+              <p className="text-xs text-slate-500">
+                {data.open_gaps.length} längre {data.open_gaps.length === 1 ? "lucka" : "luckor"} (fler än fyra förlorade runor)
+                lämnas öppna: där har modellen inte prövats. Du kan ändå se vilka ord som passar med ett valt antal runor:{" "}
+                {data.open_gaps.map((og, i) => (
+                  <button key={i} type="button" onClick={() => setOverview(overview === `open:${i}` ? null : `open:${i}`)}
+                    className="font-semibold text-[#b7410e] hover:underline mr-2">
+                    <span className="font-mono" translate="no">{data.groups?.[og.group] ?? ""}</span> ({og.n} runor)
+                  </button>
+                ))}
+              </p>
+              {data.open_gaps.map((og, i) => overview === `open:${i}` && (
+                <GapOverview key={i} signum={data.signum} gap={i} kind="open" initialN={og.n > 6 ? 6 : undefined}
+                  onClose={() => setOverview(null)} onSaved={loadFills} />
+              ))}
+            </div>
           )}
+          <VitkiFills fills={fills} onChange={loadFills} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {data.dating && (

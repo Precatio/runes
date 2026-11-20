@@ -726,6 +726,11 @@ class Model:
         own weight exactly as the Edda list is, their spellings derived by the rules; a list with weight 0 is not
         loaded, so the vocabulary is unchanged. extra_names: normalized names from a name lexicon (Peterson 2007),
         added to the name model with one attestation each where the texts do not know them."""
+        # Vitki's own fillings of lost runes (src/vitki_fills.py) must never become training or test data: the model
+        # would learn, and be scored on, its own answers
+        recs, spelling_recs = list(recs), list(spelling_recs)
+        if any(isinstance(r, dict) and r.get("_vitki_filled") for r in recs + spelling_recs):
+            raise ValueError("Sannolikhetsmodellen tränas aldrig på Vitkis egna ifyllningar (src/vitki_fills.py).")
         recs = [r for r in recs if r["signum"] not in set(exclude)]
         self.aligned, self.contexts, self.alpha, self.kappa, self.kappa_e = aligned, contexts, alpha, kappa, kappa_e
         self.lm_beta = lm_beta  # how many occurrences of a word an epoch needs before its own word sequences get half the weight
@@ -1635,7 +1640,8 @@ def _name_cache(model, site, near_km, lam_near, near_sites, carver, lam_carver):
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
             words=None, site=None, near_km=20.0, lam_near=0.0, near_sites=None, allowed=None, carver=None, lam_carver=0.0,
-            trace_eps=0.0, segments=None, hard=None, div_rate=None, name_scale=1.0, var_cands=0):
+            trace_eps=0.0, segments=None, hard=None, div_rate=None, name_scale=1.0, var_cands=0, origins=None,
+            word_runes=None):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
     whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
@@ -1669,6 +1675,13 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     var_cands: that many fillings that only the tolerance layer makes (a rule-made variant, not a carved spelling of any
     word), ranked by word frequency × P(the spelling it was made from | word), without the penalty – appended after the
     vocabulary's candidates, so that they reach the scoring, where the penalty applies as before (analysplan_tm20.md).
+    origins: a dict that receives, for each filling tried, where it came from (a set of: "vocabulary" – a word whose
+    spelling fits; "names" – a name composed of name elements; "nearby" – a name as carved on a nearby stone; "carver"
+    – a name on the carver's stones; "stone" – a word written elsewhere on the stone; "variant" – the tolerance layer;
+    "runes" – rune by rune: every combination, or the vowel/consonant model). word_runes: a dict that receives, for
+    each filling, the runes of the word where the gap starts before and after the gap ((left, right); both '' when the
+    word lies wholly in the gap). Neither changes what is tried or how it is scored (the gap overview in the app,
+    src/textmodel_overview.py).
     Returns [(filling, probability)], best first, over the candidates considered."""
     gi, g0, g1 = gap
     k = g1 - g0
@@ -1705,6 +1718,8 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
             if i_ >= before and next_w is None and p_ >= 0.3:
                 next_w = w_
     names_arg, near_spell = _name_cache(model, site, near_km, lam_near, near_sites, carver, lam_carver)
+    org = defaultdict(set) if origins is not None else None
+    car_spell = model.names_by_carver(carver)[1] if (org is not None and carver and lam_carver) else set()
     if names_arg and not cache_arg:  # names of the stone's neighbours and of its carver's circle
         cache_arg = names_arg
     pre = defaultdict(float)
@@ -1728,23 +1743,33 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
                     else:
                         sc = max(p_ * (model.uni.get(w, 0) + 0.5) / ntok for w, p_ in model.index[key_].items())
                     pre[f] = max(pre[f], sc)
+                    if org is not None:
+                        org[f].add("vocabulary")
                     tv = tolv.get(key_) if var_cands else None
                     if tv and all(w in tv for w in model.index[key_]):  # made only by the tolerance layer
                         vs = max(model.index[src_].get(w, 0.0) * (model.uni.get(w, 0) + 0.5) / ntok
                                  for w, (src_, _k) in tv.items())
                         pre_vars[f] = max(pre_vars[f], vs)
+                        if org is not None:
+                            org[f].add("variant")
             for cr in near_spell:  # a name as it was carved on a nearby stone
                 if len(cr) == b - a and pat.match(cr):
                     pre[cr[g0 - a:g1 - a]] = max(pre[cr[g0 - a:g1 - a]], 0.5)
+                    if org is not None:
+                        org[cr[g0 - a:g1 - a]].add("carver" if cr in car_spell else "nearby")
             for cr in cached_runes:  # the same word written elsewhere on the stone
                 if len(cr) == b - a and pat.match(cr):
                     pre[cr[g0 - a:g1 - a]] = max(pre[cr[g0 - a:g1 - a]], 1.0)
+                    if org is not None:
+                        org[cr[g0 - a:g1 - a]].add("stone")
             if name_cands and model.names is not None and b - a >= 4:
                 # the names keep their own ranking: their priors (~1e-8) would otherwise drown under the
                 # vocabulary candidates (~1e-4) and never reach the scoring, which judges them at full strength
                 for sp, pn in model.names.match(pat_s.replace("\\", ""), top=name_cands).items():
                     f = sp[g0 - a:g1 - a]
                     pre_names[f] = max(pre_names[f], pn)
+                    if org is not None:
+                        org[f].add("names")
     ranked = [f for f, _ in sorted(pre.items(), key=lambda kv: -kv[1])]
     cands = [f for f in ranked if ok(f)][:n_cands]
     if soft:  # the best candidates whatever the traces say, in case a trace is misread
@@ -1756,6 +1781,7 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
         named = [f for f, _ in sorted(pre_names.items(), key=lambda kv: -kv[1])]
         cands += [f for f in named if f not in cands and (ok(f) or (soft and ok_hard(f)))][:name_cands]
     alpha = [sorted(s_) if s_ is not None else FILL_ALPHABET for s_ in sets]
+    n_before_runes = len(cands)
     if k <= 2 or (allowed and math.prod(len(a_) for a_ in alpha) <= 400):
         # short gaps, or few combinations left by what is visible: every combination is tried as well
         cands += ["".join(f) for f in itertools.product(*alpha) if "".join(f) not in cands]
@@ -1774,6 +1800,10 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
         left, right = g[max(0, g0 - 4):g0].split("?")[-1], g[g1:g1 + 3].split("?")[0]
         fills = model.cvchar.fills(left, k, right)[:char_fills * (5 if allowed else 1)]
         cands += [f for f, _ in fills if f not in cands and (ok(f) or (soft and ok_hard(f)))][:char_fills * (2 if soft else 1)]
+    if org is not None:
+        for f in cands[n_before_runes:]:  # proposed rune by rune (every combination, or the vowel/consonant model)
+            org[f].add("runes")
+        origins.update({f: sorted(org[f]) for f in cands})
     if adapt and reading0:  # the stone's own spelling habits, from the rest of its text
         base = ctx or Ctx((), model.spell.p, ("glob",))
         ctx = model.adapt(base, adapt_counts(model, reading0[2], reading0[3], base), adapt)
@@ -1804,6 +1834,7 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
                                           name_scale=name_scale)
             path_ = (best_path(post_, len(text_), model.lemma)
                      if (trigram or by_word or words is not None or segments is not None) else None)
+            off_ = 0  # where text_ starts in the window's text
         else:
             if split is None:
                 split = SplitText(model, parts, sg, mid[0], mid[-1] + 1, ctx=ctx, doc=doc, cache=cache_arg, area=area, d=div_rate,
@@ -1812,11 +1843,18 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
             # words never cross the group's edges, so the best path over the group is the whole path's part there
             path_ = ([(i_ + split.offset, j_ + split.offset, w_, p_) for i_, j_, w_, p_ in best_path(post_, len(text_), model.lemma)]
                      if (by_word or words is not None or segments is not None) else None)
+            off_ = split.offset
         out[f] = lz + (trigram_delta(model, path_) if trigram else 0.0) + (misfit(f) * math.log(trace_eps) if soft else 0.0)
         if path_ is not None:
             word_of[f] = next((w for i_, j_, w, _ in path_ if i_ <= gap_at < j_), None)
             seg_of[f] = [(max(i_, gap_at) - gap_at, min(j_, gap_at + k) - gap_at, w)
                          for i_, j_, w, _ in path_ if i_ < gap_at + k and j_ > gap_at]
+            if word_runes is not None:
+                # the runes of the word where the gap starts, outside the gap (text_ is the group alone with SplitText)
+                hit = next(((i_, j_) for i_, j_, _w, _ in path_ if i_ <= gap_at < j_), None)
+                if hit:
+                    word_runes[f] = (text_[hit[0] - off_:gap_at - off_] if hit[0] < gap_at else "",
+                                     text_[gap_at + k - off_:hit[1] - off_] if hit[1] > gap_at + k else "")
     if not out:
         return []
     mx = max(out.values())

@@ -11,6 +11,7 @@ import { useAuth } from "@/components/AuthContext";
 import { useSettings } from "@/components/SettingsContext";
 import { useLanguage } from "@/components/LanguageContext";
 import ReportPreview, { downloadBlob, type ReportResult } from "@/components/ReportPreview";
+import GapOverview from "@/components/GapOverview";
 import { API_URL } from "@/lib/api";
 import { corpus, type ScanMetadata } from "@/lib/corpus";
 import { db, type GrooveAnalysisRecord } from "@/lib/db";
@@ -96,6 +97,9 @@ export default function StoneAnalysisPage() {
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
   const [busyDocx, setBusyDocx] = useState(false);
+  // The gaps the probability model read, each clickable for the overview of every word that fits (GapOverview)
+  const [tmGaps, setTmGaps] = useState<{ signum: string; gaps: { number: number; carved: string; start: number; end: number; n: number; word: string | null; p: number | null }[] } | null>(null);
+  const [gapOpen, setGapOpen] = useState<number | null>(null);
   const last = useRef<{ body: Record<string, unknown>; analysis: GrooveAnalysisRecord;
     synthesis: SynthesisResult | null; raking: string } | null>(null);
 
@@ -117,7 +121,7 @@ export default function StoneAnalysisPage() {
 
   const run = async () => {
     if (!file) return;
-    setRunning(true); setError(null); setReport(null); setSaved(null); setPreview(null);
+    setRunning(true); setError(null); setReport(null); setSaved(null); setPreview(null); setTmGaps(null); setGapOpen(null);
     setSteps(STEPS.map(([key, name]) => ({ key, name, state: "väntar" })));
     const notes: string[] = [];
     const wfSteps: { name: string; result: string }[] = [];
@@ -197,11 +201,15 @@ export default function StoneAnalysisPage() {
         try {
           const tmRes = await fetch(`${API_URL}/api/textmodel/${encodeURIComponent(sig)}`);
           // A failed call says why (the engine's own message), not only that the model could not read the inscription
-          const tm: { available?: boolean; reason?: string; gaps?: { words?: { word: string; p: number }[] }[] } =
+          const tm: { available?: boolean; reason?: string; signum?: string;
+                      gaps?: { number: number; carved: string; start: number; end: number; n: number; words?: { word: string; p: number }[] }[] } =
             tmRes.ok ? await tmRes.json()
               : { available: false, reason: (await tmRes.json().catch(() => null))?.detail ?? `analysmotorn svarade ${tmRes.status}` };
           if (tm.available) {
             const gaps = (tm.gaps ?? []).filter(g => g.words?.length);
+            setTmGaps({ signum: tm.signum ?? sig, gaps: (tm.gaps ?? []).map(g => ({
+              number: g.number, carved: g.carved, start: g.start, end: g.end, n: g.n,
+              word: g.words?.[0]?.word ?? null, p: g.words?.[0]?.p ?? null })) });
             const best = gaps.slice(0, 3).map(g => `${g.words![0].word} (${Math.round(100 * g.words![0].p)} %)`).join(", ");
             const scan: { available?: boolean; gaps?: Record<string, unknown> } | null =
               await fetch(`${API_URL}/api/textmodel/scantraces/${encodeURIComponent(sig)}`)
@@ -429,6 +437,26 @@ export default function StoneAnalysisPage() {
             </ol>
             {error && <p className="text-sm text-red-700 font-semibold mt-3">{error}</p>}
           </div>
+          {tmGaps && tmGaps.gaps.length > 0 && (
+            <div className="liquid-glass-island rounded-[32px] p-6 space-y-3">
+              <div className="text-sm font-semibold text-slate-900">Luckorna i texten</div>
+              <p className="text-xs text-slate-600">
+                Klicka på en lucka för att se alla ord som sannolikhetsmodellen prövar där, inte bara det bästa, och för att
+                pröva ett annat antal förlorade runor.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {tmGaps.gaps.map(g => (
+                  <button key={g.number} type="button" onClick={() => setGapOpen(gapOpen === g.number ? null : g.number)}
+                    aria-expanded={gapOpen === g.number}
+                    className={`text-xs rounded-lg border px-2 py-1 ${gapOpen === g.number ? "border-[#b7410e] bg-[#b7410e]/10" : "border-slate-300 bg-white hover:border-slate-900"}`}>
+                    <span className="font-mono" translate="no">{g.carved.slice(0, g.start)}<span className="text-[#b7410e] font-bold">{g.carved.slice(g.start, g.end)}</span>{g.carved.slice(g.end)}</span>
+                    {g.word && <> → <span translate="no">{g.word}</span>{g.p != null && <> ({Math.min(99, Math.round(g.p * 100))} %)</>}</>}
+                  </button>
+                ))}
+              </div>
+              {gapOpen != null && <GapOverview signum={tmGaps.signum} gap={gapOpen} onClose={() => setGapOpen(null)} />}
+            </div>
+          )}
           {preview && (
             <div className="liquid-glass-island rounded-[32px] p-4">
               <img src={preview.raking["nordväst"]} alt="Strykljus ur skanningen" className="w-full rounded-2xl" />
