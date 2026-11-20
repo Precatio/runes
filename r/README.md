@@ -26,6 +26,10 @@ ligger), `water_dir` (Natural Earth, valfri) och `seed`; stenmodulerna dessutom 
 | `stone.R` | sten | `stone.json`, `sten_*.png` |
 | `landscape.R` | sten | `landscape.json`, `landskap_*.png` |
 
+**Vitkis ifyllningar** av förlorade runor ligger aldrig i `corpus.csv`. De kan slås på som en valbar kontroll med
+`read_vitki_fills()` och `with_vitki_fills(d, fills, modul)` i `vitki_fills.R`. Bara bekräftade ifyllningar räknas, och
+funktionen vägrar i modulerna för namn, formler, stavning, ristare och mönsterupptäckt (METHODS 8.1).
+
 Ordningen i korpusen är den i `MODULES` i `src/r_bridge.py`. Reproducerbarhetspaketet från appen innehåller
 skripten, data och `KOR_OM.R`, som kör alla korpusanalyser i rätt ordning. Lämningarna och avstånden till vatten körs
 bara om man själv lägger Riksantikvarieämbetets och ortnamnens filer i `data/` och Natural Earths vattenlager i

@@ -35,9 +35,9 @@ def test_corpus_has_no_fillings_column():
 
 
 def test_no_module_calls_with_vitki_fills_by_default():
-    for f in os.listdir(os.path.join(ROOT, "R")):
+    for f in os.listdir(r_bridge.R_DIR):
         if f.endswith(".R") and f not in ("common.R", "vitki_fills.R"):
-            assert "with_vitki_fills(" not in open(os.path.join(ROOT, "R", f), encoding="utf-8").read(), f
+            assert "with_vitki_fills(" not in open(os.path.join(r_bridge.R_DIR, f), encoding="utf-8").read(), f
 
 
 @pytest.mark.skipif(not (r_bridge.rscript() or shutil.which("Rscript")), reason="R saknas")
@@ -46,7 +46,7 @@ def test_r_adds_confirmed_words_once_and_refuses_forbidden_modules(tmp_path):
     fills.write_text(r_bridge._fills_csv(_store(tmp_path)), encoding="utf-8")
     script = tmp_path / "t.R"
     script.write_text(f'''
-source("{os.path.join(ROOT, "R", "vitki_fills.R")}")
+source("{os.path.join(r_bridge.R_DIR, "vitki_fills.R")}")
 d <- data.frame(signum = c("U 657", "U 1"), normalization = c("... ok Gunnarr", NA), stringsAsFactors = FALSE)
 f <- read_vitki_fills("{fills}")
 stopifnot(nrow(f) == 1)                                   # förslag never counted

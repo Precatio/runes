@@ -2247,12 +2247,12 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     * **Valbar kontroll.** Bekräftade ifyllningar kan slås på som ett extra steg i robusthetsstegen ("håller resultatet
       också med Vitkis ifyllningar?"). Ifyllningarna ligger en rad per ifyllning i `data/vitki_ifyllningar.csv` i
       reproducerbarhetspaketet (parametern `vitki_fills` i `KOR_OM.R`). I R läser `read_vitki_fills()` bara de
-      bekräftade, och `with_vitki_fills(d, fills, modul)` (`R/vitki_fills.R`, utanför `common.R` så att modulernas versioner inte ändras) lägger deras ord sist i stenens normalisering (namn med
+      bekräftade, och `with_vitki_fills(d, fills, modul)` (`r/vitki_fills.R`, utanför `common.R` så att modulernas versioner inte ändras) lägger deras ord sist i stenens normalisering (namn med
       citattecken som i Rundata); ett ord som stenen redan har läggs inte till, så en lucka som Rundata fyllt med samma ord
       räknas inte två gånger. Drag, kategorier och mönster är Rundatas och ändras inte. Resultatet bär en rad som säger
       hur många ord som lagts till. Ingen modul gör detta som förval (prövat i `tests/test_r_vitki_fills.py`).
     * **Förbjudet där det blir cirkulärt.** `with_vitki_fills` vägrar i modulerna som mäter det som modellen bygger sina
-      ifyllningar på (`VITKI_FILLS_FORBIDDEN` i `R/vitki_fills.R`): namn och namnens geografi (`names`, `people`), formler,
+      ifyllningar på (`VITKI_FILLS_FORBIDDEN` i `r/vitki_fills.R`): namn och namnens geografi (`names`, `people`), formler,
       ordföljd och ordnätverk (`text`, `messages`, `network`), stavning och dialekt (`dialect`, `chronology`), ristarna
       (`attribution*`, `anonymous`, `carver_profile`) och mönsterupptäckten (`discovery*`). Samma regel gäller prov
       utanför R: en ifyllning får aldrig vara underlag i ett prov av namn, formler, stavning eller ristare.

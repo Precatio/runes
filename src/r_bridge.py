@@ -265,7 +265,7 @@ FILLS_COLUMNS = ["signum", "status", "gap", "fill", "word", "name", "method", "p
 
 def _fills_csv(path: str | None = None) -> str:
     """Vitki's fillings of lost runes (förslag and bekräftad), one row per filling, for R's read_vitki_fills()
-    (R/vitki_fills.R): an opt-in robustness check, never part of corpus.csv (METHODS 8.1)."""
+    (r/vitki_fills.R): an opt-in robustness check, never part of corpus.csv (METHODS 8.1)."""
     from src import vitki_fills
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator="\n")
