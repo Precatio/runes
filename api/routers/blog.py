@@ -128,12 +128,14 @@ def _published() -> list[dict]:
 
 
 def first_photo(body: str | None, alt: bool = False) -> str | None:
-    """The article's first photo from Wikimedia Commons (a line of its own, ![…](…)), for the list's thumbnail;
-    figures and charts are not used. alt: its alt text (what the photo shows) instead of its address."""
-    for m in re.finditer(r"^!\[([^\]]*)\]\((\S+?)\)", body or "", re.M):
-        if "wikimedia.org" in m.group(2):
-            return (m.group(1) or None) if alt else m.group(2)
-    return None
+    """The list's thumbnail: the article's first photo from Wikimedia Commons (a line of its own, ![…](…)), or, when it
+    has none, its first own figure (/api/blog/figures/…; Viktor 2026-11-20: articles without a thumbnail). alt: its alt
+    text (what the picture shows) instead of its address."""
+    pics = [(m.group(1), m.group(2)) for m in re.finditer(r"^!\[([^\]]*)\]\((\S+?)\)", body or "", re.M)]
+    pick = next((p for p in pics if "wikimedia.org" in p[1]), None) or next((p for p in pics if p[1].startswith("/api/blog/figures/")), None)
+    if not pick:
+        return None
+    return (pick[0] or None) if alt else pick[1]
 
 
 @router.get("/blog/posts")

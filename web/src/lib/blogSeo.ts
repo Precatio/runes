@@ -177,8 +177,13 @@ export async function commonsSizes(srcs: (string | null | undefined)[]): Promise
  *  otherwise the standard thumbnail as before. */
 export function cardImage(post: Pick<BlogPost, "image" | "image_width">, want: number): string {
   if (!post.image) return "";
+  if (isFigure(post.image)) return absolute(post.image);  // the article's own figure: its one copy, wherever it is served
   return post.image_width ? commonsAt(post.image, want, post.image_width) : thumbnail(post.image, want);
 }
+
+/** A thumbnail that is the article's own figure (a map, a chart, a screenshot), not a Commons photo: the cards draw it
+ *  whole (object-contain) on the page colour, since cropping a chart to fill the box cuts off its labels. */
+export const isFigure = (src?: string | null) => !!src && /(^|\/)(figurer|api\/blog\/figures)\//.test(src) && !/wikimedia\.org/.test(src);
 
 /** The list's posts with the size of their first photo (BlogPost.image_width/image_height), when Commons knows it. */
 export async function withImageSizes(posts: BlogPost[]): Promise<BlogPost[]> {

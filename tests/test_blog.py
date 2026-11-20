@@ -639,3 +639,14 @@ def test_an_article_is_backed_up_before_it_is_overwritten_or_deleted(monkeypatch
     # A backup that cannot be written never stops the save or the deletion
     monkeypatch.setattr(blog, "BACKUP", "/dev/null/not-a-folder")
     blog._backup("y", {"title": "T"})
+
+
+def test_first_photo_falls_back_on_own_figure():
+    """The list's thumbnail: a Commons photo first, otherwise the first own figure, otherwise none (2026-11-20)."""
+    from api.routers.blog import first_photo
+    fig = "![Karta](/api/blog/figures/0123456789abcdef.png)\nKarta: Vitki."
+    photo = "![Rökstenen](https://upload.wikimedia.org/wikipedia/commons/b/b1/R%C3%B6kstenen_1.JPG)\nFoto: X."
+    assert first_photo(f"Text\n\n{fig}\n\n{photo}") == "https://upload.wikimedia.org/wikipedia/commons/b/b1/R%C3%B6kstenen_1.JPG"
+    assert first_photo(f"Text\n\n{fig}") == "/api/blog/figures/0123456789abcdef.png"
+    assert first_photo(f"Text\n\n{fig}", alt=True) == "Karta"
+    assert first_photo("Bara text.") is None

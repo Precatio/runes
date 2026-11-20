@@ -6,10 +6,11 @@ import { useEffect, useRef } from "react";
 import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { inOrder, type Order } from "@/lib/featured";
 import { useLanguage } from "@/components/LanguageContext";
-import { cardImage, commonsSrcSet, readerPath } from "@/lib/blogSeo";
+import { cardImage, commonsSrcSet, isFigure, readerPath } from "@/lib/blogSeo";
 import LabelChips from "@/components/LabelChips";
 
-// The article's first photo, or a rune on the page colour when it has none. The first card is in the first view, so its
+// The article's first photo, its first own figure when it has no photo (drawn whole on the page colour), or a rune on
+// the page colour when it has neither. The first card is in the first view, so its
 // photo is fetched at once (eager), the others when they come near. big: the article of the week's wide card
 export function Picture({ post, big, className, eager = false }: { post: BlogPost; big: boolean; className: string; eager?: boolean }) {
   if (!post.image) {
@@ -20,7 +21,7 @@ export function Picture({ post, big, className, eager = false }: { post: BlogPos
     );
   }
   return (
-    <div className={`${className} overflow-hidden bg-slate-200`}>
+    <div className={`${className} overflow-hidden ${isFigure(post.image) ? "bg-[#f3ede4]" : "bg-slate-200"}`}>
       <CardPhoto post={post} image={post.image} big={big} eager={eager} />
     </div>
   );
@@ -80,7 +81,7 @@ function CardPhoto({ post, image, big, eager }: { post: BlogPost; image: string;
     <img ref={ref} src={cardImage(post, big ? 960 : 500)} srcSet={commonsSrcSet(image, w, big ? BIG_WIDTHS : SMALL_WIDTHS, 1)}
       sizes={w ? cardSizes(big, w, h) : undefined} alt={post.image_alt || post.title}
       loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : undefined} decoding="async"
-      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+      className={`h-full w-full transition-transform duration-500 group-hover:scale-105 ${isFigure(image) ? "object-contain p-2" : "object-cover"}`} />
   );
 }
 

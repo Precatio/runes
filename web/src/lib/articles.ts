@@ -14,9 +14,11 @@ interface Snapshot { exported_at: string | null; posts: BlogPost[] }
 
 const isLive = (p: BlogPost, now = Date.now()) => !p.publishedAt || Date.parse(p.publishedAt) <= now;
 const exported = () => (snapshot as Snapshot).posts.filter(p => isLive(p));
-// The list carries no article texts, as from the analysis engine, but the first photo for the thumbnail
+// The list carries no article texts, as from the analysis engine, but the first photo for the thumbnail – or, when the
+// article has no Commons photo, its first own figure (the exported /figurer/ copy), as api/routers/blog.first_photo
 const listed = ({ body, body_en: _e, ...p }: BlogPost) => {
-  const photo = pictures(body ?? "").find(x => /wikimedia\.org/.test(x.src));
+  const pics = pictures(body ?? "");
+  const photo = pics.find(x => /wikimedia\.org/.test(x.src)) ?? pics.find(x => /\/(figurer|api\/blog\/figures)\//.test(x.src));
   const words = (t?: string | null) => (t ?? "").split(/\s+/).filter(Boolean).length;  // for the reading time
   return { ...p, image: photo?.src ?? null, image_alt: photo?.alt || null, words: words(body), words_en: words(_e) } as BlogPost;
 };
