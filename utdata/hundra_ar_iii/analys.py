@@ -1,4 +1,5 @@
-"""Hundra år av runfrågor III – måtten M1–M3, M5, M6 enligt analysplaner/2026-11-20-hundra-ar-III.md (låst c5a33b6);
+"""Hundra år av runfrågor III – måtten M1–M3, M5, M6 enligt analysplaner/2026-11-20-hundra-ar-III.md (låst c5a33b6) och
+tillägg 1 (67477c4: bara stenar vars signum mönstret kan hitta);
 M4 i analys_m4.R. Läser data/cache/hundra_ar_iii/omnamnanden.csv (omnamnanden.py) och skriver
 data/cache/hundra_ar_iii/stenar.csv (en rad per runsten, till R) och utdata/hundra_ar_iii/matt.json.
     .venv/bin/python utdata/hundra_ar_iii/analys.py"""
@@ -33,8 +34,22 @@ def length(r):
     return len(re.findall(r"[a-zþæøåöäðRʀ]", t, flags=re.I))
 
 
+def measurable(signa: list[str]) -> set[str]:
+    """Tillägg 1: stones whose own signum the pattern finds and folds back to the same stone."""
+    from src.signum import fold_signum
+    rx = literature.signum_pattern(sorted({s.split()[0] for s in signa}))
+    out = set()
+    for s in signa:
+        m = rx.search(s)
+        if m and fold_signum(f"{m.group(1)} {m.group(2)}") == fold_signum(s):
+            out.add(s)
+    return out
+
+
 def main():
-    R = [r for r in store().inscriptions if is_runestone(r)]
+    ALL = [r for r in store().inscriptions if is_runestone(r)]
+    ok = measurable([r["signum"] for r in ALL])
+    R = [r for r in ALL if r["signum"] in ok]
     land = Counter(r["signum"].split()[0] for r in R)
     rows = list(csv.DictReader(open(os.path.join(CACHE, "omnamnanden.csv"), encoding="utf-8")))
     J = [x for x in rows if x["source"] != "avhandling"]
@@ -42,7 +57,8 @@ def main():
     nj = Counter(x["signum"] for x in J)
     nt = Counter(x["signum"] for x in T)
     out = {"n_stones": len(R), "n_journal_pairs": len(J), "n_thesis_pairs": len(T),
-           "n_journal_texts": len({x["text"] for x in J}), "land_stones": dict(land)}
+           "n_journal_texts": len({x["text"] for x in J}), "land_stones": dict(land),
+           "n_all": len(ALL), "unmeasurable": dict(Counter(r["signum"].split()[0] for r in ALL if r["signum"] not in ok))}
 
     # M1 per decade (1906–1949 pooled)
     per = defaultdict(list)
