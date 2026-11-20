@@ -3,7 +3,11 @@ med tesseract swe+isl+eng 2026-10-30) som en tabell per uppslag: namnet som Pete
 fornvästnordiska formen (raden "Fvn."), artikelblocket (till nästa uppslag) och en jämförelsenyckel som för samman
 Petersons runsvenska former med Rundatas normalisering (Biorn = Bjôrn, Froysteinn = Freysteinn, UlfR = Ulfr, OCR:ns
 P för Þ). Skriver data/cache/literature/peterson2007_namn.csv (utanför kodförrådet) och peterson_kontroll.txt här.
-    .venv/bin/python utdata/litteraturdata/peterson_namn.py"""
+    .venv/bin/python utdata/litteraturdata/peterson_namn.py
+
+ERSATT 2026-11-20 av scripts/peterson_ocr.py + scripts/peterson_lexikon.py (ny teckenigenkänning, kontroll mot Rundata).
+Skriptet skulle skriva över den nya tabellen och körs därför bara med PETERSON_GAMMAL=1; den gamla tabellen finns kvar
+som data/cache/literature/peterson2007_namn_fore_2026-11-20.csv."""
 import csv
 import os
 import re
@@ -11,6 +15,9 @@ import subprocess
 import sys
 import unicodedata
 from collections import Counter
+
+if os.environ.get("PETERSON_GAMMAL") != "1":
+    sys.exit("Ersatt av scripts/peterson_lexikon.py (2026-11-20); sätt PETERSON_GAMMAL=1 för att ändå köra den gamla tolkningen.")
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 PDF = os.environ.get("PETERSON_PDF", "/Volumes/2TB/litteratur/peterson2007_runnamnslexikon.pdf")
