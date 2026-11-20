@@ -70,7 +70,7 @@ artiklar, Verkstaden, Metodhörnan, ”Ett påstående från förr, prövat” o
 - Viktor publicerar, och publicerade artiklar ändras bara efter hans besked, via Firestore;
 - varje synlig nyhet får en notis;
 - **språkmodellerna nämns som Anthropics Claude**, kort, i metodstycket, aldrig som ”AI”;
-- **det vi behåller** (Viktor 10 nov): hur varje fråga prövas, påståendedatabasen och relevansmotiveringarna stannar hos oss
+- **det vi behåller** (Viktor 10 nov): hur varje fråga prövas, påståendedatabasen och relevansmotiveringarna stannar hos oss. *Rättat 20 nov:* filerna hade kommit med i det publika repot omkring 10 nov; de togs bort ur repot och ignoreras från 20 nov (Viktor: "ta bort framåt"), men finns kvar i historiken och kan finnas i Zenodo-arkivet för 3.1.0,
   tills studien eller huvudrapporten är publicerad;
 - **varje forskningsrapport** får Google Scholar-taggar, PDF på webbplatsen (`scripts/rapport_pdf_webb.py`) och data som
   dataset på Zenodo (`scripts/zenodo_dataset/`).

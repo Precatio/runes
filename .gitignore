@@ -64,3 +64,13 @@ data/*.fore-*
 web/test-results/
 web/playwright-report/
 web/.next-e2e/
+
+# Litteraturgenomgången är internt underlag (Viktor 2026-11-20, PUBLICERINGSPLAN.md "det vi behåller"): frågelistan,
+# påståendedatabasen, relevansmotiveringarna, SYNTES och anteckningarna stannar lokalt tills studierna är publicerade.
+# Skripten (*.py) får följa med. Lägg INTE till datafilerna med `git add -f`.
+utdata/litteraturgenomgang/**/*.jsonl
+utdata/litteraturgenomgang/**/*.json
+utdata/litteraturgenomgang/**/*.md
+utdata/litteraturgenomgang/**/*.xlsx
+utdata/litteraturgenomgang/**/*.csv
+utdata/rapporter/rapport0*
