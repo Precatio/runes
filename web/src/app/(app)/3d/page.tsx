@@ -23,7 +23,7 @@ import { METRICS, type SliceMetrics } from "@/lib/metrics";
 import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
 import dynamic from 'next/dynamic';
 import { API_URL } from "@/lib/api";
-import { DEFAULT_DEPTH, fetchDepthField, type DepthField, type DepthSettings } from "@/lib/depthField";
+import { DEFAULT_DEPTH, depthMapPng, fetchDepthField, type DepthField, type DepthSettings } from "@/lib/depthField";
 import type { ProbeChannel } from "@/components/threeD/DepthColorPanel";
 
 // The RTI and image tabs are opened on few visits (the mesh tab is the default), so their code loads with the tab
@@ -658,10 +658,30 @@ function ThreeDPageContent() {
       setDepthBusy(false);
     }
   };
+  const [depthPanel, setDepthPanel] = useState(false);
   const toggleDepth = () => {
-    if (depthOn) setDepthOn(false);
-    else if (depthField) setDepthOn(true);
+    if (depthOn || depthPanel) { setDepthOn(false); setDepthPanel(false); return; }
+    setDepthPanel(true);
+    if (depthField) setDepthOn(true);
     else loadDepth(false);
+  };
+  const [snapshotTrigger, setSnapshotTrigger] = useState(0);
+  // the depth map straight from above, at the grid's full resolution doubled, as a PNG named after the scan
+  const exportDepthMap = async () => {
+    if (!depthField) return;
+    try {
+      // enlarged to about 3 000 px on the long side (the scan's own grid is often ~1 mm; nothing finer is invented)
+      const k = Math.max(2, Math.ceil(3000 / Math.max(depthField.width, depthField.height)));
+      const blob = await depthMapPng(depthField, depthSettings, k);
+      const a = document.createElement("a");
+      const base = (meshInfo?.filename ?? "sten").replace(/\.[^.]+$/, "").replace(/[^\wåäöÅÄÖ.-]+/g, "_");
+      a.href = URL.createObjectURL(blob);
+      a.download = `${base}_djupkarta_${depthField.width * k}x${depthField.height * k}.png`;
+      a.click();
+      window.setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    } catch (e) {
+      setDepthError(errorText(e, "Djupkartan kunde inte sparas."));
+    }
   };
 
   const handleFileUpload = async (selectedFile: File | null) => {
@@ -680,6 +700,7 @@ function ThreeDPageContent() {
     setDepthOn(false);
     setDepthField(null);
     setDepthError(null);
+    setDepthPanel(false);
     sessionRef.current = null;
     if (!selectedFile) return;
 
@@ -1027,13 +1048,17 @@ function ThreeDPageContent() {
               onAutoSnapRequest={handleAutoSnapRequest}
               depth={depthView}
               onDepthProbe={onDepthProbe}
+              depthActive={depthOn || depthPanel}
+              onDepthToggle={meshInfo ? toggleDepth : undefined}
+              snapshotTrigger={snapshotTrigger}
+              overlay={meshInfo && depthPanel ? (
+                <DepthColorPanel field={depthOn ? depthField : null} settings={depthSettings} onChange={setDepthSettings}
+                  busy={depthBusy} error={depthError} probeChannel={probeChannel} onClose={toggleDepth}
+                  onFromView={() => loadDepth(true)} onSnapshot={() => setSnapshotTrigger(n => n + 1)}
+                  onExportMap={exportDepthMap} />
+              ) : undefined}
             />
           </div>
-          {meshInfo && (
-            <DepthColorPanel field={depthField} settings={depthSettings} onChange={setDepthSettings} busy={depthBusy}
-              error={depthError} probeChannel={probeChannel} on={depthOn} onToggle={toggleDepth}
-              onFromView={() => loadDepth(true)} />
-          )}
 
           {measureMode === "auto" && autoResult && autoResult.counts.accepted > 0 && (
             <AutoGrooveReview

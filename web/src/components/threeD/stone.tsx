@@ -135,6 +135,7 @@ export function StoneMesh({ geometry, onClick, resetCounter, topografyMode, plan
     applyDepth(depthMat, du, {
       tex, field, edges: bandEdges(field, settings.scheme), strength: settings.strength, peel: settings.peel,
       plan: settings.peelMode === "plan", plane: hRange[1] - settings.plane * (hRange[1] - hRange[0]), contour: settings.contour,
+      only: settings.only,
     });
   }, [field, settings, tex, hRange, du, depthMat]);
   const depthMesh = useRef<THREE.Mesh>(null);

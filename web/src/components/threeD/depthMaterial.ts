@@ -26,6 +26,7 @@ export function makeDepthMaterial(): { material: THREE.MeshStandardMaterial; uni
     uPeelMode: { value: 0 },
     uPlane: { value: 1e9 },
     uContour: { value: 0 },
+    uOnly: { value: -1 },
   };
   const material = new THREE.MeshStandardMaterial({ color: "#a0a5aa", roughness: 0.7, metalness: 0 });
   material.onBeforeCompile = (shader) => {
@@ -40,6 +41,7 @@ uniform vec3 uU; uniform vec3 uV; uniform vec3 uN;
 uniform vec2 uOrigin; uniform vec2 uSize;
 uniform vec4 uEdges; uniform vec3 uC0; uniform vec3 uC1; uniform vec3 uC2; uniform vec3 uC3;
 uniform float uStrength; uniform float uPeel; uniform int uPeelMode; uniform float uPlane; uniform float uContour;
+uniform int uOnly;
 varying vec3 vObjPos; varying vec3 vObjNormal;`)
       .replace("#include <color_fragment>", `#include <color_fragment>
 {
@@ -51,10 +53,12 @@ varying vec3 vObjPos; varying vec3 vObjNormal;`)
   if (gl_FrontFacing && dot(normalize(vObjNormal), uN) > 0.2 && uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0)
     d = texture2D(uDepthTex, uv).r;
   if (d > -999.0) {
-    if (uPeelMode == 0 && d < uPeel) {
-      diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.94, 0.93, 0.91), 0.8);  // peeled off: pale
-    } else if (d >= uEdges.x) {
-      vec3 c = d >= uEdges.w ? uC3 : d >= uEdges.z ? uC2 : d >= uEdges.y ? uC1 : uC0;
+    int band = d >= uEdges.w ? 3 : d >= uEdges.z ? 2 : d >= uEdges.y ? 1 : d >= uEdges.x ? 0 : -1;
+    // peeled off, or outside the one band chosen: pale
+    if ((uPeelMode == 0 && d < uPeel) || (uOnly >= 0 && band != uOnly)) {
+      diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.94, 0.93, 0.91), 0.8);
+    } else if (band >= 0) {
+      vec3 c = band == 3 ? uC3 : band == 2 ? uC2 : band == 1 ? uC1 : uC0;
       diffuseColor.rgb = mix(diffuseColor.rgb, c, uStrength);
     }
     if (uContour > 0.0) {
@@ -66,7 +70,7 @@ varying vec3 vObjPos; varying vec3 vObjNormal;`)
   if (!gl_FrontFacing) diffuseColor.rgb = vec3(0.22, 0.24, 0.27);  // the inside, seen through a flat cut
 }`);
   };
-  material.customProgramCacheKey = () => "vitki-depth-colour-1";
+  material.customProgramCacheKey = () => "vitki-depth-colour-2";
   return { material, uniforms };
 }
 
@@ -96,7 +100,7 @@ export function heightRange(geometry: THREE.BufferGeometry, n: [number, number, 
 /** Sets the depth material from the field and the panel (a function, so the component does not mutate its state). */
 export function applyDepth(material: THREE.MeshStandardMaterial, u: DepthUniforms, v: {
   tex: THREE.Texture | null; field: DepthField; edges: [number, number, number, number]; strength: number; peel: number;
-  plan: boolean; plane: number; contour: number;
+  plan: boolean; plane: number; contour: number; only: number | null;
 }) {
   const f = v.field;
   u.uDepthTex.value = v.tex;
@@ -111,6 +115,7 @@ export function applyDepth(material: THREE.MeshStandardMaterial, u: DepthUniform
   u.uPeelMode.value = v.plan ? 1 : 0;
   u.uPlane.value = v.plane;
   u.uContour.value = v.contour;
+  u.uOnly.value = v.only ?? -1;
   const side = v.plan ? THREE.DoubleSide : THREE.FrontSide;  // the inside shows through a flat cut
   if (material.side !== side) {
     material.side = side;

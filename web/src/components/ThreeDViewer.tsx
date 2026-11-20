@@ -72,10 +72,17 @@ export interface ThreeDViewerProps {
   // Djupfärger (METHODS.md 2d4): the depth grid and the panel's settings; null/undefined = the ordinary stone
   depth?: { field: DepthField; settings: DepthSettings } | null;
   onDepthProbe?: (mm: number | null) => void;
+  // The toolbar's depth button (replaces the old grey "Topografi" mode when given) and the panel shown inside the view
+  depthActive?: boolean;
+  onDepthToggle?: () => void;
+  overlay?: React.ReactNode;
+  // Bumped by the page to save the view as a high-resolution picture (the toolbar's download button does the same)
+  snapshotTrigger?: number;
 }
 
 export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, onAutoSnapRequest, cutoffDepth = 0, layerThickness = 100, slicerMode = 'flat', preCentered = false, emptyMessage,
-  clickMode = 'points', onSingleClick, onClearMarkers, markers, autoPoints, viewDirRef, depth, onDepthProbe }: ThreeDViewerProps) {
+  clickMode = 'points', onSingleClick, onClearMarkers, markers, autoPoints, viewDirRef, depth, onDepthProbe,
+  depthActive = false, onDepthToggle, overlay, snapshotTrigger = 0 }: ThreeDViewerProps) {
   const [resetCounter, setResetCounter] = useState(0);
   const [clearCounter, setClearCounter] = useState(0);
   const [snapCounter, setSnapCounter] = useState(0);
@@ -118,8 +125,17 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
   const [isCompilingTopo] = useState(false);
   
   const toggleTopography = () => {
-    setTopografyMode(prev => !prev);
+    if (onDepthToggle) onDepthToggle();
+    else setTopografyMode(prev => !prev);
   };
+  const topoActive = onDepthToggle ? depthActive : topografyMode;
+  // the page asks for a picture of the view (Djupfärger's export button)
+  const [lastSnap, setLastSnap] = useState(snapshotTrigger);
+  if (snapshotTrigger !== lastSnap) {
+    setLastSnap(snapshotTrigger);
+    setSnapMessage("Renderar bilden …");
+    setSnapCounterImg(c => c + 1);
+  }
 
   return (
     <div className="w-full h-full rounded-[24px] overflow-hidden relative cursor-crosshair">
@@ -184,9 +200,10 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
                 </svg>
               </button>
 
-              <button type="button" onClick={toggleTopography} disabled={isCompilingTopo}
-                className={`bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-md border transition-all flex items-center justify-center ${topografyMode ? "text-[#b7410e] border-[#b7410e]/30 bg-orange-50" : "text-slate-700 border-white/50 hover:bg-white"}`}
-                title="Topografi (djupfärgning)">
+              <button type="button" onClick={toggleTopography} disabled={isCompilingTopo} aria-pressed={topoActive}
+                className={`bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-md border transition-all flex items-center justify-center gap-1.5 ${topoActive ? "text-[#b7410e] border-[#b7410e]/30 bg-orange-50" : "text-slate-700 border-white/50 hover:bg-white"}`}
+                title={onDepthToggle ? "Djupfärger: färga stenen efter djupet, skala av lager" : "Topografi (djupfärgning)"}>
+                {onDepthToggle && <span className="text-xs font-bold px-0.5">Djupfärger</span>}
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
                 </svg>
@@ -320,6 +337,12 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
               {snapMessage}
             </div>
           )}
+          {overlay && (
+            <div className="absolute bottom-3 left-3 z-20 w-[min(620px,calc(100%-24px))] max-h-[60%] overflow-auto rounded-2xl shadow-lg">
+              {overlay}
+            </div>
+          )}
+          {!overlay && (
           <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-end items-end gap-2 pointer-events-none">
             {clickMode === 'view' && file && (
               <button type="button" onClick={() => setFaceCounter(c => c + 1)}
@@ -337,6 +360,7 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
                 : <strong className="text-slate-800">Shift + klick: lägg till mätpunkt (Alt + Shift: ny linje)</strong>}
             </div>
           </div>
+          )}
         </>
       )}
 

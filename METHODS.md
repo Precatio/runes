@@ -1568,6 +1568,14 @@ mätt som gemensam yta delat med sammanlagd yta).
   plana snittet följer inte stenens form, så på en välvd eller lutande sten försvinner höga partier först oavsett
   ristning.
 * **Djupkurvor** var 0,25, 0,5 eller 1 mm, och djupet under pekaren i mm.
+* **Ett djup i taget.** Ett klick på ett färgband (till exempel "3 mm och djupare") visar bara det bandet; allt annat
+  blir blekt.
+* **Bilder.** Vyn i 3D-fönstret sparas i hög upplösning (samma som verktygsradens nedladdning). Djupkartan rakt
+  uppifrån (norr uppåt, u åt höger) sparas med samma färger, avskalning och djupkurvor över en skuggning av djupet
+  självt och ett skalstreck, förstorad till omkring 3 000 bildpunkter; den verkliga upplösningen är rutnätets, ofta
+  omkring 1 mm, och ingenting finare hittas på.
+* **Var den finns.** Knappen Djupfärger i 3D-fönstrets verktygsrad (som ersätter det äldre gråskaleläget
+  Topografi); reglagen ligger i fönstret.
 * **Vad det inte är.** Visningen är ett hjälpmedel för att se, inte ett mått på vad som är runor: grunda, vittrade
   runor är inte djupare än vittringsgropar (se 2d2), och färgen skiljer inte på dem.
 
