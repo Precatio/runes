@@ -54,10 +54,13 @@ export interface TextModelReading {
     sv: string; en: string; draft?: number;
     // the reading word by word: runic Swedish/Danish as the model reads it, and standard Old West Norse
     words?: { rsv: string; ows: string; filled: boolean; unknown: boolean }[];
+    gloss?: { sv: string; en: string }[];  // one per reading word (strict Swedish: Old Norse where no checked word)
   };
+  // the editors' translations of Rundata's reading: Runor 2020's Swedish (when there is one) and Rundata's English
+  editors?: { sv: string | null; en: string | null; sv_source: string | null; en_source: string };
   // the blind reading set against Rundata's normalization of the stone, after reading (display only)
   compare?: {
-    pairs: { model: string | null; rundata: string | null; same: boolean; filled: boolean }[];
+    pairs: { model: string | null; rundata: string | null; same: boolean; filled: boolean; i: number | null }[];
     n_same: number; n_pairs: number; filled_same: number; filled: number;
   };
   validation: {

@@ -2195,12 +2195,16 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     väger tyngre (simulerat: hela ord 56 → 81 procent).
 
 * **Läsningen sammanställd och jämförd med Rundata (2026-11-20, `src/textmodel.py`: `word_forms`, `compare_rundata`):**
-  * **Fyra former.** Panelen visar modellens läsning ord för ord på runsvenska/rundanska (som modellen läser), på
-    fornvästnordiska (den form Rundatas `normalization_ows` oftast ger ordet, `rungloss.ows_map` över alla inskrifter;
-    en form räknas som namn när Rundata skriver den som namn oftare än inte) och som utkast på modern svenska och
-    engelska (ord för ord ur ordlistorna). Ord som rymmer runor modellen fyllt i markeras. Utkastets svenska ordlista
-    utökades med de vanligaste engelska glosorna som saknade svensk motsvarighet (`rungloss.SV_MORE`, utkast 2); den
-    strikta listan i Forskningsluckor använder bara de kontrollerade orden och är oförändrad.
+  * **Läsningen och översättningarna.** Panelen visar modellens läsning ord för ord på runsvenska/rundanska (som
+    modellen läser) och på fornvästnordiska (den form Rundatas `normalization_ows` oftast ger ordet,
+    `rungloss.ows_map` över alla inskrifter; en form räknas som namn när Rundata skriver den som namn oftare än inte).
+    Ord som rymmer runor modellen fyllt i markeras. Som översättning visas utgivarnas: Runor 2020:s svenska där den
+    finns och Rundatas engelska. Ett utkast ord för ord ur ordlistorna blir ingen svenska (på Karlevistenen, Öl 1,
+    blev det obegripligt), så det visas inte längre som text. Där modellen läser ett annat ord än Rundata eller har
+    fyllt i runor visas i stället ordets betydelse ur ordlistan i strikt läge (ordet självt när ordlistan inte har
+    något kontrollerat svenskt ord, ett namn som det är läst). Utkastets ordlista utökades också med de vanligaste
+    engelska glosorna som saknade svensk motsvarighet (`rungloss.SV_MORE`, bara i det lösa läget; den strikta listan i
+    Forskningsluckor är oförändrad).
   * **Jämförelsen med Rundata görs efter läsningen.** Den blinda läsningen ställs mot Rundatas normalisering av
     stenen ord för ord (difflib på orden i enkla bokstäver). Ett par räknas som samma ord när orden är lika i enkla
     bokstäver, eller för ord om minst fem bokstäver när `same_word` säger ja (`same_word`:s likhetsmått låter annars

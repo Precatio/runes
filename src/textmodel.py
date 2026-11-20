@@ -348,11 +348,17 @@ def analyze(signum: str, allowed: dict | None = None, loo: bool = False) -> dict
     return _with_forms(out)
 
 
-DRAFT = 2  # the draft glossary's version: 2 = SV_MORE in rungloss (2026-11-20)
+DRAFT = 4  # the draft's version: 2 = SV_MORE in rungloss; 3 = a gloss per word; 4 = the glosses strict (2026-11-20)
 
 
 def _drafts(vocab: list, b: dict) -> dict:
-    return {"sv": rg.swedish(vocab, b["en"], b["da"], b["ows"]), "en": b["en"].translate(vocab), "draft": DRAFT}
+    """The word-by-word drafts: the whole text (kept for the API) and one gloss per word of the reading, shown only for
+    the words where the model reads otherwise than Rundata or has filled runes (a word-by-word draft is no Swedish)."""
+    # strict: a word whose gloss has no checked Swedish word keeps its Old Norse form, and a name stays as read
+    gloss = [{"sv": "" if w == "<unk>" else rg.swedish([w], b["en"], b["da"], b["ows"], reorder=False, strict=True),
+              "en": "" if w == "<unk>" else b["en"].translate([w])} for w in vocab]
+    return {"sv": rg.swedish(vocab, b["en"], b["da"], b["ows"]), "en": b["en"].translate(vocab), "gloss": gloss,
+            "draft": DRAFT}
 
 
 def _save(path: str, out: dict) -> None:
@@ -372,6 +378,13 @@ def _with_forms(out: dict) -> dict:
         r = _records()["by"].get(out.get("signum"))
         if r is not None:
             out["compare"] = compare_rundata(out["reading"], r.get("normalization") or "")
+            # the editors' translations: Runor 2020's Swedish where it has one, Rundata's English (shown as the
+            # translation; the model's glosses only where its reading differs)
+            from src import runor
+            ro = runor.for_inscription(r) or {}
+            out["editors"] = {"sv": ro.get("translation_sv"), "en": r.get("translation_en") or None,
+                              "sv_source": "Runor 2020 (Riksantikvarieämbetet), Samnordisk runtextdatabas" if ro.get("translation_sv") else None,
+                              "en_source": "Rundata (Samnordisk runtextdatabas, Uppsala universitet)"}
     return out
 
 
@@ -397,7 +410,8 @@ def compare_rundata(reading: list[dict], normalization: str) -> dict:
             fb = rl._fold(y or "").replace("w", "v")
             # short words only when equal: same_word's likeness ratio lets þoru pass for þry
             same = bool(fa and fb and (fa == fb or (min(len(fa), len(fb)) >= 5 and rl.same_word(x["word"], y))))
-            pairs.append({"model": m, "rundata": y, "same": same, "filled": bool(x and x.get("filled"))})
+            pairs.append({"model": m, "rundata": y, "same": same, "filled": bool(x and x.get("filled")),
+                          "i": (i1 + k) if x is not None else None})
     both = [p for p in pairs if p["model"] and p["rundata"]]
     return {"pairs": pairs, "n_same": sum(p["same"] for p in pairs), "n_pairs": len(both),
             "filled_same": sum(1 for p in pairs if p["filled"] and p["same"]),

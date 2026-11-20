@@ -404,18 +404,48 @@ export default function TextModelPanel({ signum }: { signum: string }) {
                     </div>
                   </>
                 )}
-                <div>
-                  <div className="text-[11px] text-slate-500">Modern svenska – utkast</div>
-                  <p className="text-sm text-slate-900" translate="no">{data.translation.sv}</p>
-                </div>
-                <div>
-                  <div className="text-[11px] text-slate-500">Engelska – utkast</div>
-                  <p className="text-sm text-slate-700" translate="no">{data.translation.en}</p>
-                </div>
+                {data.editors && (
+                  <>
+                    <div>
+                      <div className="text-[11px] text-slate-500">Modern svenska – utgivarnas översättning</div>
+                      {data.editors.sv
+                        ? <p className="text-sm text-slate-900" translate="no">{data.editors.sv}</p>
+                        : <p className="text-sm text-slate-500">Runor har ingen svensk översättning av den här inskriften.</p>}
+                    </div>
+                    {data.editors.en && (
+                      <div>
+                        <div className="text-[11px] text-slate-500">Engelska – Rundatas översättning</div>
+                        <p className="text-sm text-slate-700" translate="no">{data.editors.en}</p>
+                      </div>
+                    )}
+                  </>
+                )}
+                {data.compare && data.translation.gloss && data.translation.words && (() => {
+                  const diff = data.compare.pairs.filter(p => p.i != null && (!p.same || p.filled) && !data.translation!.words![p.i!].unknown);
+                  return diff.length === 0 ? (
+                    <p className="text-[11px] text-slate-500">
+                      Modellen läser samma ord som Rundata i hela texten, så utgivarnas översättning gäller också modellens läsning.
+                    </p>
+                  ) : (
+                    <div>
+                      <div className="text-[11px] text-slate-500">Där modellen läser annorlunda eller har fyllt i – ord för ord</div>
+                      <div className="mt-1 flex flex-wrap gap-1.5" translate="no">
+                        {diff.map((p, k) => (
+                          <span key={k} className="inline-flex flex-col items-center rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs">
+                            <span className={`italic text-slate-900 ${p.filled ? "underline decoration-dotted decoration-[#b7410e] underline-offset-4" : ""}`}>{data.translation!.words![p.i!].rsv}</span>
+                            <span className="text-slate-700">{data.translation!.gloss![p.i!].sv || "–"}</span>
+                            {p.rundata && <span className="text-[10px] text-slate-400">Rundata: {p.rundata}</span>}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
                 <p className="text-[11px] text-slate-500">
                   Ord med prickad understrykning innehåller runor som modellen har fyllt i. Fornvästnordiskan är den form
-                  Rundata oftast ger varje ord. Svenskan och engelskan är utkast ord för ord ur modellens läsning, via de
-                  danska och engelska översättningarna i Danske Runeindskrifter och Rundata – inte en tolkning.
+                  Rundata oftast ger varje ord. Översättningarna är utgivarnas och gäller Rundatas läsning; där modellen läser
+                  ett annat ord visas bara ordets betydelse ur ordlistan, eller ordet självt när ordlistan inte har något
+                  säkert svenskt ord. En översättning ord för ord blir ingen svenska.
                 </p>
               </section>
             )}
