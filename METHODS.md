@@ -2237,10 +2237,27 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     modellversionen. Inskriftsexporten (CSV och Excel) får kolumnen *Vitkis ifyllningar (status och proveniens)*, och
     R-paketet får filen `data/vitki_ifyllningar.csv` bredvid `corpus.csv`. Korpusfilen för R ändras inte: en bekräftad
     ifyllning ska inte ändra korpusens fingeravtryck och tvinga fram en ny beräkning av alla R-resultat.
-  * **Analyserna.** Rundata är förvalet. Där det är meningsfullt kan de bekräftade ifyllningarna slås på, och resultatet
-    säger det; hittills gäller det ordräkningen (`GET /api/rundata/words?fills=true`, som anger hur många ord som lagts
-    till). Ett ord som Rundata redan har på stenen (en lucka som Rundata har fyllt med samma ord) räknas inte två
-    gånger. Förslag räknas aldrig.
+  * **Analyserna (beslut 2026-11-20).** Rundata är förvalet, och korpusfilen för R (`corpus.csv`) innehåller aldrig
+    Vitkis ifyllningar: den är Rundatas text, och dess fingeravtryck ska inte ändras av en bekräftelse. Skälen mot att
+    räkna in ifyllningarna som förval: (1) *cirkelresonemang* – modellen fyller luckor ur korpusens mönster (formler,
+    namn på närliggande stenar, ristarens vanor), och prov som mäter samma mönster skulle få tillbaka modellens egna
+    antaganden; (2) *urval* – modellen är säkrast på vanliga ord och namn, så ifyllt material är mer typiskt än det som
+    stod där; (3) *stabila siffror* – publicerade resultat ska inte flytta sig med varje bekräftelse; (4) *proveniens* –
+    utgivarens läsning och Vitkis ska gå att skilja åt; (5) vinsten är liten, några tiotal ord bland tusentals stenar.
+    * **Valbar kontroll.** Bekräftade ifyllningar kan slås på som ett extra steg i robusthetsstegen ("håller resultatet
+      också med Vitkis ifyllningar?"). Ifyllningarna ligger en rad per ifyllning i `data/vitki_ifyllningar.csv` i
+      reproducerbarhetspaketet (parametern `vitki_fills` i `KOR_OM.R`). I R läser `read_vitki_fills()` bara de
+      bekräftade, och `with_vitki_fills(d, fills, modul)` lägger deras ord sist i stenens normalisering (namn med
+      citattecken som i Rundata); ett ord som stenen redan har läggs inte till, så en lucka som Rundata fyllt med samma ord
+      räknas inte två gånger. Drag, kategorier och mönster är Rundatas och ändras inte. Resultatet bär en rad som säger
+      hur många ord som lagts till. Ingen modul gör detta som förval (prövat i `tests/test_r_vitki_fills.py`).
+    * **Förbjudet där det blir cirkulärt.** `with_vitki_fills` vägrar i modulerna som mäter det som modellen bygger sina
+      ifyllningar på (`VITKI_FILLS_FORBIDDEN` i `R/common.R`): namn och namnens geografi (`names`, `people`), formler,
+      ordföljd och ordnätverk (`text`, `messages`, `network`), stavning och dialekt (`dialect`, `chronology`), ristarna
+      (`attribution*`, `anonymous`, `carver_profile`) och mönsterupptäckten (`discovery*`). Samma regel gäller prov
+      utanför R: en ifyllning får aldrig vara underlag i ett prov av namn, formler, stavning eller ristare.
+    * **Ordräkningen i appen** (`GET /api/rundata/words?fills=true`) följer samma regler: bara bekräftade ifyllningar,
+      ett ord som stenen redan har räknas inte två gånger, och svaret anger hur många ord som lagts till.
   * **Spärren mot träning.** Sannolikhetsmodellen tränas och prövas aldrig på Vitkis egna ifyllningar: modellen skulle
     annars lära sig, och bedömas på, sina egna svar. Modellen läser bara Rundata (`rl.load_rundata`); en post som bär en
     ifyllning märks (`vitki_fills.mark`), och `runlm.Model` vägrar ta emot den. `tests/test_vitki_fills.py` prövar
