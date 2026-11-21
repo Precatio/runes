@@ -45,7 +45,8 @@ utgåvor och används bara för räkning och korta citat.
 
 **Mönstret**: *tröll* är sagornas vanligaste väsensord, i både fornaldarsagorna och islänningasagorna. Myten
 (Eddan och Snorre) domineras i stället av namngivna jättar och odjur. Dvärgarna finns i myten och fornaldarsagorna, men
-inte en enda gång i islänningasagornas prosa. Fylgjor hör nästan bara till islänningasagorna (13 av 15 i prosan).
+inte en enda gång i islänningasagornas prosa. Fylgjor är islänningasagornas tredje vanligaste väsensord (13), men
+per ord lika vanliga i fornaldarsagorna (6 på en tredjedel så mycket text).
 
 ## V3 Vers mot prosa
 I samma sagor är versen 10–25 gånger tätare än prosan (islänningasagor 24 mot 2,2, Heimskringla 21 mot 0,9,
