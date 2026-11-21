@@ -1,0 +1,31 @@
+klass,term,regex
+jättar,jötunn,\bjötun(?!heim)\w*|\bjötn(?:ar|a|um|i|ana|arnir|anna|unum)\b
+jättar,þurs,\b(?:hrím|bergs?)?þurs(?!asker)\w*
+jättar,risi,\b(?:berg|land)?ris(?:i|a|ar|um|ann|anum|arnir|anna|ana|inn)\b|\brisa(?:kyn|ætt|kon)\w*
+jättar,gýgr,\b(?:mar)?gýg(?:r|ur|i|jar|jur|ina|in|jan)\b
+jättar,flagð,\bflag(?:ð|ðs|ði|ða|ðið|ðkon\w*)\b|\bflögð\w*
+jättar,skessa,\bskess(?:a|u|ur|unni|una|an)\b
+jättar,tröll,\btröll(?!skap)\w*|\btroll(?!skap)\w*
+jättar,bergbúi,\bbergbú\w*
+jättar,namngiven jätte,\b(?:Ymi[rs]|Ymi|Þrym\w*|Skrými\w*|Hrungni\w*|Suttung\w*|Vafþrúðni\w*|Hymi[rs]?|Þjaza|Þjaz[ai]|Útgarða-?[Ll]ok\w*|Bergelmi\w*|Aurgelmi\w*|Hræsvelg\w*)\b
+dvärgar,dvergr,\bdverg(?:r|ur|ar|a|um|i|s|inn|arnir|anna|unum|ana)\b
+alver,álfr,\b(?:ljós|dökk|svart)?álf(?:r|ur|ar|a|um|i|s|inn|arnir|anna|unum|ana|ablót\w*|kon\w*)\b
+alver,huldufólk,\bhuldu(?:fólk|mann|kon)\w*
+vättar,vættr,\b(?:land|mein|ó)?vætt(?:r|ur|ir|a|um|ar|ina|irnar|irnir|inn)\b
+diser och nornor,dís,\bdís(?:ir|a|um|ar|ablót\w*|arsal\w*)?\b
+diser och nornor,norn,\bnorn(?:ir|a|um|ar|ina|irnar|agest\w*)?\b
+diser och nornor,valkyrja,\bvalkyrj\w*|\bvalkyri\w*
+diser och nornor,fylgja,\bfylgj(?:u|ur|una|unnar|unni|urnar|an|ukon\w*)\b
+de döda,draugr,\bdraug(?:r|ur|ar|a|um|i|s|inn|arnir|ana|unum)\b
+de döda,aptrganga,\b(?:aptr|aftur|aptur)gang\w*
+de döda,haugbúi,\bhaugbú\w*
+de döda,uppvakningr,\buppvakning\w*
+nattväsen,mara,\bmar(?:a|u)\b
+nattväsen,kveldriða,\b(?:kveld|tún|myrk)rið\w*
+odjur,skrímsl,\bskrímsl\w*
+odjur,finngálkn,\bfinngálkn\w*
+odjur,sjöväsen,\b(?:marbendil|marmennil|hafgufu|hafgufa|lyngbak)\w*
+odjur,namngivet odjur,\b(?:Fáfni\w*|Fenri[rs]\w*|Miðgarðsorm\w*|Jörmungand\w*|Níðhögg\w*|Sleipni\w*|Ratatosk\w*|Hugin\w*|Munin\w*|Auðhuml\w*|Garm(?:r|s|i)?)\b
+kristna väsen,engill,\bengil\w*|\bengl(?:a|ar|um|arnir|anna|i|ana|unum)\b
+kristna väsen,djöfull,\bdjöf(?:ul|l)\w*
+kristna väsen,púki,\bpúk(?:i|a|ar|um)\b
