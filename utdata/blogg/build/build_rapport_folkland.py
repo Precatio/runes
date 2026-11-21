@@ -40,8 +40,21 @@ APP_VERSION = "3.1.0"  # the Vitki version the analysis was made in (tag v3.1.0 
 SITE = "https://vitkirunor.se"
 MALL_SHA = open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().split()[0]
 assert MALL_SHA.startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 1  # never published; the correction before publication is part of version 1 (no change log)
-TODAY = "2026-11-07"  # rapportversionens datum, fast i byggaren
+REPORT_VERSION = 2  # version 1 published 2026-11-07; version 2 adds two map figures and two stone images (change log)
+TODAY = "2026-11-21"  # rapportversionens datum, fast i byggaren
+V1_DATE = "2026-11-07"
+
+# Version 2 (Viktor 2026-11-21: "kan vi dra nytta av våra kartor i Vitki över folklandsgränserna? … några illustrerande
+# exempel"): two screenshots of the Vitki map (Punkter, trait æftiR/at, the layer of the old lands; grey basemap), frozen
+# under their content hash, and Commons images of the two example stones by Öpir
+from src import blog_figures  # noqa: E402
+FIGDIR = os.path.join(ROOT, "utdata", "rapporter", "figurer", "folkland")
+FIG_ALLA = blog_figures.freeze(open(os.path.join(FIGDIR, "folkland_alla.png"), "rb").read())
+FIG_OPIR = blog_figures.freeze(open(os.path.join(FIGDIR, "folkland_opir.png"), "rb").read())
+N_MAP_ALLA, N_MAP_OPIR = 776, 83  # the counts the map showed for the two views (2026-11-21)
+IMG_U1177 = ("https://upload.wikimedia.org/wikipedia/commons/b/b0/U_1177.jpg", "https://commons.wikimedia.org/wiki/File:U_1177.jpg")
+IMG_U181 = ("https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/U_181%2C_%C3%96sseby-Garn.JPG/1280px-U_181%2C_%C3%96sseby-Garn.JPG",
+            "https://commons.wikimedia.org/wiki/File:U_181,_%C3%96sseby-Garn.JPG")
 PLANS = ("2026-11-02-gamla-granser-nya-monster", "2026-11-02-gamla-granser-nya-monster-avvikelse",
          "2026-11-02-folkland-slumpindelning-trappa", "2026-11-02-gransskannern", "2026-11-01-upplands-folkland",
          "2026-11-01-folkland-at-ristare", "2026-11-01-folkland-at-trappa")
@@ -418,6 +431,18 @@ Så ser skillnaden ut på stenarna. Samma ristare, Öpir, skrev *at* på {OPIR['
 - Fjädrundaland, U 749 i Husby-Sjutolft, attribuerad till Balle: {EX['u749']} – *þair litu rasa stan*, ’de lät resa stenen’, med ʀ i *þæiR* skrivet med r-runan ᚱ.
 - Tiundaland, U 974 i Vaksala, attribuerad till Öpir: {EX['u974']} – *þaiR*, samma ord med yr-runan ᛦ.
 
+![Figur 1. æftiR och at på Upplands runstenar]({FIG_ALLA})
+Figur 1. De {N_MAP_ALLA} svenska vikingatida runstenarna i Uppland där prepositionen går att avgöra, med folklanden efter sexårsgärden 1314. Blått: bara *æftiR*. Rostrött: bara *at*. Grönt: båda. Lila: den äldre *aft/æft*. Streckad ring: försvunnen sten. Skärmbild ur kartan i Vitki (punkterna färgade efter språkdraget ”æftiR eller at”, gränslagret Små land). Bild: Vitki, ur Rundata (ODbL); folklanden efter sexårsgärden 1314 och *Det medeltida Sverige*; kartbakgrund © OpenStreetMap-bidragsgivare, i gråskala.
+
+![Figur 2. Öpirs stenar]({FIG_OPIR})
+Figur 2. Samma karta med bara de {N_MAP_OPIR} stenar som Rundata tillskriver Öpir, signerade eller attribuerade. De roströda *at*-stenarna ligger tätast i Tiundaland. I Attundaland skrev samma ristare oftast *æftiR*. Färgerna som i figur 1. Bild: Vitki, ur Rundata (ODbL); kartbakgrund © OpenStreetMap-bidragsgivare, i gråskala.
+
+![U 1177 i Harbo]({IMG_U1177[0]})
+U 1177 i Harbo i Tiundaland, Öpirs sten med *at*. Teckning: Johan Hadorph, public domain, via [Wikimedia Commons]({IMG_U1177[1]}).
+
+![U 181 i Össeby-Garn]({IMG_U181[0]})
+U 181 i Össeby-Garn i Attundaland, Öpirs sten med *æftiR*. Foto: Berig, CC BY 2.5, via [Wikimedia Commons]({IMG_U181[1]}).
+
 **5.3 Känslighetsanalyserna och kalibreringen.** Alla fyra förregistrerade steg håller, som före landrättelsen (då p mellan {pf(min(LAD1.values()))} och {pf(max(LAD1.values()))}):
 - Bara stenar på sin ursprungliga plats ({LAD['pa_plats'][0]} stenar): {LAD['pa_plats'][1]} mot median {LAD['pa_plats'][2]}, p = {pf(LAD['pa_plats'][3])}.
 - Utan de fem flitigaste ristarnas stenar ({LAD['utan_fem_ristare'][0]}): {LAD['utan_fem_ristare'][1]} mot {LAD['utan_fem_ristare'][2]}, p = {pf(LAD['utan_fem_ristare'][3])}.
@@ -478,7 +503,13 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Skillnaderna syns både i hur stenarna skrevs (r för ʀ, monoftongen) och i seden (korset, flera resare). Prepositionen *at* skiljer också, men den skarpa gräns för *at* mellan Tiundaland och Attundaland som vi först såg håller inte när ordet räknas rätt.
 - Att indelningen, eller bygderna den byggde på, fanns redan när stenarna restes är en tolkning som resultatet stöder men inte bevisar; varför gränserna skilde – språk, sed eller verkstäder – avgör provet inte.
 - Smålands små land visar inget motsvarande.
-:::"""
+:::
+
+## Ändringslogg
+
+**Version 1, {V1_DATE}.** Publicerad.
+
+**Version 2, {TODAY}.** Två kartbilder (figur 1 och 2, skärmbilder ur kartan i Vitki med folklandens gränser) och bilder av de två exempelstenarna U 1177 och U 181 lades till i 5.2. Analysen, siffrorna och slutsatsen är oförändrade."""
 
 body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. The English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, Uppland, folkland, hundred, regional variation, permutation test, logistic regression. Competing interests: none. Funding: none.*
 
@@ -546,6 +577,18 @@ This is what the difference looks like on the stones. The same carver, Öpir, wr
 - Fjädrundaland, U 749 at Husby-Sjutolft, attributed to Balle: {EX['u749']} – *þair litu rasa stan*, 'they had the stone raised', with the ʀ of *þæiR* written with the r-rune ᚱ.
 - Tiundaland, U 974 at Vaksala, attributed to Öpir: {EX['u974']} – *þaiR*, the same word with the yr-rune ᛦ.
 
+![Figure 1. æftiR and at on Uppland's runestones]({FIG_ALLA})
+Figure 1. The {N_MAP_ALLA} Swedish Viking-age runestones in Uppland where the preposition can be decided, with the folklands after the six-year tithe of 1314. Blue: only *æftiR*. Rust: only *at*. Green: both. Purple: the older *aft/æft*. Dashed ring: lost stone. Screenshot from the map in Vitki (points coloured by the language trait “æftiR or at”, border layer Small lands). Image: Vitki, from Rundata (ODbL); the folklands after the six-year tithe of 1314 and *Det medeltida Sverige*; basemap © OpenStreetMap contributors, in greyscale.
+
+![Figure 2. Öpir's stones]({FIG_OPIR})
+Figure 2. The same map with only the {N_MAP_OPIR} stones that Rundata ascribes to Öpir, signed or attributed. The rust-red *at* stones are densest in Tiundaland. In Attundaland the same carver mostly wrote *æftiR*. Colours as in Figure 1. Image: Vitki, from Rundata (ODbL); basemap © OpenStreetMap contributors, in greyscale.
+
+![U 1177 at Harbo]({IMG_U1177[0]})
+U 1177 at Harbo in Tiundaland, Öpir's stone with *at*. Drawing: Johan Hadorph, public domain, via [Wikimedia Commons]({IMG_U1177[1]}).
+
+![U 181 at Össeby-Garn]({IMG_U181[0]})
+U 181 at Össeby-Garn in Attundaland, Öpir's stone with *æftiR*. Photo: Berig, CC BY 2.5, via [Wikimedia Commons]({IMG_U181[1]}).
+
 **5.3 The sensitivity analyses and the calibration.** All four pre-registered steps hold, as before the land correction (then p between {pf(min(LAD1.values()), True)} and {pf(max(LAD1.values()), True)}):
 - Only stones in their original place ({LAD['pa_plats'][0]} stones): {LAD['pa_plats'][1]} against a median of {LAD['pa_plats'][2]}, p = {pf(LAD['pa_plats'][3], True)}.
 - Without the stones of the five most prolific carvers ({LAD['utan_fem_ristare'][0]}): {LAD['utan_fem_ristare'][1]} against {LAD['utan_fem_ristare'][2]}, p = {pf(LAD['utan_fem_ristare'][3], True)}.
@@ -606,7 +649,13 @@ The analysis was done in Vitki {APP_VERSION}, an open research tool for runeston
 - The differences show both in how the stones were written (r for ʀ, the monophthong) and in the custom (the cross, several raisers). The preposition *at* also differs, but the sharp border for *at* between Tiundaland and Attundaland that we first saw does not hold when the word is counted correctly.
 - That the division, or the districts it was built on, existed already when the stones were raised is an interpretation the result supports but does not prove; why the borders separated – language, custom or workshops – the test does not decide.
 - Småland's small lands show nothing similar.
-:::"""
+:::
+
+## Change log
+
+**Version 1, {V1_DATE}.** Published.
+
+**Version 2, {TODAY}.** Two map figures (Figures 1 and 2, screenshots from the map in Vitki with the folkland borders) and images of the two example stones U 1177 and U 181 were added in 5.2. The analysis, the figures and the conclusion are unchanged."""
 
 # ---- checks -----------------------------------------------------------------------------------------------------------
 # the plain-words sentence rests on these numbers (mallen version 4): twice the median, 2 of 999, about three in a thousand
@@ -620,7 +669,10 @@ for b, lang in ((body, "sv"), (body_en, "en")):
     head = b.split("## Data")[0]
     assert not re.findall(JARGON, head), re.findall(JARGON, head)
     assert "e83202e01a5e6d27" not in head and "e83202e01a5e6d27" in b  # the corpus version only under Data och kod
-    assert not re.search(r"\]\(/", b), "absoluta länkar"
+    assert not re.search(r"(?<!!)\[[^\]]*\]\(/", b), "absoluta länkar (bilderna undantagna)"
+    imgs = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", b)
+    assert imgs == [FIG_ALLA, FIG_OPIR, IMG_U1177[0], IMG_U181[0]], imgs
+    assert ("Bild: Vitki" if lang == "sv" else "Image: Vitki") in b and "OpenStreetMap" in b
     assert "Någon release" not in b and "No release" not in b
     caps = [ln for ln in b.split("\n") if ln.startswith(("Källa:", "Source:"))]
     assert len(caps) == 1 and caps[0].endswith(CHART_SV if lang == "sv" else CHART_EN), caps
@@ -630,15 +682,21 @@ for b, lang in ((body, "sv"), (body_en, "en")):
 assert "pagan marker" not in body_en.split("The plan's two other")[0].split("## 3. Material")[1]
 assert "bärs alltså inte av bergarten granit" in body and "beror inte på berggrunden" not in body
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 1, 2026-11-07. Tidslinje:")
-assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 1, 2026-11-07. Timeline:")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 2, 2026-11-21. Tidslinje:")
+assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 2, 2026-11-21. Timeline:")
 # the header line as scripts/zenodo_rapporter.py and web/src/lib/report.ts parse it
 _h = body_en.splitlines()[0].strip("* ")
 assert re.search(r"Report version (\d+), (\d{4}-\d{2}-\d{2})", _h) and re.search(r"(?:made|done) in Vitki (\d+(?:\.\d+)*)", _h)
 assert re.search(r"Keywords: ([^.]+)\.", _h) and "CC BY 4.0" in _h
 assert "*" not in TL_SV + TL_EN  # the header line is not rendered as markdown (the timeline shows it as text)
 # the length (mallen: 1 500–3 000 ord på svenska före Data och kod)
-WORDS_SV, WORDS_EN = len(body.split("## Data")[0].split()), len(body_en.split("## Data")[0].split())
+def _prose(t):
+    """The running text before Data och kod, without images and their captions (version 2 added four of them)."""
+    lines = t.split("## Data")[0].split("\n")
+    return " ".join(ln for i, ln in enumerate(lines) if not ln.startswith("![") and not (i and lines[i - 1].startswith("![")))
+
+
+WORDS_SV, WORDS_EN = len(_prose(body).split()), len(_prose(body_en).split())
 assert 1500 <= WORDS_SV <= 3000, WORDS_SV
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,
