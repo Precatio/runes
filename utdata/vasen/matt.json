@@ -1,0 +1,1183 @@
+{
+ "ord_per_korpus": {
+  "eddadikter": 47883,
+  "snorra_edda_gylfaginning": 17912,
+  "snorra_edda_skáldskaparmál": 21547,
+  "islanningasagor": 877129,
+  "islanningasagor_vers": 19224,
+  "heimskringla": 242869,
+  "heimskringla_vers": 18022,
+  "fornaldarsagor": 341701,
+  "fornaldarsagor_vers": 16074,
+  "samtidssagor": 48218,
+  "samtidssagor_vers": 1179,
+  "runstenar_SE": 26683
+ },
+ "texter_per_korpus": {
+  "eddadikter": 34,
+  "snorra_edda_gylfaginning": 1,
+  "snorra_edda_skáldskaparmál": 1,
+  "islanningasagor": 42,
+  "islanningasagor_vers": 29,
+  "heimskringla": 16,
+  "heimskringla_vers": 16,
+  "fornaldarsagor": 36,
+  "fornaldarsagor_vers": 36,
+  "samtidssagor": 6,
+  "samtidssagor_vers": 6,
+  "runstenar_SE": 2321
+ },
+ "grind": {
+  "omgang_1": {
+   "stickprov": 135,
+   "riktiga_per_klass": {
+    "jättar": "15/15",
+    "dvärgar": "15/15",
+    "alver": "13/15",
+    "vättar": "10/15",
+    "diser och nornor": "14/15",
+    "de döda": "12/15",
+    "nattväsen": "6/15",
+    "odjur": "12/15",
+    "kristna väsen": "14/15"
+   },
+   "viktat_procent": 94
+  },
+  "omgang_2_tillagg_1": {
+   "vättar": "11/15",
+   "nattväsen": "8/8"
+  },
+  "klasser_utan_test": [
+   "vättar"
+  ],
+  "not": "vättar under 80 % även efter revisionen (vætt = viktenhet, verbet vætta i vers) – redovisas bara som antal enligt planen"
+ },
+ "V1": {
+  "eddadikter": {
+   "träffar": {
+    "jättar": 216,
+    "dvärgar": 35,
+    "alver": 0,
+    "vättar": 8,
+    "diser och nornor": 40,
+    "de döda": 2,
+    "nattväsen": 3,
+    "odjur": 73,
+    "kristna väsen": 0
+   },
+   "texter_med_träff": {
+    "jättar": 19,
+    "dvärgar": 7,
+    "alver": 0,
+    "vättar": 4,
+    "diser och nornor": 16,
+    "de döda": 1,
+    "nattväsen": 3,
+    "odjur": 12,
+    "kristna väsen": 0
+   },
+   "vanligaste_termer": [
+    [
+     "namngiven jätte",
+     94
+    ],
+    [
+     "jötunn",
+     91
+    ],
+    [
+     "namngivet odjur",
+     73
+    ],
+    [
+     "dvergr",
+     35
+    ],
+    [
+     "þurs",
+     19
+    ],
+    [
+     "norn",
+     13
+    ],
+    [
+     "valkyrja",
+     12
+    ],
+    [
+     "dís",
+     11
+    ],
+    [
+     "vættr",
+     8
+    ],
+    [
+     "gýgr",
+     6
+    ],
+    [
+     "fylgja",
+     4
+    ],
+    [
+     "flagð",
+     3
+    ]
+   ]
+  },
+  "snorra_edda_gylfaginning": {
+   "träffar": {
+    "jättar": 149,
+    "dvärgar": 10,
+    "alver": 1,
+    "vättar": 0,
+    "diser och nornor": 12,
+    "de döda": 0,
+    "nattväsen": 0,
+    "odjur": 45,
+    "kristna väsen": 0
+   },
+   "texter_med_träff": {
+    "jättar": 1,
+    "dvärgar": 1,
+    "alver": 1,
+    "vättar": 0,
+    "diser och nornor": 1,
+    "de döda": 0,
+    "nattväsen": 0,
+    "odjur": 1,
+    "kristna väsen": 0
+   },
+   "vanligaste_termer": [
+    [
+     "namngiven jätte",
+     90
+    ],
+    [
+     "namngivet odjur",
+     45
+    ],
+    [
+     "jötunn",
+     29
+    ],
+    [
+     "þurs",
+     16
+    ],
+    [
+     "dvergr",
+     10
+    ],
+    [
+     "norn",
+     9
+    ],
+    [
+     "risi",
+     7
+    ],
+    [
+     "gýgr",
+     4
+    ],
+    [
+     "tröll",
+     3
+    ],
+    [
+     "valkyrja",
+     3
+    ],
+    [
+     "álfr",
+     1
+    ]
+   ]
+  },
+  "snorra_edda_skáldskaparmál": {
+   "träffar": {
+    "jättar": 114,
+    "dvärgar": 20,
+    "alver": 2,
+    "vättar": 0,
+    "diser och nornor": 10,
+    "de döda": 0,
+    "nattväsen": 0,
+    "odjur": 38,
+    "kristna väsen": 5
+   },
+   "texter_med_träff": {
+    "jättar": 1,
+    "dvärgar": 1,
+    "alver": 1,
+    "vättar": 0,
+    "diser och nornor": 1,
+    "de döda": 0,
+    "nattväsen": 0,
+    "odjur": 1,
+    "kristna väsen": 1
+   },
+   "vanligaste_termer": [
+    [
+     "namngiven jätte",
+     62
+    ],
+    [
+     "jötunn",
+     40
+    ],
+    [
+     "namngivet odjur",
+     38
+    ],
+    [
+     "dvergr",
+     20
+    ],
+    [
+     "tröll",
+     9
+    ],
+    [
+     "valkyrja",
+     5
+    ],
+    [
+     "engill",
+     5
+    ],
+    [
+     "dís",
+     4
+    ],
+    [
+     "álfr",
+     2
+    ],
+    [
+     "gýgr",
+     1
+    ],
+    [
+     "norn",
+     1
+    ],
+    [
+     "þurs",
+     1
+    ]
+   ]
+  },
+  "islanningasagor": {
+   "träffar": {
+    "jättar": 136,
+    "dvärgar": 0,
+    "alver": 2,
+    "vättar": 24,
+    "diser och nornor": 16,
+    "de döda": 4,
+    "nattväsen": 1,
+    "odjur": 5,
+    "kristna väsen": 7
+   },
+   "texter_med_träff": {
+    "jättar": 24,
+    "dvärgar": 0,
+    "alver": 1,
+    "vättar": 14,
+    "diser och nornor": 10,
+    "de döda": 1,
+    "nattväsen": 1,
+    "odjur": 3,
+    "kristna väsen": 3
+   },
+   "vanligaste_termer": [
+    [
+     "tröll",
+     81
+    ],
+    [
+     "vættr",
+     24
+    ],
+    [
+     "þurs",
+     17
+    ],
+    [
+     "jötunn",
+     14
+    ],
+    [
+     "fylgja",
+     13
+    ],
+    [
+     "risi",
+     8
+    ],
+    [
+     "flagð",
+     8
+    ],
+    [
+     "engill",
+     4
+    ],
+    [
+     "bergbúi",
+     3
+    ],
+    [
+     "namngivet odjur",
+     3
+    ],
+    [
+     "dís",
+     3
+    ],
+    [
+     "djöfull",
+     3
+    ]
+   ]
+  },
+  "islanningasagor_vers": {
+   "träffar": {
+    "jättar": 17,
+    "dvärgar": 1,
+    "alver": 1,
+    "vättar": 5,
+    "diser och nornor": 10,
+    "de döda": 2,
+    "nattväsen": 0,
+    "odjur": 9,
+    "kristna väsen": 2
+   },
+   "texter_med_träff": {
+    "jättar": 8,
+    "dvärgar": 1,
+    "alver": 1,
+    "vättar": 4,
+    "diser och nornor": 8,
+    "de döda": 2,
+    "nattväsen": 0,
+    "odjur": 8,
+    "kristna väsen": 2
+   },
+   "vanligaste_termer": [
+    [
+     "namngivet odjur",
+     9
+    ],
+    [
+     "dís",
+     6
+    ],
+    [
+     "tröll",
+     5
+    ],
+    [
+     "vættr",
+     5
+    ],
+    [
+     "flagð",
+     4
+    ],
+    [
+     "norn",
+     3
+    ],
+    [
+     "jötunn",
+     3
+    ],
+    [
+     "namngiven jätte",
+     3
+    ],
+    [
+     "engill",
+     2
+    ],
+    [
+     "draugr",
+     2
+    ],
+    [
+     "valkyrja",
+     1
+    ],
+    [
+     "dvergr",
+     1
+    ]
+   ]
+  },
+  "heimskringla": {
+   "träffar": {
+    "jättar": 11,
+    "dvärgar": 2,
+    "alver": 1,
+    "vättar": 3,
+    "diser och nornor": 2,
+    "de döda": 1,
+    "nattväsen": 1,
+    "odjur": 0,
+    "kristna väsen": 0
+   },
+   "texter_med_träff": {
+    "jättar": 5,
+    "dvärgar": 1,
+    "alver": 1,
+    "vättar": 1,
+    "diser och nornor": 1,
+    "de döda": 1,
+    "nattväsen": 1,
+    "odjur": 0,
+    "kristna väsen": 0
+   },
+   "vanligaste_termer": [
+    [
+     "tröll",
+     6
+    ],
+    [
+     "jötunn",
+     3
+    ],
+    [
+     "vættr",
+     3
+    ],
+    [
+     "risi",
+     2
+    ],
+    [
+     "dvergr",
+     2
+    ],
+    [
+     "dís",
+     2
+    ],
+    [
+     "álfr",
+     1
+    ],
+    [
+     "draugr",
+     1
+    ],
+    [
+     "mara",
+     1
+    ]
+   ]
+  },
+  "heimskringla_vers": {
+   "träffar": {
+    "jättar": 14,
+    "dvärgar": 1,
+    "alver": 2,
+    "vättar": 4,
+    "diser och nornor": 6,
+    "de döda": 1,
+    "nattväsen": 2,
+    "odjur": 7,
+    "kristna väsen": 1
+   },
+   "texter_med_träff": {
+    "jättar": 8,
+    "dvärgar": 1,
+    "alver": 2,
+    "vättar": 3,
+    "diser och nornor": 4,
+    "de döda": 1,
+    "nattväsen": 2,
+    "odjur": 5,
+    "kristna väsen": 1
+   },
+   "vanligaste_termer": [
+    [
+     "namngivet odjur",
+     7
+    ],
+    [
+     "jötunn",
+     4
+    ],
+    [
+     "vættr",
+     4
+    ],
+    [
+     "gýgr",
+     3
+    ],
+    [
+     "norn",
+     2
+    ],
+    [
+     "dís",
+     2
+    ],
+    [
+     "namngiven jätte",
+     2
+    ],
+    [
+     "flagð",
+     2
+    ],
+    [
+     "álfr",
+     2
+    ],
+    [
+     "tröll",
+     2
+    ],
+    [
+     "valkyrja",
+     1
+    ],
+    [
+     "draugr",
+     1
+    ]
+   ]
+  },
+  "fornaldarsagor": {
+   "träffar": {
+    "jättar": 252,
+    "dvärgar": 25,
+    "alver": 8,
+    "vättar": 18,
+    "diser och nornor": 14,
+    "de döda": 4,
+    "nattväsen": 0,
+    "odjur": 74,
+    "kristna väsen": 15
+   },
+   "texter_med_träff": {
+    "jättar": 27,
+    "dvärgar": 10,
+    "alver": 5,
+    "vättar": 10,
+    "diser och nornor": 7,
+    "de döda": 2,
+    "nattväsen": 0,
+    "odjur": 9,
+    "kristna väsen": 3
+   },
+   "vanligaste_termer": [
+    [
+     "tröll",
+     119
+    ],
+    [
+     "jötunn",
+     67
+    ],
+    [
+     "namngivet odjur",
+     58
+    ],
+    [
+     "risi",
+     30
+    ],
+    [
+     "dvergr",
+     25
+    ],
+    [
+     "vættr",
+     18
+    ],
+    [
+     "flagð",
+     16
+    ],
+    [
+     "engill",
+     8
+    ],
+    [
+     "álfr",
+     8
+    ],
+    [
+     "finngálkn",
+     8
+    ],
+    [
+     "sjöväsen",
+     7
+    ],
+    [
+     "djöfull",
+     7
+    ]
+   ]
+  },
+  "fornaldarsagor_vers": {
+   "träffar": {
+    "jättar": 23,
+    "dvärgar": 2,
+    "alver": 2,
+    "vättar": 2,
+    "diser och nornor": 9,
+    "de döda": 1,
+    "nattväsen": 1,
+    "odjur": 4,
+    "kristna väsen": 1
+   },
+   "texter_med_träff": {
+    "jättar": 9,
+    "dvärgar": 2,
+    "alver": 2,
+    "vättar": 2,
+    "diser och nornor": 5,
+    "de döda": 1,
+    "nattväsen": 1,
+    "odjur": 3,
+    "kristna väsen": 1
+   },
+   "vanligaste_termer": [
+    [
+     "flagð",
+     10
+    ],
+    [
+     "dís",
+     5
+    ],
+    [
+     "namngivet odjur",
+     4
+    ],
+    [
+     "tröll",
+     3
+    ],
+    [
+     "risi",
+     3
+    ],
+    [
+     "norn",
+     3
+    ],
+    [
+     "gýgr",
+     3
+    ],
+    [
+     "vættr",
+     2
+    ],
+    [
+     "álfr",
+     2
+    ],
+    [
+     "þurs",
+     2
+    ],
+    [
+     "dvergr",
+     2
+    ],
+    [
+     "engill",
+     1
+    ]
+   ]
+  },
+  "samtidssagor": {
+   "träffar": {
+    "jättar": 3,
+    "dvärgar": 0,
+    "alver": 0,
+    "vättar": 1,
+    "diser och nornor": 1,
+    "de döda": 0,
+    "nattväsen": 0,
+    "odjur": 0,
+    "kristna väsen": 3
+   },
+   "texter_med_träff": {
+    "jättar": 2,
+    "dvärgar": 0,
+    "alver": 0,
+    "vättar": 1,
+    "diser och nornor": 1,
+    "de döda": 0,
+    "nattväsen": 0,
+    "odjur": 0,
+    "kristna väsen": 3
+   },
+   "vanligaste_termer": [
+    [
+     "djöfull",
+     3
+    ],
+    [
+     "tröll",
+     3
+    ],
+    [
+     "vættr",
+     1
+    ],
+    [
+     "fylgja",
+     1
+    ]
+   ]
+  },
+  "samtidssagor_vers": {
+   "träffar": {
+    "jättar": 0,
+    "dvärgar": 0,
+    "alver": 0,
+    "vättar": 0,
+    "diser och nornor": 0,
+    "de döda": 0,
+    "nattväsen": 0,
+    "odjur": 0,
+    "kristna väsen": 0
+   },
+   "texter_med_träff": {
+    "jättar": 0,
+    "dvärgar": 0,
+    "alver": 0,
+    "vättar": 0,
+    "diser och nornor": 0,
+    "de döda": 0,
+    "nattväsen": 0,
+    "odjur": 0,
+    "kristna väsen": 0
+   },
+   "vanligaste_termer": []
+  },
+  "runstenar_SE": {
+   "träffar": {
+    "jättar": 1,
+    "dvärgar": 0,
+    "alver": 0,
+    "vättar": 0,
+    "diser och nornor": 0,
+    "de döda": 1,
+    "nattväsen": 0,
+    "odjur": 0,
+    "kristna väsen": 0
+   },
+   "texter_med_träff": {
+    "jättar": 1,
+    "dvärgar": 0,
+    "alver": 0,
+    "vättar": 0,
+    "diser och nornor": 0,
+    "de döda": 1,
+    "nattväsen": 0,
+    "odjur": 0,
+    "kristna väsen": 0
+   },
+   "vanligaste_termer": [
+    [
+     "draugr",
+     1
+    ],
+    [
+     "risi",
+     1
+    ]
+   ]
+  }
+ },
+ "V2": {
+  "eddadikter": {
+   "per_10000_ord": 78.73,
+   "intervall": [
+    45.683,
+    122.641
+   ],
+   "per_klass": {
+    "jättar": 45.11,
+    "dvärgar": 7.31,
+    "alver": 0.0,
+    "vättar": 1.67,
+    "diser och nornor": 8.35,
+    "de döda": 0.42,
+    "nattväsen": 0.63,
+    "odjur": 15.25,
+    "kristna väsen": 0.0
+   }
+  },
+  "snorra_edda_gylfaginning": {
+   "per_10000_ord": 121.15,
+   "intervall": null,
+   "per_klass": {
+    "jättar": 83.18,
+    "dvärgar": 5.58,
+    "alver": 0.56,
+    "vättar": 0.0,
+    "diser och nornor": 6.7,
+    "de döda": 0.0,
+    "nattväsen": 0.0,
+    "odjur": 25.12,
+    "kristna väsen": 0.0
+   }
+  },
+  "snorra_edda_skáldskaparmál": {
+   "per_10000_ord": 87.72,
+   "intervall": null,
+   "per_klass": {
+    "jättar": 52.91,
+    "dvärgar": 9.28,
+    "alver": 0.93,
+    "vättar": 0.0,
+    "diser och nornor": 4.64,
+    "de döda": 0.0,
+    "nattväsen": 0.0,
+    "odjur": 17.64,
+    "kristna väsen": 2.32
+   }
+  },
+  "islanningasagor": {
+   "per_10000_ord": 2.22,
+   "intervall": [
+    1.365,
+    3.492
+   ],
+   "per_klass": {
+    "jättar": 1.55,
+    "dvärgar": 0.0,
+    "alver": 0.02,
+    "vättar": 0.27,
+    "diser och nornor": 0.18,
+    "de döda": 0.05,
+    "nattväsen": 0.01,
+    "odjur": 0.06,
+    "kristna väsen": 0.08
+   }
+  },
+  "islanningasagor_vers": {
+   "per_10000_ord": 24.45,
+   "intervall": [
+    19.347,
+    28.924
+   ],
+   "per_klass": {
+    "jättar": 8.84,
+    "dvärgar": 0.52,
+    "alver": 0.52,
+    "vättar": 2.6,
+    "diser och nornor": 5.2,
+    "de döda": 1.04,
+    "nattväsen": 0.0,
+    "odjur": 4.68,
+    "kristna väsen": 1.04
+   }
+  },
+  "heimskringla": {
+   "per_10000_ord": 0.86,
+   "intervall": [
+    0.258,
+    2.009
+   ],
+   "per_klass": {
+    "jättar": 0.45,
+    "dvärgar": 0.08,
+    "alver": 0.04,
+    "vättar": 0.12,
+    "diser och nornor": 0.08,
+    "de döda": 0.04,
+    "nattväsen": 0.04,
+    "odjur": 0.0,
+    "kristna väsen": 0.0
+   }
+  },
+  "heimskringla_vers": {
+   "per_10000_ord": 21.09,
+   "intervall": [
+    11.257,
+    40.946
+   ],
+   "per_klass": {
+    "jättar": 7.77,
+    "dvärgar": 0.55,
+    "alver": 1.11,
+    "vättar": 2.22,
+    "diser och nornor": 3.33,
+    "de döda": 0.55,
+    "nattväsen": 1.11,
+    "odjur": 3.88,
+    "kristna väsen": 0.55
+   }
+  },
+  "fornaldarsagor": {
+   "per_10000_ord": 12.0,
+   "intervall": [
+    8.898,
+    15.333
+   ],
+   "per_klass": {
+    "jättar": 7.37,
+    "dvärgar": 0.73,
+    "alver": 0.23,
+    "vättar": 0.53,
+    "diser och nornor": 0.41,
+    "de döda": 0.12,
+    "nattväsen": 0.0,
+    "odjur": 2.17,
+    "kristna väsen": 0.44
+   }
+  },
+  "fornaldarsagor_vers": {
+   "per_10000_ord": 28.0,
+   "intervall": [
+    17.424,
+    44.03
+   ],
+   "per_klass": {
+    "jättar": 14.31,
+    "dvärgar": 1.24,
+    "alver": 1.24,
+    "vättar": 1.24,
+    "diser och nornor": 5.6,
+    "de döda": 0.62,
+    "nattväsen": 0.62,
+    "odjur": 2.49,
+    "kristna väsen": 0.62
+   }
+  },
+  "samtidssagor": {
+   "per_10000_ord": 1.66,
+   "intervall": [
+    0.468,
+    4.083
+   ],
+   "per_klass": {
+    "jättar": 0.62,
+    "dvärgar": 0.0,
+    "alver": 0.0,
+    "vättar": 0.21,
+    "diser och nornor": 0.21,
+    "de döda": 0.0,
+    "nattväsen": 0.0,
+    "odjur": 0.0,
+    "kristna väsen": 0.62
+   }
+  },
+  "samtidssagor_vers": {
+   "per_10000_ord": 0.0,
+   "intervall": [
+    0.0,
+    0.0
+   ],
+   "per_klass": {
+    "jättar": 0.0,
+    "dvärgar": 0.0,
+    "alver": 0.0,
+    "vättar": 0.0,
+    "diser och nornor": 0.0,
+    "de döda": 0.0,
+    "nattväsen": 0.0,
+    "odjur": 0.0,
+    "kristna väsen": 0.0
+   }
+  },
+  "runstenar_SE": {
+   "per_10000_ord": 0.75,
+   "intervall": null,
+   "per_klass": {
+    "jättar": 0.37,
+    "dvärgar": 0.0,
+    "alver": 0.0,
+    "vättar": 0.0,
+    "diser och nornor": 0.0,
+    "de döda": 0.37,
+    "nattväsen": 0.0,
+    "odjur": 0.0,
+    "kristna väsen": 0.0
+   }
+  }
+ },
+ "V5": [
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   121.1,
+   217
+  ],
+  [
+   "snorra_edda_skáldskaparmál",
+   "Skáldskaparmál",
+   87.7,
+   189
+  ],
+  [
+   "fornaldarsagor",
+   "Norna-Gests þáttr",
+   44.0,
+   20
+  ],
+  [
+   "fornaldarsagor",
+   "Egils saga einhenda ok Ásmundar berserkjabana",
+   39.1,
+   40
+  ],
+  [
+   "heimskringla_vers",
+   "Saga Ólafs Tryggvasonar",
+   33.9,
+   7
+  ],
+  [
+   "fornaldarsagor",
+   "Illuga saga Gríðarfóstra",
+   31.5,
+   9
+  ],
+  [
+   "fornaldarsagor",
+   "Ketils saga hængs",
+   31.2,
+   14
+  ],
+  [
+   "islanningasagor",
+   "bardar saga snaefellsass",
+   31.1,
+   41
+  ],
+  [
+   "islanningasagor_vers",
+   "kormaks saga",
+   30.3,
+   8
+  ],
+  [
+   "fornaldarsagor",
+   "Gríms saga loðinkinna",
+   29.0,
+   8
+  ]
+ ],
+ "V4": [
+  {
+   "sten": "Öl 1",
+   "term": "draugr",
+   "ord": "draugr"
+  },
+  {
+   "sten": "U 703",
+   "term": "risi",
+   "ord": "risinn"
+  }
+ ],
+ "tester": {
+  "huvud": {
+   "T1": {
+    "fornaldar": 11.47,
+    "islänninga": 1.95,
+    "kvot": 5.88,
+    "intervall": [
+     3.437,
+     10.21
+    ],
+    "p": 0.0,
+    "p_holm": 0.0,
+    "håller": true
+   },
+   "T2": {
+    "islänninga_%": 2.3,
+    "fornaldar_%": 1.0,
+    "skillnad_pe": 1.3,
+    "intervall": [
+     -2.597,
+     6.283
+    ],
+    "p": 0.8278,
+    "p_holm": 0.8278,
+    "håller": false
+   },
+   "T3": {
+    "obestämt": true,
+    "träffar_samtid": 7
+   }
+  },
+  "utan_tröll": {
+   "T1": {
+    "fornaldar": 7.99,
+    "islänninga": 1.03,
+    "kvot": 7.79,
+    "intervall": [
+     4.272,
+     15.097
+    ],
+    "p": 0.0,
+    "p_holm": 0.0,
+    "håller": true
+   },
+   "T2": {
+    "islänninga_%": 4.4,
+    "fornaldar_%": 1.5,
+    "skillnad_pe": 3.0,
+    "intervall": [
+     -3.782,
+     13.043
+    ],
+    "p": 0.7834,
+    "p_holm": 0.7834,
+    "håller": false
+   },
+   "T3": {
+    "obestämt": true,
+    "träffar_samtid": 4
+   }
+  },
+  "utan_största_sagan": {
+   "T1": {
+    "fornaldar": 11.07,
+    "islänninga": 2.03,
+    "kvot": 5.45,
+    "intervall": [
+     3.076,
+     10.066
+    ],
+    "p": 0.0,
+    "p_holm": 0.0,
+    "håller": true
+   },
+   "T2": {
+    "islänninga_%": 2.5,
+    "fornaldar_%": 1.2,
+    "skillnad_pe": 1.4,
+    "intervall": [
+     -3.0,
+     6.821
+    ],
+    "p": 0.8148,
+    "p_holm": 0.8148,
+    "håller": false
+   },
+   "T3": {
+    "obestämt": true,
+    "träffar_samtid": 6
+   }
+  }
+ }
+}
