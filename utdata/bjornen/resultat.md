@@ -23,7 +23,7 @@ Räknat 2026-11-21 med `analys.py`, `analys_t2.R` och SHM-sammanställningen `b4
 
 ## B2 Isbjörnarna
 18 träffar på *hvítabjörn*:
-- **Króka-Refs saga (6):** isbjörnar från Grönland, bland annat en *fulltíði* (fullvuxen) isbjörn som gåva till kung
+- **Króka-Refs saga (5):** isbjörnar från Grönland, bland annat en *fulltíði* (fullvuxen) isbjörn som gåva till kung
   Harald och fem isbjörnar i en last.
 - **Hrólfs saga Gautrekssonar (5)** och **Örvar-Odds saga (2):** isbjörnar som fylgjor och i drömmar.
 - **Övriga:** Svarfdæla saga, Harðar saga, Þorsteins saga Síðu-Hallssonar och Ketils saga hængs har en var, och Völsunga
