@@ -1,0 +1,6 @@
+term,regex
+björn,\b(?:hýð|híð)?bj[öo]rn(?!s?son)\w*|\bbjarn(?:ar|arins|i|inum|ins|arhúð\w*|arfeld\w*)\b|\bbirn(?:i|ir|ina|inum|inn|irnir)\b
+isbjörn,\b(?:hvíta|ís)bj[öo]rn\w*|\b(?:hvíta|ís)bjarn\w*|\b(?:hvíta|ís)birn\w*
+bjarndýr,\bbjarndýr\w*
+bersi,\bbers(?:i|a|ar)\b
+húnn,\bhún(?:n|ar|um|ninn|inn|ana)\b
