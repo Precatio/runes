@@ -1,0 +1,61 @@
+{
+ "källa": "Statens historiska museer, samlingar.shm.se (CC0); fritextsökningen 'valkyria' (49 poster) filtrerad på 'valkyri' i benämning, titel eller beskrivning; objektnamnen Valkyria, Valkyriefigurin, Kvinnofigur gav 0, Figurin 449 utan valkyrior; 2026-11-21",
+ "poster": 40,
+ "typ": {
+  "hänge": 6,
+  "gjutform": 33,
+  "annat": 1
+ },
+ "gjutformar_socken": {
+  "Adelsö socken": 33
+ },
+ "gjutformar_montage": 2,
+ "hängen": [
+  {
+   "landskap": "Uppland",
+   "socken": "Adelsö socken",
+   "material": "Silver",
+   "sammanhang": "Kammargrav, Grav, Obekant yttre gravskic",
+   "titel": "Valkyriahänge"
+  },
+  {
+   "landskap": "Södermanland",
+   "socken": "Grödinge socken",
+   "material": "Silver",
+   "sammanhang": "Hög med centralröse, Brandgrav",
+   "titel": "Valkyriahänge"
+  },
+  {
+   "landskap": "Öland",
+   "socken": "",
+   "material": "Cu-legering",
+   "sammanhang": "",
+   "titel": "Valkyriahänge"
+  },
+  {
+   "landskap": "Öland",
+   "socken": "Köping socken",
+   "material": "Silver",
+   "sammanhang": "",
+   "titel": "Valkyriahänge"
+  },
+  {
+   "landskap": "Uppland",
+   "socken": "Adelsö socken",
+   "material": "Silver",
+   "sammanhang": "Kammargrav, Grav, Flatmarksgrav: 968",
+   "titel": "Valkyriahänge"
+  },
+  {
+   "landskap": "Uppland",
+   "socken": "Alsike socken",
+   "material": "Silver|Guld",
+   "sammanhang": "Grav: III",
+   "titel": "Damen i Tuna"
+  }
+ ],
+ "övrigt": [
+  "Örslev: Örslev av silver. Har en kvinna porträtterad på ena sidan och ett djur på den an"
+ ],
+ "förbehåll": "SHM:s samlingar, inte alla museer; 'valkyria' är museets benämning av kvinnofigurer, och tolkningen som valkyria är omdiskuterad i litteraturen"
+}

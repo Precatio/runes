@@ -1,0 +1,266 @@
+{
+ "träffar": 135,
+ "D1": {
+  "eddadikter": {
+   "norn": 13,
+   "valkyria": 12,
+   "dís": 6,
+   "kvinna": 5,
+   "annat": 3,
+   "fylgja": 1
+  },
+  "snorra_edda_gylfaginning": {
+   "norn": 9,
+   "valkyria": 3
+  },
+  "snorra_edda_skáldskaparmál": {
+   "valkyria": 4,
+   "annat": 4,
+   "kvinna": 2
+  },
+  "islanningasagor": {
+   "fylgja": 12,
+   "spåkvinna": 10,
+   "kult": 2,
+   "dís": 1,
+   "annat": 1
+  },
+  "islanningasagor_vers": {
+   "kvinna": 3,
+   "dís": 2,
+   "norn": 2,
+   "valkyria": 1,
+   "kult": 1,
+   "spåkvinna": 1,
+   "annat": 1
+  },
+  "heimskringla": {
+   "kult": 2
+  },
+  "heimskringla_vers": {
+   "annat": 3,
+   "norn": 2,
+   "valkyria": 1
+  },
+  "fornaldarsagor": {
+   "fylgja": 6,
+   "norn": 4,
+   "dís": 4,
+   "spåkvinna": 2,
+   "kult": 1,
+   "valkyria": 1
+  },
+  "fornaldarsagor_vers": {
+   "dís": 5,
+   "norn": 3,
+   "annat": 1
+  },
+  "samtidssagor": {
+   "fylgja": 1
+  },
+  "samtidssagor_vers": {}
+ },
+ "D1_per_10000": {
+  "eddadikter": 6.68,
+  "snorra_edda_gylfaginning": 6.7,
+  "snorra_edda_skáldskaparmál": 1.86,
+  "islanningasagor": 0.17,
+  "islanningasagor_vers": 3.12,
+  "heimskringla": 0.08,
+  "heimskringla_vers": 1.66,
+  "fornaldarsagor": 0.47,
+  "fornaldarsagor_vers": 4.98,
+  "samtidssagor": 0.21,
+  "samtidssagor_vers": 0.0
+ },
+ "D1_grupp": {
+  "Eddan": {
+   "norn": 22,
+   "valkyria": 19,
+   "kvinna": 7,
+   "annat": 7,
+   "dís": 6,
+   "fylgja": 1
+  },
+  "sagorna": {
+   "fylgja": 19,
+   "spåkvinna": 13,
+   "dís": 12,
+   "norn": 11,
+   "kult": 6,
+   "annat": 6,
+   "valkyria": 3,
+   "kvinna": 3
+  }
+ },
+ "D2_kult": [
+  [
+   "islanningasagor",
+   "egils saga",
+   "dísablót"
+  ],
+  [
+   "islanningasagor_vers",
+   "egils saga",
+   "dísir"
+  ],
+  [
+   "islanningasagor",
+   "viga-glums saga",
+   "dísablót"
+  ],
+  [
+   "heimskringla",
+   "Ynglinga saga",
+   "dísablóti"
+  ],
+  [
+   "heimskringla",
+   "Ynglinga saga",
+   "dísarsalinn"
+  ],
+  [
+   "fornaldarsagor",
+   "Hervarar saga ok Heiðreks",
+   "dísarsal"
+  ]
+ ],
+ "D3_namn_eddan": [
+  [
+   "Skögul",
+   5
+  ],
+  [
+   "Sigrdrífa",
+   4
+  ],
+  [
+   "Skuld",
+   4
+  ],
+  [
+   "Hrist",
+   3
+  ],
+  [
+   "Mist",
+   2
+  ],
+  [
+   "Verðandi",
+   2
+  ],
+  [
+   "Göndul",
+   2
+  ],
+  [
+   "Urðr",
+   2
+  ],
+  [
+   "Urðar",
+   1
+  ],
+  [
+   "Sigrdrífar",
+   1
+  ],
+  [
+   "Sigrdrífumál",
+   1
+  ],
+  [
+   "Urð",
+   1
+  ]
+ ],
+ "D5": {
+  "kvinnor": 629,
+  "dis_kvinnor": 24,
+  "dis_namn": [
+   [
+    "Holmdís",
+    6
+   ],
+   [
+    "Heðindís",
+    3
+   ],
+   [
+    "Díselfr",
+    2
+   ],
+   [
+    "Eydís",
+    2
+   ],
+   [
+    "Óðindísa",
+    2
+   ],
+   [
+    "Ádísa",
+    1
+   ],
+   [
+    "Erindís",
+    1
+   ],
+   [
+    "Alfdís",
+    1
+   ],
+   [
+    "Dísa",
+    1
+   ],
+   [
+    "Freydís",
+    1
+   ],
+   [
+    "Erndís",
+    1
+   ],
+   [
+    "Ádís",
+    1
+   ],
+   [
+    "Hjalmdís",
+    1
+   ],
+   [
+    "Dís",
+    1
+   ]
+  ],
+  "per_landskap": {
+   "Uppland": {
+    "kvinnor": 385,
+    "dis": 15
+   },
+   "Södermanland": {
+    "kvinnor": 110,
+    "dis": 5
+   },
+   "Östergötland": {
+    "kvinnor": 39,
+    "dis": 1
+   },
+   "Västergötland": {
+    "kvinnor": 26,
+    "dis": 0
+   }
+  },
+  "svealand": {
+   "kvinnor": 509,
+   "dis": 22
+  },
+  "gotaland": {
+   "kvinnor": 97,
+   "dis": 1
+  }
+ }
+}
