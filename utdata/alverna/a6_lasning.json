@@ -1,0 +1,13 @@
+{
+ "källa": "Svenskt ortnamnslexikon (2016), sökning i förklaringarna enligt planens A6; alla träffar lästa för hand 2026-11-21",
+ "träffar": 6,
+ "alvnamn_enligt_SOL": 0,
+ "artiklar": [
+  {"namn": "Alva sn, Gotland", "SOL": "alv 'jordlager närmast under matjorden'"},
+  {"namn": "Alvaret, Öland", "SOL": "dialektordet alvar, bildning till alv 'jordlager'"},
+  {"namn": "Alvhem, Skepplanda sn, Västergötland", "SOL": "förleden möjligen alv 'jordlager'"},
+  {"namn": "Ärla sn, Södermanland", "SOL": "äril 'härd ...', alv i förklaringen av ordet"},
+  {"namn": "Hemse sn, Gotland", "SOL": "träffen är sockenledet 'Alva snr' i huvudet, inte en tolkning"},
+  {"namn": "Alva sn (andra förekomsten i samma artikel)", "SOL": "samma artikel"}
+ ]
+}

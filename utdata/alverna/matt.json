@@ -1,0 +1,795 @@
+{
+ "träffar": 443,
+ "A1": {
+  "eddadikter": {
+   "Völundr": 3,
+   "annat": 4,
+   "kenning": 0,
+   "ortnamn": 1,
+   "personnamn": 12,
+   "världsdel": 0,
+   "väsen": 28
+  },
+  "snorra_edda_gylfaginning": {
+   "Völundr": 0,
+   "annat": 16,
+   "kenning": 0,
+   "ortnamn": 2,
+   "personnamn": 1,
+   "världsdel": 0,
+   "väsen": 8
+  },
+  "snorra_edda_skáldskaparmál": {
+   "Völundr": 0,
+   "annat": 5,
+   "kenning": 2,
+   "ortnamn": 1,
+   "personnamn": 0,
+   "världsdel": 0,
+   "väsen": 5
+  },
+  "islanningasagor": {
+   "Völundr": 0,
+   "annat": 5,
+   "kenning": 0,
+   "ortnamn": 0,
+   "personnamn": 135,
+   "världsdel": 0,
+   "väsen": 2
+  },
+  "islanningasagor_vers": {
+   "Völundr": 0,
+   "annat": 1,
+   "kenning": 0,
+   "ortnamn": 0,
+   "personnamn": 2,
+   "världsdel": 0,
+   "väsen": 1
+  },
+  "heimskringla": {
+   "Völundr": 0,
+   "annat": 0,
+   "kenning": 0,
+   "ortnamn": 3,
+   "personnamn": 65,
+   "världsdel": 0,
+   "väsen": 1
+  },
+  "heimskringla_vers": {
+   "Völundr": 0,
+   "annat": 1,
+   "kenning": 1,
+   "ortnamn": 0,
+   "personnamn": 3,
+   "världsdel": 0,
+   "väsen": 1
+  },
+  "fornaldarsagor": {
+   "Völundr": 0,
+   "annat": 1,
+   "kenning": 0,
+   "ortnamn": 10,
+   "personnamn": 84,
+   "världsdel": 3,
+   "väsen": 13
+  },
+  "fornaldarsagor_vers": {
+   "Völundr": 0,
+   "annat": 0,
+   "kenning": 1,
+   "ortnamn": 0,
+   "personnamn": 5,
+   "världsdel": 0,
+   "väsen": 2
+  },
+  "samtidssagor": {
+   "Völundr": 0,
+   "annat": 0,
+   "kenning": 0,
+   "ortnamn": 0,
+   "personnamn": 7,
+   "världsdel": 0,
+   "väsen": 0
+  },
+  "samtidssagor_vers": {
+   "Völundr": 0,
+   "annat": 0,
+   "kenning": 0,
+   "ortnamn": 0,
+   "personnamn": 0,
+   "världsdel": 0,
+   "väsen": 0
+  },
+  "runstenar_SE": {
+   "Völundr": 0,
+   "annat": 2,
+   "kenning": 0,
+   "ortnamn": 0,
+   "personnamn": 6,
+   "världsdel": 0,
+   "väsen": 0
+  }
+ },
+ "A1_texter_med_väsen": {
+  "eddadikter": 11,
+  "snorra_edda_gylfaginning": 1,
+  "snorra_edda_skáldskaparmál": 1,
+  "islanningasagor": 1,
+  "islanningasagor_vers": 1,
+  "heimskringla": 1,
+  "heimskringla_vers": 1,
+  "fornaldarsagor": 6,
+  "fornaldarsagor_vers": 2,
+  "samtidssagor": 0,
+  "samtidssagor_vers": 0,
+  "runstenar_SE": 0
+ },
+ "A1_former": [
+  [
+   "alfar",
+   13
+  ],
+  [
+   "alfa",
+   12
+  ],
+  [
+   "alfum",
+   8
+  ],
+  [
+   "álfa",
+   6
+  ],
+  [
+   "álfum",
+   4
+  ],
+  [
+   "Ljósálfar",
+   3
+  ],
+  [
+   "álfar",
+   3
+  ],
+  [
+   "alfkunngar",
+   2
+  ],
+  [
+   "Dökkálfar",
+   2
+  ],
+  [
+   "Álfkonan",
+   2
+  ],
+  [
+   "álfrinn",
+   2
+  ],
+  [
+   "Svartálfum",
+   1
+  ],
+  [
+   "álfkonan",
+   1
+  ],
+  [
+   "álfkonunaut",
+   1
+  ],
+  [
+   "álfkona",
+   1
+  ],
+  [
+   "álfr",
+   1
+  ],
+  [
+   "Álfar",
+   1
+  ],
+  [
+   "álfakyns",
+   1
+  ]
+ ],
+ "A2_per_10000": {
+  "eddadikter": 6.47,
+  "snorra_edda_gylfaginning": 4.47,
+  "snorra_edda_skáldskaparmál": 2.32,
+  "islanningasagor": 0.02,
+  "islanningasagor_vers": 0.52,
+  "heimskringla": 0.04,
+  "heimskringla_vers": 0.55,
+  "fornaldarsagor": 0.38,
+  "fornaldarsagor_vers": 1.24,
+  "samtidssagor": 0.0,
+  "samtidssagor_vers": 0.0,
+  "runstenar_SE": 0.0
+ },
+ "A3_kult": [
+  [
+   "islanningasagor",
+   "kormaks saga",
+   "álfum"
+  ],
+  [
+   "heimskringla",
+   "Saga Ólafs hins helga",
+   "álfa"
+  ],
+  [
+   "heimskringla_vers",
+   "Saga Ólafs hins helga",
+   "álfa"
+  ]
+ ],
+ "A4_ljus_dokk": [
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Ljósálfar"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Dökkálfar"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Ljósálfar"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Dökkálfar"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Ljósálfar"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Svartálfaheim"
+  ],
+  [
+   "snorra_edda_skáldskaparmál",
+   "Skáldskaparmál",
+   "Svartálfum"
+  ],
+  [
+   "snorra_edda_skáldskaparmál",
+   "Skáldskaparmál",
+   "Svartálfaheim"
+  ]
+ ],
+ "Völundr": [
+  [
+   "eddadikter",
+   "Völundarkviða",
+   "alfa"
+  ],
+  [
+   "eddadikter",
+   "Völundarkviða",
+   "alfa"
+  ],
+  [
+   "eddadikter",
+   "Völundarkviða",
+   "alfa"
+  ]
+ ],
+ "annat": [
+  [
+   "eddadikter",
+   "Grímnismál",
+   "Alföðr"
+  ],
+  [
+   "eddadikter",
+   "Helgakviða_Hundingsbana_I",
+   "Alföður"
+  ],
+  [
+   "eddadikter",
+   "Skírnismál",
+   "álfröðull"
+  ],
+  [
+   "eddadikter",
+   "Vafþrúðnismál",
+   "alfröðull"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_gylfaginning",
+   "Gylfaginning",
+   "alfröðull"
+  ],
+  [
+   "snorra_edda_skáldskaparmál",
+   "Skáldskaparmál",
+   "Alföðr"
+  ],
+  [
+   "snorra_edda_skáldskaparmál",
+   "Skáldskaparmál",
+   "Alföður"
+  ],
+  [
+   "snorra_edda_skáldskaparmál",
+   "Skáldskaparmál",
+   "Alföður"
+  ],
+  [
+   "snorra_edda_skáldskaparmál",
+   "Skáldskaparmál",
+   "alfröðull"
+  ],
+  [
+   "snorra_edda_skáldskaparmál",
+   "Skáldskaparmál",
+   "álfröðull"
+  ],
+  [
+   "islanningasagor",
+   "bardar saga snaefellsass",
+   "álfreka"
+  ],
+  [
+   "islanningasagor",
+   "brennu-njals saga",
+   "alfari"
+  ],
+  [
+   "islanningasagor_vers",
+   "egils saga",
+   "alfeigum"
+  ],
+  [
+   "islanningasagor",
+   "eyrbyggja saga",
+   "álfrek"
+  ],
+  [
+   "islanningasagor",
+   "eyrbyggja saga",
+   "álfreka"
+  ],
+  [
+   "islanningasagor",
+   "heidarviga saga",
+   "alfarið"
+  ],
+  [
+   "heimskringla_vers",
+   "Sagan af Haraldi konungi gráfeld ok Hákoni jarli",
+   "álfröðull"
+  ],
+  [
+   "fornaldarsagor",
+   "Ragnars saga loðbrókar ok sona hans",
+   "alfari"
+  ],
+  [
+   "runstenar_SE",
+   "Sö Fv1988;34",
+   "alfdan"
+  ],
+  [
+   "runstenar_SE",
+   "Vs 32",
+   "alf"
+  ]
+ ],
+ "A5_sagor_namn": [
+  [
+   "Álfur",
+   58
+  ],
+  [
+   "Álfr",
+   46
+  ],
+  [
+   "Álfs",
+   39
+  ],
+  [
+   "Álfi",
+   19
+  ],
+  [
+   "Álfhildr",
+   19
+  ],
+  [
+   "Álfgeir",
+   16
+  ],
+  [
+   "Alfífa",
+   14
+  ],
+  [
+   "Álf",
+   12
+  ],
+  [
+   "Álfhildi",
+   10
+  ],
+  [
+   "Alfífu",
+   8
+  ],
+  [
+   "Alfr",
+   6
+  ],
+  [
+   "Álfdísar",
+   6
+  ],
+  [
+   "Alfífuson",
+   6
+  ],
+  [
+   "Álfvini",
+   5
+  ],
+  [
+   "Álfgeirs",
+   4
+  ],
+  [
+   "Álfdísi",
+   4
+  ],
+  [
+   "Álfvina",
+   4
+  ],
+  [
+   "Álfgeiri",
+   3
+  ],
+  [
+   "Álfdís",
+   3
+  ],
+  [
+   "Álfhildar",
+   3
+  ],
+  [
+   "Álfheiðr",
+   3
+  ],
+  [
+   "Alf",
+   2
+  ],
+  [
+   "Álfgerður",
+   2
+  ],
+  [
+   "Álfgeirr",
+   2
+  ],
+  [
+   "Alfi",
+   1
+  ]
+ ],
+ "A5_sagor_namn_antal": 314,
+ "A5_runstenar": {
+  "stenar": 2321,
+  "alf_stenar": 7,
+  "alf_andel": 0.3,
+  "alf_former": [
+   [
+    "Alfdís",
+    1
+   ],
+   [
+    "Alfhildar",
+    1
+   ],
+   [
+    "Alfketil",
+    1
+   ],
+   [
+    "Alfríkr",
+    1
+   ],
+   [
+    "Alfgeir",
+    1
+   ],
+   [
+    "Alfgautr",
+    1
+   ],
+   [
+    "Álfrúnar",
+    1
+   ]
+  ],
+  "alf_landskap": [
+   [
+    "Södermanland",
+    3
+   ],
+   [
+    "Uppland",
+    3
+   ],
+   [
+    "Hälsingland",
+    1
+   ]
+  ],
+  "alf_signa": [
+   "Sö 115",
+   "Sö 254",
+   "Sö 257",
+   "U 37",
+   "U 515",
+   "U 573",
+   "Hs 10"
+  ],
+  "tor_stenar": 335,
+  "tor_andel": 14.4,
+  "as_stenar": 168,
+  "as_andel": 7.2
+ },
+ "A6": {
+  "kandidater": 5,
+  "läsning": {
+   "källa": "Svenskt ortnamnslexikon (2016), sökning i förklaringarna enligt planens A6; alla träffar lästa för hand 2026-11-21",
+   "träffar": 6,
+   "alvnamn_enligt_SOL": 0,
+   "artiklar": [
+    {
+     "namn": "Alva sn, Gotland",
+     "SOL": "alv 'jordlager närmast under matjorden'"
+    },
+    {
+     "namn": "Alvaret, Öland",
+     "SOL": "dialektordet alvar, bildning till alv 'jordlager'"
+    },
+    {
+     "namn": "Alvhem, Skepplanda sn, Västergötland",
+     "SOL": "förleden möjligen alv 'jordlager'"
+    },
+    {
+     "namn": "Ärla sn, Södermanland",
+     "SOL": "äril 'härd ...', alv i förklaringen av ordet"
+    },
+    {
+     "namn": "Hemse sn, Gotland",
+     "SOL": "träffen är sockenledet 'Alva snr' i huvudet, inte en tolkning"
+    },
+    {
+     "namn": "Alva sn (andra förekomsten i samma artikel)",
+     "SOL": "samma artikel"
+    }
+   ]
+  }
+ },
+ "T1": {
+  "huvud": {
+   "underlag": {
+    "Eddan_träffar": 44,
+    "Eddan_texter": 13,
+    "sagorna_träffar": 20,
+    "sagorna_texter": 12
+   },
+   "T1a_gudar": {
+    "Eddan_%": 68.2,
+    "sagorna_%": 0.0,
+    "skillnad_pe": 68.2,
+    "intervall": [
+     37.5,
+     93.0
+    ],
+    "p": 0.0,
+    "p_holm": 0.0,
+    "håller": true
+   },
+   "T1b_vidunder": {
+    "Eddan_%": 40.9,
+    "sagorna_%": 15.0,
+    "skillnad_pe": 25.9,
+    "intervall": [
+     -11.2,
+     58.5
+    ],
+    "p": 0.2206,
+    "p_holm": 0.2206,
+    "håller": false
+   },
+   "dvärgar": {
+    "Eddan_%": 45.5,
+    "sagorna_%": 5.0,
+    "skillnad_pe": 40.5,
+    "intervall": [
+     7.2,
+     68.8
+    ],
+    "p": 0.0112
+   }
+  },
+  "utan_Alvíssmál": {
+   "underlag": {
+    "Eddan_träffar": 33,
+    "Eddan_texter": 12,
+    "sagorna_träffar": 20,
+    "sagorna_texter": 12
+   },
+   "T1a_gudar": {
+    "Eddan_%": 57.6,
+    "sagorna_%": 0.0,
+    "skillnad_pe": 57.6,
+    "intervall": [
+     31.9,
+     88.9
+    ],
+    "p": 0.0,
+    "p_holm": 0.0,
+    "håller": true
+   },
+   "T1b_vidunder": {
+    "Eddan_%": 21.2,
+    "sagorna_%": 15.0,
+    "skillnad_pe": 6.2,
+    "intervall": [
+     -17.9,
+     27.9
+    ],
+    "p": 0.6092,
+    "p_holm": 0.6092,
+    "håller": false
+   },
+   "dvärgar": {
+    "Eddan_%": 27.3,
+    "sagorna_%": 5.0,
+    "skillnad_pe": 22.3,
+    "intervall": [
+     1.0,
+     43.3
+    ],
+    "p": 0.0446
+   }
+  },
+  "fönster_10": {
+   "underlag": {
+    "Eddan_träffar": 44,
+    "Eddan_texter": 13,
+    "sagorna_träffar": 20,
+    "sagorna_texter": 12
+   },
+   "T1a_gudar": {
+    "Eddan_%": 65.9,
+    "sagorna_%": 0.0,
+    "skillnad_pe": 65.9,
+    "intervall": [
+     37.5,
+     89.6
+    ],
+    "p": 0.0,
+    "p_holm": 0.0,
+    "håller": true
+   },
+   "T1b_vidunder": {
+    "Eddan_%": 34.1,
+    "sagorna_%": 10.0,
+    "skillnad_pe": 24.1,
+    "intervall": [
+     -11.1,
+     56.7
+    ],
+    "p": 0.2822,
+    "p_holm": 0.2822,
+    "håller": false
+   },
+   "dvärgar": {
+    "Eddan_%": 27.3,
+    "sagorna_%": 0.0,
+    "skillnad_pe": 27.3,
+    "intervall": [
+     8.3,
+     41.7
+    ],
+    "p": 0.004
+   }
+  }
+ }
+}

@@ -81,3 +81,9 @@ islänningasagan i toppen), Kormáks saga (vers) 30, Gríms saga loðinkinna 29.
 - Antal ord är inte tro. Att en saga nämner troll visar vad berättaren valde att berätta på 1200–1300-talet, inte vad
   någon på 900-talet trodde.
 - Islänningasagornas stavning är nutida (sagadb.org). Ordlistan täcker både den och den fornisländska.
+
+## Rättelse 2026-11-21 (upptäckt i alvstudien)
+Ordlistan (v1 och v2) krävde *álf-* med accent, men Guðni Jónssons Eddautgåva stavar *alfar* utan accent. Därför
+räknades inte de 31 alvträffarna i eddadikterna (och 3 Völund-epitet). Eddadikternas täthet var alltså något för låg
+(alverna ger omkring 6,5 till per 10 000 ord), och alvernas antal i hela korpusen är omkring 64, inte 22. Testerna
+T1–T3 gäller sagorna och påverkas inte. Se `utdata/alverna/resultat.md`.
