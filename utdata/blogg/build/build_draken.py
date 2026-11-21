@@ -183,7 +183,7 @@ Här måste vi skilja på det vi har mätt och det forskningen säger.
 **Det vi har mätt.**
 - Lånordet är nästan frånvarande i eddadikterna. Där är draken en *ormr*, och det enda undantaget är Nidhögg i Völuspá.
 - I den skrivna prosan, nedtecknad på 1200- och 1300-talen, är *dreki* lika vanligt som *ormr* för draken. Ordet har dessutom blivit sagornas vanliga ord för ett stort skepp.
-- Vi ville pröva om lånordet verkligen tar över. Men eddadikterna har bara åtta drakar, och planen krävde tio, så jämförelsen är inte prövad. Riktningen är tydlig, men den är inte bevisad.
+- **Testet:** att lånordet tar över hann inte prövas. Eddadikterna har bara åtta drakar, och planen krävde tio, så riktningen är tydlig men inte bevisad.
 
 En detalj i Völsunga saga är värd att notera. Sagan säger att Sigurd dödade *{q('vaeringar')}* – ”den stora draken, som väringarna kallar Fafner”. Hans sköld var *{q('skjoldr')}* – ”målad med en drake”. Väringarna var de nordbor som tjänade i Konstantinopel. Vad sagaförfattaren menade med att det var *de* som använde namnet vet vi inte, men det knyter draken till nordbornas resor söderut.
 
@@ -200,6 +200,7 @@ Kopia av den förstörda Ockelbostenen (Gs 19) i Gästrikland, med motiv ur Sigu
 :::box Det viktigaste i korthet
 - I sagornas prosa betyder *dreki* oftast ett skepp, {SHIP_PC} procent av gångerna. Draken som djur är det mindre vanliga.
 - I eddadikterna heter draken nästan alltid *ormr*. Ordet *dreki*, ett lån från latinet, finns där bara en gång.
+- Testet: att lånordet tar över hann inte prövas. Eddadikterna har bara åtta drakar, och planen krävde tio, så riktningen är tydlig men inte bevisad.
 - På runstenarna nämns draken aldrig i texten, men på tre av fyra stenar är runslingan själv en orm.
 - Sigurd och Fafner finns i bild på fem svenska ristningar, men inte i någon runtext.
 :::
@@ -259,7 +260,7 @@ Here we must separate what we have measured from what research says.
 **What we have measured.**
 - The loanword is almost absent from the Eddic poems. There the dragon is an *ormr*, and the only exception is Níðhöggr in Völuspá.
 - In the written prose, set down in the 13th and 14th centuries, *dreki* is as common as *ormr* for the dragon. The word has also become the sagas' ordinary word for a great ship.
-- We wanted to test whether the loanword really takes over. But the Eddic poems have only eight dragons, and the plan required ten, so the comparison is not tested. The direction is clear, but it is not proven.
+- **The test:** whether the loanword takes over could not be tested. The Eddic poems have only eight dragons, and the plan required ten, so the direction is clear but not proven.
 
 One detail in Völsunga saga is worth noting. The saga says that Sigurðr killed *{q('vaeringar')}* – “the great dragon that the Varangians call Fáfnir”. His shield was *{q('skjoldr')}* – “painted with a dragon”. The Varangians were the Norsemen who served in Constantinople. What the saga writer meant by saying it was *they* who used the name we do not know, but it ties the dragon to the Norsemen's journeys south.
 
@@ -276,6 +277,7 @@ Copy of the destroyed Ockelbo stone (Gs 19) in Gästrikland, with motifs from th
 :::box The essentials in brief
 - In the prose of the sagas *dreki* usually means a ship, {SHIP_PC} per cent of the time. The dragon as an animal is the less common meaning.
 - In the Eddic poems the dragon is nearly always *ormr*. The word *dreki*, a loan from Latin, occurs there only once.
+- The test: whether the loanword takes over could not be tested. The Eddic poems have only eight dragons, and the plan required ten, so the direction is clear but not proven.
 - On the runestones the dragon is never named in the text, but on three stones in four the rune band itself is a serpent.
 - Sigurðr and Fáfnir appear in pictures on five Swedish carvings, but in no runic text.
 :::
