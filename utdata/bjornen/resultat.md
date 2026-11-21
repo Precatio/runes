@@ -60,7 +60,7 @@ Räknat 2026-11-21 med `analys.py`, `analys_t2.R` och SHM-sammanställningen `b4
   - Två av de fem fönstren var dessutom falska. Underlaget är för litet för att avgöra frågan.
 - **T2 björnnamnen och skogen: håller formellt.**
   - Björnnamn finns på 11,5 % av stenarna i skogslandskapen (21 av 183) och 19,1 % i Mälarlandskapen (302 av 1 584).
-  - Kvot 0,49 (0,30–0,81), p 0,006, Holm-justerat 0,011.
+  - Kvot 0,49 (0,29–0,81), p 0,006, Holm-justerat 0,011.
   - **Men känsligheten** visar att skillnaden bärs av Småland (5 %). Utan Småland blir kvoten 1,18 (0,60–2,32).
   - Läsning: björnnamnen är inte vanligare där björnarna levde, och de är vanligast i Mälardalen. Att de är *ovanligare*
     i skogsbygderna gäller bara Småland.
