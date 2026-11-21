@@ -1,0 +1,264 @@
+{
+ "träffar": 412,
+ "O1": {
+  "eddadikter|dreki": {
+   "drake": 1
+  },
+  "eddadikter|ormr": {
+   "orm": 9,
+   "drake": 7,
+   "bild": 1
+  },
+  "prosa|dreki": {
+   "skepp": 212,
+   "drake": 57,
+   "bild": 2,
+   "kenning": 1,
+   "annat": 1
+  },
+  "prosa|ormr": {
+   "drake": 48,
+   "orm": 25,
+   "annat": 25,
+   "kenning": 2,
+   "skepp": 1,
+   "bild": 1
+  },
+  "vers|dreki": {
+   "skepp": 4
+  },
+  "vers|ormr": {
+   "kenning": 6,
+   "annat": 4,
+   "orm": 3,
+   "drake": 2
+  },
+  "runsten|dreki": {},
+  "runsten|ormr": {}
+ },
+ "O1_korpus_dreki": {
+  "eddadikter": {
+   "drake": 1
+  },
+  "snorra_edda_gylfaginning": {},
+  "snorra_edda_skáldskaparmál": {
+   "kenning": 1,
+   "annat": 1
+  },
+  "islanningasagor": {
+   "skepp": 39,
+   "drake": 13
+  },
+  "islanningasagor_vers": {},
+  "heimskringla": {
+   "skepp": 20,
+   "drake": 2
+  },
+  "heimskringla_vers": {
+   "skepp": 4
+  },
+  "fornaldarsagor": {
+   "skepp": 153,
+   "drake": 42,
+   "bild": 2
+  },
+  "fornaldarsagor_vers": {},
+  "samtidssagor": {},
+  "samtidssagor_vers": {}
+ },
+ "O1_drakar_per_text": [
+  [
+   "fornaldarsagor|Yngvars saga víðförla|dreki",
+   15
+  ],
+  [
+   "fornaldarsagor|Völsunga saga|ormr",
+   13
+  ],
+  [
+   "islanningasagor|gull-thoris saga|dreki",
+   11
+  ],
+  [
+   "fornaldarsagor|Ragnars saga loðbrókar ok sona hans|ormr",
+   10
+  ],
+  [
+   "snorra_edda_gylfaginning|Gylfaginning|ormr",
+   9
+  ],
+  [
+   "fornaldarsagor|Eireks saga víðförla|dreki",
+   7
+  ],
+  [
+   "fornaldarsagor|Sögubrot af nokkurum fornkonungum í Dana- ok Svíaveldi|dreki",
+   4
+  ],
+  [
+   "fornaldarsagor|Völsunga saga|dreki",
+   4
+  ],
+  [
+   "fornaldarsagor|Yngvars saga víðförla|ormr",
+   4
+  ],
+  [
+   "fornaldarsagor|Þáttr af Ragnars sonum|ormr",
+   4
+  ],
+  [
+   "eddadikter|Fáfnismál|ormr",
+   3
+  ],
+  [
+   "fornaldarsagor|Hálfdanar saga Eysteinssonar|dreki",
+   3
+  ],
+  [
+   "fornaldarsagor|Ketils saga hængs|dreki",
+   3
+  ],
+  [
+   "islanningasagor|bjarnar saga hitdaelakappa|dreki",
+   2
+  ],
+  [
+   "fornaldarsagor|Bósa saga ok Herrauðs|dreki",
+   2
+  ],
+  [
+   "fornaldarsagor|Bósa saga ok Herrauðs|ormr",
+   2
+  ],
+  [
+   "fornaldarsagor|Hrómundar saga Gripssonar|ormr",
+   2
+  ],
+  [
+   "fornaldarsagor|Sörla saga sterka|dreki",
+   2
+  ],
+  [
+   "eddadikter|Hymiskviða|ormr",
+   1
+  ],
+  [
+   "eddadikter|Reginsmál|ormr",
+   1
+  ],
+  [
+   "eddadikter|Sigurðarkviða_in_meiri|ormr",
+   1
+  ],
+  [
+   "eddadikter|Völuspá|dreki",
+   1
+  ],
+  [
+   "eddadikter|Völuspá|ormr",
+   1
+  ],
+  [
+   "snorra_edda_skáldskaparmál|Skáldskaparmál|ormr",
+   1
+  ],
+  [
+   "heimskringla|Saga Ólafs Tryggvasonar|dreki",
+   1
+  ],
+  [
+   "heimskringla|Ynglinga saga|dreki",
+   1
+  ],
+  [
+   "fornaldarsagor|Hrómundar saga Gripssonar|dreki",
+   1
+  ],
+  [
+   "fornaldarsagor|Norna-Gests þáttr|ormr",
+   1
+  ],
+  [
+   "fornaldarsagor|Sögubrot af nokkurum fornkonungum í Dana- ok Svíaveldi|ormr",
+   1
+  ],
+  [
+   "fornaldarsagor_vers|Völsunga saga|ormr",
+   1
+  ]
+ ],
+ "O2": {
+  "eddadikter|Fáfn": 51,
+  "eddadikter|Góin": 1,
+  "eddadikter|Jörm": 1,
+  "eddadikter|Móin": 3,
+  "prosa|Fáfn": 79,
+  "prosa|Góin": 2,
+  "prosa|Jörm": 4,
+  "prosa|Miðg": 17,
+  "prosa|Móin": 2,
+  "prosa|Níðh": 6,
+  "vers|Fáfn": 5
+ },
+ "T1": {
+  "huvud": {
+   "edda_n": 8,
+   "edda_texter": 5,
+   "prosa_n": 105,
+   "prosa_texter": 20,
+   "obestämt": true
+  },
+  "bara_fafnir": {
+   "edda_n": 4,
+   "edda_texter": 2,
+   "prosa_n": 28,
+   "prosa_texter": 4,
+   "obestämt": true
+  },
+  "utan_snorre": {
+   "edda_n": 8,
+   "edda_texter": 5,
+   "prosa_n": 95,
+   "prosa_texter": 18,
+   "obestämt": true
+  }
+ },
+ "O3_text": [],
+ "O3_ormslinga": {
+  "Uppland": {
+   "stilbestämda": 567,
+   "med_ormhuvud": 523,
+   "andel": 92.2
+  },
+  "Södermanland": {
+   "stilbestämda": 188,
+   "med_ormhuvud": 145,
+   "andel": 77.1
+  },
+  "Östergötland": {
+   "stilbestämda": 100,
+   "med_ormhuvud": 33,
+   "andel": 33.0
+  },
+  "Västergötland": {
+   "stilbestämda": 82,
+   "med_ormhuvud": 22,
+   "andel": 26.8
+  },
+  "Småland": {
+   "stilbestämda": 32,
+   "med_ormhuvud": 4,
+   "andel": 12.5
+  },
+  "Öland": {
+   "stilbestämda": 22,
+   "med_ormhuvud": 16,
+   "andel": 72.7
+  }
+ },
+ "O3_totalt": {
+  "stilbestämda": 1038,
+  "med_ormhuvud": 780
+ }
+}
