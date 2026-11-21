@@ -11,6 +11,8 @@ import { getPost, listPosts, postSlugs } from "@/lib/articles";
 import { isReport, enReportPath } from "@/lib/report";
 import { featuredFirst } from "@/lib/featured";
 import { authorOf } from "@/lib/site";
+import SeriesNav, { SeriesMarker, seriesInfo } from "@/components/SeriesNav";
+import { partsOf, seriesOf } from "@/lib/series";
 import { articleJsonLd, commonsSizes, enPostPath, EN_ARTICLES_PATH, postPath, keywords, languageAlternates, metaDescription, pictures, SHARE_SIZE, enSharePath } from "@/lib/blogSeo";
 
 // The English edition of a published article, rendered on the server so that search engines see English text and
@@ -69,7 +71,12 @@ export default async function EnglishPostPage({ params }: { params: Promise<{ sl
   const post = await getPost(decodeURIComponent(slug));
   if (!post?.body_en) notFound();
   if (isReport(post)) permanentRedirect(enReportPath(post.slug));
-  const more = featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug && p.title_en)).slice(0, 3);
+  const all = (await listPosts()).posts;
+  const more = featuredFirst(all.filter(p => p.slug !== post.slug && p.title_en)).slice(0, 3);
+  // The series it belongs to, with its published parts in reading order (lib/series.ts)
+  const s = seriesOf(post);
+  const series = s ? seriesInfo(s) : null;
+  const parts = s ? partsOf(all, s.key).map(({ slug, title, title_en }) => ({ slug, title, title_en })) : [];
   const sizes = await commonsSizes(pictures(post.body_en).map(p => p.src));
   const author = authorOf(post.author);
   const name = post.author || author?.name;
@@ -86,6 +93,7 @@ export default async function EnglishPostPage({ params }: { params: Promise<{ sl
         <div className="mt-8 text-sm text-slate-500">
           <time dateTime={post.publishedAt ?? post.month}>{postDate(post, "en")}</time>
         </div>
+        {series && <div className="mt-3"><SeriesMarker series={series} parts={parts} current={post.slug} lang="en" /></div>}
         <LabelChips labels={post.labels} lang="en" linked className="mt-3" />
         <h1 className="mt-2 text-4xl md:text-5xl font-serif font-bold tracking-tight leading-tight text-slate-900">{title}</h1>
         {post.summary_en && <p className="mt-5 text-xl text-slate-600 leading-relaxed">{post.summary_en}</p>}
@@ -96,6 +104,7 @@ export default async function EnglishPostPage({ params }: { params: Promise<{ sl
         <ShareArticle title={title} lang="en" />
         {author && <AuthorCard author={author} lang="en" />}
       </article>
+      {series && <SeriesNav series={series} parts={parts} current={post.slug} lang="en" />}
       <MoreInEnglish posts={more} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify(articleJsonLd(post, "en")).replace(/</g, "\\u003c") }} />

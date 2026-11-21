@@ -13,7 +13,7 @@ import { postDate, type BlogPost } from "@/components/BlogBody";
 import { Picture } from "@/components/BlogList";
 import { hasViews, inOrder, type Order } from "@/lib/featured";
 import { SUBJECTS, TYPES, isType, labelName, typeOf } from "@/lib/labels";
-import { MIN_PARTS, SERIES, seriesOf } from "@/lib/series";
+import { MIN_PARTS, SERIES, partsOf, seriesOf } from "@/lib/series";
 import { readerPath } from "@/lib/blogSeo";
 import { loadIndex, matches, searchTerms, snippet, type IndexPost } from "@/lib/articleSearch";
 import { trackSearch } from "@/lib/track";
@@ -92,8 +92,6 @@ const Heading = ({ children }: { children: ReactNode }) => (
 
 // ---- the series in reading order --------------------------------------------------------------------------------
 const dateOf = (p: BlogPost) => p.publishedAt ?? p.month ?? "";
-const partsOf = (posts: BlogPost[], key: string) =>
-  posts.filter(p => seriesOf(p)?.key === key).sort((a, b) => dateOf(a).localeCompare(dateOf(b)));
 function seriesLabel(p: BlogPost, en: boolean, parts: Map<string, number>) {
   const s = seriesOf(p);
   if (!s) return null;
@@ -196,7 +194,7 @@ export default function ArticleLibrary({ posts, lang: pageLang = "sv", failed = 
     return () => clearTimeout(t);
   }, [query, hits, index]);
 
-  const seriesShown = SERIES.filter(s => posts.filter(p => s.match.test(p.title)).length >= MIN_PARTS);
+  const seriesShown = SERIES.filter(s => partsOf(posts, s.key).length >= MIN_PARTS);
   const base = hits ?? posts;
   const filtered = base.filter(p => (!kind || p.labels?.includes(kind)) && (!subject || p.labels?.includes(subject))
     && (!series || seriesOf(p)?.key === series));
@@ -251,7 +249,7 @@ export default function ArticleLibrary({ posts, lang: pageLang = "sv", failed = 
           <Heading>{en ? "Series" : "Serier"}</Heading>
           {seriesShown.map(s => (
             <Option key={s.key} on={series === s.key} onClick={() => set({ serie: series === s.key ? null : s.key })}
-              count={posts.filter(p => s.match.test(p.title)).length}>
+              count={partsOf(posts, s.key).length}>
               {en ? s.en : s.sv}
             </Option>
           ))}
@@ -330,6 +328,28 @@ export default function ArticleLibrary({ posts, lang: pageLang = "sv", failed = 
           <p className="mt-10 text-slate-500">{en ? "No article matches. " : "Ingen artikel matchar. "}
             <button type="button" onClick={clear} className="font-semibold text-[#b7410e] hover:underline">{en ? "Clear the filters" : "Rensa filtren"}</button>
           </p>
+        )}
+
+        {/* The series, to follow from part 1: shown above the articles while nothing is chosen */}
+        {plain && !terms.length && seriesShown.length > 0 && (
+          <section className="mt-6" aria-labelledby="artikelserier">
+            <h2 id="artikelserier" className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">{en ? "Article series" : "Artikelserier"}</h2>
+            <div className="mt-2 grid gap-3 sm:grid-cols-2">
+              {seriesShown.map(s => {
+                const n = partsOf(posts, s.key).length;
+                return (
+                  <button key={s.key} type="button" onClick={() => set({ serie: s.key })}
+                    className="rounded-2xl border border-[#b7410e]/25 bg-[#f3ede4]/70 px-4 py-3 text-left transition hover:border-[#b7410e]/60 hover:bg-[#f3ede4]">
+                    <span className="block font-serif font-bold text-slate-900"><span aria-hidden="true" className="text-[#b7410e]">❖ </span>{en ? s.en : s.sv}</span>
+                    <span className="mt-0.5 block text-[13px] leading-snug text-slate-600">{en ? s.aboutEn : s.about}</span>
+                    <span className="mt-1 block text-[13px] font-semibold text-[#9a350b]">
+                      {en ? (n === 1 ? "1 part so far" : `${n} parts`) : (n === 1 ? "1 del hittills" : `${n} delar`)} →
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
         )}
 
         {inSeries && (

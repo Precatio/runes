@@ -3,6 +3,8 @@ import { notFound, permanentRedirect } from "next/navigation";
 import BlogShell from "@/components/BlogShell";
 import BlogArticle from "@/components/BlogArticle";
 import MoreArticles from "@/components/MoreArticles";
+import SeriesNav, { SeriesMarker, seriesInfo } from "@/components/SeriesNav";
+import { partsOf, seriesOf } from "@/lib/series";
 import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts, postSlugs } from "@/lib/articles";
 import { isReport, reportPath } from "@/lib/report";
@@ -59,18 +61,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // A research report has its own section and paper layout (app/rapporter); an old address under /artiklar leads there
   if (isReport(post)) permanentRedirect(reportPath(post.slug));
   // three other articles: the article of the week first, then the newest
-  const more = (await withImageSizes(featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3))).map(moreCard);
+  const all = (await listPosts()).posts;
+  const more = (await withImageSizes(featuredFirst(all.filter(p => p.slug !== post.slug)).slice(0, 3))).map(moreCard);
+  // The series it belongs to, with its published parts in reading order (lib/series.ts)
+  const s = seriesOf(post);
+  const series = s ? seriesInfo(s) : null;
+  const parts = s ? partsOf(all, s.key).map(({ slug, title, title_en }) => ({ slug, title, title_en })) : [];
   // The sizes of its Commons photos
   const sizes = await commonsSizes(pictures(post.body ?? "").map(p => p.src));
   const english = post.body_en ? enPostPath(post.slug) : null;
   return (
     <BlogShell>
-      {english && (
-        <div className="max-w-3xl mx-auto px-6 pt-8 -mb-10 text-right">
-          <a href={english} hrefLang="en" className="tap text-sm text-[#b7410e] font-semibold hover:underline">In English →</a>
+      {(english || (series && parts.length)) && (
+        <div className="max-w-3xl mx-auto px-6 pt-8 -mb-10 flex flex-wrap items-center justify-between gap-3">
+          {series ? <SeriesMarker series={series} parts={parts} current={post.slug} lang="sv" /> : <span />}
+          {english && <a href={english} hrefLang="en" className="tap text-sm text-[#b7410e] font-semibold hover:underline">In English →</a>}
         </div>
       )}
       <BlogArticle post={swedishOnly(post)} sizes={sizes} english={english} />
+      {series && <SeriesNav series={series} parts={parts} current={post.slug} lang="sv" />}
       <MoreArticles posts={more} />
       { }
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(post)).replace(/</g, "\\u003c") }} />
