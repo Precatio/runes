@@ -1,0 +1,30 @@
+{
+ "källa": "Statens historiska museer, samlingar.shm.se (CC0), objektnamnen Björnklo, Klo, Björntand, Björnfalang; hämtat 2026-11-21; poster med 'björn' i benämning, titel, beskrivning eller artbedömning",
+ "poster": 84,
+ "föremål": 323,
+ "period": {
+  "äldre järnålder–folkvandringstid": 31,
+  "Järnålder": 16,
+  "vikingatid (också delvis)": 14,
+  "vendeltid": 9,
+  "Yngre järnålder": 7,
+  "medeltid": 5,
+  "Odaterad": 2
+ },
+ "landskap": {
+  "Uppland": 33,
+  "Gotland": 19,
+  "Östergötland": 11,
+  "Södermanland": 9,
+  "Hälsingland": 4,
+  "Närke": 3,
+  "Medelpad": 3,
+  "Jämtland": 2
+ },
+ "sammanhang": {
+  "grav": 68,
+  "boplats": 9,
+  "okänt": 7
+ },
+ "förbehåll": "SHM:s samlingar, inte hela Sverige; brända ben artbestäms och registreras ofta inte post för post, så antalet är ett minimum"
+}

@@ -1,0 +1,8 @@
+{
+ "stickprov": 71,
+ "riktiga": {"bersi": "6/9", "bjarndýr": "11/11", "björn|Eddan": "6/8", "björn|fornaldarsagorna": "8/8", "björn|islänningasagorna": "8/8", "björn|övriga": "2/3", "húnn": "3/7", "isbjörn": "17/17"},
+ "viktat_procent": 92,
+ "fel": ["björn/bersi som kenning för skepp (Skáldskaparmál)", "húnn som spelpjäs (hnefatafl) och som 'söner' (Völundarkviða)", "björnuna om kungen (Olav den helige)"],
+ "utan_test": [["björn", "Eddan"]],
+ "förvandlingsfönster": {"lästa": 5, "verkliga": 3, "not": "alla fem i fornaldarsagorna; tre björnfylgjor i drömmar (Hrólfs saga Gautrekssonar, Þorsteins saga Víkingssonar), två falska ('dreka hamr' i Hrómundar saga). Bödvar Bjarkes 'bjarnarhamrinn' fångas inte av mönstret (ordet står inuti en sammansättning)."}
+}

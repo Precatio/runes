@@ -1,0 +1,432 @@
+{
+ "träffar": 137,
+ "grind": {
+  "stickprov": 71,
+  "riktiga": {
+   "bersi": "6/9",
+   "bjarndýr": "11/11",
+   "björn|Eddan": "6/8",
+   "björn|fornaldarsagorna": "8/8",
+   "björn|islänningasagorna": "8/8",
+   "björn|övriga": "2/3",
+   "húnn": "3/7",
+   "isbjörn": "17/17"
+  },
+  "viktat_procent": 92,
+  "fel": [
+   "björn/bersi som kenning för skepp (Skáldskaparmál)",
+   "húnn som spelpjäs (hnefatafl) och som 'söner' (Völundarkviða)",
+   "björnuna om kungen (Olav den helige)"
+  ],
+  "utan_test": [
+   [
+    "björn",
+    "Eddan"
+   ]
+  ],
+  "förvandlingsfönster": {
+   "lästa": 5,
+   "verkliga": 3,
+   "not": "alla fem i fornaldarsagorna; tre björnfylgjor i drömmar (Hrólfs saga Gautrekssonar, Þorsteins saga Víkingssonar), två falska ('dreka hamr' i Hrómundar saga). Bödvar Bjarkes 'bjarnarhamrinn' fångas inte av mönstret (ordet står inuti en sammansättning)."
+  }
+ },
+ "B1": {
+  "eddadikter": {
+   "björn": 7,
+   "húnn": 2,
+   "isbjörn": 1
+  },
+  "snorra_edda_gylfaginning": {
+   "björn": 1
+  },
+  "snorra_edda_skáldskaparmál": {
+   "björn": 4,
+   "bersi": 3,
+   "húnn": 1
+  },
+  "islanningasagor": {
+   "björn": 49,
+   "isbjörn": 8,
+   "bjarndýr": 5,
+   "bersi": 3,
+   "húnn": 1
+  },
+  "islanningasagor_vers": {
+   "björn": 5
+  },
+  "heimskringla": {
+   "björn": 3
+  },
+  "heimskringla_vers": {
+   "húnn": 1
+  },
+  "fornaldarsagor": {
+   "björn": 20,
+   "isbjörn": 9,
+   "bjarndýr": 6,
+   "húnn": 1,
+   "bersi": 1
+  },
+  "fornaldarsagor_vers": {
+   "björn": 3,
+   "húnn": 1
+  },
+  "samtidssagor": {
+   "bersi": 1
+  },
+  "samtidssagor_vers": {
+   "bersi": 1
+  },
+  "runstenar_SE": {}
+ },
+ "B1_per_10000": {
+  "eddadikter": 2.09,
+  "snorra_edda_gylfaginning": 0.56,
+  "snorra_edda_skáldskaparmál": 3.71,
+  "islanningasagor": 0.75,
+  "islanningasagor_vers": 2.6,
+  "heimskringla": 0.12,
+  "heimskringla_vers": 0.55,
+  "fornaldarsagor": 1.08,
+  "fornaldarsagor_vers": 2.49,
+  "samtidssagor": 0.21,
+  "samtidssagor_vers": 8.48,
+  "runstenar_SE": 0.0
+ },
+ "B2_isbjörn": [
+  [
+   "eddadikter",
+   "Atlamál_in_grænlenzku",
+   "hvítabjörn"
+  ],
+  [
+   "islanningasagor",
+   "hardar saga og holmverja",
+   "hvítabjörn"
+  ],
+  [
+   "islanningasagor",
+   "kroka-refs saga",
+   "hvítabjörn"
+  ],
+  [
+   "islanningasagor",
+   "kroka-refs saga",
+   "hvítabjörn"
+  ],
+  [
+   "islanningasagor",
+   "kroka-refs saga",
+   "hvítabjörn"
+  ],
+  [
+   "islanningasagor",
+   "kroka-refs saga",
+   "hvítabjörn"
+  ],
+  [
+   "islanningasagor",
+   "kroka-refs saga",
+   "hvítabjörnu"
+  ],
+  [
+   "islanningasagor",
+   "svarfdaela saga",
+   "hvítabjörn"
+  ],
+  [
+   "islanningasagor",
+   "thorsteins saga sidu-hallssonar",
+   "hvítabjörn"
+  ],
+  [
+   "fornaldarsagor",
+   "Hrólfs saga Gautrekssonar",
+   "hvítabjörn"
+  ],
+  [
+   "fornaldarsagor",
+   "Hrólfs saga Gautrekssonar",
+   "hvítabjörn"
+  ],
+  [
+   "fornaldarsagor",
+   "Hrólfs saga Gautrekssonar",
+   "hvítabjörninn"
+  ],
+  [
+   "fornaldarsagor",
+   "Hrólfs saga Gautrekssonar",
+   "hvítabirnir"
+  ],
+  [
+   "fornaldarsagor",
+   "Hrólfs saga Gautrekssonar",
+   "hvítabirnir"
+  ],
+  [
+   "fornaldarsagor",
+   "Ketils saga hængs",
+   "hvítabjörnum"
+  ],
+  [
+   "fornaldarsagor",
+   "Völsunga saga",
+   "hvítabjörn"
+  ],
+  [
+   "fornaldarsagor",
+   "Örvar-Odds saga",
+   "hvítabjörn"
+  ],
+  [
+   "fornaldarsagor",
+   "Örvar-Odds saga",
+   "hvítabjörn"
+  ]
+ ],
+ "förvandling_per_grupp": {
+  "Eddan": {
+   "n": 19,
+   "förvandling": 0
+  },
+  "fornaldarsagorna": {
+   "n": 41,
+   "förvandling": 5
+  },
+  "islänningasagorna": {
+   "n": 71,
+   "förvandling": 0
+  },
+  "övriga": {
+   "n": 6,
+   "förvandling": 0
+  }
+ },
+ "förvandling_texter": [
+  [
+   "fornaldarsagorna|Hrólfs saga Gautrekssonar",
+   2
+  ],
+  [
+   "fornaldarsagorna|Hrómundar saga Gripssonar",
+   2
+  ],
+  [
+   "fornaldarsagorna|Þorsteins saga Víkingssonar",
+   1
+  ]
+ ],
+ "T1": {
+  "huvud": {
+   "fornaldar_n": 41,
+   "fornaldar_texter": 10,
+   "islänninga_n": 71,
+   "islänninga_texter": 17,
+   "fornaldar_%": 12.2,
+   "islänninga_%": 0.0,
+   "skillnad_pe": 12.2,
+   "intervall": [
+    0.0,
+    28.6
+   ],
+   "p": 0.0512
+  },
+  "fönster_10": {
+   "fornaldar_n": 41,
+   "fornaldar_texter": 10,
+   "islänninga_n": 71,
+   "islänninga_texter": 17,
+   "fornaldar_%": 4.9,
+   "islänninga_%": 0.0,
+   "skillnad_pe": 4.9,
+   "intervall": [
+    0.0,
+    11.4
+   ],
+   "p": 0.2158
+  }
+ },
+ "B3_landskap": {
+  "Uppland": {
+   "stenar": 1178,
+   "björnnamn": 234,
+   "andel": 19.9,
+   "vargnamn": 109,
+   "varg_andel": 9.3
+  },
+  "Södermanland": {
+   "stenar": 363,
+   "björnnamn": 59,
+   "andel": 16.3,
+   "vargnamn": 43,
+   "varg_andel": 11.8
+  },
+  "Östergötland": {
+   "stenar": 222,
+   "björnnamn": 19,
+   "andel": 8.6,
+   "vargnamn": 10,
+   "varg_andel": 4.5
+  },
+  "Öland": {
+   "stenar": 154,
+   "björnnamn": 15,
+   "andel": 9.7,
+   "vargnamn": 3,
+   "varg_andel": 1.9
+  },
+  "Västergötland": {
+   "stenar": 131,
+   "björnnamn": 14,
+   "andel": 10.7,
+   "vargnamn": 9,
+   "varg_andel": 6.9
+  },
+  "Småland": {
+   "stenar": 121,
+   "björnnamn": 6,
+   "andel": 5.0,
+   "vargnamn": 6,
+   "varg_andel": 5.0
+  },
+  "Gotland": {
+   "stenar": 42,
+   "björnnamn": 4,
+   "andel": 9.5,
+   "vargnamn": 2,
+   "varg_andel": 4.8
+  },
+  "Västmanland": {
+   "stenar": 24,
+   "björnnamn": 5,
+   "andel": 20.8,
+   "vargnamn": 2,
+   "varg_andel": 8.3
+  },
+  "Gästrikland": {
+   "stenar": 21,
+   "björnnamn": 4,
+   "andel": 19.0,
+   "vargnamn": 1,
+   "varg_andel": 4.8
+  }
+ },
+ "B3_totalt": {
+  "stenar": 2321,
+  "björnnamn": 375,
+  "vargnamn": 189
+ },
+ "B3_former": [
+  [
+   "Bjôrn",
+   101
+  ],
+  [
+   "Þorbjôrn",
+   50
+  ],
+  [
+   "Ásbjôrn",
+   35
+  ],
+  [
+   "Vébjôrn",
+   21
+  ],
+  [
+   "Geirbjôrn",
+   15
+  ],
+  [
+   "Ígulbjôrn",
+   15
+  ],
+  [
+   "Ketilbjôrn",
+   15
+  ],
+  [
+   "Sigbjôrn",
+   14
+  ],
+  [
+   "Gunnbjôrn",
+   11
+  ],
+  [
+   "Styrbjôrn",
+   9
+  ],
+  [
+   "Nesbjôrn",
+   9
+  ],
+  [
+   "Auðbjôrn",
+   8
+  ],
+  [
+   "Viðbjôrn",
+   8
+  ],
+  [
+   "Guðbjôrn",
+   8
+  ],
+  [
+   "Fastbjôrn",
+   8
+  ],
+  [
+   "Ábjôrn",
+   8
+  ],
+  [
+   "Holmbjôrn",
+   7
+  ],
+  [
+   "Vígbjôrn",
+   7
+  ],
+  [
+   "Sæbjôrn",
+   6
+  ],
+  [
+   "Bjôrn/",
+   6
+  ],
+  [
+   "Freybjôrn",
+   6
+  ],
+  [
+   "Eibjôrn",
+   6
+  ],
+  [
+   "Sigbjôrn/",
+   5
+  ],
+  [
+   "Eybjôrn",
+   4
+  ],
+  [
+   "Ernbjôrn",
+   4
+  ]
+ ],
+ "B3_skog": {
+  "stenar": 183,
+  "björnnamn": 21,
+  "andel": 11.5
+ },
+ "B3_malar": {
+  "stenar": 1584,
+  "björnnamn": 302,
+  "andel": 19.1
+ }
+}
