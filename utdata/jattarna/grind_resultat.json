@@ -1,0 +1,7 @@
+{
+ "stickprov": 102,
+ "riktiga_per_term": {"tröllkona": "9/10", "gýgr": "8/10", "flagð": "10/10", "skessa": "7/7", "namngiven jättinna": "10/10", "jötunn": "10/10", "þurs": "9/10", "risi": "8/10", "tröll": "10/10", "bergbúi": "5/5", "namngiven jätte": "10/10"},
+ "viktat_procent": 97.8,
+ "fel": ["trollkona hlífa = yxa (kenning, Skáldskaparmál)", "gýgi galdrs (kenning)", "þursligir om män", "upp risinn (uppstigen)", "risinn på runsten (participium)"],
+ "termer_utan_test": []
+}

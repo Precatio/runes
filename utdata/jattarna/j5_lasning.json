@@ -1,0 +1,18 @@
+{
+ "källa": "Svenskt ortnamnslexikon (2016); alla 48 kandidater lästa för hand 2026-11-21 enligt planens J5",
+ "jatte_eller_trollnamn": [
+  {"namn": "Edenryd", "landskap": "Skåne", "slag": "jätte", "SOL_säkerhet": "troligen", "not": "fda. iætæn 'jätte' + ryd; tradition 1620-talet om jättar i ett stenröse"},
+  {"namn": "Gigerugnen (Ekornavallen)", "landskap": "Västergötland", "slag": "jättekvinna", "SOL_säkerhet": "sannolikt", "not": "gånggrift; 'jättekvinnans ugn', motsvarighet till fvn. gýgr"},
+  {"namn": "Trollhättan", "landskap": "Västergötland", "slag": "troll", "SOL_säkerhet": "troligen", "not": "fallet liknat vid ett vattentrolls huvudbonad"},
+  {"namn": "Trullhalsar", "landskap": "Gotland", "slag": "troll", "SOL_säkerhet": "säkert ('namnet betyder')", "not": "gravfält; stensättningarna liknade vid halsar på troll"},
+  {"namn": "Bobergs härad", "landskap": "Östergötland", "slag": "jätte eller troll", "SOL_säkerhet": "möjligen", "not": "bo 'boning' – föreställningar om jättar eller troll i berget; alternativt förvaltningsgård"},
+  {"namn": "Tossebergsklätten", "landskap": "Värmland", "slag": "jätte", "SOL_säkerhet": "möjligen", "not": "dialektordet tusse 'jätte'"},
+  {"namn": "Locknevi", "landskap": "Småland", "slag": "trollkäring", "SOL_säkerhet": "föreslaget", "not": "en av flera tolkningar"},
+  {"namn": "Trollaborg", "landskap": "Småland", "slag": "troll", "SOL_säkerhet": "möjligen", "not": "sägner om troll; alternativt släkten Trolle"}
+ ],
+ "samiska_jattenamn": [
+  {"namn": "Staloluokta", "landskap": "Lappland", "not": "stállo, samisk människoätande jätte"},
+  {"namn": "Stalon", "landskap": "Lappland/Ångermanland", "not": "staaloe, samma"}
+ ],
+ "avvisade_exempel": {"Jättendal": "fsv. *iæt 'betesmark'", "Jättene": "fvn. gátt 'dörröppning'", "Fivelstad": "personbetecknande eller växt; jätte bara som fornengelsk parallell", "Ramundberget": "efter folkvisans hjälte", "Trolle-namn": "släkten Trolle", "Källö": "jättegryta som terrängord"}
+}

@@ -1,0 +1,827 @@
+{
+ "träffar": 1094,
+ "grind": {
+  "stickprov": 102,
+  "riktiga_per_term": {
+   "tröllkona": "9/10",
+   "gýgr": "8/10",
+   "flagð": "10/10",
+   "skessa": "7/7",
+   "namngiven jättinna": "10/10",
+   "jötunn": "10/10",
+   "þurs": "9/10",
+   "risi": "8/10",
+   "tröll": "10/10",
+   "bergbúi": "5/5",
+   "namngiven jätte": "10/10"
+  },
+  "viktat_procent": 97.8,
+  "fel": [
+   "trollkona hlífa = yxa (kenning, Skáldskaparmál)",
+   "gýgi galdrs (kenning)",
+   "þursligir om män",
+   "upp risinn (uppstigen)",
+   "risinn på runsten (participium)"
+  ],
+  "termer_utan_test": []
+ },
+ "J1": {
+  "eddadikter": {
+   "namngiven jätte": 109,
+   "jötunn": 91,
+   "namngiven jättinna": 29,
+   "þurs": 19,
+   "gýgr": 6,
+   "flagð": 3,
+   "tröllkona": 1,
+   "bergbúi": 1,
+   "tröll": 1
+  },
+  "snorra_edda_gylfaginning": {
+   "namngiven jätte": 100,
+   "jötunn": 29,
+   "þurs": 16,
+   "risi": 7,
+   "namngiven jättinna": 4,
+   "gýgr": 4,
+   "tröll": 2,
+   "tröllkona": 1
+  },
+  "snorra_edda_skáldskaparmál": {
+   "namngiven jätte": 90,
+   "jötunn": 40,
+   "namngiven jättinna": 15,
+   "tröll": 6,
+   "tröllkona": 3,
+   "gýgr": 1,
+   "þurs": 1,
+   "flagð": 1
+  },
+  "islanningasagor": {
+   "tröll": 75,
+   "þurs": 17,
+   "jötunn": 14,
+   "namngiven jätte": 14,
+   "risi": 8,
+   "flagð": 8,
+   "tröllkona": 6,
+   "namngiven jättinna": 4,
+   "bergbúi": 3,
+   "skessa": 2
+  },
+  "islanningasagor_vers": {
+   "namngiven jätte": 6,
+   "tröll": 5,
+   "flagð": 4,
+   "jötunn": 3,
+   "namngiven jättinna": 3,
+   "gýgr": 1,
+   "þurs": 1
+  },
+  "heimskringla": {
+   "jötunn": 3,
+   "tröll": 3,
+   "tröllkona": 3,
+   "risi": 2
+  },
+  "heimskringla_vers": {
+   "jötunn": 4,
+   "gýgr": 3,
+   "namngiven jätte": 2,
+   "flagð": 2,
+   "tröll": 2,
+   "namngiven jättinna": 1,
+   "þurs": 1
+  },
+  "fornaldarsagor": {
+   "tröll": 101,
+   "jötunn": 67,
+   "risi": 30,
+   "namngiven jättinna": 20,
+   "tröllkona": 18,
+   "namngiven jätte": 17,
+   "flagð": 16,
+   "þurs": 6,
+   "skessa": 5,
+   "gýgr": 5,
+   "bergbúi": 1
+  },
+  "fornaldarsagor_vers": {
+   "flagð": 10,
+   "risi": 3,
+   "gýgr": 3,
+   "tröll": 2,
+   "þurs": 2,
+   "tröllkona": 1,
+   "jötunn": 1,
+   "namngiven jätte": 1
+  },
+  "samtidssagor": {
+   "tröllkona": 2,
+   "tröll": 1
+  },
+  "samtidssagor_vers": {},
+  "runstenar_SE": {
+   "namngiven jättinna": 1,
+   "risi": 1
+  }
+ },
+ "J1_per_10000": {
+  "eddadikter": 54.3,
+  "snorra_edda_gylfaginning": 91.0,
+  "snorra_edda_skáldskaparmál": 72.86,
+  "islanningasagor": 1.72,
+  "islanningasagor_vers": 11.96,
+  "heimskringla": 0.45,
+  "heimskringla_vers": 8.32,
+  "fornaldarsagor": 8.37,
+  "fornaldarsagor_vers": 14.31,
+  "samtidssagor": 0.62,
+  "samtidssagor_vers": 0.0,
+  "runstenar_SE": 0.75
+ },
+ "J2_risi_andel": {
+  "eddadikter": {
+   "risi": 0,
+   "av": 110,
+   "procent": 0.0
+  },
+  "snorra_edda_gylfaginning": {
+   "risi": 7,
+   "av": 52,
+   "procent": 13.5
+  },
+  "snorra_edda_skáldskaparmál": {
+   "risi": 0,
+   "av": 41,
+   "procent": 0.0
+  },
+  "islanningasagor": {
+   "risi": 8,
+   "av": 39,
+   "procent": 20.5
+  },
+  "islanningasagor_vers": {
+   "risi": 0,
+   "av": 4,
+   "procent": 0.0
+  },
+  "heimskringla": {
+   "risi": 2,
+   "av": 5,
+   "procent": 40.0
+  },
+  "heimskringla_vers": {
+   "risi": 0,
+   "av": 5,
+   "procent": 0.0
+  },
+  "fornaldarsagor": {
+   "risi": 30,
+   "av": 103,
+   "procent": 29.1
+  },
+  "fornaldarsagor_vers": {
+   "risi": 3,
+   "av": 6,
+   "procent": 50.0
+  },
+  "samtidssagor": {
+   "risi": 0,
+   "av": 0,
+   "procent": null
+  },
+  "samtidssagor_vers": {
+   "risi": 0,
+   "av": 0,
+   "procent": null
+  },
+  "runstenar_SE": {
+   "risi": 1,
+   "av": 1,
+   "procent": 100.0
+  }
+ },
+ "J3_namn": {
+  "jättar": [
+   [
+    "Vafþrúðnir",
+    38
+   ],
+   [
+    "Útgarða-Loki",
+    26
+   ],
+   [
+    "Hymir",
+    22
+   ],
+   [
+    "Skrýmir",
+    20
+   ],
+   [
+    "Hrungnir",
+    18
+   ],
+   [
+    "Þjaza",
+    15
+   ],
+   [
+    "Surtr",
+    14
+   ],
+   [
+    "Baugi",
+    14
+   ],
+   [
+    "Ymis",
+    13
+   ],
+   [
+    "Hrungnis",
+    11
+   ],
+   [
+    "Þrymr",
+    10
+   ],
+   [
+    "Gymis",
+    8
+   ],
+   [
+    "Gillingr",
+    8
+   ],
+   [
+    "Þjazi",
+    7
+   ],
+   [
+    "Suttungr",
+    7
+   ],
+   [
+    "Hymi",
+    6
+   ],
+   [
+    "Surti",
+    6
+   ],
+   [
+    "Suttungs",
+    5
+   ],
+   [
+    "Ymi",
+    5
+   ],
+   [
+    "Útgarða-Loka",
+    5
+   ]
+  ],
+  "jättinnor": [
+   [
+    "Gríðr",
+    16
+   ],
+   [
+    "Hrímgerðr",
+    14
+   ],
+   [
+    "Greip",
+    11
+   ],
+   [
+    "Hyndla",
+    6
+   ],
+   [
+    "Fenju",
+    4
+   ],
+   [
+    "Gjálp",
+    3
+   ],
+   [
+    "Bestlu",
+    3
+   ],
+   [
+    "Hyrrokkin",
+    3
+   ],
+   [
+    "Gríði",
+    3
+   ],
+   [
+    "Menju",
+    2
+   ],
+   [
+    "Fenja",
+    2
+   ],
+   [
+    "Menja",
+    2
+   ],
+   [
+    "Gríðar",
+    2
+   ],
+   [
+    "Hrímgerðarmálum",
+    1
+   ],
+   [
+    "Hrímgerðarmál",
+    1
+   ],
+   [
+    "Hrímgerði",
+    1
+   ],
+   [
+    "Hyndluljóð",
+    1
+   ],
+   [
+    "Bestla",
+    1
+   ],
+   [
+    "Angrboða",
+    1
+   ]
+  ]
+ },
+ "J4_runstenar": [
+  [
+   "Ög 64",
+   "Greip"
+  ],
+  [
+   "U 703",
+   "risinn"
+  ]
+ ],
+ "J5_kandidater": [
+  {
+   "huvud": "Björndalen stadsdel, Trollhättans stad, Vassända-Naglums sn, Väne hd, ",
+   "ord": "Trollhättans",
+   "kontext": "Björndalen stadsdel, Trollhättans stad, Vassända-Naglums sn, Väne hd, Västergötland. – På den plats vid Trollhättan där stadsdelen i senare tid vuxit fram fanns tidigare ett soldattor"
+  },
+  {
+   "huvud": "Björndalen stadsdel, Trollhättans stad, Vassända-Naglums sn, Väne hd, ",
+   "ord": "Trollhättan",
+   "kontext": "Björndalen stadsdel, Trollhättans stad, Vassända-Naglums sn, Väne hd, Västergötland. – På den plats vid Trollhättan där stadsdelen i senare tid vuxit fram fanns tidigare ett soldattorp ( Björndalen 1895), vars namn stadsdelen övertagit. På platsen finns en sänka me"
+  },
+  {
+   "huvud": "Bobergs härad hd, Östergötland. (ii) Bobergx hæræth 1352. – Häradet ha",
+   "ord": "jättar",
+   "kontext": " Efterleden berg syftar på den betydande höjd som byn ligger på. Förleden i bynamnet är inte säkert tolkad. Den kan innehålla substantivet bo i betydelsen ’boning’, syftande på föreställningar om att jättar eller troll har bott i berget, eller som beteckning på förvaltningsgård (jfr → bo )."
+  },
+  {
+   "huvud": "Bobergs härad hd, Östergötland. (ii) Bobergx hæræth 1352. – Häradet ha",
+   "ord": "troll",
+   "kontext": "erg syftar på den betydande höjd som byn ligger på. Förleden i bynamnet är inte säkert tolkad. Den kan innehålla substantivet bo i betydelsen ’boning’, syftande på föreställningar om att jättar eller troll har bott i berget, eller som beteckning på förvaltningsgård (jfr → bo )."
+  },
+  {
+   "huvud": "Bäckaskog gods, Kiaby sn samt tätortKiaby, Nymö, Trolle-Ljungby snr, V",
+   "ord": "Trolle",
+   "kontext": "Bäckaskog gods, Kiaby sn samt tätortKiaby, Nymö, Trolle-Ljungby snr, Villands hd, Skåne. (de) Becchiascogh 1241 avskr. – Godsets namn är sammansatt av gammal genitiv singularis av bäck samt skog . Förleden"
+  },
+  {
+   "huvud": "Edenryd tätort, Ivetofta sn, Villands hd, Skåne. (i) Ietneryth 1434 av",
+   "ord": "jätte",
+   "kontext": "Ivetofta sn, Villands hd, Skåne. (i) Ietneryth 1434 avskr. – Tätorten har vuxit fram ur en by. Namnet, vars efterled är → ryd ’röjning’, innehåller i förleden troligen genitiv pluralis av fda. iætæn ’jätte’, där det uddljudande j :et har uppfattats som prepositionen i och avlägsnats. En tradition om att jättar skulle ha bott i ett närbeläget stenröse fi"
+  },
+  {
+   "huvud": "Edenryd tätort, Ivetofta sn, Villands hd, Skåne. (i) Ietneryth 1434 av",
+   "ord": "jättar",
+   "kontext": "rs efterled är → ryd ’röjning’, innehåller i förleden troligen genitiv pluralis av fda. iætæn ’jätte’, där det uddljudande j :et har uppfattats som prepositionen i och avlägsnats. En tradition om att jättar skulle ha bott i ett närbeläget stenröse finns belagd från 1620-talet."
+  },
+  {
+   "huvud": "Ekornavallen fornminnesområde, Hornborga sn, Gudhems hd, Västergötland",
+   "ord": "jättekvinnans",
+   "kontext": " är ett av Västergötlands märkligaste fornminnesområden med bl.a. domarringar, ett stort röse och gånggrifter; en av de sistnämnda bär namnet → Gigerugnen ( Girommen ), tolkat som en sammansättning (’jättekvinnans ugn’) med sannolikt genitiv av en motsvarighet till det fornvästnordiska gýgr ’jättekvinna’ i förleden."
+  },
+  {
+   "huvud": "Ekornavallen fornminnesområde, Hornborga sn, Gudhems hd, Västergötland",
+   "ord": "jättekvinna",
+   "kontext": " och gånggrifter; en av de sistnämnda bär namnet → Gigerugnen ( Girommen ), tolkat som en sammansättning (’jättekvinnans ugn’) med sannolikt genitiv av en motsvarighet till det fornvästnordiska gýgr ’jättekvinna’ i förleden."
+  },
+  {
+   "huvud": "Fivelstad sn, Aska hd, Östergötland. Fiwlstadhir 1311. – Kyrkbyn har g",
+   "ord": "jätte",
+   "kontext": "Fivelstad sn, Aska hd, Östergötland. Fiwlstadhir 1311. – Kyrkbyn har givit socknen dess namn. Ortnamnets förled kan vara personbetecknande (jfr fvn. fífl ’narr’ och det fornengelska fifel ’jätte’) eller innehålla en växtbeteckning (jfr det växtbetecknande äldre nysvenska fifler och norska fivel ’ängsull; maskros’). Efterleden innehåller → sta"
+  },
+  {
+   "huvud": "Jättendal sn, tätort, Hälsingland. (i) Ietunda sokn 1402 sen avskr., (",
+   "ord": "Jättendal",
+   "kontext": "Jättendal sn, tätort, Hälsingland. (i) Ietunda sokn 1402 sen avskr., (j) Jætundall 1483. – Tätorten, som omfattar byar i kyrktrakten, har övertagit sockennamne"
+  },
+  {
+   "huvud": "Jättendal sn, tätort, Hälsingland. (i) Ietunda sokn 1402 sen avskr., (",
+   "ord": "Jättendal",
+   "kontext": "den och Kyrksjön är återstoder av. Ett sådant fjärdnamn är sannolikt bildat till fsv. * iæt ’betesmark’, ett med verbet äta nära samhörigt ord, med syftning på betesmarkerna vid fjärden. Efterleden i Jättendal åsyftar den dal som både Kyrksjön och socknens kärnbygd är belägna i."
+  },
+  {
+   "huvud": "Jättene by, Friggeråkers, Gudhems snr, Gudhems hd, Västergötland → vin",
+   "ord": "Jättene",
+   "kontext": "Jättene by, Friggeråkers, Gudhems snr, Gudhems hd, Västergötland → vin ."
+  },
+  {
+   "huvud": "Källö-Knippla tätort, Öckerö sn, Västra Hisings hd, Bohuslän. – Den ö ",
+   "ord": "jättegryta",
+   "kontext": "ägen på består av den gamla ön Källö och tre tidigare små skär söder därom, Knippla eller Treknipplarna, nu sammanväxta med Källö. Namnet Källö ( Thielö 1568, Kiälön 1673) åsyftar sannolikt en källa (jättegryta), Saramors källa. Det kan dock inte uteslutas att förleden innehåller bohuslänskans tjäl ( l ) ’strandskata’. Namnet Knipplan ( Knipplerna 1673) inne"
+  },
+  {
+   "huvud": "Locknevi sn, Södra Tjusts hd, Småland. (de) Lødhkonuwj 1371, (j) Ludhk",
+   "ord": "trollkäring",
+   "kontext": "gts om efterleden i * Ludhkonuvi i stället kunde innehålla dativ av fsv. vidher ’skog’ eller snarare ett därtill bildat * vidhi med samma betydelse. Förleden har då föreslagits innehålla ett ord för ’trollkäring’, varvid * ludh skulle syfta på riklig hårbeklädnad, ludenhet eller vara en motsvarighet till fvn. ljóð ’trolldomssång’. Med en sådan tolkning av Loc"
+  },
+  {
+   "huvud": "Locknevi sn, Södra Tjusts hd, Småland. (de) Lødhkonuwj 1371, (j) Ludhk",
+   "ord": "trolldomssång",
+   "kontext": "at * vidhi med samma betydelse. Förleden har då föreslagits innehålla ett ord för ’trollkäring’, varvid * ludh skulle syfta på riklig hårbeklädnad, ludenhet eller vara en motsvarighet till fvn. ljóð ’trolldomssång’. Med en sådan tolkning av Locknevi kunde namnet åsyfta en skog eller ett skogsparti som trotts vara tillhåll för en trollkäring, en häxa. Vid altern"
+  },
+  {
+   "huvud": "Locknevi sn, Södra Tjusts hd, Småland. (de) Lødhkonuwj 1371, (j) Ludhk",
+   "ord": "trollkäring",
+   "kontext": "ig hårbeklädnad, ludenhet eller vara en motsvarighet till fvn. ljóð ’trolldomssång’. Med en sådan tolkning av Locknevi kunde namnet åsyfta en skog eller ett skogsparti som trotts vara tillhåll för en trollkäring, en häxa. Vid alternativet ’trolldomssång’ bör dock även den möjligheten beaktas att efterleden kan vara det ovan nämnda → vi ’helig plats, kultplats"
+  },
+  {
+   "huvud": "Locknevi sn, Södra Tjusts hd, Småland. (de) Lødhkonuwj 1371, (j) Ludhk",
+   "ord": "trolldomssång",
+   "kontext": "motsvarighet till fvn. ljóð ’trolldomssång’. Med en sådan tolkning av Locknevi kunde namnet åsyfta en skog eller ett skogsparti som trotts vara tillhåll för en trollkäring, en häxa. Vid alternativet ’trolldomssång’ bör dock även den möjligheten beaktas att efterleden kan vara det ovan nämnda → vi ’helig plats, kultplats’ och att *ludhkona , *lodhkona då skulle "
+  },
+  {
+   "huvud": "Ramundberget skidort, Tännäs sn, Härjedalen. RamundBerg 1855. – Namnet",
+   "ord": "jätte",
+   "kontext": "Ramundberget skidort, Tännäs sn, Härjedalen. RamundBerg 1855. – Namnet ska eventuellt sättas i samband med den spridda folkvisan om Ramunder den unge. Enligt denna kämpar och besegrar Ramunder en jätte uppe på ett berg. Därefter går han in i berget, fäller en mängd små troll och drar vidare med sju skepp lastade med guld och ädla stenar."
+  },
+  {
+   "huvud": "Ramundberget skidort, Tännäs sn, Härjedalen. RamundBerg 1855. – Namnet",
+   "ord": "troll",
+   "kontext": " ska eventuellt sättas i samband med den spridda folkvisan om Ramunder den unge. Enligt denna kämpar och besegrar Ramunder en jätte uppe på ett berg. Därefter går han in i berget, fäller en mängd små troll och drar vidare med sju skepp lastade med guld och ädla stenar."
+  },
+  {
+   "huvud": "Sofielund stadsdel, Malmö stad, Skåne. – Namnet avsåg äldst en nu förs",
+   "ord": "Trolle",
+   "kontext": "dst en nu försvunnen större gård i Västra Skrävlinge sn, Oxie hd (huvudbyggnaden riven 1953), som 1786 bröts ut ur kyrkbyn i Västra Skrävlinge och på 1790-talet namngavs efter ägarens hustru Sofia af Trolle. Efterleden lund är vanlig i nybildade slotts- och herrgårdsnamn från denna tid. Den stadsdel som med början på 1870-talet tillkom kring gården, älds"
+  },
+  {
+   "huvud": "Staloluokta samiskt viste, Padjelanta nationalpark, Jokkmokks sn, Lapp",
+   "ord": "jätte",
+   "kontext": "nd. – Namnet är givet efter den vik i → Virihávrre vid vilken vistet är beläget. Det är en försvenskning av lulesam. Stáloluokta , sammansatt av genitiv singularis av stállo ’dum, grym människoätande jätte (i samisk folkdiktning)’, en i samiska ortnamn inte ovanlig förled, och luokta ’vik’."
+  },
+  {
+   "huvud": "Stalon underjordiskt kraftverk i övre Ångermanälven, Vilhelmina sn, La",
+   "ord": "jätte",
+   "kontext": "rdiskt kraftverk i övre Ångermanälven, Vilhelmina sn, Lappland. – Namnet ingår som förled i flera namn i trakten. Det är en försvenskning av genitivformen av sydsam. staaloe ’dum, grym människoätande jätte (i samisk folkdiktning)’, jfr → Staloluokta ."
+  },
+  {
+   "huvud": "Tossebergsklätten berg, Sunne sn, Fryksdals hd, Värmland. Tåssbergz kl",
+   "ord": "jätte",
+   "kontext": "rgsklätten berg, Sunne sn, Fryksdals hd, Värmland. Tåssbergz klätten 1663. – Namnet innehåller i förleden bynamnet Tosseberg ( Tosseberg 1503), vars förled i sin tur kan innehålla dialektordet tusse ’jätte’. Efterleden är klätt , en sidoform till klint ’höjd’."
+  },
+  {
+   "huvud": "Trollaborg medeltida borg, Voxtorps sn, Östbo hd, Småland. (a) Trollab",
+   "ord": "Trollaborg",
+   "kontext": "Trollaborg medeltida borg, Voxtorps sn, Östbo hd, Småland. (a) Trollaborgh 1370. – Frågan om namnets anknytning till släkten Trolle är omdiskuterad. Borgen har "
+  },
+  {
+   "huvud": "Trollaborg medeltida borg, Voxtorps sn, Östbo hd, Småland. (a) Trollab",
+   "ord": "Trollaborgh",
+   "kontext": "Trollaborg medeltida borg, Voxtorps sn, Östbo hd, Småland. (a) Trollaborgh 1370. – Frågan om namnets anknytning till släkten Trolle är omdiskuterad. Borgen har förknippats med sägner om troll, och namnet kan också vara en fo"
+  },
+  {
+   "huvud": "Trollaborg medeltida borg, Voxtorps sn, Östbo hd, Småland. (a) Trollab",
+   "ord": "Trolle",
+   "kontext": "Trollaborg medeltida borg, Voxtorps sn, Östbo hd, Småland. (a) Trollaborgh 1370. – Frågan om namnets anknytning till släkten Trolle är omdiskuterad. Borgen har förknippats med sägner om troll, och namnet kan också vara en folklig fantasiprodukt."
+  },
+  {
+   "huvud": "Trollaborg medeltida borg, Voxtorps sn, Östbo hd, Småland. (a) Trollab",
+   "ord": "troll",
+   "kontext": "Trollaborg medeltida borg, Voxtorps sn, Östbo hd, Småland. (a) Trollaborgh 1370. – Frågan om namnets anknytning till släkten Trolle är omdiskuterad. Borgen har förknippats med sägner om troll, och namnet kan också vara en folklig fantasiprodukt."
+  },
+  {
+   "huvud": "Trolleholm gods, Torrlösa sn, Onsjö hd, Skåne. – Godsets namn, givet e",
+   "ord": "Trolleholm",
+   "kontext": "Trolleholm gods, Torrlösa sn, Onsjö hd, Skåne. – Godsets namn, givet efter ägaren Fredrik Trolle, ersatte enligt testamente 1768 efter dennes död 1770 ett äldre"
+  },
+  {
+   "huvud": "Trolleholm gods, Torrlösa sn, Onsjö hd, Skåne. – Godsets namn, givet e",
+   "ord": "Trolle",
+   "kontext": "Trolleholm gods, Torrlösa sn, Onsjö hd, Skåne. – Godsets namn, givet efter ägaren Fredrik Trolle, ersatte enligt testamente 1768 efter dennes död 1770 ett äldre namn Eriksholm , där förleden minner om slottets byggherres Tage Ottesen Thotts äldre"
+  },
+  {
+   "huvud": "Trolle-Ljungby sn, gods, Villands hd, Skåne. Lywngby 1401 (avser kyrkb",
+   "ord": "Trolle",
+   "kontext": "Trolle-Ljungby sn, gods, Villands hd, Skåne. Lywngby 1401 (avser kyrkbyn). – Socknens ursprungliga namn Ljungby är givet efter kyrkbyn (Västra Ljungby). Det"
+  },
+  {
+   "huvud": "Trolle-Ljungby sn, gods, Villands hd, Skåne. Lywngby 1401 (avser kyrkb",
+   "ord": "Trolle",
+   "kontext": "wngby 1401 (avser kyrkbyn). – Socknens ursprungliga namn Ljungby är givet efter kyrkbyn (Västra Ljungby). Det innehåller ljung i betydelsen ’ljungmark’ och → by ’gård; by’. Det nuvarande sockennamnet Trolle-Ljungby gavs 1883 efter godset Trolle Ljungby, beläget i Västra Ljungby. Tillägget Trolle - i godsets namn tillkom 1830 efter fideikommissariens namn"
+  },
+  {
+   "huvud": "Trolle-Ljungby sn, gods, Villands hd, Skåne. Lywngby 1401 (avser kyrkb",
+   "ord": "Trolle",
+   "kontext": " ursprungliga namn Ljungby är givet efter kyrkbyn (Västra Ljungby). Det innehåller ljung i betydelsen ’ljungmark’ och → by ’gård; by’. Det nuvarande sockennamnet Trolle-Ljungby gavs 1883 efter godset Trolle Ljungby, beläget i Västra Ljungby. Tillägget Trolle - i godsets namn tillkom 1830 efter fideikommissariens namn Trolle-Wachtmeister ."
+  },
+  {
+   "huvud": "Trolle-Ljungby sn, gods, Villands hd, Skåne. Lywngby 1401 (avser kyrkb",
+   "ord": "Trolle",
+   "kontext": "ästra Ljungby). Det innehåller ljung i betydelsen ’ljungmark’ och → by ’gård; by’. Det nuvarande sockennamnet Trolle-Ljungby gavs 1883 efter godset Trolle Ljungby, beläget i Västra Ljungby. Tillägget Trolle - i godsets namn tillkom 1830 efter fideikommissariens namn Trolle-Wachtmeister ."
+  },
+  {
+   "huvud": "Trolle-Ljungby sn, gods, Villands hd, Skåne. Lywngby 1401 (avser kyrkb",
+   "ord": "Trolle",
+   "kontext": " by ’gård; by’. Det nuvarande sockennamnet Trolle-Ljungby gavs 1883 efter godset Trolle Ljungby, beläget i Västra Ljungby. Tillägget Trolle - i godsets namn tillkom 1830 efter fideikommissariens namn Trolle-Wachtmeister ."
+  },
+  {
+   "huvud": "Trollenäs sn, gods, Onsjö hd, Skåne. (in) Næs 1300-talets mellersta de",
+   "ord": "Trollenäs",
+   "kontext": "Trollenäs sn, gods, Onsjö hd, Skåne. (in) Næs 1300-talets mellersta del (avser kyrkbyn). – Sockennamnet är givet efter kyrkbyn, vars ursprungliga namn var Näs "
+  },
+  {
+   "huvud": "Trollenäs sn, gods, Onsjö hd, Skåne. (in) Næs 1300-talets mellersta de",
+   "ord": "Trollenäs",
+   "kontext": "åne. (in) Næs 1300-talets mellersta del (avser kyrkbyn). – Sockennamnet är givet efter kyrkbyn, vars ursprungliga namn var Näs . Det åsyftar det näs mellan Saxån och Gullarpsån där kyrkbyn och godset Trollenäs ligger. Godsets nuvarande namn, med tillägget Trolle -, gavs av ägaren Fredrik Trolle i hans testamente 1768 och trädde i kraft vid hans död 1770. So"
+  },
+  {
+   "huvud": "Trollenäs sn, gods, Onsjö hd, Skåne. (in) Næs 1300-talets mellersta de",
+   "ord": "Trolle",
+   "kontext": " – Sockennamnet är givet efter kyrkbyn, vars ursprungliga namn var Näs . Det åsyftar det näs mellan Saxån och Gullarpsån där kyrkbyn och godset Trollenäs ligger. Godsets nuvarande namn, med tillägget Trolle -, gavs av ägaren Fredrik Trolle i hans testamente 1768 och trädde i kraft vid hans död 1770. Sockennamnet Näs ändrades till Trollenäs 1899."
+  },
+  {
+   "huvud": "Trollenäs sn, gods, Onsjö hd, Skåne. (in) Næs 1300-talets mellersta de",
+   "ord": "Trolle",
+   "kontext": "rkbyn, vars ursprungliga namn var Näs . Det åsyftar det näs mellan Saxån och Gullarpsån där kyrkbyn och godset Trollenäs ligger. Godsets nuvarande namn, med tillägget Trolle -, gavs av ägaren Fredrik Trolle i hans testamente 1768 och trädde i kraft vid hans död 1770. Sockennamnet Näs ändrades till Trollenäs 1899."
+  },
+  {
+   "huvud": "Trollenäs sn, gods, Onsjö hd, Skåne. (in) Næs 1300-talets mellersta de",
+   "ord": "Trollenäs",
+   "kontext": " och godset Trollenäs ligger. Godsets nuvarande namn, med tillägget Trolle -, gavs av ägaren Fredrik Trolle i hans testamente 1768 och trädde i kraft vid hans död 1770. Sockennamnet Näs ändrades till Trollenäs 1899."
+  },
+  {
+   "huvud": "Trollhättan kn, stad, Västergötland. Trollhetta quarn 1413 sen avskr.,",
+   "ord": "Trollhättan",
+   "kontext": "Trollhättan kn, stad, Västergötland. Trollhetta quarn 1413 sen avskr., Trålhätte 1548. – Staden återgår på ett samhälle, framvuxet på en plats vid Göta älv där d"
+  },
+  {
+   "huvud": "Trollhättan kn, stad, Västergötland. Trollhetta quarn 1413 sen avskr.,",
+   "ord": "Trollhetta",
+   "kontext": "Trollhättan kn, stad, Västergötland. Trollhetta quarn 1413 sen avskr., Trålhätte 1548. – Staden återgår på ett samhälle, framvuxet på en plats vid Göta älv där det sedan medeltiden stått kvarnar. T"
+  },
+  {
+   "huvud": "Trollhättan kn, stad, Västergötland. Trollhetta quarn 1413 sen avskr.,",
+   "ord": "Trollhättefallen",
+   "kontext": "kr., Trålhätte 1548. – Staden återgår på ett samhälle, framvuxet på en plats vid Göta älv där det sedan medeltiden stått kvarnar. Troligen har namnet ursprungligen åsyftat Gullöfallet, det största av Trollhättefallen. Detta har uppenbarligen liknats vid ett vattentrolls huvudbonad, en hätta som i skepnad av ett väldigt vattenfall liksom faller ned efter trollets r"
+  },
+  {
+   "huvud": "Trollhättan kn, stad, Västergötland. Trollhetta quarn 1413 sen avskr.,",
+   "ord": "trollets",
+   "kontext": "ngligen åsyftat Gullöfallet, det största av Trollhättefallen. Detta har uppenbarligen liknats vid ett vattentrolls huvudbonad, en hätta som i skepnad av ett väldigt vattenfall liksom faller ned efter trollets rygg."
+  },
+  {
+   "huvud": "Trullhalsar gravfält, Anga sn, Gotland. – Namnet betyder ’Trollhalsar’",
+   "ord": "Trollhalsar",
+   "kontext": "Trullhalsar gravfält, Anga sn, Gotland. – Namnet betyder ’Trollhalsar’. Antagligen är det de karakteristiska stensättningarna med kallmurade sidor som liknats vid halsar på troll."
+  },
+  {
+   "huvud": "Trullhalsar gravfält, Anga sn, Gotland. – Namnet betyder ’Trollhalsar’",
+   "ord": "troll",
+   "kontext": "Trullhalsar gravfält, Anga sn, Gotland. – Namnet betyder ’Trollhalsar’. Antagligen är det de karakteristiska stensättningarna med kallmurade sidor som liknats vid halsar på troll."
+  },
+  {
+   "huvud": "Vassända-Naglum f.d. sn, Väne hd, Västergötland. (j) Wadzænda sokn 141",
+   "ord": "Trollhättans",
+   "kontext": "a-Naglum f.d. sn, Väne hd, Västergötland. (j) Wadzænda sokn 1413, Nafleem 1330-talet. – De två medeltida socknarna Vassända och Naglum slogs samman 1887 och uppgick 1945 i Vänersborgs stad respektive Trollhättans stad. Vassända är sammansatt av vatten ’sjö’ och ände med syftning på läget vid änden av Vänerviken Vassbotten. Naglum innehåller i efterleden → hem "
+  },
+  {
+   "huvud": "vin Namnen på - vin , har liksom de på - hem huvudsakligen västlig utb",
+   "ord": "Jättene",
+   "kontext": " Förlederna i - vin -namnen, här för Sveriges vidkommande exemplifierade med västgötska namn, är av skiftande slag, dock aldrig personnamn. De åsyftar huvudsakligen terrängformationer: det västgötska Jättene (fvn. gátt ’dörröppning’, svenska dialekters gåt med bl.a. betydelsen ’inskärning, trångt mellanrum’), → Knätte (dialektordet knatt ’kulle’, → Släden"
+  }
+ ],
+ "J5_lasning": {
+  "källa": "Svenskt ortnamnslexikon (2016); alla 48 kandidater lästa för hand 2026-11-21 enligt planens J5",
+  "jatte_eller_trollnamn": [
+   {
+    "namn": "Edenryd",
+    "landskap": "Skåne",
+    "slag": "jätte",
+    "SOL_säkerhet": "troligen",
+    "not": "fda. iætæn 'jätte' + ryd; tradition 1620-talet om jättar i ett stenröse"
+   },
+   {
+    "namn": "Gigerugnen (Ekornavallen)",
+    "landskap": "Västergötland",
+    "slag": "jättekvinna",
+    "SOL_säkerhet": "sannolikt",
+    "not": "gånggrift; 'jättekvinnans ugn', motsvarighet till fvn. gýgr"
+   },
+   {
+    "namn": "Trollhättan",
+    "landskap": "Västergötland",
+    "slag": "troll",
+    "SOL_säkerhet": "troligen",
+    "not": "fallet liknat vid ett vattentrolls huvudbonad"
+   },
+   {
+    "namn": "Trullhalsar",
+    "landskap": "Gotland",
+    "slag": "troll",
+    "SOL_säkerhet": "säkert ('namnet betyder')",
+    "not": "gravfält; stensättningarna liknade vid halsar på troll"
+   },
+   {
+    "namn": "Bobergs härad",
+    "landskap": "Östergötland",
+    "slag": "jätte eller troll",
+    "SOL_säkerhet": "möjligen",
+    "not": "bo 'boning' – föreställningar om jättar eller troll i berget; alternativt förvaltningsgård"
+   },
+   {
+    "namn": "Tossebergsklätten",
+    "landskap": "Värmland",
+    "slag": "jätte",
+    "SOL_säkerhet": "möjligen",
+    "not": "dialektordet tusse 'jätte'"
+   },
+   {
+    "namn": "Locknevi",
+    "landskap": "Småland",
+    "slag": "trollkäring",
+    "SOL_säkerhet": "föreslaget",
+    "not": "en av flera tolkningar"
+   },
+   {
+    "namn": "Trollaborg",
+    "landskap": "Småland",
+    "slag": "troll",
+    "SOL_säkerhet": "möjligen",
+    "not": "sägner om troll; alternativt släkten Trolle"
+   }
+  ],
+  "samiska_jattenamn": [
+   {
+    "namn": "Staloluokta",
+    "landskap": "Lappland",
+    "not": "stállo, samisk människoätande jätte"
+   },
+   {
+    "namn": "Stalon",
+    "landskap": "Lappland/Ångermanland",
+    "not": "staaloe, samma"
+   }
+  ],
+  "avvisade_exempel": {
+   "Jättendal": "fsv. *iæt 'betesmark'",
+   "Jättene": "fvn. gátt 'dörröppning'",
+   "Fivelstad": "personbetecknande eller växt; jätte bara som fornengelsk parallell",
+   "Ramundberget": "efter folkvisans hjälte",
+   "Trolle-namn": "släkten Trolle",
+   "Källö": "jättegryta som terrängord"
+  }
+ },
+ "tester": {
+  "huvud": {
+   "T2_kvinnor": {
+    "Eddan_n": 580,
+    "Eddan_texter": 22,
+    "sagorna_n": 512,
+    "sagorna_texter": 86,
+    "Eddan_%": 11.7,
+    "sagorna_%": 22.9,
+    "skillnad_pe": -11.1,
+    "intervall": [
+     -23.9,
+     3.6
+    ],
+    "p": 0.122,
+    "p_holm": 0.122,
+    "håller": false
+   },
+   "T3_norr": {
+    "Eddan_n": 18,
+    "Eddan_texter": 7,
+    "sagorna_n": 21,
+    "sagorna_texter": 12,
+    "obestämt": true
+   }
+  },
+  "utan_tröll": {
+   "T2_kvinnor": {
+    "Eddan_n": 571,
+    "Eddan_texter": 22,
+    "sagorna_n": 323,
+    "sagorna_texter": 73,
+    "Eddan_%": 11.9,
+    "sagorna_%": 36.2,
+    "skillnad_pe": -24.3,
+    "intervall": [
+     -40.0,
+     -7.1
+    ],
+    "p": 0.0104,
+    "p_holm": 0.0104,
+    "håller": true
+   },
+   "T3_norr": {
+    "Eddan_n": 18,
+    "Eddan_texter": 7,
+    "sagorna_n": 16,
+    "sagorna_texter": 10,
+    "obestämt": true
+   }
+  },
+  "fönster_10": {
+   "T2_kvinnor": {
+    "Eddan_n": 580,
+    "Eddan_texter": 22,
+    "sagorna_n": 512,
+    "sagorna_texter": 86,
+    "Eddan_%": 11.7,
+    "sagorna_%": 22.9,
+    "skillnad_pe": -11.1,
+    "intervall": [
+     -23.9,
+     3.6
+    ],
+    "p": 0.122,
+    "p_holm": 0.122,
+    "håller": false
+   },
+   "T3_norr": {
+    "Eddan_n": 10,
+    "Eddan_texter": 6,
+    "sagorna_n": 12,
+    "sagorna_texter": 11,
+    "obestämt": true
+   }
+  },
+  "bara_fornaldar": {
+   "T2_kvinnor": {
+    "Eddan_n": 580,
+    "Eddan_texter": 22,
+    "sagorna_n": 309,
+    "sagorna_texter": 37,
+    "Eddan_%": 11.7,
+    "sagorna_%": 25.2,
+    "skillnad_pe": -13.5,
+    "intervall": [
+     -33.2,
+     4.2
+    ],
+    "p": 0.146,
+    "p_holm": 0.146,
+    "håller": false
+   },
+   "T3_norr": {
+    "Eddan_n": 18,
+    "Eddan_texter": 7,
+    "sagorna_n": 11,
+    "sagorna_texter": 8,
+    "obestämt": true
+   }
+  },
+  "bara_islanninga": {
+   "T2_kvinnor": {
+    "Eddan_n": 580,
+    "Eddan_texter": 22,
+    "sagorna_n": 174,
+    "sagorna_texter": 34,
+    "Eddan_%": 11.7,
+    "sagorna_%": 16.1,
+    "skillnad_pe": -4.4,
+    "intervall": [
+     -13.2,
+     8.9
+    ],
+    "p": 0.4472,
+    "p_holm": 0.4472,
+    "håller": false
+   },
+   "T3_norr": {
+    "Eddan_n": 18,
+    "Eddan_texter": 7,
+    "sagorna_n": 8,
+    "sagorna_texter": 3,
+    "obestämt": true
+   }
+  }
+ }
+}
