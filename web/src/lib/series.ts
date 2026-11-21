@@ -30,7 +30,7 @@ export const SERIES: Series[] = [
     about: "Vilka platser utanför Norden runstenarna och sagorna nämner – och hur mycket av österleden som var ett enda tåg.",
     aboutEn: "Which places beyond the North the runestones and the sagas name – and how much of the eastern route was one expedition." },
   { key: "nordiska-vasen", sv: "Fornnordiska väsen", en: "Old Norse beings", match: /^Fornnordiska väsen – /,
-    slugs: ["var-bodde-trollen", "var-tog-alverna-vagen", "jattekvinnans-ugn", "var-sjatte-runsten-bar-en-bjorn", "draken-var-ett-skepp"],
+    slugs: ["var-bodde-trollen", "var-tog-alverna-vagen", "jattekvinnans-ugn", "var-sjatte-runsten-bar-en-bjorn", "draken-var-ett-skepp", "valkyriorna-gots-i-birka"],
     about: "Jättar, troll, alver, dvärgar och de andra väsendena i den fornnordiska litteraturen – räknade och lästa.",
     aboutEn: "Giants, trolls, elves, dwarves and the other beings of Old Norse literature – counted and read." },
 ];
