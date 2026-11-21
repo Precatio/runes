@@ -237,6 +237,27 @@ Kräver Viktor och står därför inte i listan: granskning av fler slingor, fac
 litteraturkontroll (3.5, det olästa), publicering av rapporterna på Zenodo (4.3), beslut om runläsaren och om K-samsöks AI-tolkning, Så gör du för Stenrapport
 och Syntes (inloggat projekt) och all publicering.
 
+## Framtida forskningsrapporter (Viktor 2026-11-21: "spara denna plan")
+
+Ett urval av rapporter som skulle betyda mest för runforskningen. Varje rapport har bedömts efter forskningsintresse,
+vad bara Vitki kan göra, genomförbarhet och risk. Varje rapport får en egen låst plan innan något räknas.
+
+1. **Hur stor del av runstenarna känner vi? Bortfallet, sten för sten.** Plan A1 (januari 2027) och A2 (februari 2027)
+   är låsta. Den ger korrektionen som de andra rapporterna behöver.
+2. **Utgivareffekten.** Följer ristartillskrivningar och osäkra läsningar SRI-bandet och utgivaren, när landskap och
+   tid hålls konstanta?
+3. **Tinget.** Står runstenarna närmare tingsplatser och Ting-namn än slumpvis valda platser i samma bygd (grupper som
+   enhet)?
+4. **Sammanfaller gränserna?** Samma gränser för stil, stavning, formler, namn och kors, eller olika kartor? Källström
+   2025, Riksantikvarieämbetets rapport om runspråkets dialektgränser, läses först.
+5. **Från runsten till gravhäll.** Flyttade bönen och korset till de tidigmedeltida gravhällarna (Runor 2020)?
+   Gravhällarna tas med uttryckligen och redovisas för sig.
+
+Därefter: kvinnornas rörlighet genom namnen, hushållet och de ofria, stilkronologins ankare (beskrivande), korset som
+våg, vad en runsten kostade, bron och vadet, och svear och götar som gradient. Inte nu: torshammare och kultplatser
+över landsgränserna (kräver andra museer), studier som bygger på runigenkänningen (väntar på facit), naturvetenskapliga
+data. Den interna bakgrunden finns i litteraturgenomgångens filer, som inte är publika.
+
 ## Väntande beslut som planen behöver från Viktor
 1. ~~Stilbedömningen~~ – beslutat 2026-10-20: bort.
 2. ~~Egen läsning~~ – beslutat: fält i Syntes (A).
