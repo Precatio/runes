@@ -58,7 +58,6 @@ Rundata nämner Sigurdsbilder på fem svenska ristningar: Ramsundsberget (Sö 10
 Årsunda (Gs 9) och Ockelbo (Gs 19, förstörd). Ingen av deras texter nämner draken.
 
 ## Varifrån draken kom
-Det besvaras inte av räkningen. Ur litteraturen, inte prövat här: *dreki* är ett lån från latinets *draco* (via
-fornengelska *draca* och fornsaxiska *drako*), medan *ormr* och *linnormr* är inhemska ord. Det som mätts här stämmer med
+Det besvaras inte av räkningen. Ur litteraturen, inte prövat här: *dreki* är ett lån från latinets *draco* (troligen via fornengelska *draca* eller fornsaxiska *drako*), medan *ormr* och *linnormr* är inhemska ord. Det som mätts här stämmer med
 att lånordet hör till den yngre, skrivna prosan. I eddadikterna, med Völuspás Nidhögg som enda undantag, är draken en
 *ormr*.
