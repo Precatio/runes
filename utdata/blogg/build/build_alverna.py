@@ -179,7 +179,7 @@ def alviss_box(lang):
 # ======================================================================================================================
 # 5. Texten
 # ======================================================================================================================
-title = "Var tog alverna vägen? Gudarnas grannar i Eddan, nästan borta i sagorna"
+title = "Fornnordiska väsen – Var tog alverna vägen?"
 summary = (f"Vi läste varje alv i den fornnordiska litteraturen, {N_EL} stycken. I Eddan står alverna nästan alltid bredvid gudarna. "
            "I sagorna står de aldrig där – och i Sverige finns de varken i ortnamnen eller på runstenarna, utom i sju namn.")
 
@@ -284,7 +284,7 @@ Läs Alvíssmál, gärna högt. Lyssna efter vad alverna kallar saker, och jämf
 
 Eddadikterna och Snorres Edda: heimskringla.no, Guðni Jónssons utgåvor; texterna används här bara för räkning och korta citat. Heimskringla: heimskringla.no, utgåvan av N. Linder och H. A. Haggson (1869–72), public domain. Islänningasagorna: sagadb.org (Sveinbjörn Þórðarson), nutida isländsk stavning, public domain. Fornaldarsagorna och samtidssagorna: heimskringla.no, Guðni Jónssons m.fl. utgåvor, bara räkning och korta citat. Tack till heimskringla.no för texterna. Ortnamnen: Svenskt ortnamnslexikon (Institutet för språk och folkminnen, 2016), bara läsning och korta citat. Runstenarna: Samnordisk runtextdatabas, version 3.1 (2018), Uppsala universitet. Översättningarna är våra egna utom runstenens. Reglerna och skripten: [analysplanen]({PLAN}) med ett tillägg."""
 
-title_en = "Where did the elves go? The gods' neighbours in the Edda, almost gone from the sagas"
+title_en = "Old Norse beings – Where did the elves go?"
 summary_en = (f"We read every elf in Old Norse literature, {N_EL} of them. In the Edda the elves nearly always stand beside the gods. "
               "In the sagas they never do – and in Sweden they appear neither in the place names nor on the runestones, except in seven names.")
 

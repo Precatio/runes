@@ -132,7 +132,7 @@ def chart_slinga(lang):
 # ======================================================================================================================
 # 5. Texten
 # ======================================================================================================================
-title = "Draken var ett skepp – fem frågor om ormen och draken"
+title = "Fornnordiska väsen – Draken var ett skepp"
 summary = (f"I sagornas prosa betyder ordet dreki ett skepp i {SHIP_PC} procent av fallen. I eddadikterna heter draken nästan alltid ormr. "
            f"Och på runstenarna slingrar sig ormen runt texten på tre av fyra stenar, men nämns aldrig. Vi läste alla {N_ALL} ställen.")
 
@@ -209,7 +209,7 @@ Kopia av den förstörda Ockelbostenen (Gs 19) i Gästrikland, med motiv ur Sigu
 
 Eddadikterna, Snorres Edda, fornaldarsagorna och samtidssagorna: heimskringla.no, Guðni Jónssons m.fl. utgåvor; texterna används här bara för räkning och korta citat. Heimskringla: heimskringla.no, Linder & Haggson (1869–72), public domain. Islänningasagorna: sagadb.org (Sveinbjörn Þórðarson), public domain. Tack till heimskringla.no för texterna. Runstenarna: Samnordisk runtextdatabas, version 3.1 (2018), Uppsala universitet. Översättningarna är våra egna. Reglerna och skripten: [analysplanen]({PLAN})."""
 
-title_en = "The dragon was a ship – five questions about the serpent and the dragon"
+title_en = "Old Norse beings – The dragon was a ship"
 summary_en = (f"In the prose of the sagas the word dreki means a ship in {SHIP_PC} per cent of cases. In the Eddic poems the dragon is nearly always ormr. "
               f"And on the runestones the serpent winds around the text on three stones in four, but is never named. We read all {N_ALL} places.")
 

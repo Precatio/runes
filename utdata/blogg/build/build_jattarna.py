@@ -144,7 +144,7 @@ def names_list(lang):
 # ======================================================================================================================
 # 5. Texten
 # ======================================================================================================================
-title = "Jättekvinnans ugn – var jättarna bodde, i sagorna och i Sverige"
+title = "Fornnordiska väsen – Jättekvinnans ugn"
 summary = ("Vi räknade jättarna i den fornnordiska litteraturen och letade efter dem i de svenska ortnamnen. I Eddan heter de jötnar och har namn. "
            "I sagorna blir de troll. Och i Sverige har de, där de finns, lämnat sina namn på de äldsta gravarna.")
 
@@ -232,7 +232,7 @@ Gigerugnen ligger vid Ekornavallen mellan Falköping och Hornborgasjön, och Tru
 
 Eddadikterna och Snorres Edda: heimskringla.no, Guðni Jónssons utgåvor; texterna används här bara för räkning och korta citat. Heimskringla: heimskringla.no, utgåvan av N. Linder och H. A. Haggson (1869–72), public domain. Islänningasagorna: sagadb.org (Sveinbjörn Þórðarson), public domain. Fornaldarsagorna och samtidssagorna: heimskringla.no, Guðni Jónssons m.fl. utgåvor, bara räkning och korta citat. Tack till heimskringla.no för texterna. Ortnamnen: Svenskt ortnamnslexikon (Institutet för språk och folkminnen, 2016), bara läsning och korta citat. Runstenarna: Samnordisk runtextdatabas, version 3.1 (2018), Uppsala universitet. Översättningarna är våra egna. Reglerna och skripten: [analysplanen]({PLAN})."""
 
-title_en = "The giantess's oven – where the giants lived, in the sagas and in Sweden"
+title_en = "Old Norse beings – The giantess's oven"
 summary_en = ("We counted the giants of Old Norse literature and looked for them in Swedish place names. In the Edda they are jötnar and have names. "
               "In the sagas they become trolls. And in Sweden, where they appear at all, they have left their names on the oldest graves.")
 

@@ -219,7 +219,7 @@ def chart_kinds(lang):
 # ======================================================================================================================
 # 5. Texten
 # ======================================================================================================================
-title = "Var bodde trollen? Mest i forntiden, sällan på Island"
+title = "Fornnordiska väsen – Var bodde trollen?"
 summary = (f"Vi räknade jättar, dvärgar, alver, nornor, gengångare och odjur i {MILJ_SV} miljoner ord fornnordisk litteratur. "
            "De bor i myten och i sagorna om forntiden – fornaldarsagorna nämner dem nästan sex gånger så ofta som islänningasagorna – "
            "och runstenarnas texter nämner dem inte alls.")
@@ -332,7 +332,7 @@ Samma mönster syntes när vi räknade platser: fornaldarsagorna blickar mot ös
 
 Islänningasagorna: sagadb.org (Sveinbjörn Þórðarson), nutida isländsk stavning, public domain. Heimskringla: heimskringla.no, utgåvan av N. Linder och H. A. Haggson (1869–72), public domain. Fornaldarsagorna, samtidssagorna, eddadikterna och Snorres Edda: heimskringla.no, Guðni Jónssons m.fl. utgåvor; texterna används här bara för räkning och korta citat. Tack till heimskringla.no för texterna. Runstenarna: Samnordisk runtextdatabas, version 3.1 (2018), Uppsala universitet. Översättningarna är våra egna. Ordlistan, reglerna och skripten: [analysplanen]({PLAN}) med ett tillägg."""
 
-title_en = "Where did the trolls live? Mostly in the ancient past, rarely in Iceland"
+title_en = "Old Norse beings – Where did the trolls live?"
 summary_en = (f"We counted giants, dwarves, elves, norns, the walking dead and monsters in {MILJ_EN} million words of Old Norse literature. "
               "They live in myth and in the sagas of the ancient past – the legendary sagas mention them almost six times as often as the sagas of Icelanders – "
               "and the runestone texts do not mention them at all.")

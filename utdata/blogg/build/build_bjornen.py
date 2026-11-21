@@ -122,7 +122,7 @@ def chart_graves(lang):
 # ======================================================================================================================
 # 5. Texten
 # ======================================================================================================================
-title = "Var sjätte runsten bär en björn – men i sagorna är den sällsynt"
+title = "Fornnordiska väsen – Var sjätte runsten bär en björn"
 summary = (f"{TOT['björnnamn']} av {TOT['stenar']:,} svenska runstenar har ett namn med björn i: Björn, Torbjörn, Asbjörn. Det är dubbelt så många som vargnamnen. ".replace(",", " ")
            + "I sagorna är björnen däremot ett ovanligt ord, och björnklorna i gravarna är mest äldre än vikingatiden.")
 
@@ -184,7 +184,7 @@ Leta upp en runsten nära dig och läs namnen. Med en sannolikhet av ungefär en
 
 Runstenarna: Samnordisk runtextdatabas, version 3.1 (2018), Uppsala universitet. Gravfynden: Statens historiska museer, samlingar.shm.se (metadata CC0), hämtat 2026-11-21. Islänningasagorna: sagadb.org (Sveinbjörn Þórðarson), public domain. Fornaldarsagorna och eddadikterna: heimskringla.no, Guðni Jónssons m.fl. utgåvor; texterna används här bara för räkning och korta citat. Heimskringla: heimskringla.no, Linder & Haggson (1869–72), public domain. Tack till heimskringla.no för texterna. Översättningarna är våra egna utom runstenens. Reglerna och skripten: [analysplanen]({PLAN})."""
 
-title_en = "One runestone in six carries a bear – but in the sagas it is rare"
+title_en = "Old Norse beings – One runestone in six carries a bear"
 summary_en = (f"{TOT['björnnamn']} of {TOT['stenar']:,} Swedish runestones have a name with a bear in it: Bjôrn, Þorbjôrn, Ásbjôrn. That is twice as many as the wolf names. "
               "In the sagas, on the other hand, the bear is a rare word, and the bear claws in the graves are mostly older than the Viking Age.")
 
