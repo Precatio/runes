@@ -1,0 +1,14 @@
+term,kon,regex
+jötunkona,f,\bjötun(?:kon|mey|brúð)\w*
+risakona,f,\brisa?kon\w*
+tröllkona,f,\btr[öo]llkon\w*|\btr[öo]llkven\w*
+gýgr,f,\b(?:mar)?gýg(?:r|ur|i|jar|jur|ina|in|jan|jarnar)\b
+flagð,f,\bflag(?:ð|ðs|ði|ða|ðið|ðkon\w*)\b|\bflögð\w*
+skessa,f,\bskess(?:a|u|ur|unni|una|an)\b
+namngiven jättinna,f,\b(?:Gjálp\w*|Greip(?:ar)?|Gríð(?:r|ar|i)?|Angrboð\w*|Hyrrokkin\w*|Járnsax\w*|Hrímgerð\w*|Hyndl\w*|Bestl\w*|Fenj\w*|Menj\w*)\b
+jötunn,n,\bjötun(?!heim|kon|mey|brúð)\w*|\bjötn(?:ar|a|um|i|ana|arnir|anna|unum)\b
+þurs,n,\b(?:hrím|bergs?)?þurs(?!asker)\w*
+risi,n,\b(?:berg|land)?ris(?:i|a|ar|um|ann|anum|arnir|anna|ana|inn)\b|\brisa(?:kyn|ætt)\w*
+tröll,n,\btr[öo]ll(?!skap|kon|kven)\w*
+bergbúi,n,\bbergbú\w*
+namngiven jätte,n,\b(?:Ymi[rs]?|Þrym\w*|Skrými\w*|Hrungni\w*|Suttung\w*|Vafþrúðni\w*|Hymi[rs]?|Þjaz[ai]|Útgarða-?[Ll]ok\w*|Bergelmi\w*|Aurgelmi\w*|Hræsvelg\w*|Gymi[rs]?|Fárbaut\w*|Baug[ai]|Gilling\w*|Þrívald\w*|Surt(?:r|ar|i|s)?)\b
