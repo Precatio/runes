@@ -1,0 +1,38 @@
+{
+ "stickprov": 40,
+ "lika": 34,
+ "procent": 85.0,
+ "krav": 85,
+ "oenigheter": [
+  {
+   "id": "heimskringla_vers|Saga Hákonar góða|3862",
+   "min": "kenning",
+   "blind": "fredlös"
+  },
+  {
+   "id": "eddadikter|Hávamál|6937",
+   "min": "djur",
+   "blind": "annat"
+  },
+  {
+   "id": "heimskringla_vers|Saga Ólafs Tryggvasonar|7363",
+   "min": "kenning",
+   "blind": "djur"
+  },
+  {
+   "id": "islanningasagor|heidarviga saga|134526",
+   "min": "djur",
+   "blind": "fredlös"
+  },
+  {
+   "id": "snorra_edda_skáldskaparmál|Skáldskaparmál|81373",
+   "min": "djur",
+   "blind": "fredlös"
+  },
+  {
+   "id": "snorra_edda_skáldskaparmál|Skáldskaparmál|97635",
+   "min": "annat",
+   "blind": "djur"
+  }
+ ]
+}

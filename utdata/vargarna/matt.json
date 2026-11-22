@@ -1,0 +1,382 @@
+{
+ "träffar": 158,
+ "V1": {
+  "dikt": {
+   "djur": 47,
+   "myt": 12,
+   "fredlös": 5,
+   "annat": 5,
+   "kenning": 5,
+   "förvandling": 2
+  },
+  "prosa": {
+   "förvandling": 28,
+   "djur": 15,
+   "annat": 9,
+   "fredlös": 3,
+   "myt": 1
+  },
+  "snorre": {
+   "myt": 14,
+   "djur": 8,
+   "kenning": 2,
+   "annat": 2
+  }
+ },
+ "V1_korpus": {
+  "eddadikter": {
+   "djur": 13,
+   "myt": 11,
+   "fredlös": 3,
+   "annat": 3,
+   "förvandling": 2,
+   "kenning": 1
+  },
+  "snorra_edda_gylfaginning": {
+   "myt": 11,
+   "djur": 1
+  },
+  "snorra_edda_skáldskaparmál": {
+   "djur": 7,
+   "myt": 3,
+   "kenning": 2,
+   "annat": 2
+  },
+  "islanningasagor_vers": {
+   "djur": 11,
+   "annat": 1,
+   "myt": 1,
+   "kenning": 1,
+   "fredlös": 1
+  },
+  "islanningasagor": {
+   "förvandling": 16,
+   "annat": 5,
+   "djur": 4,
+   "fredlös": 2
+  },
+  "heimskringla_vers": {
+   "djur": 19,
+   "kenning": 3,
+   "fredlös": 1
+  },
+  "heimskringla": {
+   "djur": 6,
+   "myt": 1
+  },
+  "fornaldarsagor": {
+   "förvandling": 12,
+   "djur": 5,
+   "annat": 4,
+   "fredlös": 1
+  },
+  "fornaldarsagor_vers": {
+   "djur": 4,
+   "annat": 1
+  }
+ },
+ "V1_per_10000": {
+  "eddadikter": 5.43,
+  "snorra_edda_gylfaginning": 6.7,
+  "snorra_edda_skáldskaparmál": 4.64,
+  "islanningasagor": 0.23,
+  "islanningasagor_vers": 6.24,
+  "heimskringla": 0.29,
+  "heimskringla_vers": 10.54,
+  "fornaldarsagor": 0.5,
+  "fornaldarsagor_vers": 2.49,
+  "samtidssagor": 0.0,
+  "samtidssagor_vers": 0.0
+ },
+ "V2": {
+  "dikt|Fenrir": 2,
+  "dikt|Fenris": 3,
+  "dikt|Fenrisúlfi": 1,
+  "dikt|Fenrisúlfr": 2,
+  "dikt|Freka": 2,
+  "dikt|Garmr": 5,
+  "dikt|Gera": 2,
+  "dikt|Geri": 1,
+  "dikt|Hata": 2,
+  "dikt|Hati": 2,
+  "dikt|Sköll": 1,
+  "prosa|Freka": 2,
+  "prosa|Gera": 30,
+  "prosa|Geri": 7,
+  "snorre|Fenris": 1,
+  "snorre|Fenrisúlf": 3,
+  "snorre|Fenrisúlfr": 6,
+  "snorre|Fenrisúlfs": 1,
+  "snorre|Freka": 1,
+  "snorre|Freki": 2,
+  "snorre|Garmr": 2,
+  "snorre|Gera": 2,
+  "snorre|Geri": 1,
+  "snorre|Hati": 1
+ },
+ "V3": {
+  "eddadikter": {
+   "träffar": 3,
+   "per_10000": 0.63,
+   "vanligaste": [
+    [
+     "Hervararkviða",
+     1
+    ],
+    [
+     "Hyndluljóð",
+     1
+    ],
+    [
+     "Hárbarðsljóð",
+     1
+    ]
+   ]
+  },
+  "snorra_edda_gylfaginning": {
+   "träffar": 1,
+   "per_10000": 0.56,
+   "vanligaste": [
+    [
+     "Gylfaginning",
+     1
+    ]
+   ]
+  },
+  "snorra_edda_skáldskaparmál": {
+   "träffar": 5,
+   "per_10000": 2.32,
+   "vanligaste": [
+    [
+     "Skáldskaparmál",
+     5
+    ]
+   ]
+  },
+  "islanningasagor": {
+   "träffar": 110,
+   "per_10000": 1.25,
+   "vanligaste": [
+    [
+     "heidarviga saga",
+     28
+    ],
+    [
+     "eyrbyggja saga",
+     22
+    ],
+    [
+     "grettis saga",
+     17
+    ],
+    [
+     "vatnsdaela saga",
+     8
+    ],
+    [
+     "viga-glums saga",
+     8
+    ]
+   ]
+  },
+  "islanningasagor_vers": {
+   "träffar": 2,
+   "per_10000": 1.04,
+   "vanligaste": [
+    [
+     "eyrbyggja saga",
+     1
+    ],
+    [
+     "grettis saga",
+     1
+    ]
+   ]
+  },
+  "heimskringla": {
+   "träffar": 8,
+   "per_10000": 0.33,
+   "vanligaste": [
+    [
+     "Haralds saga hins hárfagra",
+     4
+    ],
+    [
+     "Saga Hálfdanar svarta",
+     3
+    ],
+    [
+     "Ynglinga saga",
+     1
+    ]
+   ]
+  },
+  "heimskringla_vers": {
+   "träffar": 1,
+   "per_10000": 0.55,
+   "vanligaste": [
+    [
+     "Haralds saga hins hárfagra",
+     1
+    ]
+   ]
+  },
+  "fornaldarsagor": {
+   "träffar": 134,
+   "per_10000": 3.92,
+   "vanligaste": [
+    [
+     "Hrólfs saga kraka ok kappa hans",
+     40
+    ],
+    [
+     "Hrólfs saga Gautrekssonar",
+     17
+    ],
+    [
+     "Göngu-Hrólfs saga",
+     12
+    ],
+    [
+     "Hervarar saga ok Heiðreks",
+     12
+    ],
+    [
+     "Egils saga einhenda ok Ásmundar berserkjabana",
+     11
+    ]
+   ]
+  },
+  "fornaldarsagor_vers": {
+   "träffar": 7,
+   "per_10000": 4.35,
+   "vanligaste": [
+    [
+     "Örvar-Odds saga",
+     4
+    ],
+    [
+     "Egils saga einhenda ok Ásmundar berserkjabana",
+     1
+    ],
+    [
+     "Gríms saga loðinkinna",
+     1
+    ],
+    [
+     "Hervarar saga ok Heiðreks",
+     1
+    ]
+   ]
+  },
+  "samtidssagor": {
+   "träffar": 1,
+   "per_10000": 0.21,
+   "vanligaste": [
+    [
+     "Þorgils saga ok Hafliða",
+     1
+    ]
+   ]
+  }
+ },
+ "T1": {
+  "huvud": {
+   "dikt_n": 59,
+   "dikt_texter": 30,
+   "prosa_n": 16,
+   "prosa_texter": 12,
+   "dikt_%": 16.9,
+   "prosa_%": 6.2,
+   "skillnad_pe": 10.7,
+   "intervall": [
+    -8.6,
+    24.8
+   ],
+   "p": 0.2428,
+   "håller": false
+  },
+  "med_örn": {
+   "dikt_n": 59,
+   "dikt_texter": 30,
+   "prosa_n": 16,
+   "prosa_texter": 12,
+   "dikt_%": 30.5,
+   "prosa_%": 6.2,
+   "skillnad_pe": 24.3,
+   "intervall": [
+    4.8,
+    39.3
+   ],
+   "p": 0.017,
+   "håller": true
+  },
+  "fönster_10": {
+   "dikt_n": 59,
+   "dikt_texter": 30,
+   "prosa_n": 16,
+   "prosa_texter": 12,
+   "dikt_%": 10.2,
+   "prosa_%": 6.2,
+   "skillnad_pe": 3.9,
+   "intervall": [
+    -13.7,
+    15.3
+   ],
+   "p": 0.6072,
+   "håller": false
+  }
+ },
+ "V4_text": [
+  [
+   "Öl Köping40",
+   "ulfr"
+  ],
+  [
+   "U 324",
+   "ulfr"
+  ]
+ ],
+ "V4_namn": {
+  "stenar_med_vargnamn": 189,
+  "stenar": 2321,
+  "per_landskap": {
+   "Uppland": {
+    "vargnamn": 109,
+    "andel": 9.3
+   },
+   "Södermanland": {
+    "vargnamn": 43,
+    "andel": 11.8
+   },
+   "Östergötland": {
+    "vargnamn": 10,
+    "andel": 4.5
+   },
+   "Öland": {
+    "vargnamn": 3,
+    "andel": 1.9
+   },
+   "Västergötland": {
+    "vargnamn": 9,
+    "andel": 6.9
+   },
+   "Småland": {
+    "vargnamn": 6,
+    "andel": 5.0
+   },
+   "Gotland": {
+    "vargnamn": 2,
+    "andel": 4.8
+   },
+   "Västmanland": {
+    "vargnamn": 2,
+    "andel": 8.3
+   },
+   "Gästrikland": {
+    "vargnamn": 1,
+    "andel": 4.8
+   }
+  }
+ }
+}
