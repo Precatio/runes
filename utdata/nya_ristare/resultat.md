@@ -110,3 +110,14 @@ kärnor.
 - **Facit och träningen** bygger delvis på samma slags drag som runologerna själva använde. Provet visar att metoden
   återskapar deras bedömningar, inte att bedömningarna är rätt.
 - **Fragment och stenar med lite text** kan bara grupperas på stil, kors och plats. De har märkts svagt underlag.
+
+## Tillägg 2026-11-23: runhöjd och stenhöjd (utvecklingsdelen, negativt)
+Runhöjden (finns för 14 % av paren) och stenhöjden (23 %) ur `data/stone_dimensions.json`, som skillnad och kvot, lades
+till M1 och prövades på utvecklingsdelen.
+
+| | Median | Medel | Onämnda |
+|---|---|---|---|
+| Före | 0,944 | 0,856 | 0,946 |
+| Efter | 0,944 | 0,859 | 0,928 |
+
+De lades inte till, och modellen är oförändrad.
