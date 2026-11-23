@@ -1,0 +1,82 @@
+[
+ {
+  "tau": 0.9,
+  "precision_namngivna": 0.846,
+  "täckning_namngivna": 0.044,
+  "facit_samma_grupp": 0.212,
+  "grannar_samma_grupp": 0.007,
+  "grupper_minst3": 106,
+  "stenar_i_grupper_minst3": 417,
+  "största": 10
+ },
+ {
+  "tau": 0.8,
+  "precision_namngivna": 0.769,
+  "täckning_namngivna": 0.088,
+  "facit_samma_grupp": 0.341,
+  "grannar_samma_grupp": 0.029,
+  "grupper_minst3": 228,
+  "stenar_i_grupper_minst3": 1103,
+  "största": 26
+ },
+ {
+  "tau": 0.7,
+  "precision_namngivna": 0.686,
+  "täckning_namngivna": 0.126,
+  "facit_samma_grupp": 0.4,
+  "grannar_samma_grupp": 0.097,
+  "grupper_minst3": 293,
+  "stenar_i_grupper_minst3": 1820,
+  "största": 72
+ },
+ {
+  "tau": 0.6,
+  "precision_namngivna": 0.582,
+  "täckning_namngivna": 0.174,
+  "facit_samma_grupp": 0.471,
+  "grannar_samma_grupp": 0.146,
+  "grupper_minst3": 240,
+  "stenar_i_grupper_minst3": 2111,
+  "största": 83
+ },
+ {
+  "tau": 0.5,
+  "precision_namngivna": 0.464,
+  "täckning_namngivna": 0.223,
+  "facit_samma_grupp": 0.494,
+  "grannar_samma_grupp": 0.274,
+  "grupper_minst3": 173,
+  "stenar_i_grupper_minst3": 2217,
+  "största": 83
+ },
+ {
+  "tau": 0.4,
+  "precision_namngivna": 0.409,
+  "täckning_namngivna": 0.233,
+  "facit_samma_grupp": 0.506,
+  "grannar_samma_grupp": 0.3,
+  "grupper_minst3": 153,
+  "stenar_i_grupper_minst3": 2270,
+  "största": 87
+ },
+ {
+  "tau": 0.3,
+  "precision_namngivna": 0.34,
+  "täckning_namngivna": 0.244,
+  "facit_samma_grupp": 0.518,
+  "grannar_samma_grupp": 0.311,
+  "grupper_minst3": 142,
+  "stenar_i_grupper_minst3": 2286,
+  "största": 115
+ },
+ {
+  "tau": 0.2,
+  "precision_namngivna": 0.329,
+  "täckning_namngivna": 0.244,
+  "facit_samma_grupp": 0.518,
+  "grannar_samma_grupp": 0.311,
+  "grupper_minst3": 139,
+  "stenar_i_grupper_minst3": 2286,
+  "största": 115
+ }
+]

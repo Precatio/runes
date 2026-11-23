@@ -1,0 +1,306 @@
+{
+ "stickprov": 40,
+ "lika": 30,
+ "procent": 75.0,
+ "krav": 85,
+ "oenigheter": [
+  {
+   "id": "U 599|11503",
+   "första": [
+    [
+     [
+      "U 599",
+      "U 729"
+     ],
+     "säker",
+     false
+    ]
+   ],
+   "kontroll": []
+  },
+  {
+   "id": "U 224|49128",
+   "första": [
+    [
+     [
+      "U 225",
+      "U 226"
+     ],
+     "trolig",
+     false
+    ]
+   ],
+   "kontroll": []
+  },
+  {
+   "id": "Ög 87|1877",
+   "första": [
+    [
+     [
+      "Ög 165",
+      "Ög 81"
+     ],
+     "möjlig",
+     false
+    ],
+    [
+     [
+      "Ög 165",
+      "Ög 82"
+     ],
+     "möjlig",
+     false
+    ],
+    [
+     [
+      "Ög 165",
+      "Ög 83"
+     ],
+     "möjlig",
+     false
+    ],
+    [
+     [
+      "Ög 165",
+      "Ög 84"
+     ],
+     "möjlig",
+     false
+    ]
+   ],
+   "kontroll": [
+    [
+     [
+      "Ög 165",
+      "Ög 81"
+     ],
+     "möjlig",
+     false
+    ],
+    [
+     [
+      "Ög 81",
+      "Ög 82"
+     ],
+     "möjlig",
+     false
+    ],
+    [
+     [
+      "Ög 81",
+      "Ög 83"
+     ],
+     "möjlig",
+     false
+    ],
+    [
+     [
+      "Ög 81",
+      "Ög 84"
+     ],
+     "möjlig",
+     false
+    ]
+   ]
+  },
+  {
+   "id": "U 300|3431",
+   "första": [
+    [
+     [
+      "U 102",
+      "U 300"
+     ],
+     "möjlig",
+     true
+    ],
+    [
+     [
+      "U 102",
+      "U 300"
+     ],
+     "trolig",
+     false
+    ]
+   ],
+   "kontroll": [
+    [
+     [
+      "U 102",
+      "U 300"
+     ],
+     "möjlig",
+     true
+    ]
+   ]
+  },
+  {
+   "id": "Vg 13|3416",
+   "första": [
+    [
+     [
+      "Vg 11",
+      "Vg 13"
+     ],
+     "säker",
+     false
+    ],
+    [
+     [
+      "Vg 13",
+      "Vg 15"
+     ],
+     "trolig",
+     false
+    ]
+   ],
+   "kontroll": [
+    [
+     [
+      "Vg 11",
+      "Vg 13"
+     ],
+     "säker",
+     false
+    ]
+   ]
+  },
+  {
+   "id": "U 11|33505",
+   "första": [
+    [
+     [
+      "U 11",
+      "U 77"
+     ],
+     "möjlig",
+     false
+    ],
+    [
+     [
+      "U 11",
+      "U 77"
+     ],
+     "trolig",
+     false
+    ]
+   ],
+   "kontroll": [
+    [
+     [
+      "U 11",
+      "U 77"
+     ],
+     "säker",
+     false
+    ]
+   ]
+  },
+  {
+   "id": "Öl 2|21105",
+   "första": [
+    [
+     [
+      "Öl 3",
+      "Öl 4"
+     ],
+     "säker",
+     false
+    ]
+   ],
+   "kontroll": []
+  },
+  {
+   "id": "Öl 21|10004",
+   "första": [
+    [
+     [
+      "Öl 26",
+      "Öl 27"
+     ],
+     "trolig",
+     false
+    ],
+    [
+     [
+      "Öl 3",
+      "Öl 4"
+     ],
+     "säker",
+     false
+    ]
+   ],
+   "kontroll": [
+    [
+     [
+      "Öl 3",
+      "Öl 4"
+     ],
+     "säker",
+     false
+    ]
+   ]
+  },
+  {
+   "id": "Sö 310|3831",
+   "första": [],
+   "kontroll": [
+    [
+     [
+      "Sö 310",
+      "Sö 311"
+     ],
+     "säker",
+     false
+    ]
+   ]
+  },
+  {
+   "id": "U 395|9581",
+   "första": [
+    [
+     [
+      "U 382",
+      "U 395"
+     ],
+     "trolig",
+     false
+    ],
+    [
+     [
+      "U 382",
+      "U 395"
+     ],
+     "trolig",
+     true
+    ],
+    [
+     [
+      "U 383",
+      "U 395"
+     ],
+     "trolig",
+     false
+    ]
+   ],
+   "kontroll": [
+    [
+     [
+      "U 382",
+      "U 395"
+     ],
+     "säker",
+     true
+    ],
+    [
+     [
+      "U 383",
+      "U 395"
+     ],
+     "trolig",
+     false
+    ]
+   ]
+  }
+ ]
+}

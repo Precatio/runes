@@ -1,0 +1,52 @@
+{
+ "M0 text (överskott)": {
+  "grupper": 17,
+  "median_percentil": 0.8322192513368984,
+  "medel": 0.7022462022153201,
+  "andel_över_0_9": 0.23529411764705882,
+  "onämnda": {
+   "grupper": 2,
+   "median_percentil": 0.5390941911396643
+  }
+ },
+ "M1 alla belägg": {
+  "grupper": 27,
+  "median_percentil": 0.9444444444444444,
+  "medel": 0.8558806620674875,
+  "andel_över_0_9": 0.5925925925925926,
+  "onämnda": {
+   "grupper": 8,
+   "median_percentil": 0.9456241956241956
+  }
+ },
+ "M2 utan text": {
+  "grupper": 27,
+  "median_percentil": 0.8955815335843076,
+  "medel": 0.8327113434918755,
+  "andel_över_0_9": 0.48148148148148145,
+  "onämnda": {
+   "grupper": 8,
+   "median_percentil": 0.886904761904762
+  }
+ },
+ "M3 text + stil + kors": {
+  "grupper": 27,
+  "median_percentil": 0.9,
+  "medel": 0.7938109825896889,
+  "andel_över_0_9": 0.5185185185185185,
+  "onämnda": {
+   "grupper": 8,
+   "median_percentil": 0.8130952380952381
+  }
+ },
+ "M5 alla belägg, bara signerade": {
+  "grupper": 27,
+  "median_percentil": 0.6623192960402263,
+  "medel": 0.6491761391036486,
+  "andel_över_0_9": 0.2962962962962963,
+  "onämnda": {
+   "grupper": 8,
+   "median_percentil": 0.41995868281572163
+  }
+ }
+}
