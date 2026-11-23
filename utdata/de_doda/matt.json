@@ -1,0 +1,648 @@
+{
+ "träffar": 383,
+ "per_mönster": {
+  "B": 311,
+  "A": 72
+ },
+ "V1": {
+  "isl": {
+   "grav": 48,
+   "högbo": 42,
+   "gengångare": 36,
+   "annan betydelse": 12,
+   "plats": 6,
+   "annat": 5
+  },
+  "forn": {
+   "högbo": 53,
+   "grav": 48,
+   "plats": 16,
+   "annan betydelse": 5,
+   "annat": 4,
+   "gengångare": 1
+  },
+  "övriga": {
+   "högbo": 38,
+   "grav": 29,
+   "plats": 21,
+   "annan betydelse": 15,
+   "annat": 3,
+   "gengångare": 1
+  }
+ },
+ "V1_mönster": {
+  "A|isl": {
+   "gengångare": 35,
+   "annan betydelse": 8,
+   "annat": 5,
+   "högbo": 3
+  },
+  "A|forn": {
+   "högbo": 4,
+   "annan betydelse": 3,
+   "gengångare": 1,
+   "annat": 1
+  },
+  "A|övriga": {
+   "högbo": 7,
+   "annan betydelse": 4,
+   "gengångare": 1
+  },
+  "B|isl": {
+   "grav": 48,
+   "högbo": 39,
+   "plats": 6,
+   "annan betydelse": 4,
+   "gengångare": 1
+  },
+  "B|forn": {
+   "högbo": 49,
+   "grav": 48,
+   "plats": 16,
+   "annat": 3,
+   "annan betydelse": 2
+  },
+  "B|övriga": {
+   "högbo": 31,
+   "grav": 29,
+   "plats": 21,
+   "annan betydelse": 11,
+   "annat": 3
+  }
+ },
+ "V1_korpus": {
+  "eddadikter": {
+   "högbo": 22,
+   "plats": 6,
+   "grav": 2
+  },
+  "fornaldarsagor": {
+   "högbo": 53,
+   "grav": 48,
+   "plats": 16,
+   "annan betydelse": 5,
+   "annat": 4,
+   "gengångare": 1
+  },
+  "fornaldarsagor_vers": {
+   "högbo": 11,
+   "plats": 4,
+   "grav": 3,
+   "annan betydelse": 1,
+   "annat": 1
+  },
+  "heimskringla": {
+   "grav": 21,
+   "plats": 7,
+   "annan betydelse": 5,
+   "annat": 2,
+   "gengångare": 1,
+   "högbo": 1
+  },
+  "heimskringla_vers": {
+   "annan betydelse": 5,
+   "plats": 3,
+   "grav": 1
+  },
+  "islanningasagor": {
+   "grav": 48,
+   "högbo": 42,
+   "gengångare": 36,
+   "annan betydelse": 12,
+   "plats": 6,
+   "annat": 5
+  },
+  "islanningasagor_vers": {
+   "högbo": 4,
+   "grav": 1,
+   "annan betydelse": 1
+  },
+  "samtidssagor": {
+   "annan betydelse": 1
+  },
+  "snorra_edda_gylfaginning": {
+   "annan betydelse": 1
+  },
+  "snorra_edda_skáldskaparmál": {
+   "plats": 1,
+   "grav": 1,
+   "annan betydelse": 1
+  }
+ },
+ "V1_per_10000": {
+  "eddadikter": 4.59,
+  "snorra_edda_gylfaginning": 0.0,
+  "snorra_edda_skáldskaparmál": 0.0,
+  "islanningasagor": 0.89,
+  "islanningasagor_vers": 2.08,
+  "heimskringla": 0.08,
+  "heimskringla_vers": 0.0,
+  "fornaldarsagor": 1.58,
+  "fornaldarsagor_vers": 6.84,
+  "samtidssagor": 0.0,
+  "samtidssagor_vers": 0.0
+ },
+ "V2": [
+  [
+   "fornaldarsagor",
+   "Göngu-Hrólfs saga",
+   24,
+   {
+    "högbo": 24
+   }
+  ],
+  [
+   "fornaldarsagor",
+   "Hrómundar saga Gripssonar",
+   19,
+   {
+    "högbo": 19
+   }
+  ],
+  [
+   "islanningasagor",
+   "grettis saga",
+   19,
+   {
+    "högbo": 9,
+    "gengångare": 10
+   }
+  ],
+  [
+   "eddadikter",
+   "Hervararkviða",
+   15,
+   {
+    "högbo": 15
+   }
+  ],
+  [
+   "islanningasagor",
+   "hardar saga og holmverja",
+   15,
+   {
+    "högbo": 14,
+    "gengångare": 1
+   }
+  ],
+  [
+   "islanningasagor",
+   "bardar saga snaefellsass",
+   12,
+   {
+    "högbo": 12
+   }
+  ],
+  [
+   "fornaldarsagor_vers",
+   "Hervarar saga ok Heiðreks",
+   11,
+   {
+    "högbo": 11
+   }
+  ],
+  [
+   "islanningasagor",
+   "eyrbyggja saga",
+   8,
+   {
+    "gengångare": 8
+   }
+  ],
+  [
+   "eddadikter",
+   "Völsungakviða_in_forna",
+   7,
+   {
+    "högbo": 7
+   }
+  ],
+  [
+   "islanningasagor",
+   "brennu-njals saga",
+   5,
+   {
+    "högbo": 5
+   }
+  ],
+  [
+   "islanningasagor",
+   "floamanna saga",
+   5,
+   {
+    "gengångare": 5
+   }
+  ],
+  [
+   "islanningasagor",
+   "laxdaela saga",
+   4,
+   {
+    "gengångare": 4
+   }
+  ],
+  [
+   "fornaldarsagor",
+   "Hervarar saga ok Heiðreks",
+   3,
+   {
+    "högbo": 3
+   }
+  ],
+  [
+   "islanningasagor",
+   "gull-thoris saga",
+   3,
+   {
+    "högbo": 2,
+    "gengångare": 1
+   }
+  ],
+  [
+   "islanningasagor_vers",
+   "grettis saga",
+   3,
+   {
+    "högbo": 3
+   }
+  ]
+ ],
+ "T1": {
+  "huvud": {
+   "forn_n": 54,
+   "forn_texter": 9,
+   "isl_n": 78,
+   "isl_texter": 14,
+   "forn_%": 98.1,
+   "isl_%": 53.8,
+   "skillnad_pe": 44.3,
+   "intervall": [
+    17.7,
+    76.6
+   ],
+   "p": 0.0038,
+   "håller": true
+  },
+  "bara_A": {
+   "forn_n": 5,
+   "forn_texter": 2,
+   "isl_n": 38,
+   "isl_texter": 12,
+   "obestämt": true
+  },
+  "en_per_saga": {
+   "forn_n": 9,
+   "forn_texter": 9,
+   "isl_n": 17,
+   "isl_texter": 14,
+   "obestämt": true
+  }
+ },
+ "V3": [
+  [
+   "Öl 1",
+   "haugi",
+   "flestr vissi þat, mestar dæðir dolga \"Þrúðar draugr í þessu haugi; munat \"Reið-Viðurr ráða rógstarkr í \"Danmôrku \"[E]ndils jô"
+  ],
+  [
+   "Öl ATA4064/60A",
+   "hôggva",
+   "\"Þo[r]... ... [lé]tu \"Ulf hôggva steina."
+  ],
+  [
+   "Ög 93",
+   "hôggvinn",
+   "ðheiðr reisti stein þenna eptir \"Bjôrn, bónda sinn, er varð hôggvinn."
+  ],
+  [
+   "Ög 177",
+   "hôggvinn",
+   "orgeirr ok \"Áli/\"Alli [þau] létu reisa eptir \"Tófa, er varð hôggvinn."
+  ],
+  [
+   "Sö 121",
+   "hôggva",
+   "\"<sumuR> hôggva stein, sem er dauðr austr í \"<tuna> <asu>."
+  ],
+  [
+   "Sö 279",
+   "hôgg",
+   "\"Ei... ... [hôgg]va [st]e[in] ... [s]onu \"Eimund[ar] ... sunnarla á \"Serkl[a"
+  ],
+  [
+   "Sm 11",
+   "hôggva",
+   "\"Klakka synir létu hôggva stein eptir [f]ôður sinn ok eptir \"Kala/\"Kalla/\"Galla ok \"V"
+  ],
+  [
+   "Vg 67",
+   "hôggvi",
+   "tir, bezt með ôldum. Verði at <rata> ok at argri konu sá er hôggvi [í] krus, ... of brjóti."
+  ],
+  [
+   "U 85",
+   "hôggva",
+   "\"Bjôrn ok \"Fullugi(?) þeir létu hôggva stein ... sinn."
+  ],
+  [
+   "U 135",
+   "haug",
+   "steina þessa at \"Eystein, fôður sinn, ok brú þessa gerðu ok haug þenna."
+  ],
+  [
+   "U 147",
+   "hôggva",
+   "\"[J]órunnr ... þær létu hôggva steina [ep]ti[r] \"Ingif[ast] ok \"Ingvar."
+  ],
+  [
+   "U 161",
+   "hôggva",
+   "tôðum eptir \"Ulf í \"Skolhamri, mág sinn góðan. \"Ulfkell lét hôggva."
+  ],
+  [
+   "U 162",
+   "hôggva",
+   "\"Grímr lét hôggva stein eptir fôður sinn \"Véstein. \"Óleifr hjó."
+  ],
+  [
+   "U 206",
+   "hôggva",
+   "... [l]étu stein hôggva ..."
+  ],
+  [
+   "U 211",
+   "hôggva",
+   "\"Jófríðr lét stein hôggva eptir \"Spja[lla](?), [bón]da sinn."
+  ],
+  [
+   "U 239",
+   "hôggva",
+   "\"Inga lét hôggva steina ... \"... [b]ó[nd]a ... ..."
+  ],
+  [
+   "U 247",
+   "hôggva",
+   "\"Fastlaug(?) lét hôggva stein eptir \"Ketil, bróður sinn. \"Sveinn risti."
+  ],
+  [
+   "U 253",
+   "hôgg",
+   "§A \"Guðlaug lét hôgg[va] stein eptir \"... bónda sinn. §B ... ok \"Fasti, þeir ..."
+  ],
+  [
+   "U 269",
+   "haug",
+   "\"Illugi lét reisa steina ok haug gera eptir \"Bjôrn, bróður sinn."
+  ],
+  [
+   "U 277",
+   "hôggva",
+   "\"Ketilgerðr lét stein hôggva eptir \"Ôzur, bónda sinn, ok \"Ulfr lét hôggva eptir \"Bjôrn."
+  ],
+  [
+   "U 277",
+   "hôggva",
+   "erðr lét stein hôggva eptir \"Ôzur, bónda sinn, ok \"Ulfr lét hôggva eptir \"Bjôrn."
+  ],
+  [
+   "U 294",
+   "hôggva",
+   "\"Guðlaug lét stein hôggva eptir \"Forkunn, bónda sinn, ok \"Ketilelfr(?)."
+  ],
+  [
+   "U 295",
+   "hôggva",
+   "\"Végeirr(?) lét stein hôggva [e]p[tir] \"Bersu/\"Birsu, son sinn. \"Fa[st]laug lét stein hô"
+  ],
+  [
+   "U 295",
+   "hôggva",
+   "va [e]p[tir] \"Bersu/\"Birsu, son sinn. \"Fa[st]laug lét stein hôggva eptir b[r]óður sinn \"Fulluga."
+  ],
+  [
+   "U 296",
+   "hôggva",
+   "\"Ingivaldr ok \"Gíslaug létu hôggva steina eptir \"Ingimund, son sinn."
+  ],
+  [
+   "U 304",
+   "hôggva",
+   "\"Fullugi lét hôggva stein ok þeir \"Haukr/\"Húkr báðir brœðr eptir \"Manna/\"Mána, "
+  ],
+  [
+   "U 313",
+   "hôggva",
+   "§A \"Gunnarr lét hôggva stein eptir \"Jôfurfast, stjúpu sína, ok \"Holmdís eptir §B d"
+  ],
+  [
+   "U 317",
+   "hôggva",
+   "eifr lét brú gera ok \"Sveinn [at \"K]arl ok \"Heimlaug(?) lét hôggva stein eptir \"Karl, bónda sinn."
+  ],
+  [
+   "U 365",
+   "hôggva",
+   "... s[t]ein hôggva eptir ..."
+  ],
+  [
+   "U 604",
+   "hôggva",
+   "\"<huli> lét stein hôggva ok þeir ... ... eptir \"Krók, bróður sinn ..."
+  ],
+  [
+   "U 766",
+   "hôggva",
+   "\"Guðfastr lét hôggva steina tvá eptir \"Eist, son sinn, ok sjalfan sik."
+  ],
+  [
+   "U 773",
+   "hôggva",
+   "\"Styf[j]aldr(?) ok \"<slaka> þeir létu hôggva merki merkiligt/mærilikt ok \"A[rn]laug eptir \"Ónæm(?)/\"Hóne"
+  ],
+  [
+   "U 780",
+   "hôggva",
+   "\"... ok \"Holmsteinn ok \"Steinbjôrn létu hôggva stein at \"Eist, bróður sinn."
+  ],
+  [
+   "U 789",
+   "hôggva",
+   "\"Þorgunnr lét hôggva stein eptir \"Rúna(?)/\"Hróar(?), bónd[a] ..."
+  ],
+  [
+   "U 795",
+   "hôggva",
+   "\"Þingbjôrn lét hôggva stein eptir sonu sína."
+  ],
+  [
+   "U 796",
+   "hôggv",
+   "\"Sæ[g]rímr lét hôggv[a a]t son sinn \"Áfast. \"Hlífsteinn hjó rúnar þessar at góða"
+  ],
+  [
+   "U 797",
+   "hôggva",
+   "§P \"Eyjarr(?) ok \"Kári létu hôggva ... ... \"... fôður sinn. §Q \"Varr(?) ok \"Kári létu hôggva ."
+  ],
+  [
+   "U 797",
+   "hôggva",
+   "u hôggva ... ... \"... fôður sinn. §Q \"Varr(?) ok \"Kári létu hôggva ... ... ... \"Ós[n]ík[i]n(?), fôður sinn."
+  ],
+  [
+   "U 828",
+   "hôggva",
+   "\"Kagr(?)/\"Gagr(?) ok \"Hákon létu hôggva stein ok brú gera eptir \"Erngísl, fôður sinn góðan. \"Guð hj"
+  ],
+  [
+   "U 867",
+   "hôggva",
+   "erði brú at \"Bollu, dóttur sína. \"Áli/\"Alli ok \"Óleifr létu hôggva at \"Þjalfa, fôður sinn, \"Inga at ver sinn. \"Guð létti sál þ"
+  ],
+  [
+   "U 908",
+   "hôggva",
+   "\"Þórir lét hôggva stein at \"Bínu(?), fôður sinn, \"Ketilvé at bónda sinn."
+  ],
+  [
+   "U 921",
+   "hôggva",
+   "\"Sægeirr lét hôggva stein at \"Una/\"Unna, son sinn."
+  ],
+  [
+   "U 951",
+   "hôggva",
+   "§A \"Geirfríðr(?) ok \"Geirmarr létu hôggva §B at \"Auðmund. \"Grímr \"Skald hjó."
+  ],
+  [
+   "U 957",
+   "hôggva",
+   "erðarr ok \"Ulfr ok \"Holmbjôrn ok \"Ábjôrn ok \"Rúni þeir létu hôggva stein at \"Jarl, fôður sinn, \"Arnfríðr at bónda sinn."
+  ],
+  [
+   "U 1011",
+   "hôggva",
+   "§A \"Vígmundr lét hôggva stein at sik sjalfan, slœgjastr manna. \"Guð hjalpi sál \"Víg"
+  ],
+  [
+   "U 1037",
+   "hôggva",
+   "... lét hôggva ... \"...fast, fôður sinn ... [s]ystur s[ín]a \"..."
+  ],
+  [
+   "U 1045",
+   "hôggva",
+   "\"Bjarnhôfði lét hôggva stein at \"Bjarnhôfða, fôður sinn ... ... <at>."
+  ],
+  [
+   "U 1048",
+   "hôggva",
+   "\"Gillaug lét hôggva at \"Jôrund, son sinn, dó í \"Heiðabý."
+  ],
+  [
+   "U 1060",
+   "hôggva",
+   "\"Holmgeirr [ok] \"Karl létu hôggva [at] \"Eist, fôður sinn."
+  ],
+  [
+   "U 1068",
+   "hôggva",
+   "... hôggva stein at \"I[n]gvar, fôð[ur] ... [bó]nda sinn."
+  ],
+  [
+   "U 1074",
+   "hôggva",
+   "\"Ásfríðr [lét] hôggva stein at \"Djarf, son sinn, \"Nasi/\"Nesi at bróður sinn. \"Lík"
+  ],
+  [
+   "U 1076",
+   "hôggva",
+   "\"Andvéttr lét hôggva stein þenna at \"Gota, bróður sinn ..."
+  ],
+  [
+   "U 1081",
+   "hôggva",
+   "\"Borgf[astr(?) ok] \"...fastr létu hôggva at \"Ketilfast, bróður sinn."
+  ],
+  [
+   "U 1083",
+   "hôggva",
+   "\"Arta(?) lét hôggva stein at fôður sinn \"Nefgeir ok \"Heðinfast at bónda sinn ok"
+  ],
+  [
+   "U 1091",
+   "hôggva",
+   "\"... létu hôggva at \"Glóða, fôður sinn ..."
+  ],
+  [
+   "U 1095",
+   "hôggva",
+   "\"<bel> lét hôggva at \"Eystein, fôður sinn, \"Gillaug at bónda sinn. \"Líkbjôrn "
+  ],
+  [
+   "U 1102",
+   "hôggva",
+   "tein eptir \"Guðstein, fôður sinn. §B \"Stóðkell bað \"Óþvegin hôggva."
+  ],
+  [
+   "U 1111",
+   "hôggva",
+   "\"Andsvarr ok \"Þorbjôrn létu hôggva stein eptir fôður sinn ok \"Steinhildr [eptir] bónda sinn \"T"
+  ],
+  [
+   "U 1118",
+   "hôggva",
+   "\"Ófriðr ok \"Gísl létu hôggva stein at \"Svart, bróður sinn."
+  ],
+  [
+   "U 1140",
+   "hôggva",
+   "\"Fastgeirr, \"Fastlaug at son sinn létu hôggva, at \"Nefgeir."
+  ],
+  [
+   "U 1152",
+   "hôggva",
+   "\"Ernlaug lét hôggva stein eptir \"Þorstein, bónda sinn. \"Hlífsteinn."
+  ],
+  [
+   "U 1160",
+   "hôggva",
+   "\"Liðsmaðr lét hôggva stein eptir \"Ígulbjôrn(?), fôður."
+  ],
+  [
+   "U 1164",
+   "hôggva",
+   "\"Ernlaug lét hôggva stein eptir \"... ... sinn. \"Hlífsteinn hjó rúnar."
+  ],
+  [
+   "U 1181",
+   "hôggva",
+   "\"... lét hôggva ... [si]k sjalfan, \"Eng[la]ndsfari, afi <kunu-s>."
+  ],
+  [
+   "U Fv1959;188",
+   "hôggva",
+   "\"Sigsteinn ok \"Erin[vé l]étu stein hôggva eptir \"Eil[eif, son sinn]."
+  ],
+  [
+   "U Fv1973;146",
+   "hôggva",
+   "\"Haraldr ok \"Erngísl ok \"Halfdan ok \"Fóthraðr létu hôggva stein eptir \"Gísl, fôður sinn."
+  ],
+  [
+   "U Fv1993;233",
+   "hôggva",
+   "\"[He]mingr lét hôggva stein eptir s[on] sinn góðan."
+  ],
+  [
+   "U THS30;83",
+   "hôggva",
+   "\"Ragnfastr ok \"Inga ok ... [lét]u hôggva stein þenna ok brú gera eptir \"Þorstein, ... sinn. Hann f[e"
+  ],
+  [
+   "Vs 29",
+   "hôggva",
+   "\"Véseti ok \"Halfdan létu hôggva stein eptir \"Holma, fôður sinn, ok \"Holmfast, bróður sinn. "
+  ]
+ ]
+}
