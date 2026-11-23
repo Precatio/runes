@@ -1,0 +1,10843 @@
+[
+ {
+  "stenar": [
+   "Öl Köping1",
+   "Öl Köping12",
+   "Öl Köping13",
+   "Öl Köping15",
+   "Öl Köping17",
+   "Öl Köping18",
+   "Öl Köping22",
+   "Öl Köping25",
+   "Öl Köping26",
+   "Öl Köping27",
+   "Öl Köping31",
+   "Öl Köping34",
+   "Öl Köping35",
+   "Öl Köping36",
+   "Öl Köping40",
+   "Öl Köping41",
+   "Öl Köping44",
+   "Öl Köping47",
+   "Öl Köping50",
+   "Öl Köping59",
+   "Öl Köping60",
+   "Öl Köping65",
+   "Öl Köping66",
+   "Öl Köping72",
+   "Öl Köping73",
+   "Öl Köping8"
+  ],
+  "typ": "okänd hand",
+  "storlek": 26,
+  "medel_p": 0.8050679619495685,
+  "diameter_km": 0.0,
+  "landskap": {
+   "Öl": 26
+  },
+  "socknar": [
+   "Köpings sn"
+  ],
+  "stil": {
+   "–": 26
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G001",
+  "belägg_per_par": 0.03076923076923077,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 459",
+   "U 626",
+   "U 630",
+   "U 646",
+   "U 649",
+   "U 651",
+   "U 652",
+   "U 655",
+   "U 656",
+   "U 657",
+   "U 659",
+   "U 665",
+   "U 667",
+   "U 676",
+   "U 679",
+   "U 683",
+   "U 688",
+   "U 689",
+   "U 817",
+   "U 864",
+   "U 891"
+  ],
+  "typ": "med Arbjörn",
+  "storlek": 21,
+  "medel_p": 0.8508574630532946,
+  "diameter_km": 22.789004850759145,
+  "landskap": {
+   "U": 21
+  },
+  "socknar": [
+   "Balingsta sn",
+   "Haga sn",
+   "Hjälsta sn",
+   "Häggeby sn",
+   "Håbo-Tibble sn",
+   "Håtuna sn",
+   "Skoklosters sn",
+   "Uppsala-Näs sn",
+   "Yttergrans sn",
+   "Övergrans sn"
+  ],
+  "stil": {
+   "Pr2": 16,
+   "–": 5
+  },
+  "säkra": {
+   "U 459": "Arbjörn",
+   "U 630": "Arbjörn",
+   "U 646": "Arbjörn",
+   "U 651": "Arbjörn",
+   "U 652": "Arbjörn",
+   "U 655": "Arbjörn",
+   "U 667": "Arbjörn",
+   "U 676": "Arbjörn",
+   "U 688": "Arbjörn",
+   "U 689": "Arbjörn",
+   "U 817": "Arbjörn",
+   "U 864": "Arbjörn",
+   "U 891": "Arbjörn"
+  },
+  "signerade": [
+   "U 652",
+   "U 688"
+  ],
+  "runor": {
+   "U 459": "Arbjörn",
+   "U 630": "Arbjörn",
+   "U 646": "Arbjörn",
+   "U 651": "Arbjörn",
+   "U 652": "Arbjörn",
+   "U 655": "Arbjörn",
+   "U 665": "Samma som gjort U 672.",
+   "U 667": "Arbjörn",
+   "U 676": "Arbjörn",
+   "U 688": "Arbjörn",
+   "U 689": "Arbjörn",
+   "U 817": "Arbjörn",
+   "U 864": "Arbjörn",
+   "U 891": "Arbjörn"
+  },
+  "k0": {
+   "U 626": [
+    "Arbjörn",
+    0.295
+   ],
+   "U 649": [
+    "Arbjörn",
+    0.58
+   ],
+   "U 656": [
+    "Arbjörn",
+    0.587
+   ],
+   "U 657": [
+    "Balle",
+    0.389
+   ],
+   "U 659": [
+    "Fot 2",
+    0.708
+   ],
+   "U 665": [
+    "Arbjörn",
+    0.503
+   ],
+   "U 679": [
+    "Arbjörn",
+    0.323
+   ],
+   "U 683": [
+    "Öpir 1",
+    0.368
+   ]
+  },
+  "id": "G002",
+  "belägg_per_par": 12.433333333333334,
+  "text_andel": 0.8142857142857143,
+  "median_avstånd_km": 8.686021822184848,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Öl 52",
+   "Öl Köping14",
+   "Öl Köping2",
+   "Öl Köping20",
+   "Öl Köping23",
+   "Öl Köping30",
+   "Öl Köping38",
+   "Öl Köping39",
+   "Öl Köping49",
+   "Öl Köping52",
+   "Öl Köping54",
+   "Öl Köping55",
+   "Öl Köping57",
+   "Öl Köping68",
+   "Öl Köping71"
+  ],
+  "typ": "okänd hand",
+  "storlek": 15,
+  "medel_p": 0.85228819165911,
+  "diameter_km": 3.6552055373054118,
+  "landskap": {
+   "Öl": 15
+  },
+  "socknar": [
+   "Köpings sn"
+  ],
+  "stil": {
+   "–": 15
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G003",
+  "belägg_per_par": 1.5523809523809524,
+  "text_andel": 0.009523809523809525,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 1027",
+   "U 1032",
+   "U 1036",
+   "U 1039",
+   "U 1040",
+   "U 1047",
+   "U 1051",
+   "U 1056",
+   "U 1062",
+   "U 1065",
+   "U 1084",
+   "U 1085",
+   "U 1089"
+  ],
+  "typ": "blandad",
+  "storlek": 13,
+  "medel_p": 0.868401247339371,
+  "diameter_km": 20.4854589586042,
+  "landskap": {
+   "U": 13
+  },
+  "socknar": [
+   "Björklinge sn",
+   "Bälinge sn",
+   "Lena sn",
+   "Tensta sn",
+   "Viksta sn"
+  ],
+  "stil": {
+   "Pr4": 11,
+   "–": 1,
+   "Pr5": 1
+  },
+  "säkra": {
+   "U 1036": "Öpir 1",
+   "U 1062": "Ingulv",
+   "U 1065": "Ingulv",
+   "U 1084": "Öpir 1",
+   "U 1085": "Öpir 1",
+   "U 1089": "Öpir 1"
+  },
+  "signerade": [
+   "U 1039",
+   "U 1040"
+  ],
+  "runor": {
+   "U 1027": "Samma som gjort U 1026.",
+   "U 1036": "Öpir 1",
+   "U 1039": "Kjule; Öpir 1",
+   "U 1040": "Osniken; Kättilmund; Kjule",
+   "U 1047": "Ingulv; Likbjörn",
+   "U 1051": "Ingulv; Gudfast",
+   "U 1056": "En ovan och osäker ristare.",
+   "U 1062": "Ingulv",
+   "U 1065": "Ingulv",
+   "U 1084": "Öpir 1",
+   "U 1085": "Öpir 1",
+   "U 1089": "Öpir 1"
+  },
+  "k0": {
+   "U 1027": [
+    "Öpir 1",
+    0.958
+   ],
+   "U 1032": [
+    "Öpir 1",
+    0.839
+   ],
+   "U 1039": [
+    "Öpir 1",
+    0.7
+   ],
+   "U 1040": [
+    "Öpir 1",
+    0.961
+   ],
+   "U 1047": [
+    "Öpir 1",
+    0.643
+   ],
+   "U 1051": [
+    "Öpir 1",
+    0.82
+   ],
+   "U 1056": [
+    "Öpir 1",
+    0.537
+   ]
+  },
+  "id": "G004",
+  "belägg_per_par": 16.987179487179485,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.917405497472009,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1152",
+   "U 1160",
+   "U 719",
+   "U 742",
+   "U 766",
+   "U 767",
+   "U 780",
+   "U 789",
+   "U 795",
+   "U 796",
+   "U 797",
+   "U Fv1973;146"
+  ],
+  "typ": "med Livsten",
+  "storlek": 12,
+  "medel_p": 0.913588285446167,
+  "diameter_km": 27.253303957895138,
+  "landskap": {
+   "U": 12
+  },
+  "socknar": [
+   "Boglösa sn",
+   "Breds sn",
+   "Frösthults sn",
+   "Simtuna sn",
+   "Sparrsätra sn",
+   "Svinnegarns sn",
+   "Tillinge sn",
+   "Vallby sn",
+   "Vårfrukyrka sn"
+  ],
+  "stil": {
+   "Pr4": 12
+  },
+  "säkra": {
+   "U 1152": "Livsten",
+   "U 1160": "Livsten",
+   "U 766": "Livsten",
+   "U 767": "Livsten",
+   "U 780": "Livsten",
+   "U 789": "Livsten",
+   "U 795": "Livsten",
+   "U 796": "Livsten",
+   "U 797": "Livsten",
+   "U Fv1973;146": "Livsten"
+  },
+  "signerade": [
+   "U 1152",
+   "U 742",
+   "U 766",
+   "U 767",
+   "U 796"
+  ],
+  "runor": {
+   "U 1152": "Livsten",
+   "U 1160": "Livsten",
+   "U 719": "Ödbjörn; Livsten",
+   "U 742": "Tidkume; Livsten",
+   "U 766": "Livsten",
+   "U 767": "Livsten",
+   "U 780": "Livsten",
+   "U 789": "Livsten",
+   "U 795": "Livsten",
+   "U 796": "Livsten",
+   "U 797": "Livsten",
+   "U Fv1973;146": "Livsten"
+  },
+  "k0": {
+   "U 719": [
+    "Balle",
+    0.415
+   ],
+   "U 742": [
+    "Öpir 1",
+    0.471
+   ]
+  },
+  "id": "G005",
+  "belägg_per_par": 15.893939393939394,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.101621314361102,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 127",
+   "U 131",
+   "U 135",
+   "U 136",
+   "U 140",
+   "U 154",
+   "U 155",
+   "U 164",
+   "U 165",
+   "U 167",
+   "U 212",
+   "U 261"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 12,
+  "medel_p": 0.8956153329574701,
+  "diameter_km": 15.617630773916334,
+  "landskap": {
+   "U": 12
+  },
+  "socknar": [
+   "Danderyds sn",
+   "Fresta sn",
+   "Täby sn",
+   "Vallentuna sn",
+   "Östra Ryds sn"
+  ],
+  "stil": {
+   "Pr2": 5,
+   "Pr3": 3,
+   "–": 4
+  },
+  "säkra": {
+   "U 127": "Fot 2",
+   "U 131": "Fot 2",
+   "U 164": "Fot 2",
+   "U 165": "Fot 2",
+   "U 167": "Fot 2",
+   "U 212": "Fot 2",
+   "U 261": "Fot 2"
+  },
+  "signerade": [
+   "U 167"
+  ],
+  "runor": {
+   "U 127": "Fot 2",
+   "U 131": "Fot 2",
+   "U 135": "Samma som gjort U 136.",
+   "U 136": "Samma som gjort U 135.",
+   "U 164": "Fot 2",
+   "U 165": "Fot 2",
+   "U 167": "Fot 2",
+   "U 212": "Fot 2",
+   "U 261": "Fot 2"
+  },
+  "k0": {
+   "U 135": [
+    "Fot 2",
+    0.535
+   ],
+   "U 136": [
+    "Fot 2",
+    0.75
+   ],
+   "U 140": [
+    "Öpir 1",
+    0.338
+   ],
+   "U 154": [
+    "Fot 2",
+    0.296
+   ],
+   "U 155": [
+    "Fot 2",
+    0.421
+   ]
+  },
+  "id": "G006",
+  "belägg_per_par": 13.348484848484848,
+  "text_andel": 0.8333333333333334,
+  "median_avstånd_km": 6.474980252391168,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 106",
+   "U 151",
+   "U 260",
+   "U 273",
+   "U 289",
+   "U 420",
+   "U 425",
+   "U 428",
+   "U 444",
+   "U 628",
+   "U 96",
+   "U ATA322-4042-2009"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 12,
+  "medel_p": 0.8891161689252565,
+  "diameter_km": 25.277762403056506,
+  "landskap": {
+   "U": 12
+  },
+  "socknar": [
+   "Eds sn",
+   "Fresta sn",
+   "Hammarby sn",
+   "Håbo-Tibble sn",
+   "Norrsunda sn",
+   "Odensala sn",
+   "Sollentuna sn",
+   "Täby sn",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "–": 8,
+   "Pr4": 1,
+   "Pr3": 2,
+   "Fp": 1
+  },
+  "säkra": {
+   "U 260": "Fot 2",
+   "U 420": "Fot 2",
+   "U 428": "Fot 2",
+   "U 628": "Fot 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 260": "Fot 2",
+   "U 273": "Visäte; Fot 2",
+   "U 420": "Fot 2",
+   "U 428": "Fot 2",
+   "U 628": "Fot 2"
+  },
+  "k0": {
+   "U 106": [
+    "Fot 2",
+    0.955
+   ],
+   "U 151": [
+    "Gunnar",
+    0.544
+   ],
+   "U 273": [
+    "Fot 2",
+    0.462
+   ],
+   "U 289": [
+    "Fot 2",
+    0.551
+   ],
+   "U 425": [
+    "Fot 2",
+    0.883
+   ],
+   "U 444": [
+    "Fot 2",
+    0.584
+   ],
+   "U 96": [
+    "Torbjörn skald",
+    0.368
+   ],
+   "U ATA322-4042-2009": [
+    "Åsmund",
+    0.282
+   ]
+  },
+  "id": "G007",
+  "belägg_per_par": 8.318181818181818,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.54617440937068,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 100",
+   "U 153",
+   "U 255",
+   "U 256",
+   "U 267",
+   "U 269",
+   "U 285",
+   "U 297",
+   "U 329",
+   "U 330",
+   "U 411",
+   "U 510"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 12,
+  "medel_p": 0.874155346642841,
+  "diameter_km": 27.31574641170625,
+  "landskap": {
+   "U": 12
+  },
+  "socknar": [
+   "Fresta sn",
+   "Hammarby sn",
+   "Kårsta sn",
+   "Markims sn",
+   "Sankt Olovs sn (Sankt Olof)",
+   "Skånela sn",
+   "Sollentuna sn",
+   "Täby sn"
+  ],
+  "stil": {
+   "Pr4": 7,
+   "Pr3": 4,
+   "–": 1
+  },
+  "säkra": {
+   "U 255": "Fot 2",
+   "U 256": "Fot 2",
+   "U 267": "Fot 2",
+   "U 269": "Fot 2",
+   "U 285": "Fot 2",
+   "U 329": "Fot 2",
+   "U 330": "Fot 2"
+  },
+  "signerade": [
+   "U 267"
+  ],
+  "runor": {
+   "U 255": "Fot 2",
+   "U 256": "Fot 2",
+   "U 267": "Fot 2",
+   "U 269": "Fot 2",
+   "U 285": "Fot 2",
+   "U 297": "Samma som gjort U Fv1953;270 och U Fv1979;245.",
+   "U 329": "Fot 2",
+   "U 330": "Fot 2",
+   "U 510": "Ärnfast; Fot 2"
+  },
+  "k0": {
+   "U 100": [
+    "Öpir 1",
+    0.504
+   ],
+   "U 153": [
+    "Fot 2",
+    0.911
+   ],
+   "U 297": [
+    "Fot 2",
+    0.958
+   ],
+   "U 411": [
+    "Fot 2",
+    0.705
+   ],
+   "U 510": [
+    "Fot 2",
+    0.839
+   ]
+  },
+  "id": "G008",
+  "belägg_per_par": 19.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.375823569522355,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 165",
+   "Ög 200",
+   "Ög 201",
+   "Ög 203",
+   "Ög 71",
+   "Ög 82",
+   "Ög 88",
+   "Ög 89",
+   "Ög 91",
+   "Ög 92",
+   "Ög 98",
+   "Ög Fv1965;54"
+  ],
+  "typ": "med Torkel",
+  "storlek": 12,
+  "medel_p": 0.8526498214765028,
+  "diameter_km": 22.816913896060953,
+  "landskap": {
+   "Ög": 12
+  },
+  "socknar": [
+   "Ekeby sn",
+   "Högby sn",
+   "Järstads sn",
+   "Skänninge",
+   "Sya sn",
+   "Veta sn",
+   "Viby sn",
+   "Väderstads sn",
+   "Åsbo sn"
+  ],
+  "stil": {
+   "RAK": 12
+  },
+  "säkra": {
+   "Ög 165": "Torkel",
+   "Ög 82": "Torkel"
+  },
+  "signerade": [
+   "Ög 165",
+   "Ög 82"
+  ],
+  "runor": {
+   "Ög 165": "Torkel",
+   "Ög 82": "Torkel"
+  },
+  "k0": {},
+  "id": "G009",
+  "belägg_per_par": 11.666666666666666,
+  "text_andel": 0.8333333333333334,
+  "median_avstånd_km": 10.96729116276972,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1151",
+   "U 1155",
+   "U 1157",
+   "U 732",
+   "U 762",
+   "U 769",
+   "U 774",
+   "U 778",
+   "U 779",
+   "U 798",
+   "U 802"
+  ],
+  "typ": "blandad",
+  "storlek": 11,
+  "medel_p": 0.9171485191041773,
+  "diameter_km": 27.021843540957082,
+  "landskap": {
+   "U": 11
+  },
+  "socknar": [
+   "Enköpings-Näs sn",
+   "Frösthults sn",
+   "Långtora sn",
+   "Simtuna sn",
+   "Sparrsätra sn",
+   "Svinnegarns sn",
+   "Villberga sn",
+   "Vårfrukyrka sn"
+  ],
+  "stil": {
+   "Fp": 10,
+   "–": 1
+  },
+  "säkra": {
+   "U 1155": "Erik",
+   "U 1157": "Erik",
+   "U 762": "Erik",
+   "U 769": "Erik",
+   "U 774": "Erik",
+   "U 778": "Äskil 2",
+   "U 779": "Erik",
+   "U 798": "Erik",
+   "U 802": "Äskil 2"
+  },
+  "signerade": [
+   "U 778"
+  ],
+  "runor": {
+   "U 1151": "Erik; Äskil 2",
+   "U 1155": "Erik",
+   "U 1157": "Erik",
+   "U 732": "Balle; Erik",
+   "U 762": "Erik",
+   "U 769": "Erik",
+   "U 774": "Erik",
+   "U 778": "Äskil 2",
+   "U 779": "Erik",
+   "U 798": "Erik",
+   "U 802": "Äskil 2"
+  },
+  "k0": {
+   "U 1151": [
+    "Erik",
+    0.837
+   ],
+   "U 732": [
+    "Erik",
+    0.789
+   ]
+  },
+  "id": "G010",
+  "belägg_per_par": 19.98181818181818,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.757266893967529,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1008",
+   "U 1020",
+   "U 1030",
+   "U 1072",
+   "U 1087",
+   "U 1088",
+   "U 1090",
+   "U 1094",
+   "U 952",
+   "U 977",
+   "U Fv1976;107"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 11,
+  "medel_p": 0.8521004633470015,
+  "diameter_km": 21.68407862284383,
+  "landskap": {
+   "U": 11
+  },
+  "socknar": [
+   "Bälinge sn",
+   "Danmarks sn",
+   "Lena sn",
+   "Rasbo sn",
+   "Uppsala",
+   "Vaksala sn",
+   "Ärentuna sn"
+  ],
+  "stil": {
+   "Pr4": 9,
+   "–": 2
+  },
+  "säkra": {
+   "U 1072": "Öpir 1",
+   "U 952": "Öpir 1",
+   "U Fv1976;107": "Öpir 1"
+  },
+  "signerade": [
+   "U 1072",
+   "U Fv1976;107"
+  ],
+  "runor": {
+   "U 1008": "Vigmund; Önjut; Manne",
+   "U 1020": "Samma som gjort U 1015, 1017-1019, 1021-1024.",
+   "U 1072": "Öpir 1",
+   "U 1087": "Öpir 1; Önjut",
+   "U 952": "Öpir 1",
+   "U Fv1976;107": "Öpir 1"
+  },
+  "k0": {
+   "U 1008": [
+    "Öpir 1",
+    0.542
+   ],
+   "U 1020": [
+    "Öpir 1",
+    0.814
+   ],
+   "U 1030": [
+    "Öpir 1",
+    0.811
+   ],
+   "U 1087": [
+    "Öpir 1",
+    0.791
+   ],
+   "U 1088": [
+    "Öpir 1",
+    0.834
+   ],
+   "U 1090": [
+    "Öpir 1",
+    0.855
+   ],
+   "U 1094": [
+    "Öpir 1",
+    0.397
+   ],
+   "U 977": [
+    "Öpir 1",
+    0.752
+   ]
+  },
+  "id": "G011",
+  "belägg_per_par": 11.454545454545455,
+  "text_andel": 0.8181818181818182,
+  "median_avstånd_km": 11.454366769475625,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 105",
+   "Sö 108",
+   "Sö 110",
+   "Sö 112",
+   "Sö 115",
+   "Sö 90",
+   "Sö 91",
+   "Sö 96",
+   "Sö 97",
+   "Sö Fv1986;218"
+  ],
+  "typ": "med Traen",
+  "storlek": 10,
+  "medel_p": 0.8933493137359619,
+  "diameter_km": 14.49270587689744,
+  "landskap": {
+   "Sö": 10
+  },
+  "socknar": [
+   "Hammarby sn",
+   "Jäders sn",
+   "Kjula sn",
+   "Klosters sn (Eskilstuna)",
+   "Stenkvista sn"
+  ],
+  "stil": {
+   "Fp": 9,
+   "–": 1
+  },
+  "säkra": {
+   "Sö 112": "Traen",
+   "Sö 90": "Traen"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 112": "Traen",
+   "Sö 90": "Traen",
+   "Sö 91": "Troligen samma ristare som gjort Sö Fv1986;218.",
+   "Sö Fv1986;218": "Troligen samma ristare som gjort Sö 91."
+  },
+  "k0": {
+   "Sö 105": [
+    "Balle",
+    0.5
+   ],
+   "Sö 108": [
+    "Traen",
+    0.546
+   ],
+   "Sö 110": [
+    "Traen",
+    0.617
+   ],
+   "Sö 115": [
+    "Balle",
+    0.487
+   ],
+   "Sö 91": [
+    "Traen",
+    0.365
+   ],
+   "Sö 96": [
+    "Balle",
+    0.666
+   ],
+   "Sö 97": [
+    "Traen",
+    0.378
+   ],
+   "Sö Fv1986;218": [
+    "Balle",
+    0.421
+   ]
+  },
+  "id": "G012",
+  "belägg_per_par": 10.71111111111111,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.441813408205524,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 211",
+   "U 217",
+   "U 239",
+   "U 277",
+   "U 294",
+   "U 295",
+   "U 317",
+   "U 604",
+   "U Fv1959;188",
+   "U Fv1993;233"
+  ],
+  "typ": "blandad",
+  "storlek": 10,
+  "medel_p": 0.8885786069764031,
+  "diameter_km": 23.217783434960637,
+  "landskap": {
+   "U": 10
+  },
+  "socknar": [
+   "Angarns sn",
+   "Hammarby sn",
+   "Skånela sn",
+   "Stockholms-Näs sn (nu Kungsängen)",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "Pr4": 4,
+   "–": 6
+  },
+  "säkra": {
+   "U 217": "Drosboe",
+   "U 277": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 217": "Drosboe",
+   "U 277": "Öpir 1"
+  },
+  "k0": {
+   "U 211": [
+    "Öpir 1",
+    0.676
+   ],
+   "U 239": [
+    "Öpir 1",
+    0.65
+   ],
+   "U 294": [
+    "Fot 2",
+    0.476
+   ],
+   "U 295": [
+    "Öpir 1",
+    0.465
+   ],
+   "U 317": [
+    "Öpir 1",
+    0.408
+   ],
+   "U 604": [
+    "Öpir 1",
+    0.532
+   ],
+   "U Fv1959;188": [
+    "Öpir 1",
+    0.5
+   ],
+   "U Fv1993;233": [
+    "Öpir 1",
+    0.695
+   ]
+  },
+  "id": "G013",
+  "belägg_per_par": 12.955555555555556,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.575440920554891,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 647",
+   "U 699",
+   "U 721",
+   "U 729",
+   "U 740",
+   "U 744",
+   "U 753",
+   "U 810",
+   "U 819",
+   "U 873"
+  ],
+  "typ": "med Balle",
+  "storlek": 10,
+  "medel_p": 0.8616891741752625,
+  "diameter_km": 26.12621458773113,
+  "landskap": {
+   "U": 10
+  },
+  "socknar": [
+   "Boglösa sn",
+   "Fröslunda sn",
+   "Gryta sn",
+   "Husby-Sjutolfts sn",
+   "Kulla sn",
+   "Litslena sn",
+   "Löts sn",
+   "Veckholms sn",
+   "Övergrans sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr3": 8
+  },
+  "säkra": {
+   "U 647": "Balle",
+   "U 699": "Balle",
+   "U 721": "Balle",
+   "U 729": "Balle",
+   "U 740": "Balle",
+   "U 744": "Balle",
+   "U 753": "Balle",
+   "U 810": "Balle",
+   "U 819": "Balle",
+   "U 873": "Balle"
+  },
+  "signerade": [
+   "U 647",
+   "U 699",
+   "U 721",
+   "U 729",
+   "U 740",
+   "U 744",
+   "U 753",
+   "U 819",
+   "U 873"
+  ],
+  "runor": {
+   "U 647": "Balle",
+   "U 699": "Balle",
+   "U 721": "Balle",
+   "U 729": "Balle",
+   "U 740": "Balle",
+   "U 744": "Balle",
+   "U 753": "Balle",
+   "U 810": "Balle",
+   "U 819": "Balle",
+   "U 873": "Balle"
+  },
+  "k0": {},
+  "id": "G014",
+  "belägg_per_par": 16.955555555555556,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.307927665916937,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 16",
+   "Ög 18",
+   "Ög 20",
+   "Ög 234",
+   "Ög 235",
+   "Ög 236",
+   "Ög 237",
+   "Ög 33",
+   "Ög 34",
+   "Ög Fv1959;249"
+  ],
+  "typ": "okänd hand",
+  "storlek": 10,
+  "medel_p": 0.8611365172598097,
+  "diameter_km": 18.46666691997632,
+  "landskap": {
+   "Ög": 10
+  },
+  "socknar": [
+   "Kuddby sn",
+   "Söderköping",
+   "Å sn",
+   "Östra Stenby sn"
+  ],
+  "stil": {
+   "RAK": 10
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "Ög 234": "Samma som gjort Ög 235 ATA 8141/74",
+   "Ög 235": "Samma som gjort Ög 234 ATA 8141/74."
+  },
+  "k0": {
+   "Ög 237": [
+    "Traen",
+    0.249
+   ]
+  },
+  "id": "G015",
+  "belägg_per_par": 9.8,
+  "text_andel": 0.6222222222222222,
+  "median_avstånd_km": 7.659899989386976,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 650",
+   "U 690",
+   "U 695",
+   "U 703",
+   "U 708",
+   "U 722",
+   "U 723",
+   "U 724",
+   "U 813",
+   "U 815"
+  ],
+  "typ": "med Balle",
+  "storlek": 10,
+  "medel_p": 0.846668521563212,
+  "diameter_km": 29.446077335628654,
+  "landskap": {
+   "U": 10
+  },
+  "socknar": [
+   "Arnö sn (nu Kungs-Husby sn)",
+   "Hjälsta sn",
+   "Kungs-Husby sn",
+   "Löts sn",
+   "Veckholms sn",
+   "Övergrans sn"
+  ],
+  "stil": {
+   "–": 4,
+   "Pr3": 6
+  },
+  "säkra": {
+   "U 650": "Balle",
+   "U 690": "Balle",
+   "U 695": "Balle",
+   "U 703": "Balle",
+   "U 708": "Balle",
+   "U 722": "Balle",
+   "U 723": "Balle",
+   "U 724": "Balle",
+   "U 815": "Balle"
+  },
+  "signerade": [],
+  "runor": {
+   "U 650": "Balle",
+   "U 690": "Balle",
+   "U 695": "Balle",
+   "U 703": "Balle",
+   "U 708": "Balle",
+   "U 722": "Balle",
+   "U 723": "Balle",
+   "U 724": "Balle",
+   "U 813": "Tidkume; Balle; Ödkume",
+   "U 815": "Balle"
+  },
+  "k0": {
+   "U 813": [
+    "Balle",
+    0.652
+   ]
+  },
+  "id": "G016",
+  "belägg_per_par": 11.266666666666667,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.276875815181558,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Öl ATA411-4568-1998A",
+   "Öl ATA411-4568-1998B",
+   "Öl ATA411-4568-1998C",
+   "Öl ATA4375/56",
+   "Öl ATA4376/56A",
+   "Öl ATA4376/56B",
+   "Öl ATA4377/56A",
+   "Öl ATA4377/56B",
+   "Öl ATA4378/56",
+   "Öl ATA4684/43E"
+  ],
+  "typ": "okänd hand",
+  "storlek": 10,
+  "medel_p": 0.8045785771475897,
+  "diameter_km": 0.0,
+  "landskap": {
+   "Öl": 10
+  },
+  "socknar": [
+   "Hulterstads sn"
+  ],
+  "stil": {
+   "–": 10
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "Öl ATA4684/43E": "Assar"
+  },
+  "k0": {},
+  "id": "G017",
+  "belägg_per_par": 0.13333333333333333,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 1074",
+   "U 1081",
+   "U 1083",
+   "U 1091",
+   "U 1095",
+   "U 1118",
+   "U 1140",
+   "U 908",
+   "U 921"
+  ],
+  "typ": "blandad",
+  "storlek": 9,
+  "medel_p": 0.9015242457389832,
+  "diameter_km": 28.364474109658744,
+  "landskap": {
+   "U": 9
+  },
+  "socknar": [
+   "Bälinge sn",
+   "Jumkils sn",
+   "Skuttunge sn",
+   "Vendels sn",
+   "Vänge sn"
+  ],
+  "stil": {
+   "–": 5,
+   "Pr4": 4
+  },
+  "säkra": {
+   "U 1074": "Likbjörn",
+   "U 1081": "Likbjörn",
+   "U 1091": "Kjule",
+   "U 1095": "Likbjörn",
+   "U 921": "Likbjörn"
+  },
+  "signerade": [
+   "U 1074",
+   "U 1095"
+  ],
+  "runor": {
+   "U 1074": "Likbjörn",
+   "U 1081": "Likbjörn",
+   "U 1091": "Kjule",
+   "U 1095": "Likbjörn",
+   "U 1140": "Öpir 1; Önjut",
+   "U 921": "Likbjörn"
+  },
+  "k0": {
+   "U 1083": [
+    "Öpir 1",
+    0.522
+   ],
+   "U 1118": [
+    "Likbjörn",
+    0.551
+   ],
+   "U 1140": [
+    "Likbjörn",
+    0.722
+   ],
+   "U 908": [
+    "Öpir 1",
+    0.347
+   ]
+  },
+  "id": "G018",
+  "belägg_per_par": 15.055555555555555,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.645342794809845,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 100",
+   "Vg 101",
+   "Vg 103",
+   "Vg 108",
+   "Vg 113",
+   "Vg 114",
+   "Vg 116",
+   "Vg 123",
+   "Vg 124"
+  ],
+  "typ": "okänd hand",
+  "storlek": 9,
+  "medel_p": 0.8766441179646386,
+  "diameter_km": 29.201109615721144,
+  "landskap": {
+   "Vg": 9
+  },
+  "socknar": [
+   "Barne-Åsaka sn",
+   "Bjärby sn",
+   "Flo sn",
+   "Hyringa sn",
+   "Håle sn",
+   "Ryda sn",
+   "Tängs sn"
+  ],
+  "stil": {
+   "RAK": 7,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G019",
+  "belägg_per_par": 14.38888888888889,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.269378479474025,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 115",
+   "U 133",
+   "U 141",
+   "U 224",
+   "U 263",
+   "U 270",
+   "U 332",
+   "U Fv2009;312",
+   "U THS30;83"
+  ],
+  "typ": "blandad",
+  "storlek": 9,
+  "medel_p": 0.8569762508074442,
+  "diameter_km": 16.86569467188568,
+  "landskap": {
+   "U": 9
+  },
+  "socknar": [
+   "Eds sn",
+   "Fresta sn",
+   "Markims sn",
+   "Täby sn",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "Pr5": 1,
+   "Pr3": 1,
+   "–": 7
+  },
+  "säkra": {
+   "U 115": "Öpir 1",
+   "U 133": "Fot 2",
+   "U 141": "Fot 2",
+   "U 224": "Gunnar"
+  },
+  "signerade": [],
+  "runor": {
+   "U 115": "Öpir 1",
+   "U 133": "Fot 2",
+   "U 141": "Fot 2",
+   "U 224": "Gunnar"
+  },
+  "k0": {
+   "U 263": [
+    "Fot 2",
+    0.451
+   ],
+   "U 270": [
+    "Öpir 1",
+    0.634
+   ],
+   "U 332": [
+    "Fot 2",
+    0.666
+   ],
+   "U Fv2009;312": [
+    "Öpir 1",
+    0.461
+   ],
+   "U THS30;83": [
+    "Fot 2",
+    0.236
+   ]
+  },
+  "id": "G020",
+  "belägg_per_par": 10.722222222222221,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.538840407515754,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Öl Köping16",
+   "Öl Köping19",
+   "Öl Köping21",
+   "Öl Köping32",
+   "Öl Köping42",
+   "Öl Köping43",
+   "Öl Köping61",
+   "Öl Köping62",
+   "Öl Köping74"
+  ],
+  "typ": "okänd hand",
+  "storlek": 9,
+  "medel_p": 0.8051286571555667,
+  "diameter_km": 0.0,
+  "landskap": {
+   "Öl": 9
+  },
+  "socknar": [
+   "Köpings sn"
+  ],
+  "stil": {
+   "–": 9
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G021",
+  "belägg_per_par": 0.027777777777777776,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 1153",
+   "U 1154",
+   "U 1156",
+   "U 1165",
+   "U 1172",
+   "U 755",
+   "U 768",
+   "U 793"
+  ],
+  "typ": "med Erik",
+  "storlek": 8,
+  "medel_p": 0.9527544953993389,
+  "diameter_km": 29.939401932107337,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Härnevi sn",
+   "Litslena sn",
+   "Simtuna sn",
+   "Tillinge sn",
+   "Vittinge sn",
+   "Vårfrukyrka sn"
+  ],
+  "stil": {
+   "Fp": 8
+  },
+  "säkra": {
+   "U 1153": "Erik",
+   "U 1154": "Erik",
+   "U 1156": "Erik",
+   "U 1165": "Erik",
+   "U 1172": "Erik",
+   "U 768": "Erik",
+   "U 793": "Erik"
+  },
+  "signerade": [
+   "U 1165"
+  ],
+  "runor": {
+   "U 1153": "Erik",
+   "U 1154": "Erik",
+   "U 1156": "Erik",
+   "U 1165": "Erik",
+   "U 1172": "Erik",
+   "U 755": "Erik; Balle",
+   "U 768": "Erik",
+   "U 793": "Erik"
+  },
+  "k0": {
+   "U 755": [
+    "Erik",
+    0.982
+   ]
+  },
+  "id": "G022",
+  "belägg_per_par": 18.857142857142858,
+  "text_andel": 1.0,
+  "median_avstånd_km": 13.356718335118309,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 258",
+   "U 327",
+   "U 336",
+   "U 349",
+   "U 358",
+   "U 490",
+   "U 678",
+   "U Fv1979;244B"
+  ],
+  "typ": "blandad",
+  "storlek": 8,
+  "medel_p": 0.9278147965669632,
+  "diameter_km": 29.905751774709977,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Fresta sn",
+   "Frösunda sn",
+   "Lagga sn",
+   "Markims sn",
+   "Orkesta sn",
+   "Skepptuna sn",
+   "Skoklosters sn"
+  ],
+  "stil": {
+   "RAK": 8
+  },
+  "säkra": {
+   "U 258": "Gunnar",
+   "U 327": "Gunnar",
+   "U 349": "Gunnar",
+   "U 358": "Gunnar",
+   "U 490": "Gunnar",
+   "U 678": "Fot 2",
+   "U Fv1979;244B": "Gunnar"
+  },
+  "signerade": [
+   "U 678"
+  ],
+  "runor": {
+   "U 258": "Gunnar",
+   "U 327": "Gunnar",
+   "U 336": "Ulv i Borresta; Gunnar",
+   "U 349": "Gunnar",
+   "U 358": "Gunnar",
+   "U 490": "Gunnar",
+   "U 678": "Fot 2",
+   "U Fv1979;244B": "Gunnar"
+  },
+  "k0": {
+   "U 336": [
+    "Gunnar",
+    0.861
+   ]
+  },
+  "id": "G023",
+  "belägg_per_par": 16.035714285714285,
+  "text_andel": 1.0,
+  "median_avstånd_km": 21.59558666214101,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 147",
+   "U 152",
+   "U 227",
+   "U 272",
+   "U 286",
+   "U 42",
+   "U 77",
+   "U 84"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 8,
+  "medel_p": 0.9153341289077487,
+  "diameter_km": 27.710389662761102,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Hammarby sn",
+   "Järfälla sn",
+   "Skå sn",
+   "Spånga sn (nu Sundbyberg)",
+   "Täby sn",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "Pr4": 8
+  },
+  "säkra": {
+   "U 286": "Fot 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 286": "Fot 2",
+   "U 77": "Torgöt Fotsarve; Olev"
+  },
+  "k0": {
+   "U 147": [
+    "Öpir 1",
+    0.325
+   ],
+   "U 152": [
+    "Gunnar",
+    0.438
+   ],
+   "U 227": [
+    "Fot 2",
+    0.788
+   ],
+   "U 272": [
+    "Öpir 1",
+    0.26
+   ],
+   "U 42": [
+    "Fot 2",
+    0.66
+   ],
+   "U 77": [
+    "Fot 2",
+    0.701
+   ],
+   "U 84": [
+    "Öpir 1",
+    0.409
+   ]
+  },
+  "id": "G024",
+  "belägg_per_par": 13.142857142857142,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.309250180670322,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 119",
+   "U 207",
+   "U 236",
+   "U 237",
+   "U 238",
+   "U 293",
+   "U 333",
+   "U 73"
+  ],
+  "typ": "med Visäte",
+  "storlek": 8,
+  "medel_p": 0.8992367195231574,
+  "diameter_km": 23.585230484497682,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Angarns sn",
+   "Eds sn",
+   "Hammarby sn",
+   "Orkesta sn",
+   "Spånga sn",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "Pr3": 6,
+   "–": 2
+  },
+  "säkra": {
+   "U 119": "Visäte",
+   "U 207": "Visäte",
+   "U 236": "Visäte",
+   "U 237": "Visäte",
+   "U 238": "Visäte",
+   "U 293": "Visäte",
+   "U 333": "Visäte",
+   "U 73": "Visäte"
+  },
+  "signerade": [
+   "U 207",
+   "U 236"
+  ],
+  "runor": {
+   "U 119": "Visäte",
+   "U 207": "Visäte",
+   "U 236": "Visäte",
+   "U 237": "Visäte",
+   "U 238": "Visäte",
+   "U 293": "Visäte",
+   "U 333": "Visäte",
+   "U 73": "Visäte"
+  },
+  "k0": {},
+  "id": "G025",
+  "belägg_per_par": 18.392857142857142,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.656563555273662,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 103",
+   "U 160",
+   "U 161",
+   "U 201",
+   "U 226",
+   "U 276",
+   "U 328",
+   "U 430"
+  ],
+  "typ": "med Gunnar",
+  "storlek": 8,
+  "medel_p": 0.8989284677164895,
+  "diameter_km": 16.849685837963627,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Angarns sn",
+   "Hammarby sn",
+   "Markims sn",
+   "Norrsunda sn",
+   "Sollentuna sn",
+   "Täby sn",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "Pr1": 8
+  },
+  "säkra": {
+   "U 103": "Gunnar",
+   "U 201": "Gunnar",
+   "U 226": "Gunnar"
+  },
+  "signerade": [
+   "U 161",
+   "U 226"
+  ],
+  "runor": {
+   "U 103": "Gunnar",
+   "U 160": "Gunnar; Ulv i Borresta",
+   "U 161": "Ulv i Borresta; Gunnar",
+   "U 201": "Samma som gjort U 276; Gunnar",
+   "U 226": "Gunnar",
+   "U 276": "Samma som gjort U 201; Gunnar; Ulv i Borresta",
+   "U 328": "Gunnar; Ulv i Borresta",
+   "U 430": "Ulv i Borresta; Gunnar"
+  },
+  "k0": {
+   "U 160": [
+    "Gunnar",
+    0.901
+   ],
+   "U 161": [
+    "Öpir 1",
+    0.42
+   ],
+   "U 276": [
+    "Gunnar",
+    0.805
+   ],
+   "U 328": [
+    "Gunnar",
+    0.794
+   ],
+   "U 430": [
+    "Gunnar",
+    0.524
+   ]
+  },
+  "id": "G026",
+  "belägg_per_par": 21.642857142857142,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.824203547764096,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 104",
+   "U 117",
+   "U 142",
+   "U 181",
+   "U 216",
+   "U 287",
+   "U 288",
+   "U 296"
+  ],
+  "typ": "blandad",
+  "storlek": 8,
+  "medel_p": 0.897048179592405,
+  "diameter_km": 22.64058551916875,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Eds sn",
+   "Hammarby sn",
+   "Skånela sn",
+   "Täby sn",
+   "Vallentuna sn",
+   "Össeby-Garns sn"
+  ],
+  "stil": {
+   "Pr5": 4,
+   "Pr4": 3,
+   "–": 1
+  },
+  "säkra": {
+   "U 104": "Öpir 1",
+   "U 117": "Öpir 1",
+   "U 142": "Öpir 1",
+   "U 181": "Öpir 1",
+   "U 216": "Drosboe",
+   "U 287": "Öpir 1",
+   "U 288": "Öpir 1"
+  },
+  "signerade": [
+   "U 104",
+   "U 142",
+   "U 181",
+   "U 216",
+   "U 287",
+   "U 288"
+  ],
+  "runor": {
+   "U 104": "Öpir 1",
+   "U 117": "Öpir 1",
+   "U 142": "Öpir 1",
+   "U 181": "Öpir 1",
+   "U 216": "Drosboe",
+   "U 287": "Öpir 1",
+   "U 288": "Öpir 1"
+  },
+  "k0": {
+   "U 296": [
+    "Öpir 1",
+    0.598
+   ]
+  },
+  "id": "G027",
+  "belägg_per_par": 20.428571428571427,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.40812329258642,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 448",
+   "U 460",
+   "U 471",
+   "U 476",
+   "U 480",
+   "U 843",
+   "U 955",
+   "U 997"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 8,
+  "medel_p": 0.8841407618352345,
+  "diameter_km": 18.856983509345977,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Alsike sn",
+   "Dalby sn",
+   "Danmarks sn",
+   "Funbo sn",
+   "Haga sn",
+   "Knivsta sn",
+   "Odensala sn"
+  ],
+  "stil": {
+   "–": 4,
+   "Pr4": 2,
+   "Pr3": 2
+  },
+  "säkra": {
+   "U 448": "Fot 2",
+   "U 471": "Fot 2",
+   "U 480": "Fot 2",
+   "U 955": "Fot 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 448": "Fot 2",
+   "U 460": "Orökja 2; Torgöt Fotsarve; Fot 2; Tjälve 1",
+   "U 471": "Fot 2",
+   "U 480": "Fot 2",
+   "U 955": "Fot 2"
+  },
+  "k0": {
+   "U 460": [
+    "Fot 2",
+    0.811
+   ],
+   "U 476": [
+    "Gunnar",
+    0.286
+   ],
+   "U 843": [
+    "Fot 2",
+    0.849
+   ],
+   "U 997": [
+    "Fot 2",
+    0.568
+   ]
+  },
+  "id": "G028",
+  "belägg_per_par": 15.178571428571429,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.24763162412795,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 648",
+   "U 669",
+   "U 746",
+   "U 825",
+   "U 836",
+   "U 840",
+   "U 851",
+   "U 868"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 8,
+  "medel_p": 0.8713581838778087,
+  "diameter_km": 19.959912098725436,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Balingsta sn",
+   "Dalby sn",
+   "Gryta sn",
+   "Holms sn",
+   "Husby-Sjutolfts sn",
+   "Häggeby sn",
+   "Nysätra sn",
+   "Övergrans sn"
+  ],
+  "stil": {
+   "Pr4": 8
+  },
+  "säkra": {
+   "U 840": "Öpir 1"
+  },
+  "signerade": [
+   "U 669",
+   "U 746"
+  ],
+  "runor": {
+   "U 669": "Öpir 1; Visäte; Ofeg",
+   "U 746": "Torgöt Fotsarve; Torgöt 2",
+   "U 825": "Svarthövde",
+   "U 836": "Öpir 1; Torgöt Fotsarve",
+   "U 840": "Öpir 1"
+  },
+  "k0": {
+   "U 648": [
+    "Fot 2",
+    0.537
+   ],
+   "U 669": [
+    "Visäte",
+    0.743
+   ],
+   "U 746": [
+    "Balle",
+    0.569
+   ],
+   "U 825": [
+    "Öpir 1",
+    0.458
+   ],
+   "U 836": [
+    "Fot 2",
+    0.377
+   ],
+   "U 851": [
+    "Öpir 1",
+    0.508
+   ],
+   "U 868": [
+    "Öpir 1",
+    0.579
+   ]
+  },
+  "id": "G029",
+  "belägg_per_par": 11.642857142857142,
+  "text_andel": 0.75,
+  "median_avstånd_km": 10.448200875274216,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1070",
+   "U 846",
+   "U 847",
+   "U 885",
+   "U 889",
+   "U 895",
+   "U 907",
+   "U 913"
+  ],
+  "typ": "blandad",
+  "storlek": 8,
+  "medel_p": 0.8673262255532401,
+  "diameter_km": 20.522690510618624,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Bondkyrka sn (nu Uppsala)",
+   "Börje sn",
+   "Skogstibble sn (nu Skogs-Tibble)",
+   "Vänge sn",
+   "Västeråkers sn",
+   "Åkerby sn",
+   "Ålands sn"
+  ],
+  "stil": {
+   "Pr4": 7,
+   "–": 1
+  },
+  "säkra": {
+   "U 1070": "Gudfast",
+   "U 846": "Åsmund",
+   "U 847": "Åsmund",
+   "U 885": "Åsmund",
+   "U 889": "Öpir 1",
+   "U 907": "Öpir 1",
+   "U 913": "Sven 4"
+  },
+  "signerade": [
+   "U 847",
+   "U 913"
+  ],
+  "runor": {
+   "U 1070": "Gudfast",
+   "U 846": "Åsmund",
+   "U 847": "Åsmund",
+   "U 885": "Åsmund",
+   "U 889": "Öpir 1",
+   "U 907": "Öpir 1",
+   "U 913": "Sven 4"
+  },
+  "k0": {
+   "U 895": [
+    "Öpir 1",
+    0.41
+   ]
+  },
+  "id": "G030",
+  "belägg_per_par": 17.107142857142858,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.810718697008706,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1014",
+   "U 1034",
+   "U 1096",
+   "U 914",
+   "U 959",
+   "U 962",
+   "U 973",
+   "U Fv1974;203"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 8,
+  "medel_p": 0.8647806495428085,
+  "diameter_km": 18.652237814057056,
+  "landskap": {
+   "U": 8
+  },
+  "socknar": [
+   "Björklinge sn",
+   "Bälinge sn",
+   "Börje sn",
+   "Tensta sn",
+   "Vaksala sn",
+   "Vaksala sn (nu Uppsala)",
+   "Ärentuna sn"
+  ],
+  "stil": {
+   "Pr5": 7,
+   "–": 1
+  },
+  "säkra": {
+   "U 1014": "Öpir 1",
+   "U 1034": "Öpir 1",
+   "U 1096": "Öpir 1",
+   "U 914": "Öpir 1",
+   "U 959": "Öpir 1",
+   "U 973": "Öpir 1"
+  },
+  "signerade": [
+   "U 1034",
+   "U 973"
+  ],
+  "runor": {
+   "U 1014": "Öpir 1",
+   "U 1034": "Öpir 1",
+   "U 1096": "Öpir 1",
+   "U 914": "Öpir 1",
+   "U 959": "Öpir 1",
+   "U 973": "Öpir 1"
+  },
+  "k0": {
+   "U 962": [
+    "Öpir 1",
+    0.839
+   ],
+   "U Fv1974;203": [
+    "Öpir 1",
+    0.757
+   ]
+  },
+  "id": "G031",
+  "belägg_per_par": 13.571428571428571,
+  "text_andel": 0.75,
+  "median_avstånd_km": 10.184309987096512,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 217",
+   "Sö 224",
+   "Sö 229",
+   "Sö 240",
+   "Sö 254",
+   "Sö 265",
+   "Sö 266"
+  ],
+  "typ": "blandad",
+  "storlek": 7,
+  "medel_p": 0.926203537554968,
+  "diameter_km": 28.171044331898344,
+  "landskap": {
+   "Sö": 7
+  },
+  "socknar": [
+   "Sorunda sn",
+   "Västerhaninge sn",
+   "Ösmo sn",
+   "Österhaninge sn"
+  ],
+  "stil": {
+   "Fp": 7
+  },
+  "säkra": {
+   "Sö 217": "Amunde",
+   "Sö 229": "Amunde",
+   "Sö 240": "Amunde",
+   "Sö 254": "Amunde",
+   "Sö 265": "Åsbjörn",
+   "Sö 266": "Åsbjörn"
+  },
+  "signerade": [
+   "Sö 266"
+  ],
+  "runor": {
+   "Sö 217": "Amunde",
+   "Sö 229": "Amunde",
+   "Sö 240": "Amunde",
+   "Sö 254": "Amunde",
+   "Sö 265": "Åsbjörn",
+   "Sö 266": "Åsbjörn"
+  },
+  "k0": {
+   "Sö 224": [
+    "Amunde",
+    0.563
+   ]
+  },
+  "id": "G032",
+  "belägg_per_par": 18.952380952380953,
+  "text_andel": 1.0,
+  "median_avstånd_km": 19.348039114046255,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 168",
+   "Ög 207",
+   "Ög 208",
+   "Ög 211",
+   "Ög 42",
+   "Ög 61",
+   "Ög ATA6488/60"
+  ],
+  "typ": "okänd hand",
+  "storlek": 7,
+  "medel_p": 0.900352554661887,
+  "diameter_km": 20.12045965245966,
+  "landskap": {
+   "Ög": 7
+  },
+  "socknar": [
+   "Flistads sn",
+   "Skänninge",
+   "Viby sn",
+   "Viby sn (eg. Sjögestads sn)",
+   "Älvestads sn"
+  ],
+  "stil": {
+   "RAK": 7
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G033",
+  "belägg_per_par": 10.380952380952381,
+  "text_andel": 0.7142857142857143,
+  "median_avstånd_km": 10.811510500398217,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 161",
+   "Vg 166",
+   "Vg 170",
+   "Vg 171",
+   "Vg 174",
+   "Vg 177",
+   "Vg 183"
+  ],
+  "typ": "okänd hand",
+  "storlek": 7,
+  "medel_p": 0.8896550110408238,
+  "diameter_km": 29.07613780802646,
+  "landskap": {
+   "Vg": 7
+  },
+  "socknar": [
+   "Blidsbergs sn",
+   "Dalums sn",
+   "Humla sn",
+   "Härna sn",
+   "Norra Åsarps sn",
+   "Södra Vings sn"
+  ],
+  "stil": {
+   "RAK": 7
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G034",
+  "belägg_per_par": 9.19047619047619,
+  "text_andel": 0.47619047619047616,
+  "median_avstånd_km": 13.916086906912545,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1098",
+   "U 878",
+   "U 899",
+   "U 937",
+   "U 980",
+   "U 991",
+   "U Fv1972;271"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 7,
+  "medel_p": 0.8868545095125834,
+  "diameter_km": 26.15610034059214,
+  "landskap": {
+   "U": 7
+  },
+  "socknar": [
+   "Bondkyrka sn (nu Uppsala)",
+   "Bälinge sn",
+   "Funbo sn",
+   "Gamla Uppsala sn (nu Uppsala)",
+   "Hagby sn",
+   "Uppsala"
+  ],
+  "stil": {
+   "–": 4,
+   "Pr3": 2,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 899": "Fot 2",
+   "U 937": "Fot 2",
+   "U 980": "Fot 2",
+   "U 991": "Fot 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 899": "Fot 2",
+   "U 937": "Fot 2",
+   "U 980": "Fot 2",
+   "U 991": "Fot 2"
+  },
+  "k0": {
+   "U 1098": [
+    "Fot 2",
+    0.707
+   ],
+   "U 878": [
+    "Fot 2",
+    0.378
+   ],
+   "U Fv1972;271": [
+    "Öpir 1",
+    0.426
+   ]
+  },
+  "id": "G035",
+  "belägg_per_par": 11.380952380952381,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.268862983973799,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 203",
+   "U 343",
+   "U 346",
+   "U 356",
+   "U 409",
+   "U 438",
+   "U 629"
+  ],
+  "typ": "blandad",
+  "storlek": 7,
+  "medel_p": 0.8844398600714547,
+  "diameter_km": 27.839339457979495,
+  "landskap": {
+   "U": 7
+  },
+  "socknar": [
+   "Angarns sn",
+   "Frösunda sn",
+   "Husby-Ärlinghundra sn",
+   "Håbo-Tibble sn",
+   "Lunda sn",
+   "Orkesta sn",
+   "Sankt Olovs sn (Sankt Olof) (nu Odensala sn)"
+  ],
+  "stil": {
+   "Pr3": 4,
+   "–": 3
+  },
+  "säkra": {
+   "U 343": "Åsmund",
+   "U 346": "Åsmund",
+   "U 356": "Åsmund",
+   "U 438": "Åsmund",
+   "U 629": "Torfast"
+  },
+  "signerade": [
+   "U 203",
+   "U 346",
+   "U 356",
+   "U 629"
+  ],
+  "runor": {
+   "U 203": "Frögärd; Åsmund",
+   "U 343": "Åsmund",
+   "U 346": "Åsmund",
+   "U 356": "Åsmund",
+   "U 409": "Torfast; Åsmund",
+   "U 438": "Åsmund",
+   "U 629": "Torfast"
+  },
+  "k0": {
+   "U 203": [
+    "Åsmund",
+    0.655
+   ],
+   "U 409": [
+    "Åsmund",
+    0.73
+   ]
+  },
+  "id": "G036",
+  "belägg_per_par": 18.38095238095238,
+  "text_andel": 1.0,
+  "median_avstånd_km": 16.743033890924092,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1064",
+   "U 1069",
+   "U 1102",
+   "U 1107",
+   "U 1110",
+   "U 1116",
+   "U 918"
+  ],
+  "typ": "blandad",
+  "storlek": 7,
+  "medel_p": 0.8815869916053045,
+  "diameter_km": 19.718038598063746,
+  "landskap": {
+   "U": 7
+  },
+  "socknar": [
+   "Bälinge sn",
+   "Jumkils sn",
+   "Skuttunge sn",
+   "Viksta sn",
+   "Åkerby sn"
+  ],
+  "stil": {
+   "–": 1,
+   "Pr4": 5,
+   "Pr5": 1
+  },
+  "säkra": {
+   "U 1102": "Otvagen",
+   "U 1116": "Gudfast",
+   "U 918": "Gudfast"
+  },
+  "signerade": [
+   "U 1102",
+   "U 1116",
+   "U 918"
+  ],
+  "runor": {
+   "U 1102": "Otvagen",
+   "U 1107": "Tord; Gudfast",
+   "U 1116": "Gudfast",
+   "U 918": "Gudfast"
+  },
+  "k0": {
+   "U 1064": [
+    "Öpir 1",
+    0.474
+   ],
+   "U 1069": [
+    "Öpir 1",
+    0.773
+   ],
+   "U 1107": [
+    "Öpir 1",
+    0.808
+   ],
+   "U 1110": [
+    "Öpir 1",
+    0.758
+   ]
+  },
+  "id": "G037",
+  "belägg_per_par": 17.61904761904762,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.432287240378137,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 149",
+   "Ög 150",
+   "Ög 152",
+   "Ög 154",
+   "Ög 23",
+   "Ög 30",
+   "Ög Fv1966;102"
+  ],
+  "typ": "okänd hand",
+  "storlek": 7,
+  "medel_p": 0.8798939301854088,
+  "diameter_km": 13.308969766942255,
+  "landskap": {
+   "Ög": 7
+  },
+  "socknar": [
+   "Furingstads sn",
+   "Kuddby sn",
+   "Styrstads sn",
+   "Söderköping",
+   "Tåby sn (eg. Furingstads sn)"
+  ],
+  "stil": {
+   "–": 4,
+   "Fp": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G038",
+  "belägg_per_par": 12.571428571428571,
+  "text_andel": 0.7142857142857143,
+  "median_avstånd_km": 6.511280969507943,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 121",
+   "Sö 123",
+   "Sö 147",
+   "Sö 161",
+   "Sö 162",
+   "Sö 164",
+   "Sö 166"
+  ],
+  "typ": "med Traen",
+  "storlek": 7,
+  "medel_p": 0.8696989729290917,
+  "diameter_km": 15.16059652233182,
+  "landskap": {
+   "Sö": 7
+  },
+  "socknar": [
+   "Allhelgona sn (nu Helgona)",
+   "Runtuna sn",
+   "Råby-Rönö sn",
+   "Spelviks sn"
+  ],
+  "stil": {
+   "RAK": 7
+  },
+  "säkra": {
+   "Sö 123": "Traen",
+   "Sö 164": "Traen"
+  },
+  "signerade": [
+   "Sö 162"
+  ],
+  "runor": {
+   "Sö 123": "Traen",
+   "Sö 162": "Gunnlev 2; Sigmund",
+   "Sö 164": "Traen"
+  },
+  "k0": {
+   "Sö 121": [
+    "Balle",
+    0.426
+   ],
+   "Sö 147": [
+    "Traen",
+    0.906
+   ],
+   "Sö 161": [
+    "Traen",
+    0.561
+   ],
+   "Sö 162": [
+    "Balle",
+    0.406
+   ],
+   "Sö 166": [
+    "Traen",
+    0.276
+   ]
+  },
+  "id": "G039",
+  "belägg_per_par": 10.047619047619047,
+  "text_andel": 0.7142857142857143,
+  "median_avstånd_km": 5.510833365314431,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 195",
+   "Ög 67",
+   "Ög 68",
+   "Ög 84",
+   "Ög 85",
+   "Ög 96",
+   "Ög 97"
+  ],
+  "typ": "med Torkel",
+  "storlek": 7,
+  "medel_p": 0.8688369989395142,
+  "diameter_km": 14.882732719585327,
+  "landskap": {
+   "Ög": 7
+  },
+  "socknar": [
+   "Ekeby sn",
+   "Högby sn",
+   "Mjölby sn",
+   "Väderstads sn",
+   "Åsbo sn"
+  ],
+  "stil": {
+   "RAK": 7
+  },
+  "säkra": {
+   "Ög 84": "Torkel"
+  },
+  "signerade": [],
+  "runor": {
+   "Ög 84": "Torkel"
+  },
+  "k0": {},
+  "id": "G040",
+  "belägg_per_par": 7.0,
+  "text_andel": 0.47619047619047616,
+  "median_avstånd_km": 11.24517697238084,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 624",
+   "U 635",
+   "U 640",
+   "U 660",
+   "U 674",
+   "U 811",
+   "U 844"
+  ],
+  "typ": "blandad",
+  "storlek": 7,
+  "medel_p": 0.8586749477045876,
+  "diameter_km": 26.728908397904068,
+  "landskap": {
+   "U": 7
+  },
+  "socknar": [
+   "Bro sn",
+   "Dalby sn",
+   "Hjälsta sn",
+   "Häggeby sn",
+   "Håtuna sn",
+   "Kalmar sn"
+  ],
+  "stil": {
+   "Pr4": 5,
+   "Pr3": 1,
+   "–": 1
+  },
+  "säkra": {
+   "U 640": "Fot 2",
+   "U 660": "Fot 2",
+   "U 674": "Fot 2",
+   "U 811": "Torgöt Fotsarve",
+   "U 844": "Fot 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 624": "Ärnfast; Fot 2",
+   "U 640": "Fot 2",
+   "U 660": "Fot 2",
+   "U 674": "Fot 2",
+   "U 811": "Torgöt Fotsarve",
+   "U 844": "Fot 2"
+  },
+  "k0": {
+   "U 624": [
+    "Fot 2",
+    0.961
+   ],
+   "U 635": [
+    "Fot 2",
+    0.97
+   ]
+  },
+  "id": "G041",
+  "belägg_per_par": 17.80952380952381,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.967284362690659,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 749",
+   "U 757",
+   "U 770",
+   "U 808",
+   "U 838",
+   "U 839",
+   "U 855"
+  ],
+  "typ": "blandad",
+  "storlek": 7,
+  "medel_p": 0.8434421647162664,
+  "diameter_km": 20.459968289604618,
+  "landskap": {
+   "U": 7
+  },
+  "socknar": [
+   "Balingsta sn",
+   "Fröslunda sn",
+   "Husby-Sjutolfts sn",
+   "Litslena sn",
+   "Nysätra sn",
+   "Vårfrukyrka sn"
+  ],
+  "stil": {
+   "Pr3": 4,
+   "–": 2,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 749": "Balle",
+   "U 757": "Balle",
+   "U 770": "Balle",
+   "U 808": "Balle",
+   "U 838": "Balle",
+   "U 839": "Torgöt Fotsarve"
+  },
+  "signerade": [
+   "U 770"
+  ],
+  "runor": {
+   "U 749": "Balle",
+   "U 757": "Balle",
+   "U 770": "Balle",
+   "U 808": "Balle",
+   "U 838": "Balle",
+   "U 839": "Torgöt Fotsarve"
+  },
+  "k0": {
+   "U 855": [
+    "Balle",
+    0.318
+   ]
+  },
+  "id": "G042",
+  "belägg_per_par": 18.142857142857142,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.00701587306427,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U ATA7269/60A",
+   "U ATA7269/60B",
+   "U ATA7269/60C",
+   "U ATA7269/60E",
+   "U ATA7269/60F",
+   "U ATA7269/60G",
+   "U ATA7269/60H"
+  ],
+  "typ": "okänd hand",
+  "storlek": 7,
+  "medel_p": 0.8056922554969788,
+  "diameter_km": 0.0,
+  "landskap": {
+   "U": 7
+  },
+  "socknar": [
+   "Eds sn"
+  ],
+  "stil": {
+   "–": 7
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U ATA7269/60A": [
+    "Öpir 1",
+    0.386
+   ],
+   "U ATA7269/60B": [
+    "Öpir 1",
+    0.524
+   ],
+   "U ATA7269/60C": [
+    "Öpir 1",
+    0.524
+   ],
+   "U ATA7269/60E": [
+    "Öpir 1",
+    0.524
+   ],
+   "U ATA7269/60F": [
+    "Öpir 1",
+    0.524
+   ],
+   "U ATA7269/60G": [
+    "Öpir 1",
+    0.524
+   ],
+   "U ATA7269/60H": [
+    "Öpir 1",
+    0.524
+   ]
+  },
+  "id": "G043",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Sö 194",
+   "Sö 198",
+   "Sö 200",
+   "Sö 209",
+   "Sö 210",
+   "Sö 212"
+  ],
+  "typ": "med Balle",
+  "storlek": 6,
+  "medel_p": 0.9285603364308676,
+  "diameter_km": 4.796887711413261,
+  "landskap": {
+   "Sö": 6
+  },
+  "socknar": [
+   "Ytterselö sn",
+   "Överselö sn"
+  ],
+  "stil": {
+   "Fp": 6
+  },
+  "säkra": {
+   "Sö 194": "Balle",
+   "Sö 198": "Balle",
+   "Sö 200": "Balle",
+   "Sö 209": "Balle",
+   "Sö 210": "Balle",
+   "Sö 212": "Balle"
+  },
+  "signerade": [
+   "Sö 210"
+  ],
+  "runor": {
+   "Sö 194": "Balle",
+   "Sö 198": "Balle; Samma som gjort Sö 200, 207, U 792",
+   "Sö 200": "Samma som gjort Sö 198, 207, U 792; Balle",
+   "Sö 209": "Balle",
+   "Sö 210": "Balle",
+   "Sö 212": "Balle"
+  },
+  "k0": {},
+  "id": "G044",
+  "belägg_per_par": 16.933333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 3.237748452364023,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 371",
+   "U 504",
+   "U 508",
+   "U 518",
+   "U 539",
+   "U ATA3916/47"
+  ],
+  "typ": "med Gunnar",
+  "storlek": 6,
+  "medel_p": 0.9060859123865763,
+  "diameter_km": 23.308022853799006,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Husby-Lyhundra sn (nu Husby-Sjuhundra)",
+   "Kårsta sn",
+   "Närtuna sn",
+   "Skederids sn",
+   "Skepptuna sn"
+  ],
+  "stil": {
+   "RAK": 6
+  },
+  "säkra": {
+   "U 371": "Gunnar",
+   "U 504": "Gunnar",
+   "U 508": "Gunnar",
+   "U 518": "Gunnar",
+   "U 539": "Gunnar"
+  },
+  "signerade": [],
+  "runor": {
+   "U 371": "Gunnar",
+   "U 504": "Gunnar",
+   "U 508": "Gunnar",
+   "U 518": "Gunnar",
+   "U 539": "Samma som gjort U 323 och U 518; Gunnar"
+  },
+  "k0": {
+   "U ATA3916/47": [
+    "Öpir 1",
+    0.677
+   ]
+  },
+  "id": "G045",
+  "belägg_per_par": 13.466666666666667,
+  "text_andel": 0.6666666666666666,
+  "median_avstånd_km": 13.46675371179598,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 485",
+   "U 933",
+   "U 944",
+   "U 974",
+   "U 993",
+   "U Fv1948;168"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 6,
+  "medel_p": 0.8941356698671977,
+  "diameter_km": 17.504219656283034,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Alsike sn",
+   "Funbo sn",
+   "Lagga sn",
+   "Uppsala",
+   "Vaksala sn"
+  ],
+  "stil": {
+   "Pr5": 4,
+   "–": 1,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 933": "Öpir 1",
+   "U 974": "Öpir 1",
+   "U Fv1948;168": "Öpir 1"
+  },
+  "signerade": [
+   "U 485",
+   "U 993",
+   "U Fv1948;168"
+  ],
+  "runor": {
+   "U 485": "Ofeg",
+   "U 933": "Öpir 1",
+   "U 974": "Öpir 1",
+   "U 993": "Björn 4; Öpir 1",
+   "U Fv1948;168": "Öpir 1"
+  },
+  "k0": {
+   "U 485": [
+    "Öpir 1",
+    0.997
+   ],
+   "U 944": [
+    "Öpir 1",
+    0.767
+   ],
+   "U 993": [
+    "Öpir 1",
+    0.993
+   ]
+  },
+  "id": "G046",
+  "belägg_per_par": 15.866666666666667,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.21153721128632,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1011",
+   "U 894",
+   "U 925",
+   "U 939",
+   "U 950",
+   "U 957"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 6,
+  "medel_p": 0.8862417856852214,
+  "diameter_km": 16.78537982966423,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Danmarks sn",
+   "Rasbo sn",
+   "Uppsala",
+   "Uppsala-Näs sn"
+  ],
+  "stil": {
+   "Pr4": 5,
+   "–": 1
+  },
+  "säkra": {
+   "U 925": "Öpir 1",
+   "U 939": "Öpir 1",
+   "U 950": "Öpir 1"
+  },
+  "signerade": [
+   "U 1011"
+  ],
+  "runor": {
+   "U 1011": "Önjut; Fot 2; Vigmund; Åfrid",
+   "U 925": "Öpir 1",
+   "U 939": "Öpir 1",
+   "U 950": "Öpir 1"
+  },
+  "k0": {
+   "U 1011": [
+    "Öpir 1",
+    0.434
+   ],
+   "U 894": [
+    "Öpir 1",
+    0.974
+   ],
+   "U 957": [
+    "Öpir 1",
+    0.474
+   ]
+  },
+  "id": "G047",
+  "belägg_per_par": 17.933333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.632633228475327,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 200",
+   "U 214",
+   "U 323",
+   "U 338",
+   "U 502",
+   "U 512"
+  ],
+  "typ": "blandad",
+  "storlek": 6,
+  "medel_p": 0.8742616891860961,
+  "diameter_km": 25.186111079794774,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Fasterna sn",
+   "Närtuna sn",
+   "Orkesta sn",
+   "Skånela sn",
+   "Vada sn",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "RAK": 6
+  },
+  "säkra": {
+   "U 200": "Gunnar",
+   "U 214": "Drosboe",
+   "U 323": "Gunnar",
+   "U 338": "Gunnar",
+   "U 502": "Gunnar",
+   "U 512": "Gunnar"
+  },
+  "signerade": [],
+  "runor": {
+   "U 200": "Gunnar",
+   "U 214": "Drosboe",
+   "U 323": "Gunnar",
+   "U 338": "Gunnar",
+   "U 502": "Gunnar",
+   "U 512": "Gunnar"
+  },
+  "k0": {},
+  "id": "G048",
+  "belägg_per_par": 13.8,
+  "text_andel": 0.6666666666666666,
+  "median_avstånd_km": 12.056613641115197,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1009",
+   "U 903",
+   "U 932",
+   "U 969",
+   "U 970",
+   "U 986"
+  ],
+  "typ": "blandad",
+  "storlek": 6,
+  "medel_p": 0.8716405550638835,
+  "diameter_km": 20.320647631926295,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Gamla Uppsala sn (nu Uppsala)",
+   "Läby sn",
+   "Rasbo sn",
+   "Uppsala",
+   "Vaksala sn (nu Uppsala)"
+  ],
+  "stil": {
+   "Pr3": 1,
+   "–": 4,
+   "Pr5": 1
+  },
+  "säkra": {
+   "U 1009": "Åsmund",
+   "U 903": "Åsmund",
+   "U 969": "Åsmund",
+   "U 970": "Öpir 1",
+   "U 986": "Åsmund"
+  },
+  "signerade": [
+   "U 932",
+   "U 969",
+   "U 970",
+   "U 986"
+  ],
+  "runor": {
+   "U 1009": "Åsmund",
+   "U 903": "Åsmund",
+   "U 932": "Åsmund; Ingjald",
+   "U 969": "Åsmund",
+   "U 970": "Öpir 1",
+   "U 986": "Åsmund"
+  },
+  "k0": {
+   "U 932": [
+    "Åsmund",
+    0.94
+   ]
+  },
+  "id": "G049",
+  "belägg_per_par": 11.066666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.496200838583293,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 253",
+   "U 301",
+   "U 302",
+   "U 319",
+   "U 429",
+   "U ATA5734/59"
+  ],
+  "typ": "blandad",
+  "storlek": 6,
+  "medel_p": 0.8684528787930806,
+  "diameter_km": 10.42777584855355,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Fresta sn",
+   "Norrsunda sn",
+   "Skånela sn"
+  ],
+  "stil": {
+   "–": 4,
+   "RAK": 2
+  },
+  "säkra": {
+   "U 301": "Åsmund",
+   "U 319": "Gunnar"
+  },
+  "signerade": [
+   "U 301"
+  ],
+  "runor": {
+   "U 301": "Åsmund",
+   "U 319": "Gunnar"
+  },
+  "k0": {
+   "U 253": [
+    "Öpir 1",
+    0.562
+   ],
+   "U 302": [
+    "Åsmund",
+    0.457
+   ],
+   "U 429": [
+    "Fot 2",
+    0.391
+   ],
+   "U ATA5734/59": [
+    "Öpir 1",
+    0.372
+   ]
+  },
+  "id": "G050",
+  "belägg_per_par": 9.533333333333333,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.042541582061597,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 353",
+   "U 421",
+   "U 426",
+   "U 433",
+   "U 456",
+   "U Fv1978;226"
+  ],
+  "typ": "med Sune",
+  "storlek": 6,
+  "medel_p": 0.8665183345476787,
+  "diameter_km": 16.093592169682175,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Husby-Ärlinghundra sn",
+   "Lunda sn",
+   "Norrsunda sn",
+   "Odensala sn"
+  ],
+  "stil": {
+   "–": 4,
+   "Pr1": 2
+  },
+  "säkra": {
+   "U 353": "Sune",
+   "U Fv1978;226": "Sune"
+  },
+  "signerade": [
+   "U 353"
+  ],
+  "runor": {
+   "U 353": "Sune",
+   "U Fv1978;226": "Sune"
+  },
+  "k0": {
+   "U 421": [
+    "Fot 2",
+    0.594
+   ],
+   "U 426": [
+    "Fot 2",
+    0.526
+   ],
+   "U 433": [
+    "Fot 2",
+    0.721
+   ],
+   "U 456": [
+    "Öpir 1",
+    0.454
+   ]
+  },
+  "id": "G051",
+  "belägg_per_par": 13.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.207911043108881,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 131",
+   "Sö 134",
+   "Sö 137",
+   "Sö 319",
+   "Sö 367",
+   "Sö 46"
+  ],
+  "typ": "okänd hand",
+  "storlek": 6,
+  "medel_p": 0.8656919797261556,
+  "diameter_km": 24.308737534650025,
+  "landskap": {
+   "Sö": 6
+  },
+  "socknar": [
+   "Lids sn",
+   "Ludgo sn",
+   "Nykyrka sn",
+   "Sankt Nicolai sn (nu Nyköping)",
+   "Årdala sn"
+  ],
+  "stil": {
+   "RAK": 6
+  },
+  "säkra": {},
+  "signerade": [
+   "Sö 46"
+  ],
+  "runor": {
+   "Sö 46": "Kättil 1; Stack"
+  },
+  "k0": {
+   "Sö 131": [
+    "Traen",
+    0.77
+   ],
+   "Sö 134": [
+    "Tore 1",
+    0.371
+   ],
+   "Sö 137": [
+    "Traen",
+    0.598
+   ],
+   "Sö 319": [
+    "Traen",
+    0.5
+   ],
+   "Sö 367": [
+    "Traen",
+    0.645
+   ],
+   "Sö 46": [
+    "Traen",
+    0.944
+   ]
+  },
+  "id": "G052",
+  "belägg_per_par": 18.2,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.79311918334428,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 691",
+   "U 692",
+   "U 718",
+   "U 763",
+   "U 764",
+   "U 765"
+  ],
+  "typ": "med Tidkume",
+  "storlek": 6,
+  "medel_p": 0.8615142544110616,
+  "diameter_km": 13.495066205210401,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Arnö sn (nu Aspö sn)",
+   "Vallby sn",
+   "Vårfrukyrka sn"
+  ],
+  "stil": {
+   "Pr4": 5,
+   "–": 1
+  },
+  "säkra": {
+   "U 718": "Tidkume",
+   "U 763": "Tidkume",
+   "U 764": "Tidkume",
+   "U 765": "Tidkume"
+  },
+  "signerade": [
+   "U 692"
+  ],
+  "runor": {
+   "U 691": "Tidkume; Ödbjörn",
+   "U 692": "Tidkume; Ödbjörn",
+   "U 718": "Tidkume",
+   "U 763": "Samma som gjort U 764; Tidkume",
+   "U 764": "Tidkume; Samma som gjort U 763",
+   "U 765": "Tidkume"
+  },
+  "k0": {
+   "U 691": [
+    "Balle",
+    0.691
+   ],
+   "U 692": [
+    "Balle",
+    0.43
+   ]
+  },
+  "id": "G053",
+  "belägg_per_par": 10.666666666666666,
+  "text_andel": 0.6666666666666666,
+  "median_avstånd_km": 6.936573356016243,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 472",
+   "U 481",
+   "U 493",
+   "U 495",
+   "U 945",
+   "U Fv1955;216"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 6,
+  "medel_p": 0.8470284859339396,
+  "diameter_km": 23.8608696367695,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Danmarks sn",
+   "Husby-Långhundra sn",
+   "Knivsta sn",
+   "Lagga sn",
+   "Sankt Pers sn",
+   "Östuna sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr4": 1,
+   "Pr3": 2,
+   "Pr2": 1
+  },
+  "säkra": {
+   "U 472": "Fot 2",
+   "U 481": "Fot 2",
+   "U 945": "Fot 2"
+  },
+  "signerade": [
+   "U 945"
+  ],
+  "runor": {
+   "U 472": "Fot 2",
+   "U 481": "Fot 2",
+   "U 945": "Fot 2"
+  },
+  "k0": {
+   "U 493": [
+    "Öpir 1",
+    0.45
+   ],
+   "U 495": [
+    "Fot 2",
+    0.464
+   ],
+   "U Fv1955;216": [
+    "Fot 2",
+    0.602
+   ]
+  },
+  "id": "G054",
+  "belägg_per_par": 9.533333333333333,
+  "text_andel": 0.6666666666666666,
+  "median_avstånd_km": 12.06499769381624,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 145",
+   "Sö 163",
+   "Sö 165",
+   "Sö 169",
+   "Sö 51",
+   "Sö Fv1948;289"
+  ],
+  "typ": "okänd hand",
+  "storlek": 6,
+  "medel_p": 0.8462378700574239,
+  "diameter_km": 20.087471044886424,
+  "landskap": {
+   "Sö": 6
+  },
+  "socknar": [
+   "Ludgo sn",
+   "Nyköping",
+   "Runtuna sn",
+   "Råby-Rönö sn",
+   "Spelviks sn",
+   "Svärta sn"
+  ],
+  "stil": {
+   "–": 4,
+   "Fp": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 145": [
+    "Traen",
+    0.669
+   ],
+   "Sö 163": [
+    "Traen",
+    0.342
+   ],
+   "Sö 165": [
+    "Traen",
+    0.383
+   ],
+   "Sö 169": [
+    "Balle",
+    0.608
+   ],
+   "Sö 51": [
+    "Traen",
+    0.495
+   ],
+   "Sö Fv1948;289": [
+    "Balle",
+    0.313
+   ]
+  },
+  "id": "G055",
+  "belägg_per_par": 11.733333333333333,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.952671804897772,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 124",
+   "U 172",
+   "U 175",
+   "U 54",
+   "U 62",
+   "U 69"
+  ],
+  "typ": "blandad",
+  "storlek": 6,
+  "medel_p": 0.8379210432370504,
+  "diameter_km": 24.880225792208414,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Lidingö",
+   "Solna sn",
+   "Spånga sn",
+   "Stockholm",
+   "Österåkers sn"
+  ],
+  "stil": {
+   "Pr3": 3,
+   "–": 2,
+   "RAK": 1
+  },
+  "säkra": {
+   "U 62": "Fot 2",
+   "U 69": "Gunnar"
+  },
+  "signerade": [],
+  "runor": {
+   "U 124": "Samma som gjort U 60.",
+   "U 62": "Fot 2",
+   "U 69": "Gunnar"
+  },
+  "k0": {
+   "U 124": [
+    "Fot 2",
+    0.679
+   ],
+   "U 172": [
+    "Öpir 1",
+    0.367
+   ],
+   "U 175": [
+    "Öpir 1",
+    0.332
+   ],
+   "U 54": [
+    "Fot 2",
+    0.381
+   ]
+  },
+  "id": "G056",
+  "belägg_per_par": 10.733333333333333,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.46624837357787,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 12",
+   "Vg 14",
+   "Vg 2",
+   "Vg 3",
+   "Vg 4",
+   "Vg 6"
+  ],
+  "typ": "okänd hand",
+  "storlek": 6,
+  "medel_p": 0.8368297179539999,
+  "diameter_km": 25.72133568322529,
+  "landskap": {
+   "Vg": 6
+  },
+  "socknar": [
+   "Berga sn",
+   "Bällefors sn",
+   "Eks sn",
+   "Fägre sn",
+   "Leksbergs sn",
+   "Lyrestads sn"
+  ],
+  "stil": {
+   "RAK": 6
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G057",
+  "belägg_per_par": 11.066666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 18.264041498903396,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 397B",
+   "U 400",
+   "U 401",
+   "U 402",
+   "U 404",
+   "U Fv1992;164A"
+  ],
+  "typ": "med Torbjörn 2",
+  "storlek": 6,
+  "medel_p": 0.8061356584231059,
+  "diameter_km": 0.10344610441310483,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Sigtuna"
+  ],
+  "stil": {
+   "–": 6
+  },
+  "säkra": {
+   "U 401": "Torbjörn 2",
+   "U 404": "Torbjörn 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 401": "Torbjörn 2",
+   "U 404": "Torbjörn 2"
+  },
+  "k0": {
+   "U 397B": [
+    "Torbjörn 2",
+    0.64
+   ],
+   "U 400": [
+    "Torbjörn 2",
+    0.64
+   ],
+   "U 402": [
+    "Torbjörn 2",
+    0.64
+   ],
+   "U Fv1992;164A": [
+    "Torbjörn 2",
+    0.631
+   ]
+  },
+  "id": "G058",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 386",
+   "U ATA321-1786-2012",
+   "U ATA322-4014-2011:2",
+   "U ATA322-4014-2011:3",
+   "U Fv1992;167B",
+   "U Fv1992;168A"
+  ],
+  "typ": "okänd hand",
+  "storlek": 6,
+  "medel_p": 0.8055072824160258,
+  "diameter_km": 0.16287059045592095,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Sigtuna"
+  ],
+  "stil": {
+   "–": 6
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 386": [
+    "Torbjörn 2",
+    0.64
+   ],
+   "U ATA321-1786-2012": [
+    "Torbjörn 2",
+    0.361
+   ],
+   "U ATA322-4014-2011:2": [
+    "Torbjörn 2",
+    0.631
+   ],
+   "U ATA322-4014-2011:3": [
+    "Torbjörn 2",
+    0.631
+   ],
+   "U Fv1992;167B": [
+    "Torbjörn 2",
+    0.634
+   ],
+   "U Fv1992;168A": [
+    "Torbjörn 2",
+    0.634
+   ]
+  },
+  "id": "G059",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.1029925896944711,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 63",
+   "U NOR2002;33A",
+   "U NOR2002;33B",
+   "U NOR2002;33C",
+   "U NOR2002;33D",
+   "U NOR2002;33E"
+  ],
+  "typ": "med Olev",
+  "storlek": 6,
+  "medel_p": 0.8054221073786417,
+  "diameter_km": 0.0505227636396007,
+  "landskap": {
+   "U": 6
+  },
+  "socknar": [
+   "Spånga sn"
+  ],
+  "stil": {
+   "–": 6
+  },
+  "säkra": {
+   "U 63": "Olev"
+  },
+  "signerade": [],
+  "runor": {
+   "U 63": "Olev"
+  },
+  "k0": {
+   "U NOR2002;33A": [
+    "Öpir 1",
+    0.454
+   ],
+   "U NOR2002;33B": [
+    "Öpir 1",
+    0.454
+   ],
+   "U NOR2002;33C": [
+    "Öpir 1",
+    0.454
+   ],
+   "U NOR2002;33D": [
+    "Öpir 1",
+    0.454
+   ],
+   "U NOR2002;33E": [
+    "Öpir 1",
+    0.454
+   ]
+  },
+  "id": "G060",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Sö 274",
+   "Sö 290",
+   "Sö 292",
+   "Sö 297",
+   "Sö 298"
+  ],
+  "typ": "med Halvdan",
+  "storlek": 5,
+  "medel_p": 0.9628402829170227,
+  "diameter_km": 27.388485868775472,
+  "landskap": {
+   "Sö": 5
+  },
+  "socknar": [
+   "Brännkyrka sn",
+   "Grödinge sn",
+   "Stockholm"
+  ],
+  "stil": {
+   "Pr2": 3,
+   "Pr3": 2
+  },
+  "säkra": {
+   "Sö 274": "Halvdan",
+   "Sö 290": "Halvdan",
+   "Sö 292": "Halvdan",
+   "Sö 297": "Halvdan",
+   "Sö 298": "Halvdan"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 274": "Halvdan",
+   "Sö 290": "Halvdan",
+   "Sö 292": "Halvdan",
+   "Sö 297": "Halvdan",
+   "Sö 298": "Halvdan"
+  },
+  "k0": {},
+  "id": "G061",
+  "belägg_per_par": 15.7,
+  "text_andel": 1.0,
+  "median_avstånd_km": 17.13075767815375,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 859",
+   "U 860",
+   "U 875",
+   "U 901",
+   "U 904"
+  ],
+  "typ": "med Åsmund",
+  "storlek": 5,
+  "medel_p": 0.9459208488464356,
+  "diameter_km": 10.531954336456602,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Balingsta sn",
+   "Hagby sn",
+   "Läby sn"
+  ],
+  "stil": {
+   "Pr3": 4,
+   "–": 1
+  },
+  "säkra": {
+   "U 859": "Åsmund",
+   "U 860": "Åsmund",
+   "U 875": "Åsmund"
+  },
+  "signerade": [
+   "U 859"
+  ],
+  "runor": {
+   "U 859": "Åsmund",
+   "U 860": "Åsmund",
+   "U 875": "Åsmund",
+   "U 901": "Åsmund; Torfast",
+   "U 904": "Torfast; Åsmund"
+  },
+  "k0": {
+   "U 901": [
+    "Åsmund",
+    0.829
+   ],
+   "U 904": [
+    "Åsmund",
+    0.449
+   ]
+  },
+  "id": "G062",
+  "belägg_per_par": 20.6,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.06638311289076,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1012",
+   "U 1026",
+   "U 1092",
+   "U 893",
+   "U 938"
+  ],
+  "typ": "blandad",
+  "storlek": 5,
+  "medel_p": 0.9253292560577393,
+  "diameter_km": 27.714171575456056,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Bälinge sn",
+   "Lena sn",
+   "Rasbokils sn",
+   "Uppsala",
+   "Uppsala-Näs sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr4": 3
+  },
+  "säkra": {
+   "U 1012": "Åsmund",
+   "U 1092": "Kjule",
+   "U 893": "Öpir 1",
+   "U 938": "Öpir 1"
+  },
+  "signerade": [
+   "U 893"
+  ],
+  "runor": {
+   "U 1012": "Åsmund",
+   "U 1026": "Samma som gjort U 1027.",
+   "U 1092": "Kjule",
+   "U 893": "Öpir 1",
+   "U 938": "Öpir 1"
+  },
+  "k0": {
+   "U 1026": [
+    "Öpir 1",
+    0.993
+   ]
+  },
+  "id": "G063",
+  "belägg_per_par": 18.7,
+  "text_andel": 1.0,
+  "median_avstånd_km": 17.925334173142705,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 700",
+   "U 726",
+   "U 758",
+   "U 759",
+   "U 786"
+  ],
+  "typ": "blandad",
+  "storlek": 5,
+  "medel_p": 0.9216263949871063,
+  "diameter_km": 21.59168110880253,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Enköping",
+   "Löts sn",
+   "Tillinge sn",
+   "Veckholms sn"
+  ],
+  "stil": {
+   "Fp": 3,
+   "Pr4": 2
+  },
+  "säkra": {
+   "U 700": "Balle",
+   "U 726": "Balle",
+   "U 758": "Tidkume",
+   "U 759": "Tidkume",
+   "U 786": "Torbjörn 2"
+  },
+  "signerade": [
+   "U 726",
+   "U 758",
+   "U 759"
+  ],
+  "runor": {
+   "U 700": "Samma som gjort U 701; Balle",
+   "U 726": "Balle",
+   "U 758": "Tidkume",
+   "U 759": "Tidkume",
+   "U 786": "Torbjörn 2"
+  },
+  "k0": {},
+  "id": "G064",
+  "belägg_per_par": 19.6,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.862263676382991,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 11",
+   "Ög 118",
+   "Ög 120",
+   "Ög 121",
+   "Ög 123"
+  ],
+  "typ": "okänd hand",
+  "storlek": 5,
+  "medel_p": 0.919290405511856,
+  "diameter_km": 12.010678460071508,
+  "landskap": {
+   "Ög": 5
+  },
+  "socknar": [
+   "Slaka sn",
+   "Vårdsbergs sn"
+  ],
+  "stil": {
+   "RAK": 4,
+   "–": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G065",
+  "belägg_per_par": 18.1,
+  "text_andel": 1.0,
+  "median_avstånd_km": 0.03540005545618446,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 641",
+   "U 642",
+   "U 643",
+   "U 828",
+   "U 831"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 5,
+  "medel_p": 0.9055467545986176,
+  "diameter_km": 15.752480217013616,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Fittja sn",
+   "Giresta sn",
+   "Yttergrans sn",
+   "Yttergrans sn (nu Övergrans sn)"
+  ],
+  "stil": {
+   "Pr3": 1,
+   "Pr4": 3,
+   "–": 1
+  },
+  "säkra": {
+   "U 641": "Fot 2",
+   "U 642": "Fot 2"
+  },
+  "signerade": [
+   "U 828"
+  ],
+  "runor": {
+   "U 641": "Fot 2",
+   "U 642": "Fot 2",
+   "U 643": "Fot 2; Torgöt Fotsarve",
+   "U 828": "Tidkume; tillsammans med Livsten; Ödkume"
+  },
+  "k0": {
+   "U 643": [
+    "Fot 2",
+    0.867
+   ],
+   "U 828": [
+    "Gunnar",
+    0.411
+   ],
+   "U 831": [
+    "Livsten",
+    0.507
+   ]
+  },
+  "id": "G066",
+  "belägg_per_par": 13.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.245293483300285,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 362",
+   "Sö 363",
+   "Sö 84",
+   "Sö 85",
+   "Sö Fv1958;242"
+  ],
+  "typ": "okänd hand",
+  "storlek": 5,
+  "medel_p": 0.8994805574417114,
+  "diameter_km": 3.0357088830998626,
+  "landskap": {
+   "Sö": 5
+  },
+  "socknar": [
+   "Tumbo sn"
+  ],
+  "stil": {
+   "KB": 5
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 362": [
+    "Balle",
+    0.281
+   ],
+   "Sö 363": [
+    "Balle",
+    0.383
+   ],
+   "Sö 84": [
+    "Balle",
+    0.891
+   ],
+   "Sö 85": [
+    "Balle",
+    0.511
+   ],
+   "Sö Fv1958;242": [
+    "Balle",
+    0.481
+   ]
+  },
+  "id": "G067",
+  "belägg_per_par": 13.1,
+  "text_andel": 1.0,
+  "median_avstånd_km": 0.05977377514096517,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sm 32",
+   "Sm 33",
+   "Sm 36",
+   "Sm 37",
+   "Sm 44"
+  ],
+  "typ": "okänd hand",
+  "storlek": 5,
+  "medel_p": 0.8983815312385559,
+  "diameter_km": 10.088502134503841,
+  "landskap": {
+   "Sm": 5
+  },
+  "socknar": [
+   "Hamneda sn",
+   "Nöttja sn",
+   "Södra Ljunga sn"
+  ],
+  "stil": {
+   "RAK": 5
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G068",
+  "belägg_per_par": 10.9,
+  "text_andel": 0.6,
+  "median_avstånd_km": 5.143485203765055,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 186",
+   "U 188",
+   "U 189",
+   "U 335",
+   "U 506"
+  ],
+  "typ": "med Gunnar",
+  "storlek": 5,
+  "medel_p": 0.8921361207962036,
+  "diameter_km": 13.299245528836302,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Kårsta sn",
+   "Orkesta sn",
+   "Össeby-Garns sn"
+  ],
+  "stil": {
+   "Pr2": 2,
+   "–": 2,
+   "Pr1": 1
+  },
+  "säkra": {
+   "U 188": "Gunnar",
+   "U 189": "Gunnar"
+  },
+  "signerade": [],
+  "runor": {
+   "U 186": "Gunnar; Fot 2",
+   "U 188": "Gunnar",
+   "U 189": "Gunnar"
+  },
+  "k0": {
+   "U 186": [
+    "Gunnar",
+    0.83
+   ],
+   "U 335": [
+    "Gunnar",
+    0.77
+   ],
+   "U 506": [
+    "Öpir 1",
+    0.554
+   ]
+  },
+  "id": "G069",
+  "belägg_per_par": 15.1,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.03679733760518,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 390",
+   "U 458",
+   "U 484",
+   "U Fv1953;274",
+   "U Fv1958;250"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 5,
+  "medel_p": 0.8878736138343811,
+  "diameter_km": 25.514990352154914,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Haga sn",
+   "Lagga sn",
+   "Sigtuna",
+   "Skånela sn"
+  ],
+  "stil": {
+   "Pr2": 3,
+   "–": 1,
+   "Pr3": 1
+  },
+  "säkra": {
+   "U 390": "Fot 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 390": "Fot 2",
+   "U 484": "Imitation av U 372.",
+   "U Fv1958;250": "Torgöt Fotsarve; Fot 2"
+  },
+  "k0": {
+   "U 458": [
+    "Öpir 1",
+    0.368
+   ],
+   "U 484": [
+    "Fot 2",
+    0.592
+   ],
+   "U Fv1953;274": [
+    "Fot 2",
+    0.512
+   ],
+   "U Fv1958;250": [
+    "Fot 2",
+    0.622
+   ]
+  },
+  "id": "G070",
+  "belägg_per_par": 6.5,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.460327517371907,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 457",
+   "U 474",
+   "U 478",
+   "U 947",
+   "U 954"
+  ],
+  "typ": "blandad",
+  "storlek": 5,
+  "medel_p": 0.8771736204624176,
+  "diameter_km": 15.92615209375056,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Danmarks sn",
+   "Haga sn",
+   "Knivsta sn"
+  ],
+  "stil": {
+   "Pr1": 3,
+   "–": 2
+  },
+  "säkra": {
+   "U 457": "Torbjörn 2",
+   "U 474": "Torbjörn 2",
+   "U 478": "Torbjörn 2",
+   "U 947": "Äsbjörn 2"
+  },
+  "signerade": [
+   "U 947"
+  ],
+  "runor": {
+   "U 457": "Torbjörn 2",
+   "U 474": "Torbjörn 2",
+   "U 478": "Torbjörn 2",
+   "U 947": "Äsbjörn 2"
+  },
+  "k0": {
+   "U 954": [
+    "Gunnar",
+    0.25
+   ]
+  },
+  "id": "G071",
+  "belägg_per_par": 19.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.209290451125678,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 131",
+   "Ög 132",
+   "Ög 133",
+   "Ög 135",
+   "Ög 144"
+  ],
+  "typ": "okänd hand",
+  "storlek": 5,
+  "medel_p": 0.8740459978580475,
+  "diameter_km": 18.469174791087834,
+  "landskap": {
+   "Ög": 5
+  },
+  "socknar": [
+   "Heda sn",
+   "Kumla sn",
+   "Ödeshögs sn"
+  ],
+  "stil": {
+   "RAK": 2,
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G072",
+  "belägg_per_par": 14.2,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.890951988936648,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 514",
+   "U 545",
+   "U 546",
+   "U 547",
+   "U 572"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 5,
+  "medel_p": 0.8731735825538636,
+  "diameter_km": 9.996215379977274,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Husby-Lyhundra sn (nu Husby-Sjuhundra)",
+   "Lohärads sn",
+   "Rimbo sn"
+  ],
+  "stil": {
+   "Pr4": 4,
+   "–": 1
+  },
+  "säkra": {
+   "U 545": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 545": "Öpir 1"
+  },
+  "k0": {
+   "U 514": [
+    "Öpir 1",
+    0.692
+   ],
+   "U 546": [
+    "Öpir 1",
+    0.814
+   ],
+   "U 547": [
+    "Öpir 1",
+    0.512
+   ],
+   "U 572": [
+    "Öpir 1",
+    0.72
+   ]
+  },
+  "id": "G073",
+  "belägg_per_par": 11.5,
+  "text_andel": 0.6,
+  "median_avstånd_km": 5.035459885057377,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 40",
+   "U 43",
+   "U 44",
+   "U 79",
+   "U Fv1953;266"
+  ],
+  "typ": "blandad",
+  "storlek": 5,
+  "medel_p": 0.8729195475578309,
+  "diameter_km": 12.734251343786665,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Skå sn",
+   "Spånga sn"
+  ],
+  "stil": {
+   "Pr3": 4,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 43": "Ärnfast",
+   "U 44": "Snare",
+   "U 79": "Ärnfast",
+   "U Fv1953;266": "Snare"
+  },
+  "signerade": [
+   "U 43",
+   "U 44",
+   "U 79",
+   "U Fv1953;266"
+  ],
+  "runor": {
+   "U 40": "Troligen samma som gjort U 52.",
+   "U 43": "Ärnfast",
+   "U 44": "Snare",
+   "U 79": "Ärnfast",
+   "U Fv1953;266": "Snare"
+  },
+  "k0": {
+   "U 40": [
+    "Fot 2",
+    0.21
+   ]
+  },
+  "id": "G074",
+  "belägg_per_par": 14.6,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.310787292546705,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 226",
+   "Sö 261",
+   "Sö 263",
+   "Sö 271",
+   "Sö 273"
+  ],
+  "typ": "blandad",
+  "storlek": 5,
+  "medel_p": 0.8727979183197021,
+  "diameter_km": 22.691339091586116,
+  "landskap": {
+   "Sö": 5
+  },
+  "socknar": [
+   "Sorunda sn",
+   "Österhaninge sn"
+  ],
+  "stil": {
+   "Fp": 5
+  },
+  "säkra": {
+   "Sö 226": "Amunde",
+   "Sö 261": "Björn 2 eller -björn",
+   "Sö 271": "Amunde",
+   "Sö 273": "Amunde"
+  },
+  "signerade": [
+   "Sö 271"
+  ],
+  "runor": {
+   "Sö 226": "Amunde",
+   "Sö 261": "Björn 2; -björn",
+   "Sö 271": "Amunde",
+   "Sö 273": "Amunde"
+  },
+  "k0": {
+   "Sö 263": [
+    "Amunde",
+    0.668
+   ]
+  },
+  "id": "G075",
+  "belägg_per_par": 7.8,
+  "text_andel": 0.6,
+  "median_avstånd_km": 8.680177182152406,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 909",
+   "U 912",
+   "U 916",
+   "U 946",
+   "U 951"
+  ],
+  "typ": "med Grim skald",
+  "storlek": 5,
+  "medel_p": 0.8632271826267243,
+  "diameter_km": 17.953467240934096,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Börje sn",
+   "Danmarks sn",
+   "Vänge sn"
+  ],
+  "stil": {
+   "–": 2,
+   "KB": 3
+  },
+  "säkra": {
+   "U 909": "Grim skald",
+   "U 912": "Grim skald",
+   "U 946": "Grim skald",
+   "U 951": "Grim skald"
+  },
+  "signerade": [
+   "U 916",
+   "U 951"
+  ],
+  "runor": {
+   "U 909": "Grim skald",
+   "U 912": "Grim skald",
+   "U 916": "Käti; Grim skald",
+   "U 946": "Grim skald",
+   "U 951": "Grim skald"
+  },
+  "k0": {
+   "U 916": [
+    "Öpir 1",
+    0.825
+   ]
+  },
+  "id": "G076",
+  "belägg_per_par": 11.0,
+  "text_andel": 0.6,
+  "median_avstånd_km": 13.881800467740966,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1018",
+   "U 1024",
+   "U 1042",
+   "U 1046",
+   "U 910"
+  ],
+  "typ": "okänd hand",
+  "storlek": 5,
+  "medel_p": 0.8611840784549714,
+  "diameter_km": 23.749064232965516,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Björklinge sn",
+   "Tensta sn",
+   "Vänge sn",
+   "Ärentuna sn"
+  ],
+  "stil": {
+   "Pr4": 5
+  },
+  "säkra": {},
+  "signerade": [
+   "U 1042"
+  ],
+  "runor": {
+   "U 1018": "Samma som gjort U 1015, 1017, 1019-1024",
+   "U 1024": "Samma som gjort U 1015, 1017-1023.",
+   "U 1042": "Osniken; Kjule",
+   "U 1046": "Önjut; Öpir 1"
+  },
+  "k0": {
+   "U 1018": [
+    "Öpir 1",
+    0.626
+   ],
+   "U 1024": [
+    "Öpir 1",
+    0.655
+   ],
+   "U 1042": [
+    "Öpir 1",
+    0.846
+   ],
+   "U 1046": [
+    "Öpir 1",
+    0.53
+   ],
+   "U 910": [
+    "Öpir 1",
+    0.845
+   ]
+  },
+  "id": "G077",
+  "belägg_per_par": 17.2,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.440364404744711,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Öl 48",
+   "Öl 49",
+   "Öl Köping58",
+   "Öl Köping69",
+   "Öl Köping7"
+  ],
+  "typ": "okänd hand",
+  "storlek": 5,
+  "medel_p": 0.8509305238723754,
+  "diameter_km": 0.04797864925574025,
+  "landskap": {
+   "Öl": 5
+  },
+  "socknar": [
+   "Köpings sn"
+  ],
+  "stil": {
+   "–": 5
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G078",
+  "belägg_per_par": 4.2,
+  "text_andel": 0.3,
+  "median_avstånd_km": 0.01042105854375705,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 33",
+   "Vg 35",
+   "Vg 47",
+   "Vg 48",
+   "Vg 55"
+  ],
+  "typ": "okänd hand",
+  "storlek": 5,
+  "medel_p": 0.8441369533538818,
+  "diameter_km": 24.84138552730088,
+  "landskap": {
+   "Vg": 5
+  },
+  "socknar": [
+   "Källby sn",
+   "Mellby sn",
+   "Otterstads sn",
+   "Strö sn"
+  ],
+  "stil": {
+   "RAK": 4,
+   "–": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G079",
+  "belägg_per_par": 8.7,
+  "text_andel": 0.6,
+  "median_avstånd_km": 15.274179991887001,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 240",
+   "U 241",
+   "U 322",
+   "U 423",
+   "U 608"
+  ],
+  "typ": "med Åsmund",
+  "storlek": 5,
+  "medel_p": 0.8376231908798217,
+  "diameter_km": 20.775093289085923,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Norrsunda sn",
+   "Skånela sn",
+   "Vallentuna sn",
+   "Västra Ryds sn"
+  ],
+  "stil": {
+   "Pr3": 3,
+   "–": 2
+  },
+  "säkra": {
+   "U 240": "Åsmund",
+   "U 241": "Åsmund",
+   "U 322": "Åsmund",
+   "U 423": "Åsmund"
+  },
+  "signerade": [],
+  "runor": {
+   "U 240": "Åsmund",
+   "U 241": "Åsmund",
+   "U 322": "Åsmund",
+   "U 423": "Åsmund"
+  },
+  "k0": {
+   "U 608": [
+    "Åsmund",
+    0.581
+   ]
+  },
+  "id": "G080",
+  "belägg_per_par": 15.7,
+  "text_andel": 1.0,
+  "median_avstånd_km": 13.046941383908825,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 182",
+   "U 183",
+   "U 198",
+   "U Fv1971;213A",
+   "U Fv1972;272"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 5,
+  "medel_p": 0.8322890937328339,
+  "diameter_km": 3.243474546575322,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Vada sn",
+   "Össeby-Garns sn"
+  ],
+  "stil": {
+   "Pr4": 1,
+   "–": 1,
+   "Pr5": 3
+  },
+  "säkra": {
+   "U 183": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 183": "Öpir 1"
+  },
+  "k0": {
+   "U 182": [
+    "Fot 2",
+    0.505
+   ],
+   "U 198": [
+    "Öpir 1",
+    0.762
+   ],
+   "U Fv1971;213A": [
+    "Öpir 1",
+    0.787
+   ],
+   "U Fv1972;272": [
+    "Öpir 1",
+    0.885
+   ]
+  },
+  "id": "G081",
+  "belägg_per_par": 3.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.8480093705618517,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 556",
+   "U Fv1967;265",
+   "U Fv1979;243A",
+   "U Fv1979;243B",
+   "U Fv1979;244A"
+  ],
+  "typ": "okänd hand",
+  "storlek": 5,
+  "medel_p": 0.8036633014678956,
+  "diameter_km": 0.009031086524456102,
+  "landskap": {
+   "U": 5
+  },
+  "socknar": [
+   "Husby-Lyhundra sn (nu Husby-Sjuhundra)",
+   "Husby-Sjuhundra sn"
+  ],
+  "stil": {
+   "–": 5
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 556": [
+    "Öpir 1",
+    0.676
+   ],
+   "U Fv1967;265": [
+    "Öpir 1",
+    0.71
+   ],
+   "U Fv1979;243A": [
+    "Gunnar",
+    0.399
+   ],
+   "U Fv1979;243B": [
+    "Öpir 1",
+    0.71
+   ],
+   "U Fv1979;244A": [
+    "Öpir 1",
+    0.736
+   ]
+  },
+  "id": "G082",
+  "belägg_per_par": 0.1,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 229",
+   "U 279",
+   "U 312",
+   "U 315"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 4,
+  "medel_p": 0.9277721544106802,
+  "diameter_km": 5.638071235895853,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Hammarby sn",
+   "Skånela sn",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "Pr4": 4
+  },
+  "säkra": {
+   "U 229": "Öpir 1",
+   "U 279": "Öpir 1",
+   "U 315": "Öpir 1"
+  },
+  "signerade": [
+   "U 229",
+   "U 279",
+   "U 315"
+  ],
+  "runor": {
+   "U 229": "Öpir 1",
+   "U 279": "Öpir 1",
+   "U 312": "Öpir 1; -fast",
+   "U 315": "Öpir 1"
+  },
+  "k0": {
+   "U 312": [
+    "Öpir 1",
+    0.764
+   ]
+  },
+  "id": "G083",
+  "belägg_per_par": 17.833333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.586724567682668,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 143",
+   "Sö 149",
+   "Sö Fv1948;282",
+   "Sö Fv1982;235"
+  ],
+  "typ": "med Tore 1",
+  "storlek": 4,
+  "medel_p": 0.9250028530756632,
+  "diameter_km": 5.882651500533422,
+  "landskap": {
+   "Sö": 4
+  },
+  "socknar": [
+   "Ludgo sn",
+   "Runtuna sn",
+   "Spelviks sn"
+  ],
+  "stil": {
+   "KB": 4
+  },
+  "säkra": {
+   "Sö 143": "Tore 1",
+   "Sö 149": "Tore 1"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 143": "Tore 1",
+   "Sö 149": "Tore 1"
+  },
+  "k0": {
+   "Sö Fv1948;282": [
+    "Traen",
+    0.257
+   ],
+   "Sö Fv1982;235": [
+    "Balle",
+    0.272
+   ]
+  },
+  "id": "G084",
+  "belägg_per_par": 11.166666666666666,
+  "text_andel": 0.5,
+  "median_avstånd_km": 3.0977660449281506,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 658",
+   "U 685",
+   "U 686",
+   "U 814"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 4,
+  "medel_p": 0.9216696421305338,
+  "diameter_km": 10.815069041719532,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Hjälsta sn",
+   "Håtuna sn",
+   "Skoklosters sn"
+  ],
+  "stil": {
+   "–": 1,
+   "Pr2": 2,
+   "Pr3": 1
+  },
+  "säkra": {
+   "U 814": "Fot 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 685": "Samma som gjort U 686.",
+   "U 686": "Samma som gjort U 685.",
+   "U 814": "Fot 2"
+  },
+  "k0": {
+   "U 658": [
+    "Fot 2",
+    0.676
+   ],
+   "U 685": [
+    "Fot 2",
+    0.649
+   ],
+   "U 686": [
+    "Fot 2",
+    0.311
+   ]
+  },
+  "id": "G085",
+  "belägg_per_par": 12.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.667951671618761,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 190",
+   "U 325",
+   "U 352",
+   "U NOR2003;23"
+  ],
+  "typ": "blandad",
+  "storlek": 4,
+  "medel_p": 0.9105177223682404,
+  "diameter_km": 14.934850477350976,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Frösunda sn",
+   "Markims sn",
+   "Vada sn",
+   "Össeby-Garns sn"
+  ],
+  "stil": {
+   "Pr4": 3,
+   "–": 1
+  },
+  "säkra": {
+   "U 190": "Samma som gjort U 509. Torsten",
+   "U 325": "Torsten",
+   "U 352": "Torsten",
+   "U NOR2003;23": "Torsten"
+  },
+  "signerade": [],
+  "runor": {
+   "U 190": "Torsten; Samma som gjort U 509",
+   "U 325": "Torsten",
+   "U 352": "Åsmund; Torsten",
+   "U NOR2003;23": "Torsten"
+  },
+  "k0": {},
+  "id": "G086",
+  "belägg_per_par": 14.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.373236421796337,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sm 52",
+   "Sm 61",
+   "Sm 62",
+   "Sm 64"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.9093184073766073,
+  "diameter_km": 24.443131307972788,
+  "landskap": {
+   "Sm": 4
+  },
+  "socknar": [
+   "Forsheda sn",
+   "Tånnö sn",
+   "Voxtorps sn",
+   "Värnamo"
+  ],
+  "stil": {
+   "RAK": 4
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G087",
+  "belägg_per_par": 17.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 15.732986266169355,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 13",
+   "Ög 146",
+   "Ög 158",
+   "Ög ATA580/75"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.9073419471581777,
+  "diameter_km": 12.18848815504867,
+  "landskap": {
+   "Ög": 4
+  },
+  "socknar": [
+   "Dagsbergs sn",
+   "Konungsunds sn",
+   "Tingstads sn",
+   "Östra Stenby sn"
+  ],
+  "stil": {
+   "Fp": 3,
+   "–": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G088",
+  "belägg_per_par": 11.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.875605183780518,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 277",
+   "Sö 279",
+   "Sö 281",
+   "Sö 325"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.9037698904673258,
+  "diameter_km": 7.291757051173776,
+  "landskap": {
+   "Sö": 4
+  },
+  "socknar": [
+   "Härads sn",
+   "Strängnäs"
+  ],
+  "stil": {
+   "Pr2": 4
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 277": [
+    "Balle",
+    0.629
+   ],
+   "Sö 279": [
+    "Tidkume",
+    0.312
+   ],
+   "Sö 281": [
+    "Balle",
+    0.474
+   ],
+   "Sö 325": [
+    "Balle",
+    0.206
+   ]
+  },
+  "id": "G089",
+  "belägg_per_par": 7.5,
+  "text_andel": 0.5,
+  "median_avstånd_km": 3.657738568289383,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1017",
+   "U 1022",
+   "U 940",
+   "U Fv1990;32B"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 4,
+  "medel_p": 0.8980189164479574,
+  "diameter_km": 16.49538599800269,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Funbo sn",
+   "Uppsala",
+   "Ärentuna sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr4": 1,
+   "Pr3": 1
+  },
+  "säkra": {
+   "U 1022": "Öpir 1"
+  },
+  "signerade": [
+   "U 1022",
+   "U 940"
+  ],
+  "runor": {
+   "U 1017": "Samma som gjort U 1015 och 1018-1024.",
+   "U 1022": "Samma som gjort U 1015, 1017-1021, 1023-1024; Öpir 1",
+   "U 940": "Åsmund; Öpir 1"
+  },
+  "k0": {
+   "U 1017": [
+    "Öpir 1",
+    0.792
+   ],
+   "U 940": [
+    "Öpir 1",
+    0.545
+   ],
+   "U Fv1990;32B": [
+    "Öpir 1",
+    0.542
+   ]
+  },
+  "id": "G090",
+  "belägg_per_par": 16.833333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.599944347993365,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 372",
+   "U 375",
+   "U 431",
+   "U 998"
+  ],
+  "typ": "med Åsmund",
+  "storlek": 4,
+  "medel_p": 0.8924419283866882,
+  "diameter_km": 26.93353035668807,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Funbo sn",
+   "Norrsunda sn",
+   "Skepptuna sn",
+   "Vidbo sn"
+  ],
+  "stil": {
+   "Pr2": 4
+  },
+  "säkra": {
+   "U 372": "Åsmund",
+   "U 431": "Åsmund",
+   "U 998": "Åsmund"
+  },
+  "signerade": [
+   "U 998"
+  ],
+  "runor": {
+   "U 372": "Åsmund",
+   "U 375": "Åsmund; Torfast",
+   "U 431": "Åsmund",
+   "U 998": "Åsmund"
+  },
+  "k0": {
+   "U 375": [
+    "Åsmund",
+    0.74
+   ]
+  },
+  "id": "G091",
+  "belägg_per_par": 18.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 16.190797036119243,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 169",
+   "U 235",
+   "U 341",
+   "U ATA4822/64"
+  ],
+  "typ": "med Gunnar",
+  "storlek": 4,
+  "medel_p": 0.886445552110672,
+  "diameter_km": 16.691761137122466,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Orkesta sn",
+   "Vallentuna sn",
+   "Össeby-Garns sn",
+   "Östra Ryds sn"
+  ],
+  "stil": {
+   "RAK": 4
+  },
+  "säkra": {
+   "U 169": "Gunnar",
+   "U 341": "Gunnar"
+  },
+  "signerade": [],
+  "runor": {
+   "U 169": "Gunnar",
+   "U 341": "Gunnar"
+  },
+  "k0": {
+   "U 235": [
+    "Gunnar",
+    0.599
+   ],
+   "U ATA4822/64": [
+    "Öpir 1",
+    0.656
+   ]
+  },
+  "id": "G092",
+  "belägg_per_par": 10.5,
+  "text_andel": 0.5,
+  "median_avstånd_km": 8.907159578678046,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 362",
+   "U 376",
+   "U 377",
+   "U 378"
+  ],
+  "typ": "med Sven 1",
+  "storlek": 4,
+  "medel_p": 0.8824253976345062,
+  "diameter_km": 7.318654962315225,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Skepptuna sn",
+   "Vidbo sn"
+  ],
+  "stil": {
+   "–": 1,
+   "Pr4": 3
+  },
+  "säkra": {
+   "U 377": "Sven 1"
+  },
+  "signerade": [
+   "U 376",
+   "U 377"
+  ],
+  "runor": {
+   "U 376": "Sten; Sven 3",
+   "U 377": "Sven 1",
+   "U 378": "Sten; Sven 3"
+  },
+  "k0": {
+   "U 362": [
+    "Öpir 1",
+    0.437
+   ],
+   "U 376": [
+    "Öpir 1",
+    0.678
+   ],
+   "U 378": [
+    "Öpir 1",
+    0.441
+   ]
+  },
+  "id": "G093",
+  "belägg_per_par": 12.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.01082960081326,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 151",
+   "Vg 152",
+   "Vg 154",
+   "Vg 156"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8777067363262177,
+  "diameter_km": 4.717579971012658,
+  "landskap": {
+   "Vg": 4
+  },
+  "socknar": [
+   "Eggvena sn",
+   "Fölene sn",
+   "Remmene sn"
+  ],
+  "stil": {
+   "–": 1,
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G094",
+  "belägg_per_par": 13.166666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.2939681038018955,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 139",
+   "Vg 179",
+   "Vg 180",
+   "Vg 182"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8775994777679443,
+  "diameter_km": 10.237813641280233,
+  "landskap": {
+   "Vg": 4
+  },
+  "socknar": [
+   "Kölaby sn",
+   "Norra Åsarps sn",
+   "Vårkumla sn"
+  ],
+  "stil": {
+   "Fp": 4
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G095",
+  "belägg_per_par": 12.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.853181434685098,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 482",
+   "U 876",
+   "U 990",
+   "U 992"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8773014843463898,
+  "diameter_km": 26.896604785510494,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Funbo sn",
+   "Hagby sn",
+   "Lagga sn"
+  ],
+  "stil": {
+   "–": 1,
+   "Fp": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "U 990": "Alrik; Äskil 2",
+   "U 992": "Alrik; Äskil 2"
+  },
+  "k0": {
+   "U 482": [
+    "Fot 2",
+    0.736
+   ],
+   "U 876": [
+    "Balle",
+    0.309
+   ],
+   "U 990": [
+    "Erik",
+    0.546
+   ],
+   "U 992": [
+    "Öpir 1",
+    0.479
+   ]
+  },
+  "id": "G096",
+  "belägg_per_par": 16.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 16.70984117855132,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 317",
+   "Sö 52",
+   "Sö 57",
+   "Sö 75"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8769464691480001,
+  "diameter_km": 21.30611637459403,
+  "landskap": {
+   "Sö": 4
+  },
+  "socknar": [
+   "Bettna sn",
+   "Blacksta sn",
+   "Flens sn",
+   "Vrena sn"
+  ],
+  "stil": {
+   "Fp": 3,
+   "–": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 52": [
+    "Traen",
+    0.616
+   ],
+   "Sö 57": [
+    "Traen",
+    0.392
+   ],
+   "Sö 75": [
+    "Amunde",
+    0.317
+   ]
+  },
+  "id": "G097",
+  "belägg_per_par": 11.833333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.662773523840919,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 241",
+   "Sö 244",
+   "Sö 245",
+   "Sö 260"
+  ],
+  "typ": "blandad",
+  "storlek": 4,
+  "medel_p": 0.8755489488442739,
+  "diameter_km": 7.789384635063852,
+  "landskap": {
+   "Sö": 4
+  },
+  "socknar": [
+   "Västerhaninge sn",
+   "Österhaninge sn"
+  ],
+  "stil": {
+   "Fp": 1,
+   "Pr2": 1,
+   "–": 2
+  },
+  "säkra": {
+   "Sö 241": "Björn 2 eller -björn",
+   "Sö 244": "Halvdan",
+   "Sö 245": "Halvdan",
+   "Sö 260": "Björn 2 eller -björn"
+  },
+  "signerade": [
+   "Sö 241"
+  ],
+  "runor": {
+   "Sö 241": "-björn; Björn 2",
+   "Sö 244": "Halvdan",
+   "Sö 245": "Halvdan",
+   "Sö 260": "Björn 2; -björn"
+  },
+  "k0": {},
+  "id": "G098",
+  "belägg_per_par": 9.5,
+  "text_andel": 0.5,
+  "median_avstånd_km": 4.334789475970426,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 193",
+   "Ög 202",
+   "Ög 204",
+   "Ög 214"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8752724230289459,
+  "diameter_km": 11.160185704290463,
+  "landskap": {
+   "Ög": 4
+  },
+  "socknar": [
+   "Härberga sn (nu Herrberga)",
+   "Veta sn",
+   "Viby sn",
+   "Västerlösa sn"
+  ],
+  "stil": {
+   "–": 4
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G099",
+  "belägg_per_par": 8.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.231774342464947,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 173",
+   "Vg 187",
+   "Vg 197",
+   "Vg 198"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8746395607789358,
+  "diameter_km": 10.270312892443322,
+  "landskap": {
+   "Vg": 4
+  },
+  "socknar": [
+   "Böne sn",
+   "Dalums sn",
+   "Vists sn (nu Ulricehamn)"
+  ],
+  "stil": {
+   "RAK": 2,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G100",
+  "belägg_per_par": 19.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.407542148955332,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1075",
+   "U 1079",
+   "U 923",
+   "U 929"
+  ],
+  "typ": "blandad",
+  "storlek": 4,
+  "medel_p": 0.8734432558218638,
+  "diameter_km": 11.440696456067444,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Bälinge sn",
+   "Uppsala"
+  ],
+  "stil": {
+   "–": 4
+  },
+  "säkra": {
+   "U 1075": "Ingulv",
+   "U 1079": "Gudfast",
+   "U 923": "Likbjörn",
+   "U 929": "Ingulv"
+  },
+  "signerade": [
+   "U 1075",
+   "U 929"
+  ],
+  "runor": {
+   "U 1075": "Ingulv",
+   "U 1079": "Gudfast",
+   "U 923": "Likbjörn",
+   "U 929": "Ingulv"
+  },
+  "k0": {},
+  "id": "G101",
+  "belägg_per_par": 8.5,
+  "text_andel": 0.5,
+  "median_avstånd_km": 8.87177705521038,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 205",
+   "Sö 214",
+   "U 707",
+   "U 775"
+  ],
+  "typ": "blandad",
+  "storlek": 4,
+  "medel_p": 0.8673861722151438,
+  "diameter_km": 17.11891461718943,
+  "landskap": {
+   "Sö": 2,
+   "U": 2
+  },
+  "socknar": [
+   "Enköpings-Näs sn",
+   "Kungs-Husby sn",
+   "Överselö sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Fp": 1,
+   "Pr4": 1
+  },
+  "säkra": {
+   "Sö 214": "Balle",
+   "U 707": "Balle",
+   "U 775": "Tidkume"
+  },
+  "signerade": [
+   "Sö 205",
+   "Sö 214",
+   "U 707",
+   "U 775"
+  ],
+  "runor": {
+   "Sö 205": "Orökja 1; Tidkume; Äsbjörn 1",
+   "Sö 214": "Balle",
+   "U 707": "Balle",
+   "U 775": "Tidkume"
+  },
+  "k0": {
+   "Sö 205": [
+    "Balle",
+    0.724
+   ]
+  },
+  "id": "G102",
+  "belägg_per_par": 15.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.665587206435342,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sm 105",
+   "Sm 106",
+   "Sm 110",
+   "Sm 98"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.865921825170517,
+  "diameter_km": 8.871493761331072,
+  "landskap": {
+   "Sm": 4
+  },
+  "socknar": [
+   "Myresjö sn",
+   "Vetlanda"
+  ],
+  "stil": {
+   "–": 4
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G103",
+  "belägg_per_par": 12.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.656594478619208,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 559",
+   "U 560",
+   "U 562",
+   "U 563"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 4,
+  "medel_p": 0.8648822605609894,
+  "diameter_km": 0.0,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Malsta sn"
+  ],
+  "stil": {
+   "Pr5": 4
+  },
+  "säkra": {
+   "U 559": "Öpir 1",
+   "U 560": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 559": "Öpir 1",
+   "U 560": "Öpir 1"
+  },
+  "k0": {
+   "U 562": [
+    "Öpir 1",
+    0.882
+   ],
+   "U 563": [
+    "Öpir 1",
+    0.882
+   ]
+  },
+  "id": "G104",
+  "belägg_per_par": 3.1666666666666665,
+  "text_andel": 0.16666666666666666,
+  "median_avstånd_km": 0.0,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 204",
+   "Sö 206",
+   "Sö 208",
+   "Sö 213"
+  ],
+  "typ": "blandad",
+  "storlek": 4,
+  "medel_p": 0.8634333610534668,
+  "diameter_km": 3.323333221436709,
+  "landskap": {
+   "Sö": 4
+  },
+  "socknar": [
+   "Överselö sn"
+  ],
+  "stil": {
+   "Pr4": 2,
+   "–": 2
+  },
+  "säkra": {
+   "Sö 204": "Äsbjörn",
+   "Sö 206": "Äsbjörn",
+   "Sö 208": "Äsbjörn",
+   "Sö 213": "Äsbjörn 1"
+  },
+  "signerade": [
+   "Sö 213"
+  ],
+  "runor": {
+   "Sö 204": "Äsbjörn",
+   "Sö 206": "Äsbjörn",
+   "Sö 208": "Äsbjörn",
+   "Sö 213": "Äsbjörn 1"
+  },
+  "k0": {},
+  "id": "G105",
+  "belägg_per_par": 16.833333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 1.662325584010069,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 445",
+   "U 455",
+   "U 463",
+   "U 486"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 4,
+  "medel_p": 0.8634056349595388,
+  "diameter_km": 18.26712075171192,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Lagga sn",
+   "Odensala sn",
+   "Vassunda sn"
+  ],
+  "stil": {
+   "Pr4": 4
+  },
+  "säkra": {
+   "U 445": "Fot 2",
+   "U 455": "Fot 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 445": "Fot 2",
+   "U 455": "Fot 2",
+   "U 463": "Tjälve 1; Orökja 2; Fot 2"
+  },
+  "k0": {
+   "U 463": [
+    "Fot 2",
+    0.88
+   ],
+   "U 486": [
+    "Öpir 1",
+    0.638
+   ]
+  },
+  "id": "G106",
+  "belägg_per_par": 12.166666666666666,
+  "text_andel": 0.5,
+  "median_avstånd_km": 10.116519755549307,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 155",
+   "Ög 161",
+   "Ög 163",
+   "Ög Fv1970;310"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8592162231604258,
+  "diameter_km": 17.556263656331907,
+  "landskap": {
+   "Ög": 4
+  },
+  "socknar": [
+   "Kimstads sn",
+   "Kullerstads sn",
+   "Styrstads sn"
+  ],
+  "stil": {
+   "–": 3,
+   "KB": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G107",
+  "belägg_per_par": 16.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.549650220819741,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 524",
+   "U 530",
+   "U 570",
+   "U 574"
+  ],
+  "typ": "med Vidbjörn",
+  "storlek": 4,
+  "medel_p": 0.8575945496559143,
+  "diameter_km": 15.538976339842499,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Estuna sn",
+   "Lohärads sn",
+   "Länna sn",
+   "Norrtälje"
+  ],
+  "stil": {
+   "Pr2": 2,
+   "–": 1,
+   "Pr3": 1
+  },
+  "säkra": {
+   "U 524": "Vidbjörn",
+   "U 530": "Vidbjörn",
+   "U 574": "Vidbjörn"
+  },
+  "signerade": [
+   "U 524"
+  ],
+  "runor": {
+   "U 524": "Vidbjörn",
+   "U 530": "Vidbjörn",
+   "U 570": "Torfast; Åsmund",
+   "U 574": "Vidbjörn"
+  },
+  "k0": {
+   "U 570": [
+    "Fot 2",
+    0.414
+   ]
+  },
+  "id": "G108",
+  "belägg_per_par": 8.166666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.588021831859498,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sm 28",
+   "Sm 35",
+   "Sm 39",
+   "Sm 42"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8541824022928873,
+  "diameter_km": 13.004861548318106,
+  "landskap": {
+   "Sm": 4
+  },
+  "socknar": [
+   "Berga sn",
+   "Ljungby sn",
+   "Ryssby sn"
+  ],
+  "stil": {
+   "RAK": 3,
+   "–": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G109",
+  "belägg_per_par": 14.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.452552444456959,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 373",
+   "U 374",
+   "U 418",
+   "U 446"
+  ],
+  "typ": "med Åsmund",
+  "storlek": 4,
+  "medel_p": 0.853644847869873,
+  "diameter_km": 13.049332175500945,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Norrsunda sn",
+   "Odensala sn",
+   "Skepptuna sn"
+  ],
+  "stil": {
+   "Pr3": 2,
+   "–": 2
+  },
+  "säkra": {
+   "U 374": "Åsmund"
+  },
+  "signerade": [],
+  "runor": {
+   "U 374": "Åsmund",
+   "U 418": "Torfast; Åsmund"
+  },
+  "k0": {
+   "U 373": [
+    "Öpir 1",
+    0.668
+   ],
+   "U 418": [
+    "Åsmund",
+    0.659
+   ],
+   "U 446": [
+    "Öpir 1",
+    0.376
+   ]
+  },
+  "id": "G110",
+  "belägg_per_par": 10.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.170613331289129,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1162",
+   "U 1167",
+   "U 1176",
+   "U 890"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 4,
+  "medel_p": 0.8447103401025137,
+  "diameter_km": 25.536991736966872,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Altuna sn",
+   "Huddunge sn",
+   "Torstuna sn",
+   "Ålands sn"
+  ],
+  "stil": {
+   "Pr4": 4
+  },
+  "säkra": {
+   "U 1162": "Öpir 1",
+   "U 1176": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 1162": "Öpir 1",
+   "U 1176": "Öpir 1",
+   "U 890": "Åsmund"
+  },
+  "k0": {
+   "U 1167": [
+    "Öpir 1",
+    0.548
+   ],
+   "U 890": [
+    "Öpir 1",
+    0.744
+   ]
+  },
+  "id": "G111",
+  "belägg_per_par": 12.833333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 20.597652236817222,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 720",
+   "U 734",
+   "U 741",
+   "U 800"
+  ],
+  "typ": "blandad",
+  "storlek": 4,
+  "medel_p": 0.8432567616303762,
+  "diameter_km": 16.578559645057318,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Boglösa sn",
+   "Långtora sn",
+   "Vallby sn",
+   "Villberga sn"
+  ],
+  "stil": {
+   "–": 3,
+   "KB": 1
+  },
+  "säkra": {
+   "U 720": "Torbjörn 2",
+   "U 734": "Lidsvald",
+   "U 741": "Grim skald",
+   "U 800": "Tidkume"
+  },
+  "signerade": [
+   "U 734"
+  ],
+  "runor": {
+   "U 720": "Torbjörn 2",
+   "U 734": "Lidsvald",
+   "U 741": "Grim skald",
+   "U 800": "Tidkume; Samma som gjort U 803"
+  },
+  "k0": {},
+  "id": "G112",
+  "belägg_per_par": 10.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.092229287639894,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Nä 23",
+   "Nä 26",
+   "Nä 28",
+   "Nä 34"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8419021467367808,
+  "diameter_km": 3.0738405920291347,
+  "landskap": {
+   "Nä": 4
+  },
+  "socknar": [
+   "Glanshammars sn",
+   "Rinkaby sn"
+  ],
+  "stil": {
+   "–": 3,
+   "Pr2": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "Nä 23": "Eventuellt samma som gjort Nä 26, 27 och 32.",
+   "Nä 26": "Samma som gjort Nä 27 och eventuellt 23 samt 32.",
+   "Nä 34": "En van och konstnärligt framstående ristare."
+  },
+  "k0": {},
+  "id": "G113",
+  "belägg_per_par": 12.833333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 1.5371482756623773,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 380",
+   "U 384",
+   "U 397",
+   "U 410"
+  ],
+  "typ": "med Torfast",
+  "storlek": 4,
+  "medel_p": 0.8413871030012766,
+  "diameter_km": 2.1091760996968945,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Sankt Olovs sn (Sankt Olof)",
+   "Sigtuna"
+  ],
+  "stil": {
+   "–": 3,
+   "Pr3": 1
+  },
+  "säkra": {
+   "U 410": "Torfast"
+  },
+  "signerade": [],
+  "runor": {
+   "U 410": "Torfast"
+  },
+  "k0": {
+   "U 380": [
+    "Torbjörn 2",
+    0.53
+   ],
+   "U 384": [
+    "Öpir 1",
+    0.706
+   ],
+   "U 397": [
+    "Öpir 1",
+    0.369
+   ]
+  },
+  "id": "G114",
+  "belägg_per_par": 2.3333333333333335,
+  "text_andel": 0.0,
+  "median_avstånd_km": 1.089416006891243,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Vg 102",
+   "Vg 107",
+   "Vg 110",
+   "Vg 30"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8380838334560394,
+  "diameter_km": 23.954962116526495,
+  "landskap": {
+   "Vg": 4
+  },
+  "socknar": [
+   "Håle sn",
+   "Järpås sn",
+   "Tuns sn",
+   "Vänersnäs sn"
+  ],
+  "stil": {
+   "–": 2,
+   "RAK": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G115",
+  "belägg_per_par": 14.833333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.011136284504492,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 542",
+   "U 549",
+   "U 550",
+   "U 555"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8356775343418121,
+  "diameter_km": 0.009031086524456102,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Husby-Lyhundra sn (nu Husby-Sjuhundra)"
+  ],
+  "stil": {
+   "–": 4
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 542": [
+    "Öpir 1",
+    0.331
+   ],
+   "U 549": [
+    "Öpir 1",
+    0.34
+   ],
+   "U 550": [
+    "Öpir 1",
+    0.725
+   ],
+   "U 555": [
+    "Öpir 1",
+    0.578
+   ]
+  },
+  "id": "G116",
+  "belägg_per_par": 1.5,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.004515543262228051,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U Fv1968;276",
+   "U Fv1968;278A",
+   "U Fv1968;278B",
+   "U Fv1968;279A"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8056922554969788,
+  "diameter_km": 0.0,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Skoklosters sn"
+  ],
+  "stil": {
+   "–": 4
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U Fv1968;276": [
+    "Öpir 1",
+    0.358
+   ],
+   "U Fv1968;278A": [
+    "Torbjörn 2",
+    0.416
+   ],
+   "U Fv1968;278B": [
+    "Torbjörn 2",
+    0.416
+   ],
+   "U Fv1968;279A": [
+    "Torbjörn 2",
+    0.416
+   ]
+  },
+  "id": "G117",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 298",
+   "U Fv1953;270",
+   "U Fv1953;272",
+   "U Fv1979;245"
+  ],
+  "typ": "okänd hand",
+  "storlek": 4,
+  "medel_p": 0.8055058419704437,
+  "diameter_km": 0.07610503387772578,
+  "landskap": {
+   "U": 4
+  },
+  "socknar": [
+   "Skånela sn"
+  ],
+  "stil": {
+   "–": 4
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "U Fv1953;270": "Samma som gjort U 297 och U Fv1979;245.",
+   "U Fv1979;245": "Samma som gjort U 297 och Fv1953;270."
+  },
+  "k0": {
+   "U 298": [
+    "Öpir 1",
+    0.407
+   ],
+   "U Fv1953;270": [
+    "Öpir 1",
+    0.469
+   ],
+   "U Fv1953;272": [
+    "Öpir 1",
+    0.41
+   ],
+   "U Fv1979;245": [
+    "Fot 2",
+    0.894
+   ]
+  },
+  "id": "G118",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.03907991422634498,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Sö 27",
+   "Sö 34",
+   "Sö 36"
+  ],
+  "typ": "med Tore 1",
+  "storlek": 3,
+  "medel_p": 0.9693415363629659,
+  "diameter_km": 5.10412255733793,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Trosa sn (nu Trosa-Vagnhärad)",
+   "Vagnhärads sn (nu Trosa-Vagnhärad)"
+  ],
+  "stil": {
+   "KB": 3
+  },
+  "säkra": {
+   "Sö 27": "Tore 1",
+   "Sö 34": "Tore 1",
+   "Sö 36": "Tore 1"
+  },
+  "signerade": [
+   "Sö 34"
+  ],
+  "runor": {
+   "Sö 27": "Tore 1",
+   "Sö 34": "Tore 1",
+   "Sö 36": "Tore 1"
+  },
+  "k0": {},
+  "id": "G119",
+  "belägg_per_par": 11.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.305171865325623,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 231",
+   "U 232",
+   "U 233"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.96535857518514,
+  "diameter_km": 8.738013378040524,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "Pr5": 2,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 231": "Öpir 1",
+   "U 232": "Öpir 1",
+   "U 233": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 231": "Öpir 1",
+   "U 232": "Öpir 1",
+   "U 233": "Öpir 1"
+  },
+  "k0": {},
+  "id": "G120",
+  "belägg_per_par": 20.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.604982597787084,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1161",
+   "U 1164",
+   "Vs 29"
+  ],
+  "typ": "med Livsten",
+  "storlek": 3,
+  "medel_p": 0.9437244335810343,
+  "diameter_km": 22.039722926641527,
+  "landskap": {
+   "U": 2,
+   "Vs": 1
+  },
+  "socknar": [
+   "Altuna sn",
+   "Sala landsförsamling",
+   "Västerlövsta sn"
+  ],
+  "stil": {
+   "Pr3": 1,
+   "–": 1,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 1164": "Livsten",
+   "Vs 29": "Livsten"
+  },
+  "signerade": [
+   "U 1161",
+   "U 1164",
+   "Vs 29"
+  ],
+  "runor": {
+   "U 1161": "Balle; Livsten; Frösten; okänd",
+   "U 1164": "Livsten",
+   "Vs 29": "Livsten"
+  },
+  "k0": {
+   "U 1161": [
+    "Balle",
+    0.352
+   ]
+  },
+  "id": "G121",
+  "belägg_per_par": 17.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 21.597751239789947,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 517",
+   "U 532",
+   "U 558"
+  ],
+  "typ": "med Torbjörn skald",
+  "storlek": 3,
+  "medel_p": 0.9362413883209229,
+  "diameter_km": 17.03079736340084,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Husby-Lyhundra sn (nu Husby-Sjuhundra)",
+   "Roslags-Bro sn",
+   "Skederids sn"
+  ],
+  "stil": {
+   "Pr2": 1,
+   "–": 2
+  },
+  "säkra": {
+   "U 517": "Torbjörn skald",
+   "U 532": "Torbjörn skald",
+   "U 558": "Torbjörn skald"
+  },
+  "signerade": [
+   "U 532"
+  ],
+  "runor": {
+   "U 517": "Torbjörn skald",
+   "U 532": "Torbjörn skald",
+   "U 558": "Torbjörn skald"
+  },
+  "k0": {},
+  "id": "G122",
+  "belägg_per_par": 9.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 15.303714959255045,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 207",
+   "Sö 321",
+   "U 792"
+  ],
+  "typ": "med Balle",
+  "storlek": 3,
+  "medel_p": 0.9358917276064554,
+  "diameter_km": 25.779762673864496,
+  "landskap": {
+   "Sö": 2,
+   "U": 1
+  },
+  "socknar": [
+   "Fogdö sn",
+   "Tillinge sn",
+   "Överselö sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {
+   "Sö 207": "Balle",
+   "Sö 321": "Balle",
+   "U 792": "Balle"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 207": "Balle; Samma som gjort Sö 198, 200, U 792",
+   "Sö 321": "Balle",
+   "U 792": "Balle; Samma som gjort Sö 198, 200, 207"
+  },
+  "k0": {},
+  "id": "G123",
+  "belägg_per_par": 9.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 24.623742469445418,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 424",
+   "U 464",
+   "U 465"
+  ],
+  "typ": "med Fot 2",
+  "storlek": 3,
+  "medel_p": 0.9326433142026266,
+  "diameter_km": 18.757721905236757,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Norrsunda sn",
+   "Vassunda sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {
+   "U 464": "Fot 2"
+  },
+  "signerade": [
+   "U 464"
+  ],
+  "runor": {
+   "U 464": "Fot 2"
+  },
+  "k0": {
+   "U 424": [
+    "Balle",
+    0.323
+   ],
+   "U 465": [
+    "Fot 2",
+    0.421
+   ]
+  },
+  "id": "G124",
+  "belägg_per_par": 14.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 15.176175055858618,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö Fv1954;20",
+   "U 19",
+   "U 61"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.9306151866912842,
+  "diameter_km": 26.794957576849097,
+  "landskap": {
+   "Sö": 1,
+   "U": 2
+  },
+  "socknar": [
+   "Ekerö sn",
+   "Grödinge sn",
+   "Spånga sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {
+   "Sö Fv1954;20": "Björn 3",
+   "U 19": "Torbjörn 2",
+   "U 61": "Gunnar"
+  },
+  "signerade": [
+   "Sö Fv1954;20"
+  ],
+  "runor": {
+   "Sö Fv1954;20": "Björn 3",
+   "U 19": "Torbjörn 2",
+   "U 61": "Gunnar"
+  },
+  "k0": {},
+  "id": "G125",
+  "belägg_per_par": 12.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 16.37195266196711,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1010",
+   "U 1019",
+   "U 1023"
+  ],
+  "typ": "med Manne",
+  "storlek": 3,
+  "medel_p": 0.9295005400975546,
+  "diameter_km": 15.511346493799596,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Rasbo sn",
+   "Ärentuna sn"
+  ],
+  "stil": {
+   "Pr4": 2,
+   "–": 1
+  },
+  "säkra": {
+   "U 1010": "Manne"
+  },
+  "signerade": [],
+  "runor": {
+   "U 1010": "Manne",
+   "U 1019": "Samma som gjort U 1015, 1017-1018, 1020-1024.",
+   "U 1023": "Samma som gjort U 1015, 1017-1022, 1024."
+  },
+  "k0": {
+   "U 1019": [
+    "Öpir 1",
+    0.836
+   ],
+   "U 1023": [
+    "Öpir 1",
+    0.718
+   ]
+  },
+  "id": "G126",
+  "belägg_per_par": 20.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.192565704855847,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1006",
+   "U 917",
+   "U 995"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.9288822213808695,
+  "diameter_km": 26.13364871905213,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Funbo sn",
+   "Jumkils sn",
+   "Rasbo sn"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {},
+  "signerade": [
+   "U 917"
+  ],
+  "runor": {
+   "U 1006": "Önjut; Manne; Vigmund",
+   "U 917": "Disälv; Öpir 1"
+  },
+  "k0": {
+   "U 1006": [
+    "Öpir 1",
+    0.845
+   ],
+   "U 917": [
+    "Öpir 1",
+    0.784
+   ],
+   "U 995": [
+    "Öpir 1",
+    0.515
+   ]
+  },
+  "id": "G127",
+  "belägg_per_par": 16.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 26.107888504126436,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 179",
+   "Ög 66",
+   "Ög 93"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.9274080197016398,
+  "diameter_km": 16.296208321320375,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Bjälbo sn",
+   "Vadstena",
+   "Väderstads sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G128",
+  "belägg_per_par": 13.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.131021342523207,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 14",
+   "Ög 225",
+   "Ög 233"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.9262787699699402,
+  "diameter_km": 11.028433182588959,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Konungsunds sn",
+   "Östra Husby sn",
+   "Östra Stenby sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Fp": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Ög 225": [
+    "Balle",
+    0.33
+   ]
+  },
+  "id": "G129",
+  "belägg_per_par": 18.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.403175751224332,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 256",
+   "Sö 268",
+   "Sö 269"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.9262590010960897,
+  "diameter_km": 29.182095314835387,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Ösmo sn",
+   "Österhaninge sn"
+  ],
+  "stil": {
+   "Pr1": 2,
+   "–": 1
+  },
+  "säkra": {
+   "Sö 256": "Halvdan",
+   "Sö 268": "Amunde",
+   "Sö 269": "Halvdan"
+  },
+  "signerade": [
+   "Sö 268"
+  ],
+  "runor": {
+   "Sö 256": "Halvdan",
+   "Sö 268": "Amunde",
+   "Sö 269": "Halvdan"
+  },
+  "k0": {},
+  "id": "G130",
+  "belägg_per_par": 16.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 27.243807556235822,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 231",
+   "Ög 232",
+   "Ög 32"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.9255181550979614,
+  "diameter_km": 9.747388614296145,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Å sn",
+   "Östra Stenby sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G131",
+  "belägg_per_par": 16.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.742181821064715,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 439",
+   "U 661",
+   "U Fv1992;157"
+  ],
+  "typ": "med Äskil 2",
+  "storlek": 3,
+  "medel_p": 0.9236988425254822,
+  "diameter_km": 18.34455200445601,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Husby-Ärlinghundra sn",
+   "Håtuna sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {
+   "U 439": "Äskil 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 439": "Äskil 2",
+   "U 661": "Äskil 2; Alrik"
+  },
+  "k0": {
+   "U 661": [
+    "Erik",
+    0.48
+   ],
+   "U Fv1992;157": [
+    "Gunnar",
+    0.234
+   ]
+  },
+  "id": "G132",
+  "belägg_per_par": 19.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.206230951827603,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 129",
+   "Sö 148",
+   "Sö 167"
+  ],
+  "typ": "med Traen",
+  "storlek": 3,
+  "medel_p": 0.9234910607337952,
+  "diameter_km": 6.639658757762822,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Lids sn",
+   "Runtuna sn",
+   "Spelviks sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Fp": 1
+  },
+  "säkra": {
+   "Sö 129": "Traen",
+   "Sö 148": "Traen",
+   "Sö 167": "Traen"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 129": "Traen",
+   "Sö 148": "Traen",
+   "Sö 167": "Traen"
+  },
+  "k0": {},
+  "id": "G133",
+  "belägg_per_par": 19.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.674677773659379,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 453",
+   "U 613",
+   "U 74"
+  ],
+  "typ": "med Visäte",
+  "storlek": 3,
+  "medel_p": 0.9187002778053284,
+  "diameter_km": 27.533090680815313,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Odensala sn",
+   "Spånga sn",
+   "Västra Ryds sn"
+  ],
+  "stil": {
+   "Pr3": 2,
+   "–": 1
+  },
+  "säkra": {
+   "U 453": "Visäte",
+   "U 613": "Visäte",
+   "U 74": "Visäte"
+  },
+  "signerade": [
+   "U 74"
+  ],
+  "runor": {
+   "U 453": "Visäte",
+   "U 613": "Visäte",
+   "U 74": "Visäte"
+  },
+  "k0": {},
+  "id": "G134",
+  "belägg_per_par": 17.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 20.36646950357234,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 805",
+   "U 809",
+   "U 861"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.9130105773607889,
+  "diameter_km": 10.73657498102402,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Balingsta sn",
+   "Fröslunda sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Fp": 1
+  },
+  "säkra": {
+   "U 805": "Torbjörn 2",
+   "U 809": "Torbjörn 2",
+   "U 861": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 805": "Torbjörn 2",
+   "U 809": "Torbjörn 2",
+   "U 861": "Öpir 1"
+  },
+  "k0": {},
+  "id": "G135",
+  "belägg_per_par": 17.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.586249285242374,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 111",
+   "Ög 221",
+   "Ög Fv1950;341"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.9083030621210734,
+  "diameter_km": 13.45907976275378,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Landeryds sn",
+   "Sankt Lars sn (nu Linköping)",
+   "Törnevalla sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G136",
+  "belägg_per_par": 20.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.160150865084235,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Öl 19",
+   "Öl 26",
+   "Öl 27"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.9080886840820312,
+  "diameter_km": 15.25889037936017,
+  "landskap": {
+   "Öl": 3
+  },
+  "socknar": [
+   "Hulterstads sn",
+   "Sandby sn"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "Öl 26": "Samma som gjort Öl 27.",
+   "Öl 27": "Samma som gjort Öl 26."
+  },
+  "k0": {},
+  "id": "G137",
+  "belägg_per_par": 17.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 15.245610037021534,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 252",
+   "Sö 262",
+   "Sö 305"
+  ],
+  "typ": "med Halvdan",
+  "storlek": 3,
+  "medel_p": 0.9028274416923523,
+  "diameter_km": 26.100464851732585,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Botkyrka sn",
+   "Ösmo sn",
+   "Österhaninge sn"
+  ],
+  "stil": {
+   "–": 1,
+   "Pr3": 2
+  },
+  "säkra": {
+   "Sö 252": "Halvdan",
+   "Sö 262": "Halvdan"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 252": "Halvdan",
+   "Sö 262": "Halvdan"
+  },
+  "k0": {
+   "Sö 305": [
+    "Halvdan",
+    0.397
+   ]
+  },
+  "id": "G138",
+  "belägg_per_par": 10.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 24.533832560427005,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 128",
+   "Vg 133",
+   "Vg 137"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.9028245409329733,
+  "diameter_km": 29.150074744703918,
+  "landskap": {
+   "Vg": 3
+  },
+  "socknar": [
+   "Kinneve sn (nu Kinneved)",
+   "Marka sn",
+   "Österbitterna sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G139",
+  "belägg_per_par": 17.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 27.645813731873282,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 361",
+   "U 663",
+   "U 684"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.902777373790741,
+  "diameter_km": 29.3721229359944,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Håtuna sn",
+   "Skepptuna sn",
+   "Skoklosters sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 684": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 684": "Öpir 1"
+  },
+  "k0": {
+   "U 361": [
+    "Öpir 1",
+    0.558
+   ],
+   "U 663": [
+    "Öpir 1",
+    0.864
+   ]
+  },
+  "id": "G140",
+  "belägg_per_par": 17.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 26.90713677595864,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 381",
+   "U 611",
+   "U 637"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8989277482032776,
+  "diameter_km": 15.575406509024626,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Kalmar sn",
+   "Sigtuna",
+   "Västra Ryds sn"
+  ],
+  "stil": {
+   "–": 1,
+   "Pr1": 1,
+   "Pr2": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 381": [
+    "Balle",
+    0.292
+   ],
+   "U 611": [
+    "Visäte",
+    0.277
+   ],
+   "U 637": [
+    "Öpir 1",
+    0.227
+   ]
+  },
+  "id": "G141",
+  "belägg_per_par": 9.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.799383210663102,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 393",
+   "U 454",
+   "U 621"
+  ],
+  "typ": "med Visäte",
+  "storlek": 3,
+  "medel_p": 0.8987972140312195,
+  "diameter_km": 19.06084923473229,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Bro sn",
+   "Odensala sn",
+   "Sigtuna"
+  ],
+  "stil": {
+   "–": 1,
+   "Pr3": 1,
+   "Pr2": 1
+  },
+  "säkra": {
+   "U 393": "Visäte",
+   "U 454": "Visäte",
+   "U 621": "Visäte"
+  },
+  "signerade": [
+   "U 454"
+  ],
+  "runor": {
+   "U 393": "Visäte",
+   "U 454": "Visäte",
+   "U 621": "Visäte"
+  },
+  "k0": {},
+  "id": "G142",
+  "belägg_per_par": 23.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.221565277117639,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Nä 12",
+   "Nä 16",
+   "Nä 9"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8985453446706136,
+  "diameter_km": 20.96313105259969,
+  "landskap": {
+   "Nä": 3
+  },
+  "socknar": [
+   "Almby sn (nu Örebro)",
+   "Kumla sn",
+   "Stora Mellösa sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "Nä 12": "Eventuellt samma som gjort Nä 9.",
+   "Nä 9": "Eventuellt samma som gjort Nä 12."
+  },
+  "k0": {},
+  "id": "G143",
+  "belägg_per_par": 9.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 17.38779724263581,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 66",
+   "Vg 74",
+   "Vg 90"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.898541788260142,
+  "diameter_km": 20.82636976694584,
+  "landskap": {
+   "Vg": 3
+  },
+  "socknar": [
+   "Håkantorps sn",
+   "Norra Vånga sn",
+   "Vinköls sn"
+  ],
+  "stil": {
+   "–": 1,
+   "RAK": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "Vg 90": "Eventuellt samma som gjort Vg 85."
+  },
+  "k0": {},
+  "id": "G144",
+  "belägg_per_par": 10.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 19.66442711272952,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 105",
+   "Ög 130",
+   "Ög 172"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8973072568575541,
+  "diameter_km": 27.994614774137624,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Kärna sn",
+   "Linköping",
+   "Skärkinds sn"
+  ],
+  "stil": {
+   "RAK": 1,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G145",
+  "belägg_per_par": 15.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 22.886095913910093,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 489",
+   "U 919",
+   "U 922"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8961100975672404,
+  "diameter_km": 16.940577346137445,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Jumkils sn",
+   "Lagga sn",
+   "Uppsala"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {
+   "U 489": "Öpir 1",
+   "U 919": "Tord",
+   "U 922": "Öpir 1"
+  },
+  "signerade": [
+   "U 489",
+   "U 919",
+   "U 922"
+  ],
+  "runor": {
+   "U 489": "Öpir 1",
+   "U 919": "Tord",
+   "U 922": "Öpir 1"
+  },
+  "k0": {},
+  "id": "G146",
+  "belägg_per_par": 17.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 16.875925734937667,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sm 27",
+   "Sm 43",
+   "Sm 45"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8958111604054769,
+  "diameter_km": 20.26014682218921,
+  "landskap": {
+   "Sm": 3
+  },
+  "socknar": [
+   "Berga sn",
+   "Södra Ljunga sn",
+   "Tutaryds sn (nu Södra Ljunga sn)"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G147",
+  "belägg_per_par": 4.666666666666667,
+  "text_andel": 0.0,
+  "median_avstånd_km": 12.823755779717786,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 141",
+   "Sö 3",
+   "Sö 37"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8950872222582499,
+  "diameter_km": 22.097346136535307,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Björnlunda sn",
+   "Ludgo sn",
+   "Vagnhärads sn (nu Trosa-Vagnhärad)"
+  ],
+  "stil": {
+   "–": 1,
+   "Fp": 1,
+   "Pr2": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 141": [
+    "Tore 1",
+    0.287
+   ],
+   "Sö 3": [
+    "Balle",
+    0.696
+   ],
+   "Sö 37": [
+    "Halvdan",
+    0.202
+   ]
+  },
+  "id": "G148",
+  "belägg_per_par": 18.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 19.387273350239997,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 10",
+   "Sö 30",
+   "Sö 353"
+  ],
+  "typ": "med Tore 1",
+  "storlek": 3,
+  "medel_p": 0.8948517243067423,
+  "diameter_km": 16.890796674728886,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Frustuna sn",
+   "Vagnhärads sn (nu Trosa-Vagnhärad)",
+   "Överjärna sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {
+   "Sö 10": "Tore 1"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 10": "Tore 1",
+   "Sö 353": "Troligen samma ornamentik som Sö 350-52."
+  },
+  "k0": {
+   "Sö 30": [
+    "Tore 1",
+    0.333
+   ],
+   "Sö 353": [
+    "Halvdan",
+    0.443
+   ]
+  },
+  "id": "G149",
+  "belägg_per_par": 7.333333333333333,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 14.299195866333418,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 108",
+   "U 414",
+   "U 78"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.8947307666142782,
+  "diameter_km": 25.83967194536788,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Eds sn",
+   "Norrsunda sn",
+   "Spånga sn (nu Sundbyberg)"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr5": 1
+  },
+  "säkra": {
+   "U 78": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 78": "Öpir 1"
+  },
+  "k0": {
+   "U 108": [
+    "Gunnar",
+    0.535
+   ],
+   "U 414": [
+    "Gunnar",
+    0.62
+   ]
+  },
+  "id": "G150",
+  "belägg_per_par": 15.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 15.129131693614786,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 158",
+   "Sö 45",
+   "Sö Fv1948;295"
+  ],
+  "typ": "med Traen",
+  "storlek": 3,
+  "medel_p": 0.8944167892138163,
+  "diameter_km": 21.273918467349247,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Lunda sn",
+   "Runtuna sn",
+   "Sankt Nicolai (Nikolai) sn (nu Nyköping)"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {
+   "Sö 45": "Traen"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 158": "Tidigare tolkad som signerad av Traen.",
+   "Sö 45": "Traen"
+  },
+  "k0": {
+   "Sö 158": [
+    "Traen",
+    0.762
+   ],
+   "Sö Fv1948;295": [
+    "Traen",
+    0.912
+   ]
+  },
+  "id": "G151",
+  "belägg_per_par": 16.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 13.799481457735236,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 156",
+   "Ög 177",
+   "Ög 29"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8941032489140829,
+  "diameter_km": 5.633245123849918,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Söderköping",
+   "Tingstads sn",
+   "Tåby sn (eg. Furingstads sn)"
+  ],
+  "stil": {
+   "Pr2": 1,
+   "Fp": 1,
+   "–": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G152",
+  "belägg_per_par": 16.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 5.006698601898873,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 291",
+   "U 35",
+   "U 47"
+  ],
+  "typ": "med Ärnfast",
+  "storlek": 3,
+  "medel_p": 0.8931945959726969,
+  "diameter_km": 24.712743666873493,
+  "landskap": {
+   "Sö": 1,
+   "U": 2
+  },
+  "socknar": [
+   "Grödinge sn",
+   "Lovö sn",
+   "Sånga sn"
+  ],
+  "stil": {
+   "Pr2": 2,
+   "Pr3": 1
+  },
+  "säkra": {
+   "U 47": "Ärnfast"
+  },
+  "signerade": [],
+  "runor": {
+   "U 47": "Ärnfast"
+  },
+  "k0": {
+   "Sö 291": [
+    "Halvdan",
+    0.473
+   ],
+   "U 35": [
+    "Fot 2",
+    0.48
+   ]
+  },
+  "id": "G153",
+  "belägg_per_par": 21.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 20.04461534191779,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 166",
+   "U 170",
+   "U 225"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8920394778251648,
+  "diameter_km": 19.535537267790943,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Vallentuna sn",
+   "Östra Ryds sn"
+  ],
+  "stil": {
+   "Pr4": 1,
+   "–": 1,
+   "RAK": 1
+  },
+  "säkra": {
+   "U 170": "Faste/Fastulv",
+   "U 225": "Gunnar"
+  },
+  "signerade": [
+   "U 170",
+   "U 225"
+  ],
+  "runor": {
+   "U 170": "Faste/Fastulv",
+   "U 225": "Gunnar"
+  },
+  "k0": {
+   "U 166": [
+    "Öpir 1",
+    0.376
+   ]
+  },
+  "id": "G154",
+  "belägg_per_par": 15.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.016559414571491,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sm 100",
+   "Sm 71",
+   "Sm SvS1973;4"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8910502990086874,
+  "diameter_km": 22.753440433782142,
+  "landskap": {
+   "Sm": 3
+  },
+  "socknar": [
+   "Mellby sn",
+   "Norra Sandsjö sn",
+   "Nävelsjö sn"
+  ],
+  "stil": {
+   "–": 2,
+   "RAK": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "Sm SvS1973;4": "Samma som gjort Sm 143."
+  },
+  "k0": {},
+  "id": "G155",
+  "belägg_per_par": 17.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 20.79949195520501,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 357",
+   "U 359",
+   "U 494"
+  ],
+  "typ": "med Åsmund",
+  "storlek": 3,
+  "medel_p": 0.8905931313832601,
+  "diameter_km": 6.325395183432562,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Husby-Långhundra sn",
+   "Skepptuna sn"
+  ],
+  "stil": {
+   "Pr4": 2,
+   "–": 1
+  },
+  "säkra": {
+   "U 357": "Åsmund"
+  },
+  "signerade": [],
+  "runor": {
+   "U 357": "Åsmund",
+   "U 494": "Åsmund"
+  },
+  "k0": {
+   "U 359": [
+    "Öpir 1",
+    0.805
+   ],
+   "U 494": [
+    "Åsmund",
+    0.667
+   ]
+  },
+  "id": "G156",
+  "belägg_per_par": 9.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.290215968154473,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 59",
+   "Vg 61",
+   "Vg 62"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8896057407061259,
+  "diameter_km": 17.384723730720584,
+  "landskap": {
+   "Vg": 3
+  },
+  "socknar": [
+   "Edsvära sn",
+   "Norra Härene sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [
+   "Vg 59"
+  ],
+  "runor": {
+   "Vg 59": "Hjälm; Hjalle"
+  },
+  "k0": {},
+  "id": "G157",
+  "belägg_per_par": 17.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 16.942327511579393,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sm 11",
+   "Sm 13",
+   "Sm 16"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8883960843086243,
+  "diameter_km": 21.61646797028908,
+  "landskap": {
+   "Sm": 3
+  },
+  "socknar": [
+   "Furuby sn",
+   "Uråsa sn",
+   "Östra Torsås sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G158",
+  "belägg_per_par": 16.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.77313445717295,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1033",
+   "U 470",
+   "U 964"
+  ],
+  "typ": "med Torbjörn 2",
+  "storlek": 3,
+  "medel_p": 0.8873277107874552,
+  "diameter_km": 29.374719579280985,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Knivsta sn",
+   "Lena sn",
+   "Vaksala sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr1": 1
+  },
+  "säkra": {
+   "U 470": "Torbjörn 2"
+  },
+  "signerade": [],
+  "runor": {
+   "U 470": "Torbjörn 2"
+  },
+  "k0": {
+   "U 1033": [
+    "Balle",
+    0.211
+   ],
+   "U 964": [
+    "Öpir 1",
+    0.673
+   ]
+  },
+  "id": "G159",
+  "belägg_per_par": 10.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 19.46032809611429,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 179",
+   "Sö 335",
+   "Sö 8"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.887275238831838,
+  "diameter_km": 18.543465594694258,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Dillnäs sn (nu Gåsinge-Dillnäs)",
+   "Kärnbo sn",
+   "Åkers sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {
+   "Sö 179": "Äskil 2",
+   "Sö 8": "Tore 1"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 179": "Äskil 2",
+   "Sö 8": "Tore 1"
+  },
+  "k0": {
+   "Sö 335": [
+    "Traen",
+    0.451
+   ]
+  },
+  "id": "G160",
+  "belägg_per_par": 20.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 16.10048849823752,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 739",
+   "U 750",
+   "U 751"
+  ],
+  "typ": "med Balle",
+  "storlek": 3,
+  "medel_p": 0.8850731253623962,
+  "diameter_km": 9.46215972198439,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Boglösa sn",
+   "Husby-Sjutolfts sn"
+  ],
+  "stil": {
+   "Pr3": 3
+  },
+  "säkra": {
+   "U 739": "Balle",
+   "U 750": "Balle",
+   "U 751": "Balle"
+  },
+  "signerade": [
+   "U 750"
+  ],
+  "runor": {
+   "U 739": "Balle",
+   "U 750": "Balle",
+   "U 751": "Balle"
+  },
+  "k0": {},
+  "id": "G161",
+  "belägg_per_par": 19.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.45629021968443,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1086",
+   "U 896",
+   "U 961"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.8840929269790649,
+  "diameter_km": 12.573224553077578,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Bondkyrka sn (nu Uppsala)",
+   "Bälinge sn",
+   "Vaksala sn"
+  ],
+  "stil": {
+   "Pr4": 2,
+   "–": 1
+  },
+  "säkra": {
+   "U 1086": "Öpir 1",
+   "U 896": "Öpir 1"
+  },
+  "signerade": [
+   "U 896",
+   "U 961"
+  ],
+  "runor": {
+   "U 1086": "Öpir 1",
+   "U 896": "Öpir 1",
+   "U 961": "Öpir 1; Igulfast"
+  },
+  "k0": {
+   "U 961": [
+    "Fot 2",
+    0.449
+   ]
+  },
+  "id": "G162",
+  "belägg_per_par": 15.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.738920018651287,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 37",
+   "U 405",
+   "U 94"
+  ],
+  "typ": "med Torbjörn skald",
+  "storlek": 3,
+  "medel_p": 0.8840689857800802,
+  "diameter_km": 23.692652784446047,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Ekerö sn",
+   "Sollentuna sn",
+   "Sånga sn"
+  ],
+  "stil": {
+   "Pr2": 1,
+   "Pr1": 1,
+   "–": 1
+  },
+  "säkra": {
+   "U 37": "Torbjörn skald"
+  },
+  "signerade": [
+   "U 37",
+   "U 405"
+  ],
+  "runor": {
+   "U 37": "Torbjörn skald",
+   "U 405": "Torbjörn 3; Torbjörn skald"
+  },
+  "k0": {
+   "U 405": [
+    "Balle",
+    0.275
+   ],
+   "U 94": [
+    "Gunnar",
+    0.458
+   ]
+  },
+  "id": "G163",
+  "belägg_per_par": 11.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 17.35408607137993,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 354",
+   "U 435",
+   "U Fv1992;156"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.883971114953359,
+  "diameter_km": 9.8096401767927,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Husby-Ärlinghundra sn",
+   "Lunda sn"
+  ],
+  "stil": {
+   "Pr2": 2,
+   "–": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 354": [
+    "Åsmund",
+    0.427
+   ],
+   "U 435": [
+    "Balle",
+    0.322
+   ],
+   "U Fv1992;156": [
+    "Visäte",
+    0.229
+   ]
+  },
+  "id": "G164",
+  "belägg_per_par": 15.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.731326498125439,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 184",
+   "Ög 186",
+   "Ög 189"
+  ],
+  "typ": "med Anund",
+  "storlek": 3,
+  "medel_p": 0.8836062550544739,
+  "diameter_km": 4.944108814001135,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Sjögestads sn",
+   "Vikingstads sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {
+   "Ög 186": "Anund"
+  },
+  "signerade": [
+   "Ög 186"
+  ],
+  "runor": {
+   "Ög 186": "Anund"
+  },
+  "k0": {},
+  "id": "G165",
+  "belägg_per_par": 17.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.692002714349778,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 137",
+   "U 17",
+   "U 89"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8835403919219971,
+  "diameter_km": 28.02865854262709,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Ekerö sn",
+   "Järfälla sn",
+   "Täby sn"
+  ],
+  "stil": {
+   "Pr2": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 137": [
+    "Fot 2",
+    0.564
+   ],
+   "U 17": [
+    "Visäte",
+    0.272
+   ],
+   "U 89": [
+    "Fot 2",
+    0.404
+   ]
+  },
+  "id": "G166",
+  "belägg_per_par": 14.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.401853551528935,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sm 101",
+   "Sm 77",
+   "Sm 78"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.883003830909729,
+  "diameter_km": 12.91280622071341,
+  "landskap": {
+   "Sm": 3
+  },
+  "socknar": [
+   "Nävelsjö sn",
+   "Sävsjö (Vallsjö sn)",
+   "Sävsjö (f.d. Norra Ljunga sn)"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G167",
+  "belägg_per_par": 19.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.141546730460911,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1045",
+   "U 1113",
+   "U 1117"
+  ],
+  "typ": "med Kol",
+  "storlek": 3,
+  "medel_p": 0.8823963403701782,
+  "diameter_km": 1.6284259302228625,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Björklinge sn",
+   "Skuttunge sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 1117": "Kol"
+  },
+  "signerade": [
+   "U 1117"
+  ],
+  "runor": {
+   "U 1117": "Kol"
+  },
+  "k0": {
+   "U 1045": [
+    "Likbjörn",
+    0.35
+   ],
+   "U 1113": [
+    "Öpir 1",
+    0.644
+   ]
+  },
+  "id": "G168",
+  "belägg_per_par": 1.3333333333333333,
+  "text_andel": 0.0,
+  "median_avstånd_km": 1.4080961351939145,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 118",
+   "U 75",
+   "U 98"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8810489376386007,
+  "diameter_km": 11.050043432028746,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Eds sn",
+   "Sollentuna sn",
+   "Spånga sn"
+  ],
+  "stil": {
+   "Pr4": 2,
+   "–": 1
+  },
+  "säkra": {
+   "U 118": "Öpir 1",
+   "U 75": "Visäte"
+  },
+  "signerade": [
+   "U 118"
+  ],
+  "runor": {
+   "U 118": "Öpir 1",
+   "U 75": "Visäte"
+  },
+  "k0": {
+   "U 98": [
+    "Fot 2",
+    0.353
+   ]
+  },
+  "id": "G169",
+  "belägg_per_par": 16.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.76488690581669,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 77",
+   "Ög 94",
+   "Ög N267"
+  ],
+  "typ": "med Torkel",
+  "storlek": 3,
+  "medel_p": 0.8809652328491211,
+  "diameter_km": 7.332867820080136,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Hovs sn",
+   "Väderstads sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr1": 1
+  },
+  "säkra": {
+   "Ög 77": "Torkel"
+  },
+  "signerade": [],
+  "runor": {
+   "Ög 77": "Torkel"
+  },
+  "k0": {},
+  "id": "G170",
+  "belägg_per_par": 9.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.1139570008761925,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 468",
+   "U 644",
+   "U 654"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8806620637575785,
+  "diameter_km": 16.72556063341304,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Vassunda sn",
+   "Yttergrans sn",
+   "Övergrans sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "U 468": "Antagligen samma som gjort U 466.",
+   "U 644": "Alrik; Äskil 2",
+   "U 654": "Alrik; Äskil"
+  },
+  "k0": {
+   "U 468": [
+    "Öpir 1",
+    0.379
+   ],
+   "U 644": [
+    "Gunnar",
+    0.242
+   ],
+   "U 654": [
+    "Erik",
+    0.272
+   ]
+  },
+  "id": "G171",
+  "belägg_per_par": 10.666666666666666,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 15.554287995092013,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 21",
+   "Ög 31",
+   "Ög 99"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8787237405776978,
+  "diameter_km": 4.966526486524633,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Kuddby sn",
+   "Mogata sn",
+   "Å sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr2": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G172",
+  "belägg_per_par": 19.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.653553689281529,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 22",
+   "Sö 28",
+   "Sö 38"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8779060443242391,
+  "diameter_km": 10.882026252759857,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Mörkö sn",
+   "Vagnhärads sn (nu Trosa-Vagnhärad)"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 22": [
+    "Fot 2",
+    0.319
+   ],
+   "Sö 28": [
+    "Traen",
+    0.685
+   ],
+   "Sö 38": [
+    "Traen",
+    0.474
+   ]
+  },
+  "id": "G173",
+  "belägg_per_par": 14.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.77344267641256,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 252",
+   "U 275",
+   "U 292"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.875614603360494,
+  "diameter_km": 2.4775362590669845,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Fresta sn",
+   "Hammarby sn"
+  ],
+  "stil": {
+   "Pr5": 2,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 252": "Öpir 1",
+   "U 292": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 252": "Öpir 1",
+   "U 292": "Öpir 1"
+  },
+  "k0": {
+   "U 275": [
+    "Fot 2",
+    0.693
+   ]
+  },
+  "id": "G174",
+  "belägg_per_par": 8.666666666666666,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 1.732378776914449,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 355",
+   "U 503",
+   "U 511"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8750412066777548,
+  "diameter_km": 10.881369772298587,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Kårsta sn",
+   "Lunda sn",
+   "Närtuna sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 355": "Gunnar",
+   "U 503": "Visäte",
+   "U 511": "Visäte"
+  },
+  "signerade": [],
+  "runor": {
+   "U 355": "Gunnar",
+   "U 503": "Visäte",
+   "U 511": "Visäte"
+  },
+  "k0": {},
+  "id": "G175",
+  "belägg_per_par": 16.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.70909565613556,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 379",
+   "U 447",
+   "U 627"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.874505341053009,
+  "diameter_km": 10.99255771236061,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Håbo-Tibble sn",
+   "Odensala sn",
+   "Sigtuna"
+  ],
+  "stil": {
+   "KB": 1,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [
+   "U 379"
+  ],
+  "runor": {
+   "U 379": "Torbjörn skald; Torbjörn 2"
+  },
+  "k0": {
+   "U 379": [
+    "Torbjörn 2",
+    0.647
+   ],
+   "U 447": [
+    "Gunnar",
+    0.262
+   ],
+   "U 627": [
+    "Torbjörn 2",
+    0.158
+   ]
+  },
+  "id": "G176",
+  "belägg_per_par": 16.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 5.743296313105637,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 111",
+   "Sö 76",
+   "Sö 92"
+  ],
+  "typ": "med Balle",
+  "storlek": 3,
+  "medel_p": 0.8739697337150574,
+  "diameter_km": 15.33479718225035,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Husby-Rekarne sn",
+   "Lista sn",
+   "Stenkvista sn"
+  ],
+  "stil": {
+   "Fp": 2,
+   "–": 1
+  },
+  "säkra": {
+   "Sö 92": "Balle"
+  },
+  "signerade": [
+   "Sö 92"
+  ],
+  "runor": {
+   "Sö 92": "Balle"
+  },
+  "k0": {
+   "Sö 111": [
+    "Balle",
+    0.478
+   ],
+   "Sö 76": [
+    "Balle",
+    0.824
+   ]
+  },
+  "id": "G177",
+  "belägg_per_par": 8.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.719453871293597,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 187",
+   "Ög 209",
+   "Ög 210"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8731709718704224,
+  "diameter_km": 2.4467834478121624,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Sjögestads sn",
+   "Viby sn"
+  ],
+  "stil": {
+   "–": 2,
+   "KB": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G178",
+  "belägg_per_par": 15.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 1.9889555625995288,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 20",
+   "Vg 32",
+   "Vg 44"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8723918596903483,
+  "diameter_km": 11.124765621799412,
+  "landskap": {
+   "Vg": 3
+  },
+  "socknar": [
+   "Gösslunda sn",
+   "Kållands-Åsaka sn",
+   "Skalunda sn"
+  ],
+  "stil": {
+   "RAK": 2,
+   "–": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G179",
+  "belägg_per_par": 10.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.23468633817689,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 334",
+   "U 382",
+   "U Fv1972;172"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8723435600598654,
+  "diameter_km": 22.12539044763057,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Hammarby sn",
+   "Orkesta sn",
+   "Sigtuna"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {
+   "U 334": "Kättil 3",
+   "U 382": "Sven 1",
+   "U Fv1972;172": "Visäte"
+  },
+  "signerade": [
+   "U 334",
+   "U 382"
+  ],
+  "runor": {
+   "U 334": "Kättil 3",
+   "U 382": "Sven 1",
+   "U Fv1972;172": "Visäte"
+  },
+  "k0": {},
+  "id": "G180",
+  "belägg_per_par": 10.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 15.500435726196423,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 106",
+   "Vg 16",
+   "Vg 9"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8714020649592081,
+  "diameter_km": 11.225147754032896,
+  "landskap": {
+   "Vg": 3
+  },
+  "socknar": [
+   "Leksbergs sn",
+   "Tidavads sn (nu Ekby sn)"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G181",
+  "belägg_per_par": 12.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 9.396985803374758,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 138",
+   "Sö 140",
+   "Sö 320"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8711784482002258,
+  "diameter_km": 20.447346746593933,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Ludgo sn",
+   "Årdala sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 138": [
+    "Tore 1",
+    0.358
+   ],
+   "Sö 140": [
+    "Traen",
+    0.614
+   ],
+   "Sö 320": [
+    "Balle",
+    0.487
+   ]
+  },
+  "id": "G182",
+  "belägg_per_par": 14.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 17.972141249735238,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 134",
+   "Ög 136",
+   "Ög 70"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8701086839040121,
+  "diameter_km": 16.627743694514432,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Ekeby sn",
+   "Kumla sn",
+   "Röks sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G183",
+  "belägg_per_par": 5.666666666666667,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.163240448277698,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 427",
+   "U 466",
+   "U 483"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8699424862861633,
+  "diameter_km": 25.146583909425804,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Lagga sn",
+   "Norrsunda sn",
+   "Vassunda sn"
+  ],
+  "stil": {
+   "Pr2": 3
+  },
+  "säkra": {
+   "U 466": "Antagligen samma som gjort U 468. Enligt Brate Visäte",
+   "U 483": "Åsmund"
+  },
+  "signerade": [
+   "U 466"
+  ],
+  "runor": {
+   "U 466": "Antagligen samma som gjort U 468; Visäte",
+   "U 483": "Åsmund"
+  },
+  "k0": {
+   "U 427": [
+    "Öpir 1",
+    0.369
+   ]
+  },
+  "id": "G184",
+  "belägg_per_par": 15.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.78473029612456,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 183",
+   "Sö 202",
+   "Sö 211"
+  ],
+  "typ": "med Äskil 1",
+  "storlek": 3,
+  "medel_p": 0.8681625922520956,
+  "diameter_km": 14.6611624500186,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Kärnbo sn",
+   "Ytterselö sn",
+   "Överselö sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {
+   "Sö 211": "Äskil 1"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 202": "Äskil 1; Äsger",
+   "Sö 211": "Äskil 1"
+  },
+  "k0": {
+   "Sö 183": [
+    "Balle",
+    0.554
+   ],
+   "Sö 202": [
+    "Balle",
+    0.396
+   ]
+  },
+  "id": "G185",
+  "belägg_per_par": 17.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.720377159108446,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 124",
+   "Ög 192",
+   "Ög 212"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8674263954162598,
+  "diameter_km": 13.075745736180215,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Slaka sn",
+   "Viby sn",
+   "Vikingstads sn"
+  ],
+  "stil": {
+   "–": 2,
+   "RAK": 1
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G186",
+  "belägg_per_par": 20.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.222749519010096,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 148",
+   "Ög 226",
+   "Ög 230"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8613506952921549,
+  "diameter_km": 17.12096701346888,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Furingstads sn",
+   "Häradshammars sn",
+   "Östra Husby sn"
+  ],
+  "stil": {
+   "RAK": 1,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G187",
+  "belägg_per_par": 16.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 15.305720827007004,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 906",
+   "U 911",
+   "U 915"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.8609643975893656,
+  "diameter_km": 7.823021477584048,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Börje sn",
+   "Vänge sn"
+  ],
+  "stil": {
+   "Pr5": 1,
+   "–": 2
+  },
+  "säkra": {
+   "U 906": "Öpir 1",
+   "U 915": "Öpir 1"
+  },
+  "signerade": [],
+  "runor": {
+   "U 906": "Öpir 1",
+   "U 915": "Öpir 1"
+  },
+  "k0": {
+   "U 911": [
+    "Balle",
+    0.666
+   ]
+  },
+  "id": "G188",
+  "belägg_per_par": 15.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.912724424459502,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 821",
+   "U 854",
+   "U 856"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8604303995768229,
+  "diameter_km": 8.193465898366389,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Balingsta sn",
+   "Kulla sn"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {
+   "U 821": "Torgöt Fotsarve",
+   "U 856": "Åsmund"
+  },
+  "signerade": [],
+  "runor": {
+   "U 821": "Torgöt Fotsarve; Åsmund",
+   "U 856": "Åsmund"
+  },
+  "k0": {
+   "U 854": [
+    "Öpir 1",
+    0.565
+   ]
+  },
+  "id": "G189",
+  "belägg_per_par": 9.333333333333334,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 6.956466001254135,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 23",
+   "U 26",
+   "U 36"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.85862135887146,
+  "diameter_km": 4.7594552210134955,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Hilleshögs sn",
+   "Sånga sn"
+  ],
+  "stil": {
+   "Pr5": 1,
+   "–": 1,
+   "Pr4": 1
+  },
+  "säkra": {
+   "U 23": "Öpir 1",
+   "U 36": "Öpir 1"
+  },
+  "signerade": [
+   "U 23",
+   "U 36"
+  ],
+  "runor": {
+   "U 23": "Öpir 1",
+   "U 36": "Öpir 1"
+  },
+  "k0": {
+   "U 26": [
+    "Öpir 1",
+    0.567
+   ]
+  },
+  "id": "G190",
+  "belägg_per_par": 3.6666666666666665,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 4.75807316859157,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 383",
+   "U 388",
+   "U 395"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8573521574338278,
+  "diameter_km": 0.4290065396339014,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Sigtuna"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "U 395": "Sven 1; Öpir 1"
+  },
+  "k0": {
+   "U 383": [
+    "Öpir 1",
+    0.48
+   ],
+   "U 388": [
+    "Öpir 1",
+    0.486
+   ],
+   "U 395": [
+    "Fot 2",
+    0.322
+   ]
+  },
+  "id": "G191",
+  "belägg_per_par": 2.3333333333333335,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.4290065396339014,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Sm 29",
+   "Sm 46",
+   "Sm 60"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8562677105267843,
+  "diameter_km": 23.308620966936562,
+  "landskap": {
+   "Sm": 3
+  },
+  "socknar": [
+   "Berga sn (nu Vittaryds sn)",
+   "Rydaholms sn",
+   "Vittaryds sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G192",
+  "belägg_per_par": 17.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 23.275756730592825,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 109",
+   "Ög 110",
+   "Ög 190"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8546935319900513,
+  "diameter_km": 2.11355805646479,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Kärna sn",
+   "Vikingstads sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G193",
+  "belägg_per_par": 5.0,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 2.010859050620221,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 63",
+   "Ög 64",
+   "Ög Fv1983;240"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8535828590393066,
+  "diameter_km": 11.558675763826397,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Allhelgona sn",
+   "Appuna sn",
+   "Bjälbo sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G194",
+  "belägg_per_par": 14.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.811806783678635,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 117",
+   "Ög 119",
+   "Ög 238"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8534839948018392,
+  "diameter_km": 6.716585743588053,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Slaka sn",
+   "Vikingstads sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G195",
+  "belägg_per_par": 8.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.714345989228808,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 1100",
+   "U 1104",
+   "U 1108"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.8531438112258911,
+  "diameter_km": 7.9127488944394635,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Bälinge sn",
+   "Skuttunge sn"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {
+   "U 1100": "Öpir 1"
+  },
+  "signerade": [
+   "U 1100",
+   "U 1104"
+  ],
+  "runor": {
+   "U 1100": "Öpir 1",
+   "U 1104": "Kättil 4; Nase"
+  },
+  "k0": {
+   "U 1104": [
+    "Öpir 1",
+    0.682
+   ],
+   "U 1108": [
+    "Öpir 1",
+    0.891
+   ]
+  },
+  "id": "G196",
+  "belägg_per_par": 9.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.479689683519348,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 128",
+   "Sö 150",
+   "Sö 157"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8516578674316406,
+  "diameter_km": 5.363042108722758,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Lids sn",
+   "Runtuna sn"
+  ],
+  "stil": {
+   "Pr2": 1,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 128": [
+    "Balle",
+    0.378
+   ],
+   "Sö 150": [
+    "Traen",
+    0.6
+   ],
+   "Sö 157": [
+    "Balle",
+    0.563
+   ]
+  },
+  "id": "G197",
+  "belägg_per_par": 11.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 4.4673814485843355,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 299",
+   "Sö 352",
+   "U 126"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.850542406241099,
+  "diameter_km": 16.387105879144833,
+  "landskap": {
+   "Sö": 2,
+   "U": 1
+  },
+  "socknar": [
+   "Huddinge sn",
+   "Solna sn",
+   "Överjärna sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {
+   "Sö 299": "Åsgöt",
+   "Sö 352": "Traen"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 299": "Åsgöt",
+   "Sö 352": "Traen"
+  },
+  "k0": {
+   "U 126": [
+    "Balle",
+    0.223
+   ]
+  },
+  "id": "G198",
+  "belägg_per_par": 14.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.733024540745182,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 671",
+   "U 731",
+   "U 745"
+  ],
+  "typ": "med Balle",
+  "storlek": 3,
+  "medel_p": 0.8500258127848307,
+  "diameter_km": 15.731694306837815,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Husby-Sjutolfts sn",
+   "Häggeby sn",
+   "Villberga sn"
+  ],
+  "stil": {
+   "Fp": 2,
+   "–": 1
+  },
+  "säkra": {
+   "U 731": "Balle"
+  },
+  "signerade": [],
+  "runor": {
+   "U 731": "Balle"
+  },
+  "k0": {
+   "U 671": [
+    "Arbjörn",
+    0.483
+   ],
+   "U 745": [
+    "Balle",
+    0.827
+   ]
+  },
+  "id": "G199",
+  "belägg_per_par": 6.333333333333333,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.127210900612642,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "G 138",
+   "G 207",
+   "G 208"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8489254514376322,
+  "diameter_km": 14.32623276847248,
+  "landskap": {
+   "G": 3
+  },
+  "socknar": [
+   "Halla sn",
+   "Stenkumla sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {
+   "G 207": "Samma ristare som gjort G 208.",
+   "G 208": "Samma ristare som gjort G 207."
+  },
+  "k0": {},
+  "id": "G200",
+  "belägg_per_par": 13.333333333333334,
+  "text_andel": 1.0,
+  "median_avstånd_km": 14.32623276847248,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Öl 46",
+   "Öl Köping45",
+   "Öl Köping56"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8486263751983643,
+  "diameter_km": 0.25382178974700464,
+  "landskap": {
+   "Öl": 3
+  },
+  "socknar": [
+   "Köpings sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G201",
+  "belägg_per_par": 1.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.25382178974700464,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Ög 151",
+   "Ög 157",
+   "Ög 47"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8483014106750488,
+  "diameter_km": 13.408351547638649,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Furingstads sn",
+   "Kvillinge sn",
+   "Tingstads sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G202",
+  "belägg_per_par": 11.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 13.259818050556262,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 104",
+   "Ög 115",
+   "Ög 122"
+  ],
+  "typ": "med Anund",
+  "storlek": 3,
+  "medel_p": 0.8469998041788737,
+  "diameter_km": 10.694766836939968,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Kaga sn",
+   "Skeda sn",
+   "Slaka sn"
+  ],
+  "stil": {
+   "Fp": 2,
+   "–": 1
+  },
+  "säkra": {
+   "Ög 122": "Anund"
+  },
+  "signerade": [],
+  "runor": {
+   "Ög 122": "Anund"
+  },
+  "k0": {},
+  "id": "G203",
+  "belägg_per_par": 7.0,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 6.918084562840741,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "G 200",
+   "G 203",
+   "G 220"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8467382589975992,
+  "diameter_km": 10.448966486342862,
+  "landskap": {
+   "G": 3
+  },
+  "socknar": [
+   "Atlingbo sn",
+   "Follingbo sn",
+   "Hogräns sn"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G204",
+  "belägg_per_par": 8.0,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 9.663871500329488,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 314",
+   "Sö 83",
+   "Sö Sb1965;12"
+  ],
+  "typ": "med Näsbjörn",
+  "storlek": 3,
+  "medel_p": 0.8446796337763468,
+  "diameter_km": 7.376538122324916,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Torshälla",
+   "Tumbo sn"
+  ],
+  "stil": {
+   "Pr2": 1,
+   "–": 2
+  },
+  "säkra": {
+   "Sö 83": "Näsbjörn"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 83": "Näsbjörn"
+  },
+  "k0": {
+   "Sö 314": [
+    "Balle",
+    0.747
+   ],
+   "Sö Sb1965;12": [
+    "Balle",
+    0.736
+   ]
+  },
+  "id": "G205",
+  "belägg_per_par": 4.0,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 7.362486709997167,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 228",
+   "U 254",
+   "U 259"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8435943325360616,
+  "diameter_km": 3.1187622817176535,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Fresta sn",
+   "Vallentuna sn"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 228": [
+    "Öpir 1",
+    0.697
+   ],
+   "U 254": [
+    "Åsmund",
+    0.613
+   ],
+   "U 259": [
+    "Öpir 1",
+    0.522
+   ]
+  },
+  "id": "G206",
+  "belägg_per_par": 2.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 3.1159189095890683,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Sö 177",
+   "Sö 178",
+   "Sö 187"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8433850208918253,
+  "diameter_km": 6.469968213249168,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Kärnbo sn",
+   "Toresunds sn"
+  ],
+  "stil": {
+   "KB": 1,
+   "Pr4": 1,
+   "–": 1
+  },
+  "säkra": {
+   "Sö 177": "Brune",
+   "Sö 178": "Brune",
+   "Sö 187": "Balle"
+  },
+  "signerade": [
+   "Sö 178"
+  ],
+  "runor": {
+   "Sö 177": "Brune",
+   "Sö 178": "Brune",
+   "Sö 187": "Balle"
+  },
+  "k0": {},
+  "id": "G207",
+  "belägg_per_par": 17.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 6.01559489240507,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Öl 7",
+   "Öl ATA3960/71",
+   "Öl KALM1982;57"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8431735237439474,
+  "diameter_km": 0.012782044963092222,
+  "landskap": {
+   "Öl": 3
+  },
+  "socknar": [
+   "Mörbylånga sn"
+  ],
+  "stil": {
+   "Pr3": 1,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G208",
+  "belägg_per_par": 5.333333333333333,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 0.012782044963092222,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Ög 166",
+   "Ög 194",
+   "Ög 62"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8425463239351908,
+  "diameter_km": 6.931669835282713,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Allhelgona sn",
+   "Härberga sn (nu Herrberga)",
+   "Skänninge"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G209",
+  "belägg_per_par": 4.666666666666667,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 6.059806041643794,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 122",
+   "Vg 127",
+   "Vg 184"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8425119916598002,
+  "diameter_km": 22.726903757364013,
+  "landskap": {
+   "Vg": 3
+  },
+  "socknar": [
+   "Barne-Åsaka sn",
+   "Larvs sn",
+   "Smula sn"
+  ],
+  "stil": {
+   "Fp": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G210",
+  "belägg_per_par": 18.333333333333332,
+  "text_andel": 1.0,
+  "median_avstånd_km": 22.599227202211065,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 619",
+   "U 631",
+   "U 638"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8422687848409017,
+  "diameter_km": 8.479462630088847,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Bro sn",
+   "Kalmar sn"
+  ],
+  "stil": {
+   "Pr5": 1,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [
+   "U 638"
+  ],
+  "runor": {
+   "U 638": "Fulker; Björn 1; Fot 2"
+  },
+  "k0": {
+   "U 619": [
+    "Öpir 1",
+    0.249
+   ],
+   "U 631": [
+    "Öpir 1",
+    0.373
+   ],
+   "U 638": [
+    "Balle",
+    0.332
+   ]
+  },
+  "id": "G211",
+  "belägg_per_par": 8.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 7.039127006231623,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 153",
+   "Sö 159",
+   "Sö ATA6163/61"
+  ],
+  "typ": "med Traen",
+  "storlek": 3,
+  "medel_p": 0.8418186704317728,
+  "diameter_km": 2.576916802209708,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Runtuna sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {
+   "Sö 153": "Traen"
+  },
+  "signerade": [
+   "Sö 159"
+  ],
+  "runor": {
+   "Sö 153": "Traen",
+   "Sö 159": "Gudmund; Gunnlev 1; Rörik"
+  },
+  "k0": {
+   "Sö 159": [
+    "Traen",
+    0.835
+   ],
+   "Sö ATA6163/61": [
+    "Balle",
+    0.286
+   ]
+  },
+  "id": "G212",
+  "belägg_per_par": 3.3333333333333335,
+  "text_andel": 0.0,
+  "median_avstånd_km": 2.2722042155168167,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 122",
+   "Sö 154",
+   "Sö 170"
+  ],
+  "typ": "med Traen",
+  "storlek": 3,
+  "medel_p": 0.8406437635421753,
+  "diameter_km": 12.399898829161,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Allhelgona sn (nu Helgona)",
+   "Runtuna sn",
+   "Svärta sn"
+  ],
+  "stil": {
+   "Pr2": 1,
+   "Pr1": 1,
+   "–": 1
+  },
+  "säkra": {
+   "Sö 122": "Traen",
+   "Sö 154": "Traen",
+   "Sö 170": "Traen"
+  },
+  "signerade": [],
+  "runor": {
+   "Sö 122": "Traen",
+   "Sö 154": "Traen",
+   "Sö 170": "Traen"
+  },
+  "k0": {},
+  "id": "G213",
+  "belägg_per_par": 18.666666666666668,
+  "text_andel": 1.0,
+  "median_avstånd_km": 12.227445088736777,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vs 17",
+   "Vs 3",
+   "Vs Fv1988;36"
+  ],
+  "typ": "med Litle",
+  "storlek": 3,
+  "medel_p": 0.8403862118721008,
+  "diameter_km": 24.77555464766064,
+  "landskap": {
+   "Vs": 3
+  },
+  "socknar": [
+   "Dingtuna sn",
+   "Hubbo sn",
+   "Tortuna sn"
+  ],
+  "stil": {
+   "–": 2,
+   "Fp": 1
+  },
+  "säkra": {
+   "Vs 17": "Litle"
+  },
+  "signerade": [],
+  "runor": {
+   "Vs 17": "Litle"
+  },
+  "k0": {
+   "Vs 3": [
+    "Balle",
+    0.543
+   ],
+   "Vs Fv1988;36": [
+    "Balle",
+    0.574
+   ]
+  },
+  "id": "G214",
+  "belägg_per_par": 15.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 15.729168102927288,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Vg 130",
+   "Vg 136",
+   "Vg 176"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.84002153078715,
+  "diameter_km": 18.262258242156154,
+  "landskap": {
+   "Vg": 3
+  },
+  "socknar": [
+   "Dalums sn",
+   "Grolanda sn",
+   "Kinneve sn (nu Kinneved)"
+  ],
+  "stil": {
+   "Pr1": 1,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G215",
+  "belägg_per_par": 4.666666666666667,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 16.114963547616156,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Öl 2",
+   "Öl 31",
+   "Öl 41"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8381139636039734,
+  "diameter_km": 16.466079365089062,
+  "landskap": {
+   "Öl": 3
+  },
+  "socknar": [
+   "Algutsrums sn",
+   "Gärdslösa sn",
+   "Runstens sn"
+  ],
+  "stil": {
+   "Pr3": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G216",
+  "belägg_per_par": 16.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 10.784098588856974,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 157",
+   "U Fv1959;256",
+   "U Fv1967;262A"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8355699578921,
+  "diameter_km": 12.823122642775386,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Eds sn",
+   "Fresta sn",
+   "Täby sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 157": [
+    "Fot 2",
+    0.421
+   ],
+   "U Fv1959;256": [
+    "Fot 2",
+    0.408
+   ],
+   "U Fv1967;262A": [
+    "Fot 2",
+    0.379
+   ]
+  },
+  "id": "G217",
+  "belägg_per_par": 1.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 10.309606213118464,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U 568",
+   "U 580",
+   "U 582"
+  ],
+  "typ": "med Vidbjörn",
+  "storlek": 3,
+  "medel_p": 0.8345541556676229,
+  "diameter_km": 11.98551550575741,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Estuna sn",
+   "Lohärads sn",
+   "Söderby-Karls sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {
+   "U 580": "Vidbjörn"
+  },
+  "signerade": [],
+  "runor": {
+   "U 580": "Vidbjörn"
+  },
+  "k0": {
+   "U 568": [
+    "Öpir 1",
+    0.563
+   ],
+   "U 582": [
+    "Öpir 1",
+    0.468
+   ]
+  },
+  "id": "G218",
+  "belägg_per_par": 9.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.4175306631405,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 934",
+   "U 935",
+   "U Fv1973;194"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8293418884277344,
+  "diameter_km": 0.06402122804568776,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Uppsala"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 934": [
+    "Öpir 1",
+    0.794
+   ],
+   "U 935": [
+    "Öpir 1",
+    0.729
+   ],
+   "U Fv1973;194": [
+    "Åsmund",
+    0.674
+   ]
+  },
+  "id": "G219",
+  "belägg_per_par": 3.6666666666666665,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.05921508955132824,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 121",
+   "U 122",
+   "U 48"
+  ],
+  "typ": "med Öpir 1",
+  "storlek": 3,
+  "medel_p": 0.8241962790489197,
+  "diameter_km": 11.807419931593937,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Lovö sn",
+   "Solna sn"
+  ],
+  "stil": {
+   "Pr4": 3
+  },
+  "säkra": {
+   "U 122": "Öpir 1"
+  },
+  "signerade": [
+   "U 122"
+  ],
+  "runor": {
+   "U 121": "Ärnfast; Fot 2",
+   "U 122": "Öpir 1"
+  },
+  "k0": {
+   "U 121": [
+    "Fot 2",
+    0.671
+   ],
+   "U 48": [
+    "Öpir 1",
+    0.587
+   ]
+  },
+  "id": "G220",
+  "belägg_per_par": 10.666666666666666,
+  "text_andel": 1.0,
+  "median_avstånd_km": 11.382235739824381,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 156",
+   "U 202",
+   "U 208"
+  ],
+  "typ": "blandad",
+  "storlek": 3,
+  "medel_p": 0.8235148787498474,
+  "diameter_km": 11.7128280267614,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Angarns sn",
+   "Täby sn"
+  ],
+  "stil": {
+   "Pr3": 3
+  },
+  "säkra": {
+   "U 202": "Fot 2",
+   "U 208": "Visäte"
+  },
+  "signerade": [
+   "U 208"
+  ],
+  "runor": {
+   "U 202": "Fot 2",
+   "U 208": "Visäte"
+  },
+  "k0": {
+   "U 156": [
+    "Öpir 1",
+    0.447
+   ]
+  },
+  "id": "G221",
+  "belägg_per_par": 3.6666666666666665,
+  "text_andel": 0.0,
+  "median_avstånd_km": 10.312083448878456,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "Sö 48",
+   "Sö 50",
+   "Sö Fv1954;19"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8227194348971049,
+  "diameter_km": 16.09002879075344,
+  "landskap": {
+   "Sö": 3
+  },
+  "socknar": [
+   "Stigtomta sn",
+   "Tuna sn",
+   "Vrena sn"
+  ],
+  "stil": {
+   "Pr3": 1,
+   "–": 2
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "Sö 48": [
+    "Traen",
+    0.336
+   ],
+   "Sö 50": [
+    "Öpir 1",
+    0.268
+   ],
+   "Sö Fv1954;19": [
+    "Balle",
+    0.388
+   ]
+  },
+  "id": "G222",
+  "belägg_per_par": 9.0,
+  "text_andel": 1.0,
+  "median_avstånd_km": 8.918252038017059,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 443",
+   "U 451",
+   "U 452"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8143270413080851,
+  "diameter_km": 2.985755823443538,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Odensala sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U 443": [
+    "Öpir 1",
+    0.27
+   ],
+   "U 451": [
+    "Fot 2",
+    0.372
+   ],
+   "U 452": [
+    "Fot 2",
+    0.955
+   ]
+  },
+  "id": "G223",
+  "belägg_per_par": 2.3333333333333335,
+  "text_andel": 0.0,
+  "median_avstånd_km": 2.985755823443538,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Öl 1",
+   "Öl 25",
+   "Öl 33"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8083023627599081,
+  "diameter_km": 18.909181895418698,
+  "landskap": {
+   "Öl": 3
+  },
+  "socknar": [
+   "Runstens sn",
+   "Sandby sn (nu Gårdby sn)",
+   "Vickleby sn"
+  ],
+  "stil": {
+   "RAK": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G224",
+  "belägg_per_par": 3.0,
+  "text_andel": 0.3333333333333333,
+  "median_avstånd_km": 14.19145120113998,
+  "underlag": "gott"
+ },
+ {
+  "stenar": [
+   "U 24",
+   "U 27",
+   "U 28"
+  ],
+  "typ": "med Torbjörn skald",
+  "storlek": 3,
+  "medel_p": 0.8059110641479492,
+  "diameter_km": 0.016320416116349865,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Hilleshögs sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {
+   "U 24": "Torbjörn skald"
+  },
+  "signerade": [],
+  "runor": {
+   "U 24": "Torbjörn skald"
+  },
+  "k0": {
+   "U 27": [
+    "Öpir 1",
+    0.428
+   ],
+   "U 28": [
+    "Torbjörn 2",
+    0.408
+   ]
+  },
+  "id": "G225",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.013621789956796864,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "Ög Fv1959;244",
+   "Ög Fv1959;245",
+   "Ög Fv1959;246"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8056922554969788,
+  "diameter_km": 0.0,
+  "landskap": {
+   "Ög": 3
+  },
+  "socknar": [
+   "Söderköping"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {},
+  "id": "G226",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U ATA365/61A",
+   "U ATA365/61B",
+   "U ATA365/61C"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8056922554969788,
+  "diameter_km": 0.0,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Svinnegarns sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U ATA365/61A": [
+    "Balle",
+    0.935
+   ],
+   "U ATA365/61B": [
+    "Balle",
+    0.935
+   ],
+   "U ATA365/61C": [
+    "Balle",
+    0.935
+   ]
+  },
+  "id": "G227",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ },
+ {
+  "stenar": [
+   "U Fv1990;32A",
+   "U NOR1998;23A",
+   "U NOR1998;23B"
+  ],
+  "typ": "okänd hand",
+  "storlek": 3,
+  "medel_p": 0.8056922554969788,
+  "diameter_km": 0.0,
+  "landskap": {
+   "U": 3
+  },
+  "socknar": [
+   "Ekerö sn"
+  ],
+  "stil": {
+   "–": 3
+  },
+  "säkra": {},
+  "signerade": [],
+  "runor": {},
+  "k0": {
+   "U Fv1990;32A": [
+    "Åsmund",
+    0.287
+   ],
+   "U NOR1998;23A": [
+    "Torbjörn 2",
+    0.327
+   ],
+   "U NOR1998;23B": [
+    "Torbjörn 2",
+    0.327
+   ]
+  },
+  "id": "G228",
+  "belägg_per_par": 0.0,
+  "text_andel": 0.0,
+  "median_avstånd_km": 0.0,
+  "underlag": "svagt"
+ }
+]

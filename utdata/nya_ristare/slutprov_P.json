@@ -1,0 +1,480 @@
+{
+ "del": "P",
+ "tau": 0.8,
+ "alla": {
+  "grupper": 42,
+  "medel_samma": 0.422,
+  "medel_kontroll": 0.066,
+  "median_skillnad": 0.102,
+  "bättre": 23,
+  "sämre": 8,
+  "p": 2.0859830586859824e-05
+ },
+ "onämnda": {
+  "grupper": 15,
+  "medel_samma": 0.689,
+  "medel_kontroll": 0.075,
+  "median_skillnad": 0.8,
+  "bättre": 11,
+  "sämre": 3,
+  "p": 0.0016753142087218506
+ },
+ "grupper": [
+  {
+   "stenar": [
+    "Sö 194",
+    "Sö 198",
+    "Sö 200",
+    "Sö 207",
+    "U 792"
+   ],
+   "par": 9,
+   "samma_grupp": 0.4444444444444444,
+   "kontroll": 0.12226623471682758,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "Sö 202",
+    "Sö 333"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.05024509803921569,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "Sö 215",
+    "Sö 233",
+    "Sö 268",
+    "Sö 271"
+   ],
+   "par": 6,
+   "samma_grupp": 0.0,
+   "kontroll": 0.050945262249222766,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "Sö 307",
+    "Sö 339"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.0,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "Sö 350",
+    "Sö 351",
+    "Sö 352"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "Sö 362",
+    "Sö 363",
+    "Sö 84",
+    "Sö 85"
+   ],
+   "par": 6,
+   "samma_grupp": 1.0,
+   "kontroll": 0.25,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "Sö 91",
+    "Sö Fv1986;218"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.27884615384615385,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "U 1006",
+    "U 1007",
+    "U 1008"
+   ],
+   "par": 3,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 1015",
+    "U 1017",
+    "U 1018",
+    "U 1019",
+    "U 1020",
+    "U 1021",
+    "U 1022",
+    "U 1023",
+    "U 1024"
+   ],
+   "par": 36,
+   "samma_grupp": 0.08333333333333333,
+   "kontroll": 0.014919494086160754,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 1026",
+    "U 1027"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "U 1041",
+    "U 1047",
+    "U 1052",
+    "U 1065"
+   ],
+   "par": 6,
+   "samma_grupp": 0.16666666666666666,
+   "kontroll": 0.08491899883391636,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 1158",
+    "U 1160"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 1165",
+    "U 1172"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.008620689655172414,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 124",
+    "U 60"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.04838709677419355,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "U 127",
+    "U 164",
+    "U 165",
+    "U 167",
+    "U 212",
+    "U 261",
+    "U 480"
+   ],
+   "par": 17,
+   "samma_grupp": 0.8823529411764706,
+   "kontroll": 0.03065083927791048,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 135",
+    "U 136"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.16666666666666666,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "U 152",
+    "U 227",
+    "U 272"
+   ],
+   "par": 3,
+   "samma_grupp": 1.0,
+   "kontroll": 0.00908629649469859,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "U 202",
+    "U 256"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.013107369664746713,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 214",
+    "U 215"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.041666666666666664,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 216",
+    "U 217"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 258",
+    "U 358"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.011023748764282595,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 279",
+    "U 287",
+    "U 288"
+   ],
+   "par": 3,
+   "samma_grupp": 0.3333333333333333,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 311",
+    "U 840",
+    "U 842"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 312",
+    "U 313",
+    "U 314"
+   ],
+   "par": 3,
+   "samma_grupp": 0.3333333333333333,
+   "kontroll": 0.1111111111111111,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 323",
+    "U 518",
+    "U 539"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.017857142857142856,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 338",
+    "U 371"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.006896551724137931,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 459",
+    "U 630",
+    "U 646",
+    "U 652",
+    "U 688",
+    "U 845"
+   ],
+   "par": 15,
+   "samma_grupp": 0.6666666666666666,
+   "kontroll": 0.05501141248074446,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 49",
+    "U 50"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.0,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "U 524",
+    "U 579"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.024448419797257006,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 532",
+    "U 533"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 644",
+    "U 654",
+    "U 661"
+   ],
+   "par": 3,
+   "samma_grupp": 0.3333333333333333,
+   "kontroll": 0.0,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "U 685",
+    "U 686"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.0,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "U 700",
+    "U 701"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 763",
+    "U 764"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 1.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 768",
+    "U 769",
+    "U 793"
+   ],
+   "par": 3,
+   "samma_grupp": 0.3333333333333333,
+   "kontroll": 0.02027777777777778,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 800",
+    "U 803"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 973",
+    "U 974"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "U 990",
+    "U 992"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.0,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "Vs 22",
+    "Vs 27",
+    "Vs 32",
+    "Vs 33"
+   ],
+   "par": 6,
+   "samma_grupp": 0.16666666666666666,
+   "kontroll": 0.045,
+   "onämnd": false
+  },
+  {
+   "stenar": [
+    "Ög 180",
+    "Ög 189"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.125,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "Ög 234",
+    "Ög 235"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.2,
+   "onämnd": true
+  },
+  {
+   "stenar": [
+    "Öl 26",
+    "Öl 27"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.0,
+   "onämnd": true
+  }
+ ]
+}
