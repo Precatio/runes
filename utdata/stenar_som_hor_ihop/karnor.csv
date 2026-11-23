@@ -1,0 +1,1472 @@
+karna,typ,storlek,signum,landskap,socken,stil,saker_ristare,signerad,k0_forslag,k0_p_cal,medeloverskott,diameter_km
+K001,okänd hand,24,Ög 13,Ög,Konungsunds sn,Fp,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 14,Ög,Konungsunds sn,nan,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 151,Ög,Furingstads sn,RAK,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 152,Ög,Furingstads sn,nan,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 154,Ög,Styrstads sn,nan,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 177,Ög,Söderköping,Fp,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 20,Ög,Kuddby sn,RAK,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 22,Ög,Kuddby sn,RAK,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 225,Ög,Östra Husby sn,Fp,,0,Balle,0.33,0.159,29.6
+K001,okänd hand,24,Ög 226,Ög,Östra Husby sn,nan,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 228,Ög,Östra Husby sn,Pr2,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 229,Ög,Östra Husby sn,Fp,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 23,Ög,Kuddby sn,Fp,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 230,Ög,Häradshammars sn,nan,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 231,Ög,Östra Stenby sn,Fp,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 234,Ög,Östra Stenby sn,RAK,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 235,Ög,Östra Stenby sn,RAK,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 236,Ög,Östra Stenby sn,RAK,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 26,Ög,Östra Ny sn,nan,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 31,Ög,Å sn,nan,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 34,Ög,Å sn,RAK,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 46,Ög,Kvillinge sn,nan,,0,,,0.159,29.6
+K001,okänd hand,24,Ög 99,Ög,Mogata sn,Pr2,,0,,,0.159,29.6
+K001,okänd hand,24,Ög Fv1966;102,Ög,Söderköping,Fp,,0,,,0.159,29.6
+K002,blandad,21,U 1012,U,Rasbokils sn,nan,Åsmund,0,,,0.23,29.4
+K002,blandad,21,U 1017,U,Ärentuna sn,nan,,0,Öpir 1,0.792,0.23,29.4
+K002,blandad,21,U 1020,U,Ärentuna sn,Pr4,,0,Öpir 1,0.814,0.23,29.4
+K002,blandad,21,U 1031,U,Lena sn,nan,,0,Åsmund,0.645,0.23,29.4
+K002,blandad,21,U 1035,U,Tensta sn,nan,,0,Åsmund,0.726,0.23,29.4
+K002,blandad,21,U 1047,U,Björklinge sn,Pr4,,0,Öpir 1,0.643,0.23,29.4
+K002,blandad,21,U 1051,U,Björklinge sn,nan,,0,Öpir 1,0.82,0.23,29.4
+K002,blandad,21,U 1065,U,Viksta sn,Pr4,Ingulv,0,,,0.23,29.4
+K002,blandad,21,U 1070,U,Åkerby sn,Pr4,Gudfast,0,,,0.23,29.4
+K002,blandad,21,U 1092,U,Bälinge sn,Pr4,Kjule,0,,,0.23,29.4
+K002,blandad,21,U 1108,U,Skuttunge sn,Pr4,,0,Öpir 1,0.891,0.23,29.4
+K002,blandad,21,U 903,U,Läby sn,nan,Åsmund,0,,,0.23,29.4
+K002,blandad,21,U 904,U,Läby sn,Pr3,,0,Åsmund,0.449,0.23,29.4
+K002,blandad,21,U 907,U,Vänge sn,Pr4,Öpir 1,0,,,0.23,29.4
+K002,blandad,21,U 912,U,Börje sn,KB,Grim skald,0,,,0.23,29.4
+K002,blandad,21,U 925,U,Uppsala,Pr4,Öpir 1,0,,,0.23,29.4
+K002,blandad,21,U 932,U,Uppsala,nan,,1,Åsmund,0.94,0.23,29.4
+K002,blandad,21,U 938,U,Uppsala,Pr4,Öpir 1,0,,,0.23,29.4
+K002,blandad,21,U 944,U,Uppsala,nan,,0,Öpir 1,0.767,0.23,29.4
+K002,blandad,21,U 995,U,Funbo sn,Pr4,,0,Öpir 1,0.515,0.23,29.4
+K002,blandad,21,U 996,U,Funbo sn,Pr4,,0,Öpir 1,0.727,0.23,29.4
+K003,med Traen,20,Sö 122,Sö,Allhelgona sn (nu Helgona),Pr2,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 130,Sö,Lids sn,nan,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 131,Sö,Lids sn,RAK,,0,Traen,0.77,0.197,29.2
+K003,med Traen,20,Sö 148,Sö,Runtuna sn,nan,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 151,Sö,Runtuna sn,Pr1,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 154,Sö,Runtuna sn,Pr1,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 159,Sö,Runtuna sn,nan,,1,Traen,0.835,0.197,29.2
+K003,med Traen,20,Sö 160,Sö,Råby-Rönö sn,nan,,1,Traen,0.89,0.197,29.2
+K003,med Traen,20,Sö 163,Sö,Råby-Rönö sn,Fp,,0,Traen,0.342,0.197,29.2
+K003,med Traen,20,Sö 164,Sö,Råby-Rönö sn,RAK,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 166,Sö,Spelviks sn,RAK,,0,Traen,0.276,0.197,29.2
+K003,med Traen,20,Sö 167,Sö,Spelviks sn,Fp,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 170,Sö,Svärta sn,nan,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 319,Sö,Årdala sn,RAK,,0,Traen,0.5,0.197,29.2
+K003,med Traen,20,Sö 320,Sö,Årdala sn,Fp,,0,Balle,0.487,0.197,29.2
+K003,med Traen,20,Sö 44,Sö,Bergshammars sn,nan,,0,Traen,0.525,0.197,29.2
+K003,med Traen,20,Sö 45,Sö,Sankt Nicolai (Nikolai) sn (nu Nyköping),Fp,Traen,0,,,0.197,29.2
+K003,med Traen,20,Sö 46,Sö,Nykyrka sn,RAK,,1,Traen,0.944,0.197,29.2
+K003,med Traen,20,Sö 53,Sö,Bettna sn,nan,,0,Traen,0.81,0.197,29.2
+K003,med Traen,20,Sö Fv1948;295,Sö,Lunda sn,Fp,,0,Traen,0.912,0.197,29.2
+K004,blandad,19,U 1026,U,Lena sn,Pr4,,0,Öpir 1,0.993,0.344,27.6
+K004,blandad,19,U 1038,U,Tensta sn,nan,Likbjörn,1,,,0.344,27.6
+K004,blandad,19,U 1044,U,Tensta sn,Pr5,Öpir 1,0,,,0.344,27.6
+K004,blandad,19,U 1069,U,Åkerby sn,Pr4,,0,Öpir 1,0.773,0.344,27.6
+K004,blandad,19,U 1074,U,Bälinge sn,nan,Likbjörn,1,,,0.344,27.6
+K004,blandad,19,U 1076,U,Bälinge sn,nan,Likbjörn,0,,,0.344,27.6
+K004,blandad,19,U 1081,U,Bälinge sn,nan,Likbjörn,0,,,0.344,27.6
+K004,blandad,19,U 1083,U,Bälinge sn,nan,,0,Öpir 1,0.522,0.344,27.6
+K004,blandad,19,U 1095,U,Bälinge sn,Pr4,Likbjörn,1,,,0.344,27.6
+K004,blandad,19,U 1116,U,Skuttunge sn,Pr4,Gudfast,1,,,0.344,27.6
+K004,blandad,19,U 1118,U,Skuttunge sn,Pr4,,0,Likbjörn,0.551,0.344,27.6
+K004,blandad,19,U 919,U,Jumkils sn,Pr4,Tord,1,,,0.344,27.6
+K004,blandad,19,U 933,U,Uppsala,Pr5,Öpir 1,0,,,0.344,27.6
+K004,blandad,19,U 950,U,Danmarks sn,Pr4,Öpir 1,0,,,0.344,27.6
+K004,blandad,19,U 957,U,Danmarks sn,nan,,0,Öpir 1,0.474,0.344,27.6
+K004,blandad,19,U 961,U,Vaksala sn,Pr4,,1,Fot 2,0.449,0.344,27.6
+K004,blandad,19,U 974,U,Vaksala sn,Pr5,Öpir 1,0,,,0.344,27.6
+K004,blandad,19,U 977,U,Vaksala sn,nan,,0,Öpir 1,0.752,0.344,27.6
+K004,blandad,19,U Fv1976;107,U,Uppsala,Pr4,Öpir 1,1,,,0.344,27.6
+K005,blandad,19,U 122,U,Solna sn,Pr4,Öpir 1,1,,,0.337,28.6
+K005,blandad,19,U 152,U,Täby sn,Pr4,,0,Gunnar,0.438,0.337,28.6
+K005,blandad,19,U 155,U,Täby sn,nan,,0,Fot 2,0.421,0.337,28.6
+K005,blandad,19,U 162,U,Täby sn,nan,Olev,1,,,0.337,28.6
+K005,blandad,19,U 166,U,Östra Ryds sn,Pr4,,0,Öpir 1,0.376,0.337,28.6
+K005,blandad,19,U 174,U,Österåkers sn,nan,,0,Öpir 1,0.549,0.337,28.6
+K005,blandad,19,U 222,U,Vallentuna sn,nan,,0,Öpir 1,0.241,0.337,28.6
+K005,blandad,19,U 226,U,Vallentuna sn,Pr1,Gunnar,1,,,0.337,28.6
+K005,blandad,19,U 239,U,Vallentuna sn,nan,,0,Öpir 1,0.65,0.337,28.6
+K005,blandad,19,U 253,U,Fresta sn,nan,,0,Öpir 1,0.562,0.337,28.6
+K005,blandad,19,U 425,U,Norrsunda sn,nan,,0,Fot 2,0.883,0.337,28.6
+K005,blandad,19,U 429,U,Norrsunda sn,nan,,0,Fot 2,0.391,0.337,28.6
+K005,blandad,19,U 70,U,Spånga sn,Pr1,Torbjörn skald,1,,,0.337,28.6
+K005,blandad,19,U 84,U,Järfälla sn,Pr4,,0,Öpir 1,0.409,0.337,28.6
+K005,blandad,19,U 89,U,Järfälla sn,Pr2,,0,Fot 2,0.404,0.337,28.6
+K005,blandad,19,U 93,U,Järfälla sn,nan,,0,Öpir 1,0.346,0.337,28.6
+K005,blandad,19,U ATA5734/59,U,Skånela sn,RAK,,0,Öpir 1,0.372,0.337,28.6
+K005,blandad,19,U Fv1971;212B,U,Vada sn,nan,,0,Öpir 1,0.381,0.337,28.6
+K005,blandad,19,U NOR2003;23,U,Vada sn,nan,Torsten,0,,,0.337,28.6
+K006,blandad,19,U 119,U,Eds sn,Pr3,Visäte,0,,,0.315,29.3
+K006,blandad,19,U 175,U,Österåkers sn,nan,,0,Öpir 1,0.332,0.315,29.3
+K006,blandad,19,U 186,U,Össeby-Garns sn,Pr2,,0,Gunnar,0.83,0.315,29.3
+K006,blandad,19,U 190,U,Össeby-Garns sn,Pr4,Samma som gjort U 509. Torsten,0,,,0.315,29.3
+K006,blandad,19,U 193,U,Össeby-Garns sn,Pr4,,0,Öpir 1,0.455,0.315,29.3
+K006,blandad,19,U 195,U,Össeby-Garns sn,Pr5,Öpir 1,0,,,0.315,29.3
+K006,blandad,19,U 227,U,Vallentuna sn,Pr4,,0,Fot 2,0.788,0.315,29.3
+K006,blandad,19,U 240,U,Vallentuna sn,Pr3,Åsmund,0,,,0.315,29.3
+K006,blandad,19,U 273,U,Hammarby sn,nan,,0,Fot 2,0.462,0.315,29.3
+K006,blandad,19,U 289,U,Hammarby sn,Pr3,,0,Fot 2,0.551,0.315,29.3
+K006,blandad,19,U 295,U,Skånela sn,Pr4,,0,Öpir 1,0.465,0.315,29.3
+K006,blandad,19,U 328,U,Markims sn,Pr1,,0,Gunnar,0.794,0.315,29.3
+K006,blandad,19,U 333,U,Orkesta sn,Pr3,Visäte,0,,,0.315,29.3
+K006,blandad,19,U 352,U,Frösunda sn,Pr4,Torsten,0,,,0.315,29.3
+K006,blandad,19,U 357,U,Skepptuna sn,Pr4,Åsmund,0,,,0.315,29.3
+K006,blandad,19,U 361,U,Skepptuna sn,nan,,0,Öpir 1,0.558,0.315,29.3
+K006,blandad,19,U 430,U,Norrsunda sn,Pr1,,0,Gunnar,0.524,0.315,29.3
+K006,blandad,19,U 503,U,Närtuna sn,nan,Visäte,0,,,0.315,29.3
+K006,blandad,19,U 511,U,Kårsta sn,Pr4,Visäte,0,,,0.315,29.3
+K007,blandad,19,U 1014,U,Ärentuna sn,Pr5,Öpir 1,0,,,0.253,29.7
+K007,blandad,19,U 1084,U,Bälinge sn,Pr5,Öpir 1,0,,,0.253,29.7
+K007,blandad,19,U 1088,U,Bälinge sn,Pr4,,0,Öpir 1,0.834,0.253,29.7
+K007,blandad,19,U 1091,U,Bälinge sn,nan,Kjule,0,,,0.253,29.7
+K007,blandad,19,U 1096,U,Bälinge sn,Pr5,Öpir 1,0,,,0.253,29.7
+K007,blandad,19,U 1098,U,Bälinge sn,nan,,0,Fot 2,0.707,0.253,29.7
+K007,blandad,19,U 1106,U,Bälinge sn,Pr4,Öpir 1,1,,,0.253,29.7
+K007,blandad,19,U 821,U,Kulla sn,Pr4,Torgöt Fotsarve,0,,,0.253,29.7
+K007,blandad,19,U 827,U,Holms sn,Pr4,Öpir 1,0,,,0.253,29.7
+K007,blandad,19,U 846,U,Västeråkers sn,nan,Åsmund,0,,,0.253,29.7
+K007,blandad,19,U 849,U,Balingsta sn,nan,,0,Fot 2,0.481,0.253,29.7
+K007,blandad,19,U 885,U,Skogstibble sn (nu Skogs-Tibble),Pr4,Åsmund,0,,,0.253,29.7
+K007,blandad,19,U 894,U,Uppsala-Näs sn,Pr4,,0,Öpir 1,0.974,0.253,29.7
+K007,blandad,19,U 895,U,Bondkyrka sn (nu Uppsala),Pr4,,0,Öpir 1,0.41,0.253,29.7
+K007,blandad,19,U 921,U,Jumkils sn,nan,Likbjörn,0,,,0.253,29.7
+K007,blandad,19,U 946,U,Danmarks sn,KB,Grim skald,0,,,0.253,29.7
+K007,blandad,19,U 951,U,Danmarks sn,nan,Grim skald,1,,,0.253,29.7
+K007,blandad,19,U 992,U,Funbo sn,Fp,,0,Öpir 1,0.479,0.253,29.7
+K007,blandad,19,U Fv1948;168,U,Alsike sn,Pr5,Öpir 1,1,,,0.253,29.7
+K008,blandad,19,U 106,U,Eds sn,nan,,0,Fot 2,0.955,0.176,29.5
+K008,blandad,19,U 131,U,Danderyds sn,Pr3,Fot 2,0,,,0.176,29.5
+K008,blandad,19,U 151,U,Täby sn,nan,,0,Gunnar,0.544,0.176,29.5
+K008,blandad,19,U 204,U,Angarns sn,Fp,,0,Fot 2,0.796,0.176,29.5
+K008,blandad,19,U 243,U,Vallentuna sn,Pr3,Visäte,0,,,0.176,29.5
+K008,blandad,19,U 256,U,Fresta sn,Pr3,Fot 2,0,,,0.176,29.5
+K008,blandad,19,U 260,U,Fresta sn,Pr4,Fot 2,0,,,0.176,29.5
+K008,blandad,19,U 286,U,Hammarby sn,Pr4,Fot 2,0,,,0.176,29.5
+K008,blandad,19,U 325,U,Markims sn,Pr4,Torsten,0,,,0.176,29.5
+K008,blandad,19,U 390,U,Sigtuna,Pr2,Fot 2,0,,,0.176,29.5
+K008,blandad,19,U 393,U,Sigtuna,nan,Visäte,0,,,0.176,29.5
+K008,blandad,19,U 394,U,Sigtuna,nan,Torbjörn 2,0,,,0.176,29.5
+K008,blandad,19,U 435,U,Husby-Ärlinghundra sn,Pr2,,0,Balle,0.322,0.176,29.5
+K008,blandad,19,U 437,U,Husby-Ärlinghundra sn,nan,,0,Öpir 1,0.485,0.176,29.5
+K008,blandad,19,U 61,U,Spånga sn,RAK,Gunnar,0,,,0.176,29.5
+K008,blandad,19,U 62,U,Spånga sn,Pr3,Fot 2,0,,,0.176,29.5
+K008,blandad,19,U 628,U,Håbo-Tibble sn,nan,Fot 2,0,,,0.176,29.5
+K008,blandad,19,U 96,U,Sollentuna sn,nan,,0,Torbjörn skald,0.368,0.176,29.5
+K008,blandad,19,U Fv1993;231,U,Frösunda sn,nan,,0,Öpir 1,0.328,0.176,29.5
+K009,blandad,18,U 126,U,Solna sn,Fp,,0,Balle,0.223,0.157,29.9
+K009,blandad,18,U 133,U,Täby sn,Pr3,Fot 2,0,,,0.157,29.9
+K009,blandad,18,U 149,U,Täby sn,nan,,0,Fot 2,0.711,0.157,29.9
+K009,blandad,18,U 159,U,Täby sn,nan,Visäte,0,,,0.157,29.9
+K009,blandad,18,U 214,U,Vallentuna sn,RAK,Drosboe,0,,,0.157,29.9
+K009,blandad,18,U 217,U,Vallentuna sn,nan,Drosboe,0,,,0.157,29.9
+K009,blandad,18,U 224,U,Vallentuna sn,nan,Gunnar,0,,,0.157,29.9
+K009,blandad,18,U 272,U,Hammarby sn,Pr4,,0,Öpir 1,0.26,0.157,29.9
+K009,blandad,18,U 345,U,Orkesta sn,nan,,0,Gunnar,0.867,0.157,29.9
+K009,blandad,18,U 432,U,Norrsunda sn,nan,,0,Öpir 1,0.335,0.157,29.9
+K009,blandad,18,U 433,U,Husby-Ärlinghundra sn,nan,,0,Fot 2,0.721,0.157,29.9
+K009,blandad,18,U 456,U,Odensala sn,nan,,0,Öpir 1,0.454,0.157,29.9
+K009,blandad,18,U 617,U,Bro sn,RAK,Gunnar,0,,,0.157,29.9
+K009,blandad,18,U 619,U,Bro sn,Pr5,,0,Öpir 1,0.249,0.157,29.9
+K009,blandad,18,U 69,U,Spånga sn,RAK,Gunnar,0,,,0.157,29.9
+K009,blandad,18,U Fv1958;250,U,Sigtuna,Pr3,,0,Fot 2,0.622,0.157,29.9
+K009,blandad,18,U Fv1978;226,U,Lunda sn,Pr1,Sune,0,,,0.157,29.9
+K009,blandad,18,U THS30;83,U,Täby sn,nan,,0,Fot 2,0.236,0.157,29.9
+K010,blandad,18,U 109,U,Eds sn,nan,,0,Öpir 1,0.429,0.126,29.7
+K010,blandad,18,U 121,U,Solna sn,Pr4,,0,Fot 2,0.671,0.126,29.7
+K010,blandad,18,U 137,U,Täby sn,Pr2,,0,Fot 2,0.564,0.126,29.7
+K010,blandad,18,U 158,U,Täby sn,nan,,0,Visäte,0.693,0.126,29.7
+K010,blandad,18,U 161,U,Täby sn,Pr1,,1,Öpir 1,0.42,0.126,29.7
+K010,blandad,18,U 170,U,Östra Ryds sn,nan,Faste/Fastulv,1,,,0.126,29.7
+K010,blandad,18,U 180,U,Össeby-Garns sn,nan,Visäte,0,,,0.126,29.7
+K010,blandad,18,U 208,U,Angarns sn,Pr3,Visäte,1,,,0.126,29.7
+K010,blandad,18,U 225,U,Vallentuna sn,RAK,Gunnar,1,,,0.126,29.7
+K010,blandad,18,U 235,U,Vallentuna sn,RAK,,0,Gunnar,0.599,0.126,29.7
+K010,blandad,18,U 252,U,Fresta sn,Pr5,Öpir 1,0,,,0.126,29.7
+K010,blandad,18,U 269,U,Fresta sn,Pr4,Fot 2,0,,,0.126,29.7
+K010,blandad,18,U 296,U,Skånela sn,nan,,0,Öpir 1,0.598,0.126,29.7
+K010,blandad,18,U 315,U,Skånela sn,Pr4,Öpir 1,1,,,0.126,29.7
+K010,blandad,18,U 426,U,Norrsunda sn,Pr1,,0,Fot 2,0.526,0.126,29.7
+K010,blandad,18,U 72,U,Spånga sn,Pr3,Visäte,0,,,0.126,29.7
+K010,blandad,18,U 75,U,Spånga sn,Pr4,Visäte,0,,,0.126,29.7
+K010,blandad,18,U 97,U,Sollentuna sn,nan,Kättil 2,1,,,0.126,29.7
+K011,blandad,17,U 1006,U,Rasbo sn,Pr4,,0,Öpir 1,0.845,0.346,26.9
+K011,blandad,17,U 1019,U,Ärentuna sn,Pr4,,0,Öpir 1,0.836,0.346,26.9
+K011,blandad,17,U 1023,U,Ärentuna sn,nan,,0,Öpir 1,0.718,0.346,26.9
+K011,blandad,17,U 1024,U,Ärentuna sn,Pr4,,0,Öpir 1,0.655,0.346,26.9
+K011,blandad,17,U 1030,U,Lena sn,Pr4,,0,Öpir 1,0.811,0.346,26.9
+K011,blandad,17,U 1048,U,Björklinge sn,nan,,0,Likbjörn,0.614,0.346,26.9
+K011,blandad,17,U 1053,U,Björklinge sn,nan,,0,Öpir 1,0.489,0.346,26.9
+K011,blandad,17,U 1056,U,Björklinge sn,Pr4,,0,Öpir 1,0.537,0.346,26.9
+K011,blandad,17,U 1085,U,Bälinge sn,Pr4,Öpir 1,0,,,0.346,26.9
+K011,blandad,17,U 1089,U,Bälinge sn,Pr4,Öpir 1,0,,,0.346,26.9
+K011,blandad,17,U 1102,U,Bälinge sn,Pr4,Otvagen,1,,,0.346,26.9
+K011,blandad,17,U 1107,U,Bälinge sn,Pr4,,0,Öpir 1,0.808,0.346,26.9
+K011,blandad,17,U 1110,U,Skuttunge sn,Pr4,,0,Öpir 1,0.758,0.346,26.9
+K011,blandad,17,U 1111,U,Skuttunge sn,Pr4,Gudfast,0,,,0.346,26.9
+K011,blandad,17,U 1119,U,Skuttunge sn,Pr4,Gudfast,0,,,0.346,26.9
+K011,blandad,17,U 1140,U,Vendels sn,Pr4,,0,Likbjörn,0.722,0.346,26.9
+K011,blandad,17,U 917,U,Jumkils sn,Pr4,,1,Öpir 1,0.784,0.346,26.9
+K012,blandad,17,U 136,U,Täby sn,Pr2,,0,Fot 2,0.75,0.32,27.1
+K012,blandad,17,U 141,U,Täby sn,nan,Fot 2,0,,,0.32,27.1
+K012,blandad,17,U 147,U,Täby sn,Pr4,,0,Öpir 1,0.325,0.32,27.1
+K012,blandad,17,U 153,U,Täby sn,Pr3,,0,Fot 2,0.911,0.32,27.1
+K012,blandad,17,U 154,U,Täby sn,Pr3,,0,Fot 2,0.296,0.32,27.1
+K012,blandad,17,U 194,U,Össeby-Garns sn,Pr3,,0,Åsmund,0.607,0.32,27.1
+K012,blandad,17,U 241,U,Vallentuna sn,Pr3,Åsmund,0,,,0.32,27.1
+K012,blandad,17,U 270,U,Fresta sn,nan,,0,Öpir 1,0.634,0.32,27.1
+K012,blandad,17,U 283,U,Hammarby sn,nan,Fot 2,0,,,0.32,27.1
+K012,blandad,17,U 344,U,Orkesta sn,Pr3,Åsmund,0,,,0.32,27.1
+K012,blandad,17,U 346,U,Frösunda sn,nan,Åsmund,1,,,0.32,27.1
+K012,blandad,17,U 356,U,Lunda sn,Pr3,Åsmund,1,,,0.32,27.1
+K012,blandad,17,U 423,U,Norrsunda sn,Pr3,Åsmund,0,,,0.32,27.1
+K012,blandad,17,U 431,U,Norrsunda sn,Pr2,Åsmund,0,,,0.32,27.1
+K012,blandad,17,U 439,U,Husby-Ärlinghundra sn,Fp,Äskil 2,0,,,0.32,27.1
+K012,blandad,17,U 446,U,Odensala sn,nan,,0,Öpir 1,0.376,0.32,27.1
+K012,blandad,17,U Fv1992;157,U,Husby-Ärlinghundra sn,Fp,,0,Gunnar,0.234,0.32,27.1
+K013,blandad,17,U 1005,U,Rasbo sn,nan,,0,Öpir 1,0.949,0.273,29.6
+K013,blandad,17,U 1010,U,Rasbo sn,Pr4,Manne,0,,,0.273,29.6
+K013,blandad,17,U 1011,U,Rasbo sn,Pr4,,1,Öpir 1,0.434,0.273,29.6
+K013,blandad,17,U 1015,U,Ärentuna sn,nan,,0,Öpir 1,0.865,0.273,29.6
+K013,blandad,17,U 1025,U,Ärentuna sn,nan,,0,Öpir 1,0.91,0.273,29.6
+K013,blandad,17,U 1040,U,Tensta sn,Pr4,,1,Öpir 1,0.961,0.273,29.6
+K013,blandad,17,U 1042,U,Tensta sn,Pr4,,1,Öpir 1,0.846,0.273,29.6
+K013,blandad,17,U 1079,U,Bälinge sn,nan,Gudfast,0,,,0.273,29.6
+K013,blandad,17,U 1097,U,Bälinge sn,Pr4,,0,Öpir 1,0.797,0.273,29.6
+K013,blandad,17,U 1114,U,Skuttunge sn,nan,,0,Öpir 1,0.434,0.273,29.6
+K013,blandad,17,U 914,U,Börje sn,Pr5,Öpir 1,0,,,0.273,29.6
+K013,blandad,17,U 923,U,Uppsala,nan,Likbjörn,0,,,0.273,29.6
+K013,blandad,17,U 929,U,Uppsala,nan,Ingulv,1,,,0.273,29.6
+K013,blandad,17,U 939,U,Uppsala,Pr4,Öpir 1,0,,,0.273,29.6
+K013,blandad,17,U 948,U,Danmarks sn,Pr4,,1,Öpir 1,0.658,0.273,29.6
+K013,blandad,17,U 985,U,Gamla Uppsala sn (nu Uppsala),nan,Öpir 1,0,,,0.273,29.6
+K013,blandad,17,U Fv1974;203,U,Björklinge sn,nan,,0,Öpir 1,0.757,0.273,29.6
+K014,blandad,17,U 104,U,Eds sn,Pr5,Öpir 1,1,,,0.145,29.9
+K014,blandad,17,U 118,U,Eds sn,Pr4,Öpir 1,1,,,0.145,29.9
+K014,blandad,17,U 127,U,Danderyds sn,Pr2,Fot 2,0,,,0.145,29.9
+K014,blandad,17,U 142,U,Täby sn,Pr4,Öpir 1,1,,,0.145,29.9
+K014,blandad,17,U 164,U,Täby sn,nan,Fot 2,0,,,0.145,29.9
+K014,blandad,17,U 165,U,Täby sn,Pr2,Fot 2,0,,,0.145,29.9
+K014,blandad,17,U 212,U,Vallentuna sn,nan,Fot 2,0,,,0.145,29.9
+K014,blandad,17,U 216,U,Vallentuna sn,Pr5,Drosboe,1,,,0.145,29.9
+K014,blandad,17,U 236,U,Vallentuna sn,Pr3,Visäte,1,,,0.145,29.9
+K014,blandad,17,U 247,U,Vallentuna sn,nan,Sven 1,1,,,0.145,29.9
+K014,blandad,17,U 259,U,Fresta sn,Pr4,,0,Öpir 1,0.522,0.145,29.9
+K014,blandad,17,U 261,U,Fresta sn,nan,Fot 2,0,,,0.145,29.9
+K014,blandad,17,U 287,U,Hammarby sn,Pr4,Öpir 1,1,,,0.145,29.9
+K014,blandad,17,U 36,U,Sånga sn,Pr4,Öpir 1,1,,,0.145,29.9
+K014,blandad,17,U 44,U,Skå sn,Pr4,Snare,1,,,0.145,29.9
+K014,blandad,17,U 60,U,Stockholm,nan,,0,Visäte,0.388,0.145,29.9
+K014,blandad,17,U 92,U,Järfälla sn,RAK,,0,Öpir 1,0.886,0.145,29.9
+K015,okänd hand,16,Ög 134,Ög,Kumla sn,RAK,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 166,Ög,Skänninge,nan,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 179,Ög,Vadstena,Fp,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 187,Ög,Sjögestads sn,nan,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 193,Ög,Härberga sn (nu Herrberga),nan,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 199,Ög,Sya sn,nan,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 200,Ög,Sya sn,RAK,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 202,Ög,Veta sn,nan,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 207,Ög,Viby sn,RAK,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 208,Ög,Viby sn (eg. Sjögestads sn),RAK,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 71,Ög,Ekeby sn,RAK,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 88,Ög,Högby sn,RAK,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 9,Ög,Vinnerstads sn (nu Motala),Pr3,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 92,Ög,Väderstads sn,RAK,,0,,,0.268,29.6
+K015,okänd hand,16,Ög 93,Ög,Väderstads sn,Fp,,0,,,0.268,29.6
+K015,okänd hand,16,Ög N267,Ög,Väderstads sn,nan,,0,,,0.268,29.6
+K016,blandad,16,Sö 215,Sö,Sorunda sn,nan,Amunde,1,,,0.263,29.9
+K016,blandad,16,Sö 229,Sö,Sorunda sn,Fp,Amunde,0,,,0.263,29.9
+K016,blandad,16,Sö 232,Sö,Sorunda sn,KB,,0,Amunde,0.927,0.263,29.9
+K016,blandad,16,Sö 233,Sö,Sorunda sn,Fp,Amunde,1,,,0.263,29.9
+K016,blandad,16,Sö 238,Sö,Västerhaninge sn,nan,Björn 2 eller -björn,0,,,0.263,29.9
+K016,blandad,16,Sö 241,Sö,Västerhaninge sn,Fp,Björn 2 eller -björn,1,,,0.263,29.9
+K016,blandad,16,Sö 256,Sö,Ösmo sn,Pr1,Halvdan,0,,,0.263,29.9
+K016,blandad,16,Sö 258,Sö,Ösmo sn,Fp,Björn 2 eller -björn,0,,,0.263,29.9
+K016,blandad,16,Sö 263,Sö,Österhaninge sn,Fp,,0,Amunde,0.668,0.263,29.9
+K016,blandad,16,Sö 265,Sö,Österhaninge sn,Fp,Åsbjörn,0,,,0.263,29.9
+K016,blandad,16,Sö 266,Sö,Österhaninge sn,Fp,Åsbjörn,1,,,0.263,29.9
+K016,blandad,16,Sö 269,Sö,Österhaninge sn,nan,Halvdan,0,,,0.263,29.9
+K016,blandad,16,Sö 271,Sö,Österhaninge sn,Fp,Amunde,1,,,0.263,29.9
+K016,blandad,16,Sö 273,Sö,Österhaninge sn,Fp,Amunde,0,,,0.263,29.9
+K016,blandad,16,Sö 296,Sö,Grödinge sn,Fp,,1,Traen,0.392,0.263,29.9
+K016,blandad,16,Sö 297,Sö,Grödinge sn,Pr2,Halvdan,0,,,0.263,29.9
+K017,blandad,16,U 1152,U,Frösthults sn,Pr4,Livsten,1,,,0.241,28.9
+K017,blandad,16,U 1158,U,Simtuna sn,nan,,1,Livsten,0.321,0.241,28.9
+K017,blandad,16,U 1160,U,Simtuna sn,Pr4,Livsten,0,,,0.241,28.9
+K017,blandad,16,U 1167,U,Torstuna sn,Pr4,,0,Öpir 1,0.548,0.241,28.9
+K017,blandad,16,U 1168,U,Österunda sn,Pr4,,0,Balle,0.421,0.241,28.9
+K017,blandad,16,U 718,U,Vallby sn,nan,Tidkume,0,,,0.241,28.9
+K017,blandad,16,U 733,U,Villberga sn,Pr3,Tidkume,1,,,0.241,28.9
+K017,blandad,16,U 742,U,Boglösa sn,Pr4,,1,Öpir 1,0.471,0.241,28.9
+K017,blandad,16,U 752,U,Husby-Sjutolfts sn,nan,,0,Balle,0.72,0.241,28.9
+K017,blandad,16,U 767,U,Vårfrukyrka sn,Pr4,Livsten,1,,,0.241,28.9
+K017,blandad,16,U 780,U,Svinnegarns sn,Pr4,Livsten,0,,,0.241,28.9
+K017,blandad,16,U 789,U,Tillinge sn,Pr4,Livsten,0,,,0.241,28.9
+K017,blandad,16,U 795,U,Breds sn,Pr4,Livsten,0,,,0.241,28.9
+K017,blandad,16,U 796,U,Sparrsätra sn,Pr4,Livsten,1,,,0.241,28.9
+K017,blandad,16,U 797,U,Sparrsätra sn,Pr4,Livsten,0,,,0.241,28.9
+K017,blandad,16,U Fv1973;146,U,Tillinge sn,Pr4,Livsten,0,,,0.241,28.9
+K018,blandad,14,U 379,U,Sigtuna,KB,,1,Torbjörn 2,0.647,0.33,29.9
+K018,blandad,14,U 411,U,Sankt Olovs sn (Sankt Olof),Pr4,,0,Fot 2,0.705,0.33,29.9
+K018,blandad,14,U 447,U,Odensala sn,nan,,0,Gunnar,0.262,0.33,29.9
+K018,blandad,14,U 457,U,Haga sn,Pr1,Torbjörn 2,0,,,0.33,29.9
+K018,blandad,14,U 471,U,Knivsta sn,Pr3,Fot 2,0,,,0.33,29.9
+K018,blandad,14,U 474,U,Knivsta sn,Pr1,Torbjörn 2,0,,,0.33,29.9
+K018,blandad,14,U 669,U,Häggeby sn,Pr4,,1,Visäte,0.743,0.33,29.9
+K018,blandad,14,U 945,U,Danmarks sn,Pr3,Fot 2,1,,,0.33,29.9
+K018,blandad,14,U 954,U,Danmarks sn,nan,,0,Gunnar,0.25,0.33,29.9
+K018,blandad,14,U 963,U,Vaksala sn,RAK,,0,Öpir 1,0.351,0.33,29.9
+K018,blandad,14,U 971,U,Vaksala sn,Fp,Öpir 1,0,,,0.33,29.9
+K018,blandad,14,U 990,U,Funbo sn,Fp,,0,Erik,0.546,0.33,29.9
+K018,blandad,14,U Fv1955;216,U,Sankt Pers sn,Pr2,,0,Fot 2,0.602,0.33,29.9
+K018,blandad,14,U Fv1992;156,U,Husby-Ärlinghundra sn,nan,,0,Visäte,0.229,0.33,29.9
+K019,med Traen,14,Sö 123,Sö,Allhelgona sn (nu Helgona),RAK,Traen,0,,,0.196,24.6
+K019,med Traen,14,Sö 133,Sö,Lids sn,nan,,0,Balle,0.352,0.196,24.6
+K019,med Traen,14,Sö 138,Sö,Ludgo sn,Fp,,0,Tore 1,0.358,0.196,24.6
+K019,med Traen,14,Sö 140,Sö,Ludgo sn,Fp,,0,Traen,0.614,0.196,24.6
+K019,med Traen,14,Sö 145,Sö,Runtuna sn,nan,,0,Traen,0.669,0.196,24.6
+K019,med Traen,14,Sö 158,Sö,Runtuna sn,Fp,,0,Traen,0.762,0.196,24.6
+K019,med Traen,14,Sö 161,Sö,Råby-Rönö sn,RAK,,0,Traen,0.561,0.196,24.6
+K019,med Traen,14,Sö 169,Sö,Svärta sn,nan,,0,Balle,0.608,0.196,24.6
+K019,med Traen,14,Sö 367,Sö,Sankt Nicolai sn (nu Nyköping),RAK,,0,Traen,0.645,0.196,24.6
+K019,med Traen,14,Sö 51,Sö,Nyköping,nan,,0,Traen,0.495,0.196,24.6
+K019,med Traen,14,Sö 52,Sö,Bettna sn,Fp,,0,Traen,0.616,0.196,24.6
+K019,med Traen,14,Sö 59,Sö,Husby-Oppunda sn,Fp,,0,Balle,0.384,0.196,24.6
+K019,med Traen,14,Sö 75,Sö,Vrena sn,Fp,,0,Amunde,0.317,0.196,24.6
+K019,med Traen,14,Sö Fv1948;289,Sö,Ludgo sn,Fp,,0,Balle,0.313,0.196,24.6
+K020,blandad,13,U 117,U,Eds sn,Pr4,Öpir 1,0,,,0.41,26.6
+K020,blandad,13,U 189,U,Össeby-Garns sn,nan,Gunnar,0,,,0.41,26.6
+K020,blandad,13,U 203,U,Angarns sn,Pr3,,1,Åsmund,0.655,0.41,26.6
+K020,blandad,13,U 207,U,Angarns sn,Pr3,Visäte,1,,,0.41,26.6
+K020,blandad,13,U 232,U,Vallentuna sn,Pr5,Öpir 1,0,,,0.41,26.6
+K020,blandad,13,U 233,U,Vallentuna sn,Pr4,Öpir 1,0,,,0.41,26.6
+K020,blandad,13,U 336,U,Orkesta sn,RAK,,0,Gunnar,0.861,0.41,26.6
+K020,blandad,13,U 373,U,Skepptuna sn,Pr3,,0,Öpir 1,0.668,0.41,26.6
+K020,blandad,13,U 375,U,Vidbo sn,Pr2,,0,Åsmund,0.74,0.41,26.6
+K020,blandad,13,U 508,U,Kårsta sn,RAK,Gunnar,0,,,0.41,26.6
+K020,blandad,13,U ATA322-4042-2009,U,Vallentuna sn,nan,,0,Åsmund,0.282,0.41,26.6
+K020,blandad,13,U Fv1959;188,U,Hammarby sn,Pr4,,0,Öpir 1,0.5,0.41,26.6
+K020,blandad,13,U Fv1993;233,U,Hammarby sn,nan,,0,Öpir 1,0.695,0.41,26.6
+K021,blandad,13,U 237,U,Vallentuna sn,nan,Visäte,0,,,0.389,27.5
+K021,blandad,13,U 245,U,Vallentuna sn,Pr3,Visäte,0,,,0.389,27.5
+K021,blandad,13,U 293,U,Hammarby sn,nan,Visäte,0,,,0.389,27.5
+K021,blandad,13,U 302,U,Skånela sn,nan,,0,Åsmund,0.457,0.389,27.5
+K021,blandad,13,U 319,U,Skånela sn,RAK,Gunnar,0,,,0.389,27.5
+K021,blandad,13,U 418,U,Norrsunda sn,Pr3,,0,Åsmund,0.659,0.389,27.5
+K021,blandad,13,U 424,U,Norrsunda sn,nan,,0,Balle,0.323,0.389,27.5
+K021,blandad,13,U 453,U,Odensala sn,Pr3,Visäte,0,,,0.389,27.5
+K021,blandad,13,U 461,U,Haga sn,Pr2,,0,Gunnar,0.361,0.389,27.5
+K021,blandad,13,U 465,U,Vassunda sn,nan,,0,Fot 2,0.421,0.389,27.5
+K021,blandad,13,U 622,U,Bro sn,nan,Visäte,0,,,0.389,27.5
+K021,blandad,13,U 627,U,Håbo-Tibble sn,nan,,0,Torbjörn 2,0.158,0.389,27.5
+K021,blandad,13,U 94,U,Sollentuna sn,nan,,0,Gunnar,0.458,0.389,27.5
+K022,blandad,13,U 623,U,Bro sn,Pr2,,0,Fot 2,0.73,0.311,27.5
+K022,blandad,13,U 630,U,Håbo-Tibble sn,Pr2,Arbjörn,0,,,0.311,27.5
+K022,blandad,13,U 646,U,Yttergrans sn,nan,Arbjörn,0,,,0.311,27.5
+K022,blandad,13,U 649,U,Övergrans sn,Pr2,,0,Arbjörn,0.58,0.311,27.5
+K022,blandad,13,U 659,U,Håtuna sn,Pr2,,0,Fot 2,0.708,0.311,27.5
+K022,blandad,13,U 662,U,Håtuna sn,Pr2,,0,Öpir 1,0.632,0.311,27.5
+K022,blandad,13,U 667,U,Häggeby sn,Pr2,Arbjörn,0,,,0.311,27.5
+K022,blandad,13,U 671,U,Häggeby sn,Fp,,0,Arbjörn,0.483,0.311,27.5
+K022,blandad,13,U 679,U,Skoklosters sn,Pr2,,0,Arbjörn,0.323,0.311,27.5
+K022,blandad,13,U 696,U,Veckholms sn,Pr3,Balle,0,,,0.311,27.5
+K022,blandad,13,U 826,U,Holms sn,nan,,0,Öpir 1,0.607,0.311,27.5
+K022,blandad,13,U 863,U,Balingsta sn,nan,,0,Öpir 1,0.509,0.311,27.5
+K022,blandad,13,U 864,U,Balingsta sn,nan,Arbjörn,0,,,0.311,27.5
+K023,blandad,13,U 258,U,Fresta sn,RAK,Gunnar,0,,,0.222,29.4
+K023,blandad,13,U 275,U,Hammarby sn,Pr4,,0,Fot 2,0.693,0.222,29.4
+K023,blandad,13,U 277,U,Hammarby sn,nan,Öpir 1,0,,,0.222,29.4
+K023,blandad,13,U 294,U,Hammarby sn,nan,,0,Fot 2,0.476,0.222,29.4
+K023,blandad,13,U 321,U,Skånela sn,Pr4,Sven 1,1,,,0.222,29.4
+K023,blandad,13,U 472,U,Knivsta sn,nan,Fot 2,0,,,0.222,29.4
+K023,blandad,13,U 604,U,Stockholms-Näs sn (nu Kungsängen),Pr4,,0,Öpir 1,0.532,0.222,29.4
+K023,blandad,13,U 624,U,Bro sn,Pr4,,0,Fot 2,0.961,0.222,29.4
+K023,blandad,13,U 635,U,Kalmar sn,Pr4,,0,Fot 2,0.97,0.222,29.4
+K023,blandad,13,U 640,U,Kalmar sn,Pr3,Fot 2,0,,,0.222,29.4
+K023,blandad,13,U 648,U,Övergrans sn,Pr4,,0,Fot 2,0.537,0.222,29.4
+K023,blandad,13,U 660,U,Håtuna sn,Pr4,Fot 2,0,,,0.222,29.4
+K023,blandad,13,U 674,U,Häggeby sn,nan,Fot 2,0,,,0.222,29.4
+K024,blandad,13,U 652,U,Övergrans sn,Pr2,Arbjörn,1,,,0.155,28.6
+K024,blandad,13,U 695,U,Veckholms sn,Pr3,Balle,0,,,0.155,28.6
+K024,blandad,13,U 707,U,Kungs-Husby sn,nan,Balle,1,,,0.155,28.6
+K024,blandad,13,U 708,U,Kungs-Husby sn,nan,Balle,0,,,0.155,28.6
+K024,blandad,13,U 734,U,Villberga sn,nan,Lidsvald,1,,,0.155,28.6
+K024,blandad,13,U 739,U,Boglösa sn,Pr3,Balle,0,,,0.155,28.6
+K024,blandad,13,U 745,U,Husby-Sjutolfts sn,Fp,,0,Balle,0.827,0.155,28.6
+K024,blandad,13,U 766,U,Vårfrukyrka sn,Pr4,Livsten,1,,,0.155,28.6
+K024,blandad,13,U 803,U,Långtora sn,Pr4,,0,Öpir 1,0.401,0.155,28.6
+K024,blandad,13,U 838,U,Nysätra sn,Pr3,Balle,0,,,0.155,28.6
+K024,blandad,13,U 839,U,Nysätra sn,Pr4,Torgöt Fotsarve,0,,,0.155,28.6
+K024,blandad,13,U 851,U,Balingsta sn,Pr4,,0,Öpir 1,0.508,0.155,28.6
+K024,blandad,13,U 855,U,Balingsta sn,nan,,0,Balle,0.318,0.155,28.6
+K025,okänd hand,13,Vg 135,Vg,Kinneve sn (nu Kinneved),RAK,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 157,Vg,Hovs sn,Fp,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 160,Vg,Hällstads sn,RAK,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 161,Vg,Härna sn,RAK,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 168,Vg,Södra Vings sn,nan,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 169,Vg,Södra Vings sn,nan,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 170,Vg,Blidsbergs sn,RAK,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 171,Vg,Blidsbergs sn,RAK,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 173,Vg,Böne sn,RAK,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 174,Vg,Dalums sn,RAK,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 182,Vg,Norra Åsarps sn,Fp,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 183,Vg,Norra Åsarps sn,RAK,,0,,,0.133,29.8
+K025,okänd hand,13,Vg 198,Vg,Dalums sn,nan,,0,,,0.133,29.8
+K026,blandad,13,U 515,U,Rimbo sn,Pr4,Torsten,0,,,0.068,25.0
+K026,blandad,13,U 517,U,Skederids sn,Pr2,Torbjörn skald,0,,,0.068,25.0
+K026,blandad,13,U 519,U,Skederids sn,Fp,þuliR,1,,,0.068,25.0
+K026,blandad,13,U 527,U,Frötuna sn,Pr3,,1,Öpir 1,0.538,0.068,25.0
+K026,blandad,13,U 532,U,Roslags-Bro sn,nan,Torbjörn skald,1,,,0.068,25.0
+K026,blandad,13,U 533,U,Roslags-Bro sn,Pr1,Torbjörn skald,0,,,0.068,25.0
+K026,blandad,13,U 541,U,Husby-Lyhundra sn (nu Husby-Sjuhundra),Pr5,Öpir 1,1,,,0.068,25.0
+K026,blandad,13,U 559,U,Malsta sn,Pr5,Öpir 1,0,,,0.068,25.0
+K026,blandad,13,U 565,U,Malsta sn,nan,Öpir 1,1,,,0.068,25.0
+K026,blandad,13,U 572,U,Lohärads sn,Pr4,,0,Öpir 1,0.72,0.068,25.0
+K026,blandad,13,U 578,U,Estuna sn,nan,,0,Öpir 1,0.497,0.068,25.0
+K026,blandad,13,U 585,U,Söderby-Karls sn,nan,,0,Åsmund,0.291,0.068,25.0
+K026,blandad,13,U 586,U,Edsbro sn,RAK,Gunnar,0,,,0.068,25.0
+K027,blandad,12,Sö 207,Sö,Överselö sn,Fp,Balle,0,,,0.257,29.5
+K027,blandad,12,Sö 281,Sö,Strängnäs,Pr2,,0,Balle,0.474,0.257,29.5
+K027,blandad,12,U 691,U,Arnö sn (nu Aspö sn),Pr4,,0,Balle,0.691,0.257,29.5
+K027,blandad,12,U 698,U,Veckholms sn,nan,,0,Balle,0.599,0.257,29.5
+K027,blandad,12,U 700,U,Veckholms sn,Fp,Balle,0,,,0.257,29.5
+K027,blandad,12,U 701,U,Veckholms sn,nan,Balle,0,,,0.257,29.5
+K027,blandad,12,U 719,U,Vallby sn,Pr4,,0,Balle,0.415,0.257,29.5
+K027,blandad,12,U 726,U,Löts sn,Fp,Balle,1,,,0.257,29.5
+K027,blandad,12,U 758,U,Enköping,Pr4,Tidkume,1,,,0.257,29.5
+K027,blandad,12,U 759,U,Enköping,Pr4,Tidkume,1,,,0.257,29.5
+K027,blandad,12,U 785,U,Tillinge sn,Pr1,,0,Balle,0.507,0.257,29.5
+K027,blandad,12,U 786,U,Tillinge sn,Fp,Torbjörn 2,0,,,0.257,29.5
+K028,blandad,12,Ög 180,Ög,Gammalkils sn,nan,,0,,,0.243,28.7
+K028,blandad,12,Ög 186,Ög,Sjögestads sn,Fp,Anund,1,,,0.243,28.7
+K028,blandad,12,Ög 194,Ög,Härberga sn (nu Herrberga),nan,,0,,,0.243,28.7
+K028,blandad,12,Ög 211,Ög,Viby sn,RAK,,0,,,0.243,28.7
+K028,blandad,12,Ög 40,Ög,Vallerstads sn,nan,,0,,,0.243,28.7
+K028,blandad,12,Ög 66,Ög,Bjälbo sn,Fp,,0,,,0.243,28.7
+K028,blandad,12,Ög 77,Ög,Hovs sn,nan,Torkel,0,,,0.243,28.7
+K028,blandad,12,Ög 89,Ög,Högby sn,RAK,,0,,,0.243,28.7
+K028,blandad,12,Ög 96,Ög,Väderstads sn,RAK,,0,,,0.243,28.7
+K028,blandad,12,Ög Fv1965;54,Ög,Viby sn,RAK,,0,,,0.243,28.7
+K028,blandad,12,Ög Fv1975;174,Ög,Väderstads sn,Fp,,0,,,0.243,28.7
+K028,blandad,12,Ög Fv1983;240,Ög,Appuna sn,nan,,0,,,0.243,28.7
+K029,okänd hand,12,Öl 10,Öl,Smedby sn,nan,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 13,Öl,Södra Möckleby sn,RAK,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 15,Öl,Södra Möckleby sn,RAK,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 17,Öl,Segerstads sn,RAK,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 18,Öl,Segerstads sn,nan,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 21,Öl,Hulterstads sn,nan,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 25,Öl,Sandby sn (nu Gårdby sn),RAK,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 26,Öl,Sandby sn,Pr4,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 27,Öl,Sandby sn,Pr4,,0,,,0.195,28.3
+K029,okänd hand,12,Öl 6,Öl,Mörbylånga sn,Pr4,,0,,,0.195,28.3
+K029,okänd hand,12,Öl Fv1911;274B,Öl,Resmo sn,nan,,0,,,0.195,28.3
+K029,okänd hand,12,Öl KALM1982;57,Öl,Mörbylånga sn,nan,,0,,,0.195,28.3
+K030,blandad,12,U 1007,U,Rasbo sn,Pr4,Manne,1,,,0.182,28.2
+K030,blandad,12,U 1016,U,Ärentuna sn,nan,,0,Åsmund,0.374,0.182,28.2
+K030,blandad,12,U 1032,U,Lena sn,Pr4,,0,Öpir 1,0.839,0.182,28.2
+K030,blandad,12,U 1034,U,Tensta sn,Pr5,Öpir 1,1,,,0.182,28.2
+K030,blandad,12,U 1052,U,Björklinge sn,Pr4,,1,Öpir 1,0.339,0.182,28.2
+K030,blandad,12,U 1087,U,Bälinge sn,Pr4,,0,Öpir 1,0.791,0.182,28.2
+K030,blandad,12,U 893,U,Uppsala-Näs sn,nan,Öpir 1,1,,,0.182,28.2
+K030,blandad,12,U 918,U,Jumkils sn,Pr5,Gudfast,1,,,0.182,28.2
+K030,blandad,12,U 922,U,Uppsala,Pr4,Öpir 1,1,,,0.182,28.2
+K030,blandad,12,U 972,U,Vaksala sn,nan,,0,Öpir 1,0.863,0.182,28.2
+K030,blandad,12,U 978,U,Gamla Uppsala sn (nu Uppsala),Pr2,Erik,0,,,0.182,28.2
+K030,blandad,12,U 984,U,Gamla Uppsala sn (nu Uppsala),nan,Öpir 1,1,,,0.182,28.2
+K031,blandad,12,U 115,U,Eds sn,Pr5,Öpir 1,0,,,0.163,28.7
+K031,blandad,12,U 257,U,Fresta sn,nan,,1,Öpir 1,0.597,0.163,28.7
+K031,blandad,12,U 332,U,Markims sn,nan,,0,Fot 2,0.666,0.163,28.7
+K031,blandad,12,U 354,U,Lunda sn,Pr2,,0,Åsmund,0.427,0.163,28.7
+K031,blandad,12,U 355,U,Lunda sn,nan,Gunnar,0,,,0.163,28.7
+K031,blandad,12,U 414,U,Norrsunda sn,nan,,0,Gunnar,0.62,0.163,28.7
+K031,blandad,12,U 494,U,Husby-Långhundra sn,nan,,0,Åsmund,0.667,0.163,28.7
+K031,blandad,12,U 495,U,Husby-Långhundra sn,Pr3,,0,Fot 2,0.464,0.163,28.7
+K031,blandad,12,U 608,U,Västra Ryds sn,nan,,0,Åsmund,0.581,0.163,28.7
+K031,blandad,12,U 676,U,Häggeby sn,Pr2,Arbjörn,0,,,0.163,28.7
+K031,blandad,12,U 677,U,Häggeby sn,nan,,0,Öpir 1,0.646,0.163,28.7
+K031,blandad,12,U SD2013;24,U,Odensala sn,nan,Åsmund,1,,,0.163,28.7
+K032,med Torkel,12,Ög 109,Ög,Kärna sn,nan,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 119,Ög,Slaka sn,RAK,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 124,Ög,Slaka sn,nan,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 183,Ög,Ledbergs sn,nan,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 184,Ög,Sjögestads sn,Fp,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 190,Ög,Vikingstads sn,nan,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 192,Ög,Vikingstads sn,nan,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 203,Ög,Veta sn,RAK,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 212,Ög,Viby sn,RAK,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 63,Ög,Allhelgona sn,nan,,0,,,0.127,26.8
+K032,med Torkel,12,Ög 84,Ög,Högby sn,RAK,Torkel,0,,,0.127,26.8
+K032,med Torkel,12,Ög 91,Ög,Järstads sn,RAK,,0,,,0.127,26.8
+K033,okänd hand,12,Vg 106,Vg,Leksbergs sn,RAK,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 11,Vg,Leksbergs sn,nan,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 12,Vg,Leksbergs sn,RAK,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 13,Vg,Leksbergs sn,Fp,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 15,Vg,Mariestads sn,Fp,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 16,Vg,Tidavads sn (nu Ekby sn),RAK,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 2,Vg,Berga sn,RAK,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 3,Vg,Bällefors sn,RAK,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 4,Vg,Eks sn,RAK,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 6,Vg,Fägre sn,RAK,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 7,Vg,Götlunda sn,nan,,0,,,0.041,24.4
+K033,okänd hand,12,Vg 9,Vg,Leksbergs sn,RAK,,0,,,0.041,24.4
+K034,blandad,11,U 100,U,Sollentuna sn,Pr4,,0,Öpir 1,0.504,0.374,29.7
+K034,blandad,11,U 135,U,Täby sn,Pr2,,0,Fot 2,0.535,0.374,29.7
+K034,blandad,11,U 255,U,Fresta sn,nan,Fot 2,0,,,0.374,29.7
+K034,blandad,11,U 317,U,Skånela sn,nan,,0,Öpir 1,0.408,0.374,29.7
+K034,blandad,11,U 327,U,Markims sn,RAK,Gunnar,0,,,0.374,29.7
+K034,blandad,11,U 329,U,Markims sn,Pr3,Fot 2,0,,,0.374,29.7
+K034,blandad,11,U 330,U,Markims sn,Pr3,Fot 2,0,,,0.374,29.7
+K034,blandad,11,U 376,U,Vidbo sn,Pr4,,1,Öpir 1,0.678,0.374,29.7
+K034,blandad,11,U 377,U,Vidbo sn,Pr4,Sven 1,1,,,0.374,29.7
+K034,blandad,11,U 445,U,Odensala sn,Pr4,Fot 2,0,,,0.374,29.7
+K034,blandad,11,U 463,U,Vassunda sn,Pr4,,0,Fot 2,0.88,0.374,29.7
+K035,okänd hand,11,Ög 148,Ög,Furingstads sn,RAK,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 149,Ög,Furingstads sn,nan,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 17,Ög,Kuddby sn,Pr3,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 18,Ög,Kuddby sn,RAK,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 21,Ög,Kuddby sn,nan,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 232,Ög,Östra Stenby sn,Fp,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 237,Ög,Östra Stenby sn,RAK,,0,Traen,0.249,0.295,28.2
+K035,okänd hand,11,Ög 25,Ög,Östra Ny sn,nan,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 27,Ög,Östra Ny sn,nan,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 32,Ög,Å sn,Fp,,0,,,0.295,28.2
+K035,okänd hand,11,Ög 44,Ög,Kvillinge sn,nan,,0,,,0.295,28.2
+K036,okänd hand,11,Ög 111,Ög,Landeryds sn,Fp,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 113,Ög,Sankt Lars sn (nu Linköping),nan,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 118,Ög,Slaka sn,RAK,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 121,Ög,Slaka sn,RAK,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 123,Ög,Slaka sn,nan,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 201,Ög,Veta sn,RAK,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 206,Ög,Viby sn,nan,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 209,Ög,Viby sn,nan,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 210,Ög,Viby sn,KB,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 41,Ög,Älvestads sn,nan,,0,,,0.261,28.1
+K036,okänd hand,11,Ög 42,Ög,Älvestads sn,RAK,,0,,,0.261,28.1
+K037,okänd hand,11,Sm 103,Sm,Skede sn,nan,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 106,Sm,Vetlanda,nan,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 109,Sm,Vetlanda,nan,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 110,Sm,Vetlanda,nan,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 111,Sm,Vetlanda landsförsamling,nan,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 134,Sm,Hults sn,nan,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 138,Sm,Höreda sn,nan,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 71,Sm,Norra Sandsjö sn,RAK,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 85,Sm,Alseda sn,Fp,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 93,Sm,Björkö sn,nan,,0,,,0.212,29.4
+K037,okänd hand,11,Sm 98,Sm,Myresjö sn,nan,,0,,,0.212,29.4
+K038,blandad,11,U 312,U,Skånela sn,Pr4,,0,Öpir 1,0.764,0.211,29.0
+K038,blandad,11,U 326,U,Markims sn,Pr1,Gunnar,0,,,0.211,29.0
+K038,blandad,11,U 395,U,Sigtuna,Pr4,,0,Fot 2,0.322,0.211,29.0
+K038,blandad,11,U 427,U,Norrsunda sn,Pr2,,0,Öpir 1,0.369,0.211,29.0
+K038,blandad,11,U 444,U,Odensala sn,Fp,,0,Fot 2,0.584,0.211,29.0
+K038,blandad,11,U 466,U,Vassunda sn,Pr2,Antagligen samma som gjort U 468. Enligt Brate Visäte,1,,,0.211,29.0
+K038,blandad,11,U 481,U,Lagga sn,Pr4,Fot 2,0,,,0.211,29.0
+K038,blandad,11,U 483,U,Lagga sn,Pr2,Åsmund,0,,,0.211,29.0
+K038,blandad,11,U 496,U,Husby-Långhundra sn,Pr4,Önjut,0,,,0.211,29.0
+K038,blandad,11,U 510,U,Kårsta sn,Pr4,,0,Fot 2,0.839,0.211,29.0
+K038,blandad,11,U Fv1979;244B,U,Skepptuna sn,RAK,Gunnar,0,,,0.211,29.0
+K039,med Anund,11,Ög 103,Ög,Kaga sn,Fp,,0,,,0.21,27.0
+K039,med Anund,11,Ög 104,Ög,Kaga sn,Fp,,0,,,0.21,27.0
+K039,med Anund,11,Ög 11,Ög,Vårdsbergs sn,RAK,,0,,,0.21,27.0
+K039,med Anund,11,Ög 122,Ög,Slaka sn,nan,Anund,0,,,0.21,27.0
+K039,med Anund,11,Ög 129,Ög,Linköping,RAK,,0,,,0.21,27.0
+K039,med Anund,11,Ög 221,Ög,Törnevalla sn,Fp,,0,,,0.21,27.0
+K039,med Anund,11,Ög 223,Ög,Törnevalla sn,nan,,0,,,0.21,27.0
+K039,med Anund,11,Ög ATA6225/65,Ög,Vists sn,nan,,0,,,0.21,27.0
+K039,med Anund,11,Ög Fv1950;341,Ög,Sankt Lars sn (nu Linköping),Fp,,0,,,0.21,27.0
+K039,med Anund,11,Ög MÖLM1960;230,Ög,Törnevalla sn,nan,,0,,,0.21,27.0
+K039,med Anund,11,Ög NOR1994;27,Ög,Skärkinds sn,nan,,0,,,0.21,27.0
+K040,okänd hand,11,Vg 101,Vg,Flo sn,RAK,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 104,Vg,Sals sn,nan,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 108,Vg,Tängs sn,RAK,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 110,Vg,Vänersnäs sn,RAK,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 112,Vg,Ås sn,nan,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 113,Vg,Bjärby sn,RAK,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 114,Vg,Bjärby sn,nan,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 115,Vg,Grästorps köping (Tengene sn),nan,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 118,Vg,Slädene sn,Pr1,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 119,Vg,Sparlösa sn,nan,,0,,,0.091,25.2
+K040,okänd hand,11,Vg 125,Vg,Södra Kedums sn,RAK,,0,,,0.091,25.2
+K041,med Fot 2,10,U 324,U,Skånela sn,Pr1,,0,Gunnar,0.836,0.492,29.5
+K041,med Fot 2,10,U 428,U,Norrsunda sn,Pr3,Fot 2,0,,,0.492,29.5
+K041,med Fot 2,10,U 448,U,Odensala sn,nan,Fot 2,0,,,0.492,29.5
+K041,med Fot 2,10,U 455,U,Odensala sn,Pr4,Fot 2,0,,,0.492,29.5
+K041,med Fot 2,10,U 458,U,Haga sn,nan,,0,Öpir 1,0.368,0.492,29.5
+K041,med Fot 2,10,U 482,U,Lagga sn,nan,,0,Fot 2,0.736,0.492,29.5
+K041,med Fot 2,10,U 484,U,Lagga sn,Pr2,,0,Fot 2,0.592,0.492,29.5
+K041,med Fot 2,10,U 843,U,Dalby sn,nan,,0,Fot 2,0.849,0.492,29.5
+K041,med Fot 2,10,U 997,U,Funbo sn,Pr4,,0,Fot 2,0.568,0.492,29.5
+K041,med Fot 2,10,U Fv1953;274,U,Skånela sn,Pr2,,0,Fot 2,0.512,0.492,29.5
+K042,blandad,10,U 108,U,Eds sn,nan,,0,Gunnar,0.535,0.448,29.5
+K042,blandad,10,U 160,U,Täby sn,Pr1,,0,Gunnar,0.901,0.448,29.5
+K042,blandad,10,U 17,U,Ekerö sn,Pr2,,0,Visäte,0.272,0.448,29.5
+K042,blandad,10,U 25,U,Hilleshögs sn,nan,,0,Balle,0.326,0.448,29.5
+K042,blandad,10,U 276,U,Hammarby sn,Pr1,,0,Gunnar,0.805,0.448,29.5
+K042,blandad,10,U 37,U,Sånga sn,Pr2,Torbjörn skald,1,,,0.448,29.5
+K042,blandad,10,U 56,U,Stockholm,Pr2,,0,Åsmund,0.332,0.448,29.5
+K042,blandad,10,U 613,U,Västra Ryds sn,nan,Visäte,0,,,0.448,29.5
+K042,blandad,10,U 615,U,Västra Ryds sn,KB,,0,Balle,0.414,0.448,29.5
+K042,blandad,10,U 74,U,Spånga sn,Pr3,Visäte,1,,,0.448,29.5
+K043,blandad,10,Sö 213,Sö,Överselö sn,nan,Äsbjörn 1,1,,,0.421,28.0
+K043,blandad,10,U 647,U,Övergrans sn,nan,Balle,1,,,0.421,28.0
+K043,blandad,10,U 712,U,Kungs-Husby sn,nan,Balle,0,,,0.421,28.0
+K043,blandad,10,U 721,U,Löts sn,nan,Balle,1,,,0.421,28.0
+K043,blandad,10,U 744,U,Husby-Sjutolfts sn,Pr3,Balle,1,,,0.421,28.0
+K043,blandad,10,U 746,U,Husby-Sjutolfts sn,Pr4,,1,Balle,0.569,0.421,28.0
+K043,blandad,10,U 750,U,Husby-Sjutolfts sn,Pr3,Balle,1,,,0.421,28.0
+K043,blandad,10,U 753,U,Litslena sn,Pr3,Balle,1,,,0.421,28.0
+K043,blandad,10,U 770,U,Vårfrukyrka sn,Pr3,Balle,1,,,0.421,28.0
+K043,blandad,10,U 775,U,Enköpings-Näs sn,Pr4,Tidkume,1,,,0.421,28.0
+K044,blandad,10,U 478,U,Knivsta sn,Pr1,Torbjörn 2,0,,,0.301,28.2
+K044,blandad,10,U 611,U,Västra Ryds sn,Pr1,,0,Visäte,0.277,0.301,28.2
+K044,blandad,10,U 614,U,Västra Ryds sn,Pr3,Visäte,0,,,0.301,28.2
+K044,blandad,10,U 616,U,Västra Ryds sn,Pr1,,0,Öpir 1,0.465,0.301,28.2
+K044,blandad,10,U 636,U,Kalmar sn,Fp,,0,Öpir 1,0.354,0.301,28.2
+K044,blandad,10,U 644,U,Yttergrans sn,Fp,,0,Gunnar,0.242,0.301,28.2
+K044,blandad,10,U 654,U,Övergrans sn,Fp,,0,Erik,0.272,0.301,28.2
+K044,blandad,10,U 661,U,Håtuna sn,Fp,,0,Erik,0.48,0.301,28.2
+K044,blandad,10,U 668,U,Häggeby sn,Pr3,,1,Balle,0.356,0.301,28.2
+K044,blandad,10,U 812,U,Hjälsta sn,Pr2,Arbjörn,0,,,0.301,28.2
+K045,blandad,10,U 1067,U,Åkerby sn,Pr1,Brand,1,,,0.211,29.4
+K045,blandad,10,U 464,U,Vassunda sn,nan,Fot 2,1,,,0.211,29.4
+K045,blandad,10,U 489,U,Lagga sn,Pr4,Öpir 1,1,,,0.211,29.4
+K045,blandad,10,U 808,U,Fröslunda sn,Pr3,Balle,0,,,0.211,29.4
+K045,blandad,10,U 815,U,Hjälsta sn,Pr3,Balle,0,,,0.211,29.4
+K045,blandad,10,U 819,U,Kulla sn,Pr3,Balle,1,,,0.211,29.4
+K045,blandad,10,U 862,U,Balingsta sn,nan,Visäte,1,,,0.211,29.4
+K045,blandad,10,U 873,U,Gryta sn,Pr3,Balle,1,,,0.211,29.4
+K045,blandad,10,U 889,U,Ålands sn,Pr4,Öpir 1,0,,,0.211,29.4
+K045,blandad,10,U 973,U,Vaksala sn (nu Uppsala),Pr5,Öpir 1,1,,,0.211,29.4
+K046,blandad,9,U 682,U,Skoklosters sn,nan,Arbjörn,1,,,0.395,29.3
+K046,blandad,9,U 688,U,Skoklosters sn,nan,Arbjörn,1,,,0.395,29.3
+K046,blandad,9,U 751,U,Husby-Sjutolfts sn,Pr3,Balle,0,,,0.395,29.3
+K046,blandad,9,U 824,U,Holms sn,nan,Åsmund,1,,,0.395,29.3
+K046,blandad,9,U 825,U,Holms sn,Pr4,,0,Öpir 1,0.458,0.395,29.3
+K046,blandad,9,U 847,U,Västeråkers sn,Pr4,Åsmund,1,,,0.395,29.3
+K046,blandad,9,U 906,U,Vänge sn,Pr5,Öpir 1,0,,,0.395,29.3
+K046,blandad,9,U 926,U,Uppsala,nan,Öpir 1,1,,,0.395,29.3
+K046,blandad,9,U 958,U,Danmarks sn,nan,Torgöt Fotsarve,1,,,0.395,29.3
+K047,blandad,9,U 1153,U,Simtuna sn,Fp,Erik,0,,,0.391,29.9
+K047,blandad,9,U 1154,U,Simtuna sn,Fp,Erik,0,,,0.391,29.9
+K047,blandad,9,U 1163,U,Altuna sn,Pr2,,0,Traen,0.237,0.391,29.9
+K047,blandad,9,U 1172,U,Vittinge sn,Fp,Erik,0,,,0.391,29.9
+K047,blandad,9,U 755,U,Litslena sn,Fp,,0,Erik,0.982,0.391,29.9
+K047,blandad,9,U 768,U,Vårfrukyrka sn,Fp,Erik,0,,,0.391,29.9
+K047,blandad,9,U 805,U,Fröslunda sn,nan,Torbjörn 2,0,,,0.391,29.9
+K047,blandad,9,U 809,U,Fröslunda sn,Fp,Torbjörn 2,0,,,0.391,29.9
+K047,blandad,9,Vs 17,Vs,Tortuna sn,nan,Litle,0,,,0.391,29.9
+K048,blandad,9,U 462,U,Vassunda sn,nan,Öpir 1,1,,,0.389,29.5
+K048,blandad,9,U 818,U,Kulla sn,nan,Äskil 2,0,,,0.389,29.5
+K048,blandad,9,U 828,U,Fittja sn,Pr4,,1,Gunnar,0.411,0.389,29.5
+K048,blandad,9,U 859,U,Balingsta sn,Pr3,Åsmund,1,,,0.389,29.5
+K048,blandad,9,U 861,U,Balingsta sn,nan,Öpir 1,0,,,0.389,29.5
+K048,blandad,9,U 867,U,Gryta sn,nan,Likbjörn,0,,,0.389,29.5
+K048,blandad,9,U 901,U,Läby sn,nan,,0,Åsmund,0.829,0.389,29.5
+K048,blandad,9,U 947,U,Danmarks sn,nan,Äsbjörn 2,1,,,0.389,29.5
+K048,blandad,9,U 993,U,Funbo sn,Pr4,,1,Öpir 1,0.993,0.389,29.5
+K049,blandad,9,U 389,U,Sigtuna,Pr4,,0,Fot 2,0.678,0.351,29.9
+K049,blandad,9,U 658,U,Håtuna sn,nan,,0,Fot 2,0.676,0.351,29.9
+K049,blandad,9,U 665,U,Häggeby sn,Pr2,,0,Arbjörn,0.503,0.351,29.9
+K049,blandad,9,U 685,U,Skoklosters sn,Pr2,,0,Fot 2,0.649,0.351,29.9
+K049,blandad,9,U 686,U,Skoklosters sn,Pr2,,0,Fot 2,0.311,0.351,29.9
+K049,blandad,9,U 813,U,Hjälsta sn,nan,,0,Balle,0.652,0.351,29.9
+K049,blandad,9,U 814,U,Hjälsta sn,Pr3,Fot 2,0,,,0.351,29.9
+K049,blandad,9,U Fv1976;104,U,Uppsala,nan,Likbjörn,1,,,0.351,29.9
+K049,blandad,9,U Fv1990;32B,U,Funbo sn,nan,,0,Öpir 1,0.542,0.351,29.9
+K050,blandad,9,Sö 10,Sö,Frustuna sn,Fp,Tore 1,0,,,0.343,29.3
+K050,blandad,9,Sö 19,Sö,Hölö sn,Pr3,,0,Tore 1,0.278,0.343,29.3
+K050,blandad,9,Sö 347,Sö,Ytterjärna sn,Pr3,,1,Tore 1,0.24,0.343,29.3
+K050,blandad,9,Sö 349,Sö,Ytterjärna sn,nan,,0,Tore 1,0.239,0.343,29.3
+K050,blandad,9,Sö 35,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),Pr2,Tore 1,1,,,0.343,29.3
+K050,blandad,9,Sö 350,Sö,Ytterjärna sn,Fp,Traen,0,,,0.343,29.3
+K050,blandad,9,Sö 38,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),nan,,0,Traen,0.474,0.343,29.3
+K050,blandad,9,Sö 43,Sö,Västerljungs sn,nan,,0,Halvdan,0.268,0.343,29.3
+K050,blandad,9,Sö 7,Sö,Björnlunda sn,nan,Öpir 2,0,,,0.343,29.3
+K051,blandad,9,Sö 11,Sö,Gryts sn,Pr2,Öpir 2,1,,,0.282,28.3
+K051,blandad,9,Sö 125,Sö,Bogsta sn,nan,,0,Balle,0.449,0.282,28.3
+K051,blandad,9,Sö 134,Sö,Ludgo sn,RAK,,0,Tore 1,0.371,0.282,28.3
+K051,blandad,9,Sö 139,Sö,Ludgo sn,nan,,1,Balle,0.474,0.282,28.3
+K051,blandad,9,Sö 143,Sö,Runtuna sn,KB,Tore 1,0,,,0.282,28.3
+K051,blandad,9,Sö 16,Sö,Kattnäs sn,nan,,0,Balle,0.663,0.282,28.3
+K051,blandad,9,Sö 165,Sö,Spelviks sn,nan,,0,Traen,0.383,0.282,28.3
+K051,blandad,9,Sö 318,Sö,Helgesta sn,Pr2,,0,Balle,0.441,0.282,28.3
+K051,blandad,9,Sö 9,Sö,Dillnäs sn (nu Gåsinge-Dillnäs),Fp,Traen,0,,,0.282,28.3
+K052,blandad,9,U 1008,U,Rasbo sn,Pr4,,0,Öpir 1,0.542,0.246,25.3
+K052,blandad,9,U 1028,U,Lena sn,nan,,0,Öpir 1,0.462,0.246,25.3
+K052,blandad,9,U 1036,U,Tensta sn,Pr4,Öpir 1,0,,,0.246,25.3
+K052,blandad,9,U 1094,U,Bälinge sn,Pr4,,0,Öpir 1,0.397,0.246,25.3
+K052,blandad,9,U 1122,U,Stavby sn,Pr4,,0,Öpir 1,0.569,0.246,25.3
+K052,blandad,9,U 896,U,Bondkyrka sn (nu Uppsala),nan,Öpir 1,1,,,0.246,25.3
+K052,blandad,9,U 940,U,Uppsala,Pr3,,1,Öpir 1,0.545,0.246,25.3
+K052,blandad,9,U 960,U,Vaksala sn,nan,Tore 2,0,,,0.246,25.3
+K052,blandad,9,U Fv1973;194,U,Uppsala,Pr4,,0,Åsmund,0.674,0.246,25.3
+K053,blandad,9,Sö 21,Sö,Mörkö sn,nan,,0,Öpir 1,0.36,0.241,29.0
+K053,blandad,9,Sö 235,Sö,Sorunda sn,Pr3,Halvdan,0,,,0.241,29.0
+K053,blandad,9,Sö 28,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),nan,,0,Traen,0.685,0.241,29.0
+K053,blandad,9,Sö 295,Sö,Grödinge sn,nan,,0,Halvdan,0.615,0.241,29.0
+K053,blandad,9,Sö 307,Sö,Södertälje,RAK,,0,Traen,0.416,0.241,29.0
+K053,blandad,9,Sö 308,Sö,Södertälje,Pr5,Öpir 1,1,,,0.241,29.0
+K053,blandad,9,Sö 309,Sö,Södertälje,nan,,0,Halvdan,0.579,0.241,29.0
+K053,blandad,9,Sö 339,Sö,Turinge sn,RAK,,0,Halvdan,0.543,0.241,29.0
+K053,blandad,9,Sö 345,Sö,Ytterjärna sn,nan,,0,Halvdan,0.576,0.241,29.0
+K054,okänd hand,9,Sm 100,Sm,Nävelsjö sn,nan,,0,,,0.125,30.0
+K054,okänd hand,9,Sm 107,Sm,Vetlanda,nan,,0,,,0.125,30.0
+K054,okänd hand,9,Sm 113,Sm,Vetlanda landsförsamling,nan,,0,,,0.125,30.0
+K054,okänd hand,9,Sm 142,Sm,Mellby sn,nan,,0,,,0.125,30.0
+K054,okänd hand,9,Sm 143,Sm,Mellby sn,nan,,0,,,0.125,30.0
+K054,okänd hand,9,Sm 69,Sm,Fröderyds sn,nan,,0,,,0.125,30.0
+K054,okänd hand,9,Sm 89,Sm,Alseda sn,nan,,0,,,0.125,30.0
+K054,okänd hand,9,Sm 92,Sm,Björkö sn,nan,,0,,,0.125,30.0
+K054,okänd hand,9,Sm SvS1973;4,Sm,Mellby sn,nan,,0,,,0.125,30.0
+K055,med Torkel,9,Ög 132,Ög,Heda sn,nan,,0,,,0.111,29.9
+K055,med Torkel,9,Ög 136,Ög,Röks sn,RAK,,0,,,0.111,29.9
+K055,med Torkel,9,Ög 67,Ög,Ekeby sn,RAK,,0,,,0.111,29.9
+K055,med Torkel,9,Ög 68,Ög,Ekeby sn,RAK,,0,,,0.111,29.9
+K055,med Torkel,9,Ög 8,Ög,Västra Stenby sn,RAK,,0,,,0.111,29.9
+K055,med Torkel,9,Ög 81,Ög,Högby sn,Pr1,Torkel,1,,,0.111,29.9
+K055,med Torkel,9,Ög 82,Ög,Högby sn,RAK,Torkel,1,,,0.111,29.9
+K055,med Torkel,9,Ög 83,Ög,Högby sn,nan,Torkel,0,,,0.111,29.9
+K055,med Torkel,9,Ög 94,Ög,Väderstads sn,Pr1,,0,,,0.111,29.9
+K056,okänd hand,9,Sm 101,Sm,Nävelsjö sn,nan,,0,,,0.053,27.6
+K056,okänd hand,9,Sm 105,Sm,Vetlanda,nan,,0,,,0.053,27.6
+K056,okänd hand,9,Sm 73,Sm,Skepperstads sn,nan,,0,,,0.053,27.6
+K056,okänd hand,9,Sm 76,Sm,Sävsjö (f.d. Norra Ljunga sn),nan,,0,,,0.053,27.6
+K056,okänd hand,9,Sm 77,Sm,Sävsjö (f.d. Norra Ljunga sn),nan,,0,,,0.053,27.6
+K056,okänd hand,9,Sm 78,Sm,Sävsjö (Vallsjö sn),nan,,0,,,0.053,27.6
+K056,okänd hand,9,Sm 80,Sm,Sävsjö (Vallsjö sn),nan,,0,,,0.053,27.6
+K056,okänd hand,9,Sm 96,Sm,Lannaskede sn,nan,,0,,,0.053,27.6
+K056,okänd hand,9,Sm 99,Sm,Myresjö sn,nan,,0,,,0.053,27.6
+K057,med Arbjörn,8,U 304,U,Skånela sn,nan,,0,Fot 2,0.23,0.592,29.3
+K057,med Arbjörn,8,U 384,U,Sigtuna,nan,,0,Öpir 1,0.706,0.592,29.3
+K057,med Arbjörn,8,U 626,U,Håbo-Tibble sn,nan,,0,Arbjörn,0.295,0.592,29.3
+K057,med Arbjörn,8,U 651,U,Övergrans sn,Pr2,Arbjörn,0,,,0.592,29.3
+K057,med Arbjörn,8,U 655,U,Håtuna sn,Pr2,Arbjörn,0,,,0.592,29.3
+K057,med Arbjörn,8,U 689,U,Skoklosters sn,Pr2,Arbjörn,0,,,0.592,29.3
+K057,med Arbjörn,8,U 817,U,Hjälsta sn,nan,Arbjörn,0,,,0.592,29.3
+K057,med Arbjörn,8,U 845,U,Dalby sn,Pr2,Arbjörn,0,,,0.592,29.3
+K058,blandad,8,U 107,U,Eds sn,nan,,0,Öpir 1,0.664,0.481,28.8
+K058,blandad,8,U 285,U,Hammarby sn,Pr4,Fot 2,0,,,0.481,28.8
+K058,blandad,8,U 297,U,Skånela sn,Pr4,,0,Fot 2,0.958,0.481,28.8
+K058,blandad,8,U 300,U,Skånela sn,nan,Fot 2,0,,,0.481,28.8
+K058,blandad,8,U 480,U,Alsike sn,Pr3,Fot 2,0,,,0.481,28.8
+K058,blandad,8,U 641,U,Yttergrans sn (nu Övergrans sn),Pr3,Fot 2,0,,,0.481,28.8
+K058,blandad,8,U 653,U,Övergrans sn,nan,Arbjörn,0,,,0.481,28.8
+K058,blandad,8,U 656,U,Håtuna sn,Pr2,,0,Arbjörn,0.587,0.481,28.8
+K059,med Fot 2,8,U 1120,U,Skuttunge sn,nan,,0,Öpir 1,0.586,0.466,28.8
+K059,med Fot 2,8,U 878,U,Hagby sn,Pr3,,0,Fot 2,0.378,0.466,28.8
+K059,med Fot 2,8,U 881,U,Skogstibble sn (nu Skogs-Tibble),nan,,0,Balle,0.25,0.466,28.8
+K059,med Fot 2,8,U 908,U,Vänge sn,Pr4,,0,Öpir 1,0.347,0.466,28.8
+K059,med Fot 2,8,U 937,U,Uppsala,Pr3,Fot 2,0,,,0.466,28.8
+K059,med Fot 2,8,U 955,U,Danmarks sn,nan,Fot 2,0,,,0.466,28.8
+K059,med Fot 2,8,U 980,U,Gamla Uppsala sn (nu Uppsala),nan,Fot 2,0,,,0.466,28.8
+K059,med Fot 2,8,U 991,U,Funbo sn,nan,Fot 2,0,,,0.466,28.8
+K060,med Amunde,8,Sö 20,Sö,Hölö sn,nan,,0,Halvdan,0.337,0.373,27.5
+K060,med Amunde,8,Sö 224,Sö,Sorunda sn,Fp,,0,Amunde,0.563,0.373,27.5
+K060,med Amunde,8,Sö 226,Sö,Sorunda sn,Fp,Amunde,0,,,0.373,27.5
+K060,med Amunde,8,Sö 29,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),nan,,0,Traen,0.762,0.373,27.5
+K060,med Amunde,8,Sö 293,Sö,Grödinge sn,nan,,0,Amunde,0.32,0.373,27.5
+K060,med Amunde,8,Sö 31,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),nan,,0,Traen,0.393,0.373,27.5
+K060,med Amunde,8,Sö Fv1948;298,Sö,Ösmo sn,Pr1,,0,Halvdan,0.484,0.373,27.5
+K060,med Amunde,8,Sö Fv1971;208,Sö,Ösmo sn,nan,,0,Halvdan,0.267,0.373,27.5
+K061,blandad,8,Sö 202,Sö,Ytterselö sn,Fp,,0,Balle,0.396,0.264,29.9
+K061,blandad,8,Sö 205,Sö,Överselö sn,nan,,1,Balle,0.724,0.264,29.9
+K061,blandad,8,Sö 208,Sö,Överselö sn,nan,Äsbjörn,0,,,0.264,29.9
+K061,blandad,8,Sö 325,Sö,Härads sn,Pr2,,0,Balle,0.206,0.264,29.9
+K061,blandad,8,U 703,U,Veckholms sn,Pr3,Balle,0,,,0.264,29.9
+K061,blandad,8,U 716,U,Lillkyrka sn,Pr4,,0,Balle,0.335,0.264,29.9
+K061,blandad,8,U 720,U,Vallby sn,nan,Torbjörn 2,0,,,0.264,29.9
+K061,blandad,8,U 773,U,Enköpings-Näs sn,Pr3,,0,Balle,0.294,0.264,29.9
+K062,okänd hand,8,Ög 105,Ög,Kärna sn,RAK,,0,,,0.23,24.5
+K062,okänd hand,8,Ög 112,Ög,Landeryds sn,RAK,,0,,,0.23,24.5
+K062,okänd hand,8,Ög 128,Ög,Linköping,RAK,,0,,,0.23,24.5
+K062,okänd hand,8,Ög 181,Ög,Ledbergs sn,nan,,0,,,0.23,24.5
+K062,okänd hand,8,Ög 222,Ög,Törnevalla sn,nan,,0,,,0.23,24.5
+K062,okänd hand,8,Ög 224,Ög,Törnevalla sn,nan,,0,,,0.23,24.5
+K062,okänd hand,8,Ög 238,Ög,Vikingstads sn,RAK,,0,,,0.23,24.5
+K062,okänd hand,8,Ög 61,Ög,Flistads sn,RAK,,0,,,0.23,24.5
+K063,blandad,8,U 524,U,Länna sn,Pr2,Vidbjörn,1,,,0.209,29.7
+K063,blandad,8,U 530,U,Norrtälje,nan,Vidbjörn,0,,,0.209,29.7
+K063,blandad,8,U 568,U,Lohärads sn,nan,,0,Öpir 1,0.563,0.209,29.7
+K063,blandad,8,U 579,U,Estuna sn,Pr2,Vidbjörn,0,,,0.209,29.7
+K063,blandad,8,U 580,U,Estuna sn,nan,Vidbjörn,0,,,0.209,29.7
+K063,blandad,8,U 582,U,Söderby-Karls sn,nan,,0,Öpir 1,0.468,0.209,29.7
+K063,blandad,8,U 590,U,Knutby sn,nan,Östen 2,1,,,0.209,29.7
+K063,blandad,8,U Fv1992;169,U,Ununge sn,RAK,,0,Fot 2,0.329,0.209,29.7
+K064,okänd hand,8,Ög 107,Ög,Kärna sn,nan,,0,,,0.195,27.6
+K064,okänd hand,8,Ög 117,Ög,Slaka sn,RAK,,0,,,0.195,27.6
+K064,okänd hand,8,Ög 120,Ög,Slaka sn,RAK,,0,,,0.195,27.6
+K064,okänd hand,8,Ög 168,Ög,Skänninge,RAK,,0,,,0.195,27.6
+K064,okänd hand,8,Ög 191,Ög,Vikingstads sn,nan,,0,,,0.195,27.6
+K064,okänd hand,8,Ög 196,Ög,Mjölby sn,nan,,0,,,0.195,27.6
+K064,okänd hand,8,Ög 197,Ög,Mjölby sn,nan,,0,,,0.195,27.6
+K064,okänd hand,8,Ög 37,Ög,Fornåsa sn,nan,,0,,,0.195,27.6
+K065,blandad,8,Sö 360,Sö,Blacksta sn,RAK,,0,Traen,0.837,0.166,28.3
+K065,blandad,8,Sö 47,Sö,Nykyrka sn,nan,,0,Traen,0.648,0.166,28.3
+K065,blandad,8,Sö 49,Sö,Stigtomta sn,Fp,Traen,0,,,0.166,28.3
+K065,blandad,8,Sö 54,Sö,Blacksta sn,Pr2,Stenkil,1,,,0.166,28.3
+K065,blandad,8,Sö 55,Sö,Blacksta sn,Pr2,,1,Traen,0.762,0.166,28.3
+K065,blandad,8,Sö 60,Sö,Husby-Oppunda sn,KB,,0,Traen,0.408,0.166,28.3
+K065,blandad,8,Sö 64,Sö,Stora Malms sn,Pr1,,0,,,0.166,28.3
+K065,blandad,8,Sö 65,Sö,Stora Malms sn,Pr1,,0,Traen,0.917,0.166,28.3
+K066,okänd hand,8,Vg 158,Vg,Fänneslunda sn,Pr1,,0,,,0.161,29.5
+K066,okänd hand,8,Vg 162,Vg,Möne sn,Fp,,0,,,0.161,29.5
+K066,okänd hand,8,Vg 175,Vg,Dalums sn,RAK,,0,,,0.161,29.5
+K066,okänd hand,8,Vg 178,Vg,Kölaby sn,Pr1,,0,,,0.161,29.5
+K066,okänd hand,8,Vg 179,Vg,Kölaby sn,Fp,,0,,,0.161,29.5
+K066,okänd hand,8,Vg 181,Vg,Norra Åsarps sn,Pr1,,0,,,0.161,29.5
+K066,okänd hand,8,Vg 187,Vg,Vists sn (nu Ulricehamn),RAK,,0,,,0.161,29.5
+K066,okänd hand,8,Vg 197,Vg,Dalums sn,nan,,0,,,0.161,29.5
+K067,blandad,8,Sö 223,Sö,Sorunda sn,Fp,,0,Halvdan,0.463,0.153,28.3
+K067,blandad,8,Sö 234,Sö,Sorunda sn,nan,,0,Amunde,0.483,0.153,28.3
+K067,blandad,8,Sö 237,Sö,Västerhaninge sn,nan,Halvdan,0,,,0.153,28.3
+K067,blandad,8,Sö 254,Sö,Ösmo sn,Fp,Amunde,0,,,0.153,28.3
+K067,blandad,8,Sö 260,Sö,Österhaninge sn,nan,Björn 2 eller -björn,0,,,0.153,28.3
+K067,blandad,8,Sö 272,Sö,Österhaninge sn,nan,Halvdan,0,,,0.153,28.3
+K067,blandad,8,Sö 291,Sö,Grödinge sn,Pr2,,0,Halvdan,0.473,0.153,28.3
+K067,blandad,8,Sö Fv1954;20,Sö,Grödinge sn,RAK,Björn 3,1,,,0.153,28.3
+K068,med Oddvar,8,Öl 2,Öl,Algutsrums sn,Pr3,,0,,,0.148,25.1
+K068,med Oddvar,8,Öl 31,Öl,Runstens sn,Pr3,,0,,,0.148,25.1
+K068,med Oddvar,8,Öl 43,Öl,Gärdslösa sn,nan,Oddvar,1,,,0.148,25.1
+K068,med Oddvar,8,Öl 44,Öl,Bredsätra sn (nu Bredsättra),nan,,0,,,0.148,25.1
+K068,med Oddvar,8,Öl 46,Öl,Köpings sn,nan,,0,,,0.148,25.1
+K068,med Oddvar,8,Öl ATA4703/43,Öl,Köpings sn,nan,,0,,,0.148,25.1
+K068,med Oddvar,8,Öl Köping2,Öl,Köpings sn,nan,,0,,,0.148,25.1
+K068,med Oddvar,8,Öl Köping20,Öl,Köpings sn,nan,,0,,,0.148,25.1
+K069,med Gunnar,7,U 200,U,Vada sn,RAK,Gunnar,0,,,0.508,28.2
+K069,med Gunnar,7,U 323,U,Skånela sn,RAK,Gunnar,0,,,0.508,28.2
+K069,med Gunnar,7,U 338,U,Orkesta sn,RAK,Gunnar,0,,,0.508,28.2
+K069,med Gunnar,7,U 341,U,Orkesta sn,RAK,Gunnar,0,,,0.508,28.2
+K069,med Gunnar,7,U 371,U,Skepptuna sn,RAK,Gunnar,0,,,0.508,28.2
+K069,med Gunnar,7,U 490,U,Lagga sn,RAK,Gunnar,0,,,0.508,28.2
+K069,med Gunnar,7,U 512,U,Fasterna sn,RAK,Gunnar,0,,,0.508,28.2
+K070,blandad,7,U 657,U,Håtuna sn,Pr2,,0,Balle,0.389,0.473,29.6
+K070,blandad,7,U 663,U,Håtuna sn,nan,,0,Öpir 1,0.864,0.473,29.6
+K070,blandad,7,U 684,U,Skoklosters sn,Pr4,Öpir 1,0,,,0.473,29.6
+K070,blandad,7,U 910,U,Vänge sn,Pr4,,0,Öpir 1,0.845,0.473,29.6
+K070,blandad,7,U 913,U,Börje sn,Pr4,Sven 4,1,,,0.473,29.6
+K070,blandad,7,U 952,U,Danmarks sn,Pr4,Öpir 1,0,,,0.473,29.6
+K070,blandad,7,U 959,U,Vaksala sn,Pr5,Öpir 1,0,,,0.473,29.6
+K071,blandad,7,U 1156,U,Simtuna sn,Fp,Erik,0,,,0.432,29.3
+K071,blandad,7,U 642,U,Yttergrans sn,Pr4,Fot 2,0,,,0.432,29.3
+K071,blandad,7,U 643,U,Yttergrans sn,Pr4,,0,Fot 2,0.867,0.432,29.3
+K071,blandad,7,U 732,U,Villberga sn,Fp,,0,Erik,0.789,0.432,29.3
+K071,blandad,7,U 762,U,Vårfrukyrka sn,Fp,Erik,0,,,0.432,29.3
+K071,blandad,7,U 831,U,Giresta sn,nan,,0,Livsten,0.507,0.432,29.3
+K071,blandad,7,Vs 15,Vs,Björksta sn,Pr4,Balle,1,,,0.432,29.3
+K072,blandad,7,U 409,U,Sankt Olovs sn (Sankt Olof) (nu Odensala sn),Pr3,,0,Åsmund,0.73,0.397,26.3
+K072,blandad,7,U 645,U,Yttergrans sn,Pr3,Åsmund,0,,,0.397,26.3
+K072,blandad,7,U 650,U,Övergrans sn,nan,Balle,0,,,0.397,26.3
+K072,blandad,7,U 724,U,Löts sn,Pr3,Balle,0,,,0.397,26.3
+K072,blandad,7,U 857,U,Balingsta sn,Fp,Erik,0,,,0.397,26.3
+K072,blandad,7,U 860,U,Balingsta sn,Pr3,Åsmund,0,,,0.397,26.3
+K072,blandad,7,U 866,U,Gryta sn,nan,Åsmund,0,,,0.397,26.3
+K073,okänd hand,7,Sö 317,Sö,Flens sn,Fp,,0,,,0.357,25.0
+K073,okänd hand,7,Sö 57,Sö,Blacksta sn,nan,,0,Traen,0.392,0.357,25.0
+K073,okänd hand,7,Sö 58,Sö,Floda sn,nan,,0,,,0.357,25.0
+K073,okänd hand,7,Sö 63,Sö,Stora Malms sn,Fp,,0,,,0.357,25.0
+K073,okänd hand,7,Sö 68,Sö,Sköldinge sn,Fp,,0,,,0.357,25.0
+K073,okänd hand,7,Sö 69,Sö,Sköldinge sn,nan,,0,,,0.357,25.0
+K073,okänd hand,7,Sö Fv1984;253,Sö,Bettna sn,nan,,0,Halvdan,0.383,0.357,25.0
+K074,blandad,7,U 723,U,Löts sn,Pr3,Balle,0,,,0.335,27.0
+K074,blandad,7,U 729,U,Löts sn,Pr3,Balle,1,,,0.335,27.0
+K074,blandad,7,U 757,U,Litslena sn,nan,Balle,0,,,0.335,27.0
+K074,blandad,7,U 800,U,Långtora sn,nan,Tidkume,0,,,0.335,27.0
+K074,blandad,7,U 836,U,Nysätra sn,Pr4,,0,Fot 2,0.377,0.335,27.0
+K074,blandad,7,U 840,U,Dalby sn,Pr4,Öpir 1,0,,,0.335,27.0
+K074,blandad,7,U 887,U,Skogstibble sn (nu Skogs-Tibble),Pr4,Örik,1,,,0.335,27.0
+K075,blandad,7,U 129,U,Danderyds sn,nan,,0,Öpir 1,0.632,0.284,29.3
+K075,blandad,7,U 150,U,Täby sn,nan,,0,Fot 2,0.777,0.284,29.3
+K075,blandad,7,U 23,U,Hilleshögs sn,Pr5,Öpir 1,1,,,0.284,29.3
+K075,blandad,7,U 314,U,Skånela sn,nan,-fast,0,,,0.284,29.3
+K075,blandad,7,U 322,U,Skånela sn,nan,Åsmund,0,,,0.284,29.3
+K075,blandad,7,U 382,U,Sigtuna,Pr4,Sven 1,1,,,0.284,29.3
+K075,blandad,7,U 95,U,Sollentuna sn,RAK,,0,Gunnar,0.35,0.284,29.3
+K076,med Balle,7,Sö 105,Sö,Kjula sn,Fp,,0,Balle,0.5,0.134,28.4
+K076,med Balle,7,Sö 362,Sö,Tumbo sn,KB,,0,Balle,0.281,0.134,28.4
+K076,med Balle,7,Sö 76,Sö,Lista sn,Fp,,0,Balle,0.824,0.134,28.4
+K076,med Balle,7,Sö 85,Sö,Tumbo sn,KB,,0,Balle,0.511,0.134,28.4
+K076,med Balle,7,Sö 92,Sö,Husby-Rekarne sn,nan,Balle,1,,,0.134,28.4
+K076,med Balle,7,Vs 1,Vs,Rytterns sn (Rytterne),Pr1,,0,Balle,0.306,0.134,28.4
+K076,med Balle,7,Vs 4,Vs,Dingtuna sn,nan,,0,Balle,0.505,0.134,28.4
+K077,med Gunnar,6,U 349,U,Frösunda sn,RAK,Gunnar,0,,,0.589,24.8
+K077,med Gunnar,6,U 358,U,Skepptuna sn,RAK,Gunnar,0,,,0.589,24.8
+K077,med Gunnar,6,U 504,U,Närtuna sn,RAK,Gunnar,0,,,0.589,24.8
+K077,med Gunnar,6,U 518,U,Skederids sn,RAK,Gunnar,0,,,0.589,24.8
+K077,med Gunnar,6,U 539,U,Husby-Lyhundra sn (nu Husby-Sjuhundra),RAK,Gunnar,0,,,0.589,24.8
+K077,med Gunnar,6,U 540,U,Husby-Lyhundra sn (nu Husby-Sjuhundra),Pr4,,0,Åsmund,0.609,0.589,24.8
+K078,med Erik,6,U 1151,U,Frösthults sn,Fp,,0,Erik,0.837,0.582,24.4
+K078,med Erik,6,U 1157,U,Simtuna sn,Fp,Erik,0,,,0.582,24.4
+K078,med Erik,6,U 769,U,Vårfrukyrka sn,Fp,Erik,0,,,0.582,24.4
+K078,med Erik,6,U 774,U,Enköpings-Näs sn,Fp,Erik,0,,,0.582,24.4
+K078,med Erik,6,U 779,U,Svinnegarns sn,Fp,Erik,0,,,0.582,24.4
+K078,med Erik,6,U 793,U,Tillinge sn,Fp,Erik,0,,,0.582,24.4
+K079,blandad,6,U 238,U,Vallentuna sn,Pr3,Visäte,0,,,0.514,29.0
+K079,blandad,6,U 262,U,Fresta sn,nan,Öpir 1,1,,,0.514,29.0
+K079,blandad,6,U 460,U,Haga sn,Pr4,,0,Fot 2,0.811,0.514,29.0
+K079,blandad,6,U 618,U,Bro sn,Pr5,Öpir 1,0,,,0.514,29.0
+K079,blandad,6,U 633,U,Kalmar sn,nan,,0,Fot 2,0.523,0.514,29.0
+K079,blandad,6,U Fv1972;172,U,Hammarby sn,Pr4,Visäte,0,,,0.514,29.0
+K080,blandad,6,Sö 290,Sö,Brännkyrka sn,Pr2,Halvdan,0,,,0.488,27.5
+K080,blandad,6,Sö 292,Sö,Grödinge sn,Pr3,Halvdan,0,,,0.488,27.5
+K080,blandad,6,Sö 298,Sö,Grödinge sn,Pr3,Halvdan,0,,,0.488,27.5
+K080,blandad,6,Sö 304,Sö,Salems sn,Fp,Åsgöt,0,,,0.488,27.5
+K080,blandad,6,U 19,U,Ekerö sn,RAK,Torbjörn 2,0,,,0.488,27.5
+K080,blandad,6,U 57,U,Stockholm,Pr3,,0,Öpir 1,0.568,0.488,27.5
+K081,blandad,6,U 169,U,Östra Ryds sn,RAK,Gunnar,0,,,0.484,29.9
+K081,blandad,6,U 176,U,Österåkers sn,nan,Fot 2,0,,,0.484,29.9
+K081,blandad,6,U 215,U,Vallentuna sn,nan,,0,Öpir 1,0.438,0.484,29.9
+K081,blandad,6,U 274,U,Hammarby sn,nan,,0,Fot 2,0.584,0.484,29.9
+K081,blandad,6,U 51,U,Lovö sn,Pr3,Ärnfast,0,,,0.484,29.9
+K081,blandad,6,U 98,U,Sollentuna sn,nan,,0,Fot 2,0.353,0.484,29.9
+K082,blandad,6,U 301,U,Skånela sn,nan,Åsmund,1,,,0.456,28.7
+K082,blandad,6,U 343,U,Orkesta sn,nan,Åsmund,0,,,0.456,28.7
+K082,blandad,6,U 372,U,Skepptuna sn,Pr2,Åsmund,0,,,0.456,28.7
+K082,blandad,6,U 438,U,Husby-Ärlinghundra sn,nan,Åsmund,0,,,0.456,28.7
+K082,blandad,6,U 629,U,Håbo-Tibble sn,Pr3,Torfast,1,,,0.456,28.7
+K082,blandad,6,U 998,U,Funbo sn,Pr2,Åsmund,1,,,0.456,28.7
+K083,blandad,6,U 681,U,Skoklosters sn,nan,,0,Gunnar,0.443,0.378,29.8
+K083,blandad,6,U 875,U,Hagby sn,Pr3,Åsmund,0,,,0.378,29.8
+K083,blandad,6,U 909,U,Vänge sn,nan,Grim skald,0,,,0.378,29.8
+K083,blandad,6,U 920,U,Jumkils sn,KB,,0,Gunnar,0.486,0.378,29.8
+K083,blandad,6,U 942,U,Uppsala,nan,Äsbjörn 2,0,,,0.378,29.8
+K083,blandad,6,U 987,U,Funbo sn,Pr3,Torfast,0,,,0.378,29.8
+K084,blandad,6,U 14,U,Munsö sn,Pr1,,0,Öpir 1,0.278,0.364,29.8
+K084,blandad,6,U 43,U,Skå sn,Pr3,Ärnfast,1,,,0.364,29.8
+K084,blandad,6,U 637,U,Kalmar sn,Pr2,,0,Öpir 1,0.227,0.364,29.8
+K084,blandad,6,U 79,U,Spånga sn,Pr3,Ärnfast,1,,,0.364,29.8
+K084,blandad,6,U 88,U,Järfälla sn,nan,,0,Fot 2,0.583,0.364,29.8
+K084,blandad,6,U Fv1953;266,U,Spånga sn,Pr3,Snare,1,,,0.364,29.8
+K085,med Torkel,6,Ög 165,Ög,Skänninge,RAK,Torkel,1,,,0.351,27.0
+K085,med Torkel,6,Ög 188,Ög,Vikingstads sn,nan,,0,,,0.351,27.0
+K085,med Torkel,6,Ög 189,Ög,Vikingstads sn,Fp,,0,,,0.351,27.0
+K085,med Torkel,6,Ög 204,Ög,Viby sn,nan,,0,,,0.351,27.0
+K085,med Torkel,6,Ög 64,Ög,Bjälbo sn,nan,,0,,,0.351,27.0
+K085,med Torkel,6,Ög 70,Ög,Ekeby sn,RAK,,0,,,0.351,27.0
+K086,med Äsbjörn,6,Sö 204,Sö,Överselö sn,Pr4,Äsbjörn,0,,,0.341,29.3
+K086,med Äsbjörn,6,Sö 206,Sö,Överselö sn,Pr4,Äsbjörn,0,,,0.341,29.3
+K086,med Äsbjörn,6,Sö 333,Sö,Åkers sn,Fp,,1,Balle,0.407,0.341,29.3
+K086,med Äsbjörn,6,Sö 96,Sö,Jäders sn,Fp,,0,Balle,0.666,0.341,29.3
+K086,med Äsbjörn,6,Sö Fv1986;218,Sö,Kjula sn,Fp,,0,Balle,0.421,0.341,29.3
+K086,med Äsbjörn,6,U 692,U,Arnö sn (nu Aspö sn),Pr4,,1,Balle,0.43,0.341,29.3
+K087,blandad,6,Sö 283,Sö,Botkyrka sn,nan,,0,Halvdan,0.501,0.336,27.1
+K087,blandad,6,Sö 285,Sö,Botkyrka sn,Pr2,,0,Halvdan,0.354,0.336,27.1
+K087,blandad,6,Sö 303,Sö,Salems sn,nan,Åsgöt,0,,,0.336,27.1
+K087,blandad,6,U 10,U,Adelsö sn,nan,,0,Öpir 1,0.283,0.336,27.1
+K087,blandad,6,U 103,U,Sollentuna sn,Pr1,Gunnar,0,,,0.336,27.1
+K087,blandad,6,U 82,U,Järfälla sn,nan,,0,Fot 2,0.661,0.336,27.1
+K088,blandad,6,U 179,U,Riala sn,Pr5,Öpir 1,1,,,0.33,29.8
+K088,blandad,6,U 544,U,Husby-Lyhundra sn (nu Husby-Sjuhundra),Pr5,Öpir 1,1,,,0.33,29.8
+K088,blandad,6,U 560,U,Malsta sn,Pr5,Öpir 1,0,,,0.33,29.8
+K088,blandad,6,U 567,U,Lohärads sn,Pr2,Östen 2,0,,,0.33,29.8
+K088,blandad,6,U 574,U,Estuna sn,Pr2,Vidbjörn,0,,,0.33,29.8
+K088,blandad,6,U 588,U,Edsbro sn,nan,,0,Öpir 1,0.573,0.33,29.8
+K089,blandad,6,Sö 240,Sö,Västerhaninge sn,Fp,Amunde,0,,,0.329,29.5
+K089,blandad,6,Sö 250,Sö,Ösmo sn,Fp,,0,Amunde,0.379,0.329,29.5
+K089,blandad,6,Sö 251,Sö,Ösmo sn,Pr2,Östen 2,0,,,0.329,29.5
+K089,blandad,6,Sö 253,Sö,Ösmo sn,Pr3,,0,Halvdan,0.396,0.329,29.5
+K089,blandad,6,Sö 305,Sö,Botkyrka sn,Pr3,,0,Halvdan,0.397,0.329,29.5
+K089,blandad,6,Sö 343,Sö,Tveta sn,KB,,0,Amunde,0.297,0.329,29.5
+K090,blandad,6,U 1013,U,Ärentuna sn,nan,Vidbjörn,0,,,0.318,22.9
+K090,blandad,6,U 1045,U,Björklinge sn,nan,,0,Likbjörn,0.35,0.318,22.9
+K090,blandad,6,U 1058,U,Björklinge sn,nan,,1,Öpir 1,0.881,0.318,22.9
+K090,blandad,6,U 1100,U,Bälinge sn,Pr4,Öpir 1,1,,,0.318,22.9
+K090,blandad,6,U 890,U,Ålands sn,Pr4,,0,Öpir 1,0.744,0.318,22.9
+K090,blandad,6,U 970,U,Vaksala sn (nu Uppsala),Pr5,Öpir 1,1,,,0.318,22.9
+K091,med Åsmund,6,Sö 282,Sö,Botkyrka sn,nan,,0,Halvdan,0.575,0.313,28.7
+K091,med Åsmund,6,Sö 302,Sö,Salems sn,nan,Åsmund,0,,,0.313,28.7
+K091,med Åsmund,6,Sö 346,Sö,Ytterjärna sn,Fp,,0,Amunde,0.266,0.313,28.7
+K091,med Åsmund,6,U 35,U,Sånga sn,Pr2,,0,Fot 2,0.48,0.313,28.7
+K091,med Åsmund,6,U 48,U,Lovö sn,Pr4,,0,Öpir 1,0.587,0.313,28.7
+K091,med Åsmund,6,U 50,U,Lovö sn,nan,,0,Öpir 1,0.616,0.313,28.7
+K092,blandad,6,U 1066,U,Åkerby sn,Pr1,Brand,0,,,0.293,29.3
+K092,blandad,6,U 1090,U,Bälinge sn,nan,,0,Öpir 1,0.855,0.293,29.3
+K092,blandad,6,U 479,U,Alsike sn,Pr1,Ulvkell,1,,,0.293,29.3
+K092,blandad,6,U 811,U,Hjälsta sn,Pr4,Torgöt Fotsarve,0,,,0.293,29.3
+K092,blandad,6,U 924,U,Uppsala,nan,,0,Öpir 1,0.621,0.293,29.3
+K092,blandad,6,U 964,U,Vaksala sn,Pr1,,0,Öpir 1,0.673,0.293,29.3
+K093,med Fartägn,6,M 1,M,Njurunda sn,Pr1,Fartägn,1,,,0.238,25.1
+K093,med Fartägn,6,M 11,M,Selångers sn,nan,,0,,,0.238,25.1
+K093,med Fartägn,6,M 14,M,Sättna sn,nan,,0,,,0.238,25.1
+K093,med Fartägn,6,M 15,M,Sköns sn,nan,,0,,,0.238,25.1
+K093,med Fartägn,6,M 3,M,Njurunda sn,nan,,0,,,0.238,25.1
+K093,med Fartägn,6,M 8,M,Tuna sn,nan,,0,,,0.238,25.1
+K094,blandad,6,Sö 262,Sö,Österhaninge sn,Pr3,Halvdan,0,,,0.227,28.0
+K094,blandad,6,Sö 289,Sö,Botkyrka sn,Pr2,,0,Halvdan,0.242,0.227,28.0
+K094,blandad,6,Sö ATA322-4237-2011,Sö,Österhaninge sn,nan,,0,Halvdan,0.258,0.227,28.0
+K094,blandad,6,U 124,U,Solna sn,Pr3,,0,Fot 2,0.679,0.227,28.0
+K094,blandad,6,U 419,U,Norrsunda sn,Pr2,,0,Åsmund,0.837,0.227,28.0
+K094,blandad,6,U 871,U,Gryta sn,Pr4,Åsmund,1,,,0.227,28.0
+K095,med þuliR,6,Sö 315,Sö,Dunkers sn,nan,,0,Balle,0.481,0.219,27.6
+K095,med þuliR,6,Sö 80,Sö,Torshälla sn,nan,þuliR,1,,,0.219,27.6
+K095,med þuliR,6,Sö 93,Sö,Husby-Rekarne sn,nan,,0,Balle,0.354,0.219,27.6
+K095,med þuliR,6,Sö 97,Sö,Jäders sn,nan,,0,Traen,0.378,0.219,27.6
+K095,med þuliR,6,Sö 98,Sö,Jäders sn,nan,,0,Balle,0.435,0.219,27.6
+K095,med þuliR,6,Sö NOR1998;22,Sö,Stenkvista sn,nan,,0,Balle,0.46,0.219,27.6
+K096,okänd hand,6,Sm 170,Sm,Ljungby,nan,,0,,,0.214,26.1
+K096,okänd hand,6,Sm 33,Sm,Hamneda sn,RAK,,0,,,0.214,26.1
+K096,okänd hand,6,Sm 35,Sm,Ljungby sn,RAK,,0,,,0.214,26.1
+K096,okänd hand,6,Sm 39,Sm,Ryssby sn,nan,,0,,,0.214,26.1
+K096,okänd hand,6,Sm 40,Sm,Ryssby sn,nan,,0,,,0.214,26.1
+K096,okänd hand,6,Sm 44,Sm,Södra Ljunga sn,RAK,,0,,,0.214,26.1
+K097,blandad,6,Sö 132,Sö,Lids sn,KB,,0,Traen,0.503,0.213,28.9
+K097,blandad,6,Sö 147,Sö,Runtuna sn,RAK,,0,Traen,0.906,0.213,28.9
+K097,blandad,6,Sö 36,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),KB,Tore 1,0,,,0.213,28.9
+K097,blandad,6,Sö 374,Sö,Tystberga sn,nan,Styvjald,1,,,0.213,28.9
+K097,blandad,6,Sö 40,Sö,Västerljungs sn,Pr2,Skamhals 2,1,,,0.213,28.9
+K097,blandad,6,Sö 42,Sö,Västerljungs sn,nan,,0,Traen,0.291,0.213,28.9
+K098,okänd hand,6,Ög 145,Ög,Dagsbergs sn,nan,,0,,,0.205,24.7
+K098,okänd hand,6,Ög 155,Ög,Styrstads sn,nan,,0,,,0.205,24.7
+K098,okänd hand,6,Ög 161,Ög,Kimstads sn,KB,,0,,,0.205,24.7
+K098,okänd hand,6,Ög 163,Ög,Kullerstads sn,nan,,0,,,0.205,24.7
+K098,okänd hand,6,Ög 30,Ög,Tåby sn (eg. Furingstads sn),Fp,,0,,,0.205,24.7
+K098,okänd hand,6,Ög Fv1970;310,Ög,Kullerstads sn,nan,,0,,,0.205,24.7
+K099,okänd hand,6,M 10,M,Selångers sn,nan,,0,,,0.172,22.7
+K099,okänd hand,6,M 17,M,Sköns sn,nan,,0,,,0.172,22.7
+K099,okänd hand,6,M 18,M,Timrå sn,nan,,0,,,0.172,22.7
+K099,okänd hand,6,M 4,M,Attmars sn,nan,,0,,,0.172,22.7
+K099,okänd hand,6,M 6,M,Tuna sn,nan,,0,,,0.172,22.7
+K099,okänd hand,6,M 9,M,Selångers sn,Pr3,,0,,,0.172,22.7
+K100,okänd hand,6,Vg 102,Vg,Håle sn,nan,,0,,,0.143,26.7
+K100,okänd hand,6,Vg 120,Vg,Sparlösa sn,nan,,0,,,0.143,26.7
+K100,okänd hand,6,Vg 18,Vg,Gösslunda sn,RAK,,0,,,0.143,26.7
+K100,okänd hand,6,Vg 19,Vg,Gösslunda sn,nan,,0,,,0.143,26.7
+K100,okänd hand,6,Vg 20,Vg,Gösslunda sn,RAK,,0,,,0.143,26.7
+K100,okänd hand,6,Vg 44,Vg,Skalunda sn,nan,,0,,,0.143,26.7
+K101,med Botbjärn,6,G 112,G,Ardre sn,nan,,0,,,0.022,27.2
+K101,med Botbjärn,6,G 136,G,Sjonhems sn,nan,Botbjärn,1,,,0.022,27.2
+K101,med Botbjärn,6,G 188,G,Mästerby sn,nan,,0,,,0.022,27.2
+K101,med Botbjärn,6,G 200,G,Atlingbo sn,Pr4,,0,,,0.022,27.2
+K101,med Botbjärn,6,G 203,G,Hogräns sn,Pr4,,0,,,0.022,27.2
+K101,med Botbjärn,6,G 80,G,Linde sn,Pr3,,0,,,0.022,27.2
+K102,med Fot 2,5,U 267,U,Fresta sn,Pr4,Fot 2,1,,,0.569,28.2
+K102,med Fot 2,5,U 335,U,Orkesta sn,Pr1,,0,Gunnar,0.77,0.569,28.2
+K102,med Fot 2,5,U 378,U,Vidbo sn,Pr4,,0,Öpir 1,0.441,0.569,28.2
+K102,med Fot 2,5,U 476,U,Knivsta sn,nan,,0,Gunnar,0.286,0.569,28.2
+K102,med Fot 2,5,U 506,U,Kårsta sn,nan,,0,Öpir 1,0.554,0.569,28.2
+K103,blandad,5,U 279,U,Hammarby sn,Pr4,Öpir 1,1,,,0.506,28.6
+K103,blandad,5,U 288,U,Hammarby sn,Pr5,Öpir 1,1,,,0.506,28.6
+K103,blandad,5,U 334,U,Orkesta sn,Pr4,Kättil 3,1,,,0.506,28.6
+K103,blandad,5,U 485,U,Lagga sn,Pr5,,1,Öpir 1,0.997,0.506,28.6
+K103,blandad,5,U 505,U,Kårsta sn,nan,,1,Öpir 1,0.865,0.506,28.6
+K104,med Balle,5,Sö 212,Sö,Överselö sn,Fp,Balle,0,,,0.48,26.1
+K104,med Balle,5,U 2,U,Adelsö sn,nan,Balle,0,,,0.48,26.1
+K104,med Balle,5,U 22,U,Färentuna sn,nan,,0,Gunnar,0.695,0.48,26.1
+K104,med Balle,5,U 690,U,Arnö sn (nu Kungs-Husby sn),Pr3,Balle,0,,,0.48,26.1
+K104,med Balle,5,U 722,U,Löts sn,nan,Balle,0,,,0.48,26.1
+K105,blandad,5,U 1018,U,Ärentuna sn,Pr4,,0,Öpir 1,0.626,0.459,29.0
+K105,blandad,5,U 1062,U,Viksta sn,Pr4,Ingulv,0,,,0.459,29.0
+K105,blandad,5,U 905,U,Vänge sn,nan,Likbjörn,0,,,0.459,29.0
+K105,blandad,5,U 931,U,Uppsala,nan,,0,Öpir 1,0.567,0.459,29.0
+K105,blandad,5,U 968,U,Vaksala sn (nu Uppsala),nan,,0,Öpir 1,0.534,0.459,29.0
+K106,med Balle,5,Sö 275,Sö,Strängnäs,nan,,0,Balle,0.842,0.454,29.3
+K106,med Balle,5,Sö 278,Sö,Strängnäs,nan,,0,Balle,0.8,0.454,29.3
+K106,med Balle,5,Sö 321,Sö,Fogdö sn,Fp,Balle,0,,,0.454,29.3
+K106,med Balle,5,U 731,U,Villberga sn,nan,Balle,0,,,0.454,29.3
+K106,med Balle,5,U 736,U,Villberga sn,nan,Balle,0,,,0.454,29.3
+K107,med Balle,5,Sö 189,Sö,Toresunds sn,nan,,0,Balle,0.586,0.417,29.7
+K107,med Balle,5,Sö 198,Sö,Ytterselö sn,Fp,Balle,0,,,0.417,29.7
+K107,med Balle,5,Sö 200,Sö,Ytterselö sn,Fp,Balle,0,,,0.417,29.7
+K107,med Balle,5,U 18,U,Ekerö sn,nan,,0,Gunnar,0.38,0.417,29.7
+K107,med Balle,5,U 631,U,Kalmar sn,nan,,0,Öpir 1,0.373,0.417,29.7
+K108,med Tore 1,5,Sö 127,Sö,Bogsta sn,nan,,0,Balle,0.246,0.417,26.3
+K108,med Tore 1,5,Sö 141,Sö,Ludgo sn,nan,,0,Tore 1,0.287,0.417,26.3
+K108,med Tore 1,5,Sö 142,Sö,Lästringe sn,nan,,0,Balle,0.297,0.417,26.3
+K108,med Tore 1,5,Sö 34,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),KB,Tore 1,1,,,0.417,26.3
+K108,med Tore 1,5,Sö Fv1948;282,Sö,Ludgo sn,KB,,0,Traen,0.257,0.417,26.3
+K109,med Öpir 1,5,U 362,U,Skepptuna sn,nan,,0,Öpir 1,0.437,0.413,27.7
+K109,med Öpir 1,5,U 500,U,Gottröra sn,Pr5,Öpir 1,0,,,0.413,27.7
+K109,med Öpir 1,5,U 545,U,Husby-Lyhundra sn (nu Husby-Sjuhundra),Pr4,Öpir 1,0,,,0.413,27.7
+K109,med Öpir 1,5,U 570,U,Lohärads sn,Pr3,,0,Fot 2,0.414,0.413,27.7
+K109,med Öpir 1,5,U 592,U,Knutby sn,nan,,0,Öpir 1,0.649,0.413,27.7
+K110,okänd hand,5,Öl 16,Öl,Gräsgårds sn,Pr2,,0,,,0.397,24.3
+K110,okänd hand,5,Öl 19,Öl,Hulterstads sn,Pr4,,0,,,0.397,24.3
+K110,okänd hand,5,Öl 23,Öl,Stenåsa sn,nan,,0,,,0.397,24.3
+K110,okänd hand,5,Öl 7,Öl,Mörbylånga sn,Pr3,,0,,,0.397,24.3
+K110,okänd hand,5,Öl 9,Öl,Kastlösa sn,nan,,0,,,0.397,24.3
+K111,med Traen,5,Sö 129,Sö,Lids sn,nan,Traen,0,,,0.39,28.9
+K111,med Traen,5,Sö 136,Sö,Ludgo sn,Pr1,Traen,0,,,0.39,28.9
+K111,med Traen,5,Sö 150,Sö,Runtuna sn,nan,,0,Traen,0.6,0.39,28.9
+K111,med Traen,5,Sö 152,Sö,Runtuna sn,nan,,0,Traen,0.728,0.39,28.9
+K111,med Traen,5,Sö 70,Sö,Vadsbro sn,nan,,0,Traen,0.693,0.39,28.9
+K112,blandad,5,Sö 211,Sö,Överselö sn,Fp,Äskil 1,0,,,0.334,25.7
+K112,blandad,5,Sö 323,Sö,Helgarö sn,nan,Skamhals 1,1,,,0.334,25.7
+K112,blandad,5,Sö ATA6491/60,Sö,Helgarö sn,nan,,0,Balle,0.411,0.334,25.7
+K112,blandad,5,U 763,U,Vårfrukyrka sn,Pr4,Tidkume,0,,,0.334,25.7
+K112,blandad,5,U 764,U,Vårfrukyrka sn,Pr4,Tidkume,0,,,0.334,25.7
+K113,med Traen,5,Sö 115,Sö,Stenkvista sn,Fp,,0,Balle,0.487,0.31,16.8
+K113,med Traen,5,Sö 314,Sö,Torshälla,Pr2,,0,Balle,0.747,0.31,16.8
+K113,med Traen,5,Sö 357,Sö,Eskilstuna,nan,,0,Balle,0.791,0.31,16.8
+K113,med Traen,5,Sö 90,Sö,Hammarby sn,Fp,Traen,0,,,0.31,16.8
+K113,med Traen,5,Sö Sb1965;12,Sö,Tumbo sn,nan,,0,Balle,0.736,0.31,16.8
+K114,okänd hand,5,Sö 102,Sö,Jäders sn,Pr2,,0,Balle,0.656,0.309,26.5
+K114,okänd hand,5,Sö 363,Sö,Tumbo sn,KB,,0,Balle,0.383,0.309,26.5
+K114,okänd hand,5,Sö 84,Sö,Tumbo sn,KB,,0,Balle,0.891,0.309,26.5
+K114,okänd hand,5,Sö 91,Sö,Hammarby sn,Fp,,0,Traen,0.365,0.309,26.5
+K114,okänd hand,5,Vs 3,Vs,Dingtuna sn,nan,,0,Balle,0.543,0.309,26.5
+K115,med Ulv 3,5,Sö 104,Sö,Kjula sn,nan,Ulv 3,1,,,0.294,27.8
+K115,med Ulv 3,5,Sö 107,Sö,Klosters sn (Eskilstuna),nan,,0,Traen,0.475,0.294,27.8
+K115,med Ulv 3,5,Sö 108,Sö,Klosters sn (Eskilstuna),Fp,,0,Traen,0.546,0.294,27.8
+K115,med Ulv 3,5,Sö 276,Sö,Strängnäs,nan,,0,Balle,0.335,0.294,27.8
+K115,med Ulv 3,5,Sö Fv1954;22,Sö,Vansö sn,nan,,0,Balle,0.338,0.294,27.8
+K116,med Balle,5,Sö 288,Sö,Botkyrka sn,Pr2,,0,Tore 1,0.254,0.278,26.0
+K116,med Balle,5,U 172,U,Lidingö,Pr3,,0,Öpir 1,0.367,0.278,26.0
+K116,med Balle,5,U 30,U,Hilleshögs sn,Pr2,,0,Balle,0.416,0.278,26.0
+K116,med Balle,5,U 38,U,Sånga sn,nan,Balle,0,,,0.278,26.0
+K116,med Balle,5,U 54,U,Stockholm,nan,,0,Fot 2,0.381,0.278,26.0
+K117,okänd hand,5,Vg 126,Vg,Larvs sn,nan,,0,,,0.273,26.5
+K117,okänd hand,5,Vg 133,Vg,Marka sn,RAK,,0,,,0.273,26.5
+K117,okänd hand,5,Vg 137,Vg,Kinneve sn (nu Kinneved),RAK,,0,,,0.273,26.5
+K117,okänd hand,5,Vg 59,Vg,Norra Härene sn,RAK,,1,,,0.273,26.5
+K117,okänd hand,5,Vg 61,Vg,Edsvära sn,RAK,,0,,,0.273,26.5
+K118,blandad,5,Sö 190,Sö,Ytterenhörna sn,Pr2,,1,Balle,0.295,0.271,29.7
+K118,blandad,5,Sö 196,Sö,Ytterselö sn,Fp,Assur,1,,,0.271,29.7
+K118,blandad,5,Sö 210,Sö,Överselö sn,Fp,Balle,1,,,0.271,29.7
+K118,blandad,5,Sö 214,Sö,Överselö sn,Fp,Balle,1,,,0.271,29.7
+K118,blandad,5,U 699,U,Veckholms sn,Pr3,Balle,1,,,0.271,29.7
+K119,okänd hand,5,Ög 100,Ög,Ringarums sn,nan,,0,,,0.266,29.2
+K119,okänd hand,5,Ög 156,Ög,Tingstads sn,Pr2,,0,,,0.266,29.2
+K119,okänd hand,5,Ög 227,Ög,Östra Husby sn,nan,,0,,,0.266,29.2
+K119,okänd hand,5,Ög 29,Ög,Tåby sn (eg. Furingstads sn),nan,,0,,,0.266,29.2
+K119,okänd hand,5,Ög Fv1959;249,Ög,Söderköping,RAK,,0,,,0.266,29.2
+K120,okänd hand,5,Öl 39,Öl,Gärdslösa sn,Pr2,,0,,,0.256,11.5
+K120,okänd hand,5,Öl 40,Öl,Gärdslösa sn,Pr2,,0,,,0.256,11.5
+K120,okänd hand,5,Öl 49,Öl,Köpings sn,nan,,0,,,0.256,11.5
+K120,okänd hand,5,Öl Köping69,Öl,Köpings sn,nan,,0,,,0.256,11.5
+K120,okänd hand,5,Öl Köping7,Öl,Köpings sn,nan,,0,,,0.256,11.5
+K121,med Traen,5,Sö 109,Sö,Klosters sn (Eskilstuna),Pr2,,0,Balle,0.445,0.241,17.2
+K121,med Traen,5,Sö 110,Sö,Klosters sn (Eskilstuna),Fp,,0,Traen,0.617,0.241,17.2
+K121,med Traen,5,Sö 111,Sö,Stenkvista sn,Fp,,0,Balle,0.478,0.241,17.2
+K121,med Traen,5,Sö 112,Sö,Stenkvista sn,Fp,Traen,0,,,0.241,17.2
+K121,med Traen,5,Sö Fv1958;242,Sö,Tumbo sn,KB,,0,Balle,0.481,0.241,17.2
+K122,okänd hand,5,Sm 28,Sm,Berga sn,RAK,,0,,,0.212,29.8
+K122,okänd hand,5,Sm 36,Sm,Nöttja sn,RAK,,0,,,0.212,29.8
+K122,okänd hand,5,Sm 37,Sm,Nöttja sn,RAK,,0,,,0.212,29.8
+K122,okänd hand,5,Sm 42,Sm,Ryssby sn,RAK,,0,,,0.212,29.8
+K122,okänd hand,5,Sm 45,Sm,Tutaryds sn (nu Södra Ljunga sn),RAK,,0,,,0.212,29.8
+K123,med Litle,5,Vs 16,Vs,Tortuna sn,Pr3,,0,Livsten,0.418,0.183,22.7
+K123,med Litle,5,Vs 20,Vs,Romfartuna sn,nan,Litle,1,,,0.183,22.7
+K123,med Litle,5,Vs 22,Vs,Harakers sn,nan,Litle,0,,,0.183,22.7
+K123,med Litle,5,Vs 27,Vs,Kila sn,nan,Litle,1,,,0.183,22.7
+K123,med Litle,5,Vs Fv1988;36,Vs,Hubbo sn,Fp,,0,Balle,0.574,0.183,22.7
+K124,okänd hand,5,Ög 133,Ög,Heda sn,RAK,,0,,,0.149,27.4
+K124,okänd hand,5,Ög 135,Ög,Kumla sn,nan,,0,,,0.149,27.4
+K124,okänd hand,5,Ög 142,Ög,Stora Åby sn,RAK,,0,,,0.149,27.4
+K124,okänd hand,5,Ög 144,Ög,Ödeshögs sn,nan,,0,,,0.149,27.4
+K124,okänd hand,5,Ög 97,Ög,Åsbo sn,RAK,,0,,,0.149,27.4
+K125,blandad,5,U 1009,U,Rasbo sn,Pr3,Åsmund,0,,,0.148,29.1
+K125,blandad,5,U 1041,U,Tensta sn,nan,Ingulv,1,,,0.148,29.1
+K125,blandad,5,U 1046,U,Björklinge sn,Pr4,,0,Öpir 1,0.53,0.148,29.1
+K125,blandad,5,U 1127,U,Alunda sn,Pr3,,0,Åsmund,0.404,0.148,29.1
+K125,blandad,5,U 1133,U,Morkarla sn,nan,,0,Öpir 1,0.689,0.148,29.1
+K126,blandad,5,Sö 174,Sö,Aspö sn,Pr1,,0,Balle,0.76,0.134,27.0
+K126,blandad,5,Sö 178,Sö,Kärnbo sn,Pr4,Brune,1,,,0.134,27.0
+K126,blandad,5,Sö 192,Sö,Ytterselö sn,Pr3,Balle,0,,,0.134,27.0
+K126,blandad,5,Sö 328,Sö,Strängnäs landsförsamling (nu Aspö sn),Pr2,,0,Balle,0.485,0.134,27.0
+K126,blandad,5,Sö 382,Sö,Åkers sn,Pr1,,0,Balle,0.474,0.134,27.0
+K127,blandad,5,Sö 14,Sö,Gåsinge sn (nu Gåsinge-Dillnäs),Fp,Traen,0,,,0.1,19.4
+K127,blandad,5,Sö 177,Sö,Kärnbo sn,KB,Brune,0,,,0.1,19.4
+K127,blandad,5,Sö 184,Sö,Kärnbo sn,KB,,0,Balle,0.572,0.1,19.4
+K127,blandad,5,Sö 338,Sö,Turinge sn,Pr4,Östen 1,0,,,0.1,19.4
+K127,blandad,5,Sö 8,Sö,Dillnäs sn (nu Gåsinge-Dillnäs),Fp,Tore 1,0,,,0.1,19.4
+K128,okänd hand,5,Nä 11,Nä,Askers sn,nan,,0,,,0.09,21.7
+K128,okänd hand,5,Nä 14,Nä,Stora Mellösa sn,nan,,0,,,0.09,21.7
+K128,okänd hand,5,Nä 28,Nä,Glanshammars sn,nan,,0,,,0.09,21.7
+K128,okänd hand,5,Nä 29,Nä,Glanshammars sn,Pr1,,0,,,0.09,21.7
+K128,okänd hand,5,Nä 34,Nä,Rinkaby sn,nan,,0,,,0.09,21.7
+K129,okänd hand,5,Nä 16,Nä,Almby sn (nu Örebro),RAK,,0,,,0.09,29.0
+K129,okänd hand,5,Nä 18,Nä,Hovsta sn,nan,,0,,,0.09,29.0
+K129,okänd hand,5,Nä 23,Nä,Glanshammars sn,nan,,0,,,0.09,29.0
+K129,okänd hand,5,Nä 8,Nä,Kräcklinge sn,nan,,0,,,0.09,29.0
+K129,okänd hand,5,Nä 9,Nä,Kumla sn,RAK,,0,,,0.09,29.0
+K130,med Åsmund,5,Gs 12,Gs,Valbo sn,Pr2,Åsmund,1,,,0.072,29.5
+K130,med Åsmund,5,Gs 13,Gs,Valbo sn (nu Gävle),Pr2,,1,Åsmund,0.817,0.072,29.5
+K130,med Åsmund,5,Gs 14,Gs,Ovansjö sn,nan,,0,,,0.072,29.5
+K130,med Åsmund,5,Gs 15,Gs,Ovansjö sn,Pr2,,0,,,0.072,29.5
+K130,med Åsmund,5,Gs 9,Gs,Årsunda sn,Pr2,,0,Öpir 1,0.289,0.072,29.5
+K131,okänd hand,5,G 37,G,Grötlingbo sn,Pr3,,0,,,0.059,25.9
+K131,okänd hand,5,G 370,G,Hablingbo sn,Pr3,,0,,,0.059,25.9
+K131,okänd hand,5,G 373,G,Sproge sn,nan,,0,,,0.059,25.9
+K131,okänd hand,5,G 72,G,Eksta sn,nan,,0,,,0.059,25.9
+K131,okänd hand,5,G 94,G,Närs sn,nan,,0,,,0.059,25.9
+K132,okänd hand,5,Vg 189,Vg,Länghems sn,Fp,,0,,,0.012,24.8
+K132,okänd hand,5,Vg 190,Vg,Månstads sn,nan,,0,,,0.012,24.8
+K132,okänd hand,5,Vg 192,Vg,Nittorps sn,RAK,,0,,,0.012,24.8
+K132,okänd hand,5,Vg 194,Vg,Svenljunga sn,Fp,,0,,,0.012,24.8
+K132,okänd hand,5,Vg 195,Vg,Tranemo sn,RAK,,0,,,0.012,24.8
+K133,med Ärnfast,4,U 1,U,Adelsö sn,nan,,0,Åsmund,0.288,0.594,24.0
+K133,med Ärnfast,4,U 47,U,Lovö sn,Pr3,Ärnfast,0,,,0.594,24.0
+K133,med Ärnfast,4,U 610,U,Västra Ryds sn,nan,,0,Öpir 1,0.241,0.594,24.0
+K133,med Ärnfast,4,U 91,U,Järfälla sn,Pr3,,0,Fot 2,0.5,0.594,24.0
+K134,blandad,4,U 211,U,Angarns sn,Pr4,,0,Öpir 1,0.676,0.548,29.7
+K134,blandad,4,U 313,U,Skånela sn,Pr3,-fast,0,,,0.548,29.7
+K134,blandad,4,U 421,U,Norrsunda sn,nan,,0,Fot 2,0.594,0.548,29.7
+K134,blandad,4,U 459,U,Haga sn,Pr2,Arbjörn,0,,,0.548,29.7
+K135,blandad,4,U 181,U,Össeby-Garns sn,Pr5,Öpir 1,1,,,0.539,27.2
+K135,blandad,4,U 229,U,Vallentuna sn,Pr4,Öpir 1,1,,,0.539,27.2
+K135,blandad,4,U 454,U,Odensala sn,Pr3,Visäte,1,,,0.539,27.2
+K135,blandad,4,U Fv1953;263,U,Sollentuna sn,Pr5,Igulfast,1,,,0.539,27.2
+K136,okänd hand,4,Vg 103,Vg,Håle sn,nan,,0,,,0.469,28.0
+K136,okänd hand,4,Vg 107,Vg,Tuns sn,nan,,0,,,0.469,28.0
+K136,okänd hand,4,Vg 39,Vg,Rackeby sn,nan,,0,,,0.469,28.0
+K136,okänd hand,4,Vg 47,Vg,Strö sn,RAK,,0,,,0.469,28.0
+K137,blandad,4,Sö 194,Sö,Ytterselö sn,Fp,Balle,0,,,0.45,29.6
+K137,blandad,4,U 749,U,Husby-Sjutolfts sn,Pr3,Balle,0,,,0.45,29.6
+K137,blandad,4,U 776,U,Enköpings-Näs sn,nan,Torbjörn 2,0,,,0.45,29.6
+K137,blandad,4,U 790,U,Tillinge sn,nan,Rune,1,,,0.45,29.6
+K138,med Fot 2,4,U 420,U,Norrsunda sn,nan,Fot 2,0,,,0.394,28.5
+K138,med Fot 2,4,U 422,U,Norrsunda sn,nan,,0,Öpir 1,0.678,0.394,28.5
+K138,med Fot 2,4,U 678,U,Skoklosters sn,RAK,Fot 2,1,,,0.394,28.5
+K138,med Fot 2,4,U 899,U,Bondkyrka sn (nu Uppsala),Pr4,Fot 2,0,,,0.394,28.5
+K139,med Erik,4,U 381,U,Sigtuna,nan,,0,Balle,0.292,0.365,25.2
+K139,med Erik,4,U 620,U,Bro sn,nan,,0,Balle,0.416,0.365,25.2
+K139,med Erik,4,U 649B,U,Övergrans sn,nan,,0,Balle,0.257,0.365,25.2
+K139,med Erik,4,U 738,U,Villberga sn,nan,Erik,0,,,0.365,25.2
+K140,med Balle,4,Sö 183,Sö,Kärnbo sn,Fp,,0,Balle,0.554,0.349,28.0
+K140,med Balle,4,U 4,U,Adelsö sn,nan,,0,Åsmund,0.572,0.349,28.0
+K140,med Balle,4,U 697,U,Veckholms sn,nan,Balle,0,,,0.349,28.0
+K140,med Balle,4,U 713,U,Kungs-Husby sn,nan,Balle,0,,,0.349,28.0
+K141,blandad,4,U 1155,U,Simtuna sn,Fp,Erik,0,,,0.342,28.4
+K141,blandad,4,U 1162,U,Altuna sn,Pr4,Öpir 1,0,,,0.342,28.4
+K141,blandad,4,U 1173,U,Vittinge sn,Fp,Erik,0,,,0.342,28.4
+K141,blandad,4,U 798,U,Sparrsätra sn,Fp,Erik,0,,,0.342,28.4
+K142,blandad,4,U 1021,U,Ärentuna sn,nan,,0,Öpir 1,0.602,0.314,29.2
+K142,blandad,4,U 1086,U,Bälinge sn,Pr4,Öpir 1,0,,,0.314,29.2
+K142,blandad,4,U 1123,U,Tuna sn,nan,Ödmund,0,,,0.314,29.2
+K142,blandad,4,U 1130,U,Alunda sn,nan,,0,Fot 2,0.713,0.314,29.2
+K143,okänd hand,4,Sö 128,Sö,Lids sn,Pr2,,0,Balle,0.378,0.31,29.1
+K143,okänd hand,4,Sö 157,Sö,Runtuna sn,nan,,0,Balle,0.563,0.31,29.1
+K143,okänd hand,4,Sö 3,Sö,Björnlunda sn,Fp,,0,Balle,0.696,0.31,29.1
+K143,okänd hand,4,Sö 61,Sö,Husby-Oppunda sn,Pr2,,0,Balle,0.462,0.31,29.1
+K144,blandad,4,U 1022,U,Ärentuna sn,Pr4,Öpir 1,1,,,0.301,29.1
+K144,blandad,4,U 1063,U,Viksta sn,Pr4,Öpir 1,1,,,0.301,29.1
+K144,blandad,4,U 1142,U,Vendels sn,nan,,1,Öpir 1,0.658,0.301,29.1
+K144,blandad,4,U 986,U,Gamla Uppsala sn (nu Uppsala),nan,Åsmund,1,,,0.301,29.1
+K145,blandad,4,U 638,U,Kalmar sn,nan,,1,Balle,0.332,0.297,29.6
+K145,blandad,4,U 740,U,Boglösa sn,Pr3,Balle,1,,,0.297,29.6
+K145,blandad,4,U 842,U,Dalby sn,Pr5,Öpir 1,0,,,0.297,29.6
+K145,blandad,4,U 854,U,Balingsta sn,Pr4,,0,Öpir 1,0.565,0.297,29.6
+K146,okänd hand,4,Vg 116,Vg,Hyringa sn,RAK,,0,,,0.281,28.9
+K146,okänd hand,4,Vg 124,Vg,Ryda sn,RAK,,0,,,0.281,28.9
+K146,okänd hand,4,Vg 153,Vg,Fölene sn,nan,,0,,,0.281,28.9
+K146,okänd hand,4,Vg 62,Vg,Edsvära sn,RAK,,0,,,0.281,28.9
+K147,med Äskil 2,4,Sö 176,Sö,Kärnbo sn,nan,,0,Balle,0.415,0.257,27.6
+K147,med Äskil 2,4,Sö 179,Sö,Kärnbo sn,Fp,Äskil 2,0,,,0.257,27.6
+K147,med Äskil 2,4,Sö 277,Sö,Strängnäs,Pr2,,0,Balle,0.629,0.257,27.6
+K147,med Äskil 2,4,Sö ATA7551/92,Sö,Barva sn,nan,,0,Balle,0.459,0.257,27.6
+K148,blandad,4,U 201,U,Angarns sn,Pr1,Gunnar,0,,,0.241,26.8
+K148,blandad,4,U 353,U,Lunda sn,nan,Sune,1,,,0.241,26.8
+K148,blandad,4,U 513,U,Rimbo sn,Pr2,Torbjörn skald,0,,,0.241,26.8
+K148,blandad,4,U 514,U,Rimbo sn,Pr4,,0,Öpir 1,0.692,0.241,26.8
+K149,okänd hand,4,Vg 30,Vg,Järpås sn,RAK,,0,,,0.235,26.8
+K149,okänd hand,4,Vg 40,Vg,Råda sn,nan,,0,,,0.235,26.8
+K149,okänd hand,4,Vg 56,Vg,Källby sn,RAK,,0,,,0.235,26.8
+K149,okänd hand,4,Vg 66,Vg,Norra Vånga sn,nan,,0,,,0.235,26.8
+K150,blandad,4,Sö 264,Sö,Österhaninge sn,nan,,0,Halvdan,0.762,0.234,21.7
+K150,blandad,4,Sö 274,Sö,Stockholm,Pr2,Halvdan,0,,,0.234,21.7
+K150,blandad,4,Sö 299,Sö,Huddinge sn,Fp,Åsgöt,0,,,0.234,21.7
+K150,blandad,4,Sö Fv1971;207,Sö,Tyresö sn,nan,,0,Halvdan,0.846,0.234,21.7
+K151,blandad,4,Sö 228,Sö,Sorunda sn,Pr3,,0,Halvdan,0.559,0.219,29.1
+K151,blandad,4,Sö 242,Sö,Västerhaninge sn,KB,Björn 2 eller -björn,0,,,0.219,29.1
+K151,blandad,4,Sö 351,Sö,Överjärna sn,nan,Traen,0,,,0.219,29.1
+K151,blandad,4,U 405,U,Ekerö sn,Pr1,,1,Balle,0.275,0.219,29.1
+K152,blandad,4,Sö 244,Sö,Västerhaninge sn,Pr2,Halvdan,0,,,0.214,28.4
+K152,blandad,4,Sö 352,Sö,Överjärna sn,Fp,Traen,0,,,0.214,28.4
+K152,blandad,4,U 16,U,Ekerö sn,nan,,0,Fot 2,0.238,0.214,28.4
+K152,blandad,4,U 78,U,Spånga sn (nu Sundbyberg),Pr5,Öpir 1,0,,,0.214,28.4
+K153,okänd hand,4,Sm 11,Sm,Furuby sn,RAK,,0,,,0.174,29.9
+K153,okänd hand,4,Sm 13,Sm,Uråsa sn,RAK,,0,,,0.174,29.9
+K153,okänd hand,4,Sm 15,Sm,Östra Torsås sn,nan,,0,,,0.174,29.9
+K153,okänd hand,4,Sm 2,Sm,Aringsås sn,nan,,0,,,0.174,29.9
+K154,okänd hand,4,Sm 31,Sm,Dörarps sn,nan,,0,,,0.162,20.9
+K154,okänd hand,4,Sm 48,Sm,Bredaryds sn (nu Forsheda sn),nan,,0,,,0.162,20.9
+K154,okänd hand,4,Sm 61,Sm,Tånnö sn,RAK,,0,,,0.162,20.9
+K154,okänd hand,4,Sm 64,Sm,Värnamo,RAK,,0,,,0.162,20.9
+K155,med Gunnborga,4,Hs 10,Hs,Hälsingtuna sn,Pr2,,0,,,0.156,26.3
+K155,med Gunnborga,4,Hs 12,Hs,Högs sn,RAK,,0,,,0.156,26.3
+K155,med Gunnborga,4,Hs 14,Hs,Rogsta sn,nan,,0,,,0.156,26.3
+K155,med Gunnborga,4,Hs 21,Hs,Jättendals sn,RAK,Gunnborga,1,,,0.156,26.3
+K156,blandad,4,U 183,U,Össeby-Garns sn,nan,Öpir 1,0,,,0.156,26.0
+K156,blandad,4,U 364,U,Skepptuna sn,nan,,0,Öpir 1,0.592,0.156,26.0
+K156,blandad,4,U 546,U,Husby-Lyhundra sn (nu Husby-Sjuhundra),Pr4,,0,Öpir 1,0.814,0.156,26.0
+K156,blandad,4,U 558,U,Husby-Lyhundra sn (nu Husby-Sjuhundra),nan,Torbjörn skald,0,,,0.156,26.0
+K157,med Livsten,4,U 1161,U,Altuna sn,Pr3,,1,Balle,0.352,0.142,29.2
+K157,med Livsten,4,U 1164,U,Västerlövsta sn,nan,Livsten,1,,,0.142,29.2
+K157,med Livsten,4,U 1181,U,Nora sn,Fp,,0,Livsten,0.464,0.142,29.2
+K157,med Livsten,4,Vs 29,Vs,Sala landsförsamling,Pr4,Livsten,1,,,0.142,29.2
+K158,med Likraiv,4,G 111,G,Ardre sn,nan,,0,,,0.134,15.9
+K158,med Likraiv,4,G 113,G,Ardre sn,nan,Likraiv,1,,,0.134,15.9
+K158,med Likraiv,4,G 116,G,Kräklingbo sn,nan,,0,,,0.134,15.9
+K158,med Likraiv,4,G 135,G,Sjonhems sn,Pr4,,0,,,0.134,15.9
+K159,blandad,4,U 1064,U,Viksta sn,nan,,0,Öpir 1,0.474,0.126,27.7
+K159,blandad,4,U 1143,U,Tierps sn,nan,Tore,1,,,0.126,27.7
+K159,blandad,4,U 1144,U,Tierps sn,Pr3,Åsmund,1,,,0.126,27.7
+K159,blandad,4,U 1177,U,Harbo sn,Pr4,Öpir 1,1,,,0.126,27.7
+K160,okänd hand,4,Vg 139,Vg,Vårkumla sn,Fp,,0,,,0.109,16.8
+K160,okänd hand,4,Vg 172,Vg,Blidsbergs sn,RAK,,0,,,0.109,16.8
+K160,okänd hand,4,Vg 176,Vg,Dalums sn,nan,,0,,,0.109,16.8
+K160,okänd hand,4,Vg 180,Vg,Kölaby sn,Fp,,0,,,0.109,16.8
+K161,okänd hand,4,Nä 12,Nä,Stora Mellösa sn,RAK,,0,,,0.095,20.1
+K161,okänd hand,4,Nä 26,Nä,Glanshammars sn,Pr2,,0,,,0.095,20.1
+K161,okänd hand,4,Nä 31,Nä,Götlunda sn,Fp,,0,,,0.095,20.1
+K161,okänd hand,4,Nä 32,Nä,Götlunda sn,nan,,0,,,0.095,20.1
+K162,okänd hand,4,Hs 16,Hs,Delsbo sn,nan,,0,,,0.042,26.2
+K162,okänd hand,4,Hs 17,Hs,Delsbo sn,nan,,0,,,0.042,26.2
+K162,okänd hand,4,Hs 20,Hs,Ljusdals sn,nan,,0,,,0.042,26.2
+K162,okänd hand,4,Hs 6,Hs,Järvsö sn,Pr1,,0,,,0.042,26.2
+K163,blandad,3,U 1165,U,Härnevi sn,Fp,Erik,1,,,0.74,29.0
+K163,blandad,3,U 844,U,Dalby sn,Pr4,Fot 2,0,,,0.74,29.0
+K163,blandad,3,U 876,U,Hagby sn,Fp,,0,Balle,0.309,0.74,29.0
+K164,med Öpir 1,3,U 1174,U,Vittinge sn,Pr4,,0,Balle,0.449,0.643,29.8
+K164,med Öpir 1,3,U 911,U,Vänge sn,nan,,0,Balle,0.666,0.643,29.8
+K164,med Öpir 1,3,U 915,U,Börje sn,nan,Öpir 1,0,,,0.643,29.8
+K165,med Balle,3,Sö 187,Sö,Toresunds sn,nan,Balle,0,,,0.54,28.8
+K165,med Balle,3,U 32,U,Sånga sn,Pr1,,0,Balle,0.705,0.54,28.8
+K165,med Balle,3,U 34,U,Sånga sn,Pr1,Balle,0,,,0.54,28.8
+K166,med Amunde,3,Sö 217,Sö,Sorunda sn,Fp,Amunde,0,,,0.517,22.8
+K166,med Amunde,3,Sö 25,Sö,Trosa sn (nu Trosa-Vagnhärad),nan,,0,Traen,0.268,0.517,22.8
+K166,med Amunde,3,Sö 37,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),Pr2,,0,Halvdan,0.202,0.517,22.8
+K167,okänd hand,3,U 263,U,Fresta sn,nan,,0,Fot 2,0.451,0.511,25.3
+K167,okänd hand,3,U 40,U,Skå sn,Pr3,,0,Fot 2,0.21,0.511,25.3
+K167,okänd hand,3,U 53,U,Stockholm,Pr4,,0,Öpir 1,0.321,0.511,25.3
+K168,med Tore 1,3,Sö 124,Sö,Bogsta sn,Pr4,,0,Balle,0.359,0.5,27.6
+K168,med Tore 1,3,Sö 155,Sö,Runtuna sn,nan,,0,Balle,0.428,0.5,27.6
+K168,med Tore 1,3,Sö 26,Sö,Trosa sn (nu Trosa-Vagnhärad),nan,Tore 1,0,,,0.5,27.6
+K169,okänd hand,3,Sö 48,Sö,Stigtomta sn,Pr3,,0,Traen,0.336,0.484,30.0
+K169,okänd hand,3,Sö 50,Sö,Tuna sn,nan,,0,Öpir 1,0.268,0.484,30.0
+K169,okänd hand,3,Ög ATA580/75,Ög,Östra Stenby sn,nan,,0,,,0.484,30.0
+K170,okänd hand,3,Ög 158,Ög,Tingstads sn,Fp,,0,,,0.474,27.7
+K170,okänd hand,3,Ög 176,Ög,Skärkinds sn,RAK,,0,,,0.474,27.7
+K170,okänd hand,3,Ög 233,Ög,Östra Stenby sn,nan,,0,,,0.474,27.7
+K171,med Amunde,3,Sö 268,Sö,Österhaninge sn,Pr1,Amunde,1,,,0.464,26.9
+K171,med Amunde,3,U 42,U,Skå sn,Pr4,,0,Fot 2,0.66,0.464,26.9
+K171,med Amunde,3,U 77,U,Spånga sn (nu Sundbyberg),Pr4,,0,Fot 2,0.701,0.464,26.9
+K172,blandad,3,U 188,U,Össeby-Garns sn,Pr2,Gunnar,0,,,0.462,24.9
+K172,blandad,3,U 231,U,Vallentuna sn,Pr5,Öpir 1,0,,,0.462,24.9
+K172,blandad,3,U 498,U,Husby-Långhundra sn,nan,,0,Öpir 1,0.543,0.462,24.9
+K173,okänd hand,3,Ög 147,Ög,Furingstads sn,nan,,0,,,0.459,23.5
+K173,okänd hand,3,Ög 157,Ög,Tingstads sn,RAK,,0,,,0.459,23.5
+K173,okänd hand,3,Ög 162,Ög,Kullerstads sn,nan,,0,,,0.459,23.5
+K174,okänd hand,3,Sö 18,Sö,Hölö sn,Pr4,,1,Öpir 1,0.392,0.458,29.4
+K174,okänd hand,3,Sö 257,Sö,Ösmo sn,nan,,0,Halvdan,0.493,0.458,29.4
+K174,okänd hand,3,Sö 306,Sö,Salems sn,nan,,0,Amunde,0.289,0.458,29.4
+K175,blandad,3,Sö 203,Sö,Ytterselö sn,Pr3,Balle,1,,,0.458,29.6
+K175,blandad,3,U 621,U,Bro sn,Pr2,Visäte,0,,,0.458,29.6
+K175,blandad,3,U 735,U,Villberga sn,Pr3,Balle,0,,,0.458,29.6
+K176,okänd hand,3,Ög 153,Ög,Styrstads sn,nan,,0,,,0.457,21.8
+K176,okänd hand,3,Ög 219,Ög,Lillkyrka sn,RAK,,0,,,0.457,21.8
+K176,okänd hand,3,Ög 47,Ög,Kvillinge sn,RAK,,0,,,0.457,21.8
+K177,blandad,3,U 778,U,Svinnegarns sn,Fp,Äskil 2,1,,,0.444,26.9
+K177,blandad,3,U 792,U,Tillinge sn,Fp,Balle,0,,,0.444,26.9
+K177,blandad,3,Vs 21,Vs,Romfartuna sn,Fp,,0,Balle,0.519,0.444,26.9
+K178,okänd hand,3,Vg 33,Vg,Mellby sn,RAK,,0,,,0.44,22.1
+K178,okänd hand,3,Vg 37,Vg,Rackeby sn,nan,,0,,,0.44,22.1
+K178,okänd hand,3,Vg 51,Vg,Husaby sn,nan,,0,,,0.44,22.1
+K179,med Torbjörn 2,3,U 1033,U,Lena sn,nan,,0,Balle,0.211,0.431,29.4
+K179,med Torbjörn 2,3,U 470,U,Knivsta sn,nan,Torbjörn 2,0,,,0.431,29.4
+K179,med Torbjörn 2,3,U 999,U,Funbo sn,Fp,,0,Erik,0.283,0.431,29.4
+K180,med Åsmund,3,U 1039,U,Tensta sn,Pr4,,1,Öpir 1,0.7,0.404,29.6
+K180,med Åsmund,3,U 1043,U,Tensta sn,nan,Åsmund,0,,,0.404,29.6
+K180,med Åsmund,3,U 1145,U,Tierps sn,nan,Åsmund,0,,,0.404,29.6
+K181,blandad,3,U 705,U,Veckholms sn,nan,Balle,1,,,0.392,25.7
+K181,blandad,3,U 741,U,Boglösa sn,KB,Grim skald,0,,,0.392,25.7
+K181,blandad,3,U 804,U,Långtora sn,nan,Torgöt Fotsarve,0,,,0.392,25.7
+K182,okänd hand,3,Vg 122,Vg,Barne-Åsaka sn,Fp,,0,,,0.371,22.7
+K182,okänd hand,3,Vg 127,Vg,Larvs sn,Fp,,0,,,0.371,22.7
+K182,okänd hand,3,Vg 186,Vg,Timmele sn,Fp,,0,,,0.371,22.7
+K183,okänd hand,3,Vg 117,Vg,Levene sn,RAK,,0,,,0.362,22.7
+K183,okänd hand,3,Vg 32,Vg,Kållands-Åsaka sn,RAK,,0,,,0.362,22.7
+K183,okänd hand,3,Vg 73,Vg,Synnerby sn,RAK,,0,,,0.362,22.7
+K184,okänd hand,3,Sö 66,Sö,Sköldinge sn,Pr4,,0,,,0.358,29.6
+K184,okänd hand,3,Sö 67,Sö,Sköldinge sn,nan,,0,,,0.358,29.6
+K184,okänd hand,3,Sö 94,Sö,Husby-Rekarne sn,nan,,0,Balle,0.511,0.358,29.6
+K185,okänd hand,3,Sö Fv1948;291,Sö,Lunda sn,nan,,0,Balle,0.536,0.344,29.4
+K185,okänd hand,3,Ög 146,Ög,Dagsbergs sn,Fp,,0,,,0.344,29.4
+K185,okänd hand,3,Ög 28,Ög,Östra Ny sn,Pr3,,0,,,0.344,29.4
+K186,okänd hand,3,U 1027,U,Lena sn,Pr4,,0,Öpir 1,0.958,0.284,22.2
+K186,okänd hand,3,U 1126,U,Alunda sn,nan,,0,Öpir 1,0.641,0.284,22.2
+K186,okänd hand,3,U 1134,U,Morkarla sn,nan,,0,Öpir 1,0.768,0.284,22.2
+K187,med Åsgöt,3,Sm 1,Sm,Aringsås sn,nan,Åsgöt,1,,,0.263,21.0
+K187,med Åsgöt,3,Sm 10,Sm,Växjö,Pr2,,0,,,0.263,21.0
+K187,med Åsgöt,3,Sm 7,Sm,Skatelövs sn,RAK,,0,,,0.263,21.0
+K188,med Traen,3,Sö 13,Sö,Gryts sn,nan,,0,Halvdan,0.315,0.261,29.4
+K188,med Traen,3,Sö 340,Sö,Turinge sn,nan,Traen,0,,,0.261,29.4
+K188,med Traen,3,Sö 341,Sö,Turinge sn,Fp,,1,Amunde,0.332,0.261,29.4
+K189,okänd hand,3,Öl 1,Öl,Vickleby sn,RAK,,0,,,0.25,22.3
+K189,okänd hand,3,Öl 12,Öl,Smedby sn,nan,,0,,,0.25,22.3
+K189,okänd hand,3,Öl 24,Öl,Stenåsa sn,nan,,0,,,0.25,22.3
+K190,okänd hand,3,Ög 130,Ög,Linköping,nan,,0,,,0.244,27.4
+K190,okänd hand,3,Ög 170,Ög,Gårdeby sn,nan,,0,,,0.244,27.4
+K190,okänd hand,3,Ög 172,Ög,Skärkinds sn,nan,,0,,,0.244,27.4
+K191,okänd hand,3,G 134,G,Sjonhems sn,Pr4,,0,,,0.237,26.7
+K191,okänd hand,3,G 138,G,Halla sn,nan,,0,,,0.237,26.7
+K191,okänd hand,3,G 276,G,Boge sn,nan,,0,,,0.237,26.7
+K192,blandad,3,Sö 103,Sö,Jäders sn,nan,,0,Balle,0.73,0.235,29.9
+K192,blandad,3,Sö 209,Sö,Överselö sn,Fp,Balle,0,,,0.235,29.9
+K192,blandad,3,U ATA6243/65,U,"Vårfrukyrka sn, Enköpings stad",Pr3,Tidkume,0,,,0.235,29.9
+K193,okänd hand,3,Sm 133,Sm,Flisby sn,nan,,0,,,0.219,22.5
+K193,okänd hand,3,Ög 215,Ög,Västra Ryds sn,nan,,0,,,0.219,22.5
+K193,okänd hand,3,Ög 217,Ög,Sunds sn,RAK,,0,,,0.219,22.5
+K194,blandad,3,U 1129,U,Alunda sn,nan,,0,Öpir 1,0.694,0.215,21.7
+K194,blandad,3,U 597,U,Hökhuvuds sn,Pr4,Önjut,0,,,0.215,21.7
+K194,blandad,3,U 599,U,Hökhuvuds sn,nan,Torfast,1,,,0.215,21.7
+K195,okänd hand,3,Vg 199,Vg,Norra Lundby sn,nan,,0,,,0.21,21.9
+K195,okänd hand,3,Vg 77,Vg,Eggby sn,RAK,,0,,,0.21,21.9
+K195,okänd hand,3,Vg 92,Vg,Högstena sn,RAK,,0,,,0.21,21.9
+K196,med Sigge,3,Vs 18,Vs,Skultuna sn,Fp,,0,Balle,0.597,0.2,17.9
+K196,med Sigge,3,Vs 19,Vs,Skultuna sn,Fp,,0,Balle,0.516,0.2,17.9
+K196,med Sigge,3,Vs 5,Vs,Dingtuna sn,nan,Sigge,1,,,0.2,17.9
+K197,okänd hand,3,Vg 100,Vg,Flo sn,RAK,,0,,,0.188,26.6
+K197,okänd hand,3,Vg 123,Vg,Barne-Åsaka sn,RAK,,0,,,0.188,26.6
+K197,okänd hand,3,Vg 150,Vg,Väne-Åsaka sn,nan,,0,,,0.188,26.6
+K198,okänd hand,3,Sm 29,Sm,Berga sn (nu Vittaryds sn),RAK,,0,,,0.187,23.3
+K198,okänd hand,3,Sm 46,Sm,Vittaryds sn,RAK,,0,,,0.187,23.3
+K198,okänd hand,3,Sm 60,Sm,Rydaholms sn,RAK,,0,,,0.187,23.3
+K199,okänd hand,3,Vg 184,Vg,Smula sn,Fp,,0,,,0.185,26.7
+K199,okänd hand,3,Vg 55,Vg,Källby sn,nan,,0,,,0.185,26.7
+K199,okänd hand,3,Vg 78,Vg,Stenums sn,nan,,0,,,0.185,26.7
+K200,okänd hand,3,Vg 67,Vg,Saleby sn,RAK,,0,,,0.18,20.8
+K200,okänd hand,3,Vg 74,Vg,Vinköls sn,RAK,,0,,,0.18,20.8
+K200,okänd hand,3,Vg 90,Vg,Håkantorps sn,RAK,,0,,,0.18,20.8
+K201,med Fasttegn,3,U 1139,U,Hållnäs sn,nan,Fasttegn,1,,,0.153,25.9
+K201,med Fasttegn,3,U 1146,U,Tolfta sn,Pr1,,0,Åsmund,0.323,0.153,25.9
+K201,med Fasttegn,3,U 1148,U,Älvkarleby sn,Pr4,,0,Öpir 1,0.729,0.153,25.9
+K202,okänd hand,3,Gs 2,Gs,Österfärnebo sn,Pr2,,0,Balle,0.311,0.153,29.2
+K202,okänd hand,3,Gs 3,Gs,Österfärnebo sn,nan,,0,Balle,0.387,0.153,29.2
+K202,okänd hand,3,Gs 8,Gs,Torsåkers sn,RAK,,0,,,0.153,29.2
+K203,okänd hand,3,Vg 154,Vg,Fölene sn,RAK,,0,,,0.141,21.9
+K203,okänd hand,3,Vg 155,Vg,Hols sn,RAK,,0,,,0.141,21.9
+K203,okänd hand,3,Vg NOR1997;27,Vg,Hols sn,nan,,0,,,0.141,21.9
+K204,blandad,3,Sö 82,Sö,Tumbo sn,nan,þuliR,1,,,0.137,28.6
+K204,blandad,3,Vs 13,Vs,Västerås (f.d. Badelunda sn),nan,Vred,1,,,0.137,28.6
+K204,blandad,3,Vs 9,Vs,Västerås (f.d. Lundby sn),Pr3,,0,Balle,0.339,0.137,28.6
+K205,okänd hand,3,G 207,G,Stenkumla sn,nan,,0,,,0.13,29.5
+K205,okänd hand,3,G 208,G,Stenkumla sn,nan,,0,,,0.13,29.5
+K205,okänd hand,3,G 272,G,Tingstäde sn,nan,,0,,,0.13,29.5
+K206,okänd hand,3,Sm 157,Sm,Ryssby sn,nan,,0,,,0.116,24.0
+K206,okänd hand,3,Öl 36,Öl,Runstens sn,nan,,0,,,0.116,24.0
+K206,okänd hand,3,Öl 41,Öl,Gärdslösa sn,Pr3,,0,,,0.116,24.0
+K207,okänd hand,3,Sm 16,Sm,Östra Torsås sn,RAK,,0,,,0.089,23.0
+K207,okänd hand,3,Sm 19,Sm,Gårdsby sn,RAK,,0,,,0.089,23.0
+K207,okänd hand,3,Sm 8,Sm,Dänningelanda sn,nan,,0,,,0.089,23.0
+K208,okänd hand,3,Sm 146,Sm,Ukna sn,nan,,0,,,0.083,17.7
+K208,okänd hand,3,Sm 148,Sm,Västra Eds sn,nan,,0,,,0.083,17.7
+K208,okänd hand,3,Sm 149,Sm,Västra Eds sn,nan,,0,,,0.083,17.7
+K209,okänd hand,3,Sö 72,Sö,Västra Vingåkers sn,Fp,,0,,,0.071,20.8
+K209,okänd hand,3,Sö 73,Sö,Västra Vingåkers sn,RAK,,0,,,0.071,20.8
+K209,okänd hand,3,Sö Fv1973;189,Sö,Julita sn,RAK,,0,,,0.071,20.8
+K210,okänd hand,3,Vg 14,Vg,Lyrestads sn,RAK,,0,,,0.064,22.5
+K210,okänd hand,3,Vg 17,Vg,Torsö sn,Fp,,0,,,0.064,22.5
+K210,okänd hand,3,Vg 8,Vg,Hjälstads sn,Fp,,0,,,0.064,22.5
+K211,okänd hand,3,Vg 128,Vg,Österbitterna sn,RAK,,0,,,0.039,10.2
+K211,okänd hand,3,Vg 151,Vg,Eggvena sn,nan,,0,,,0.039,10.2
+K211,okänd hand,3,Vg 152,Vg,Eggvena sn,RAK,,0,,,0.039,10.2
+K212,okänd hand,3,Sm 121,Sm,Rogberga sn,nan,,0,,,0.014,19.5
+K212,okänd hand,3,Sm 55,Sm,Byarums sn,KB,,0,,,0.014,19.5
+K212,okänd hand,3,Sm 91,Sm,Alseda sn,nan,,0,,,0.014,19.5
+K213,okänd hand,3,Sm 150,Sm,Mörlunda sn,nan,,0,,,0.0,20.0
+K213,okänd hand,3,Sm 152,Sm,Mörlunda sn,nan,,0,,,0.0,20.0
+K213,okänd hand,3,Sm 154,Sm,Högsby sn,nan,,0,,,0.0,20.0

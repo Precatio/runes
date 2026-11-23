@@ -1,0 +1,489 @@
+{
+ "plan": "analysplaner/2026-11-19-oppen-ristarmodell.md",
+ "plan_sha": "091e6cba",
+ "corpus": "510ebfb3",
+ "t_link": -0.009858686760262355,
+ "p_min": 0.5,
+ "stones_with_text": 1564,
+ "O1": {
+  "groups": 13,
+  "mean_obs": 0.3076923076923077,
+  "mean_ctrl": 0.11106619439952772,
+  "median_diff": 0.0,
+  "better": 4,
+  "worse": 5,
+  "p": 0.212890625,
+  "holds": false
+ },
+ "O1_only_condition1": {
+  "groups": 13,
+  "mean_obs": 0.3333333333333333,
+  "mean_ctrl": 0.22612527056971496,
+  "median_diff": -0.05005005005005005,
+  "better": 5,
+  "worse": 7,
+  "p": 0.25927734375
+ },
+ "O1_only_condition2": {
+  "groups": 13,
+  "mean_obs": 0.41025641025641024,
+  "mean_ctrl": 0.23998079275857054,
+  "median_diff": 0.0,
+  "better": 6,
+  "worse": 6,
+  "p": 0.169677734375
+ },
+ "O2": {
+  "sure_stones": 497,
+  "k0_right": 366,
+  "k0_accuracy": 0.7364185110663984,
+  "kept_right": 281,
+  "kept_share": 0.76775956284153,
+  "holds": true,
+  "lost_by_carver": {
+   "Öpir 1": 18,
+   "Balle": 14,
+   "Halvdan": 10,
+   "Arbjörn": 7,
+   "Fot 2": 6,
+   "Traen": 5,
+   "Visäte": 5,
+   "Åsmund": 5,
+   "Amunde": 4,
+   "Tore 1": 3,
+   "Gunnar": 3,
+   "Torbjörn skald": 1,
+   "Torbjörn 2": 1,
+   "Livsten": 1,
+   "Erik": 1,
+   "Likbjörn": 1
+  },
+  "kept_wrong": 29,
+  "k0_wrong": 131
+ },
+ "decision_replace_k0": false,
+ "descriptive": {
+  "stones_without_certain_carver": 923,
+  "k0_suggestion_p_ge_05": 503,
+  "o_known": 267,
+  "o_unknown": 656,
+  "unknown_per_province": {
+   "U": 459,
+   "Sö": 179,
+   "Vs": 9,
+   "Gs": 6,
+   "Ög": 2,
+   "D": 1
+  },
+  "known_per_province": {
+   "U": 205,
+   "Sö": 58,
+   "Vs": 3,
+   "Gs": 1
+  },
+  "k0_suggestions_lost_by_condition2": {
+   "Öpir 1": 114,
+   "Balle": 63,
+   "Halvdan": 22,
+   "Torbjörn 2": 19,
+   "Fot 2": 9,
+   "Åsmund": 5,
+   "Traen": 2,
+   "Torbjörn skald": 1,
+   "Gunnar": 1
+  },
+  "no_text_features": 393
+ },
+ "U1015_1024": {
+  "U 1015": {
+   "k0": "Öpir 1",
+   "p_cal": 0.865,
+   "o": "Öpir 1",
+   "best_excess": 0.56
+  },
+  "U 1017": {
+   "k0": "Öpir 1",
+   "p_cal": 0.792,
+   "o": "Öpir 1",
+   "best_excess": 0.471
+  },
+  "U 1018": {
+   "k0": "Öpir 1",
+   "p_cal": 0.626,
+   "o": "Öpir 1",
+   "best_excess": 0.494
+  },
+  "U 1019": {
+   "k0": "Öpir 1",
+   "p_cal": 0.836,
+   "o": "Öpir 1",
+   "best_excess": 0.4
+  },
+  "U 1020": {
+   "k0": "Öpir 1",
+   "p_cal": 0.814,
+   "o": "Öpir 1",
+   "best_excess": 0.367
+  },
+  "U 1021": {
+   "k0": "Öpir 1",
+   "p_cal": 0.602,
+   "o": "Öpir 1",
+   "best_excess": 0.497
+  },
+  "U 1022": {
+   "k0": "Öpir 1",
+   "p_cal": 0.7787078582047299,
+   "o": "Öpir 1",
+   "best_excess": 0.34
+  },
+  "U 1023": {
+   "k0": "Öpir 1",
+   "p_cal": 0.718,
+   "o": "Öpir 1",
+   "best_excess": 0.567
+  },
+  "U 1024": {
+   "k0": "Öpir 1",
+   "p_cal": 0.655,
+   "o": "Öpir 1",
+   "best_excess": 0.475
+  }
+ },
+ "O1_groups": [
+  {
+   "stones": [
+    "U 1048",
+    "U 1050",
+    "U 1060"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.0,
+   "pairs": 3,
+   "answers": {
+    "U 1048": "Likbjörn",
+    "U 1050": "okänd hand",
+    "U 1060": "okänd hand"
+   },
+   "k0": {
+    "U 1048": "Likbjörn",
+    "U 1050": "Öpir 1",
+    "U 1060": "Öpir 1"
+   },
+   "rundata": {
+    "U 1048": null,
+    "U 1050": null,
+    "U 1060": null
+   }
+  },
+  {
+   "stones": [
+    "U 201",
+    "U 276"
+   ],
+   "obs": 1.0,
+   "ctrl": 0.06456456456456457,
+   "pairs": 1,
+   "answers": {
+    "U 201": "Gunnar",
+    "U 276": "Gunnar"
+   },
+   "k0": {
+    "U 201": "Gunnar",
+    "U 276": "Gunnar"
+   },
+   "rundata": {
+    "U 201": "Gunnar",
+    "U 276": null
+   }
+  },
+  {
+   "stones": [
+    "U 1016",
+    "U 1146",
+    "U 1147"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.0,
+   "pairs": 3,
+   "answers": {
+    "U 1016": "okänd hand",
+    "U 1146": "okänd hand",
+    "U 1147": "okänd hand"
+   },
+   "k0": {
+    "U 1016": "Åsmund",
+    "U 1146": "Åsmund",
+    "U 1147": "Öpir 1"
+   },
+   "rundata": {
+    "U 1016": null,
+    "U 1146": null,
+    "U 1147": null
+   }
+  },
+  {
+   "stones": [
+    "U 1015",
+    "U 1017",
+    "U 1018",
+    "U 1019",
+    "U 1020",
+    "U 1021",
+    "U 1022",
+    "U 1023",
+    "U 1024"
+   ],
+   "obs": 1.0,
+   "ctrl": 0.5327827827827828,
+   "pairs": 36,
+   "answers": {
+    "U 1015": "Öpir 1",
+    "U 1017": "Öpir 1",
+    "U 1018": "Öpir 1",
+    "U 1019": "Öpir 1",
+    "U 1020": "Öpir 1",
+    "U 1021": "Öpir 1",
+    "U 1022": "Öpir 1",
+    "U 1023": "Öpir 1",
+    "U 1024": "Öpir 1"
+   },
+   "k0": {
+    "U 1015": "Öpir 1",
+    "U 1017": "Öpir 1",
+    "U 1018": "Öpir 1",
+    "U 1019": "Öpir 1",
+    "U 1020": "Öpir 1",
+    "U 1021": "Öpir 1",
+    "U 1022": "Öpir 1",
+    "U 1023": "Öpir 1",
+    "U 1024": "Öpir 1"
+   },
+   "rundata": {
+    "U 1015": null,
+    "U 1017": null,
+    "U 1018": null,
+    "U 1019": null,
+    "U 1020": null,
+    "U 1021": null,
+    "U 1022": "Öpir 1",
+    "U 1023": null,
+    "U 1024": null
+   }
+  },
+  {
+   "stones": [
+    "U 135",
+    "U 136"
+   ],
+   "obs": 1.0,
+   "ctrl": 0.34684684684684686,
+   "pairs": 1,
+   "answers": {
+    "U 135": "Fot 2",
+    "U 136": "Fot 2"
+   },
+   "k0": {
+    "U 135": "Fot 2",
+    "U 136": "Fot 2"
+   },
+   "rundata": {
+    "U 135": null,
+    "U 136": null
+   }
+  },
+  {
+   "stones": [
+    "U 665",
+    "U 672"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.05005005005005005,
+   "pairs": 1,
+   "answers": {
+    "U 665": "Arbjörn",
+    "U 672": "okänd hand"
+   },
+   "k0": {
+    "U 665": "Arbjörn",
+    "U 672": "Fot 2"
+   },
+   "rundata": {
+    "U 665": null,
+    "U 672": null
+   }
+  },
+  {
+   "stones": [
+    "U 1026",
+    "U 1027"
+   ],
+   "obs": 1.0,
+   "ctrl": 0.0,
+   "pairs": 1,
+   "answers": {
+    "U 1026": "Öpir 1",
+    "U 1027": "Öpir 1"
+   },
+   "k0": {
+    "U 1026": "Öpir 1",
+    "U 1027": "Öpir 1"
+   },
+   "rundata": {
+    "U 1026": null,
+    "U 1027": null
+   }
+  },
+  {
+   "stones": [
+    "U 297",
+    "U Fv1953;270",
+    "U Fv1979;245"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.024190857524190854,
+   "pairs": 3,
+   "answers": {
+    "U 297": "Fot 2",
+    "U Fv1953;270": "okänd hand",
+    "U Fv1979;245": "okänd hand"
+   },
+   "k0": {
+    "U 297": "Fot 2",
+    "U Fv1953;270": "Öpir 1",
+    "U Fv1979;245": "Fot 2"
+   },
+   "rundata": {
+    "U 297": null,
+    "U Fv1953;270": null,
+    "U Fv1979;245": null
+   }
+  },
+  {
+   "stones": [
+    "U 124",
+    "U 60"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.08258258258258258,
+   "pairs": 1,
+   "answers": {
+    "U 124": "Fot 2",
+    "U 60": "okänd hand"
+   },
+   "k0": {
+    "U 124": "Fot 2",
+    "U 60": "Visäte"
+   },
+   "rundata": {
+    "U 124": null,
+    "U 60": null
+   }
+  },
+  {
+   "stones": [
+    "U 800",
+    "U 803"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.0,
+   "pairs": 1,
+   "answers": {
+    "U 800": "Balle",
+    "U 803": "okänd hand"
+   },
+   "k0": {
+    "U 800": "Balle",
+    "U 803": "Öpir 1"
+   },
+   "rundata": {
+    "U 800": "Tidkume",
+    "U 803": null
+   }
+  },
+  {
+   "stones": [
+    "U 49",
+    "U 50"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.2527527527527528,
+   "pairs": 1,
+   "answers": {
+    "U 49": "okänd hand",
+    "U 50": "Öpir 1"
+   },
+   "k0": {
+    "U 49": "Halvdan",
+    "U 50": "Öpir 1"
+   },
+   "rundata": {
+    "U 49": null,
+    "U 50": null
+   }
+  },
+  {
+   "stones": [
+    "Vs 18",
+    "Vs 19"
+   ],
+   "obs": 0.0,
+   "ctrl": null,
+   "pairs": 1,
+   "answers": {
+    "Vs 18": "Balle",
+    "Vs 19": "okänd hand"
+   },
+   "k0": {
+    "Vs 18": "Balle",
+    "Vs 19": "Balle"
+   },
+   "rundata": {
+    "Vs 18": null,
+    "Vs 19": null
+   }
+  },
+  {
+   "stones": [
+    "U 685",
+    "U 686"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.0,
+   "pairs": 1,
+   "answers": {
+    "U 685": "Fot 2",
+    "U 686": "okänd hand"
+   },
+   "k0": {
+    "U 685": "Fot 2",
+    "U 686": "Fot 2"
+   },
+   "rundata": {
+    "U 685": null,
+    "U 686": null
+   }
+  },
+  {
+   "stones": [
+    "Sö 91",
+    "Sö Fv1986;218"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.09009009009009009,
+   "pairs": 1,
+   "answers": {
+    "Sö 91": "okänd hand",
+    "Sö Fv1986;218": "okänd hand"
+   },
+   "k0": {
+    "Sö 91": "Traen",
+    "Sö Fv1986;218": "Balle"
+   },
+   "rundata": {
+    "Sö 91": null,
+    "Sö Fv1986;218": null
+   }
+  }
+ ]
+}
