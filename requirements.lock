@@ -4,7 +4,7 @@
 #   python3.13 -m venv .venv && .venv/bin/pip install --require-hashes -r requirements.lock
 #
 # The versions are those of the developer's own .venv (Python 3.13) when the lock was made, so CI runs the tests on
-# the same libraries; only opentelemetry-api was raised to 1.45.1 for CVE-2026-114603, and (2026-11-04) nltk to 3.10.4
+# the same libraries; only opentelemetry-api was raised to 1.45.1 for CVE-2026-114603 (and 2026-11-23 to 1.45.2 for CVE-2026-126360), and (2026-11-04) nltk to 3.10.4
 # (PYSEC-2026-3740) and pyasn1 to 0.6.5 (CVE-2026-119194–119197). The lock is
 # universal (environment markers for Linux, macOS and Windows) and was generated with
 #
@@ -1444,9 +1444,9 @@ opencv-python-headless==5.0.0.93 \
     --hash=sha256:c6bcd96b185975ea240d22cfdb15a1f6d080cc95264cfbe2621f21bb144d89b9 \
     --hash=sha256:ed709fdf9aa0bd1f2ed8549e71d19449b03a675bb581eb292285f6861953be37
     # via -r requirements.txt
-opentelemetry-api==1.45.1 \
-    --hash=sha256:aa38ed19bcc084ba42782a73255b3582283eced7ad6dddbd6695189e69adfb75 \
-    --hash=sha256:b31553efa588ae44bc306f863c785c5333a9ecc091248c6ee68b4b6c87fdedfb
+opentelemetry-api==1.45.2 \
+    --hash=sha256:2cbd737377e710ee740d261c94e93fa0f08e6d037c18f17513cc0a2d94479a34 \
+    --hash=sha256:d7b0008e21e5fd61cbe7a7f34ca3b6905a78ab677d9bc395e299359c75cda6b4
     # via fastapi, google-api-core
 packaging==26.3 \
     --hash=sha256:94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79 \
