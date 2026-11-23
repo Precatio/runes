@@ -197,6 +197,11 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
     hand = hand_evidence(signum, ctx, [c for c in (current, best["carver"] if best else None) if c])
     if hand:
         out["hand"] = hand if detail else {k: hand[k] for k in ("best_share", "unnamed")}
+    # A new field (the statuses keep their tested meaning): the group of stones that may share this stone's hand
+    from src import hand_groups
+    grp = hand_groups.group_of(ctx.get("groups"), signum)
+    if grp:
+        out["hand_group"] = grp if detail else {k: grp[k] for k in ("id", "type", "evidence")}
     if detail:
         out["sources"] = sources
         out["alternatives"] = alts[:3]
@@ -241,11 +246,11 @@ def hand_evidence(signum: str, ctx: dict, carvers: list[str]) -> dict | None:
 
 
 def context(inscriptions, model, r_directory: str | None) -> dict:
-    from src import hand_links
+    from src import hand_groups, hand_links
     oof, pred = r_probabilities(r_directory)
     return {"inscriptions": inscriptions, "model": model, "names": model.names, "home": carver_home(inscriptions),
             "evaluation": model.evaluate() or {}, "oof": oof, "pred": pred, "known": model_carvers(model),
-            "hands": hand_links.load(r_directory)}
+            "hands": hand_links.load(r_directory), "groups": hand_groups.load(r_directory)}
 
 
 def overview(inscriptions, model, r_directory: str | None) -> dict:

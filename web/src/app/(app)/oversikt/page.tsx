@@ -30,12 +30,17 @@ interface HandEvidence {
   partners: HandPartner[]; carvers: Record<string, { carver: string; excess: number; n: number; share: number | null } | null>;
   unnamed: string[]; best_share: number | null; base_share: number | null; t_hand: number | null; hand_share?: number | null;
 }
+interface HandGroup {
+  id: string; type: "okänd hand" | "med" | "blandad"; carver: string | null; evidence: "gott" | "svagt"; others: string[];
+  carvers: Record<string, string>; diameter_km: number; mean_p: number; stability: number | null; precision_named: number;
+}
 interface Profile extends StoneRow {
   sources: Record<string, Source>;
   alternatives: { carver: string; strength: number; model: number; orthography: number; checks: Record<string, boolean | null>; check_texts?: Record<string, string> }[];
   model: { kind: string; probabilities: Record<string, number> } | null;
   orthography: { ranking: { carver: string; similarity: number; reliability: number }[]; n_words: number } | null;
   hand?: HandEvidence;
+  hand_group?: HandGroup;
   variables: {
     height_m?: number; height_pct?: number | null; rune_height_cm?: number; fragment: boolean; kmr_url?: string;
     n_words: number; n_words_pct: number | null; n_names: number; n_names_pct: number | null;
@@ -312,7 +317,7 @@ function Overview() {
         </div>
 
         <div className="xl:sticky xl:top-4">
-          {selected ? <StoneProfile key={selected} signum={selected} onClose={() => setSelected(null)} /> : (
+          {selected ? <StoneProfile key={selected} signum={selected} onClose={() => setSelected(null)} onPick={setSelected} /> : (
             <div className="liquid-glass-island rounded-[24px] p-5 text-sm text-slate-600">
               Klicka på en sten i diagrammen eller tabellen för att se vad varje metod säger om den, vilka andra ristare som är tänkbara
               och hur stenen förhåller sig till andra i landskapet.
@@ -358,7 +363,7 @@ function Bar({ value, color = "#2a78d6" }: { value: number | null | undefined; c
   );
 }
 
-function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void }) {
+function StoneProfile({ signum, onClose, onPick }: { signum: string; onClose: () => void; onPick?: (s: string) => void }) {
   const [p, setP] = useState<Profile | null>(profileMemo.get(signum) ?? null);
   const [error, setError] = useState<string | null>(null);
   // Keyed by signum in the parent, so a new stone starts with empty state
@@ -442,6 +447,8 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
 
       {p.hand && <HandSection hand={p.hand} carvers={[p.carver, p.alternative?.carver].filter((c): c is string => !!c)} />}
 
+      {p.hand_group && <HandGroupSection g={p.hand_group} onPick={onPick} />}
+
       <div>
         <p className="font-bold text-slate-900 mb-1">Stenen jämförd med {v.n_province} runstenar i {v.province}</p>
         <div className="space-y-1">
@@ -468,6 +475,32 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
         <Link href={`/karta?signum=${encodeURIComponent(p.signum)}`} className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:border-slate-900">Visa på karta</Link>
         {v.kmr_url && <a href={v.kmr_url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:border-slate-900">Kulturmiljöregistret</a>}
       </div>
+    </div>
+  );
+}
+
+// The group of stones that may share this stone's hand (src/hand_groups.py, METHODS 14l)
+function HandGroupSection({ g, onPick }: { g: HandGroup; onPick?: (s: string) => void }) {
+  const kind = g.type === "okänd hand" ? "ingen av stenarna har en ristare i Rundata" : g.type === "med"
+    ? `de stenar som har en ristare i Rundata har ${g.carver}` : "stenarna med ristare i Rundata har olika ristare";
+  return (
+    <div>
+      <p className="font-bold text-slate-900 mb-1">Kan ha samma hand som</p>
+      <p className="text-xs text-slate-600 mb-1.5">
+        Stenen ingår i grupp {g.id}: {g.others.length} andra stenar inom {g.diameter_km.toLocaleString("sv-SE")} km som modellen för samma
+        hand tror är gjorda av samma ristare. {kind[0].toUpperCase() + kind.slice(1)}. Omkring {Math.round(100 * g.precision_named)} % av
+        stenparen i sådana grupper har samma ristare{g.stability != null ? `, och ${Math.round(100 * g.stability)} % av gruppens par stannar ihop när modellen tränas om` : ""}.
+        {g.evidence === "svagt" && " Underlaget är svagt: gruppen hålls mest ihop av platsen."} Ett förslag att pröva, inte en tillskrivning.
+      </p>
+      <div className="flex flex-wrap gap-1.5">
+        {g.others.map(s => (
+          <button key={s} type="button" translate="no" onClick={() => onPick?.(s)}
+            className={`px-2 py-0.5 rounded-lg border text-xs hover:border-slate-900 ${g.carvers[s] ? "border-[#b7410e]/40 bg-[#b7410e]/5" : "border-slate-300 bg-white"}`}>
+            {s}{g.carvers[s] ? ` · ${g.carvers[s]}` : ""}
+          </button>
+        ))}
+      </div>
+      <p className="text-xs mt-1.5"><Link href="/ristare#samma-hand" className="text-[#b7410e] font-bold hover:underline">Alla grupper under Ristarna →</Link></p>
     </div>
   );
 }

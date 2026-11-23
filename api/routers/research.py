@@ -466,12 +466,13 @@ def _overview_key(fp: str) -> str:
         p = os.path.join(root, rel)
         parts.append(str(os.path.getmtime(p)) if os.path.exists(p) else "-")
     for rel in ("src/stone_overview.py", "src/synthesis.py", "src/orthography.py", "src/language_profile.py",
-                "src/geology.py", "src/research_gaps.py", "src/hand_links.py"):
+                "src/geology.py", "src/research_gaps.py", "src/hand_links.py", "src/hand_groups.py"):
         parts.append(hashlib.sha256(open(os.path.join(root, rel), "rb").read()).hexdigest()[:12])
     # the similarity beyond the neighbours (hands.json) can be rebuilt for the same corpus
     from src import r_bridge
-    hp = os.path.join(r_bridge.JOB.directory(fp), "hands.json")
-    parts.append(str(os.path.getmtime(hp)) if os.path.exists(hp) else "-")
+    for name in ("hands.json", "hand_groups.json"):
+        hp = os.path.join(r_bridge.JOB.directory(fp), name)
+        parts.append(str(os.path.getmtime(hp)) if os.path.exists(hp) else "-")
     return hashlib.sha256("|".join(parts).encode()).hexdigest()[:16]
 
 

@@ -716,6 +716,14 @@ def run_corpus(fp: str):
             hand_links.build(d, log=lambda *_: None)
         except Exception as e:
             errors["händer"] = str(e)
+        # Stones that may share a hand (src/hand_groups.py, METHODS 14l): groups from the learned pair model, tested
+        # against the runologists' own "samme ristare" (2026-11-23); for /ristare and Stenöversikt
+        _write_state(d, module="handgrupper")
+        try:
+            from src import hand_groups
+            hand_groups.build(d, log=lambda *_: None)
+        except Exception as e:
+            errors["handgrupper"] = str(e)
         # The carver page's data (src/carver_pages.py: profiles, the model's suggestions, the second opinion), after the
         # attribution model; served by GET /api/r/ristare and exported to the website (src/site_export.py)
         if "attribution" in done:

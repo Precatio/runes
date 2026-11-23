@@ -230,6 +230,15 @@ def carver_page():
     return FileResponse(p, media_type="application/json")
 
 
+@router.get("/handgrupper")
+def hand_groups_data():
+    """Stenar som kan ha samma hand (src/hand_groups.py, METHODS 14l): byggs av korpusjobbet för den aktuella korpusen."""
+    p = os.path.join(rb.JOB.directory(fingerprint()), "hand_groups.json")
+    if not os.path.exists(p):
+        raise HTTPException(status_code=409, detail="Grupperna är inte beräknade än: kör korpusanalyserna (Statistik).")
+    return FileResponse(p, media_type="application/json")
+
+
 @router.get("/corpus")
 def corpus_results(request: Request):
     """Resultaten av korpusanalyserna med figurernas adresser och de mönster appen ser."""

@@ -3094,6 +3094,69 @@ citatet letas upp i artikelns text: för 4 466 av 4 985 källrader hittades det 
 ett internt styrdokument: kortet finns bara under `web/src/app/(app)`, som den publika byggen tar bort, och svaret
 innehåller inte relevansmotiveringarna eller hur frågan ska prövas.
 
+### 14l. Stenar som kan ha samma hand (2026-11-23)
+
+Källkod: `src/hand_groups.py` (körs i korpusjobbet efter `hand_links`, `<korpus>/hand_groups.json`, `GET /api/r/handgrupper`),
+`src/stone_overview.py` (fältet `hand_group`), `web/src/components/HandGroups.tsx` (/ristare) och stenprofilen i
+Stenöversikten; test `tests/test_hand_groups.py`. Forskningsskripten, det som prövades: `utdata/nya_ristare/`.
+
+**Varför.**
+- Tre försök att bilda grupper ur textlikheten (14i) föll mot runologernas grupper:
+  - täta kärnor (2026-11-08);
+  - en öppen ristarmodell (2026-11-19);
+  - kärnor med diametervillkor (2026-11-23).
+- Underlaget per sten var för tunt, och facit (Runor 2020) var för litet.
+- Dessutom upptäcktes att de kategoriska språkdragen aldrig hade vägts in i textlikheten. Dragen är text i korpusen
+  (skiljetecken, stavningen av *eftir* och *þenna*, *ai*, *auk* med flera) och blev noll.
+
+**Facit** (`analysplaner/2026-11-23-nya-ristare-program.md`):
+- **Källorna:** varje ställe i SRI:s textband där utgivaren säger "samme ristare", "samma hand" eller "samme mästare" (225
+  ställen), och Runor 2020:s "samma som gjort X".
+- **Utläsningen:** SRI-ställena lästes av två instanser av Anthropics språkmodell Claude (Claude Opus). En kontrolläsning
+  nådde 75 % (kravet var 85 %). Därför lästes allt om med en striktare regel (86 % lika), och 62 omstridda par avgjordes
+  för hand.
+- **Resultatet:** 409 länkar och 118 grupper. Grupperna delades slumpvis i en utvecklingsdel och en provdel. Provdelen
+  öppnades först i det låsta slutprovet och loggas.
+
+**Beläggen per stenpar** inom 30 km:
+- textlikheten utöver grannarna (14i), samlad, ortografisk och för språkdragen;
+- stilgrupp och stilavstånd;
+- korsets form enligt Lagers typologi i Runor 2020;
+- ornament- och runformsord i SRI;
+- de kategoriska språkdragen, lika eller olika;
+- gemensamma namn, vägda efter ovanlighet;
+- kortkvist, bergart och avståndet.
+
+Saknade belägg lämnas tomma.
+
+**Modellen och grupperna.**
+- **Parmodellen:** gradient boosting tränad på par av stenar med säker ristare i Rundata, med ristarna delade i fem vikter.
+  Par av säkra stenar får sitt värde från en vikt som inte sett deras ristare. Som i provet tränas inte på par inom
+  facitgrupper eller på provdelens stenar.
+- **Grupperna:** genomsnittlig länkning på parmodellens sannolikheter, med gruppens diameter högst 30 km, avskuren vid
+  0,8.
+- **Utvecklingsdelen:** runologernas partner hamnade i median över 94 % av stenarna på samma avstånd, mot 83 % med bara
+  textlikheten. De kategoriska språkdragen stod för lyftet från 90 % till 94 %. Gemensamma namn tillförde inget.
+
+**Prövat** (`analysplaner/2026-11-23-nya-ristare-slutprov-1.md`, låst innan provdelen öppnades):
+- **Alla grupper i provdelen:** 42 % av runologernas par hamnade i samma grupp, mot 7 % av grannstenar på samma avstånd
+  (42 grupper, bättre i 23, sämre i 8, p 0,00002).
+- **Bara grupper med onämnda händer:** 69 % mot 7,5 % (15 grupper, p 0,002).
+- **Precisionen:** omkring 77 % av stenparen i samma grupp har samma ristare, mätt på namngivna ristare.
+
+**I appen.**
+- **Typer:** grupper med minst tre stenar visas under Ristarna (/ristare) som *okänd hand* (ingen sten har en säker
+  ristare), *med X* eller *blandad*.
+- **Stabil:** andelen av gruppens stenpar som stannar ihop när modellen tränas om med andra vikter (två omkörningar).
+  Medianen är 0,67, och 39 av de 77 grupperna med okänd hand och gott underlag har minst 0,8.
+- **Svagt underlag:** mindre än hälften av paren har jämförbar text och paren har i snitt färre än tre belägg. I
+  praktiken är det fragment från samma fyndplats som hålls ihop av platsen.
+- **Stenprofilen** i Stenöversikten visar gruppen. Statusarna i 14c och 14i behåller sin prövade betydelse.
+
+Grupperna är hypoteser, inte nya ristare. Facit och träningen bygger delvis på samma slags drag som runologerna använde
+(Rundatas tillskrivningar delvis efter Axelson 1993), så provet visar att metoden återskapar deras bedömningar, inte att
+bedömningarna är rätt. Ornamentik i detalj, runformer och huggteknik ingår inte.
+
 ## 15. Rapporter
 
 Två rapporttyper, båda manusutkast där tabeller och figurer räknas fram ur data och AI-text märks.

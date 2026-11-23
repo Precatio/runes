@@ -1,4 +1,13 @@
 {
+"Kan ha samma hand som":"May share a hand with",
+"Förslag":"Proposals",
+"Stenar som kan ha samma hand":"Stones that may share a hand",
+"Okänd hand":"Unknown hand",
+"Med en känd ristare":"With one known carver",
+"Blandad":"Mixed",
+"Dölj svagt underlag":"Hide weak evidence",
+"Bara stabila (minst 80 %)":"Stable only (at least 80 %)",
+"Alla grupper under Ristarna →":"All groups under The carvers →",
 " · kalibrerat per ordklass":" · calibrated by word class",
 " Med Runa för runa kopplas varje klick dessutom till runan i Rundatas translitterering.":" With Rune by rune each click is also tied to its rune in Rundata's transliteration.",
 "-- Välj projekt --":"-- Choose project --",
