@@ -3144,6 +3144,27 @@ Saknade belägg lämnas tomma.
 - **Bara grupper med onämnda händer:** 69 % mot 7,5 % (15 grupper, p 0,002).
 - **Precisionen:** omkring 77 % av stenparen i samma grupp har samma ristare, mätt på namngivna ristare.
 
+**Prövat mot litteraturen** (`analysplaner/2026-11-23-nya-ristare-slutprov-2-litteraturen.md`, låst före jämförelsen):
+- **Underlaget:** 2 490 ställen i Fornvännen, Futhark och åtta avhandlingar (Källström 2007, Zilmer 2005, Stern 2013,
+  Williams 1990, Lagman 1990, Larsson 2002, Åkerström 2020, Pereswetoff-Morath 2017), där en ristare eller "samma hand"
+  nämns nära ett signum.
+- **Läsningen:** 28 instanser av Claude läste ställena, och 5 blinda kontrolläsare tog ett stickprov på 250. Av dem var
+  88 % identiska.
+- **Granskningen:** varje uttalande om samma hand, olika händer eller tillskrivning av en gruppsten (303 uttalanden)
+  prövades av två oberoende granskare, och det behölls bara om båda bekräftade. 74 av 93 uttalanden om samma hand
+  behölls.
+- **Facit 2:** 63 nya par som inte fanns i det första facit. Mot dem hamnade 46 % av paren i samma grupp, mot 7 % för
+  grannar på samma avstånd (25 grupper, p 0,0004). För de onämnda händerna var det 26 % mot 5,5 %, men med bara 7 grupper
+  (p 0,06, obestämt).
+- **Olika händer:** av 14 par som forskare säger har olika händer lade modellen 1 i samma grupp.
+- **Besked per grupp:**
+  - *stöds i litteraturen* (57): forskare har redan kopplat ihop stenar i gruppen;
+  - *ny* (155): stenarna nämns, men inte som samma hand;
+  - *motsagd* (1);
+  - *ej omnämnd* (15).
+
+  Av de 77 grupperna med okänd hand och gott underlag är 69 nya i litteraturen.
+
 **I appen.**
 - **Typer:** grupper med minst tre stenar visas under Ristarna (/ristare) som *okänd hand* (ingen sten har en säker
   ristare), *med X* eller *blandad*.

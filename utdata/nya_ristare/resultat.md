@@ -121,3 +121,57 @@ till M1 och prövades på utvecklingsdelen.
 | Efter | 0,944 | 0,859 | 0,928 |
 
 De lades inte till, och modellen är oförändrad.
+
+## 7. Litteraturen och slutprov 2 (2026-11-23–24): **håller**
+Plan `analysplaner/2026-11-23-nya-ristare-slutprov-2-litteraturen.md` (sha 706be174), låst före jämförelsen.
+
+**Läsningen** (arbetsflöde):
+- 2 490 ställen i Fornvännen (1 018), Futhark (787) och åtta avhandlingar (685), där en ristare eller "samma hand" nämns nära
+  ett signum;
+- 28 läsare gav 1 556 uttalanden: 879 signeringar, 472 tillskrivningar, 153 om samma hand och 52 om olika händer;
+- 5 blinda kontrolläsare tog ett stickprov på 250 ställen, och 220 av dem (88 %) var identiska;
+- läsarna hittade 21 av kontrollens 22 par om samma hand, men tog ut fler, främst ur långa listor.
+
+**Granskningen:** två oberoende granskare per uttalande om samma hand, olika händer eller tillskrivning av en gruppsten. Ett
+uttalande behölls bara om båda bekräftade det.
+
+| Uttalanden | Behållna |
+|---|---|
+| Samma hand | 74 av 93 |
+| Olika händer | 38 av 42 |
+| Tillskrivningar | 131 av 168 |
+
+Ungefär 25 miljoner tokens. Körningen avbröts av användningstaket, och de sista 15 uttalandena granskades efter
+återstart.
+
+**Slutprov 2:** 132 granskade par om samma hand, varav 63 nya mot facit 1, i 30 grupper.
+
+| | Grupper | I samma grupp | Kontrollen | Bättre / sämre | p |
+|---|---|---|---|---|---|
+| **T1 alla** | 25 | 0,457 | 0,066 | 17 / 5 | 0,0004 |
+| T2 onämnda | 7 | 0,262 | 0,055 | 4 / 1 | 0,06 (för få för slutsats) |
+
+- **Olika händer:** av 14 par inom 30 km som forskare säger har olika händer ligger 1 i samma grupp.
+- **Beslut enligt planen:** metoden är prövad mot två oberoende facit, och appen behåller grupperna.
+
+**Litteraturens besked per grupp** (`grupper_litteratur.json`):
+
+| Besked | Grupper |
+|---|---|
+| Stöds i litteraturen | 57 |
+| Ny | 155 |
+| Ej omnämnd | 15 |
+| Motsagd | 1 (G074: U 43–U 79 olika händer enligt Stern 2013) |
+
+- **De 77 grupperna med okänd hand och gott underlag:** 69 nya, 7 stöds och 1 ej omnämnd.
+- **De 7 som stöds:**
+
+  | Grupp | Stöd |
+  |---|---|
+  | G019 | Vg 100–Vg 101, Lagman 1990 |
+  | G057 | Vg 2–Vg 4, Williams 1990 |
+  | G067 | Sö 362, 363, 84, 85, Jansson 1958 |
+  | G131 | Ög 231–Ög 232, Källström 2020 |
+  | G164 | U 354–U 435, Källström 2010 |
+  | G171 | U 644–U 654, Lagman och Williams 1990 |
+  | G200 | G 207–G 208, Zilmer 2005 |

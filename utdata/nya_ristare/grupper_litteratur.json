@@ -1,0 +1,4921 @@
+[
+ {
+  "id": "G001",
+  "stenar": [
+   "Öl Köping1",
+   "Öl Köping12",
+   "Öl Köping13",
+   "Öl Köping15",
+   "Öl Köping17",
+   "Öl Köping18",
+   "Öl Köping22",
+   "Öl Köping25",
+   "Öl Köping26",
+   "Öl Köping27",
+   "Öl Köping31",
+   "Öl Köping34",
+   "Öl Köping35",
+   "Öl Köping36",
+   "Öl Köping40",
+   "Öl Köping41",
+   "Öl Köping44",
+   "Öl Köping47",
+   "Öl Köping50",
+   "Öl Köping59",
+   "Öl Köping60",
+   "Öl Köping65",
+   "Öl Köping66",
+   "Öl Köping72",
+   "Öl Köping73",
+   "Öl Köping8"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G002",
+  "stenar": [
+   "U 459",
+   "U 626",
+   "U 630",
+   "U 646",
+   "U 649",
+   "U 651",
+   "U 652",
+   "U 655",
+   "U 656",
+   "U 657",
+   "U 659",
+   "U 665",
+   "U 667",
+   "U 676",
+   "U 679",
+   "U 683",
+   "U 688",
+   "U 689",
+   "U 817",
+   "U 864",
+   "U 891"
+  ],
+  "typ": "med Arbjörn",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Arbjörn": 6
+  },
+  "tillskrivningar": {
+   "U 459": [
+    "Arbjörn"
+   ],
+   "U 630": [
+    "Arbjörn"
+   ],
+   "U 646": [
+    "Arbjörn"
+   ],
+   "U 651": [
+    "Arbjörn"
+   ],
+   "U 652": [
+    "Arbjörn"
+   ],
+   "U 676": [
+    "Arbjörn"
+   ]
+  }
+ },
+ {
+  "id": "G003",
+  "stenar": [
+   "Öl 52",
+   "Öl Köping14",
+   "Öl Köping2",
+   "Öl Köping20",
+   "Öl Köping23",
+   "Öl Köping30",
+   "Öl Köping38",
+   "Öl Köping39",
+   "Öl Köping49",
+   "Öl Köping52",
+   "Öl Köping54",
+   "Öl Köping55",
+   "Öl Köping57",
+   "Öl Köping68",
+   "Öl Köping71"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G004",
+  "stenar": [
+   "U 1027",
+   "U 1032",
+   "U 1036",
+   "U 1039",
+   "U 1040",
+   "U 1047",
+   "U 1051",
+   "U 1056",
+   "U 1062",
+   "U 1065",
+   "U 1084",
+   "U 1085",
+   "U 1089"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 1039",
+    "U 1040",
+    [
+     "Källström 2007"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Ingulv": 2,
+   "Öper": 3
+  },
+  "tillskrivningar": {
+   "U 1039": [
+    "Kjule"
+   ],
+   "U 1047": [
+    "Ingulv"
+   ],
+   "U 1062": [
+    "Ingulv"
+   ],
+   "U 1065": [
+    "Ingólfr"
+   ],
+   "U 1084": [
+    "Öper"
+   ],
+   "U 1085": [
+    "Öper"
+   ],
+   "U 1089": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G005",
+  "stenar": [
+   "U 1152",
+   "U 1160",
+   "U 719",
+   "U 742",
+   "U 766",
+   "U 767",
+   "U 780",
+   "U 789",
+   "U 795",
+   "U 796",
+   "U 797",
+   "U Fv1973;146"
+  ],
+  "typ": "med Livsten",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Livsten": 9
+  },
+  "tillskrivningar": {
+   "U 1152": [
+    "Livsten"
+   ],
+   "U 1160": [
+    "Livsten"
+   ],
+   "U 719": [
+    "Livsten"
+   ],
+   "U 742": [
+    "Tidkume"
+   ],
+   "U 766": [
+    "Livsten"
+   ],
+   "U 780": [
+    "Livsten"
+   ],
+   "U 789": [
+    "Livsten"
+   ],
+   "U 795": [
+    "Livsten"
+   ],
+   "U 796": [
+    "Livsten"
+   ],
+   "U 797": [
+    "Livsten"
+   ]
+  }
+ },
+ {
+  "id": "G006",
+  "stenar": [
+   "U 127",
+   "U 131",
+   "U 135",
+   "U 136",
+   "U 140",
+   "U 154",
+   "U 155",
+   "U 164",
+   "U 165",
+   "U 167",
+   "U 212",
+   "U 261"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 164",
+    "U 212",
+    [
+     "Williams 1990"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 131": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G007",
+  "stenar": [
+   "U 106",
+   "U 151",
+   "U 260",
+   "U 273",
+   "U 289",
+   "U 420",
+   "U 425",
+   "U 428",
+   "U 444",
+   "U 628",
+   "U 96",
+   "U ATA322-4042-2009"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Fot": 2
+  },
+  "tillskrivningar": {
+   "U 260": [
+    "Fot"
+   ],
+   "U 428": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G008",
+  "stenar": [
+   "U 100",
+   "U 153",
+   "U 255",
+   "U 256",
+   "U 267",
+   "U 269",
+   "U 285",
+   "U 297",
+   "U 329",
+   "U 330",
+   "U 411",
+   "U 510"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Fot": 8
+  },
+  "tillskrivningar": {
+   "U 255": [
+    "Fot"
+   ],
+   "U 256": [
+    "Fot"
+   ],
+   "U 269": [
+    "Fot"
+   ],
+   "U 285": [
+    "Fot"
+   ],
+   "U 329": [
+    "Fot"
+   ],
+   "U 330": [
+    "Fot"
+   ],
+   "U 411": [
+    "Fot"
+   ],
+   "U 510": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G009",
+  "stenar": [
+   "Ög 165",
+   "Ög 200",
+   "Ög 201",
+   "Ög 203",
+   "Ög 71",
+   "Ög 82",
+   "Ög 88",
+   "Ög 89",
+   "Ög 91",
+   "Ög 92",
+   "Ög 98",
+   "Ög Fv1965;54"
+  ],
+  "typ": "med Torkel",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Ög 165",
+    "Ög 82",
+    [
+     "Källström 2007"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G010",
+  "stenar": [
+   "U 1151",
+   "U 1155",
+   "U 1157",
+   "U 732",
+   "U 762",
+   "U 769",
+   "U 774",
+   "U 778",
+   "U 779",
+   "U 798",
+   "U 802"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G011",
+  "stenar": [
+   "U 1008",
+   "U 1020",
+   "U 1030",
+   "U 1072",
+   "U 1087",
+   "U 1088",
+   "U 1090",
+   "U 1094",
+   "U 952",
+   "U 977",
+   "U Fv1976;107"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 952": [
+    "Øpir"
+   ]
+  }
+ },
+ {
+  "id": "G012",
+  "stenar": [
+   "Sö 105",
+   "Sö 108",
+   "Sö 110",
+   "Sö 112",
+   "Sö 115",
+   "Sö 90",
+   "Sö 91",
+   "Sö 96",
+   "Sö 97",
+   "Sö Fv1986;218"
+  ],
+  "typ": "med Traen",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 112": [
+    "Træn"
+   ]
+  }
+ },
+ {
+  "id": "G013",
+  "stenar": [
+   "U 211",
+   "U 217",
+   "U 239",
+   "U 277",
+   "U 294",
+   "U 295",
+   "U 317",
+   "U 604",
+   "U Fv1959;188",
+   "U Fv1993;233"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 217": [
+    "Drosboi"
+   ]
+  }
+ },
+ {
+  "id": "G014",
+  "stenar": [
+   "U 647",
+   "U 699",
+   "U 721",
+   "U 729",
+   "U 740",
+   "U 744",
+   "U 753",
+   "U 810",
+   "U 819",
+   "U 873"
+  ],
+  "typ": "med Balle",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Balle": 2
+  },
+  "tillskrivningar": {
+   "U 729": [
+    "Balle"
+   ],
+   "U 810": [
+    "Balle"
+   ]
+  }
+ },
+ {
+  "id": "G015",
+  "stenar": [
+   "Ög 16",
+   "Ög 18",
+   "Ög 20",
+   "Ög 234",
+   "Ög 235",
+   "Ög 236",
+   "Ög 237",
+   "Ög 33",
+   "Ög 34",
+   "Ög Fv1959;249"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G016",
+  "stenar": [
+   "U 650",
+   "U 690",
+   "U 695",
+   "U 703",
+   "U 708",
+   "U 722",
+   "U 723",
+   "U 724",
+   "U 813",
+   "U 815"
+  ],
+  "typ": "med Balle",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Balle": 7
+  },
+  "tillskrivningar": {
+   "U 650": [
+    "Balle"
+   ],
+   "U 690": [
+    "Balle"
+   ],
+   "U 703": [
+    "Balle"
+   ],
+   "U 708": [
+    "Balle"
+   ],
+   "U 722": [
+    "Balle"
+   ],
+   "U 723": [
+    "Balle"
+   ],
+   "U 724": [
+    "Balle"
+   ]
+  }
+ },
+ {
+  "id": "G017",
+  "stenar": [
+   "Öl ATA411-4568-1998A",
+   "Öl ATA411-4568-1998B",
+   "Öl ATA411-4568-1998C",
+   "Öl ATA4375/56",
+   "Öl ATA4376/56A",
+   "Öl ATA4376/56B",
+   "Öl ATA4377/56A",
+   "Öl ATA4377/56B",
+   "Öl ATA4378/56",
+   "Öl ATA4684/43E"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G018",
+  "stenar": [
+   "U 1074",
+   "U 1081",
+   "U 1083",
+   "U 1091",
+   "U 1095",
+   "U 1118",
+   "U 1140",
+   "U 908",
+   "U 921"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 1074",
+    "U 1095",
+    [
+     "Gustavson 1976 (Fornvännen)"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G019",
+  "stenar": [
+   "Vg 100",
+   "Vg 101",
+   "Vg 103",
+   "Vg 108",
+   "Vg 113",
+   "Vg 114",
+   "Vg 116",
+   "Vg 123",
+   "Vg 124"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Vg 100",
+    "Vg 101",
+    [
+     "Lagman 1990"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G020",
+  "stenar": [
+   "U 115",
+   "U 133",
+   "U 141",
+   "U 224",
+   "U 263",
+   "U 270",
+   "U 332",
+   "U Fv2009;312",
+   "U THS30;83"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Fot": 2
+  },
+  "tillskrivningar": {
+   "U 133": [
+    "Fot"
+   ],
+   "U 141": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G021",
+  "stenar": [
+   "Öl Köping16",
+   "Öl Köping19",
+   "Öl Köping21",
+   "Öl Köping32",
+   "Öl Köping42",
+   "Öl Köping43",
+   "Öl Köping61",
+   "Öl Köping62",
+   "Öl Köping74"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G022",
+  "stenar": [
+   "U 1153",
+   "U 1154",
+   "U 1156",
+   "U 1165",
+   "U 1172",
+   "U 755",
+   "U 768",
+   "U 793"
+  ],
+  "typ": "med Erik",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 1156",
+    "U 768",
+    [
+     "Williams 1990"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G023",
+  "stenar": [
+   "U 258",
+   "U 327",
+   "U 336",
+   "U 349",
+   "U 358",
+   "U 490",
+   "U 678",
+   "U Fv1979;244B"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G024",
+  "stenar": [
+   "U 147",
+   "U 152",
+   "U 227",
+   "U 272",
+   "U 286",
+   "U 42",
+   "U 77",
+   "U 84"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 152",
+    "U 227",
+    [
+     "Williams 1990"
+    ]
+   ],
+   [
+    "U 152",
+    "U 272",
+    [
+     "Williams 1990"
+    ]
+   ],
+   [
+    "U 227",
+    "U 272",
+    [
+     "Williams 1990"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 286": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G025",
+  "stenar": [
+   "U 119",
+   "U 207",
+   "U 236",
+   "U 237",
+   "U 238",
+   "U 293",
+   "U 333",
+   "U 73"
+  ],
+  "typ": "med Visäte",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Visäte": 7
+  },
+  "tillskrivningar": {
+   "U 119": [
+    "Visäte"
+   ],
+   "U 207": [
+    "Visäte"
+   ],
+   "U 237": [
+    "Visäte"
+   ],
+   "U 238": [
+    "Visäte"
+   ],
+   "U 293": [
+    "Visäte"
+   ],
+   "U 333": [
+    "Visäte"
+   ],
+   "U 73": [
+    "Visäte"
+   ]
+  }
+ },
+ {
+  "id": "G026",
+  "stenar": [
+   "U 103",
+   "U 160",
+   "U 161",
+   "U 201",
+   "U 226",
+   "U 276",
+   "U 328",
+   "U 430"
+  ],
+  "typ": "med Gunnar",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Ulv": 3
+  },
+  "tillskrivningar": {
+   "U 160": [
+    "Gunnarr",
+    "Ulv",
+    "Úlfr"
+   ],
+   "U 276": [
+    "Ulv"
+   ],
+   "U 328": [
+    "Ulv"
+   ]
+  }
+ },
+ {
+  "id": "G027",
+  "stenar": [
+   "U 104",
+   "U 117",
+   "U 142",
+   "U 181",
+   "U 216",
+   "U 287",
+   "U 288",
+   "U 296"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Öpir": 3
+  },
+  "tillskrivningar": {
+   "U 181": [
+    "Öpir"
+   ],
+   "U 216": [
+    "Drósbói"
+   ],
+   "U 287": [
+    "Öpir"
+   ],
+   "U 288": [
+    "Öpir"
+   ]
+  }
+ },
+ {
+  "id": "G028",
+  "stenar": [
+   "U 448",
+   "U 460",
+   "U 471",
+   "U 476",
+   "U 480",
+   "U 843",
+   "U 955",
+   "U 997"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Fot": 3
+  },
+  "tillskrivningar": {
+   "U 448": [
+    "Fot",
+    "Fótr"
+   ],
+   "U 460": [
+    "Fot"
+   ],
+   "U 471": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G029",
+  "stenar": [
+   "U 648",
+   "U 669",
+   "U 746",
+   "U 825",
+   "U 836",
+   "U 840",
+   "U 851",
+   "U 868"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 840": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G030",
+  "stenar": [
+   "U 1070",
+   "U 846",
+   "U 847",
+   "U 885",
+   "U 889",
+   "U 895",
+   "U 907",
+   "U 913"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 907": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G031",
+  "stenar": [
+   "U 1014",
+   "U 1034",
+   "U 1096",
+   "U 914",
+   "U 959",
+   "U 962",
+   "U 973",
+   "U Fv1974;203"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Öper": 4
+  },
+  "tillskrivningar": {
+   "U 1014": [
+    "Öper"
+   ],
+   "U 1096": [
+    "Öper"
+   ],
+   "U 914": [
+    "Öper"
+   ],
+   "U 959": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G032",
+  "stenar": [
+   "Sö 217",
+   "Sö 224",
+   "Sö 229",
+   "Sö 240",
+   "Sö 254",
+   "Sö 265",
+   "Sö 266"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Amunde": 2,
+   "Åsbjörn": 2
+  },
+  "tillskrivningar": {
+   "Sö 229": [
+    "Amunde"
+   ],
+   "Sö 254": [
+    "Amunde"
+   ],
+   "Sö 265": [
+    "Åsbjörn"
+   ],
+   "Sö 266": [
+    "Åsbjörn"
+   ]
+  }
+ },
+ {
+  "id": "G033",
+  "stenar": [
+   "Ög 168",
+   "Ög 207",
+   "Ög 208",
+   "Ög 211",
+   "Ög 42",
+   "Ög 61",
+   "Ög ATA6488/60"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G034",
+  "stenar": [
+   "Vg 161",
+   "Vg 166",
+   "Vg 170",
+   "Vg 171",
+   "Vg 174",
+   "Vg 177",
+   "Vg 183"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G035",
+  "stenar": [
+   "U 1098",
+   "U 878",
+   "U 899",
+   "U 937",
+   "U 980",
+   "U 991",
+   "U Fv1972;271"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Fot": 4
+  },
+  "tillskrivningar": {
+   "U 899": [
+    "Fot"
+   ],
+   "U 937": [
+    "Fot"
+   ],
+   "U 980": [
+    "Fot"
+   ],
+   "U 991": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G036",
+  "stenar": [
+   "U 203",
+   "U 343",
+   "U 346",
+   "U 356",
+   "U 409",
+   "U 438",
+   "U 629"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Åsmund": 3,
+   "Torfast": 2
+  },
+  "tillskrivningar": {
+   "U 343": [
+    "Åsmund"
+   ],
+   "U 346": [
+    "Åsmund"
+   ],
+   "U 356": [
+    "Åsmund"
+   ],
+   "U 409": [
+    "Torfast"
+   ],
+   "U 629": [
+    "Torfast"
+   ]
+  }
+ },
+ {
+  "id": "G037",
+  "stenar": [
+   "U 1064",
+   "U 1069",
+   "U 1102",
+   "U 1107",
+   "U 1110",
+   "U 1116",
+   "U 918"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 1116",
+    "U 918",
+    [
+     "Källström 2007"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G038",
+  "stenar": [
+   "Ög 149",
+   "Ög 150",
+   "Ög 152",
+   "Ög 154",
+   "Ög 23",
+   "Ög 30",
+   "Ög Fv1966;102"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G039",
+  "stenar": [
+   "Sö 121",
+   "Sö 123",
+   "Sö 147",
+   "Sö 161",
+   "Sö 162",
+   "Sö 164",
+   "Sö 166"
+  ],
+  "typ": "med Traen",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G040",
+  "stenar": [
+   "Ög 195",
+   "Ög 67",
+   "Ög 68",
+   "Ög 84",
+   "Ög 85",
+   "Ög 96",
+   "Ög 97"
+  ],
+  "typ": "med Torkel",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G041",
+  "stenar": [
+   "U 624",
+   "U 635",
+   "U 640",
+   "U 660",
+   "U 674",
+   "U 811",
+   "U 844"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Fot": 3
+  },
+  "tillskrivningar": {
+   "U 624": [
+    "Fot"
+   ],
+   "U 660": [
+    "Fot"
+   ],
+   "U 674": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G042",
+  "stenar": [
+   "U 749",
+   "U 757",
+   "U 770",
+   "U 808",
+   "U 838",
+   "U 839",
+   "U 855"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Balle": 5
+  },
+  "tillskrivningar": {
+   "U 749": [
+    "Balle"
+   ],
+   "U 757": [
+    "Balle"
+   ],
+   "U 770": [
+    "Balle"
+   ],
+   "U 808": [
+    "Balle"
+   ],
+   "U 838": [
+    "Balle"
+   ]
+  }
+ },
+ {
+  "id": "G043",
+  "stenar": [
+   "U ATA7269/60A",
+   "U ATA7269/60B",
+   "U ATA7269/60C",
+   "U ATA7269/60E",
+   "U ATA7269/60F",
+   "U ATA7269/60G",
+   "U ATA7269/60H"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G044",
+  "stenar": [
+   "Sö 194",
+   "Sö 198",
+   "Sö 200",
+   "Sö 209",
+   "Sö 210",
+   "Sö 212"
+  ],
+  "typ": "med Balle",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Sö 194",
+    "Sö 198",
+    [
+     "Lagman 1990"
+    ]
+   ],
+   [
+    "Sö 194",
+    "Sö 200",
+    [
+     "Lagman 1990"
+    ]
+   ],
+   [
+    "Sö 198",
+    "Sö 200",
+    [
+     "Lagman 1990",
+     "Zilmer 2005"
+    ]
+   ],
+   [
+    "Sö 209",
+    "Sö 210",
+    [
+     "Lagman 1990"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Balle": 2
+  },
+  "tillskrivningar": {
+   "Sö 198": [
+    "Balli"
+   ],
+   "Sö 209": [
+    "Balle"
+   ],
+   "Sö 212": [
+    "Balle"
+   ]
+  }
+ },
+ {
+  "id": "G045",
+  "stenar": [
+   "U 371",
+   "U 504",
+   "U 508",
+   "U 518",
+   "U 539",
+   "U ATA3916/47"
+  ],
+  "typ": "med Gunnar",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 508": [
+    "Gunnarr"
+   ]
+  }
+ },
+ {
+  "id": "G046",
+  "stenar": [
+   "U 485",
+   "U 933",
+   "U 944",
+   "U 974",
+   "U 993",
+   "U Fv1948;168"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Öpir": 3,
+   "Öper": 2
+  },
+  "tillskrivningar": {
+   "U 485": [
+    "Öpir"
+   ],
+   "U 933": [
+    "Öper",
+    "Öpir"
+   ],
+   "U 974": [
+    "Öper"
+   ],
+   "U 993": [
+    "Öpir"
+   ]
+  }
+ },
+ {
+  "id": "G047",
+  "stenar": [
+   "U 1011",
+   "U 894",
+   "U 925",
+   "U 939",
+   "U 950",
+   "U 957"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Öper": 3,
+   "Öpir": 3
+  },
+  "tillskrivningar": {
+   "U 1011": [
+    "Önjut"
+   ],
+   "U 925": [
+    "Öper",
+    "Öpir",
+    "Øpir"
+   ],
+   "U 939": [
+    "Öper",
+    "Öpir"
+   ],
+   "U 950": [
+    "Öper",
+    "Öpir"
+   ]
+  }
+ },
+ {
+  "id": "G048",
+  "stenar": [
+   "U 200",
+   "U 214",
+   "U 323",
+   "U 338",
+   "U 502",
+   "U 512"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 214": [
+    "Drósbói"
+   ]
+  }
+ },
+ {
+  "id": "G049",
+  "stenar": [
+   "U 1009",
+   "U 903",
+   "U 932",
+   "U 969",
+   "U 970",
+   "U 986"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 903": [
+    "Åsmund"
+   ]
+  }
+ },
+ {
+  "id": "G050",
+  "stenar": [
+   "U 253",
+   "U 301",
+   "U 302",
+   "U 319",
+   "U 429",
+   "U ATA5734/59"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 301": [
+    "Åsmund"
+   ]
+  }
+ },
+ {
+  "id": "G051",
+  "stenar": [
+   "U 353",
+   "U 421",
+   "U 426",
+   "U 433",
+   "U 456",
+   "U Fv1978;226"
+  ],
+  "typ": "med Sune",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G052",
+  "stenar": [
+   "Sö 131",
+   "Sö 134",
+   "Sö 137",
+   "Sö 319",
+   "Sö 367",
+   "Sö 46"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G053",
+  "stenar": [
+   "U 691",
+   "U 692",
+   "U 718",
+   "U 763",
+   "U 764",
+   "U 765"
+  ],
+  "typ": "med Tidkume",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 691": [
+    "Tíðkumi"
+   ]
+  }
+ },
+ {
+  "id": "G054",
+  "stenar": [
+   "U 472",
+   "U 481",
+   "U 493",
+   "U 495",
+   "U 945",
+   "U Fv1955;216"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Fot": 2
+  },
+  "tillskrivningar": {
+   "U 472": [
+    "Fot"
+   ],
+   "U 481": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G055",
+  "stenar": [
+   "Sö 145",
+   "Sö 163",
+   "Sö 165",
+   "Sö 169",
+   "Sö 51",
+   "Sö Fv1948;289"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G056",
+  "stenar": [
+   "U 124",
+   "U 172",
+   "U 175",
+   "U 54",
+   "U 62",
+   "U 69"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 62": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G057",
+  "stenar": [
+   "Vg 12",
+   "Vg 14",
+   "Vg 2",
+   "Vg 3",
+   "Vg 4",
+   "Vg 6"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Vg 2",
+    "Vg 4",
+    [
+     "Williams 1990"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G058",
+  "stenar": [
+   "U 397B",
+   "U 400",
+   "U 401",
+   "U 402",
+   "U 404",
+   "U Fv1992;164A"
+  ],
+  "typ": "med Torbjörn 2",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G059",
+  "stenar": [
+   "U 386",
+   "U ATA321-1786-2012",
+   "U ATA322-4014-2011:2",
+   "U ATA322-4014-2011:3",
+   "U Fv1992;167B",
+   "U Fv1992;168A"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G060",
+  "stenar": [
+   "U 63",
+   "U NOR2002;33A",
+   "U NOR2002;33B",
+   "U NOR2002;33C",
+   "U NOR2002;33D",
+   "U NOR2002;33E"
+  ],
+  "typ": "med Olev",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G061",
+  "stenar": [
+   "Sö 274",
+   "Sö 290",
+   "Sö 292",
+   "Sö 297",
+   "Sö 298"
+  ],
+  "typ": "med Halvdan",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Sö 292",
+    "Sö 298",
+    [
+     "Svärdström 1971 (Fornvännen)"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Halvdan": 4
+  },
+  "tillskrivningar": {
+   "Sö 290": [
+    "Halvdan"
+   ],
+   "Sö 292": [
+    "Halvdan"
+   ],
+   "Sö 297": [
+    "Halvdan"
+   ],
+   "Sö 298": [
+    "Halvdan"
+   ]
+  }
+ },
+ {
+  "id": "G062",
+  "stenar": [
+   "U 859",
+   "U 860",
+   "U 875",
+   "U 901",
+   "U 904"
+  ],
+  "typ": "med Åsmund",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 859",
+    "U 860",
+    [
+     "Larsson 2002"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Torfast": 2
+  },
+  "tillskrivningar": {
+   "U 901": [
+    "Torfast"
+   ],
+   "U 904": [
+    "Torfast"
+   ]
+  }
+ },
+ {
+  "id": "G063",
+  "stenar": [
+   "U 1012",
+   "U 1026",
+   "U 1092",
+   "U 893",
+   "U 938"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Öpir": 2
+  },
+  "tillskrivningar": {
+   "U 893": [
+    "Öpir"
+   ],
+   "U 938": [
+    "Öper",
+    "Öpir"
+   ]
+  }
+ },
+ {
+  "id": "G064",
+  "stenar": [
+   "U 700",
+   "U 726",
+   "U 758",
+   "U 759",
+   "U 786"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Tidkume": 2
+  },
+  "tillskrivningar": {
+   "U 758": [
+    "Tidkume"
+   ],
+   "U 759": [
+    "Tidkume"
+   ]
+  }
+ },
+ {
+  "id": "G065",
+  "stenar": [
+   "Ög 11",
+   "Ög 118",
+   "Ög 120",
+   "Ög 121",
+   "Ög 123"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G066",
+  "stenar": [
+   "U 641",
+   "U 642",
+   "U 643",
+   "U 828",
+   "U 831"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 828": [
+    "Tidkume"
+   ]
+  }
+ },
+ {
+  "id": "G067",
+  "stenar": [
+   "Sö 362",
+   "Sö 363",
+   "Sö 84",
+   "Sö 85",
+   "Sö Fv1958;242"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Sö 362",
+    "Sö 363",
+    [
+     "Jansson 1958 (Fornvännen)"
+    ]
+   ],
+   [
+    "Sö 362",
+    "Sö 84",
+    [
+     "Jansson 1958 (Fornvännen)"
+    ]
+   ],
+   [
+    "Sö 362",
+    "Sö 85",
+    [
+     "Jansson 1958 (Fornvännen)"
+    ]
+   ],
+   [
+    "Sö 363",
+    "Sö 84",
+    [
+     "Jansson 1958 (Fornvännen)"
+    ]
+   ],
+   [
+    "Sö 363",
+    "Sö 85",
+    [
+     "Jansson 1958 (Fornvännen)"
+    ]
+   ],
+   [
+    "Sö 84",
+    "Sö 85",
+    [
+     "Jansson 1958 (Fornvännen)"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G068",
+  "stenar": [
+   "Sm 32",
+   "Sm 33",
+   "Sm 36",
+   "Sm 37",
+   "Sm 44"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G069",
+  "stenar": [
+   "U 186",
+   "U 188",
+   "U 189",
+   "U 335",
+   "U 506"
+  ],
+  "typ": "med Gunnar",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G070",
+  "stenar": [
+   "U 390",
+   "U 458",
+   "U 484",
+   "U Fv1953;274",
+   "U Fv1958;250"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 390": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G071",
+  "stenar": [
+   "U 457",
+   "U 474",
+   "U 478",
+   "U 947",
+   "U 954"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Torbjörn": 3
+  },
+  "tillskrivningar": {
+   "U 457": [
+    "Torbjörn"
+   ],
+   "U 474": [
+    "Torbjörn"
+   ],
+   "U 478": [
+    "Torbjörn"
+   ]
+  }
+ },
+ {
+  "id": "G072",
+  "stenar": [
+   "Ög 131",
+   "Ög 132",
+   "Ög 133",
+   "Ög 135",
+   "Ög 144"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G073",
+  "stenar": [
+   "U 514",
+   "U 545",
+   "U 546",
+   "U 547",
+   "U 572"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 545": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G074",
+  "stenar": [
+   "U 40",
+   "U 43",
+   "U 44",
+   "U 79",
+   "U Fv1953;266"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "motsagd",
+  "samma_hand": [],
+  "olika_hander": [
+   [
+    "U 43",
+    "U 79",
+    [
+     "Stern 2013"
+    ]
+   ]
+  ],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G075",
+  "stenar": [
+   "Sö 226",
+   "Sö 261",
+   "Sö 263",
+   "Sö 271",
+   "Sö 273"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G076",
+  "stenar": [
+   "U 909",
+   "U 912",
+   "U 916",
+   "U 946",
+   "U 951"
+  ],
+  "typ": "med Grim skald",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 912",
+    "U 951",
+    [
+     "Larsson 2002"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Grim": 2
+  },
+  "tillskrivningar": {
+   "U 909": [
+    "Grim"
+   ],
+   "U 946": [
+    "Grim"
+   ]
+  }
+ },
+ {
+  "id": "G077",
+  "stenar": [
+   "U 1018",
+   "U 1024",
+   "U 1042",
+   "U 1046",
+   "U 910"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 1042": [
+    "Kjule"
+   ],
+   "U 1046": [
+    "Önjut"
+   ]
+  }
+ },
+ {
+  "id": "G078",
+  "stenar": [
+   "Öl 48",
+   "Öl 49",
+   "Öl Köping58",
+   "Öl Köping69",
+   "Öl Köping7"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G079",
+  "stenar": [
+   "Vg 33",
+   "Vg 35",
+   "Vg 47",
+   "Vg 48",
+   "Vg 55"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G080",
+  "stenar": [
+   "U 240",
+   "U 241",
+   "U 322",
+   "U 423",
+   "U 608"
+  ],
+  "typ": "med Åsmund",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Ásmundr": 2,
+   "Åsmund": 2
+  },
+  "tillskrivningar": {
+   "U 240": [
+    "Ásmundr"
+   ],
+   "U 241": [
+    "Asmundr",
+    "Ásmundr",
+    "Åsmund"
+   ],
+   "U 423": [
+    "Asmund",
+    "Åsmund"
+   ]
+  }
+ },
+ {
+  "id": "G081",
+  "stenar": [
+   "U 182",
+   "U 183",
+   "U 198",
+   "U Fv1971;213A",
+   "U Fv1972;272"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G082",
+  "stenar": [
+   "U 556",
+   "U Fv1967;265",
+   "U Fv1979;243A",
+   "U Fv1979;243B",
+   "U Fv1979;244A"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G083",
+  "stenar": [
+   "U 229",
+   "U 279",
+   "U 312",
+   "U 315"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 229": [
+    "Öpir"
+   ]
+  }
+ },
+ {
+  "id": "G084",
+  "stenar": [
+   "Sö 143",
+   "Sö 149",
+   "Sö Fv1948;282",
+   "Sö Fv1982;235"
+  ],
+  "typ": "med Tore 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G085",
+  "stenar": [
+   "U 658",
+   "U 685",
+   "U 686",
+   "U 814"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G086",
+  "stenar": [
+   "U 190",
+   "U 325",
+   "U 352",
+   "U NOR2003;23"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 190",
+    "U 325",
+    [
+     "Källström 2007"
+    ]
+   ],
+   [
+    "U 190",
+    "U 352",
+    [
+     "Källström 2007"
+    ]
+   ],
+   [
+    "U 325",
+    "U 352",
+    [
+     "Källström 2007"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Torsten": 3
+  },
+  "tillskrivningar": {
+   "U 190": [
+    "Torsten"
+   ],
+   "U 325": [
+    "Torsten"
+   ],
+   "U 352": [
+    "Torsten"
+   ]
+  }
+ },
+ {
+  "id": "G087",
+  "stenar": [
+   "Sm 52",
+   "Sm 61",
+   "Sm 62",
+   "Sm 64"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G088",
+  "stenar": [
+   "Ög 13",
+   "Ög 146",
+   "Ög 158",
+   "Ög ATA580/75"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G089",
+  "stenar": [
+   "Sö 277",
+   "Sö 279",
+   "Sö 281",
+   "Sö 325"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G090",
+  "stenar": [
+   "U 1017",
+   "U 1022",
+   "U 940",
+   "U Fv1990;32B"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Øpir": 2
+  },
+  "tillskrivningar": {
+   "U 1022": [
+    "Öpir",
+    "Øpir"
+   ],
+   "U 940": [
+    "Øpir"
+   ]
+  }
+ },
+ {
+  "id": "G091",
+  "stenar": [
+   "U 372",
+   "U 375",
+   "U 431",
+   "U 998"
+  ],
+  "typ": "med Åsmund",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Åsmund": 3
+  },
+  "tillskrivningar": {
+   "U 372": [
+    "Åsmund"
+   ],
+   "U 375": [
+    "Ásmundr",
+    "Þórfastr"
+   ],
+   "U 431": [
+    "Åsmund"
+   ],
+   "U 998": [
+    "Åsmund"
+   ]
+  }
+ },
+ {
+  "id": "G092",
+  "stenar": [
+   "U 169",
+   "U 235",
+   "U 341",
+   "U ATA4822/64"
+  ],
+  "typ": "med Gunnar",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G093",
+  "stenar": [
+   "U 362",
+   "U 376",
+   "U 377",
+   "U 378"
+  ],
+  "typ": "med Sven 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G094",
+  "stenar": [
+   "Vg 151",
+   "Vg 152",
+   "Vg 154",
+   "Vg 156"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G095",
+  "stenar": [
+   "Vg 139",
+   "Vg 179",
+   "Vg 180",
+   "Vg 182"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G096",
+  "stenar": [
+   "U 482",
+   "U 876",
+   "U 990",
+   "U 992"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G097",
+  "stenar": [
+   "Sö 317",
+   "Sö 52",
+   "Sö 57",
+   "Sö 75"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G098",
+  "stenar": [
+   "Sö 241",
+   "Sö 244",
+   "Sö 245",
+   "Sö 260"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G099",
+  "stenar": [
+   "Ög 193",
+   "Ög 202",
+   "Ög 204",
+   "Ög 214"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G100",
+  "stenar": [
+   "Vg 173",
+   "Vg 187",
+   "Vg 197",
+   "Vg 198"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G101",
+  "stenar": [
+   "U 1075",
+   "U 1079",
+   "U 923",
+   "U 929"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 1079": [
+    "Gudfast"
+   ]
+  }
+ },
+ {
+  "id": "G102",
+  "stenar": [
+   "Sö 205",
+   "Sö 214",
+   "U 707",
+   "U 775"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Tidkume": 2
+  },
+  "tillskrivningar": {
+   "Sö 205": [
+    "Tidkume",
+    "Åsbjörn"
+   ],
+   "U 707": [
+    "Balle"
+   ],
+   "U 775": [
+    "Tidkume"
+   ]
+  }
+ },
+ {
+  "id": "G103",
+  "stenar": [
+   "Sm 105",
+   "Sm 106",
+   "Sm 110",
+   "Sm 98"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G104",
+  "stenar": [
+   "U 559",
+   "U 560",
+   "U 562",
+   "U 563"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Öper": 2
+  },
+  "tillskrivningar": {
+   "U 559": [
+    "Öper"
+   ],
+   "U 560": [
+    "Öper",
+    "Öpir"
+   ]
+  }
+ },
+ {
+  "id": "G105",
+  "stenar": [
+   "Sö 204",
+   "Sö 206",
+   "Sö 208",
+   "Sö 213"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Sö 204",
+    "Sö 206",
+    [
+     "K 2021 (Futhark)"
+    ]
+   ],
+   [
+    "Sö 204",
+    "Sö 208",
+    [
+     "K 2021 (Futhark)"
+    ]
+   ],
+   [
+    "Sö 206",
+    "Sö 208",
+    [
+     "K 2021 (Futhark)"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 213": [
+    "Åsbjörn"
+   ]
+  }
+ },
+ {
+  "id": "G106",
+  "stenar": [
+   "U 445",
+   "U 455",
+   "U 463",
+   "U 486"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Fot": 3
+  },
+  "tillskrivningar": {
+   "U 445": [
+    "Fot"
+   ],
+   "U 455": [
+    "Fot"
+   ],
+   "U 463": [
+    "Fot"
+   ]
+  }
+ },
+ {
+  "id": "G107",
+  "stenar": [
+   "Ög 155",
+   "Ög 161",
+   "Ög 163",
+   "Ög Fv1970;310"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G108",
+  "stenar": [
+   "U 524",
+   "U 530",
+   "U 570",
+   "U 574"
+  ],
+  "typ": "med Vidbjörn",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G109",
+  "stenar": [
+   "Sm 28",
+   "Sm 35",
+   "Sm 39",
+   "Sm 42"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G110",
+  "stenar": [
+   "U 373",
+   "U 374",
+   "U 418",
+   "U 446"
+  ],
+  "typ": "med Åsmund",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G111",
+  "stenar": [
+   "U 1162",
+   "U 1167",
+   "U 1176",
+   "U 890"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 1176": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G112",
+  "stenar": [
+   "U 720",
+   "U 734",
+   "U 741",
+   "U 800"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G113",
+  "stenar": [
+   "Nä 23",
+   "Nä 26",
+   "Nä 28",
+   "Nä 34"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G114",
+  "stenar": [
+   "U 380",
+   "U 384",
+   "U 397",
+   "U 410"
+  ],
+  "typ": "med Torfast",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G115",
+  "stenar": [
+   "Vg 102",
+   "Vg 107",
+   "Vg 110",
+   "Vg 30"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G116",
+  "stenar": [
+   "U 542",
+   "U 549",
+   "U 550",
+   "U 555"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G117",
+  "stenar": [
+   "U Fv1968;276",
+   "U Fv1968;278A",
+   "U Fv1968;278B",
+   "U Fv1968;279A"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G118",
+  "stenar": [
+   "U 298",
+   "U Fv1953;270",
+   "U Fv1953;272",
+   "U Fv1979;245"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G119",
+  "stenar": [
+   "Sö 27",
+   "Sö 34",
+   "Sö 36"
+  ],
+  "typ": "med Tore 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G120",
+  "stenar": [
+   "U 231",
+   "U 232",
+   "U 233"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Öper": 3,
+   "Øpir": 2
+  },
+  "tillskrivningar": {
+   "U 231": [
+    "Öper"
+   ],
+   "U 232": [
+    "Öper",
+    "Øpir"
+   ],
+   "U 233": [
+    "Öper",
+    "Öpir",
+    "Øpir"
+   ]
+  }
+ },
+ {
+  "id": "G121",
+  "stenar": [
+   "U 1161",
+   "U 1164",
+   "Vs 29"
+  ],
+  "typ": "med Livsten",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Vs 29": [
+    "Livsten"
+   ]
+  }
+ },
+ {
+  "id": "G122",
+  "stenar": [
+   "U 517",
+   "U 532",
+   "U 558"
+  ],
+  "typ": "med Torbjörn skald",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 517": [
+    "Torbjörn"
+   ]
+  }
+ },
+ {
+  "id": "G123",
+  "stenar": [
+   "Sö 207",
+   "Sö 321",
+   "U 792"
+  ],
+  "typ": "med Balle",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Sö 207",
+    "U 792",
+    [
+     "Lagman 1990",
+     "Zilmer 2005"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G124",
+  "stenar": [
+   "U 424",
+   "U 464",
+   "U 465"
+  ],
+  "typ": "med Fot 2",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G125",
+  "stenar": [
+   "Sö Fv1954;20",
+   "U 19",
+   "U 61"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G126",
+  "stenar": [
+   "U 1010",
+   "U 1019",
+   "U 1023"
+  ],
+  "typ": "med Manne",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 1010": [
+    "Manne"
+   ]
+  }
+ },
+ {
+  "id": "G127",
+  "stenar": [
+   "U 1006",
+   "U 917",
+   "U 995"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 917": [
+    "Öper",
+    "Øpir"
+   ]
+  }
+ },
+ {
+  "id": "G128",
+  "stenar": [
+   "Ög 179",
+   "Ög 66",
+   "Ög 93"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G129",
+  "stenar": [
+   "Ög 14",
+   "Ög 225",
+   "Ög 233"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G130",
+  "stenar": [
+   "Sö 256",
+   "Sö 268",
+   "Sö 269"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 269": [
+    "Halvdan"
+   ]
+  }
+ },
+ {
+  "id": "G131",
+  "stenar": [
+   "Ög 231",
+   "Ög 232",
+   "Ög 32"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Ög 231",
+    "Ög 232",
+    [
+     "Källström 2020 (Fornvännen)"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G132",
+  "stenar": [
+   "U 439",
+   "U 661",
+   "U Fv1992;157"
+  ],
+  "typ": "med Äskil 2",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 439",
+    "U 661",
+    [
+     "Gustavson 1992 (Fornvännen)"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 439": [
+    "Askil"
+   ]
+  }
+ },
+ {
+  "id": "G133",
+  "stenar": [
+   "Sö 129",
+   "Sö 148",
+   "Sö 167"
+  ],
+  "typ": "med Traen",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 148": [
+    "Þráinn"
+   ]
+  }
+ },
+ {
+  "id": "G134",
+  "stenar": [
+   "U 453",
+   "U 613",
+   "U 74"
+  ],
+  "typ": "med Visäte",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Visäte": 3
+  },
+  "tillskrivningar": {
+   "U 453": [
+    "Visäte"
+   ],
+   "U 613": [
+    "Visäte"
+   ],
+   "U 74": [
+    "Visäte"
+   ]
+  }
+ },
+ {
+  "id": "G135",
+  "stenar": [
+   "U 805",
+   "U 809",
+   "U 861"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G136",
+  "stenar": [
+   "Ög 111",
+   "Ög 221",
+   "Ög Fv1950;341"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G137",
+  "stenar": [
+   "Öl 19",
+   "Öl 26",
+   "Öl 27"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G138",
+  "stenar": [
+   "Sö 252",
+   "Sö 262",
+   "Sö 305"
+  ],
+  "typ": "med Halvdan",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G139",
+  "stenar": [
+   "Vg 128",
+   "Vg 133",
+   "Vg 137"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G140",
+  "stenar": [
+   "U 361",
+   "U 663",
+   "U 684"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 684": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G141",
+  "stenar": [
+   "U 381",
+   "U 611",
+   "U 637"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G142",
+  "stenar": [
+   "U 393",
+   "U 454",
+   "U 621"
+  ],
+  "typ": "med Visäte",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 621": [
+    "Visäte"
+   ]
+  }
+ },
+ {
+  "id": "G143",
+  "stenar": [
+   "Nä 12",
+   "Nä 16",
+   "Nä 9"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G144",
+  "stenar": [
+   "Vg 66",
+   "Vg 74",
+   "Vg 90"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G145",
+  "stenar": [
+   "Ög 105",
+   "Ög 130",
+   "Ög 172"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G146",
+  "stenar": [
+   "U 489",
+   "U 919",
+   "U 922"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 919": [
+    "Tord"
+   ]
+  }
+ },
+ {
+  "id": "G147",
+  "stenar": [
+   "Sm 27",
+   "Sm 43",
+   "Sm 45"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G148",
+  "stenar": [
+   "Sö 141",
+   "Sö 3",
+   "Sö 37"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G149",
+  "stenar": [
+   "Sö 10",
+   "Sö 30",
+   "Sö 353"
+  ],
+  "typ": "med Tore 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G150",
+  "stenar": [
+   "U 108",
+   "U 414",
+   "U 78"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 78": [
+    "Öper",
+    "Öpir"
+   ]
+  }
+ },
+ {
+  "id": "G151",
+  "stenar": [
+   "Sö 158",
+   "Sö 45",
+   "Sö Fv1948;295"
+  ],
+  "typ": "med Traen",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 45": [
+    "Þráinn"
+   ]
+  }
+ },
+ {
+  "id": "G152",
+  "stenar": [
+   "Ög 156",
+   "Ög 177",
+   "Ög 29"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G153",
+  "stenar": [
+   "Sö 291",
+   "U 35",
+   "U 47"
+  ],
+  "typ": "med Ärnfast",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 47": [
+    "Ärnfast"
+   ]
+  }
+ },
+ {
+  "id": "G154",
+  "stenar": [
+   "U 166",
+   "U 170",
+   "U 225"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 225": [
+    "Gunnar",
+    "Ulv"
+   ]
+  }
+ },
+ {
+  "id": "G155",
+  "stenar": [
+   "Sm 100",
+   "Sm 71",
+   "Sm SvS1973;4"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G156",
+  "stenar": [
+   "U 357",
+   "U 359",
+   "U 494"
+  ],
+  "typ": "med Åsmund",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 357": [
+    "Åsmund"
+   ]
+  }
+ },
+ {
+  "id": "G157",
+  "stenar": [
+   "Vg 59",
+   "Vg 61",
+   "Vg 62"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G158",
+  "stenar": [
+   "Sm 11",
+   "Sm 13",
+   "Sm 16"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G159",
+  "stenar": [
+   "U 1033",
+   "U 470",
+   "U 964"
+  ],
+  "typ": "med Torbjörn 2",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 470": [
+    "Torbjörn"
+   ]
+  }
+ },
+ {
+  "id": "G160",
+  "stenar": [
+   "Sö 179",
+   "Sö 335",
+   "Sö 8"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G161",
+  "stenar": [
+   "U 739",
+   "U 750",
+   "U 751"
+  ],
+  "typ": "med Balle",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Balle": 2
+  },
+  "tillskrivningar": {
+   "U 739": [
+    "Balle"
+   ],
+   "U 751": [
+    "Balle"
+   ]
+  }
+ },
+ {
+  "id": "G162",
+  "stenar": [
+   "U 1086",
+   "U 896",
+   "U 961"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 896": [
+    "Øpir"
+   ],
+   "U 961": [
+    "Öpir"
+   ]
+  }
+ },
+ {
+  "id": "G163",
+  "stenar": [
+   "U 37",
+   "U 405",
+   "U 94"
+  ],
+  "typ": "med Torbjörn skald",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G164",
+  "stenar": [
+   "U 354",
+   "U 435",
+   "U Fv1992;156"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 354",
+    "U 435",
+    [
+     "Källström 2010 (Fornvännen)"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G165",
+  "stenar": [
+   "Ög 184",
+   "Ög 186",
+   "Ög 189"
+  ],
+  "typ": "med Anund",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G166",
+  "stenar": [
+   "U 137",
+   "U 17",
+   "U 89"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G167",
+  "stenar": [
+   "Sm 101",
+   "Sm 77",
+   "Sm 78"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G168",
+  "stenar": [
+   "U 1045",
+   "U 1113",
+   "U 1117"
+  ],
+  "typ": "med Kol",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G169",
+  "stenar": [
+   "U 118",
+   "U 75",
+   "U 98"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 75": [
+    "Visäte"
+   ]
+  }
+ },
+ {
+  "id": "G170",
+  "stenar": [
+   "Ög 77",
+   "Ög 94",
+   "Ög N267"
+  ],
+  "typ": "med Torkel",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G171",
+  "stenar": [
+   "U 468",
+   "U 644",
+   "U 654"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "U 644",
+    "U 654",
+    [
+     "Lagman 1990",
+     "Williams 1990"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G172",
+  "stenar": [
+   "Ög 21",
+   "Ög 31",
+   "Ög 99"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G173",
+  "stenar": [
+   "Sö 22",
+   "Sö 28",
+   "Sö 38"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G174",
+  "stenar": [
+   "U 252",
+   "U 275",
+   "U 292"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Öper": 2
+  },
+  "tillskrivningar": {
+   "U 252": [
+    "Öper",
+    "Öpir"
+   ],
+   "U 292": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G175",
+  "stenar": [
+   "U 355",
+   "U 503",
+   "U 511"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {
+   "Visäte": 2
+  },
+  "tillskrivningar": {
+   "U 503": [
+    "Visäte"
+   ],
+   "U 511": [
+    "Visäte"
+   ]
+  }
+ },
+ {
+  "id": "G176",
+  "stenar": [
+   "U 379",
+   "U 447",
+   "U 627"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G177",
+  "stenar": [
+   "Sö 111",
+   "Sö 76",
+   "Sö 92"
+  ],
+  "typ": "med Balle",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 92": [
+    "Balle"
+   ]
+  }
+ },
+ {
+  "id": "G178",
+  "stenar": [
+   "Ög 187",
+   "Ög 209",
+   "Ög 210"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G179",
+  "stenar": [
+   "Vg 20",
+   "Vg 32",
+   "Vg 44"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G180",
+  "stenar": [
+   "U 334",
+   "U 382",
+   "U Fv1972;172"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G181",
+  "stenar": [
+   "Vg 106",
+   "Vg 16",
+   "Vg 9"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G182",
+  "stenar": [
+   "Sö 138",
+   "Sö 140",
+   "Sö 320"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G183",
+  "stenar": [
+   "Ög 134",
+   "Ög 136",
+   "Ög 70"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G184",
+  "stenar": [
+   "U 427",
+   "U 466",
+   "U 483"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G185",
+  "stenar": [
+   "Sö 183",
+   "Sö 202",
+   "Sö 211"
+  ],
+  "typ": "med Äskil 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 202": [
+    "Askil"
+   ]
+  }
+ },
+ {
+  "id": "G186",
+  "stenar": [
+   "Ög 124",
+   "Ög 192",
+   "Ög 212"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G187",
+  "stenar": [
+   "Ög 148",
+   "Ög 226",
+   "Ög 230"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G188",
+  "stenar": [
+   "U 906",
+   "U 911",
+   "U 915"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 906": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G189",
+  "stenar": [
+   "U 821",
+   "U 854",
+   "U 856"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G190",
+  "stenar": [
+   "U 23",
+   "U 26",
+   "U 36"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G191",
+  "stenar": [
+   "U 383",
+   "U 388",
+   "U 395"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 395": [
+    "Öper"
+   ]
+  }
+ },
+ {
+  "id": "G192",
+  "stenar": [
+   "Sm 29",
+   "Sm 46",
+   "Sm 60"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G193",
+  "stenar": [
+   "Ög 109",
+   "Ög 110",
+   "Ög 190"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G194",
+  "stenar": [
+   "Ög 63",
+   "Ög 64",
+   "Ög Fv1983;240"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G195",
+  "stenar": [
+   "Ög 117",
+   "Ög 119",
+   "Ög 238"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G196",
+  "stenar": [
+   "U 1100",
+   "U 1104",
+   "U 1108"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G197",
+  "stenar": [
+   "Sö 128",
+   "Sö 150",
+   "Sö 157"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G198",
+  "stenar": [
+   "Sö 299",
+   "Sö 352",
+   "U 126"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 352": [
+    "Træn"
+   ]
+  }
+ },
+ {
+  "id": "G199",
+  "stenar": [
+   "U 671",
+   "U 731",
+   "U 745"
+  ],
+  "typ": "med Balle",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G200",
+  "stenar": [
+   "G 138",
+   "G 207",
+   "G 208"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "G 207",
+    "G 208",
+    [
+     "Zilmer 2005"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G201",
+  "stenar": [
+   "Öl 46",
+   "Öl Köping45",
+   "Öl Köping56"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G202",
+  "stenar": [
+   "Ög 151",
+   "Ög 157",
+   "Ög 47"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G203",
+  "stenar": [
+   "Ög 104",
+   "Ög 115",
+   "Ög 122"
+  ],
+  "typ": "med Anund",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G204",
+  "stenar": [
+   "G 200",
+   "G 203",
+   "G 220"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G205",
+  "stenar": [
+   "Sö 314",
+   "Sö 83",
+   "Sö Sb1965;12"
+  ],
+  "typ": "med Näsbjörn",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G206",
+  "stenar": [
+   "U 228",
+   "U 254",
+   "U 259"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G207",
+  "stenar": [
+   "Sö 177",
+   "Sö 178",
+   "Sö 187"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "stöds i litteraturen",
+  "samma_hand": [
+   [
+    "Sö 177",
+    "Sö 178",
+    [
+     "Källström 2007"
+    ]
+   ]
+  ],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Sö 177": [
+    "Brune"
+   ]
+  }
+ },
+ {
+  "id": "G208",
+  "stenar": [
+   "Öl 7",
+   "Öl ATA3960/71",
+   "Öl KALM1982;57"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G209",
+  "stenar": [
+   "Ög 166",
+   "Ög 194",
+   "Ög 62"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G210",
+  "stenar": [
+   "Vg 122",
+   "Vg 127",
+   "Vg 184"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G211",
+  "stenar": [
+   "U 619",
+   "U 631",
+   "U 638"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G212",
+  "stenar": [
+   "Sö 153",
+   "Sö 159",
+   "Sö ATA6163/61"
+  ],
+  "typ": "med Traen",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G213",
+  "stenar": [
+   "Sö 122",
+   "Sö 154",
+   "Sö 170"
+  ],
+  "typ": "med Traen",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G214",
+  "stenar": [
+   "Vs 17",
+   "Vs 3",
+   "Vs Fv1988;36"
+  ],
+  "typ": "med Litle",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "Vs 17": [
+    "Litle",
+    "Litli",
+    "Lítli"
+   ]
+  }
+ },
+ {
+  "id": "G215",
+  "stenar": [
+   "Vg 130",
+   "Vg 136",
+   "Vg 176"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G216",
+  "stenar": [
+   "Öl 2",
+   "Öl 31",
+   "Öl 41"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G217",
+  "stenar": [
+   "U 157",
+   "U Fv1959;256",
+   "U Fv1967;262A"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G218",
+  "stenar": [
+   "U 568",
+   "U 580",
+   "U 582"
+  ],
+  "typ": "med Vidbjörn",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G219",
+  "stenar": [
+   "U 934",
+   "U 935",
+   "U Fv1973;194"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G220",
+  "stenar": [
+   "U 121",
+   "U 122",
+   "U 48"
+  ],
+  "typ": "med Öpir 1",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G221",
+  "stenar": [
+   "U 156",
+   "U 202",
+   "U 208"
+  ],
+  "typ": "blandad",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {
+   "U 202": [
+    "Fot"
+   ],
+   "U 208": [
+    "Visäte"
+   ]
+  }
+ },
+ {
+  "id": "G222",
+  "stenar": [
+   "Sö 48",
+   "Sö 50",
+   "Sö Fv1954;19"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G223",
+  "stenar": [
+   "U 443",
+   "U 451",
+   "U 452"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G224",
+  "stenar": [
+   "Öl 1",
+   "Öl 25",
+   "Öl 33"
+  ],
+  "typ": "okänd hand",
+  "underlag": "gott",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G225",
+  "stenar": [
+   "U 24",
+   "U 27",
+   "U 28"
+  ],
+  "typ": "med Torbjörn skald",
+  "underlag": "svagt",
+  "besked": "ny",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G226",
+  "stenar": [
+   "Ög Fv1959;244",
+   "Ög Fv1959;245",
+   "Ög Fv1959;246"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G227",
+  "stenar": [
+   "U ATA365/61A",
+   "U ATA365/61B",
+   "U ATA365/61C"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ },
+ {
+  "id": "G228",
+  "stenar": [
+   "U Fv1990;32A",
+   "U NOR1998;23A",
+   "U NOR1998;23B"
+  ],
+  "typ": "okänd hand",
+  "underlag": "svagt",
+  "besked": "ej omnämnd",
+  "samma_hand": [],
+  "olika_hander": [],
+  "gemensam_ristare": {},
+  "tillskrivningar": {}
+ }
+]

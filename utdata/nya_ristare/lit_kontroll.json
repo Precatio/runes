@@ -1,0 +1,10 @@
+{
+ "ställen": 250,
+ "lika_ställen": 220,
+ "procent": 88.0,
+ "uttalanden_läsare": 470,
+ "uttalanden_kontroll": 362,
+ "gemensamma": 233,
+ "precision_mot_kontroll": 0.496,
+ "täckning_mot_kontroll": 0.644
+}

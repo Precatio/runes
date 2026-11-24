@@ -1,0 +1,390 @@
+{
+ "plan_sha": "706be174",
+ "granskning": {
+  "samma_hand|bekräftad": 74,
+  "tillskrivning|bekräftad": 131,
+  "samma_hand|ej": 19,
+  "olika_hander|bekräftad": 38,
+  "tillskrivning|ej": 37,
+  "olika_hander|ej": 4
+ },
+ "facit2_par": 63,
+ "facit2_grupper": 30,
+ "T1": {
+  "grupper": 25,
+  "medel_samma": 0.457,
+  "medel_kontroll": 0.066,
+  "median_skillnad": 0.248,
+  "bättre": 17,
+  "sämre": 5,
+  "p": 0.0003881908629861611,
+  "håller": true
+ },
+ "T2": {
+  "grupper": 7,
+  "medel_samma": 0.262,
+  "medel_kontroll": 0.055,
+  "median_skillnad": 0.13,
+  "bättre": 4,
+  "sämre": 1,
+  "p": 0.0625
+ },
+ "olika_händer_par_inom_30km": 14,
+ "av_dem_i_samma_grupp": 1,
+ "falska": [
+  [
+   "U 43",
+   "U 79"
+  ]
+ ],
+ "grupper": [
+  {
+   "stenar": [
+    "Ög 225",
+    "Ög 226",
+    "Ög 231",
+    "Ög 232"
+   ],
+   "par": 6,
+   "samma_grupp": 0.16666666666666666,
+   "kontroll": 0.03636363636363637,
+   "onämnd": true,
+   "källor": [
+    "fornvannen:06c3eb98-7a6b-401c-b799-eb1d43876ce2"
+   ]
+  },
+  {
+   "stenar": [
+    "Sö 299",
+    "Sö 303",
+    "Sö 304"
+   ],
+   "par": 3,
+   "samma_grupp": 0.0,
+   "kontroll": 0.004756069094304388,
+   "onämnd": false,
+   "källor": [
+    "fornvannen:1948_282"
+   ]
+  },
+  {
+   "stenar": [
+    "Sm 39",
+    "Sm 5"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": true,
+   "källor": [
+    "fornvannen:1964_225"
+   ]
+  },
+  {
+   "stenar": [
+    "Sö 292",
+    "Sö 298"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.16666666666666666,
+   "onämnd": false,
+   "källor": [
+    "fornvannen:1971_202"
+   ]
+  },
+  {
+   "stenar": [
+    "U 1074",
+    "U 1095"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.14375,
+   "onämnd": false,
+   "källor": [
+    "fornvannen:1976_096"
+   ]
+  },
+  {
+   "stenar": [
+    "U 124",
+    "U 93"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": true,
+   "källor": [
+    "fornvannen:1980_183"
+   ]
+  },
+  {
+   "stenar": [
+    "U 439",
+    "U 644",
+    "U 654",
+    "U 661",
+    "U 990"
+   ],
+   "par": 8,
+   "samma_grupp": 0.25,
+   "kontroll": 0.001812687751727821,
+   "onämnd": false,
+   "källor": [
+    "avhandling:lagman1990",
+    "avhandling:williams1990",
+    "fornvannen:1992_153"
+   ]
+  },
+  {
+   "stenar": [
+    "U 354",
+    "U 435",
+    "U 437"
+   ],
+   "par": 3,
+   "samma_grupp": 0.3333333333333333,
+   "kontroll": 0.045707219120383974,
+   "onämnd": true,
+   "källor": [
+    "fornvannen:2010_121"
+   ]
+  },
+  {
+   "stenar": [
+    "Sö 204",
+    "Sö 206",
+    "Sö 208"
+   ],
+   "par": 3,
+   "samma_grupp": 1.0,
+   "kontroll": 0.0,
+   "onämnd": false,
+   "källor": [
+    "futhark:futhark_11_183_1543736",
+    "futhark:futhark_x_hel_1543741"
+   ]
+  },
+  {
+   "stenar": [
+    "U 1070",
+    "U 1111"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.023809523809523808,
+   "onämnd": false,
+   "källor": [
+    "futhark:futhark_x_hel_2024374"
+   ]
+  },
+  {
+   "stenar": [
+    "Sö 177",
+    "Sö 178"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.0,
+   "onämnd": false,
+   "källor": [
+    "avhandling:kallstrom2007"
+   ]
+  },
+  {
+   "stenar": [
+    "U 267",
+    "U 268"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.5,
+   "onämnd": false,
+   "källor": [
+    "avhandling:kallstrom2007"
+   ]
+  },
+  {
+   "stenar": [
+    "Sö 80",
+    "Sö 82",
+    "U 519"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.0,
+   "onämnd": false,
+   "källor": [
+    "avhandling:kallstrom2007"
+   ]
+  },
+  {
+   "stenar": [
+    "U 1039",
+    "U 1040",
+    "U 1042"
+   ],
+   "par": 3,
+   "samma_grupp": 0.3333333333333333,
+   "kontroll": 0.173015873015873,
+   "onämnd": true,
+   "källor": [
+    "avhandling:kallstrom2007"
+   ]
+  },
+  {
+   "stenar": [
+    "U 1054",
+    "U 1116",
+    "U 918"
+   ],
+   "par": 3,
+   "samma_grupp": 0.3333333333333333,
+   "kontroll": 0.02062575248059119,
+   "onämnd": false,
+   "källor": [
+    "avhandling:kallstrom2007"
+   ]
+  },
+  {
+   "stenar": [
+    "Ög 165",
+    "Ög 81",
+    "Ög 82"
+   ],
+   "par": 3,
+   "samma_grupp": 0.3333333333333333,
+   "kontroll": 0.15277777777777776,
+   "onämnd": false,
+   "källor": [
+    "avhandling:kallstrom2007",
+    "avhandling:zilmer2005"
+   ]
+  },
+  {
+   "stenar": [
+    "U 190",
+    "U 191",
+    "U 325",
+    "U 352"
+   ],
+   "par": 6,
+   "samma_grupp": 0.5,
+   "kontroll": 0.005778485844203259,
+   "onämnd": false,
+   "källor": [
+    "avhandling:kallstrom2007",
+    "avhandling:larsson2002"
+   ]
+  },
+  {
+   "stenar": [
+    "Sö 288",
+    "U 30",
+    "U 461"
+   ],
+   "par": 1,
+   "samma_grupp": 0.0,
+   "kontroll": 0.003355704697986577,
+   "onämnd": true,
+   "källor": [
+    "avhandling:kallstrom2007"
+   ]
+  },
+  {
+   "stenar": [
+    "U 712",
+    "U 713"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.0,
+   "onämnd": false,
+   "källor": [
+    "avhandling:kallstrom2007"
+   ]
+  },
+  {
+   "stenar": [
+    "Sö 209",
+    "Sö 210",
+    "U 726",
+    "U 740"
+   ],
+   "par": 6,
+   "samma_grupp": 0.16666666666666666,
+   "kontroll": 0.05480319493505529,
+   "onämnd": false,
+   "källor": [
+    "avhandling:lagman1990"
+   ]
+  },
+  {
+   "stenar": [
+    "U 859",
+    "U 860"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.038461538461538464,
+   "onämnd": false,
+   "källor": [
+    "avhandling:larsson2002"
+   ]
+  },
+  {
+   "stenar": [
+    "U 912",
+    "U 951"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.014295893827380422,
+   "onämnd": false,
+   "källor": [
+    "avhandling:larsson2002"
+   ]
+  },
+  {
+   "stenar": [
+    "U 537",
+    "U 567",
+    "U 590"
+   ],
+   "par": 3,
+   "samma_grupp": 0.0,
+   "kontroll": 0.015182884748102138,
+   "onämnd": false,
+   "källor": [
+    "avhandling:larsson2002"
+   ]
+  },
+  {
+   "stenar": [
+    "Vg 2",
+    "Vg 4"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.125,
+   "onämnd": true,
+   "källor": [
+    "avhandling:williams1990"
+   ]
+  },
+  {
+   "stenar": [
+    "U 1156",
+    "U 768"
+   ],
+   "par": 1,
+   "samma_grupp": 1.0,
+   "kontroll": 0.11174242424242424,
+   "onämnd": false,
+   "källor": [
+    "avhandling:williams1990"
+   ]
+  }
+ ]
+}

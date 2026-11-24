@@ -46,7 +46,10 @@ SEED = 20261123
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 TESTED = {"plan": "analysplaner/2026-11-23-nya-ristare-slutprov-1.md", "facit_groups": 42, "together": 0.42, "control": 0.066,
           "p": 2.1e-05, "unnamed_groups": 15, "unnamed_together": 0.69, "unnamed_control": 0.075, "unnamed_p": 0.0017,
-          "precision_named": 0.77}
+          "precision_named": 0.77,
+          # slutprov 2 (…-slutprov-2-litteraturen.md): the same groups against new pairs from the literature
+          "lit_plan": "analysplaner/2026-11-23-nya-ristare-slutprov-2-litteraturen.md", "lit_groups": 25, "lit_together": 0.457,
+          "lit_control": 0.066, "lit_p": 0.00039, "lit_different_pairs": 14, "lit_different_merged": 1}
 PR = {"Pr1": 1, "Pr2": 2, "Pr3": 3, "Pr4": 4, "Pr5": 5, "Pr 1": 1, "Pr 2": 2, "Pr 3": 3, "Pr 4": 4, "Pr 5": 5}
 _cache: dict = {}
 
@@ -342,6 +345,14 @@ def build(corpus_dir: str, log=print) -> dict:
                        "parishes": sorted(set(str(corp.parish[i]) for i in m if isinstance(corp.parish[i], str))),
                        "styles": dict(Counter(str(corp["style"][i]) for i in m if isinstance(corp["style"][i], str))),
                        "runor": {sig[i]: runor[sig[i]] for i in m if sig[i] in runor}})
+    # The literature check (utdata/nya_ristare/grupper_litteratur.json, 2026-11-23): what Fornvännen, Futhark and eight
+    # theses say about the groups' stones – statements checked by two independent reviewers; matched by the set of stones
+    litp = os.path.join(ROOT, "utdata", "nya_ristare", "grupper_litteratur.json")
+    lit = {frozenset(x["stenar"]): x for x in json.load(open(litp, encoding="utf-8"))} if os.path.exists(litp) else {}
+    for x in groups:
+        li = lit.get(frozenset(x["stones"]))
+        x["literature"] = {"verdict": li["besked"], "same_hand": li["samma_hand"], "different": li["olika_hander"],
+                           "shared_carver": li["gemensam_ristare"]} if li else None
     groups.sort(key=lambda x: (-len(x["stones"]), -x["mean_p"]))
     for k, x in enumerate(groups, 1):
         x["id"] = f"G{k:03d}"
@@ -382,4 +393,5 @@ def group_of(data: dict | None, signum: str) -> dict | None:
         return None
     return {"id": g["id"], "type": g["type"], "carver": g["carver"], "evidence": g["evidence"],
             "others": [s for s in g["stones"] if s != signum], "carvers": g["carvers"], "diameter_km": g["diameter_km"],
-            "mean_p": g["mean_p"], "stability": g.get("stability"), "precision_named": data["tested"]["precision_named"]}
+            "mean_p": g["mean_p"], "stability": g.get("stability"), "literature": g.get("literature"),
+            "precision_named": data["tested"]["precision_named"]}
