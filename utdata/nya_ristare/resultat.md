@@ -175,3 +175,27 @@ Ungefär 25 miljoner tokens. Körningen avbröts av användningstaket, och de si
   | G164 | U 354–U 435, Källström 2010 |
   | G171 | U 644–U 654, Lagman och Williams 1990 |
   | G200 | G 207–G 208, Zilmer 2005 |
+
+## 8. Kitzler Åhfeldts grupper och huggtekniken (2026-11-24)
+**Kitzler Åhfeldts grupper** (beskrivande, ingick inte i något facit):
+- Rak 1 (Sö 131, 137, 166, 367, Fv1973;189) har 3 av 10 par i samma modellgrupp. Sö 131, 137 och 367 ligger i G052, och
+  Sö 166 i Traengruppen G039.
+- Rak 2 har 0 av 6 par i samma grupp.
+- Sö 134 ("Rak 1?" hos henne) ligger i G052, och likaså Sö 319, som hon räknar till Rak 4.
+
+**3D-provet** (plan `analysplaner/2026-11-24-nya-ristare-3d.md`, sha ffb9b051): **håller inte.**
+- **Underlaget:** sex modellgrupper med 18 skannade stenar (groove-7, bara runorna). Måttet var medelavståndet i fyra
+  huggspårsmått, jämfört med 9 999 omblandningar inom bergart.
+- **Resultatet:** 2,22 mot 2,49, p 0,24. Bara grupperna med okänd hand gav p 0,69.
+
+| Grupp | Typ | Stenar | Avstånd mot omblandning | p |
+|---|---|---|---|---|
+| G055 | okänd hand | Sö 163, 165 | 0,76 mot 2,97 | 0,04 |
+| G105 | blandad | Äsbjörns Sö 206, 208 | 0,45 mot 2,02 | 0,03 |
+| G084 | Tore | | 2,02 mot 2,65 | 0,32 |
+| G039 | Traen | | 2,57 mot 2,87 | 0,35 |
+| G052 | okänd hand | | 2,60 mot 2,40 | 0,62 |
+| G097 | okänd hand | Sö 52, 75 | 4,91 mot 2,02 | 0,98 |
+
+Med så få stenar har provet liten styrka, och huggspårsmåtten har tidigare följt bergarten mer än handen. Huggtekniken
+varken stöder eller fäller grupperna. G052 får alltså inget stöd av huggtekniken.

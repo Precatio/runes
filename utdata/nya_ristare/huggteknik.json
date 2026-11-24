@@ -1,0 +1,89 @@
+{
+ "plan_sha": "ffb9b051",
+ "stenar": 36,
+ "medel_alla_par": 2.509,
+ "H3D": {
+  "observerat": 2.217,
+  "omblandat_medel": 2.489,
+  "p": 0.2381,
+  "håller": false
+ },
+ "okänd_hand": {
+  "observerat": 2.754,
+  "p": 0.6867
+ },
+ "grupper": [
+  {
+   "grupp": "G039",
+   "typ": "med Traen",
+   "stenar": [
+    "Sö 161",
+    "Sö 162",
+    "Sö 164",
+    "Sö 166"
+   ],
+   "avstånd": 2.565,
+   "omblandat_medel": 2.874,
+   "p": 0.3492
+  },
+  {
+   "grupp": "G052",
+   "typ": "okänd hand",
+   "stenar": [
+    "Sö 131",
+    "Sö 134",
+    "Sö 137",
+    "Sö 319",
+    "Sö 367"
+   ],
+   "avstånd": 2.595,
+   "omblandat_medel": 2.396,
+   "p": 0.6184
+  },
+  {
+   "grupp": "G055",
+   "typ": "okänd hand",
+   "stenar": [
+    "Sö 163",
+    "Sö 165"
+   ],
+   "avstånd": 0.76,
+   "omblandat_medel": 2.966,
+   "p": 0.0381
+  },
+  {
+   "grupp": "G084",
+   "typ": "med Tore 1",
+   "stenar": [
+    "Sö 143",
+    "Sö 149",
+    "Sö Fv1948;282"
+   ],
+   "avstånd": 2.021,
+   "omblandat_medel": 2.65,
+   "p": 0.3163
+  },
+  {
+   "grupp": "G097",
+   "typ": "okänd hand",
+   "stenar": [
+    "Sö 52",
+    "Sö 75"
+   ],
+   "avstånd": 4.908,
+   "omblandat_medel": 2.022,
+   "p": 0.984
+  },
+  {
+   "grupp": "G105",
+   "typ": "blandad",
+   "stenar": [
+    "Sö 206",
+    "Sö 208"
+   ],
+   "avstånd": 0.454,
+   "omblandat_medel": 2.024,
+   "p": 0.0285
+  }
+ ]
+}
