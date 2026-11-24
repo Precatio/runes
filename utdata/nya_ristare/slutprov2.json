@@ -29,14 +29,9 @@
   "sämre": 1,
   "p": 0.0625
  },
- "olika_händer_par_inom_30km": 14,
- "av_dem_i_samma_grupp": 1,
- "falska": [
-  [
-   "U 43",
-   "U 79"
-  ]
- ],
+ "olika_händer_par_inom_30km": 9,
+ "av_dem_i_samma_grupp": 0,
+ "falska": [],
  "grupper": [
   {
    "stenar": [

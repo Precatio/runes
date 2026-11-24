@@ -33,7 +33,7 @@ interface HandEvidence {
 interface HandGroup {
   id: string; type: "okänd hand" | "med" | "blandad"; carver: string | null; evidence: "gott" | "svagt"; others: string[];
   carvers: Record<string, string>; diameter_km: number; mean_p: number; stability: number | null; precision_named: number;
-  literature?: { verdict: string; same_hand: [string, string, string[]][]; different: [string, string, string[]][] } | null;
+  literature?: { verdict: string; sri_runor?: [string, string, string[]][]; same_hand: [string, string, string[]][]; different: [string, string, string[]][] } | null;
 }
 interface Profile extends StoneRow {
   sources: Record<string, Source>;
@@ -503,8 +503,8 @@ function HandGroupSection({ g, onPick }: { g: HandGroup; onPick?: (s: string) =>
       </div>
       {g.literature && (
         <p className="text-xs text-slate-600 mt-1.5">
-          Litteraturen: {g.literature.verdict === "stöds i litteraturen" ? "forskare har redan kopplat ihop stenar i gruppen" : g.literature.verdict === "ny" ? "ingen forskare har sagt att stenarna har samma hand" : g.literature.verdict === "motsagd" ? "forskare säger att stenar i gruppen har olika händer" : "stenarna nämns inte i den genomlästa litteraturen"}
-          {g.literature.same_hand.length > 0 && <> ({g.literature.same_hand.slice(0, 2).map(([a, b, src]) => `${a}–${b}: ${src.join(", ")}`).join("; ")})</>}.
+          Litteraturen: {g.literature.verdict === "kopplad tidigare" ? "forskare har redan kopplat ihop stenar i gruppen" : g.literature.verdict === "ingen tidigare koppling" ? "ingen av de genomgångna källorna kopplar ihop stenarna" : g.literature.verdict === "motsagd" ? "forskare säger att stenar i gruppen har olika händer" : "stenarna nämns inte i de genomgångna källorna"}
+          {[...(g.literature.sri_runor ?? []), ...g.literature.same_hand].length > 0 && <> ({[...(g.literature.sri_runor ?? []), ...g.literature.same_hand].slice(0, 2).map(([a, b, src]) => `${a}–${b}: ${src.join(", ")}`).join("; ")})</>}.
         </p>
       )}
       <p className="text-xs mt-1.5"><Link href="/ristare#samma-hand" className="text-[#b7410e] font-bold hover:underline">Alla grupper under Ristarna →</Link></p>

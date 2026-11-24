@@ -1,0 +1,98 @@
+{
+ "slutprov1_alla_sammanslaget": {
+  "par": 147,
+  "samma": 59,
+  "andel": 0.401
+ },
+ "slutprov2_T1_sammanslaget": {
+  "par": 61,
+  "samma": 22,
+  "andel": 0.361
+ },
+ "slutprov1_per_landskap": {
+  "U": {
+   "grupper": 31,
+   "samma": 0.39,
+   "kontroll": 0.054
+  },
+  "Sö": {
+   "grupper": 7,
+   "samma": 0.49,
+   "kontroll": 0.107
+  },
+  "Ög": {
+   "grupper": 2,
+   "samma": 0.5,
+   "kontroll": 0.163
+  },
+  "Vs": {
+   "grupper": 1,
+   "samma": 0.17,
+   "kontroll": 0.045
+  },
+  "Öl": {
+   "grupper": 1,
+   "samma": 1.0,
+   "kontroll": 0.0
+  }
+ },
+ "provdelens_grupper": 59,
+ "provdelens_grupper_med_par": 42,
+ "kalibrering": [
+  {
+   "från": 0,
+   "till": 0.2,
+   "par": 18700,
+   "medel_p": 0.1,
+   "andel_samma": 0.038
+  },
+  {
+   "från": 0.2,
+   "till": 0.4,
+   "par": 13302,
+   "medel_p": 0.298,
+   "andel_samma": 0.091
+  },
+  {
+   "från": 0.4,
+   "till": 0.6,
+   "par": 10570,
+   "medel_p": 0.494,
+   "andel_samma": 0.151
+  },
+  {
+   "från": 0.6,
+   "till": 0.8,
+   "par": 6582,
+   "medel_p": 0.689,
+   "andel_samma": 0.259
+  },
+  {
+   "från": 0.8,
+   "till": 0.9,
+   "par": 2078,
+   "medel_p": 0.847,
+   "andel_samma": 0.461
+  },
+  {
+   "från": 0.9,
+   "till": 1.0,
+   "par": 1030,
+   "medel_p": 0.936,
+   "andel_samma": 0.727
+  }
+ ],
+ "grundnivå_samma_ristare": 0.133,
+ "holm": {
+  "S1": 0.0001,
+  "T1": 0.00155,
+  "S2": 0.00503,
+  "T2": 0.125,
+  "H3D": 0.2381
+ },
+ "stabilitet": {
+  "median": 0.67,
+  "lika_med_1": 73,
+  "grupper": 228
+ }
+}

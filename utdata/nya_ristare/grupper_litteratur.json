@@ -32,6 +32,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -64,7 +65,37 @@
   ],
   "typ": "med Arbjörn",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 630",
+    "U 646",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 630",
+    "U 652",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 646",
+    "U 652",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 652",
+    "U 688",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -113,6 +144,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -137,7 +169,16 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 1047",
+    "U 1065",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "U 1039",
@@ -194,7 +235,23 @@
   ],
   "typ": "med Livsten",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 766",
+    "U 795",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 767",
+    "U 795",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -251,7 +308,37 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 127",
+    "U 261",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 135",
+    "U 136",
+    [
+     "Runor 2020"
+    ]
+   ],
+   [
+    "U 164",
+    "U 261",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 165",
+    "U 261",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "U 164",
@@ -287,7 +374,8 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -320,7 +408,8 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -371,7 +460,8 @@
   ],
   "typ": "med Torkel",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "Ög 165",
@@ -402,7 +492,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -425,7 +516,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -451,7 +543,16 @@
   ],
   "typ": "med Traen",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Sö 91",
+    "Sö Fv1986;218",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -477,7 +578,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -503,7 +605,8 @@
   ],
   "typ": "med Balle",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -534,7 +637,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Ög 234",
+    "Ög 235",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -556,7 +668,8 @@
   ],
   "typ": "med Balle",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -603,6 +716,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -623,7 +737,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "U 1074",
@@ -652,7 +767,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "Vg 100",
@@ -681,7 +797,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -712,6 +829,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -731,7 +849,23 @@
   ],
   "typ": "med Erik",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 1165",
+    "U 1172",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 768",
+    "U 793",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "U 1156",
@@ -759,7 +893,16 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 258",
+    "U 358",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -779,7 +922,30 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 152",
+    "U 227",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 152",
+    "U 272",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 227",
+    "U 272",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "U 152",
@@ -825,7 +991,8 @@
   ],
   "typ": "med Visäte",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -869,7 +1036,24 @@
   ],
   "typ": "med Gunnar",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 160",
+    "U 161",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "U 201",
+    "U 276",
+    [
+     "Runor 2020",
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -903,7 +1087,16 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 287",
+    "U 288",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -938,7 +1131,8 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -971,7 +1165,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -995,7 +1190,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1019,7 +1215,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1053,7 +1250,16 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Sö 265",
+    "Sö 266",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1088,7 +1294,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1107,7 +1314,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1126,7 +1334,16 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 937",
+    "U 991",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1160,7 +1377,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1198,7 +1416,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "U 1116",
@@ -1225,7 +1444,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1244,7 +1464,8 @@
   ],
   "typ": "med Traen",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1263,7 +1484,8 @@
   ],
   "typ": "med Torkel",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1282,7 +1504,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1313,7 +1536,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1351,6 +1575,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1368,7 +1593,24 @@
   ],
   "typ": "med Balle",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Sö 194",
+    "Sö 198",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "Sö 198",
+    "Sö 200",
+    [
+     "Runor 2020",
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "Sö 194",
@@ -1428,7 +1670,17 @@
   ],
   "typ": "med Gunnar",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 518",
+    "U 539",
+    [
+     "Runor 2020",
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1450,7 +1702,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1485,7 +1738,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1523,7 +1777,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1545,7 +1800,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1567,7 +1823,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1589,7 +1846,8 @@
   ],
   "typ": "med Sune",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1607,7 +1865,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1625,7 +1884,16 @@
   ],
   "typ": "med Tidkume",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 763",
+    "U 764",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1647,7 +1915,8 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1674,7 +1943,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1692,7 +1962,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1714,7 +1985,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "Vg 2",
@@ -1741,6 +2013,7 @@
   "typ": "med Torbjörn 2",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1759,6 +2032,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1777,6 +2051,7 @@
   "typ": "med Olev",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1793,7 +2068,16 @@
   ],
   "typ": "med Halvdan",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Sö 274",
+    "Sö 290",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "Sö 292",
@@ -1833,7 +2117,8 @@
   ],
   "typ": "med Åsmund",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "U 859",
@@ -1867,7 +2152,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1894,7 +2180,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -1920,7 +2207,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1937,7 +2225,16 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 641",
+    "U 642",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -1958,7 +2255,44 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Sö 362",
+    "Sö 363",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "Sö 362",
+    "Sö 84",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "Sö 362",
+    "Sö 85",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "Sö 363",
+    "Sö 84",
+    [
+     "SRI"
+    ]
+   ],
+   [
+    "Sö 363",
+    "Sö 85",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "Sö 362",
@@ -2018,7 +2352,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2035,7 +2370,8 @@
   ],
   "typ": "med Gunnar",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2052,7 +2388,8 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2073,7 +2410,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -2102,7 +2440,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2119,7 +2458,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2140,17 +2480,10 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "motsagd",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
-  "olika_hander": [
-   [
-    "U 43",
-    "U 79",
-    [
-     "Stern 2013"
-    ]
-   ]
-  ],
+  "olika_hander": [],
   "gemensam_ristare": {},
   "tillskrivningar": {}
  },
@@ -2165,7 +2498,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2182,7 +2516,16 @@
   ],
   "typ": "med Grim skald",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 909",
+    "U 916",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "U 912",
@@ -2216,7 +2559,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 1018",
+    "U 1024",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2240,7 +2592,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2257,7 +2610,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2274,7 +2628,8 @@
   ],
   "typ": "med Åsmund",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -2307,7 +2662,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2325,6 +2681,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2340,7 +2697,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2360,7 +2718,8 @@
   ],
   "typ": "med Tore 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2376,7 +2735,16 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 685",
+    "U 686",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2392,7 +2760,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "U 190",
@@ -2442,7 +2811,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2458,7 +2828,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2474,7 +2845,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2490,7 +2862,16 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 1017",
+    "U 1022",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -2516,7 +2897,8 @@
   ],
   "typ": "med Åsmund",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -2548,7 +2930,8 @@
   ],
   "typ": "med Gunnar",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2564,7 +2947,16 @@
   ],
   "typ": "med Sven 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 376",
+    "U 378",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2580,7 +2972,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Vg 151",
+    "Vg 152",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2596,7 +2997,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2612,7 +3014,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 990",
+    "U 992",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2628,7 +3039,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2644,7 +3056,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2660,7 +3073,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2676,7 +3090,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2692,7 +3107,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2712,7 +3128,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -2741,7 +3158,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2757,7 +3175,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -2783,7 +3202,16 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Sö 204",
+    "Sö 206",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "Sö 204",
@@ -2825,7 +3253,8 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -2853,7 +3282,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Ög 161",
+    "Ög 163",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2869,7 +3307,8 @@
   ],
   "typ": "med Vidbjörn",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2885,7 +3324,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2901,7 +3341,8 @@
   ],
   "typ": "med Åsmund",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2917,7 +3358,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2937,7 +3379,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2953,7 +3396,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Nä 23",
+    "Nä 26",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2969,7 +3421,8 @@
   ],
   "typ": "med Torfast",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -2985,7 +3438,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3001,7 +3455,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3018,6 +3473,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3033,7 +3489,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U Fv1953;270",
+    "U Fv1979;245",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3048,7 +3513,8 @@
   ],
   "typ": "med Tore 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3063,7 +3529,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -3094,7 +3561,8 @@
   ],
   "typ": "med Livsten",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3113,7 +3581,8 @@
   ],
   "typ": "med Torbjörn skald",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3132,7 +3601,17 @@
   ],
   "typ": "med Balle",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Sö 207",
+    "U 792",
+    [
+     "Runor 2020",
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "Sö 207",
@@ -3156,7 +3635,8 @@
   ],
   "typ": "med Fot 2",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3171,7 +3651,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3186,7 +3667,16 @@
   ],
   "typ": "med Manne",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 1019",
+    "U 1023",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3205,7 +3695,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3225,7 +3716,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3240,7 +3732,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3255,7 +3748,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3274,7 +3768,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "Ög 231",
@@ -3297,7 +3792,8 @@
   ],
   "typ": "med Äskil 2",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "U 439",
@@ -3324,7 +3820,8 @@
   ],
   "typ": "med Traen",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3343,7 +3840,8 @@
   ],
   "typ": "med Visäte",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -3370,7 +3868,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3385,7 +3884,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3400,7 +3900,17 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Öl 26",
+    "Öl 27",
+    [
+     "Runor 2020",
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3415,7 +3925,8 @@
   ],
   "typ": "med Halvdan",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3430,7 +3941,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3445,7 +3957,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3464,7 +3977,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3479,7 +3993,8 @@
   ],
   "typ": "med Visäte",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3498,7 +4013,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "Nä 12",
+    "Nä 9",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3513,7 +4037,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3528,7 +4053,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3543,7 +4069,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3562,7 +4089,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3577,7 +4105,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3592,7 +4121,8 @@
   ],
   "typ": "med Tore 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3607,7 +4137,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3627,7 +4158,8 @@
   ],
   "typ": "med Traen",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3646,7 +4178,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3661,7 +4194,8 @@
   ],
   "typ": "med Ärnfast",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3680,7 +4214,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3700,7 +4235,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3715,7 +4251,8 @@
   ],
   "typ": "med Åsmund",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3734,7 +4271,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3749,7 +4287,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3764,7 +4303,8 @@
   ],
   "typ": "med Torbjörn 2",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3783,7 +4323,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3798,7 +4339,8 @@
   ],
   "typ": "med Balle",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -3822,7 +4364,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3844,7 +4387,8 @@
   ],
   "typ": "med Torbjörn skald",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3859,7 +4403,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "U 354",
@@ -3882,7 +4427,8 @@
   ],
   "typ": "med Anund",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3897,7 +4443,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3912,7 +4459,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3927,7 +4475,8 @@
   ],
   "typ": "med Kol",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3942,7 +4491,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3961,7 +4511,8 @@
   ],
   "typ": "med Torkel",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -3976,7 +4527,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 644",
+    "U 654",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "U 644",
@@ -4000,7 +4560,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4015,7 +4576,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4030,7 +4592,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -4055,7 +4618,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {
@@ -4079,7 +4643,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4094,7 +4659,8 @@
   ],
   "typ": "med Balle",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4113,7 +4679,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4128,7 +4695,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4143,7 +4711,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4158,7 +4727,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4173,7 +4743,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4188,7 +4759,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4203,7 +4775,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4218,7 +4791,8 @@
   ],
   "typ": "med Äskil 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4237,7 +4811,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4252,7 +4827,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4267,7 +4843,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4286,7 +4863,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4301,7 +4879,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4316,7 +4895,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "U 383",
+    "U 395",
+    [
+     "SRI"
+    ]
+   ]
+  ],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4335,7 +4923,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4350,7 +4939,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4365,7 +4955,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4380,7 +4971,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4395,7 +4987,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4410,7 +5003,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4425,7 +5019,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4444,7 +5039,8 @@
   ],
   "typ": "med Balle",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4459,7 +5055,16 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [
+   [
+    "G 207",
+    "G 208",
+    [
+     "Runor 2020"
+    ]
+   ]
+  ],
   "samma_hand": [
    [
     "G 207",
@@ -4483,6 +5088,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4497,7 +5103,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4512,7 +5119,8 @@
   ],
   "typ": "med Anund",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4527,7 +5135,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4542,7 +5151,8 @@
   ],
   "typ": "med Näsbjörn",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4557,7 +5167,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4572,7 +5183,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "stöds i litteraturen",
+  "besked": "kopplad tidigare",
+  "sri_runor": [],
   "samma_hand": [
    [
     "Sö 177",
@@ -4600,6 +5212,7 @@
   "typ": "okänd hand",
   "underlag": "gott",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4614,7 +5227,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4629,7 +5243,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4644,7 +5259,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4659,7 +5275,8 @@
   ],
   "typ": "med Traen",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4674,7 +5291,8 @@
   ],
   "typ": "med Traen",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4689,7 +5307,8 @@
   ],
   "typ": "med Litle",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4710,7 +5329,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4725,7 +5345,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4740,7 +5361,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4755,7 +5377,8 @@
   ],
   "typ": "med Vidbjörn",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4770,7 +5393,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4785,7 +5409,8 @@
   ],
   "typ": "med Öpir 1",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4800,7 +5425,8 @@
   ],
   "typ": "blandad",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4822,7 +5448,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4837,7 +5464,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4852,7 +5480,8 @@
   ],
   "typ": "okänd hand",
   "underlag": "gott",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4867,7 +5496,8 @@
   ],
   "typ": "med Torbjörn skald",
   "underlag": "svagt",
-  "besked": "ny",
+  "besked": "ingen tidigare koppling",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4883,6 +5513,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4898,6 +5529,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},
@@ -4913,6 +5545,7 @@
   "typ": "okänd hand",
   "underlag": "svagt",
   "besked": "ej omnämnd",
+  "sri_runor": [],
   "samma_hand": [],
   "olika_hander": [],
   "gemensam_ristare": {},

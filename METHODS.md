@@ -3129,7 +3129,9 @@ Stenöversikten; test `tests/test_hand_groups.py`. Forskningsskripten, det som p
 
 Saknade belägg lämnas tomma.
 
-**Modellen och grupperna.**
+**Modellen och grupperna.** Modellens värde rangordnar paren men är inte en kalibrerad sannolikhet: bland par av
+stenar med känd ristare har 46 % samma ristare vid 0,8–0,9 och 73 % över 0,9 (grundnivå 13 %).
+
 - **Parmodellen:** gradient boosting tränad på par av stenar med säker ristare i Rundata, med ristarna delade i fem vikter.
   Par av säkra stenar får sitt värde från en vikt som inte sett deras ristare. Som i provet tränas inte på par inom
   facitgrupper eller på provdelens stenar.
@@ -3154,16 +3156,19 @@ Saknade belägg lämnas tomma.
   prövades av två oberoende granskare, och det behölls bara om båda bekräftade. 74 av 93 uttalanden om samma hand
   behölls.
 - **Facit 2:** 63 nya par som inte fanns i det första facit. Mot dem hamnade 46 % av paren i samma grupp, mot 7 % för
-  grannar på samma avstånd (25 grupper, p 0,0004). För de onämnda händerna var det 26 % mot 5,5 %, men med bara 7 grupper
-  (p 0,06, obestämt).
-- **Olika händer:** av 14 par som forskare säger har olika händer lade modellen 1 i samma grupp.
-- **Besked per grupp:**
-  - *stöds i litteraturen* (57): forskare har redan kopplat ihop stenar i gruppen;
-  - *ny* (155): stenarna nämns, men inte som samma hand;
-  - *motsagd* (1);
-  - *ej omnämnd* (15).
+  grannar på samma avstånd (25 grupper, p 0,0004). För de onämnda händerna var det 26 % mot 5,5 % i 7 grupper, varav 5
+  med skillnad (p 0,06): det delprovet **höll inte**.
+- **Olika händer:** av 9 par inom 30 km som forskare säger har olika händer lade modellen inget i samma grupp. (Ett
+  kodfel som delade upp uttalanden om en sten mot flera andra i alla par rättades 2026-11-24, se
+  `utdata/nya_ristare/litteratur_besked.py`.)
+- **Besked per grupp** (också länkarna i SRI och Runor 2020):
+  - *kopplad tidigare* (75): någon har redan kopplat ihop stenar i gruppen;
+  - *ingen tidigare koppling* (138);
+  - *ej omnämnd* (15);
+  - ingen grupp motsägs.
 
-  Av de 77 grupperna med okänd hand och gott underlag är 69 nya i litteraturen.
+  Av de 77 grupperna med okänd hand och gott underlag är 15 kopplade tidigare (11 i SRI eller Runor 2020, 4 i den
+  övriga litteraturen) och 61 utan tidigare koppling i de genomgångna källorna.
 
 **I appen.**
 - **Typer:** grupper med minst tre stenar visas under Ristarna (/ristare) som *okänd hand* (ingen sten har en säker

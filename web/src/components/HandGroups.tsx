@@ -10,8 +10,8 @@ interface Group {
   carvers: Record<string, string>; signed: string[]; evidence: "gott" | "svagt"; stability: number | null;
   text_share: number; mean_p: number; diameter_km: number; provinces: Record<string, number>; parishes: string[];
   styles: Record<string, number>; runor: Record<string, string>;
-  literature: { verdict: string; same_hand: [string, string, string[]][]; different: [string, string, string[]][];
-    shared_carver: Record<string, number> } | null;
+  literature: { verdict: string; sri_runor?: [string, string, string[]][]; same_hand: [string, string, string[]][];
+    different: [string, string, string[]][]; shared_carver: Record<string, number> } | null;
 }
 interface Data {
   version: string; tau: number; groups: Group[];
@@ -23,11 +23,11 @@ interface Data {
 
 const pct = (v: number) => `${Math.round(100 * v)} %`;
 const LIT_LABEL: Record<string, string> = {
-  "stöds i litteraturen": "stöds i litteraturen", "ny": "ny i litteraturen", "motsagd": "motsagd i litteraturen",
-  "delvis motsagd": "delvis motsagd", "ej omnämnd": "stenarna ej omnämnda",
+  "kopplad tidigare": "kopplad tidigare", "ingen tidigare koppling": "ingen tidigare koppling",
+  "motsagd": "motsagd i litteraturen", "delvis motsagd": "delvis motsagd", "ej omnämnd": "stenarna ej omnämnda",
 };
 const LIT_STYLE: Record<string, string> = {
-  "stöds i litteraturen": "bg-emerald-50 text-emerald-800", "ny": "bg-amber-50 text-amber-800",
+  "kopplad tidigare": "bg-emerald-50 text-emerald-800", "ingen tidigare koppling": "bg-amber-50 text-amber-800",
   "motsagd": "bg-red-50 text-red-800", "delvis motsagd": "bg-red-50 text-red-800",
 };
 const TYPES = [
@@ -56,7 +56,7 @@ export default function HandGroups({ src }: { src: string }) {
   const provinces = useMemo(() => [...new Set((data?.groups ?? []).flatMap(g => Object.keys(g.provinces)))].sort(), [data]);
   const shown = useMemo(() => (data?.groups ?? []).filter(g =>
     (!type || g.type === type) && (!province || g.provinces[province]) && (!hideWeak || g.evidence === "gott")
-    && (!stableOnly || (g.stability ?? 0) >= 0.8) && (!newOnly || g.literature?.verdict === "ny")),
+    && (!stableOnly || (g.stability ?? 0) >= 0.8) && (!newOnly || g.literature?.verdict === "ingen tidigare koppling")),
     [data, type, province, hideWeak, stableOnly, newOnly]);
 
   const panel = "liquid-glass-island rounded-[32px] p-6 md:p-7 min-w-0";
@@ -79,7 +79,7 @@ export default function HandGroups({ src }: { src: string }) {
               {data.tested.lit_together != null && <> Ett andra prov mot forskarnas uttalanden i Fornvännen, Futhark och åtta
                 avhandlingar, som inte hade använts tidigare, gav {pct(data.tested.lit_together)} mot {pct(data.tested.lit_control ?? 0)}.
                 Av {data.tested.lit_different_pairs} stenpar som forskare säger har olika händer lade modellen {data.tested.lit_different_merged} i
-                samma grupp.</>}
+                samma grupp. För händer utan namn höll det andra provet inte (för få grupper).</>}
             </p>
             <p className="mt-2 text-sm text-slate-600 max-w-[80ch]">
               Omkring {pct(data.tested.precision_named)} av stenparen i samma grupp har samma ristare, mätt på stenar med känd
@@ -102,7 +102,7 @@ export default function HandGroups({ src }: { src: string }) {
                 <input type="checkbox" checked={hideWeak} onChange={e => setHideWeak(e.target.checked)} /> Dölj svagt underlag
               </label>
               <label className="flex items-center gap-1.5 text-xs text-slate-700">
-                <input type="checkbox" checked={newOnly} onChange={e => setNewOnly(e.target.checked)} /> Bara nya i litteraturen
+                <input type="checkbox" checked={newOnly} onChange={e => setNewOnly(e.target.checked)} /> Bara utan tidigare koppling
               </label>
               <label className="flex items-center gap-1.5 text-xs text-slate-700">
                 <input type="checkbox" checked={stableOnly} onChange={e => setStableOnly(e.target.checked)} /> Bara stabila (minst 80 %)
@@ -114,8 +114,9 @@ export default function HandGroups({ src }: { src: string }) {
             </div>
             <p className="mt-4 text-xs text-slate-500">
               Metod: Vitki (src/hand_groups.py, METHODS 14l), efter Rundata, Runor 2020 (RAÄ) och Sveriges runinskrifter.
-              Gränsen för en grupp är en sannolikhet för samma hand på minst {data.tau.toLocaleString("sv-SE")}, och gruppens stenar
-              ligger högst 30 km från varandra.
+              Gränsen för en grupp är modellens värde för samma hand på minst {data.tau.toLocaleString("sv-SE")} i genomsnitt (ett
+              rangordningsmått, inte en sannolikhet), och gruppens stenar ligger högst 30 km från varandra. Litteraturen: Sveriges
+              runinskrifter, Runor 2020, Fornvännen, Futhark och åtta avhandlingar, uttalanden granskade av två granskare.
             </p>
           </>
         )}
@@ -149,9 +150,9 @@ function GroupCard({ g }: { g: Group }) {
         {g.parishes.slice(0, 6).join(", ")}{g.parishes.length > 6 ? " …" : ""}
         {Object.keys(g.styles).length > 0 && <> · stil {Object.entries(g.styles).map(([k, n]) => `${k} ${n}`).join(", ")}</>}
       </p>
-      {g.literature && (g.literature.same_hand.length > 0 || g.literature.different.length > 0) && (
+      {g.literature && ((g.literature.sri_runor ?? []).length > 0 || g.literature.same_hand.length > 0 || g.literature.different.length > 0) && (
         <p className="mt-1 text-xs text-slate-600">
-          {g.literature.same_hand.slice(0, 3).map(([a, b, src]) => `${a} och ${b} samma hand enligt ${src.join(", ")}`).join("; ")}
+          {[...(g.literature.sri_runor ?? []), ...g.literature.same_hand].slice(0, 3).map(([a, b, src]) => `${a} och ${b} samma hand enligt ${src.join(", ")}`).join("; ")}
           {g.literature.different.length > 0 && <> · olika händer enligt litteraturen: {g.literature.different.map(([a, b, src]) => `${a}–${b} (${src.join(", ")})`).join("; ")}</>}
         </p>
       )}

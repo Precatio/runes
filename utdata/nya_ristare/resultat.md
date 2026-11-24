@@ -199,3 +199,50 @@ Ungefär 25 miljoner tokens. Körningen avbröts av användningstaket, och de si
 
 Med så få stenar har provet liten styrka, och huggspårsmåtten har tidigare följt bergarten mer än handen. Huggtekniken
 varken stöder eller fäller grupperna. G052 får alltså inget stöd av huggtekniken.
+
+## 9. Rättelser efter granskningen av rapportutkastet (2026-11-24)
+En oberoende granskning av rapportutkastet hittade följande. Allt är rättat innan något publicerades.
+
+**1. Kodfel om olika händer (beskrivande, inte i proven).**
+- **Felet:** uttalanden om att en sten har en annan hand än flera andra delades upp i alla par. Stern (2013), som säger att
+  U 855 inte är Arnfasts, blev "U 43 och U 79 har olika händer", fast hon tillskriver båda Arnfast.
+- **Rättelsen:** nu används bara uttalanden om två stenar och listor över olika namnbärare. Fyra uttalanden räknas som
+  tvetydiga.
+- **Följden:** av de par om olika händer som ligger inom 30 km av varandra ligger nu 0 av 9 i samma grupp (tidigare 1 av
+  14). G074 är inte längre motsagd.
+
+**2. Litteraturbeskedet räknar nu också länkarna i SRI och Runor 2020** (`litteratur_besked.py`):
+
+| Besked | Alla grupper |
+|---|---|
+| Kopplad tidigare | 75 |
+| Ingen tidigare koppling | 138 |
+| Ej omnämnd | 15 |
+| Motsagd | 0 |
+
+Av de 77 grupperna med okänd hand och gott underlag är 15 kopplade tidigare (11 i SRI eller Runor, 4 i övrig litteratur)
+och 61 utan tidigare koppling. Den tidigare uppgiften "69 nya" var för stark.
+
+**3. T2 i slutprov 2 höll inte**, i stället för obestämt. Planen kräver minst 5 grupper med skillnad, och det fanns 5.
+
+**4. Kalibreringen** (`rapport_extra.py`): modellens värde är ett rangordningsmått, inte en sannolikhet. Andelen par med
+samma ristare per värdeintervall:
+
+| Värde | Samma ristare |
+|---|---|
+| under 0,2 | 4 % |
+| 0,4–0,6 | 15 % |
+| 0,8–0,9 | 46 % |
+| över 0,9 | 73 % |
+
+Grundnivån är 13 %. Täckningen vid τ 0,8 är 8,8 % av paren med samma ristare.
+
+**5. Övrigt:**
+- **Andelarna sammanslagna över paren:** slutprov 1 59 av 147 (40 %), slutprov 2 22 av 61 (36 %).
+- **Per landskap:** Uppland 31 grupper (39 mot 5,4 %), Södermanland 7 (49 mot 10,7 %).
+- **Holm-korrigering** över de fem proven ändrar inget utfall.
+- **Stabiliteten:** 73 av 228 grupper helt stabila.
+- **De 62 omstridda paren** i SRI avgjordes av språkmodellen, inte av en människa, och motiveringen är skriven för 31.
+- **Den striktare regeln vid omläsningen** infördes efter att oenigheterna setts.
+- **τ valdes** med alla namngivna par, också provdelens stenar med känd ristare.
+- **Referenser:** Jansson 1958 heter "Runstensfynd i kyrkmurar" (Fornvännen 53, s. 241–257). Vitki-versionen är 3.1.0.

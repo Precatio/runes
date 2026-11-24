@@ -51,8 +51,11 @@ for i, it in enumerate(items):
         for a, b in itertools.combinations(st, 2):
             same[(a, b)].add(src)
     elif c["relation"] == "olika_hander":
-        for a, b in itertools.combinations(st, 2):
-            diff[(a, b)].add(src)
+        # rättelse 2026-11-24: bara två stenar, eller en lista över olika namnbärare; annars gäller uttalandet oftast en
+        # sten mot de andra, och alla par blir fel (Stern 2013 om U 855 och Arnfasts stenar)
+        if len(st) == 2 or (len(st) > 2 and all("bärare" in v["skal"] for v in vs)):
+            for a, b in itertools.combinations(st, 2):
+                diff[(a, b)].add(src)
     else:
         for a in st:
             attr[a].add((c.get("ristare") or "").split()[0])

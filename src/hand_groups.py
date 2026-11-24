@@ -17,7 +17,8 @@ ristare, mätt på namngivna ristare. Forskningsskripten (det som prövades) lig
 
    Saknade belägg är NaN.
 2. **Parmodellen:** gradient boosting tränad på par av stenar med säker ristare i Rundata (samma ristare = 1), med
-   ristarna delade i fem vikter. Par av säkra stenar får sitt värde från vikten som inte sett deras ristare. Övriga par får
+   ristarna delade i fem vikter. Värdet rangordnar paren men är inte en kalibrerad sannolikhet (vid 0,8–0,9 har 46 % av
+   paren med känd ristare samma ristare, över 0,9 73 %). Par av säkra stenar får sitt värde från vikten som inte sett deras ristare. Övriga par får
    medel över vikterna.
 3. **Grupperna:** genomsnittlig länkning på sannolikheterna med gruppens diameter högst 30 km, avskuren vid τ = 0,8.
    Grupper med minst tre stenar redovisas med typen:
@@ -49,7 +50,8 @@ TESTED = {"plan": "analysplaner/2026-11-23-nya-ristare-slutprov-1.md", "facit_gr
           "precision_named": 0.77,
           # slutprov 2 (…-slutprov-2-litteraturen.md): the same groups against new pairs from the literature
           "lit_plan": "analysplaner/2026-11-23-nya-ristare-slutprov-2-litteraturen.md", "lit_groups": 25, "lit_together": 0.457,
-          "lit_control": 0.066, "lit_p": 0.00039, "lit_different_pairs": 14, "lit_different_merged": 1}
+          "lit_control": 0.066, "lit_p": 0.00039, "lit_different_pairs": 9, "lit_different_merged": 0,
+          "lit_unnamed_held": False}
 PR = {"Pr1": 1, "Pr2": 2, "Pr3": 3, "Pr4": 4, "Pr5": 5, "Pr 1": 1, "Pr 2": 2, "Pr 3": 3, "Pr 4": 4, "Pr 5": 5}
 _cache: dict = {}
 
@@ -351,8 +353,8 @@ def build(corpus_dir: str, log=print) -> dict:
     lit = {frozenset(x["stenar"]): x for x in json.load(open(litp, encoding="utf-8"))} if os.path.exists(litp) else {}
     for x in groups:
         li = lit.get(frozenset(x["stones"]))
-        x["literature"] = {"verdict": li["besked"], "same_hand": li["samma_hand"], "different": li["olika_hander"],
-                           "shared_carver": li["gemensam_ristare"]} if li else None
+        x["literature"] = {"verdict": li["besked"], "sri_runor": li.get("sri_runor", []), "same_hand": li["samma_hand"],
+                           "different": li["olika_hander"], "shared_carver": li["gemensam_ristare"]} if li else None
     groups.sort(key=lambda x: (-len(x["stones"]), -x["mean_p"]))
     for k, x in enumerate(groups, 1):
         x["id"] = f"G{k:03d}"
