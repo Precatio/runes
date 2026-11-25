@@ -97,6 +97,19 @@ for s in ("1 170 stenar", "64 stenar hade ingen användbar bild", "981 stenar ha
           "56 540 par inom 30 km", "478 av 744 fall (64 %)", "Läsarna:** två läsare per sten. Kappa var 0,67–1,0"):
     assert s in RES, s
 N_PLANSCH, N_KORPUS, N_UTAN_BILD, STIL_LIKA, STIL_N = 1170, 2314, 64, 478, 744
+# antal per bildkälla (materialraden), räknade ur filerna
+_HC = os.path.join(ROOT, "data", "cache", "hander")
+_comb = json.load(open(os.path.join(_HC, "ornamentik", "orn_koder_kombinerade.json"), encoding="utf-8"))
+_gap = {s for s, c in _comb.items() if any(v["källa"].startswith("teckning") for v in c.values())}
+_lost = set(json.load(open(os.path.join(_HC, "ornamentik", "orn_koder_forlorade.json"), encoding="utf-8")))
+_chk = {x["sig"] for b in json.load(open(os.path.join(_HC, "ornamentik", "kallkontroll_batcher.json"), encoding="utf-8"))
+        if b["id"].startswith("t") for x in b["stones"]}
+N_TECKN_STENAR, N_TECKN_FORLORADE = len(_lost | _gap | _chk), len(_lost)
+N_GOL_PLANSCH = len(json.load(open(os.path.join(_HC, "plansch", "sidor_utvidgning.json"), encoding="utf-8")))
+_k3 = json.load(open(os.path.join(ROOT, "utdata", "nya_ristare", "ornamentik", "kallkontroll_3d.json"), encoding="utf-8"))
+N_FRIA_FOTON = sum(1 for v in _k3["hs_m"]["stenar"].values() if v["bild"].startswith("foto"))
+N_DJUP, N_DJUP_PROVADE = len(json.load(open(os.path.join(_HC, "plansch", "djupbild", "djupbild.json"), encoding="utf-8"))), _k3["källkontroll_stenar"]
+assert (N_TECKN_STENAR, N_TECKN_FORLORADE, N_GOL_PLANSCH, N_FRIA_FOTON, N_DJUP, N_DJUP_PROVADE) == (408, 185, 72, 11, 94, 24)
 assert "2 314" in PL["orn"] and "1 170" in PL["orn"]
 
 KK = J(ORN, "kallkontroll.json")
@@ -381,18 +394,18 @@ body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapp
 
 **Vad som inte är prövat.** Instrumentet prövades i låsta källkontroller med gränser bestämda i förväg, men inte i ett blindprov med svaret dolt för hela kedjan: fotot som teckningarna mättes mot är självt en återgivning, läsarna är samma språkmodell och ingen människa har kodat ett kontrollurval. Två vägar till huvudets detaljer föll (djupbilder ur 3D-skanningar och förstorade utsnitt), och ornamentiken gjorde inte grupperna av stenar med samma hand bättre i ett låst slutprov.
 **Bakgrund och syfte.** Rundjurets drag är grunden för Anne-Sofie Gräslunds stilgrupper och för mycket av dateringen av runstenarna, men de har beskrivits i ord, sten för sten. Syftet var att mäta ornamentiken över hela materialet, oberoende av texten, och att pröva bilderna måttet läses från.
-**Material.** Planschfotona i Sveriges runinskrifter ({num(N_PLANSCH)} av {num(N_KORPUS)} svenska vikingatida runstenar i Rundata), fria foton, teckningar från 1600- och 1700-talen och öppna 3D-skanningar.
+**Material.** Planschfotona i Sveriges runinskrifter ({num(N_PLANSCH)} av {num(N_KORPUS)} svenska vikingatida runstenar i Rundata, och {num(N_GOL_PLANSCH)} på Gotlands och Ölands planscher), fria foton ({num(N_FRIA_FOTON)} stenar i Hälsingland och Medelpad), teckningar från 1600- och 1700-talen ({num(N_TECKN_STENAR)} stenar, varav {num(N_TECKN_FORLORADE)} försvunna) och öppna 3D-skanningar ({num(N_DJUP)} stenar, varav {num(N_DJUP_PROVADE)} prövade mot planschfotona).
 **Metod.** Två oberoende läsare besvarade en kodbok med 17 frågor om rundjuret. Ett drag fick värde bara när båda svarade lika, och ett fält användes bara med Cohens kappa ≥ 0,40 och täckning ≥ 30 procent. Varje ny sorts bild prövades mot fotona, och koderna ställdes i låsta prov mot texten, stilgrupperna och grupper av stenar med samma hand.
 **Resultat.** Läsarna var eniga med kappa {kv(min(KAP.values()))}–{kv(max(KAP.values()))} i {len(KAP)} fält; registret omfattar {num(N_REG)} stenar, varav {len(FL)} försvunna. På {KK['teckningar']} bevarade stenar stämde teckningarna med fotona i huvudet, nackfliken och kopplet (kappa {kv(KT['huvud_vy'])}–{kv(KT['nackflik'])}), men inte påvisbart i läppflik och fötter, och djupbilderna stämde inte för huvudet. Tro och kors hänger ihop i koderna på {BB['stenar']} oberoende stenar. Stavningen följer inte ornamentiken utöver bygd och stilgrupp (Spearmans ρ = {dec(P1['rho'], 3)} mot {dec(P1['omblandning_medel'], 3)} vid omblandning, p = {dec(P1['p'])}).
 **Slutsats.** Rundjurets huvuddrag går att mäta tillförlitligt, också på försvunna stenar, men inte huvudets detaljer, som Gräslunds finindelning bygger på. Om den svaga kopplingen mellan skrift och bild beror på arbetsdelning eller svaga spår av handen går inte att avgöra.
 
 ## 1. Inledning
 
-Anne-Sofie Gräslund (1991, 1992, 2006) ordnade rundjuren på de sena vikingatida runstenarna i stilgrupper: RAK, där runbandets ändar är raka utan djurhuvud, Fp, där huvudet ses ovanifrån, och Pr1–Pr5, profilhuvuden i fem steg. Grupperna bygger på enskilda drag – huvudets vy, ögat, flikar vid nacke och läppar, svansen, fötterna, kopplet som binder ihop djuren – och används för att datera stenarna (Gräslund 2006, 2015). Bilderna, korsen och ristarna har studerats av bland andra Stern (2013), Lager (2002), Källström (2007) och Kitzler Åhfeldt (2002, 2017).
+Anne-Sofie Gräslund (1991, 1992, 2006) ordnade rundjuren på de sena vikingatida runstenarna i stilgrupper: RAK, där runbandets ändar är raka utan djurhuvud, Fp, där huvudet ses ovanifrån, och Pr1–Pr5, profilhuvuden i fem steg. Grupperna bygger på enskilda drag – huvudets vy, ögat, flikar vid nacke och läppar, svansen, fötterna, kopplet – och används för att datera stenarna (Gräslund 2006, 2015). Bilderna, korsen och ristarna har studerats av bland andra Stern (2013), Lager (2002), Källström (2007) och Kitzler Åhfeldt (2002, 2017).
 
-Dragen har däremot inte mätts över hela materialet; Rundata har stilgruppen men inte dragen. Många stenar finns bara kvar i teckningar: Bautils träsnitt, skurna på 1600-talet och tryckta 1750, Johannes Rhezelius teckningar från 1630-talet och Johan Peringskiölds från omkring 1700. Utgivarna av Sveriges runinskrifter bedömde dem sten för sten. Såvitt vi vet har de inte prövats drag för drag mot fotografier över ett större material.
+Dragen har däremot inte mätts över hela materialet. Många stenar finns bara kvar i teckningar: Bautils träsnitt, skurna på 1600-talet och tryckta 1750, Johannes Rhezelius teckningar från 1630-talet och Johan Peringskiölds från omkring 1700. Utgivarna av Sveriges runinskrifter bedömde dem sten för sten. Såvitt vi vet har de inte prövats drag för drag mot fotografier över ett större material.
 
-Bidraget här är mätningen: ett register där ornamentiken kodas oberoende av texten, så att hur texten är skriven och hur djuret är ritat kan ställas mot varandra. Fyra prov visar vad registret bär: ett väntat samband mellan text och bild, stavningen, Gräslunds stilgrupper och grupper av stenar med samma hand.
+Bidraget här är mätningen: ett register där ornamentiken kodas oberoende av texten, så att hur texten är skriven och hur djuret är ritat kan ställas mot varandra. Fyra prov, beskrivna nedan, visar vad registret bär.
 
 ## 2. Förregistrering
 
@@ -559,7 +572,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially t
 
 **What has not been tested.** The instrument was tested in locked source checks with limits set in advance, but not in a blind test with the answer hidden from the whole chain: the photograph the drawings were measured against is itself a rendering, the readers are the same language model and no person has coded a control sample. Two routes to the head's details failed (depth images from 3D scans and enlarged crops), and the ornament did not improve the groups of stones by the same hand in a locked final test.
 **Background and aim.** The rune animal's features are the basis of Anne-Sofie Gräslund's style groups and of much of the dating of the runestones, but they have been described in words, stone by stone. The aim was to measure the ornament across the whole material, independently of the text, and to test the pictures the measure is read from.
-**Material.** The plate photographs in Sveriges runinskrifter ({num(N_PLANSCH, True)} of {num(N_KORPUS, True)} Swedish Viking Age runestones in Rundata), free photographs, drawings of the 1600s and 1700s and open 3D scans.
+**Material.** The plate photographs in Sveriges runinskrifter ({num(N_PLANSCH, True)} of {num(N_KORPUS, True)} Swedish Viking Age runestones in Rundata, and {num(N_GOL_PLANSCH, True)} on the Gotland and Öland plates), free photographs ({num(N_FRIA_FOTON, True)} stones in Hälsingland and Medelpad), drawings of the 1600s and 1700s ({num(N_TECKN_STENAR, True)} stones, {num(N_TECKN_FORLORADE, True)} of them lost) and open 3D scans ({num(N_DJUP, True)} stones, {num(N_DJUP_PROVADE, True)} of them tested against the plate photographs).
 **Method.** Two independent readers answered a codebook of 17 questions about the rune animal. A feature got a value only when both answered alike, and a field was used only with Cohen's kappa ≥ 0.40 and coverage ≥ 30 percent. Every new kind of picture was tested against the photographs, and the codes were set in locked tests against the text, the style groups and groups of stones by the same hand.
 **Results.** The readers agreed with kappa {kv(min(KAP.values()), True)}–{kv(max(KAP.values()), True)} on {len(KAP)} fields; the register covers {num(N_REG, True)} stones, of which {len(FL)} are lost. On {KK['teckningar']} surviving stones the drawings agreed with the photographs on the head, the neck lappet and the koppel (kappa {kv(KT['huvud_vy'], True)}–{kv(KT['nackflik'], True)}), but not demonstrably on lip lappet and feet, and the depth images did not agree on the head. Faith and cross go together in the codes on {BB['stenar']} independent stones. Spelling does not follow the ornament beyond district and style group (Spearman's ρ = {dec(P1['rho'], 3, True)} against {dec(P1['omblandning_medel'], 3, True)} under shuffling, p = {dec(P1['p'], 2, True)}).
 **Conclusion.** The rune animal's main features can be measured reliably, also on lost stones, but not the head's details, on which Gräslund's fine division rests. Whether the weak coupling of writing and image reflects a division of labour or weak traces of the hand cannot be decided.
