@@ -1,0 +1,231 @@
+{
+ "plan": "2026-11-25-graslund-1-stilgrupper.md",
+ "F1": {
+  "stenar": 620,
+  "träffsäkerhet": 0.621,
+  "vanligaste_gruppen": 0.258,
+  "omblandning_medel": 0.219,
+  "p": 0.001,
+  "H1_håller": true,
+  "förväxlingar": {
+   "RAK": {
+    "RAK": 134,
+    "Fp": 8,
+    "Pr5": 1,
+    "Pr3": 3
+   },
+   "Fp": {
+    "Fp": 60,
+    "Pr4": 4,
+    "Pr3": 9,
+    "RAK": 17,
+    "Pr2": 1,
+    "Pr1": 5
+   },
+   "Pr1": {
+    "Pr3": 2,
+    "Fp": 5,
+    "Pr2": 9,
+    "Pr1": 9,
+    "RAK": 2,
+    "Pr4": 1
+   },
+   "Pr2": {
+    "Pr4": 15,
+    "Pr3": 17,
+    "Pr2": 28,
+    "Fp": 5,
+    "Pr1": 3,
+    "Pr5": 1
+   },
+   "Pr3": {
+    "Pr4": 39,
+    "Pr2": 19,
+    "Fp": 10,
+    "Pr3": 20,
+    "Pr1": 1,
+    "RAK": 1
+   },
+   "Pr4": {
+    "Pr4": 134,
+    "Pr3": 12,
+    "RAK": 1,
+    "Pr5": 5,
+    "Pr2": 4,
+    "Fp": 4
+   },
+   "Pr5": {
+    "Pr4": 27,
+    "Pr3": 2,
+    "Fp": 1,
+    "Pr2": 1
+   }
+  }
+ },
+ "F2": {
+  "fel_inom_Pr": 158,
+  "andel_till_granne": 0.829,
+  "omblandning_medel": 0.592,
+  "p": 0.001,
+  "H2_håller": true,
+  "avstånd": {
+   "2": 24,
+   "1": 131,
+   "3": 3
+  }
+ },
+ "F3": {
+  "bic": {
+   "2": 5501.8,
+   "3": 5292.8,
+   "4": 5339.1,
+   "5": 5482.2,
+   "6": 5634.7,
+   "7": 5791.7,
+   "8": 5971.7,
+   "9": 6136.1
+  },
+  "k": 3,
+  "ARI_mot_rundata": 0.342,
+  "klasser": [
+   {
+    "klass": 0,
+    "stenar": 295,
+    "rundata": {
+     "Pr4": 144,
+     "Pr2": 35,
+     "Pr3": 71,
+     "Pr1": 8,
+     "RAK": 1,
+     "Fp": 7,
+     "Pr5": 29
+    },
+    "drag": [
+     "djurhuvud=ja (1.00)",
+     "huvud_vy=profil (0.98)",
+     "oga=mandel (0.72)",
+     "svans=spiral (0.77)",
+     "fotter=inga (0.92)",
+     "koppel=ja (0.96)",
+     "fyrfota=nej (0.92)",
+     "orm_extra=ja (0.86)",
+     "manniska_mask=nej (0.98)",
+     "kors=ja (0.61)"
+    ]
+   },
+   {
+    "klass": 1,
+    "stenar": 191,
+    "rundata": {
+     "RAK": 141,
+     "Pr1": 4,
+     "Fp": 33,
+     "Pr2": 6,
+     "Pr3": 4,
+     "Pr4": 2,
+     "Pr5": 1
+    },
+    "drag": [
+     "djurhuvud=nej (1.00)",
+     "antal_djur=0 (0.99)",
+     "huvud_vy=inget_huvud (0.99)",
+     "oga=inget_synligt (0.99)",
+     "nackflik=ingen (0.99)",
+     "lappflik=ingen (0.99)",
+     "fotter=inga (0.99)",
+     "koppel=nej (0.98)",
+     "flatverk=inget (0.95)",
+     "fyrfota=nej (0.97)",
+     "orm_extra=nej (0.98)",
+     "manniska_mask=nej (0.96)"
+    ]
+   },
+   {
+    "klass": 2,
+    "stenar": 134,
+    "rundata": {
+     "Pr2": 28,
+     "Fp": 56,
+     "Pr3": 15,
+     "Pr1": 16,
+     "RAK": 4,
+     "Pr4": 14,
+     "Pr5": 1
+    },
+    "drag": [
+     "djurhuvud=ja (1.00)",
+     "antal_djur=1 (0.84)",
+     "huvud_vy=profil (0.65)",
+     "oga=rund (0.64)",
+     "nackflik=ingen (0.75)",
+     "lappflik=ingen (0.83)",
+     "svans=spiral (0.83)",
+     "fotter=inga (0.98)",
+     "koppel=nej (0.72)",
+     "fyrfota=nej (0.96)",
+     "orm_extra=nej (0.98)",
+     "manniska_mask=nej (0.97)",
+     "kors=ja (0.68)"
+    ]
+   }
+  ]
+ },
+ "F4": {
+  "inom_uppland_cv": 0.593,
+  "Sö": {
+   "stenar": 73,
+   "träffsäkerhet": 0.411,
+   "per_grupp": {
+    "RAK": 0.88,
+    "Fp": 0.35,
+    "Pr2": 0.44,
+    "Pr3": 0.18
+   }
+  },
+  "Ög": {
+   "stenar": 65,
+   "träffsäkerhet": 0.692,
+   "per_grupp": {
+    "RAK": 0.93,
+    "Fp": 0.08
+   }
+  }
+ },
+ "F5": {
+  "RAK": {
+   "stenar": 146,
+   "typiska_≥0,7": 0.85,
+   "gränsfall_<0,4": 0.04
+  },
+  "Fp": {
+   "stenar": 96,
+   "typiska_≥0,7": 0.5,
+   "gränsfall_<0,4": 0.17
+  },
+  "Pr1": {
+   "stenar": 28,
+   "typiska_≥0,7": 0.21,
+   "gränsfall_<0,4": 0.36
+  },
+  "Pr2": {
+   "stenar": 69,
+   "typiska_≥0,7": 0.1,
+   "gränsfall_<0,4": 0.29
+  },
+  "Pr3": {
+   "stenar": 90,
+   "typiska_≥0,7": 0.26,
+   "gränsfall_<0,4": 0.23
+  },
+  "Pr4": {
+   "stenar": 160,
+   "typiska_≥0,7": 0.35,
+   "gränsfall_<0,4": 0.12
+  },
+  "Pr5": {
+   "stenar": 31,
+   "typiska_≥0,7": 0.29,
+   "gränsfall_<0,4": 0.23
+  }
+ }
+}
