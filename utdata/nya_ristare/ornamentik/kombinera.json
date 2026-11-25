@@ -1,0 +1,112 @@
+{
+ "teckningar_kodade": 140,
+ "ifyllda_värden": {
+  "oga": 28,
+  "nackflik": 25,
+  "fyrfota": 16,
+  "antal_djur": 15,
+  "orm_extra": 20,
+  "flatverk": 20,
+  "koppel": 13,
+  "svans": 9,
+  "huvud_vy": 9,
+  "kors": 10
+ },
+ "täckning_per_stilgrupp": {
+  "Pr1": {
+   "stenar": 21,
+   "nackflik": {
+    "före": 0.33,
+    "efter": 0.48
+   },
+   "oga": {
+    "före": 0.9,
+    "efter": 0.95
+   },
+   "svans": {
+    "före": 0.62,
+    "efter": 0.67
+   },
+   "koppel": {
+    "före": 0.76,
+    "efter": 0.86
+   }
+  },
+  "Pr2": {
+   "stenar": 58,
+   "nackflik": {
+    "före": 0.29,
+    "efter": 0.38
+   },
+   "oga": {
+    "före": 0.78,
+    "efter": 0.84
+   },
+   "svans": {
+    "före": 0.47,
+    "efter": 0.5
+   },
+   "koppel": {
+    "före": 0.59,
+    "efter": 0.66
+   }
+  },
+  "Pr3": {
+   "stenar": 63,
+   "nackflik": {
+    "före": 0.27,
+    "efter": 0.3
+   },
+   "oga": {
+    "före": 0.65,
+    "efter": 0.68
+   },
+   "svans": {
+    "före": 0.49,
+    "efter": 0.49
+   },
+   "koppel": {
+    "före": 0.43,
+    "efter": 0.46
+   }
+  },
+  "Pr4": {
+   "stenar": 117,
+   "nackflik": {
+    "före": 0.12,
+    "efter": 0.18
+   },
+   "oga": {
+    "före": 0.48,
+    "efter": 0.6
+   },
+   "svans": {
+    "före": 0.31,
+    "efter": 0.34
+   },
+   "koppel": {
+    "före": 0.23,
+    "efter": 0.24
+   }
+  },
+  "Pr5": {
+   "stenar": 18,
+   "nackflik": {
+    "före": 0.28,
+    "efter": 0.44
+   },
+   "oga": {
+    "före": 0.83,
+    "efter": 0.83
+   },
+   "svans": {
+    "före": 0.22,
+    "efter": 0.22
+   },
+   "koppel": {
+    "före": 0.17,
+    "efter": 0.17
+   }
+  }
+ }
+}

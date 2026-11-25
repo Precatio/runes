@@ -376,3 +376,21 @@ och `ornamentik/kallkontroll_3d.py`, utfall `ornamentik/kallkontroll_3d.json`.
   - Medelpad: M 1, 10 och 16.
 - **Stenar med bara djupbild** (M 5, 7, 11 och 15) får bara fältet extra orm, och räknas i praktiken inte. Hälsingland och
   Medelpad är alltså med i registret, men med få stenar.
+
+## 14. Gamla teckningar fyller luckor i planschkoderna (2026-11-25)
+- **Plan:** `analysplaner/2026-11-25-teckningar-fyller-luckor.md`.
+- **Underlaget:** 141 bevarade stenar som har djurhuvud men ingen nackflik i planschkoden, och en teckning från
+  1500–1700-talet. Teckningarna lästes av två läsare och användes enligt källkontrollens regler. Ett planschvärde ersattes
+  aldrig.
+- **Ifyllda värden:**
+  - öga 28, nackflik 25, orm 20, flätverk 20, fyrfota 16, antal djur 15, koppel 13;
+  - kors 10, svans 9, huvudets vy 9.
+  - Värdena ligger i `orn_koder_kombinerade.json`, märkta med tecknaren.
+- **Täckningen av nackflik** bland stenar med djurhuvud, före och efter:
+  - Pr1 0,33 → 0,48 och Pr2 0,29 → 0,38;
+  - Pr3 0,27 → 0,30 och Pr4 0,12 → 0,18;
+  - Pr5 0,28 → 0,44.
+- **Täckningen av öga i Pr4:** 0,48 → 0,60.
+- **Bedömning:** teckningarna hjälper, men flikarna är fortfarande flaskhalsen. I Pr4, den största gruppen, är nackfliken
+  bara känd för knappt en femtedel av stenarna. Huvudsläsningen av planscherna gav inget mer (pilot 1–2). Det som
+  återstår är bättre foton.
