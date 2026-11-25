@@ -1,0 +1,609 @@
+{
+ "plan": "2026-11-25-ornamentik-kallkontroll-teckningar.md",
+ "teckningar": 129,
+ "per_typ": {
+  "bautil": 37,
+  "ovrig": 27,
+  "peringskiold": 28,
+  "rhezelius": 37
+ },
+ "läsarna_teckningar": {
+  "djurhuvud": {
+   "stenar": 125,
+   "tackning": 0.65,
+   "lika": 0.98,
+   "kappa": 0.94
+  },
+  "antal_djur": {
+   "stenar": 125,
+   "tackning": 0.48,
+   "lika": 0.95,
+   "kappa": 0.92
+  },
+  "huvud_vy": {
+   "stenar": 125,
+   "tackning": 0.65,
+   "lika": 0.95,
+   "kappa": 0.9
+  },
+  "oga": {
+   "stenar": 125,
+   "tackning": 0.52,
+   "lika": 0.91,
+   "kappa": 0.85
+  },
+  "nackflik": {
+   "stenar": 125,
+   "tackning": 0.38,
+   "lika": 0.92,
+   "kappa": 0.86
+  },
+  "lappflik": {
+   "stenar": 125,
+   "tackning": 0.3,
+   "lika": 0.89,
+   "kappa": 0.76
+  },
+  "mun": {
+   "stenar": 125,
+   "tackning": 0.08,
+   "lika": 1.0,
+   "kappa": 1.0
+  },
+  "svans": {
+   "stenar": 125,
+   "tackning": 0.31,
+   "lika": 0.92,
+   "kappa": 0.87
+  },
+  "fotter": {
+   "stenar": 125,
+   "tackning": 0.55,
+   "lika": 1.0,
+   "kappa": 1.0
+  },
+  "huvud_svans": {
+   "stenar": 125,
+   "tackning": 0.26,
+   "lika": 0.79,
+   "kappa": 0.33
+  },
+  "kontur": {
+   "stenar": 125,
+   "tackning": 0.96,
+   "lika": 1.0,
+   "kappa": null
+  },
+  "koppel": {
+   "stenar": 125,
+   "tackning": 0.43,
+   "lika": 1.0,
+   "kappa": 1.0
+  },
+  "flatverk": {
+   "stenar": 125,
+   "tackning": 0.88,
+   "lika": 0.76,
+   "kappa": 0.68
+  },
+  "fyrfota": {
+   "stenar": 125,
+   "tackning": 0.87,
+   "lika": 1.0,
+   "kappa": 1.0
+  },
+  "orm_extra": {
+   "stenar": 125,
+   "tackning": 0.74,
+   "lika": 0.98,
+   "kappa": 0.96
+  },
+  "manniska_mask": {
+   "stenar": 125,
+   "tackning": 0.94,
+   "lika": 1.0,
+   "kappa": 1.0
+  },
+  "kors": {
+   "stenar": 125,
+   "tackning": 0.91,
+   "lika": 1.0,
+   "kappa": 1.0
+  },
+  "stil": {
+   "stenar": 125,
+   "tackning": 0.16,
+   "lika": 1.0,
+   "kappa": 1.0
+  }
+ },
+ "teckning_mot_plansch": {
+  "alla": {
+   "djurhuvud": {
+    "jämförbara": 59,
+    "lika": 0.95,
+    "kappa": 0.86,
+    "täckning_teckning": 0.61
+   },
+   "antal_djur": {
+    "jämförbara": 35,
+    "lika": 0.83,
+    "kappa": 0.73,
+    "täckning_teckning": 0.44
+   },
+   "huvud_vy": {
+    "jämförbara": 54,
+    "lika": 0.93,
+    "kappa": 0.83,
+    "täckning_teckning": 0.6
+   },
+   "oga": {
+    "jämförbara": 37,
+    "lika": 0.73,
+    "kappa": 0.57,
+    "täckning_teckning": 0.46
+   },
+   "nackflik": {
+    "jämförbara": 19,
+    "lika": 0.95,
+    "kappa": 0.88,
+    "täckning_teckning": 0.34
+   },
+   "lappflik": {
+    "jämförbara": 16,
+    "lika": 0.88,
+    "kappa": 0.3,
+    "täckning_teckning": 0.26
+   },
+   "svans": {
+    "jämförbara": 18,
+    "lika": 0.78,
+    "kappa": 0.6,
+    "täckning_teckning": 0.28
+   },
+   "fotter": {
+    "jämförbara": 39,
+    "lika": 0.97,
+    "kappa": 0.0,
+    "täckning_teckning": 0.53
+   },
+   "koppel": {
+    "jämförbara": 34,
+    "lika": 0.94,
+    "kappa": 0.86,
+    "täckning_teckning": 0.42
+   },
+   "flatverk": {
+    "jämförbara": 60,
+    "lika": 0.82,
+    "kappa": 0.74,
+    "täckning_teckning": 0.65
+   },
+   "fyrfota": {
+    "jämförbara": 97,
+    "lika": 0.99,
+    "kappa": 0.9,
+    "täckning_teckning": 0.84
+   },
+   "orm_extra": {
+    "jämförbara": 66,
+    "lika": 0.97,
+    "kappa": 0.94,
+    "täckning_teckning": 0.71
+   },
+   "manniska_mask": {
+    "jämförbara": 113,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.91
+   },
+   "kors": {
+    "jämförbara": 103,
+    "lika": 0.91,
+    "kappa": 0.81,
+    "täckning_teckning": 0.88
+   }
+  },
+  "bautil": {
+   "djurhuvud": {
+    "jämförbara": 17,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.62
+   },
+   "antal_djur": {
+    "jämförbara": 11,
+    "lika": 0.91,
+    "kappa": 0.85,
+    "täckning_teckning": 0.51
+   },
+   "huvud_vy": {
+    "jämförbara": 16,
+    "lika": 0.94,
+    "kappa": 0.88,
+    "täckning_teckning": 0.62
+   },
+   "oga": {
+    "jämförbara": 12,
+    "lika": 0.83,
+    "kappa": 0.67,
+    "täckning_teckning": 0.54
+   },
+   "nackflik": {
+    "jämförbara": 5,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.46
+   },
+   "lappflik": {
+    "jämförbara": 5,
+    "lika": 0.8,
+    "kappa": 0.44,
+    "täckning_teckning": 0.32
+   },
+   "svans": {
+    "jämförbara": 6,
+    "lika": 0.83,
+    "kappa": 0.45,
+    "täckning_teckning": 0.35
+   },
+   "fotter": {
+    "jämförbara": 13,
+    "lika": 1.0,
+    "kappa": null,
+    "täckning_teckning": 0.62
+   },
+   "koppel": {
+    "jämförbara": 11,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.43
+   },
+   "flatverk": {
+    "jämförbara": 17,
+    "lika": 0.71,
+    "kappa": 0.58,
+    "täckning_teckning": 0.62
+   },
+   "fyrfota": {
+    "jämförbara": 31,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.86
+   },
+   "orm_extra": {
+    "jämförbara": 21,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.7
+   },
+   "manniska_mask": {
+    "jämförbara": 32,
+    "lika": 1.0,
+    "kappa": null,
+    "täckning_teckning": 0.92
+   },
+   "kors": {
+    "jämförbara": 30,
+    "lika": 0.97,
+    "kappa": 0.9,
+    "täckning_teckning": 0.89
+   }
+  },
+  "ovrig": {
+   "djurhuvud": {
+    "jämförbara": 13,
+    "lika": 0.85,
+    "kappa": 0.58,
+    "täckning_teckning": 0.59
+   },
+   "antal_djur": {
+    "jämförbara": 10,
+    "lika": 0.8,
+    "kappa": 0.67,
+    "täckning_teckning": 0.52
+   },
+   "huvud_vy": {
+    "jämförbara": 12,
+    "lika": 0.83,
+    "kappa": 0.57,
+    "täckning_teckning": 0.59
+   },
+   "oga": {
+    "jämförbara": 9,
+    "lika": 0.56,
+    "kappa": 0.33,
+    "täckning_teckning": 0.44
+   },
+   "nackflik": {
+    "jämförbara": 5,
+    "lika": 0.8,
+    "kappa": 0.67,
+    "täckning_teckning": 0.41
+   },
+   "lappflik": {
+    "jämförbara": 3,
+    "lika": 1.0,
+    "kappa": null,
+    "täckning_teckning": 0.3
+   },
+   "svans": {
+    "jämförbara": 5,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.26
+   },
+   "fotter": {
+    "jämförbara": 8,
+    "lika": 1.0,
+    "kappa": null,
+    "täckning_teckning": 0.59
+   },
+   "koppel": {
+    "jämförbara": 9,
+    "lika": 0.78,
+    "kappa": 0.5,
+    "täckning_teckning": 0.52
+   },
+   "flatverk": {
+    "jämförbara": 8,
+    "lika": 0.88,
+    "kappa": 0.8,
+    "täckning_teckning": 0.63
+   },
+   "fyrfota": {
+    "jämförbara": 21,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.81
+   },
+   "orm_extra": {
+    "jämförbara": 13,
+    "lika": 0.85,
+    "kappa": 0.57,
+    "täckning_teckning": 0.67
+   },
+   "manniska_mask": {
+    "jämförbara": 20,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.78
+   },
+   "kors": {
+    "jämförbara": 20,
+    "lika": 0.8,
+    "kappa": 0.6,
+    "täckning_teckning": 0.78
+   }
+  },
+  "peringskiold": {
+   "djurhuvud": {
+    "jämförbara": 14,
+    "lika": 0.93,
+    "kappa": 0.85,
+    "täckning_teckning": 0.61
+   },
+   "antal_djur": {
+    "jämförbara": 9,
+    "lika": 0.78,
+    "kappa": 0.62,
+    "täckning_teckning": 0.39
+   },
+   "huvud_vy": {
+    "jämförbara": 13,
+    "lika": 0.92,
+    "kappa": 0.86,
+    "täckning_teckning": 0.57
+   },
+   "oga": {
+    "jämförbara": 8,
+    "lika": 0.75,
+    "kappa": 0.56,
+    "täckning_teckning": 0.46
+   },
+   "nackflik": {
+    "jämförbara": 6,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.25
+   },
+   "lappflik": {
+    "jämförbara": 5,
+    "lika": 1.0,
+    "kappa": null,
+    "täckning_teckning": 0.25
+   },
+   "svans": {
+    "jämförbara": 3,
+    "lika": 0.33,
+    "kappa": 0.0,
+    "täckning_teckning": 0.29
+   },
+   "fotter": {
+    "jämförbara": 10,
+    "lika": 1.0,
+    "kappa": null,
+    "täckning_teckning": 0.57
+   },
+   "koppel": {
+    "jämförbara": 8,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.46
+   },
+   "flatverk": {
+    "jämförbara": 13,
+    "lika": 0.92,
+    "kappa": 0.87,
+    "täckning_teckning": 0.54
+   },
+   "fyrfota": {
+    "jämförbara": 21,
+    "lika": 0.95,
+    "kappa": 0.64,
+    "täckning_teckning": 0.89
+   },
+   "orm_extra": {
+    "jämförbara": 15,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.64
+   },
+   "manniska_mask": {
+    "jämförbara": 26,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.96
+   },
+   "kors": {
+    "jämförbara": 23,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.96
+   }
+  },
+  "rhezelius": {
+   "djurhuvud": {
+    "jämförbara": 15,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.62
+   },
+   "antal_djur": {
+    "jämförbara": 5,
+    "lika": 0.8,
+    "kappa": 0.58,
+    "täckning_teckning": 0.35
+   },
+   "huvud_vy": {
+    "jämförbara": 13,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.59
+   },
+   "oga": {
+    "jämförbara": 8,
+    "lika": 0.75,
+    "kappa": 0.6,
+    "täckning_teckning": 0.38
+   },
+   "nackflik": {
+    "jämförbara": 3,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.24
+   },
+   "lappflik": {
+    "jämförbara": 3,
+    "lika": 0.67,
+    "kappa": 0.0,
+    "täckning_teckning": 0.19
+   },
+   "svans": {
+    "jämförbara": 4,
+    "lika": 0.75,
+    "kappa": 0.43,
+    "täckning_teckning": 0.22
+   },
+   "fotter": {
+    "jämförbara": 8,
+    "lika": 0.88,
+    "kappa": 0.0,
+    "täckning_teckning": 0.38
+   },
+   "koppel": {
+    "jämförbara": 6,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.3
+   },
+   "flatverk": {
+    "jämförbara": 22,
+    "lika": 0.82,
+    "kappa": 0.73,
+    "täckning_teckning": 0.78
+   },
+   "fyrfota": {
+    "jämförbara": 24,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.81
+   },
+   "orm_extra": {
+    "jämförbara": 17,
+    "lika": 1.0,
+    "kappa": 1.0,
+    "täckning_teckning": 0.78
+   },
+   "manniska_mask": {
+    "jämförbara": 35,
+    "lika": 1.0,
+    "kappa": null,
+    "täckning_teckning": 0.95
+   },
+   "kors": {
+    "jämförbara": 30,
+    "lika": 0.87,
+    "kappa": 0.73,
+    "täckning_teckning": 0.89
+   }
+  }
+ },
+ "fält_som_får_läsas": {
+  "bautil": [
+   "djurhuvud",
+   "antal_djur",
+   "huvud_vy",
+   "oga",
+   "nackflik",
+   "svans",
+   "koppel",
+   "flatverk",
+   "fyrfota",
+   "orm_extra",
+   "kors"
+  ],
+  "ovrig": [
+   "djurhuvud",
+   "antal_djur",
+   "huvud_vy",
+   "oga",
+   "nackflik",
+   "svans",
+   "koppel",
+   "flatverk",
+   "fyrfota",
+   "orm_extra",
+   "manniska_mask",
+   "kors"
+  ],
+  "peringskiold": [
+   "djurhuvud",
+   "antal_djur",
+   "huvud_vy",
+   "oga",
+   "nackflik",
+   "svans",
+   "koppel",
+   "flatverk",
+   "fyrfota",
+   "orm_extra",
+   "manniska_mask",
+   "kors"
+  ],
+  "rhezelius": [
+   "djurhuvud",
+   "antal_djur",
+   "huvud_vy",
+   "oga",
+   "nackflik",
+   "svans",
+   "koppel",
+   "flatverk",
+   "fyrfota",
+   "orm_extra",
+   "kors"
+  ]
+ },
+ "gotland_öland_kodade": 43
+}

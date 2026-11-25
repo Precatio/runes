@@ -299,3 +299,36 @@ av provdelen (en återstår).
   - Täckningen av huvudets detaljer kan förbättras: en egen läsning av utsnittet kring varje huvud, ett exempelblad och
     en tredje läsare som avgör vid oenighet.
 - **Provdelen har en öppning kvar.** Den sparas tills en förbättrad version har visat sig på utvecklingsdelen.
+
+## 11. Källkontroll: 1600- och 1700-talets teckningar mot planschfotona (2026-11-25)
+
+Plan `analysplaner/2026-11-25-ornamentik-kallkontroll-teckningar.md`, låst före kodningen. Skript `ornamentik/kallkontroll.py`
+och utfall `ornamentik/kallkontroll.json`.
+
+### Urvalet och läsarna
+- **Stenarna:** 140 bevarade stenar som har både en gammal teckning och en planschkod.
+  - Bautils träsnitt 37, Rhezelius 37, Peringskiöld 28 och övriga tecknare 27, enligt urvalets typning.
+- **Läsarna:** två oberoende läsare per teckning. De var lika samstämmiga som på fotona, med kappa 0,68–1,0.
+
+### Teckning mot plansch, alla teckningar samlade (kappa)
+- **Stämmer väl:**
+  - människa eller mask 1,00, extra orm 0,94, fyrfota djur 0,90;
+  - nackflik 0,88, djurhuvud 0,86, koppel 0,86, huvudets vy 0,83, kors 0,81;
+  - flätverk 0,74, antal djur 0,73.
+- **Stämmer måttligt:** svans 0,60 och öga 0,57.
+- **Stämmer inte:** läppflik 0,30 och fötter 0,00 (nästan alltid "inga").
+
+### Enligt regeln får teckningarna läsas för
+djurhuvud, antal djur, huvudets vy, öga, nackflik, svans, koppel, flätverk, fyrfota djur, extra orm och kors. Människa eller
+mask får dessutom läsas från Peringskiöld och övriga tecknare. Läppflik och fötter läses aldrig från teckningar.
+
+### Vad det betyder och inte betyder
+- **Tecknarna återgav rundjurets huvuddrag troget:** om det har huvud, hur huvudet är vänt, flikar i nacken, koppel och
+  flätverk.
+  - Det gäller också Bautils träsnitt, trots att de förenklar formerna.
+  - Detaljerna i läppfliken gick förlorade i återgivningen.
+- **Antalen per typ av teckning är små,** 5–17 jämförbara stenar per fält. För de flesta fält gäller därför det samlade
+  värdet.
+- **Planschfotot är inte facit.** Måttet visar att två återgivningar av samma sten stämmer överens.
+- **Följden:** förlorade stenar som bara är kända från teckningar kan nu få ornamentkoder för de godkända fälten, och
+  koderna märks med källa och tecknare.
