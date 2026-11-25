@@ -345,8 +345,8 @@ def fig_djup(sv):
     h = dp.size[1]
     a2.add_patch(Rectangle((1147 - 290, 2100), 200, 380, fill=False, lw=3, ec=RUST))
     assert h > 2400
-    t1 = ("Planschfotot, två eniga läsare: huvudena sedda ovanifrån, två djur."
-          if sv else "Plate photo, two agreeing readers: heads seen from above, two animals.")
+    t1 = ("Planschfotot, två eniga läsare: huvudet sett ovanifrån.\nBåda tog dock svansen för ett andra huvud (fel, rättat i efterhand)."
+          if sv else "Plate photo, two agreeing readers: head seen from above.\nBoth, however, took the tail for a second head (an error, corrected afterwards).")
     t2 = ("Djupbilden, två eniga läsare: huvudet i profil,\nmot ovanifrån på planschfotot.\nI provet höll djupbilden bara för ”extra orm”."
           if sv else "Depth image, two agreeing readers: head in profile,\nagainst from above on the plate photo.\nIn the test the depth image held only for 'extra serpent'.")
     fig.text(0.02, 0.17, t1, fontsize=12.5, color=INK, va="top")

@@ -1,0 +1,6 @@
+{
+ "_om": "Rättelser av konsensuskoder som en människa har gjort i efterhand. De låsta analyserna (slutprov 3, Gräslund 1, skrev och ritade, budskap och bild) kördes på de ursprungliga koderna och ändras inte; rättelserna gäller registret framåt och redovisas i rapporten.",
+ "Sö 112": {"källa": "SRI-plansch", "fält": {"antal_djur": {"från": "2", "till": "1"}},
+            "motivering": "Bandets två ändar är huvud och svans på samma djur. Båda läsarna tog svansens kluvna ände för ett andra huvud ('två ormhuvuden sedda ovanifrån').",
+            "rättad_av": "Viktor Kvant", "datum": "2026-11-25"}
+}
