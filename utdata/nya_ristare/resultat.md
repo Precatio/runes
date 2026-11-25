@@ -332,3 +332,17 @@ mask får dessutom läsas från Peringskiöld och övriga tecknare. Läppflik oc
 - **Planschfotot är inte facit.** Måttet visar att två återgivningar av samma sten stämmer överens.
 - **Följden:** förlorade stenar som bara är kända från teckningar kan nu få ornamentkoder för de godkända fälten, och
   koderna märks med källa och tecknare.
+
+## 12. Förlorade stenar kodade ur teckningar (2026-11-25)
+- **Underlaget:** 200 förlorade stenar med en teckning från 1500- till 1700-talet.
+  - Bautil i första hand, därefter Peringskiöld, Rhezelius och övriga i SRI:s textband.
+- **Läsarna:** två läsare per sten. Kappa var 0,67–1,0 för de godkända fälten.
+- **Utfallet:**
+  - 196 teckningar gick att läsa.
+  - **185 stenar fick minst en godkänd kod,** och 167 av dem minst tre.
+  - Per källa: Bautil 135, Peringskiöld 24, Rhezelius 13 och övriga 13.
+  - Per landskap: Uppland 128, Södermanland 17, Småland 16, Öland 7, Västergötland 6, Östergötland 6, Västmanland 3 och
+    Gästrikland 2.
+- **Bara godkända fält:** endast de fält som källkontrollen (§ 11) godkände för respektive typ av teckning ingår.
+  Läppflik och fötter tas aldrig med.
+- **Märkning:** varje kod har källa och tecknare (`forlorade.py`, cachen `orn_koder_forlorade.json`).
