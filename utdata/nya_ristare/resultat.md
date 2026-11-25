@@ -246,3 +246,56 @@ Grundnivån är 13 %. Täckningen vid τ 0,8 är 8,8 % av paren med samma ristar
 - **Den striktare regeln vid omläsningen** infördes efter att oenigheterna setts.
 - **τ valdes** med alla namngivna par, också provdelens stenar med känd ristare.
 - **Referenser:** Jansson 1958 heter "Runstensfynd i kyrkmurar" (Fornvännen 53, s. 241–257). Vitki-versionen är 3.1.0.
+
+## 10. Ornamentiken ur SRI:s planscher (2026-11-24–25): **förbättrar inte grupperna**
+
+Plan `analysplaner/2026-11-24-nya-ristare-ornamentik.md` (sha bec4b16b), låst före jämförelsen med facit. Andra användningen
+av provdelen (en återstår).
+
+### Kodningen
+- **Underlaget:** 1 170 stenar som är avbildade på SRI:s planscher. Bilderna och koderna ligger utanför git.
+- **Läsarna:** två oberoende läsare per sten (Claude Opus), med kodbok v2 (sha 97cf9214) och 468 läsningar.
+  - 64 stenar hade ingen användbar bild.
+  - 981 stenar har tillräckligt med eniga drag för att kunna jämföras, i 56 540 par inom 30 km.
+- **Överensstämmelsen** (Cohens kappa) var hög:
+  - djurhuvud 0,95, huvudets vy 0,93, öga 0,92, koppel 0,91;
+  - läppflik 0,80, flätverk 0,79, nackflik 0,78, fötter 0,76, svans 0,72.
+- **Täckningen** (andel stenar där båda angav ett värde): 0,35–0,62 för huvudets drag.
+- **Strukna enligt regeln:**
+  - `mun` (täckning 0,08);
+  - `huvud_svans` (kappa 0,27);
+  - `kontur` (ingen variation).
+- **Läsarnas stilbedömning** stämmer med Rundatas stilgrupp i 478 av 744 fall (64 %). Den används inte som belägg.
+
+### Grinden på utvecklingsdelen: håller
+- **G1:** ornamentlikheten (överskott mot grannar på samma avstånd) för facitparen ligger i median på percentil 0,67.
+  10 grupper, p = 0,002. Ornamentiken bär alltså en signal om handen.
+- **G2:** M2:s AUC på namngivna par är 0,768, mot 0,764 för M1.
+- **Gränsen:** τ₂ = 0,8, med precision 0,80. M1, räknad med samma kod, ger exakt de prövade grupperna.
+
+### Slutprov 3 (provdelen)
+- **O1, M2 mot M1:** **håller inte.**
+  - Det gäller 25 grupper med minst ett avbildat par.
+  - 19 grupper är oförändrade, 2 blev bättre och 4 sämre.
+  - Medelandelen i samma grupp är 0,359 för M2 mot 0,403 för M1, p = 0,78.
+  - För de onämnda grupperna (7) skiljer sig bara en, vilket är för få för ett prov.
+- **O2, M2 mot grannarna:** håller. 42 grupper, 0,405 mot 0,075, p = 8e-5.
+- **Beskrivande:**
+  - Litteraturens facit 2: 0,472 för M2 mot 0,449 för M1.
+  - Par som granskarna säger har olika händer: 0 av 9 i samma grupp för båda modellerna.
+  - M2 ger 222 grupper (84 utan säker ristare) mot M1:s 228 (95).
+
+### Beslut enligt planen
+**Bara O2 höll.** Ornamentiken förbättrar inte grupperna mätbart, så appen behåller M1 (groups-1).
+
+### Vad det betyder och inte betyder
+- **Ornamentiken skiljer händer** (G1), men det den tillför täcks i stort sett redan av det modellen ser: text, stavning,
+  stilgrupp, korsform och SRI:s ornamentord.
+  - Bara hälften av stenarna är avbildade.
+  - Huvudets detaljer finns på en tredjedel till hälften av dem.
+  - De flesta facitgrupper förändras därför inte alls.
+- **Provet säger inte att ornamentiken saknar värde.**
+  - Koderna är ett nytt material för stilfrågor: målet är att pröva och förfina Gräslunds indelning.
+  - Täckningen av huvudets detaljer kan förbättras: en egen läsning av utsnittet kring varje huvud, ett exempelblad och
+    en tredje läsare som avgör vid oenighet.
+- **Provdelen har en öppning kvar.** Den sparas tills en förbättrad version har visat sig på utvecklingsdelen.

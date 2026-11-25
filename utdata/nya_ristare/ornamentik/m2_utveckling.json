@@ -1,0 +1,189 @@
+{
+ "fält": {
+  "djurhuvud": {
+   "stenar": 1134,
+   "tackning": 0.62,
+   "lika": 0.98,
+   "kappa": 0.95
+  },
+  "antal_djur": {
+   "stenar": 1134,
+   "tackning": 0.48,
+   "lika": 0.94,
+   "kappa": 0.9
+  },
+  "huvud_vy": {
+   "stenar": 1134,
+   "tackning": 0.6,
+   "lika": 0.96,
+   "kappa": 0.93
+  },
+  "oga": {
+   "stenar": 1134,
+   "tackning": 0.52,
+   "lika": 0.95,
+   "kappa": 0.92
+  },
+  "nackflik": {
+   "stenar": 1134,
+   "tackning": 0.38,
+   "lika": 0.92,
+   "kappa": 0.78
+  },
+  "lappflik": {
+   "stenar": 1134,
+   "tackning": 0.35,
+   "lika": 0.94,
+   "kappa": 0.8
+  },
+  "mun": {
+   "stenar": 1134,
+   "tackning": 0.08,
+   "lika": 0.91,
+   "kappa": 0.82
+  },
+  "svans": {
+   "stenar": 1134,
+   "tackning": 0.37,
+   "lika": 0.81,
+   "kappa": 0.72
+  },
+  "fotter": {
+   "stenar": 1134,
+   "tackning": 0.47,
+   "lika": 0.99,
+   "kappa": 0.76
+  },
+  "huvud_svans": {
+   "stenar": 1134,
+   "tackning": 0.2,
+   "lika": 0.8,
+   "kappa": 0.27
+  },
+  "kontur": {
+   "stenar": 1134,
+   "tackning": 0.96,
+   "lika": 1.0,
+   "kappa": null
+  },
+  "koppel": {
+   "stenar": 1134,
+   "tackning": 0.46,
+   "lika": 0.97,
+   "kappa": 0.91
+  },
+  "flatverk": {
+   "stenar": 1134,
+   "tackning": 0.75,
+   "lika": 0.85,
+   "kappa": 0.79
+  },
+  "fyrfota": {
+   "stenar": 1134,
+   "tackning": 0.82,
+   "lika": 1.0,
+   "kappa": 0.97
+  },
+  "orm_extra": {
+   "stenar": 1134,
+   "tackning": 0.62,
+   "lika": 0.98,
+   "kappa": 0.95
+  },
+  "manniska_mask": {
+   "stenar": 1134,
+   "tackning": 0.89,
+   "lika": 1.0,
+   "kappa": 0.98
+  },
+  "kors": {
+   "stenar": 1134,
+   "tackning": 0.79,
+   "lika": 0.99,
+   "kappa": 0.99
+  }
+ },
+ "godkända_fält": [
+  "djurhuvud",
+  "antal_djur",
+  "huvud_vy",
+  "oga",
+  "nackflik",
+  "lappflik",
+  "svans",
+  "fotter",
+  "koppel",
+  "flatverk",
+  "fyrfota",
+  "orm_extra",
+  "manniska_mask",
+  "kors"
+ ],
+ "stenar_med_kod": 981,
+ "G1": {
+  "grupper": 10,
+  "median_percentil": 0.6665225563909775,
+  "p": 0.001953125,
+  "håller": true
+ },
+ "G2": {
+  "auc_M1": 0.7642,
+  "auc_M2": 0.768,
+  "håller": true
+ },
+ "grind_håller": true,
+ "tau2_rutnät": [
+  {
+   "tau": 0.5,
+   "precision": 0.528,
+   "tackning_utv": 0.671
+  },
+  {
+   "tau": 0.55,
+   "precision": 0.583,
+   "tackning_utv": 0.635
+  },
+  {
+   "tau": 0.6,
+   "precision": 0.592,
+   "tackning_utv": 0.565
+  },
+  {
+   "tau": 0.65,
+   "precision": 0.685,
+   "tackning_utv": 0.471
+  },
+  {
+   "tau": 0.7,
+   "precision": 0.713,
+   "tackning_utv": 0.447
+  },
+  {
+   "tau": 0.75,
+   "precision": 0.759,
+   "tackning_utv": 0.424
+  },
+  {
+   "tau": 0.8,
+   "precision": 0.799,
+   "tackning_utv": 0.388
+  },
+  {
+   "tau": 0.85,
+   "precision": 0.773,
+   "tackning_utv": 0.341
+  },
+  {
+   "tau": 0.9,
+   "precision": 0.804,
+   "tackning_utv": 0.235
+  },
+  {
+   "tau": 0.95,
+   "precision": 0.916,
+   "tackning_utv": 0.129
+  }
+ ],
+ "tau2": 0.8,
+ "M1_samma_grupper_som_provat": true
+}

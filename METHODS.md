@@ -3100,6 +3100,13 @@ Källkod: `src/hand_groups.py` (körs i korpusjobbet efter `hand_links`, `<korpu
 `src/stone_overview.py` (fältet `hand_group`), `web/src/components/HandGroups.tsx` (/ristare) och stenprofilen i
 Stenöversikten; test `tests/test_hand_groups.py`. Forskningsskripten, det som prövades: `utdata/nya_ristare/`.
 
+**Ornamentiken prövad, inte införd (2026-11-25).**
+- **Kodningen:** rundjurets drag kodades ur SRI:s planscher för 1 170 stenar, av två oberoende läsare (Claude Opus) med
+  kappa 0,72–0,99 för de 14 fält som används. Läsningarna styrs av `utdata/nya_ristare/ornamentik/`.
+- **Utfallet:** ornamentlikheten skiljer händer på utvecklingsdelen (median percentil 0,67, p = 0,002), men gör inte
+  grupperna bättre i slutprov 3 (plan bec4b16b): 2 grupper bättre, 4 sämre och 19 oförändrade.
+- **Följden:** appen behåller M1. Koderna finns i cachen för senare stilstudier.
+
 **Varför.**
 - Tre försök att bilda grupper ur textlikheten (14i) föll mot runologernas grupper:
   - täta kärnor (2026-11-08);
