@@ -45,3 +45,37 @@ Plan `analysplaner/2026-11-25-skrev-och-ritade.md` (sha 7ae43d01), låst före j
 - **Avgränsningen är ändå ett resultat:** samvariationen utöver bygd och stilgrupp är högst omkring 0,05.
 - **P2 kunde inte prövas.** För få signerade ristare har stenar med båda måtten. Ristarnivån kräver fler signerade stenar
   med ornamentkod, till exempel genom huvudsläsningen och de förlorade stenarna.
+
+## Bekräftande prov: följer budskapet bilden? (2026-11-25)
+Plan `analysplaner/2026-11-25-budskap-och-bild.md` (sha 73c2c690), låst före analysen. Skript `budskap_bild.py`, utfall
+`budskap_bild.json`.
+
+### Urvalet
+- **Ett oberoende urval:** 442 stenar som inte ingick i första urvalet.
+  - Planschstenar utan stilgrupp: 274. Förlorade stenar ur teckningar: 132. Gotland, Öland, Hälsingland och Medelpad: 36.
+  - Planen räknade med 456 stenar. Den räkningen tog med fält som inte är godkända. Med bara godkända fält, som planen
+    föreskriver för måttet, blir det 442.
+- **Paren:** 8 536 inom 30 km.
+
+### Utfall
+- **B1: håller.** Budskap (12 kategorier) mot ornamentik ger ρ = 0,227, mot 0,013 vid omblandning inom härad och källa.
+  p = 0,001.
+  - **Per källa:** planscher 0,19 (p = 0,002) och teckningar 0,28 (p = 0,002).
+  - **I samma stilgrupp:** bara 83 par, ρ = 0,16, p = 0,09.
+  - **De språkliga markörerna:** inget samband (0,031, p = 0,15).
+- **Varje kategori utelämnad:** utan `pm_neutral` ("utan religiösa markörer i texten") faller ρ till **0,025**. Övriga
+  kategorier ändrar nästan ingenting (0,226–0,251).
+
+### Utforskande kontroll (inte i planen)
+- **Ornamentiken utan fältet "kors":** budskapet ger ρ = 0,062 (p = 0,007).
+- **Utan både korset och `pm_neutral`:** ρ = 0,040 (p = 0,14).
+
+### Vad det betyder
+- **B1 håller formellt, men sambandet är i huvudsak det kända.** En text med religiösa (kristna) markörer går ihop med ett
+  kors i bilden. När korset tas bort återstår en liten rest, troligen tiden: texter utan religiösa markörer är ofta äldre
+  och har annan stil.
+- **Fyndet i första urvalet var alltså inget nytt samband mellan budskap och bild.** Det är det väntade sambandet mellan tro
+  och kors.
+- **Det är en validering av registret.** Läsarna kodade bara bilden, och deras koder fångar det samband mellan text och
+  bild som borde finnas. Det stärker förtroendet för koderna.
+- **Slutsatsen om skrivsättet står fast.** Stavning och språkdrag följer inte bilden utöver bygd och stilgrupp (P1).

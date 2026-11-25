@@ -1,0 +1,67 @@
+{
+ "plan": "2026-11-25-budskap-och-bild.md",
+ "stenar": 442,
+ "källor": {
+  "utvidgning": 36,
+  "plansch": 274,
+  "teckning": 132
+ },
+ "B1": {
+  "par": 8536,
+  "rho": 0.2266,
+  "omblandning_medel": 0.013,
+  "omblandning_95": 0.0488,
+  "p": 0.001,
+  "håller": true
+ },
+ "beskrivande": {
+  "samma_stilgrupp": {
+   "par": 83,
+   "rho": 0.1622,
+   "omblandning_medel": 0.062,
+   "omblandning_95": 0.1857,
+   "p": 0.094,
+   "håller": false
+  },
+  "per_källa": {
+   "plansch": {
+    "par": 3539,
+    "rho": 0.1855,
+    "omblandning_medel": -0.0097,
+    "omblandning_95": 0.0356,
+    "p": 0.002,
+    "håller": true
+   },
+   "teckning": {
+    "par": 1337,
+    "rho": 0.2849,
+    "omblandning_medel": 0.0319,
+    "omblandning_95": 0.0965,
+    "p": 0.002,
+    "håller": true
+   }
+  },
+  "språkmarkörer": {
+   "par": 8536,
+   "rho": 0.0309,
+   "omblandning_medel": 0.0178,
+   "omblandning_95": 0.0369,
+   "p": 0.152,
+   "håller": false
+  },
+  "utan_kategori": {
+   "cat_minne": 0.2287,
+   "cat_bro_vag": 0.2464,
+   "cat_fard": 0.2299,
+   "cat_arv": 0.2274,
+   "cat_ting": 0.2315,
+   "cat_magisk": 0.2313,
+   "cat_grans": 0.2266,
+   "pm_neutral": 0.0247,
+   "pm_signatur": 0.2508,
+   "pm_bro": 0.2462,
+   "pm_fard": 0.2299,
+   "pm_arv": 0.228
+  }
+ }
+}
