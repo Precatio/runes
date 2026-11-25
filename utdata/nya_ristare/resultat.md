@@ -306,7 +306,8 @@ Plan `analysplaner/2026-11-25-ornamentik-kallkontroll-teckningar.md`, låst för
 och utfall `ornamentik/kallkontroll.json`.
 
 ### Urvalet och läsarna
-- **Stenarna:** 140 bevarade stenar som har både en gammal teckning och en planschkod.
+- **Stenarna:** 129 bevarade stenar som har både en gammal teckning och en planschkod. Urvalet drog 140 teckningar, men en
+  del stenar drogs under flera typer (rättat 2026-11-25).
   - Bautils träsnitt 37, Rhezelius 37, Peringskiöld 28 och övriga tecknare 27, enligt urvalets typning.
 - **Läsarna:** två oberoende läsare per teckning. De var lika samstämmiga som på fotona, med kappa 0,68–1,0.
 
