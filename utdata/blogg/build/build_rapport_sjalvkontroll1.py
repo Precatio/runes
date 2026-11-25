@@ -1,6 +1,6 @@
 """Forskningsrapport (låst mall utdata/rapporter/MALL.md, version 4; Delvis prövat fynd): den första samlade
-självkontrollen, "Fyra runstensfynd prövade mot hundra års invändningar – två står, ett försvagas, ett väntar på
-kartorna" (sv + en; arbetsnamn "Vitki prövar sina egna resultat I"). Planerad publicering 15 december 2026
+självkontrollen, "Fyra runstensfynd mot hundra års invändningar" (sv + en; kort titel enligt Viktor 2026-11-25,
+resultaten står i sammanfattningen; arbetsnamn "Vitki prövar sina egna resultat I"). Planerad publicering 15 december 2026
 (PUBLICERINGSPLAN.md); Viktor publicerar själv, byggaren publicerar aldrig.
 
 Fyra publicerade eller färdigskrivna resultat prövades 2026-11-10 under fem låsta planer, utlösta av invändningar i
@@ -307,6 +307,7 @@ assert (GU0["main"]["grupper_i_grupp"], GU0["main"]["grupper_ensamma"]) == (G_NG
 DES = [GU0["main"]["designeffekt"]] + [GUK[k]["main"]["designeffekt"] for k in ("K1", "K2", "K3a", "K3b")]
 PGU = [GU0["main"]["p"]] + [GUK[k]["main"]["p"] for k in ("K1", "K2", "K3a", "K3b")]
 assert (nf(min(DES), 1), nf(max(DES), 1), nf(min(PGU), 3), nf(max(PGU), 3)) == ("1,6", "1,9", "0,001", "0,007")
+assert 0.5 < 1 / max(DES) and 1 / min(DES) < 0.67  # "materialet väger som ett drygt hälften så stort" (effektivt n = n / DE)
 assert (nf(GU0["halves"]["A"]["p"], 3), nf(GUK["K1"]["halves"]["A"]["p"], 3), nf(GUK["K1"]["halves"]["B"]["p"], 3)) == ("0,055", "0,037", "0,008")
 assert all(min(GUK[k]["halves"]["A"]["p"], GUK[k]["halves"]["B"]["p"]) < 0.05 < max(GUK[k]["halves"]["A"]["p"], GUK[k]["halves"]["B"]["p"]) for k in ("K2", "K3a", "K3b"))
 
@@ -415,8 +416,10 @@ assert IDX["8ec5443b-49ad-4672-93a9-f57450e7a7c7"]["authors"] == ["Söderberg, B
 
 # ---- title, timeline, citation --------------------------------------------------------------------------------------------
 SLUG = "fyra-runstensfynd-mot-hundra-ars-invandningar"
-title = "Fyra runstensfynd prövade mot hundra års invändningar – lerkanten står, gravfälten och österns övervikt försvagas, vägen väntar på kartorna"
-title_en = "Four runestone findings tested against a century of objections – the clay edge stands, the grave fields and the eastern predominance weaken, the road awaits the maps"
+# short noun-phrase titles (Viktor 2026-11-25: report titles are too long); the results stand in the summary
+title = "Fyra runstensfynd mot hundra års invändningar"
+title_en = "Four runestone findings against a century of objections"
+assert len(title.split()) <= 6 and len(title_en.split()) <= 8 and "–" not in title + title_en
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki "
            f"{APP_VERSION}. {SITE}/en/forskningsrapporter/{SLUG}")
 TL_SV = ("österns övervikt mättes under låst plan 2026-10-28; studierna av gravfälten och av "
@@ -431,14 +434,15 @@ assert "*" not in TL_SV + TL_EN
 summary = ("Fyra av projektets resultat om runstenarna prövades under låsta planer mot invändningar ur Fornvännen. "
            f"Stenarna vid lerans kant står. Österns övervikt försvagas: utan de "
            f"{N_ING} Ingvarsstenarna ligger {U_P} procent av platserna i öster, inte {O_P}. Gravfälten försvagas när stenar "
-           "som står tillsammans räknas som en enhet; säkert är sambandet bara för granskade gravfält. Ristningarna vetter mot "
-           "vägen också då, men inte mot de gamla vägarna, och provet mot 1800-talets karta återstår.")
+           "som står tillsammans räknas som en enhet; i båda halvorna av materialet håller sambandet då bara för granskade "
+           "gravfält. Ristningarna vetter mot vägen också då, men mot de gamla vägarna är det inte visat, och provet mot "
+           "1800-talets karta återstår.")
 summary_en = ("Four of the project's results on the runestones were tested under locked plans against objections from "
               "Fornvännen. The stones at the clay edge stand. The eastern "
               f"predominance weakens: without the {N_ING} Ingvarr stones, {U_P} per cent of the places lie in the east, "
-              f"not {O_P}. The grave fields weaken when stones that stand together count as one unit; the association is "
-              "sure only for verified grave fields. The inscriptions face the road also then, but not the old roads, and "
-              "the test against the 19th-century map remains.")
+              f"not {O_P}. The grave fields weaken when stones that stand together count as one unit; in both halves of the "
+              "material the association then holds only for verified grave fields. The inscriptions face the road also "
+              "then, but for the old roads it is not shown, and the test against the 19th-century map remains.")
 CHART_SV, CHART_EN = "Diagram: Vitki, efter", "Chart: Vitki, after"
 
 
@@ -464,11 +468,12 @@ def chart_vag(sv):
     rows.append("# " + ("Riktningen till vägpostens punkt" if sv else "Bearing to the road record's point"))
     for k, lsv, len_ in (("S0", "En rad per sten", "One row per stone"), ("S2", "Jämfört inom län", "Compared within county"),
                          ("S3", "Utan flyttade och omresta stenar", "Without moved and re-erected stones"),
-                         ("S1", "Bara gamla vägar", "Only old roads")):
+                         ("S1", "Bara gamla vägar (håller inte)", "Only old roads (does not hold)")):
         rows.append(f"{'+' if k == 'S0' else ''}{lsv if sv else len_} | {pc(S[k]['andel_inom_45'])} | {S[k]['n']} {'stenar' if sv else 'stones'}")
     rows.append("# " + ("Riktningen till vägens linje" if sv else "Bearing to the road's line"))
     rows.append(f"{'Dagens vägar' if sv else 'Present-day roads'} | {pc(L0['a']['andel_inom_45'])} | {L0['a']['n']} {'stenar' if sv else 'stones'}")
-    rows.append(f"{'Gamla vägar i registret' if sv else 'Old roads in the register'} | {pc(L1['a']['andel_inom_45'])} | {L1['a']['n']} {'stenar' if sv else 'stones'}")
+    # L1 (old roads as lines) failed with groups as units: the plan 2026-11-19 strikes it from the chart
+    assert not L1G["haller"]
     rows.append("# " + ("Om riktningen vore slumpvis" if sv else "If the direction were random"))
     rows.append(f"{'Väntat' if sv else 'Expected'} | 25 | {'en fjärdedel' if sv else 'one quarter'}")
     rows.append(f"Källa: Kulturmiljöregistret (CC0), OpenStreetMap (ODbL), Runor 2020, Rundata (ODbL). {CHART_SV} "
@@ -495,7 +500,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Delvis prövat fynd. Rapportversio
 
 **Metod.** Fem analysplaner låstes den 10 november 2026 innan något räknades, var och en med i förväg bestämda regler för när resultatet står, försvagas eller faller. En sjätte, låst den 19 november, prövade gravfälten och vägen med stenar som står tillsammans som en enhet.
 
-**Resultat.** (1) Utan de {N_ING} Ingvarsstenarna ligger {U_P} % av platserna i öster (95 %-intervall {U_LO}–{U_HI}), mot publicerade {O_P} % ({O_LO}–{O_HI}): försvagat. (2) Grupperna står vid gravfälten i alla fyra prov sten för sten (oddskvoter {G_OR_LO}–{G_OR_HI}); med stenar inom en kilometer som en enhet ({G_GR} stenar, {G_NGROUPS} grupper) håller det i båda halvorna bara för granskade gravfält ({pc(K1['share_grupp'])} mot {pc(K1['share_ensam'])} %): försvagat. (3) Lerkanten håller i alla fem kontroller: bortfallet, åsarna, våtmarken, vattennivån och flyttade stenar. (4) Ristningarna vetter mot vägen också inom län, utan flyttade och omresta stenar och med en sten per grupp (p = {nf(S0G_P, 3)}), men inte mot gamla vägar, varken som punkt ({pc(S1_['andel_inom_45'])} % inom 45 grader, väntat 25, p = {nf(S1_['p'], 2)}) eller som linje (en sten per grupp, p = {nf(L1G_P, 2)}).
+**Resultat.** (1) Utan de {N_ING} Ingvarsstenarna ligger {U_P} % av platserna i öster (95 %-intervall {U_LO}–{U_HI}), mot publicerade {O_P} % ({O_LO}–{O_HI}): försvagat. (2) Grupperna står vid gravfälten i alla fyra prov sten för sten (oddskvoter {G_OR_LO}–{G_OR_HI}); med stenar inom en kilometer som en enhet ({G_GR} stenar, {G_NGROUPS} grupper) håller det i båda halvorna bara för granskade gravfält ({pc(K1['share_grupp'])} mot {pc(K1['share_ensam'])} %): försvagat. (3) Lerkanten håller i alla fem kontroller: bortfallet, åsarna, våtmarken, vattennivån och flyttade stenar. (4) Ristningarna vetter mot vägen också inom län, utan flyttade och omresta stenar och med en sten per grupp (p = {nf(S0G_P, 3)}), men inte säkert mot gamla vägar, varken som punkt ({pc(S1_['andel_inom_45'])} % inom 45 grader, väntat 25, p = {nf(S1_['p'], 2)}) eller som linje (en sten per grupp, p = {nf(L1G_P, 2)}).
 
 **Slutsats.** Lerkanten står som den publicerades. Två resultat måste sägas försiktigare: ungefär hälften av österns övervikt är ett enda tåg, och gravfältssambandet är säkert bara för granskade gravfält. Vägen är ännu inte avgjord.
 
@@ -532,7 +537,7 @@ Runstenarna kommer ur Samnordisk runtextdatabas (Rundata), fryst för analysen d
 
 **4.1 Proven.** *Östandelen* räknas som summan av östliga platser genom summan av östliga och västliga, med 95 %-intervall från bootstrap över stenar (10 000 dragningar). *Gravfälten:* originalets logistiska regression (i grupp eller ensam, landskap, tid, lokal stentäthet) med bara granskade gravfält som utfall (K1: fornlämning, bekräftad i fält, minst en gravform som inte kan förväxlas med röjningsrösen), bara yngre järnålderns former som treudd och kvadratisk stensättning (K2), län i stället för landskap (K3a) och dessutom gravfältstätheten 1–5 km från stenen (K3b). *Lerkanten:* andelen stenar på leran och vid kanten mot slumpplatserna, med intervall från bootstrap över block om 20 km, och en villkorad logistisk regression där varje sten jämförs bara med sina 50 slumpplatser i samma ruta. *Vägen:* medel-cos, medelvärdet av cosinus för vinkeln mellan ristningens riktning och riktningen till vägen (1 rakt mot vägen, 0 åt sidan), mot 9 999 omblandningar av riktningarna mellan stenarna inom landskapet.
 
-**4.2 Korrigering och halvorna.** Gravfältens fyra prov är Holm-korrigerade över varandra och görs i båda halvorna av materialet (socknarna delade så att båda får stenar från samma trakter). Vägarnas linjer korrigeras med Holm över de gamla vägarna och kartan; eftersom kartan inte är prövad används den övre gränsen, två gånger p. Riktningens halvor redovisas beskrivande.
+**4.2 Korrigering och halvorna.** Gravfältens fyra prov är Holm-korrigerade över varandra och görs i båda halvorna av materialet (socknarna delade så att båda får stenar från samma trakter). Vägarnas linjer korrigeras med Holm över de gamla vägarna och kartan; eftersom kartan inte är prövad används den övre gränsen, två gånger p. Riktningens halvor redovisas beskrivande. Med grupperna som enhet (stenar högst 1 km från varandra) räknas gravfältens osäkerhet per grupp och riktningen på en slumpvis sten per grupp.
 
 **4.3 Känslighetsanalyser.** Planernas beskrivande varianter redovisas i 5.
 
@@ -542,14 +547,14 @@ Runstenarna kommer ur Samnordisk runtextdatabas (Rundata), fryst för analysen d
 
 **5.1 Österns övervikt utan Ingvarståget – försvagat.** Sindbæk (2003, s. 180) räknade 96 svenska runstenar som nämner personer som rest österut och skrev att Ingvars tåg ”{Q_SINDBAEK}”. Vi fann {N_ING} Ingvarsstenar bland de {OST_STONES} stenar som nämner en plats i öster, med {int(P1['ingvar_gruppens_platser']['O'])} östliga platser och {int(P1['ingvar_gruppens_platser']['V'])} västlig. Utan dem ligger {U_P} % av platserna i öster ({U_LO}–{U_HI} %), mot {O_P} % ({O_LO}–{O_HI}) med dem: intervallet omfattar hälften, och resultatet är enligt planen försvagat. Ungefär hälften av övervikten, {DROP} av {SURPLUS} procentenheter över hälften, bärs av ett enda tåg. Westins (1941, s. 93) förskjutning mot väster – ”{Q_WESTIN}” – kunde inte prövas: de sena stilgrupperna har bara {P2['platser']['sen']} platser, under planens spärr på 20. Artikeln rättades 10 november 2026; stenarna och jämförelsen med sagorna finns i [Vikingarnas österled – eller bara Ingvars?]({U_SV['osterled-eller-bara-ingvars']}).
 
-**5.2 Grupperna vid gravfälten – försvagas.** Häggström (2002, s. 217) skriver att ”{Q_HAGG}”; vid inventeringen 1983 registrerades ett tydligt gravfält som röjningsröseområde (s. 218). Ekholm (1950, s. 138) fann att gravarna vid Ängby i Lunda var ”{Q_EK_AGE}”. Omkörningen av originalet gav exakt samma tal ({pc(G0['share_grupp'])} mot {pc(G0['share_ensam'])} %, oddskvot {nf(G0['or'], 2)}, p = {nf(G0['p'], 5)}). Av registrets {th(G_ALL)} gravfält är {th(G_V)} ({pc(G_V / G_ALL)} %) granskade och {th(G_Y)} ({pc(G_Y / G_ALL)} %) har yngre järnålderns former. Alla fyra prov står sig:
+**5.2 Grupperna vid gravfälten – försvagas.** Häggström (2002, s. 217) skriver att ”{Q_HAGG}”; vid inventeringen 1983 registrerades ett tydligt gravfält som röjningsröseområde (s. 218). Ekholm (1950, s. 138) fann att gravarna vid Ängby i Lunda var ”{Q_EK_AGE}”. Omkörningen av originalet gav exakt samma tal ({pc(G0['share_grupp'])} mot {pc(G0['share_ensam'])} %, oddskvot {nf(G0['or'], 2)}, p = {nf(G0['p'], 5)}). Av registrets {th(G_ALL)} gravfält är {th(G_V)} ({pc(G_V / G_ALL)} %) granskade och {th(G_Y)} ({pc(G_Y / G_ALL)} %) har yngre järnålderns former. Sten för sten står alla fyra prov:
 - **K1, bara granskade gravfält:** {pc(K1['share_grupp'])} mot {pc(K1['share_ensam'])} %, oddskvot {nf(K1['or'], 2)} [{nf(K1['lo'], 2)}–{nf(K1['hi'], 2)}], Holm-p {nf(GT['K1']['p_holm'] * 1e5, 1)}·10⁻⁵; halvorna {nf(GT['K1']['halves']['A']['or'], 2)} och {nf(GT['K1']['halves']['B']['or'], 2)}.
 - **K2, bara yngre järnålderns former:** {pc(K2['share_grupp'])} mot {pc(K2['share_ensam'])} %, oddskvot {nf(K2['or'], 2)}, Holm-p {nf(GT['K2']['p_holm'], 4)}; halvorna {nf(GT['K2']['halves']['A']['or'], 2)} och {nf(GT['K2']['halves']['B']['or'], 2)}.
 - **K3a, län i stället för landskap:** oddskvot {nf(K3A['or'], 2)}, Holm-p {nf(GT['K3a']['p_holm'], 4)}; halvorna {nf(GT['K3a']['halves']['A']['or'], 2)} och {nf(GT['K3a']['halves']['B']['or'], 2)}.
 - **K3b, dessutom gravfältstätheten 1–5 km:** oddskvot {nf(K3B['or'], 2)}, Holm-p {nf(GT['K3b']['p_holm'], 4)}; halvorna {nf(GT['K3b']['halves']['A']['or'], 2)} och {nf(GT['K3b']['halves']['B']['or'], 2)}.
 
 
-**Med stenar inom en kilometer som en enhet** (klusterrobusta standardfel, designeffekt {nf(min(DES), 1)}–{nf(max(DES), 1)}) är oddskvoterna desamma och p = {nf(min(PGU), 3)}–{nf(max(PGU), 3)} i hela materialet, men bara K1 håller i båda halvorna (p = {nf(GUK['K1']['halves']['A']['p'], 3)} och {nf(GUK['K1']['halves']['B']['p'], 3)}). Originalet ger p = {nf(GU0['halves']['A']['p'], 3)} i halva A. Försvagat.
+**Med stenar inom en kilometer som en enhet** (designeffekt {nf(min(DES), 1)}–{nf(max(DES), 1)}: materialet väger som ett drygt hälften så stort) är oddskvoterna desamma och p = {nf(min(PGU), 3)}–{nf(max(PGU), 3)} i hela materialet, men bara K1 håller i båda halvorna (p = {nf(GUK['K1']['halves']['A']['p'], 3)} och {nf(GUK['K1']['halves']['B']['p'], 3)}). Originalet ger p = {nf(GU0['halves']['A']['p'], 3)} i halva A. Försvagat.
 
 {chart_grav(True)}
 
@@ -578,9 +583,9 @@ Avsnittet är ofullständigt, och vi drar ingen slutsats om vägen.
 
 För lerkanten och gravfälten är invändningarna rimliga men förklarar inte mönstren. Gravfälten försvagas i stället av att stenar i samma grupp inte är oberoende. För östandelen hade invändningen rätt: Sindbæks ”mere end 25 sten” bär halva övervikten. För vägen står frågan öppen.
 
-Svagheterna, i ordning efter vikt: (1) *Vägen är inte prövad mot vikingatidens vägar.* Ingen av vägarna är daterad, linjeprovet planerades efter att punktprovet fallit, och det föll med grupperna som enhet. (2) *Planen för grupperna låstes efter oplanerade kontrollräkningar.* Lerkantens modell räknar stenarna var för sig; intervallen räknas över block om 20 km. (3) *Gravfälten är odaterade.* Registret har ingen datering, så samtidighet mellan sten och gravfält kan inte visas; yngre järnålderns former omfattar också vendeltid. (4) *Lerkantens mönster var inte förregistrerat,* och att gårdarna flyttade under yngre järnåldern kan inte prövas med våra data. (5) *Vi valde själva invändningarna och hur de mäts.* En annan läsare kunde ha formulerat dem skarpare.
+Svagheterna, i ordning efter vikt: (1) *Vägen är inte prövad mot vikingatidens vägar.* Ingen av vägarna är daterad, linjeprovet planerades efter att punktprovet fallit, och det föll med grupperna som enhet. (2) *Planen för grupperna låstes efter oplanerade kontrollräkningar,* och lerkanten prövades inte med grupper: modellen i K2 och K3 räknar stenarna var för sig. (3) *Gravfälten är odaterade.* Registret har ingen datering, så samtidighet mellan sten och gravfält kan inte visas; yngre järnålderns former omfattar också vendeltid. (4) *Lerkantens mönster var inte förregistrerat,* och att gårdarna flyttade under yngre järnåldern kan inte prövas med våra data. (5) *Vi valde själva invändningarna och hur de mäts.* En annan läsare kunde ha formulerat dem skarpare.
 
-Gravfältsfyndet faller om ett daterat urval visar att grupperna inte står vid samtida gravfält oftare än ensamma stenar, eller om sambandet inte håller med grupperna som enhet; lerkanten om gårdarnas lägen vid tiden visar att kanten bara är där gårdarna flyttade; vägfyndet om också 1800-talets vägar på kartan inte drar ristningarna till sig.
+Gravfältsfyndet faller om ett daterat urval visar att grupperna inte står vid samtida gravfält oftare än ensamma stenar; lerkanten om gårdarnas lägen vid tiden visar att kanten bara är där gårdarna flyttade; vägfyndet om också 1800-talets vägar på kartan inte drar ristningarna till sig.
 
 ## 7. Slutsats
 
@@ -639,7 +644,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Partially tested finding. R
 
 **Method.** Five analysis plans were locked on 10 November 2026 before anything was computed, each with rules fixed in advance for when the result stands, weakens or falls. A sixth, locked on 19 November, tested the grave fields and the road with stones that stand together as one unit.
 
-**Results.** (1) Without the {N_ING} Ingvarr stones, {U_P}% of the places lie in the east (95% interval {U_LO}–{U_HI}), against the published {O_P}% ({O_LO}–{O_HI}): weakened. (2) The groups stand at the grave fields in all four tests stone by stone (odds ratios {G_OR_LO_EN}–{G_OR_HI_EN}); with stones within one kilometre as one unit ({G_GR} stones, {G_NGROUPS} groups) it holds in both halves only for verified grave fields ({pc(K1['share_grupp'])} against {pc(K1['share_ensam'])}%): weakened. (3) The clay edge holds in all five checks: the losses, the eskers, the wet ground, the water level and moved stones. (4) The inscriptions face the road also within counties, without moved and re-erected stones and with one stone per group (p = {nf(S0G_P, 3, True)}), but not old roads, neither as a point ({pc(S1_['andel_inom_45'])}% within 45 degrees, 25 expected, p = {nf(S1_['p'], 2, True)}) nor as a line (one stone per group, p = {nf(L1G_P, 2, True)}).
+**Results.** (1) Without the {N_ING} Ingvarr stones, {U_P}% of the places lie in the east (95% interval {U_LO}–{U_HI}), against the published {O_P}% ({O_LO}–{O_HI}): weakened. (2) The groups stand at the grave fields in all four tests stone by stone (odds ratios {G_OR_LO_EN}–{G_OR_HI_EN}); with stones within one kilometre as one unit ({G_GR} stones, {G_NGROUPS} groups) it holds in both halves only for verified grave fields ({pc(K1['share_grupp'])} against {pc(K1['share_ensam'])}%): weakened. (3) The clay edge holds in all five checks: the losses, the eskers, the wet ground, the water level and moved stones. (4) The inscriptions face the road also within counties, without moved and re-erected stones and with one stone per group (p = {nf(S0G_P, 3, True)}), but not with confidence old roads, neither as a point ({pc(S1_['andel_inom_45'])}% within 45 degrees, 25 expected, p = {nf(S1_['p'], 2, True)}) nor as a line (one stone per group, p = {nf(L1G_P, 2, True)}).
 
 **Conclusion.** The clay edge stands as published. Two results must be stated more cautiously: about half of the eastern predominance is a single expedition, and the grave-field association is sure only for verified grave fields. The road is not yet decided.
 
@@ -676,7 +681,7 @@ The runestones come from the Scandinavian Runic-text Database (Rundata), frozen 
 
 **4.1 The tests.** *The east share* is the sum of eastern places divided by the sum of eastern and western, with a 95% interval from a bootstrap over stones (10,000 draws). *The grave fields:* the original's logistic regression (group or alone, province, period, local stone density) with only verified grave fields as outcome (K1: ancient monument, confirmed in the field, at least one grave form that cannot be confused with clearance cairns), only Late Iron Age forms such as tripartite and square stone settings (K2), county instead of province (K3a), and in addition the grave-field density 1–5 km from the stone (K3b). *The clay edge:* the share of stones on the clay and at the edge against the random places, with intervals from a bootstrap over 20 km blocks, and a conditional logistic regression in which each stone is compared only with its own 50 random places in the same cell. *The road:* mean cos, the mean cosine of the angle between the inscription's direction and the direction to the road (1 straight at the road, 0 to the side), against 9,999 shuffles of the directions between the stones within the province.
 
-**4.2 Correction and the halves.** The four grave-field tests are Holm-corrected over each other and run in both halves of the material (the parishes split so that both halves get stones from the same districts). The road lines are corrected with Holm over the old roads and the map; since the map is not tested, the upper bound, twice p, is used. The halves for the direction are reported descriptively.
+**4.2 Correction and the halves.** The four grave-field tests are Holm-corrected over each other and run in both halves of the material (the parishes split so that both halves get stones from the same districts). The road lines are corrected with Holm over the old roads and the map; since the map is not tested, the upper bound, twice p, is used. The halves for the direction are reported descriptively. With groups as units (stones at most 1 km from each other), the grave fields' uncertainty is computed per group and the direction on one random stone per group.
 
 **4.3 Sensitivity analyses.** The plans' descriptive variants are reported in 5.
 
@@ -686,14 +691,14 @@ The runestones come from the Scandinavian Runic-text Database (Rundata), frozen 
 
 **5.1 The eastern predominance without the Ingvarr expedition – weakened.** Sindbæk (2003, p. 180) counted 96 Swedish runestones mentioning people who had travelled east and wrote that Ingvarr's expedition “{Q_SINDBAEK}” ('alone accounts for more than 25 stones'). We found {N_ING} Ingvarr stones among the {OST_STONES} stones naming a place in the east, with {int(P1['ingvar_gruppens_platser']['O'])} eastern places and {int(P1['ingvar_gruppens_platser']['V'])} western. Without them, {U_P}% of the places lie in the east ({U_LO}–{U_HI}%), against {O_P}% ({O_LO}–{O_HI}) with them: the interval includes one half, and by the plan the result is weakened. About half of the predominance, {DROP} of the {SURPLUS} percentage points above one half, is carried by a single expedition. Westin's (1941, p. 93) westward shift – “{Q_WESTIN}” ('Towards the end of the Viking Age, however, a shift sets in') – could not be tested: the late style groups have only {P2['platser']['sen']} places, below the plan's threshold of 20. The article was corrected on 10 November 2026; the stones and the comparison with the sagas are in [The Vikings' road east – or just Ingvarr's?]({U_EN['osterled-eller-bara-ingvars']}).
 
-**5.2 The groups at the grave fields – weakens.** Häggström (2002, p. 217) writes that “{Q_HAGG}” ('it is at times exceedingly difficult to tell what are graves and what are clearance cairns'), and gives an example where a clear grave field was registered as a clearance-cairn area in the 1983 survey (p. 218). Ekholm (1950, p. 138) found the graves at Ängby in Lunda to be “{Q_EK_AGE}” ('nearly a millennium older than the runestone'). The rerun of the original gave exactly the same figures ({pc(G0['share_grupp'])} against {pc(G0['share_ensam'])}%, odds ratio {nf(G0['or'], 2, True)}, p = {nf(G0['p'], 5, True)}). Of the register's {th(G_ALL, True)} grave fields, {th(G_V, True)} ({pc(G_V / G_ALL)}%) are verified and {th(G_Y, True)} ({pc(G_Y / G_ALL)}%) have Late Iron Age forms. All four tests stand:
+**5.2 The groups at the grave fields – weakens.** Häggström (2002, p. 217) writes that “{Q_HAGG}” ('it is at times exceedingly difficult to tell what are graves and what are clearance cairns'), and gives an example where a clear grave field was registered as a clearance-cairn area in the 1983 survey (p. 218). Ekholm (1950, p. 138) found the graves at Ängby in Lunda to be “{Q_EK_AGE}” ('nearly a millennium older than the runestone'). The rerun of the original gave exactly the same figures ({pc(G0['share_grupp'])} against {pc(G0['share_ensam'])}%, odds ratio {nf(G0['or'], 2, True)}, p = {nf(G0['p'], 5, True)}). Of the register's {th(G_ALL, True)} grave fields, {th(G_V, True)} ({pc(G_V / G_ALL)}%) are verified and {th(G_Y, True)} ({pc(G_Y / G_ALL)}%) have Late Iron Age forms. Stone by stone, all four tests stand:
 - **K1, only verified grave fields:** {pc(K1['share_grupp'])} against {pc(K1['share_ensam'])}%, odds ratio {nf(K1['or'], 2, True)} [{nf(K1['lo'], 2, True)}–{nf(K1['hi'], 2, True)}], Holm p {nf(GT['K1']['p_holm'] * 1e5, 1, True)}·10⁻⁵; halves {nf(GT['K1']['halves']['A']['or'], 2, True)} and {nf(GT['K1']['halves']['B']['or'], 2, True)}.
 - **K2, only Late Iron Age forms:** {pc(K2['share_grupp'])} against {pc(K2['share_ensam'])}%, odds ratio {nf(K2['or'], 2, True)}, Holm p {nf(GT['K2']['p_holm'], 4, True)}; halves {nf(GT['K2']['halves']['A']['or'], 2, True)} and {nf(GT['K2']['halves']['B']['or'], 2, True)}.
 - **K3a, county instead of province:** odds ratio {nf(K3A['or'], 2, True)}, Holm p {nf(GT['K3a']['p_holm'], 4, True)}; halves {nf(GT['K3a']['halves']['A']['or'], 2, True)} and {nf(GT['K3a']['halves']['B']['or'], 2, True)}.
 - **K3b, also the grave-field density 1–5 km:** odds ratio {nf(K3B['or'], 2, True)}, Holm p {nf(GT['K3b']['p_holm'], 4, True)}; halves {nf(GT['K3b']['halves']['A']['or'], 2, True)} and {nf(GT['K3b']['halves']['B']['or'], 2, True)}.
 
 
-**With stones within one kilometre as one unit** (cluster-robust standard errors, design effect {nf(min(DES), 1, True)}–{nf(max(DES), 1, True)}) the odds ratios are the same and p = {nf(min(PGU), 3, True)}–{nf(max(PGU), 3, True)} in the whole material, but only K1 holds in both halves (p = {nf(GUK['K1']['halves']['A']['p'], 3, True)} and {nf(GUK['K1']['halves']['B']['p'], 3, True)}). The original gives p = {nf(GU0['halves']['A']['p'], 3, True)} in half A. Weakened.
+**With stones within one kilometre as one unit** (design effect {nf(min(DES), 1, True)}–{nf(max(DES), 1, True)}: the material weighs like one just over half as large) the odds ratios are the same and p = {nf(min(PGU), 3, True)}–{nf(max(PGU), 3, True)} in the whole material, but only K1 holds in both halves (p = {nf(GUK['K1']['halves']['A']['p'], 3, True)} and {nf(GUK['K1']['halves']['B']['p'], 3, True)}). The original gives p = {nf(GU0['halves']['A']['p'], 3, True)} in half A. Weakened.
 
 {chart_grav(False)}
 
@@ -722,9 +727,9 @@ The section is incomplete, and we draw no conclusion about the road.
 
 For the clay edge and the grave fields the objections are reasonable but do not explain the patterns. The grave fields weaken instead because stones in the same group are not independent. For the east share the objection was right: Sindbæk's “mere end 25 sten” carries half the predominance. For the road the question remains open.
 
-The weaknesses, in order of weight: (1) *The road is not tested against the roads of the Viking Age.* None of the roads is dated, the line test was planned after the point test had failed, and it fell with groups as units. (2) *The plan for the groups was locked after unplanned checks.* The clay-edge model counts the stones one by one; the intervals are computed over 20 km blocks. (3) *The grave fields are undated.* The register has no dating, so contemporaneity of stone and grave field cannot be shown; the Late Iron Age forms also include the Vendel period. (4) *The clay-edge pattern was not pre-registered,* and that farms moved during the Late Iron Age cannot be tested with our data. (5) *We chose the objections and how to measure them ourselves.* Another reader could have framed them more sharply.
+The weaknesses, in order of weight: (1) *The road is not tested against the roads of the Viking Age.* None of the roads is dated, the line test was planned after the point test had failed, and it fell with groups as units. (2) *The plan for the groups was locked after unplanned checks,* and the clay edge was not tested with groups: the model in K2 and K3 counts the stones one by one. (3) *The grave fields are undated.* The register has no dating, so contemporaneity of stone and grave field cannot be shown; the Late Iron Age forms also include the Vendel period. (4) *The clay-edge pattern was not pre-registered,* and that farms moved during the Late Iron Age cannot be tested with our data. (5) *We chose the objections and how to measure them ourselves.* Another reader could have framed them more sharply.
 
-The grave-field finding falls if a dated sample shows that the groups do not stand at contemporary grave fields more often than lone stones, or if the association does not hold with the groups as units; the clay edge if the farms' sites of the time show that the edge is only where the farms moved; the road finding if the 19th-century roads on the map do not draw the inscriptions either.
+The grave-field finding falls if a dated sample shows that the groups do not stand at contemporary grave fields more often than lone stones; the clay edge if the farms' sites of the time show that the edge is only where the farms moved; the road finding if the 19th-century roads on the map do not draw the inscriptions either.
 
 ## 7. Conclusion
 
@@ -794,6 +799,10 @@ for b, lang in ((body, "sv"), (body_en, "en")):
               URL_GUST, URL_SKOG, URL_LINDQ28):
         assert u in b, u
 assert "Vägen håller" not in body and "the road holds" not in body_en.lower()
+# the short title carries no result, so the summary must carry all four verdicts (the old title's content)
+assert all(x in summary for x in ("lerans kant står", "Österns övervikt försvagas", "Gravfälten försvagas", "inte visat", "återstår"))
+assert all(x in summary_en for x in ("clay edge stand", "predominance weakens", "grave fields weaken", "not shown", "remains"))
+assert "Gamla vägar i registret" not in body and "Old roads in the register" not in body_en  # L1 struck from the chart
 assert body.split("\n", 1)[0].startswith(f"*Viktor Kvant, oberoende forskare. Delvis prövat fynd. Rapportversion 1, {TODAY}. Tidslinje:")
 assert body_en.split("\n", 1)[0].startswith(f"*Viktor Kvant, independent researcher. Partially tested finding. Report version 1, {TODAY}. Timeline:")
 # the abstract opens with what is not tested (mallen: nivå 2)

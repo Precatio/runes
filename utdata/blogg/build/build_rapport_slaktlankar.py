@@ -41,11 +41,15 @@ assert S1["n_stones"] == 2320 and not S1["M1_holds"]
 assert (M0["n_sure"], M0["W1"]["hit"], M0["W1"]["n_stones"], M0["W2"]["hit"], M0["W2"]["n_links"], M0["J"]["sure"]) == (23, 34, 202, 19, 21, 0)
 assert (M1["n_sure"], M1["W1"]["hit"], M1["W2"]["hit"], M1["W2"]["n_links"], M1["J"]["sure"], M1["K"]["share"]) == (47, 69, 42, 45, 1, 0.0)
 assert (M2["n_sure"], M2["W1"]["hit"], M2["W2"]["hit"], M2["W2"]["n_links"], M2["J"]["sure"]) == (59, 80, 54, 57, 6)
+assert M2["J"]["passed"] is False  # granskning 2026-11-25: M2 too fails step 1's Jarlabanke condition – said in section 2
 assert (pc(M0["W1"]["share"]), pc(M1["W1"]["share"]), pc(M2["W1"]["share"]), pc(M2["W2"]["share"])) == (17, 34, 40, 95)
 # ---- the blind hand test ----------------------------------------------------------------------------------------------
 HP = H["primary"]
 assert H["verdict"] == "inte avgörande" and (HP["k"]["ny"], HP["k"]["känd"], HP["k"]["namn"]) == (5, 3, 3)
 assert 0.0035 < HP["fisher_p"] < 0.0037 and H["per_group"]["namn"] == {"N": 6, "?": 6, "J": 3}
+HS = H["sensitivity_J_or_unsure"]  # granskning 2026-11-25: the plan's sensitivity (J and ? together) is now reported in 5.1
+assert (HS["k"]["ny"], HS["k"]["känd"], HS["k"]["namn"]) == (5, 5, 9) and f"{HS['fisher_p']:.2f}" == "0.13"
+P_SV, PS_SV = f"{HP['fisher_p']:.4f}".replace(".", ","), f"{HS['fisher_p']:.2f}".replace(".", ",")  # Swedish decimal comma
 # ---- the model in the app (all Nordic runestones; Swedish links counted apart) --------------------------------------
 assert (D["n_stones"], D["n_links"], D["n_sure"], D["n_sure_pooled"], D["n_contradicted"]) == (2633, 420, 70, 28, 2)
 assert [x["n_sure"] for x in D["seeds"]] == [70, 70, 70] and D["n_sure_by_band"] == {"A": 42, "B": 23, "C": 2, "utan koordinater": 3}
@@ -98,14 +102,18 @@ if os.path.isdir(os.path.join(ROOT, ".git")):
         assert not subprocess.run(["git", "-C", ROOT, "status", "--porcelain", "--", _f], capture_output=True, text=True).stdout.strip(), _f
 
 SLUG = "slaktlankar-mellan-runstenar"
-title = "Samma släkt på flera runstenar: en öppen länkmodell återfinner 40 procent av runstenarna i runologernas släktsamband, och 92 procent av dess länkar står i deras förteckning"
-title_en = "The same family on several runestones: an open linking model recovers 40 per cent of the runestones in the runologists' family ties, and 92 per cent of its links stand in their list"
-summary = ("Metodrapport. En modell som länkar runstenar som delar namn, prövad mot slumpen på samma avstånd, hittar på egen hand "
-           "40 procent av de stenar som runologerna har knutit samman, och nio av tio av dess länkar står i deras förteckning. "
+# granskning 2026-11-25: short noun-phrase title (short-report-titles); the results the old title carried are in the summary
+title = "Släktlänkar mellan runstenar"
+title_en = "Family links between runestones"
+summary = (f"Metodrapport. En öppen modell som länkar runstenar som delar namn, prövad mot slumpen på samma avstånd, ger {len(sure_se)} "
+           f"länkar mellan svenska runstenar. Den återfinner {pc(M2['W1']['share'])} procent av de runstenar som runologerna har "
+           f"knutit samman i släktsamband, och {pc(W2A[0] / W2A[1])} procent av dess länkar står i deras förteckning. "
            "Räknesättet valdes efter att ha sett förteckningen, och ett blint handprov var inte avgörande.")
-summary_en = ("Methods report. A model that links runestones sharing names, tested against chance at the same distance, finds on "
-              "its own 40 per cent of the stones that runologists have tied together, and nine in ten of its links stand in their "
-              "list. The way of counting was chosen after seeing the list, and a blind hand test was not decisive.")
+summary_en = (f"Methods report. An open model that links runestones sharing names, tested against chance at the same distance, gives "
+              f"{len(sure_se)} links between Swedish runestones. It recovers {pc(M2['W1']['share'])} per cent of the runestones that "
+              f"runologists have tied together in family ties, and {pc(W2A[0] / W2A[1])} per cent of its links stand in their list. "
+              "The way of counting was chosen after seeing the list, and a blind hand test was not decisive.")
+assert (pc(M2['W1']['share']), pc(W2A[0] / W2A[1])) == (40, 92) and len(title.split()) <= 6 and len(title_en.split()) <= 6
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. "
            f"https://vitkirunor.se/en/forskningsrapporter/{SLUG}")
 
@@ -126,10 +134,10 @@ body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapp
 
 ## Sammanfattning
 
-**Vad som inte är prövat.** Räknesättet med avståndsband valdes efter att ha sett runologernas förteckning, som också är det främsta facit. Det blinda handprov som skulle pröva det på nytt var inte avgörande: bedömaren kände bara igen 3 av 5 kända släktlänkar ur texterna, mot kravet 4.
+**Vad som inte är prövat.** Räknesättet med avståndsband valdes efter att ha sett runologernas förteckning, som också är den främsta måttstocken. Det blinda handprov som skulle pröva det på nytt var inte avgörande: bedömaren kände bara igen 3 av 5 kända släktlänkar ur texterna, mot kravet 4.
 **Bakgrund och syfte.** Samma människor står ofta på flera runstenar. Runologerna har knutit samman sådana stenar för hand (Williams 1990; Peterson 2007), men det finns ingen öppen metod som gör det med angiven osäkerhet och som kan köras om när data ändras. Syftet är att bygga och pröva en sådan.
 **Material.** De {N_SE} svenska vikingatida runstenarna i Samnordisk runtextdatabas med personernas namn, roller och släktband, och Henrik Williams förteckning över inskrifter med genealogiskt samband (1990), avskriven för hand: {W['n_groups']} grupper, {W['n_members']} inskrifter.
-**Metod.** Två stenar är kandidater när de delar minst två ovanliga personnamn eller ett gårdsnamn. Kandidaterna prövas mot en nollmodell där namnen blandas mellan stenarna inom landskapet, och andelen falska länkar räknas för sig i tre avståndsband. Två förregistrerade planer: jämförelsen med Williams och ett blint handprov.
+**Metod.** Två stenar är kandidater när de delar minst två personnamn, varav minst ett ovanligt, eller ett gårdsnamn. Kandidaterna prövas mot en nollmodell där namnen blandas mellan stenarna inom landskapet, och andelen falska länkar räknas för sig i tre avståndsband. Två förregistrerade planer: jämförelsen med Williams och ett blint handprov.
 **Resultat.** Modellen ger {len(sure_se)} länkar mellan svenska runstenar, mot {N_POOLED_SE} med det tidigare räknesättet i samma körning. Den hittar {M2['W1']['hit']} av {M2['W1']['n_stones']} stenar som Williams knyter samman ({pc(M2['W1']['share'])} procent, mot {pc(M0['W1']['share'])} tidigare), och {W2A[0]} av {W2A[1]} ({pc(W2A[0] / W2A[1])} procent) av länkarna står i hans grupper. I handprovet bedömdes alla 5 länkar utanför Williams som samma släkt, mot 3 av 15 namnpar som modellen inte länkar.
 **Slutsats.** Avståndet är nyckeln. Nära varandra delar stenar namn långt oftare än slumpen ger, och där kan en länk bli säker; längre bort än en mil ger slumpen fler namnpar än data, så modellen kan nästan bara länka stenar inom en mil. Modellen återfinner experternas länkar träffsäkert, men nätverket den ger är tunt: {F['n_families']} släkter över {F['stones_in_families']} stenar. Den duger som öppet, prövat underlag, inte som ersättning för den runologiska läsningen.
 
@@ -143,7 +151,7 @@ Sambanden används för datering och för frågor om arv: Birgit Sawyer (2000) l
 
 **Steg 1** (plan låst 2026-11-01, SHA-256 `{SHA['2026-11-01-slaktnatverket-steg1']}…`). Planen jämförde appens tidigare modell med en ny där nollmodellen blandar namnen inom häradet och andelen falska länkar räknas per avståndsband. Den nya skulle minst fördubbla täckningen mot Williams (och nå minst 25 procent), inte bli mer än tio procentenheter mindre träffsäker, länka alla tio par bland Jarlabankes fem stenar och ha högst 5 procent motsägelser. Före låsningen var bara den tidigare modellens resultat kända. Den nya modellen klarade alla villkor utom Jarlabanke (1 av 10 par) och infördes därför inte.
 
-**Efter steg 1.** I känslighetsanalysen gav samma avståndsband med nollmodellen inom landskapet bäst utfall ({M2['n_sure']} länkar, {pc(M2['W1']['share'])} procents täckning, 6 av 10 Jarlabankepar). Det är den modell som rapporten gäller. Den valdes efter att ha sett Williams förteckning och kan därför inte prövas mot den. Petersons anmärkningar kunde inte ersätta den: {PV['n_in_williams']} av hennes {PV['n_pairs']} svenska släktpar står redan hos Williams.
+**Efter steg 1.** I känslighetsanalysen gav samma avståndsband med nollmodellen inom landskapet bäst utfall ({M2['n_sure']} länkar, {pc(M2['W1']['share'])} procents täckning, 6 av 10 Jarlabankepar). Det är den modell som rapporten gäller. Också den skulle ha fallit på planens krav att alla tio Jarlabankepar blir säkra. Den valdes efter att ha sett Williams förteckning och kan därför inte prövas mot den. Petersons anmärkningar kunde inte ersätta den: {PV['n_in_williams']} av hennes {PV['n_pairs']} svenska släktpar står redan hos Williams.
 
 **Steg 1b, det blinda handprovet** (plan låst 2026-11-01, SHA-256 `{SHA['2026-11-01-slaktnatverket-steg1b']}…`). 25 par drogs med ett fast slumpfrö: de 5 länkar utanför Williams förteckning, 5 av hans säkra par och 15 namnpar som modellen inte länkar. De blandades och visades för bedömaren, Viktor Kvant, utan signum. Gränserna: minst 3 av 5 nya bedömda som samma släkt, fler sådana bedömningar bland de nya än bland namnparen (Fishers exakta test, p under 0,05), och minst 4 av 5 kända länkar igenkända. Annars är provet inte avgörande. Svaren checkades in innan nyckeln öppnades.
 
@@ -164,11 +172,11 @@ Sambanden används för datering och för frågor om arv: Birgit Sawyer (2000) l
 
 **4.4 Prövningen.** Täckning: andelen av de runstenar som ingår i ett säkert par hos Williams som modellen knyter till minst en annan sten i samma grupp. Träffsäkerhet: andelen av modellens länkar, i de landskap Williams tar upp, där båda stenarna står i samma grupp hos honom. Det är ett golv, eftersom förteckningen inte är fullständig. Handprovet enligt 2.
 
-**4.5 Avvikelser och rättelser.** Planen för handprovet angav 270 säkra par hos Williams; det är 270 rader och 266 unika par, eftersom några stenar står i två grupper. Bedömningen gjordes i en webbsida med samma par, ordning och texter som formuläret. Inga kodfel rättades efter körningarna. Ett första försök med Fellegi–Sunter-länkning (Fellegi & Sunter 1969), 2026-10-27, fångade bygd snarare än identitet och används inte.
+**4.5 Avvikelser och rättelser.** Planen för handprovet angav 270 säkra par hos Williams; det är 270 rader och 266 unika par, eftersom några stenar står i två grupper. I steg 1:s känslighetsprov utan flyttade stenar togs också försvunna stenar bort, vilket planen inte nämnde. Bedömningen gjordes i en webbsida med samma par, ordning och texter som formuläret. Inga kodfel rättades efter körningarna. Ett första försök med Fellegi–Sunter-länkning (Fellegi & Sunter 1969), 2026-10-27, fångade bygd snarare än identitet och används inte.
 
 ## 5. Resultat
 
-**5.1 Handprovet mot gränserna.** Alla {HP['n']['ny']} nya länkar bedömdes som samma släkt. Av de kända länkarna bedömdes {HP['k']['känd']} som samma släkt och 2 som osäkra. Av namnparen bedömdes {HP['k']['namn']} som samma släkt, 6 som osäkra och 6 som inte samma släkt. Skillnaden mellan de nya länkarna och namnparen ger p = {HP['fisher_p']:.4f} (Fishers exakta test, ensidigt), men villkoret om de kända länkarna uppfylldes inte, så provet är enligt planen inte avgörande. I klartext: varje länk som modellen ensam hittade bedömdes blint som samma släkt, mot var femte av de namnpar den inte länkar, men bedömaren kände bara säkert igen tre av fem länkar som experterna redan gjort. Av kommentarerna framgår varför: i det ena paret (Ög 81 och Ög 84) vilar Williams samband på en ristare, Þorkell, och i det andra (U 136 och U 147) krävs kunskap om Jarlabankes släkt utöver de två texterna.
+**5.1 Handprovet mot gränserna.** Alla {HP['n']['ny']} nya länkar bedömdes som samma släkt. Av de kända länkarna bedömdes {HP['k']['känd']} som samma släkt och 2 som osäkra. Av namnparen bedömdes {HP['k']['namn']} som samma släkt, 6 som osäkra och 6 som inte samma släkt. Skillnaden mellan de nya länkarna och namnparen ger p = {P_SV} (Fishers exakta test, ensidigt), men villkoret om de kända länkarna uppfylldes inte, så provet är enligt planen inte avgörande. Planens känslighetsprov räknar osäkra svar som samma släkt: då blir alla {HS['k']['känd']} kända länkar igenkända, men {HS['k']['namn']} av 15 namnpar räknas också som samma släkt, och skillnaden mot de nya länkarna försvinner (p = {PS_SV}). I klartext: varje länk som modellen ensam hittade bedömdes blint som samma släkt, mot var femte av de namnpar den inte länkar, men bedömaren kände bara säkert igen tre av fem länkar som experterna redan gjort. Av kommentarerna framgår varför: i det ena paret (Ög 81 och Ög 84) vilar Williams samband på en ristare, Þorkell, och i det andra (U 136 och U 147) krävs kunskap om Jarlabankes släkt utöver de två texterna.
 
 **5.2 Mot Williams och per avstånd.** På de svenska runstenarna, med samma material för alla:
 
@@ -204,7 +212,7 @@ Häradsmodellen var för sträng mot stora släkter: sju av Jarlabankes nio sten
 
 **Svagheter, i ordning efter vikt.**
 
-1. **Efterhandsvalet.** Räknesättet valdes efter att ha sett det främsta facit, och det blinda provet var inte avgörande.
+1. **Efterhandsvalet.** Räknesättet valdes efter att ha sett den främsta måttstocken, och det blinda provet var inte avgörande.
 2. **Handprovet är litet** och har en enda bedömare. De fem nya länkarna är för få för en säker andel.
 3. **Facit är inte oberoende av texterna.** Williams samband bygger på samma inskrifter, ibland på sådant modellen inte ser.
 4. **Reglerna som läser personerna** missar en del av släktbanden, och det sänker täckningen.
@@ -213,7 +221,7 @@ Häradsmodellen var för sträng mot stora släkter: sju av Jarlabankes nio sten
 
 ## 7. Slutsats
 
-En öppen modell som prövar namnpar mot slumpen på samma avstånd återfinner {pc(M2['W1']['share'])} procent av runstenarna i runologernas släktsamband, och {pc(W2A[0] / W2A[1])} procent av dess länkar står i deras förteckning. Avståndet är nyckeln. Valet av räknesätt gjordes efter att ha sett facit, och det blinda provet var inte avgörande, så metoden är delvis prövad. Nästa steg är en blind prövning med flera bedömare och fler par.
+En öppen modell som prövar namnpar mot slumpen på samma avstånd återfinner {pc(M2['W1']['share'])} procent av runstenarna i runologernas släktsamband, och {pc(W2A[0] / W2A[1])} procent av dess länkar står i deras förteckning. Avståndet är nyckeln. Valet av räknesätt gjordes efter att ha sett måttstocken, och det blinda provet var inte avgörande, så metoden är delvis prövad. Nästa steg är en blind prövning med flera bedömare och fler par.
 
 ## Data och kod
 
@@ -242,7 +250,7 @@ Analysen är gjord i Vitki {APP_VERSION} ([vitkirunor.se](https://vitkirunor.se)
 - Samma människor står på flera runstenar, och en öppen modell kan hitta dem med en angiven osäkerhet, om namnparen prövas mot slumpen på samma avstånd.
 - Avståndet avgör: nära varandra delar stenar namn långt oftare än slumpen ger, och bara där kan modellen länka säkert.
 - Modellen återfinner experternas länkar träffsäkert men bara en del av dem; den är ett prövbart underlag, inte en ersättning för runologens läsning.
-- Räknesättet valdes efter att ha sett facit, och det blinda provet var inte avgörande; nästa steg är fler bedömare.
+- Räknesättet valdes efter att ha sett måttstocken, och det blinda provet var inte avgörande; nästa steg är fler bedömare.
 :::
 """
 
@@ -253,7 +261,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially t
 **What is not tested.** The way of counting with distance bands was chosen after seeing the runologists' list, which is also the main yardstick. The blind hand test meant to test it anew was not decisive: the judge recognised only 3 of 5 known family links from the texts, against the required 4.
 **Background and aim.** The same people often stand on several runestones. Runologists have tied such stones together by hand (Williams 1990; Peterson 2007), but there is no open method that does so with a stated uncertainty and can be rerun when the data change. The aim is to build and test one.
 **Material.** The 2,320 Swedish Viking-Age runestones in the Scandinavian Runic-text Database with the persons' names, roles and kin ties, and Henrik Williams's list of inscriptions with genealogical ties (1990), transcribed by hand: {W['n_groups']} groups, {W['n_members']} inscriptions.
-**Method.** Two stones are candidates when they share at least two uncommon personal names or a farm name. Candidates are tested against a null model in which the names are shuffled between the stones within the province, and the share of false links is counted separately in three distance bands. Two pre-registered plans: the comparison with Williams and a blind hand test.
+**Method.** Two stones are candidates when they share at least two personal names, at least one of them uncommon, or a farm name. Candidates are tested against a null model in which the names are shuffled between the stones within the province, and the share of false links is counted separately in three distance bands. Two pre-registered plans: the comparison with Williams and a blind hand test.
 **Results.** The model gives {len(sure_se)} links between Swedish runestones, against {N_POOLED_SE} with the earlier way of counting in the same run. It finds {M2['W1']['hit']} of the {M2['W1']['n_stones']} stones that Williams ties together ({pc(M2['W1']['share'])} per cent, against {pc(M0['W1']['share'])} before), and {W2A[0]} of {W2A[1]} ({pc(W2A[0] / W2A[1])} per cent) of the links stand in his groups. In the hand test all 5 links outside Williams were judged the same family, against 3 of 15 name pairs the model does not link.
 **Conclusion.** Distance is the key. Close together, stones share names far more often than chance gives, and there a link can become sure; beyond ten kilometres chance gives more name pairs than the data, so the model can link almost only stones within ten kilometres. The model recovers the experts' links accurately, but the network it gives is thin: {F['n_families']} families across {F['stones_in_families']} stones. It serves as open, tested groundwork, not as a replacement for runological reading.
 
@@ -267,7 +275,7 @@ The ties are used for dating and for questions of inheritance: Birgit Sawyer (20
 
 **Step 1** (plan locked 2026-11-01, SHA-256 `{SHA['2026-11-01-slaktnatverket-steg1']}…`). The plan compared the app's earlier model with a new one in which the null model shuffles the names within the hundred (härad) and the share of false links is counted per distance band. The new one had to at least double the coverage against Williams (and reach at least 25 per cent), not lose more than ten percentage points of precision, link all ten pairs among Jarlabanke's five stones and have at most 5 per cent contradictions. Before the lock only the earlier model's results were known. The new model met every condition except Jarlabanke (1 of 10 pairs) and was therefore not introduced.
 
-**After step 1.** In the sensitivity analysis the same distance bands with the null model within the province did best ({M2['n_sure']} links, {pc(M2['W1']['share'])} per cent coverage, 6 of 10 Jarlabanke pairs). That is the model this report concerns. It was chosen after seeing Williams's list and cannot therefore be tested against it. Peterson's notes could not replace it: {PV['n_in_williams']} of her {PV['n_pairs']} Swedish family pairs already stand in Williams.
+**After step 1.** In the sensitivity analysis the same distance bands with the null model within the province did best ({M2['n_sure']} links, {pc(M2['W1']['share'])} per cent coverage, 6 of 10 Jarlabanke pairs). That is the model this report concerns. It too would have failed the plan's demand that all ten Jarlabanke pairs become sure. It was chosen after seeing Williams's list and cannot therefore be tested against it. Peterson's notes could not replace it: {PV['n_in_williams']} of her {PV['n_pairs']} Swedish family pairs already stand in Williams.
 
 **Step 1b, the blind hand test** (plan locked 2026-11-01, SHA-256 `{SHA['2026-11-01-slaktnatverket-steg1b']}…`). 25 pairs were drawn with a fixed seed: the 5 links outside Williams's list, 5 of his sure pairs and 15 name pairs the model does not link. They were shuffled and shown to the judge, Viktor Kvant, without signa. The limits: at least 3 of 5 new links judged the same family, more such judgements among the new than among the name pairs (Fisher's exact test, p below 0.05), and at least 4 of 5 known links recognised. Otherwise the test is not decisive. The answers were committed before the key was opened.
 
@@ -288,11 +296,11 @@ The ties are used for dating and for questions of inheritance: Birgit Sawyer (20
 
 **4.4 The tests.** Coverage: the share of the runestones in a sure Williams pair that the model ties to at least one other stone of the same group. Precision: the share of the model's links, in the provinces Williams covers, where both stones stand in the same group of his. It is a floor, since the list is not complete. The hand test as in 2.
 
-**4.5 Deviations and corrections.** The hand-test plan stated 270 sure pairs in Williams; these are 270 rows and 266 unique pairs, since a few stones stand in two groups. The judging was done in a web page with the same pairs, order and texts as the form. No code errors were corrected after the runs. A first attempt with Fellegi–Sunter linkage (Fellegi & Sunter 1969), 2026-10-27, captured district rather than identity and is not used.
+**4.5 Deviations and corrections.** The hand-test plan stated 270 sure pairs in Williams; these are 270 rows and 266 unique pairs, since a few stones stand in two groups. In step 1's sensitivity test without moved stones, lost stones were also removed, which the plan did not mention. The judging was done in a web page with the same pairs, order and texts as the form. No code errors were corrected after the runs. A first attempt with Fellegi–Sunter linkage (Fellegi & Sunter 1969), 2026-10-27, captured district rather than identity and is not used.
 
 ## 5. Results
 
-**5.1 The hand test against the limits.** All {HP['n']['ny']} new links were judged the same family. Of the known links {HP['k']['känd']} were judged the same family and 2 unsure. Of the name pairs {HP['k']['namn']} were judged the same family, 6 unsure and 6 not the same family. The difference between the new links and the name pairs gives p = {HP['fisher_p']:.4f} (Fisher's exact test, one-sided), but the condition on the known links was not met, so by the plan the test is not decisive. In plain words: every link the model found on its own was judged blind as the same family, against one in five of the name pairs it does not link, but the judge recognised for certain only three of five links the experts had already made. The comments show why: in one pair (Ög 81 and Ög 84) Williams's tie rests on a carver, Þorkell, and in the other (U 136 and U 147) knowledge of Jarlabanke's family beyond the two texts is needed.
+**5.1 The hand test against the limits.** All {HP['n']['ny']} new links were judged the same family. Of the known links {HP['k']['känd']} were judged the same family and 2 unsure. Of the name pairs {HP['k']['namn']} were judged the same family, 6 unsure and 6 not the same family. The difference between the new links and the name pairs gives p = {HP['fisher_p']:.4f} (Fisher's exact test, one-sided), but the condition on the known links was not met, so by the plan the test is not decisive. The plan's sensitivity test counts unsure answers as the same family: then all {HS['k']['känd']} known links are recognised, but {HS['k']['namn']} of 15 name pairs also count as the same family, and the difference from the new links disappears (p = {HS['fisher_p']:.2f}). In plain words: every link the model found on its own was judged blind as the same family, against one in five of the name pairs it does not link, but the judge recognised for certain only three of five links the experts had already made. The comments show why: in one pair (Ög 81 and Ög 84) Williams's tie rests on a carver, Þorkell, and in the other (U 136 and U 147) knowledge of Jarlabanke's family beyond the two texts is needed.
 
 **5.2 Against Williams and by distance.** On the Swedish runestones, with the same material for all:
 
@@ -378,6 +386,8 @@ for b in (body, body_en):
     head = b.split("## Data")[0]
     bad = [m for m in re.findall(r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|Vitkis|Vitki's|\bappen\b|`[^`]*/[^`]*`|METHODS", head)]
     assert not bad, bad
+assert "facit" not in body, "facit är internt ord (MALL)"  # granskning 2026-11-25
+assert 1500 <= len(body.split("## Data")[0].split()) <= 3000, "MALL: 1 500–3 000 ord svensk prosa"
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en
 assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 1, 2026-11-01. Tidslinje: ")

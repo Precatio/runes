@@ -1,7 +1,8 @@
 """Forskningsrapport, metodrapport (låst mall utdata/rapporter/MALL.md, version 4; Metodrapport, fullt prövad):
 "Grupper av runstenar med samma hand, också utan namn" (sv + en). Planerna analysplaner/2026-11-23-nya-ristare-program.md
 (f5ce4fe7), …-slutprov-1.md (081bf667), …-slutprov-2-litteraturen.md (706be174) och 2026-11-24-nya-ristare-3d.md
-(ffb9b051); resultaten i utdata/nya_ristare/. Alla siffror asserteras mot filerna.
+(ffb9b051); resultaten i utdata/nya_ristare/. Uppföljningen 2026-11-24-nya-ristare-ornamentik.md (bec4b16b, slutprov 3,
+provdelens andra öppning) nämns i slutsatsen. Alla siffror asserteras mot filerna.
     ../../../.venv/bin/python build_rapport_nya_ristare.py [--write | --update DOC]"""
 import datetime as dt
 import hashlib
@@ -19,11 +20,12 @@ assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().
 FP = "510ebfb3acc9a229"
 APP_VERSION = "3.1.0"
 REPORT_VERSION = 1
-TODAY = "2026-11-24"
+TODAY = "2026-11-25"
 D = os.path.join(ROOT, "utdata", "nya_ristare")
 J = lambda f: json.load(open(os.path.join(D, f), encoding="utf-8"))  # noqa: E731
 PLANS = {"program": ("2026-11-23-nya-ristare-program.md", "f5ce4fe7"), "s1": ("2026-11-23-nya-ristare-slutprov-1.md", "081bf667"),
-         "s2": ("2026-11-23-nya-ristare-slutprov-2-litteraturen.md", "706be174"), "3d": ("2026-11-24-nya-ristare-3d.md", "ffb9b051")}
+         "s2": ("2026-11-23-nya-ristare-slutprov-2-litteraturen.md", "706be174"), "3d": ("2026-11-24-nya-ristare-3d.md", "ffb9b051"),
+         "orn": ("2026-11-24-nya-ristare-ornamentik.md", "bec4b16b")}
 SHA = {}
 for k, (f, pre) in PLANS.items():
     h = hashlib.sha256(open(os.path.join(ROOT, "analysplaner", f), "rb").read()).hexdigest()
@@ -91,7 +93,12 @@ assert G052["stenar"] == ["Sö 131", "Sö 134", "Sö 137", "Sö 319", "Sö 367",
 DEL = json.load(open(os.path.join(D, "delning.json"), encoding="utf-8"))
 assert len(DEL["grupper"]) == 118 and Counter(g["del"] for g in DEL["grupper"]) == {"U": 59, "P": 59}
 LOG = open(os.path.join(D, "provdelen_logg.md"), encoding="utf-8").read()
-assert len([l for l in LOG.splitlines() if l.startswith("- ")]) == 1  # provdelen öppnad en gång
+LOGR = [l for l in LOG.splitlines() if l.startswith("- ")]
+assert len(LOGR) == 2 and "slutprov 1" in LOGR[0] and "slutprov 3" in LOGR[1]  # provdelen öppnad två gånger: S1, sedan ornamentiken
+S3 = json.load(open(os.path.join(D, "ornamentik", "slutprov3.json"), encoding="utf-8"))
+assert S3["plan"] == PLANS["orn"][0] and not S3["O1"]["håller"] and S3["O2"]["håller"]  # ornamentiken förbättrar inte grupperna
+assert (S3["O1"]["grupper"], S3["O1"]["bättre"], S3["O1"]["sämre"], round(S3["O1"]["p"], 2)) == (25, 2, 4, 0.78)
+assert (S3["beskrivande"]["grupper_M1"], S3["beskrivande"]["grupper_utan_säker_M1"]) == (len(GRP), 95)  # appen behåller M1
 HG = json.load(open(os.path.join(ROOT, "data", "cache", "r", "corpus", FP, "hand_groups.json"), encoding="utf-8")) \
     if os.path.exists(os.path.join(ROOT, "data", "cache", "r", "corpus", FP, "hand_groups.json")) else None
 if HG:
@@ -118,10 +125,8 @@ def pf(p, en=False):
 
 
 SLUG = "stenar-med-samma-hand"
-title = ("Runstenar med samma hand, också utan namn: i genomsnitt 42 procent av runologernas stenpar i samma grupp mot 7 procent "
-         "för grannstenar, i ett låst slutprov")
-title_en = ("Runestones by the same hand, also without a name: on average 42 percent of the runologists' stone pairs in the same "
-            "group against 7 percent for neighbouring stones, in a locked final test")
+title = "Runstenar med samma hand"
+title_en = "Runestones by the same hand"
 summary = ("Metodrapport. En inlärd modell för samma hand bildar grupper av runstenar som kan vara gjorda av samma ristare, "
            "också där ingen namngiven ristare passar. I ett låst slutprov mot runologernas egna uttalanden, som hölls undan tills "
            "metoden var bestämd, hamnade i genomsnitt 42 procent av deras stenpar i samma grupp mot 7 procent för grannstenar på "
@@ -135,11 +140,12 @@ CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report (methods repor
            f"Vitki {APP_VERSION}. https://vitkirunor.se/en/forskningsrapporter/{SLUG}")
 TL_SV = ("planen för arbetet och delningen av runologernas grupper låstes 2026-11-23; modellen byggdes på utvecklingsdelen "
          "2026-11-23; slutprov 1 låstes och kördes 2026-11-23; litteraturen lästes och planen för slutprov 2 låstes 2026-11-23; "
-         "uttalandena i litteraturen granskades och slutprov 2 och provet av huggtekniken kördes 2026-11-24")
+         "uttalandena i litteraturen granskades och slutprov 2 och provet av huggtekniken kördes 2026-11-24; ornamentiken "
+         "prövades i ett senare låst prov 2026-11-25")
 TL_EN = ("the plan for the work and the split of the runologists' groups were locked 2026-11-23; the model was built on the "
          "development half 2026-11-23; final test 1 was locked and run 2026-11-23; the literature was read and the plan for final "
          "test 2 was locked 2026-11-23; the statements in the literature were reviewed and final test 2 and the test of the carving "
-         "technique were run 2026-11-24")
+         "technique were run 2026-11-24; the ornament was tried in a later locked test 2026-11-25")
 THESES_SV = ("Källström (2007), Zilmer (2005), Stern (2013), Williams (1990), Lagman (1990), Larsson (2002), Åkerström (2020) och "
              "Pereswetoff-Morath (2017)")
 THESES_EN = ("Källström (2007), Zilmer (2005), Stern (2013), Williams (1990), Lagman (1990), Larsson (2002), Åkerström (2020) and "
@@ -240,7 +246,7 @@ Slutprov 1 och 2 är de konfirmatoriska proven, huggtekniken är en uppföljning
 - **Alla grupper:** i provdelen hamnade i genomsnitt {pc(A['medel_samma'])} procent av runologernas stenpar per grupp i samma grupp, mot {pc(A['medel_kontroll'])} procent för grannstenar på samma avstånd. Det gällde {A['grupper']} grupper, bättre i {A['bättre']} och sämre i {A['sämre']}, {pf(A['p'])}. Sammanslaget över paren var det {EXS['samma']} av {EXS['par']} ({pc(EXS['andel'])} procent).
 - **Grupper med händer utan namn**, där ingen sten har en känd ristare: {pc(O['medel_samma'])} mot {d1(100 * O['medel_kontroll'])} procent ({O['grupper']} grupper, bättre i {O['bättre']}, sämre i {O['sämre']}, {pf(O['p'])}).
 - **Båda proven höll.** På utvecklingsdelen hade samma mått gett {pc(U1['alla']['medel_samma'])} mot {pc(U1['alla']['medel_kontroll'])} procent.
-- **Holm-korrigering** över alla fem förregistrerade proven ändrar inte utfallen.
+- **Holm-korrigering** (en justering för att flera prov gjordes) över rapportens fem förregistrerade prov ändrar inte utfallen.
 
 {chart(True)}
 
@@ -293,7 +299,7 @@ Svagheter, i ordning efter vikt:
 
 ## 7. Slutsats
 
-En modell som lär sig vad som skiljer samma hand från olika händer, och som väger samman stavning, språkdrag, stil, kors och plats, bildar grupper av runstenar som runologerna själva håller för samma hand långt oftare än grannstenar på samma avstånd. Det gäller i två låsta prov, och för händer utan namn i det första. Grupperna är få och snäva hypoteser att pröva med ornamentik, runformer och huggteknik på stenarna, inte nya ristare.
+En modell som lär sig vad som skiljer samma hand från olika händer, och som väger samman stavning, språkdrag, stil, kors och plats, bildar grupper av runstenar som runologerna själva håller för samma hand långt oftare än grannstenar på samma avstånd. Det gäller i två låsta prov, och för händer utan namn i det första. Grupperna är få och snäva hypoteser att pröva med ornamentik, runformer och huggteknik på stenarna, inte nya ristare. En senare låst prövning, som öppnade provdelen en andra gång, visade att ornamentik kodad ur planscherna i Sveriges runinskrifter inte gjorde grupperna bättre, så de grupper som prövas här behålls.
 
 ## Data och kod
 
@@ -313,8 +319,9 @@ En modell som lär sig vad som skiljer samma hand från olika händer, och som v
   - slutprov 1 i `69c148d` och `3698ddc`;
   - slutprov 2 i `d59c94f` och `f2c9083`;
   - huggtekniken i `91509e7` och `9a18ecf`;
+  - den senare prövningen av ornamentiken (`analysplaner/2026-11-24-nya-ristare-ornamentik.md`, `utdata/nya_ristare/ornamentik/`, resultat.md avsnitt 10) i `f002f81`;
   - rättelserna efter granskningen av rapporten i den commit som lägger till denna text.
-- 3D-skanningarna: Laila Kitzler Åhfeldt, projektet Runristandets dynamik, Zenodo, https://doi.org/10.5281/zenodo.11951255, CC BY 4.0.
+- 3D-skanningarna: skannade av Laila Kitzler Åhfeldt, Riksantikvarieämbetet, i projektet Runristandets dynamik (2009–2014), publicerade på Zenodo 2024, https://doi.org/10.5281/zenodo.11951255, CC BY 4.0. Huggspårsmåtten är beräknade i Vitki.
 - Grupperna visas i Vitki under Ristarna och i stenprofilen i Stenöversikten (https://vitkirunor.se).
 - Texterna ur Sveriges runinskrifter, Fornvännen, Futhark och avhandlingarna ligger inte i repot. Bara signum och källhänvisningar finns där.
 
@@ -324,6 +331,7 @@ En modell som lär sig vad som skiljer samma hand från olika händer, och som v
 - Jansson, S. B. F. 1958. Runstensfynd i kyrkmurar. *Fornvännen* 53, s. 241–257.
 - Kitzler Åhfeldt, L. 2002. *Work and Worship: Laser Scanner Analysis of Viking Age Rune Stones*. Theses and Papers in Scientific Archaeology B:9. Stockholm: Stockholms universitet.
 - Kitzler Åhfeldt, L. 2017. *Runristare och mobilitet i Södermanland*. Stockholm: Riksantikvarieämbetet.
+- Kitzler Åhfeldt, L. 2024. *3D-data Runstenar i Södermanland / Runestones in Södermanland* [Dataset]. Riksantikvarieämbetet. https://doi.org/10.5281/zenodo.11951255
 - Kitzler Åhfeldt, L. 2020. Provenancing rune carvers on Bornholm through 3D-scanning and multivariate statistics of the carving technique. *European Journal of Archaeology* 23 (1), s. 82–104.
 - Kvant, V. 2026. Statistiska ristarförslag ur runtexterna: 82 procent rätt bland de säkra förslagen i ett låst blindprov, mot 44 procent för närmaste ristare. Metodrapport, rapportversion 4. https://vitkirunor.se/forskningsrapporter/ristarforslag-blindprov
 - Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden*. Stockholm Studies in Scandinavian Philology, New Series 43. Stockholm: Stockholms universitet.
@@ -427,7 +435,7 @@ Final tests 1 and 2 are the confirmatory tests; the carving technique is a follo
 - **All groups:** in the test half, on average {pc(A['medel_samma'])} percent of the runologists' stone pairs per group ended up in the same group, against {pc(A['medel_kontroll'])} percent for neighbouring stones at the same distance. This covered {A['grupper']} groups, better in {A['bättre']} and worse in {A['sämre']}, {pf(A['p'], True)}. Pooled over the pairs it was {EXS['samma']} of {EXS['par']} ({pc(EXS['andel'])} percent).
 - **Groups with hands without a name**, where no stone has a known carver: {pc(O['medel_samma'])} against {d1(100 * O['medel_kontroll'], True)} percent ({O['grupper']} groups, better in {O['bättre']}, worse in {O['sämre']}, {pf(O['p'], True)}).
 - **Both tests held.** On the development half the same measure had given {pc(U1['alla']['medel_samma'])} against {pc(U1['alla']['medel_kontroll'])} percent.
-- **Holm correction** over all five preregistered tests does not change the outcomes.
+- **Holm correction** (an adjustment for making several tests) over the report's five preregistered tests does not change the outcomes.
 
 {chart(False)}
 
@@ -480,7 +488,7 @@ Weaknesses, in order of importance:
 
 ## 7. Conclusion
 
-A model that learns what separates the same hand from different hands, and that weighs together spelling, language traits, style, cross and place, forms groups of runestones that the runologists themselves hold to be the same hand far more often than neighbouring stones at the same distance. This holds in two locked tests, and for hands without a name in the first. The groups are few and narrow hypotheses to be tested with ornament, rune forms and carving technique on the stones, not new carvers.
+A model that learns what separates the same hand from different hands, and that weighs together spelling, language traits, style, cross and place, forms groups of runestones that the runologists themselves hold to be the same hand far more often than neighbouring stones at the same distance. This holds in two locked tests, and for hands without a name in the first. The groups are few and narrow hypotheses to be tested with ornament, rune forms and carving technique on the stones, not new carvers. A later locked test, which opened the test half a second time, showed that ornament coded from the plates of Sveriges runinskrifter did not make the groups better, so the groups tested here are kept.
 
 ## Data and code
 
@@ -500,8 +508,9 @@ A model that learns what separates the same hand from different hands, and that 
   - final test 1 in `69c148d` and `3698ddc`;
   - final test 2 in `d59c94f` and `f2c9083`;
   - the carving technique in `91509e7` and `9a18ecf`;
+  - the later test of the ornament (`analysplaner/2026-11-24-nya-ristare-ornamentik.md`, `utdata/nya_ristare/ornamentik/`, resultat.md section 10) in `f002f81`;
   - the corrections after the review of the report in the commit that adds this text.
-- The 3D scans: Laila Kitzler Åhfeldt, the project Runristandets dynamik, Zenodo, https://doi.org/10.5281/zenodo.11951255, CC BY 4.0.
+- The 3D scans: scanned by Laila Kitzler Åhfeldt, Swedish National Heritage Board, in the project Runristandets dynamik (2009–2014), published on Zenodo 2024, https://doi.org/10.5281/zenodo.11951255, CC BY 4.0. The groove measures were computed in Vitki.
 - The groups are shown in Vitki under The carvers and in the stone profile in the Stone overview (https://vitkirunor.se).
 - The texts from Sveriges runinskrifter, Fornvännen, Futhark and the theses are not in the repository. Only signa and source references are there.
 
@@ -511,6 +520,7 @@ A model that learns what separates the same hand from different hands, and that 
 - Jansson, S. B. F. 1958. Runstensfynd i kyrkmurar [Runestone finds in church walls]. *Fornvännen* 53, pp. 241–257.
 - Kitzler Åhfeldt, L. 2002. *Work and Worship: Laser Scanner Analysis of Viking Age Rune Stones*. Theses and Papers in Scientific Archaeology B:9. Stockholm: Stockholm University.
 - Kitzler Åhfeldt, L. 2017. *Runristare och mobilitet i Södermanland* [Rune carvers and mobility in Södermanland]. Stockholm: Swedish National Heritage Board.
+- Kitzler Åhfeldt, L. 2024. *3D-data Runstenar i Södermanland / Runestones in Södermanland* [Dataset]. Swedish National Heritage Board. https://doi.org/10.5281/zenodo.11951255
 - Kitzler Åhfeldt, L. 2020. Provenancing rune carvers on Bornholm through 3D-scanning and multivariate statistics of the carving technique. *European Journal of Archaeology* 23 (1), pp. 82–104.
 - Kvant, V. 2026. Statistical carver suggestions from the runic texts: 82 percent right among the confident suggestions in a locked blind test, against 44 percent for the nearest carver. Methods report, report version 4. https://vitkirunor.se/en/forskningsrapporter/ristarforslag-blindprov
 - Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden* [Masters and memorials]. Stockholm Studies in Scandinavian Philology, New Series 43. Stockholm: Stockholm University.
@@ -549,8 +559,8 @@ for b in (body, body_en):
     assert FP not in head
     assert "](/" not in b
     assert "3.0.0" not in b and "U 43 och U 79 har olika händer\n" not in b
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Metodrapport, fullt prövad. Rapportversion 1, 2026-11-24. Tidslinje: ")
-assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Methods report, fully tested. Report version 1, 2026-11-24. Timeline: ")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Metodrapport, fullt prövad. Rapportversion 1, 2026-11-25. Tidslinje: ")
+assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Methods report, fully tested. Report version 1, 2026-11-25. Timeline: ")
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 SEC = lambda b: [re.match(r"[\d.]*", h).group(0) for h in re.findall(r"^##+ (.+)$", b, re.M)]  # noqa: E731
 assert SEC(body) == SEC(body_en), (SEC(body), SEC(body_en))

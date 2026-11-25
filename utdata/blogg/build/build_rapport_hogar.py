@@ -15,6 +15,13 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from src import blog_labels  # noqa: E402
+
+# TILLBAKADRAGEN 2026-11-18: huvudfyndet höll inte med grupper av högar som enhet (plan 6870d6cd, utdata/hogar/resultat_grupper.json,
+# robust = false). Byggaren får inte skriva eller uppdatera utkastet med det gamla påståendet förrän Viktor har beslutat
+# om utkastet (radera, eller skriv om som negativ metodrapport).
+_g = json.load(open(os.path.join(ROOT, "utdata", "hogar", "resultat_grupper.json"), encoding="utf-8"))
+if not _g.get("robust", True):
+    sys.exit("Rapporten är tillbakadragen (resultat_grupper.json: robust = false) – byggaren stoppar. Se mounds-study.")
 from utdata.norge.citat import letters  # noqa: E402
 
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json"), encoding="utf-8"))["version"]
