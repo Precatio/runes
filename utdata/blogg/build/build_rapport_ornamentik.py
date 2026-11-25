@@ -348,10 +348,8 @@ def chart(sv):
 
 # ---- texten --------------------------------------------------------------------------------------------------------------
 SLUG = "ornamentiken-som-matbar-kalla"
-title = ("Ornamentiken som mätbar källa: rundjurens drag kodade på 1 220 runstenar, och 1600- och 1700-talens teckningar "
-         "prövade mot fotona – huvuddragen håller, läppflik och fötter gör det inte")
-title_en = ("Ornament as a measurable source: the rune animals' features coded on 1,220 runestones, and the drawings of the "
-            "1600s and 1700s tested against the photographs – the main features hold, lip lappet and feet do not")
+title = "Ornamentiken som mätbar källa"  # kort rubrik (Viktor 2026-11-25: rapportrubriker ska vara korta)
+title_en = "Ornament as a measurable source"
 summary = ("Metodrapport. Rundjurets drag på 1 220 runstenar kodades av två oberoende läsare efter en fast kodbok, och varje "
            "sorts bild prövades mot en annan innan den fick användas. 1600- och 1700-talens teckningar stämde med fotona i "
            "huvudet, nackfliken, kopplet och flätverket på 129 bevarade stenar, men kunde inte visas återge läppflik och "
