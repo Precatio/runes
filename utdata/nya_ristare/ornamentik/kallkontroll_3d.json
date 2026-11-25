@@ -1,0 +1,175 @@
+{
+ "plan": "2026-11-25-ornamentik-3d-halsingland-medelpad.md",
+ "källkontroll_stenar": 24,
+ "läsarna_djupbild": {
+  "djurhuvud": 0.54,
+  "antal_djur": 0.41,
+  "huvud_vy": 0.58,
+  "oga": 0.63,
+  "nackflik": null,
+  "lappflik": null,
+  "svans": 0.0,
+  "fotter": null,
+  "koppel": 1.0,
+  "flatverk": 0.91,
+  "fyrfota": 1.0,
+  "orm_extra": 1.0,
+  "manniska_mask": null,
+  "kors": 1.0
+ },
+ "djupbild_mot_plansch": {
+  "djurhuvud": {
+   "jämförbara": 9,
+   "lika": 0.78,
+   "kappa": 0.36,
+   "täckning_djupbild": 0.38
+  },
+  "antal_djur": {
+   "jämförbara": 8,
+   "lika": 0.75,
+   "kappa": -0.14,
+   "täckning_djupbild": 0.33
+  },
+  "huvud_vy": {
+   "jämförbara": 9,
+   "lika": 0.67,
+   "kappa": 0.1,
+   "täckning_djupbild": 0.38
+  },
+  "oga": {
+   "jämförbara": 9,
+   "lika": 0.78,
+   "kappa": -0.06,
+   "täckning_djupbild": 0.42
+  },
+  "nackflik": {
+   "jämförbara": 5,
+   "lika": 1.0,
+   "kappa": null,
+   "täckning_djupbild": 0.25
+  },
+  "lappflik": {
+   "jämförbara": 6,
+   "lika": 1.0,
+   "kappa": null,
+   "täckning_djupbild": 0.29
+  },
+  "svans": {
+   "jämförbara": 0,
+   "lika": null,
+   "kappa": null,
+   "täckning_djupbild": 0.04
+  },
+  "fotter": {
+   "jämförbara": 10,
+   "lika": 1.0,
+   "kappa": null,
+   "täckning_djupbild": 0.54
+  },
+  "koppel": {
+   "jämförbara": 13,
+   "lika": 1.0,
+   "kappa": 1.0,
+   "täckning_djupbild": 0.54
+  },
+  "flatverk": {
+   "jämförbara": 14,
+   "lika": 0.79,
+   "kappa": 0.58,
+   "täckning_djupbild": 0.75
+  },
+  "fyrfota": {
+   "jämförbara": 20,
+   "lika": 0.9,
+   "kappa": -0.05,
+   "täckning_djupbild": 0.83
+  },
+  "orm_extra": {
+   "jämförbara": 15,
+   "lika": 1.0,
+   "kappa": 1.0,
+   "täckning_djupbild": 0.62
+  },
+  "manniska_mask": {
+   "jämförbara": 19,
+   "lika": 0.89,
+   "kappa": 0.0,
+   "täckning_djupbild": 0.83
+  },
+  "kors": {
+   "jämförbara": 14,
+   "lika": 1.0,
+   "kappa": 1.0,
+   "täckning_djupbild": 0.58
+  }
+ },
+ "fält_som_får_läsas_ur_djupbild": [
+  "orm_extra"
+ ],
+ "hs_m": {
+  "kodade": 17,
+  "med_godkänd_kod": 15,
+  "stenar": {
+   "M 7": {
+    "fält": 1,
+    "bild": "bara djupbild"
+   },
+   "Hs 10": {
+    "fält": 9,
+    "bild": "foto + djupbild"
+   },
+   "Hs 11": {
+    "fält": 8,
+    "bild": "foto + djupbild"
+   },
+   "Hs 12": {
+    "fält": 14,
+    "bild": "foto + djupbild"
+   },
+   "Hs 14": {
+    "fält": 5,
+    "bild": "foto + djupbild"
+   },
+   "Hs 2": {
+    "fält": 7,
+    "bild": "foto + djupbild"
+   },
+   "M 11": {
+    "fält": 1,
+    "bild": "bara djupbild"
+   },
+   "M 15": {
+    "fält": 1,
+    "bild": "bara djupbild"
+   },
+   "M 16": {
+    "fält": 11,
+    "bild": "foto + djupbild"
+   },
+   "M 5": {
+    "fält": 1,
+    "bild": "bara djupbild"
+   },
+   "Hs 21": {
+    "fält": 12,
+    "bild": "foto + djupbild"
+   },
+   "Hs 6": {
+    "fält": 11,
+    "bild": "foto + djupbild"
+   },
+   "Hs 9": {
+    "fält": 14,
+    "bild": "foto + djupbild"
+   },
+   "M 1": {
+    "fält": 6,
+    "bild": "foto + djupbild"
+   },
+   "M 10": {
+    "fält": 6,
+    "bild": "foto + djupbild"
+   }
+  }
+ }
+}

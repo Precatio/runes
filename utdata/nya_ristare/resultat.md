@@ -346,3 +346,32 @@ mask får dessutom läsas från Peringskiöld och övriga tecknare. Läppflik oc
 - **Bara godkända fält:** endast de fält som källkontrollen (§ 11) godkände för respektive typ av teckning ingår.
   Läppflik och fötter tas aldrig med.
 - **Märkning:** varje kod har källa och tecknare (`forlorade.py`, cachen `orn_koder_forlorade.json`).
+
+## 13. Djupbilder ur 3D-skanningar, samt Hälsingland och Medelpad (2026-11-25)
+
+Plan `analysplaner/2026-11-25-ornamentik-3d-halsingland-medelpad.md`, låst före kodningen. Skript `ornamentik/djupbild.py`
+och `ornamentik/kallkontroll_3d.py`, utfall `ornamentik/kallkontroll_3d.json`.
+
+### Källkontrollen: djupbilder duger inte för rundjurets drag
+- **Underlaget:** 24 skannade stenar med planschkod, med två läsare per djupbild.
+- **Läsarna var osäkrare än på foton:** kappa 0,41–0,63 för huvudets drag.
+- **Djupbild mot plansch** (kappa):
+  - djurhuvud 0,36, huvudets vy 0,10, öga −0,06 och antal djur −0,14;
+  - svansen gick inte att läsa alls ur djupbilderna.
+- **Stämmer:** bara koppel, extra orm och kors (1,0), samt flätverk (0,58).
+  - Endast extra orm har minst 15 jämförbara stenar.
+- **Enligt regeln får bara "extra orm" läsas ur djupbilder.**
+
+### Vad det betyder
+- **Djupbilden ger fel slags bild för det här ändamålet.** Den lokala reliefen, i den form den räknades fram här, visar
+  vittring och sprickor lika tydligt som grunda ornamentlinjer. Läsarna kunde därför inte skilja huvud, öga och svans.
+- **Det gäller just den här beräkningen.** En bild med släpljus från flera håll kan prövas senare, med en ny låst
+  källkontroll.
+
+### Hälsingland och Medelpad
+- **Kodat:** 17 stenar.
+- **Ingår i registret:** de **11** stenar som har ett målat foto, med 5–14 drag var.
+  - Hälsingland: Hs 2, 6, 9, 10, 11, 12, 14 och 21.
+  - Medelpad: M 1, 10 och 16.
+- **Stenar med bara djupbild** (M 5, 7, 11 och 15) får bara fältet extra orm, och räknas i praktiken inte. Hälsingland och
+  Medelpad är alltså med i registret, men med få stenar.
