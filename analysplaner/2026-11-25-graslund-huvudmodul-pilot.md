@@ -38,3 +38,13 @@ Annars ändras kodboken eller utsnittsmetoden och en ny pilot görs på nya sten
 - **Stenarna:** 30 nya stenar ur samma kandidatmängd, slumpvis (frö 20261126). Pilot 1:s stenar ingår inte.
 - **Regeln:** samma som för pilot 1, med ett tillägg för fält där ett värde dominerar. Om minst 90 % av läsarnas par har
   samma värde räcker det att andelen lika är ≥ 0,9 i stället för kappa ≥ 0,6. Annars blir kappa meningslös.
+
+## Pilot 2 – utfall (2026-11-25): regeln höll inte
+- **Täckning:** nackflik 0,17 och läppflik 0,13, alltså sämre än i pilot 1. Läsarna blev försiktigare med de förstorade
+  utsnitten.
+- **Ögat:** kappa 0,87 och 100 % lika med v2. Svans 0,75 och fötter 0,77.
+- **Slutsats:** på stenar där v2 inte kunde läsa nackfliken går flikarna inte att läsa säkert ur planschfotona, hur de än
+  skärs och förstoras. Urvalet var med avsikt de svåraste bilderna. Utsnittsläsningen av planscher läggs ned för flikarna.
+- **Nästa väg:**
+  - Låt gamla teckningar fylla luckan i nackfliken. Källkontrollen gav kappa 0,88 mot planschfoton.
+  - Läppfliken kan inte läsas ur teckningar. Den behöver bättre foton, till exempel högupplösta foton med fri licens.

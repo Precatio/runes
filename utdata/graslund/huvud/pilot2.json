@@ -1,0 +1,108 @@
+{
+ "stenar": 30,
+ "täckning": {
+  "huvud_vy": 0.97,
+  "oga": 0.77,
+  "nackflik": 0.17,
+  "lappflik": 0.13,
+  "mun": 0.17,
+  "nos": 0.3,
+  "svans": 0.4,
+  "fotter": 0.47
+ },
+ "läsare1_mot_2": {
+  "huvud_vy": {
+   "par": 22,
+   "kappa": null,
+   "lika": 1.0
+  },
+  "oga": {
+   "par": 18,
+   "kappa": 0.87,
+   "lika": 0.94
+  },
+  "nackflik": {
+   "par": 4,
+   "kappa": 1.0,
+   "lika": 1.0
+  },
+  "lappflik": {
+   "par": 5,
+   "kappa": 0.41,
+   "lika": 0.6
+  },
+  "mun": {
+   "par": 5,
+   "kappa": 0.71,
+   "lika": 0.8
+  },
+  "nos": {
+   "par": 8,
+   "kappa": 0.53,
+   "lika": 0.75
+  },
+  "svans": {
+   "par": 10,
+   "kappa": 0.75,
+   "lika": 0.9
+  },
+  "fotter": {
+   "par": 13,
+   "kappa": 0.77,
+   "lika": 0.92
+  }
+ },
+ "mot_v2": {
+  "huvud_vy": {
+   "par": 29,
+   "lika": 1.0
+  },
+  "oga": {
+   "par": 20,
+   "lika": 1.0
+  }
+ },
+ "tredje_läsaren_fält": 163,
+ "regel": {
+  "täckning_flikar": false,
+  "kappa_huvud": false,
+  "mot_v2": true,
+  "håller": false
+ },
+ "fördelning": {
+  "huvud_vy": {
+   "profil": 29
+  },
+  "oga": {
+   "mandel": 16,
+   "rund": 7
+  },
+  "nackflik": {
+   "spiral": 1,
+   "kort": 3,
+   "ingen": 1
+  },
+  "lappflik": {
+   "ingen": 2,
+   "spiral": 2
+  },
+  "mun": {
+   "stangd": 2,
+   "oppen": 2,
+   "biter": 1
+  },
+  "nos": {
+   "spetsig": 6,
+   "rundad": 3
+  },
+  "svans": {
+   "spiral": 10,
+   "kluven": 2
+  },
+  "fotter": {
+   "inga": 11,
+   "taer": 2,
+   "spiral": 1
+  }
+ }
+}

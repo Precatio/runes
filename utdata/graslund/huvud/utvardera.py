@@ -14,9 +14,10 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from utdata.nya_ristare.ornamentik.overens import kappa, norm  # noqa: E402
 
+PILOT2 = "--pilot2" in sys.argv
 F = ["huvud_vy", "oga", "nackflik", "lappflik", "mun", "nos", "svans", "fotter"]
 label, r1, r2, r3 = {}, {}, {}, defaultdict(dict)
-for line in open(sys.argv[1], encoding="utf-8"):
+for line in open([a for a in sys.argv[1:] if not a.startswith("--")][0], encoding="utf-8"):
     e = json.loads(line)
     if e.get("type") == "started":
         label[e["key"]] = e.get("label", "")
@@ -59,7 +60,15 @@ for f in ("huvud_vy", "oga"):
 
 def ok_k(f):
     k = kap[f]["kappa"]
-    return k is not None and k >= 0.6  # som planen säger; saknad kappa (bara ett värde) räknas inte som godkänd
+    if k is not None and k >= 0.6:
+        return True
+    # pilot 2 (planen, bestämt före körningen): dominerar ett värde (≥ 90 % av paren) räcker andel lika ≥ 0,9
+    if PILOT2:
+        pairs = [(norm(r1[s].get(f)), norm(r2[s].get(f))) for s in final if norm(r1[s].get(f)) and norm(r2[s].get(f))]
+        if pairs:
+            top = Counter([a for a, _ in pairs] + [b for _, b in pairs]).most_common(1)[0][1] / (2 * len(pairs))
+            return top >= 0.9 and (kap[f]["lika"] or 0) >= 0.9
+    return False
 
 
 regel = {"täckning_flikar": cov["nackflik"] >= 0.6 and cov["lappflik"] >= 0.6,
@@ -68,7 +77,7 @@ regel = {"täckning_flikar": cov["nackflik"] >= 0.6 and cov["lappflik"] >= 0.6,
 regel["håller"] = all(regel.values())
 out = {"stenar": n, "täckning": cov, "läsare1_mot_2": kap, "mot_v2": mot_v2, "tredje_läsaren_fält": sum(len(v) for v in r3.values()),
        "regel": regel, "fördelning": {f: dict(Counter(c.get(f) for c in final.values() if f in c)) for f in F}}
-json.dump(final, open(os.path.join(ROOT, "data", "cache", "hander", "huvud", "huvud_koder_pilot.json"), "w", encoding="utf-8"),
+json.dump(final, open(os.path.join(ROOT, "data", "cache", "hander", "huvud", "huvud_koder_pilot2.json" if PILOT2 else "huvud_koder_pilot.json"), "w", encoding="utf-8"),
           ensure_ascii=False, indent=0)
-json.dump(out, open(os.path.join(HERE, "pilot.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+json.dump(out, open(os.path.join(HERE, "pilot2.json" if PILOT2 else "pilot.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(json.dumps(out, ensure_ascii=False, indent=1))
