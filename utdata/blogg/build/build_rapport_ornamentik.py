@@ -76,6 +76,7 @@ assert "minst **0,6** vardera" in subprocess.run(["git", "show", f"a87beda:analy
                                                   capture_output=True, text=True).stdout
 assert "Bautils träsnitt (Umeå-exemplaret): 40 stenar" in PL["kk"] and "övriga teckningar som SRI återger (Bureus" in PL["kk"]
 assert "ρ = 0,23 mot 0,07, p = 0,002" in PL["bb"] and "ρ = 0,08 mot 0,05, p = 0,036" in PL["bb"]
+assert "Budskapet** (12 kategorier, se nedan): ρ = 0,23 mot 0,07, p = 0,002" in PL["bb"]
 assert "**Totalt:** 456 stenar och 10 968 par" in PL["bb"] and "σ = 12 mm" in PL["3d"]
 assert "Med färre än 8 ristare redovisas P2 bara beskrivande" in PL["sr"]
 
@@ -125,6 +126,9 @@ assert not (set(OC) & set(FL)) and not (set(OC) & set(UT))
 OC3 = [s for s, v in OC.items() if len(v) >= 3]
 N_PL_LOST = sum(1 for s in OC3 if s in CORP.index and CORP.loc[s, "lost"] == 1)
 assert (len(OC3), N_PL_LOST) == (1036, 41)
+_PLT = J(ROOT, "data", "cache", "hander", "plansch", "teckningar.json")["_plansch_ar_teckning"]
+N_PL_TECKN = sum(1 for s in OC3 if s in CORP.index and CORP.loc[s, "lost"] == 1 and _PLT.get(s))
+assert N_PL_TECKN == 26
 
 # ---- källkontrollen av teckningarna (§ 11) ----------------------------------------------------------------------------
 TP = KK["teckning_mot_plansch"]["alla"]
@@ -381,13 +385,13 @@ body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapp
 **Material.** Planschfotona i Sveriges runinskrifter ({num(N_PLANSCH)} av {num(N_KORPUS)} svenska vikingatida runstenar i Rundata), fria foton, teckningar från 1600- och 1700-talen och öppna 3D-skanningar.
 **Metod.** Två oberoende läsare besvarade en kodbok med 17 frågor om rundjuret. Ett drag fick värde bara när båda svarade lika, och ett fält användes bara med Cohens kappa ≥ 0,40 och täckning ≥ 30 procent. Varje ny sorts bild prövades mot fotona, och koderna ställdes i låsta prov mot texten, stilgrupperna och grupper av stenar med samma hand.
 **Resultat.** Läsarna var eniga med kappa {kv(min(KAP.values()))}–{kv(max(KAP.values()))} i {len(KAP)} fält; registret omfattar {num(N_REG)} stenar, varav {len(FL)} försvunna. På {KK['teckningar']} bevarade stenar stämde teckningarna med fotona i huvudet, nackfliken och kopplet (kappa {kv(KT['huvud_vy'])}–{kv(KT['nackflik'])}), men inte påvisbart i läppflik och fötter, och djupbilderna stämde inte för huvudet. Tro och kors hänger ihop i koderna på {BB['stenar']} oberoende stenar. Stavningen följer inte ornamentiken utöver bygd och stilgrupp (Spearmans ρ = {dec(P1['rho'], 3)} mot {dec(P1['omblandning_medel'], 3)} vid omblandning, p = {dec(P1['p'])}).
-**Slutsats.** Rundjurets huvuddrag går att mäta tillförlitligt, också på försvunna stenar, men inte huvudets detaljer, som Gräslunds finindelning bygger på. Om den svaga kopplingen mellan skrift och bild beror på arbetsdelning eller på svaga spår av handen kan registret inte avgöra.
+**Slutsats.** Rundjurets huvuddrag går att mäta tillförlitligt, också på försvunna stenar, men inte huvudets detaljer, som Gräslunds finindelning bygger på. Om den svaga kopplingen mellan skrift och bild beror på arbetsdelning eller svaga spår av handen går inte att avgöra.
 
 ## 1. Inledning
 
 Anne-Sofie Gräslund (1991, 1992, 2006) ordnade rundjuren på de sena vikingatida runstenarna i stilgrupper: RAK, där runbandets ändar är raka utan djurhuvud, Fp, där huvudet ses ovanifrån, och Pr1–Pr5, profilhuvuden i fem steg. Grupperna bygger på enskilda drag – huvudets vy, ögat, flikar vid nacke och läppar, svansen, fötterna, kopplet som binder ihop djuren – och används för att datera stenarna (Gräslund 2006, 2015). Bilderna, korsen och ristarna har studerats av bland andra Stern (2013), Lager (2002), Källström (2007) och Kitzler Åhfeldt (2002, 2017).
 
-Dragen har däremot inte mätts över hela materialet; Rundata har stilgruppen men inte dragen. Många stenar finns bara kvar i teckningar: Bautils träsnitt, skurna på 1600-talet och tryckta 1750, Johannes Rhezelius teckningar från 1630-talet och Johan Peringskiölds från omkring 1700. Utgivarna av Sveriges runinskrifter har bedömt teckningarna sten för sten. Såvitt vi vet har de inte prövats drag för drag mot fotografier över ett större material.
+Dragen har däremot inte mätts över hela materialet; Rundata har stilgruppen men inte dragen. Många stenar finns bara kvar i teckningar: Bautils träsnitt, skurna på 1600-talet och tryckta 1750, Johannes Rhezelius teckningar från 1630-talet och Johan Peringskiölds från omkring 1700. Utgivarna av Sveriges runinskrifter bedömde dem sten för sten. Såvitt vi vet har de inte prövats drag för drag mot fotografier över ett större material.
 
 Bidraget här är mätningen: ett register där ornamentiken kodas oberoende av texten, så att hur texten är skriven och hur djuret är ritat kan ställas mot varandra. Fyra prov visar vad registret bär: ett väntat samband mellan text och bild, stavningen, Gräslunds stilgrupper och grupper av stenar med samma hand.
 
@@ -403,18 +407,18 @@ Arbetet följde åtta planer, låsta i projektets versionshantering innan det de
 - **Teckningarna fyller luckor** ({S['luckor']}): beskrivande.
 - **Budskap och bild** ({S['bb']}), ett bekräftande prov på oberoende stenar: ”{Q_BB.replace('**', '')}”.
 
-Sambandet mellan budskap och bild hade setts i ett första urval; därför prövades det på andra stenar. Det som kallas utforskande nedan ingick inte i någon plan.
+Sambandet mellan budskap och bild hade setts i ett första urval; därför prövades det på andra stenar. Planerna för utsnitten och luckorna gäller instrument och arbetsgång; de lades in i versionshanteringen före körningen men låstes inte med kontrollsumma (summorna ovan är räknade på den commit som lade in dem). Det som kallas utforskande nedan ingick inte i någon plan.
 
 ## 3. Material
 
 - **Stenarna:** Samnordisk runtextdatabas (Rundata) 3.1, fryst för analysen: {num(N_KORPUS)} svenska vikingatida runstenar med koordinater och Rundatas stilgrupper.
 - **Bilderna:** planschfotona i Sveriges runinskrifter ({num(N_PLANSCH)} stenar; upphovsrättsligt skyddade, lästa men inte visade), Gotlands och Ölands planscher, fria foton av de målade stenarna i Hälsingland och Medelpad, Bautil i Umeå universitetsbiblioteks exemplar, andra teckningar så som Sveriges runinskrifter återger dem, och Laila Kitzler Åhfeldts och Henrik Zedigs öppna 3D-skanningar (CC BY 4.0).
-- **Texten:** stavningen, kategoriska språkdrag (som skiljetecknets typ) och tolv kategorier för vad texten säger, kodade per sten ur Rundata.
+- **Texten:** stavningen, kategoriska språkdrag och tolv kategorier för vad texten säger, kodade per sten ur Rundata.
 
 ## 4. Metod
 
 ### 4.1 Kodboken och läsarna
-- **Kodboken** har 17 frågor om rundjuret (djurhuvud, antal djur, huvudets vy, öga, nack- och läppflik, mun, svans, fötter, koppel, flätverk, kors med flera), alltid med svaret ”osäkert”. Huvud, svans och bandändar ska förstoras innan de kodas. Två piloter på 12 och 20 stenar utanför provmaterialet föregick låsningen.
+- **Kodboken** har 17 frågor om rundjuret (djurhuvud, antal djur, huvudets vy, öga, nack- och läppflik, mun, svans, fötter, koppel, flätverk, kors med flera), alltid med svaret ”osäkert”. Huvud, svans och bandändar ska förstoras innan de kodas. Två piloter (12 och 20 stenar utanför provmaterialet) föregick låsningen.
 - **Läsarna** var två separata körningar av Anthropics språkmodell Claude (Claude Opus). De såg bara bilden och signum, fem stenar i taget i motsatt ordning, och ombads att inte använda kunskap om stenen eller litteraturen.
 - **Värdet** är det som båda anger; annars saknas det.
 - **Cohens kappa** (Cohen 1960) är andelen lika svar med slumpens bidrag borträknat: 1 är full enighet, 0 inte bättre än slumpen. **Täckningen** är andelen stenar där båda gav ett värde.
@@ -423,7 +427,7 @@ Sambandet mellan budskap och bild hade setts i ett första urval; därför pröv
 - **Principen:** en ny sorts bild prövas mot planschfotot på bevarade stenar som finns i båda, med nya läsare. Måttet är om två återgivningar av samma sten säger samma sak.
 - **Teckningarna:** slumpvis 40 ur Bautil, 40 av Rhezelius, 30 av Peringskiöld och 30 av andra tecknare.
 - **Djupbilderna:** ytan minus samma yta utjämnad över 12 mm, så att ristade linjer blir mörka, på {K3['källkontroll_stenar']} skannade stenar.
-- **Huvudet i utsnitt:** två piloter på 30 stenar där nackfliken saknade värde, med utskurna huvuden, två läsare och en tredje vid oenighet; i pilot 2 med en schematisk bild av ett profilhuvud och utsnitt förstorade till minst 1 000 bildpunkter.
+- **Huvudet i utsnitt:** två piloter på 30 stenar där nackfliken saknade värde: utskurna huvuden, två läsare och en tredje vid oenighet, i pilot 2 med ett schematiskt profilhuvud och utsnitt förstorade till minst 1 000 bildpunkter.
 - **Luckor och försvunna stenar:** teckningar kodades för 141 bevarade stenar som saknade nackflik och för {len(FB)} försvunna stenar, bara i godkända fält och märkta med tecknare. Ett planschvärde ersattes aldrig.
 
 ### 4.3 Proven
@@ -436,7 +440,7 @@ Sambandet mellan budskap och bild hade setts i ett första urval; därför pröv
 - **Källkontrollen:** urvalet drog 140 teckningar, men några stenar kom med under flera typer; jämförelsen gäller {KK['teckningar']} stenar ({PT['bautil']} Bautil, {PT['rhezelius']} Rhezelius, {PT['peringskiold']} Peringskiöld, {PT['ovrig']} övriga).
 - **Utsnitten:** pilot 2, med ändrad kodbok och ett tillägg för fält där ett värde dominerar, lades till efter pilot 1:s utfall.
 - **Skrift och bild:** planens sekundära mått, ”språkdragen”, mätte i praktiken budskapet, eftersom de kategoriska dragen blev noll som tal; dess värde (ρ = {dec(SPD['rho'])} mot {dec(SPD['omblandning_medel'])}) gäller alltså budskapet. Språkdragen räknades om rätt utanför planen.
-- **Budskap och bild:** planen räknade med 456 stenar men tog med fält som inte är godkända; med bara godkända fält blev det {BB['stenar']} stenar och {num(B1['par'])} par. Det utforskande värdet i första urvalet anges i planen som ρ = 0,23 mot 0,07 och i resultatet som 0,19 mot 0,08; skillnaden är inte utredd.
+- **Budskap och bild:** planen räknade med 456 stenar men tog med fält som inte är godkända; med bara godkända fält blev det {BB['stenar']} stenar och {num(B1['par'])} par. I första urvalet gav de tolv budskapskolumnerna ρ = 0,23 mot 0,07 (p = 0,002) och de fyra språkliga markörerna 0,08 mot 0,05 (p = 0,036); resultatets 0,19 mot 0,08 gäller båda tillsammans.
 - **Luckorna:** {KB['teckningar_kodade']} av 141 teckningar fick ett enigt värde.
 - **I övrigt** inga avvikelser.
 
@@ -461,7 +465,7 @@ I klartext: två läsare som inte ser varandra ger samma svar om rundjurets huvu
 
 ### 5.3 Djupbilder, utsnitt och luckor
 - **Djupbilderna höll inte.** Mot fotot stämde djurhuvudet med kappa {kv(D3['djurhuvud']['kappa'])}, huvudets vy {kv(D3['huvud_vy']['kappa'])}, ögat {kv(D3['oga']['kappa'])} och antalet djur {kv(D3['antal_djur']['kappa'])}; svansen gick inte att läsa, och läsarna var sinsemellan osäkrare (kappa {kv(min(L3))}–{kv(max(L3))}). Bara extra orm nådde 15 jämförbara stenar och får läsas. Beräkningen visar vittring och sprickor lika tydligt som grunda linjer (Figur 2); det gäller beräkningen, inte skanningarna.
-- **Utsnitten höll inte.** Nack- och läppflik fick värde på {pc(P1H['täckning']['nackflik'])} och {pc(P1H['täckning']['lappflik'])} procent av stenarna i pilot 1 och {pc(P2H['täckning']['nackflik'])} och {pc(P2H['täckning']['lappflik'])} procent i pilot 2, mot kravet 60, fast ögat nådde kappa {kv(P2H['läsare1_mot_2']['oga']['kappa'])}. Läsningen av flikar i utsnitt lades ned.
+- **Utsnitten höll inte.** Nack- och läppflik fick värde på {pc(P1H['täckning']['nackflik'])} och {pc(P1H['täckning']['lappflik'])} procent av stenarna i pilot 1 och {pc(P2H['täckning']['nackflik'])} och {pc(P2H['täckning']['lappflik'])} procent i pilot 2, mot kravet 60. Läsningen av flikar i utsnitt lades ned.
 - **Teckningarna fyllde {sum(FILL.values())} luckor**, mest öga ({FILL['oga']}) och nackflik ({FILL['nackflik']}). Andelen stenar med djurhuvud som har nackflik, procent före → efter: {NHEAD}; ögat i Pr4 {pc(CV['Pr4']['oga']['före'])} → {pc(CV['Pr4']['oga']['efter'])}.
 
 {FIG2_SV}
@@ -469,7 +473,7 @@ I klartext: två läsare som inte ser varandra ger samma svar om rundjurets huvu
 ### 5.4 Validering: budskap och bild
 - **Provet höll.** På {BB['stenar']} oberoende stenar ({BB['källor']['plansch']} planschstenar utan stilgrupp, {BB['källor']['teckning']} försvunna, {BB['källor']['utvidgning']} från Gotland, Öland, Hälsingland och Medelpad) och {num(B1['par'])} par var ρ = {dec(B1['rho'])} mellan budskap och ornamentik, mot {dec(B1['omblandning_medel'], 3)} vid omblandning; ingen av 999 omblandningar nådde dit (p = {dec(B1['p'], 3)}). Det gällde planschstenar (ρ = {dec(PK['plansch']['rho'])}) och teckningar ({dec(PK['teckning']['rho'])}), båda p = {dec(PK['plansch']['p'], 3)}; i samma stilgrupp fanns bara {SS['par']} par (ρ = {dec(SS['rho'])}, p = {dec(SS['p'])}).
 - **Vad som bär det:** utan kategorin ”texten saknar religiösa markörer” faller ρ till {dec(UK['pm_neutral'], 3)}; varje annan kategori utelämnad ger {dec(min(UK_OVR))}–{dec(max(UK_OVR))}. Utforskande: med korset borttaget ur ornamentiken blir ρ = 0,062 (p = 0,007), utan både korset och den kategorin 0,040 (p = 0,14).
-- **Tolkningen:** det är det väntade sambandet mellan tro och kors. Läsarna kodade bara bilden, och koderna fångar det; det validerar registret men är inget nytt fynd.
+- **Tolkningen:** det väntade sambandet mellan tro och kors; läsarna kodade bara bilden, så det validerar registret men är inget nytt fynd.
 
 ### 5.5 Skrift och bild
 - **Huvudprovet höll inte.** På {SR['stenar']} stenar och {num(P1['par'])} par i samma stilgrupp inom 30 km var ρ = {dec(P1['rho'], 3)} mellan stavning och ornamentik, mot {dec(P1['omblandning_medel'], 3)} vid omblandning (p = {dec(P1['p'])}); utan par från samma socken {dec(SU['rho'], 3)} (p = {dec(SU['p'])}); inom Pr4 ({num(P3['par'])} par) {dec(P3['rho'], 3)} mot {dec(P3['omblandning_medel'], 3)} (p = {dec(P3['p'])}).
@@ -478,7 +482,7 @@ I klartext: två läsare som inte ser varandra ger samma svar om rundjurets huvu
 - **Ristarna som enheter** kunde inte prövas: bara {P2['ristare']} signerade ristare (Öpir, Balle, Åsmund, Visäte) har minst fem stenar med båda måtten; planen krävde åtta.
 
 ### 5.6 Gräslunds stilgrupper
-- **Dragen bär stilgruppen.** På {F1['stenar']} stenar ({', '.join(f'{s} {N_STIL[s]}' for s in STYLES)}) satte modellen rätt grupp på {pc(F1['träffsäkerhet'])} procent, mot {pc(F1['vanligaste_gruppen'])} för att alltid gissa Pr4 och {pc(F1['omblandning_medel'])} med omblandade grupper (p = {dec(F1['p'], 3)}). Pr1–Pr3 känns igen på 22–41 procent och Pr5 inte alls; alla utom fyra blir Pr4.
+- **Dragen bär stilgruppen.** På {F1['stenar']} stenar ({', '.join(f'{s} {N_STIL[s]}' for s in STYLES)}) satte modellen rätt grupp på {pc(F1['träffsäkerhet'])} procent, mot {pc(F1['vanligaste_gruppen'])} för att alltid gissa Pr4 och {pc(F1['omblandning_medel'])} med omblandade grupper (p = {dec(F1['p'], 3)}). Pr5 känns inte igen alls; alla utom fyra blir Pr4.
 - **Pr-grupperna är en ordnad följd.** Av {F2['fel_inom_Pr']} fel inom Pr hamnade {F2['avstånd']['1']} ett steg bort, {F2['avstånd']['2']} två och {F2['avstånd']['3']} tre: {pc(F2['andel_till_granne'])} procent hos grannen, mot {pc(F2['omblandning_medel'])} vid omblandning (p = {dec(F2['p'], 3)}).
 - **Dragen själva** bildar tre klasser: inget djurhuvud (191 stenar, mest RAK), ett enkelt djur utan flikar (134, mest Fp och Pr1–Pr3) och profilhuvud med koppel (295, mest Pr4 och Pr3). Justerat Rand-index mot Rundata: {dec(F3['ARI_mot_rundata'])}.
 - **Mellan landskap:** tränad på Uppland träffade modellen {pc(F4['inom_uppland_cv'])} procent där men {pc(F4['Sö']['träffsäkerhet'])} i Södermanland.
@@ -492,7 +496,7 @@ I klartext: två läsare som inte ser varandra ger samma svar om rundjurets huvu
 
 ## 6. Diskussion
 
-Bidraget är mätningen: med två oberoende mått på samma sten kan frågor som prövats sten för sten ställas över hela materialet, och de negativa utfallen visar var mätningen tar slut. Mest nytt är källkontrollen, som gör de försvunna stenarna mätbara i rundjurets huvuddrag.
+Bidraget är mätningen: med två oberoende mått på samma sten kan frågor som prövats sten för sten ställas över hela materialet. Mest nytt är källkontrollen, som gör de försvunna stenarna mätbara i rundjurets huvuddrag.
 
 **Vad rapporten inte besvarar.**
 1. **Arbetsdelningen.** Att stavningen inte följer ornamentiken kan betyda att text och bild hade olika upphov medan budskap och bild bestämdes tillsammans, kanske av beställaren. Det kan också betyda att båda måtten bär handen så svagt att deras gemensamma del inte syns. Vi hävdar ingetdera. Ett svar kräver minst åtta signerade ristare med båda måtten, ett finare ornamentmått och gärna fysiska belägg, som huggtekniken i runor och ornamentik på samma sten.
@@ -502,8 +506,8 @@ Bidraget är mätningen: med två oberoende mått på samma sten kan frågor som
 1. **Läsarna är samma språkmodell** och kan ha samma blinda fläckar. Källkontrollerna skyddar delvis; ett handkodat kontrollurval saknas.
 2. **Planschfotot är inte sanningen.** Det är ofta ifyllt med färg, och samstämmighet kan dölja ett gemensamt fel.
 3. **Flikarnas tal är små** i källkontrollen ({len(NP)} och {len(LP)} stenar, {NP_FLIK} och {LP_FLIK} med flik).
-4. **Läsarna kan känna igen kända stenar** trots instruktionen.
-5. **Bortfallet följer bilden,** vars kvalitet kan variera med landskap och tid; {N_PL_LOST} planschstenar är försvunna och avbildade efter äldre förlagor.
+4. **Läsarna kan känna igen kända stenar.**
+5. **Bortfallet följer bilden,** vars kvalitet kan variera med landskap och tid. {N_PL_LOST} planschstenar är försvunna; {N_PL_TECKN} av de {N_PL_LOST} visas på planschen genom en äldre teckning, och för övriga {N_PL_LOST - N_PL_TECKN} är förlagan inte angiven i vår förteckning.
 6. **Rundatas stilgrupp är inte sanningen,** stilprovet väntades hålla, och Uppland dominerar proven.
 
 **Var metoden inte ska användas:** för läppflik och fötter ur teckningar, för huvudets drag ur djupbilder, och för att tillskriva eller datera en enskild sten på koderna ensamma.
@@ -512,12 +516,12 @@ Bidraget är mätningen: med två oberoende mått på samma sten kan frågor som
 
 ## 7. Slutsats
 
-Rundjurets huvuddrag kan kodas tillförlitligt över hela materialet, också ur 1600- och 1700-talens teckningar av försvunna stenar. Registret fångar sambandet mellan tro och kors, visar att stavningen inte följer bilden utöver bygd och tid, och bär Gräslunds huvudlinjer. Finindelningen och arbetsdelningen kräver bättre bilder av huvudet och fler signerade stenar.
+Rundjurets huvuddrag kan kodas tillförlitligt över hela materialet, också ur 1600- och 1700-talens teckningar av försvunna stenar. Registret visar att stavningen inte följer bilden utöver bygd och tid, och det bär Gräslunds huvudlinjer. Finindelningen och arbetsdelningen kräver bättre bilder av huvudet och fler signerade stenar.
 
 ## Data och kod
 
 - Analysen är gjord på Rundata-korpusen med versionsnyckeln {FP}, i Vitki {APP_VERSION}. Kod och planer: https://github.com/Precatio/runes (CC BY 4.0).
-- Planerna i `analysplaner/`: `{PLANS['orn']}`, `{PLANS['kk']}`, `{PLANS['3d']}`, `{PLANS['gr1']}`, `{PLANS['huvud']}`, `{PLANS['luckor']}`, `{PLANS['sr']}`, `{PLANS['bb']}`. Planerna för huvudet i utsnitt och luckorna har ingen egen kontrollsummefil; deras summor ovan är räknade på filen i commit `a87beda` (pilot 2 i `609c89c`) respektive `161dae7`, där de låstes.
+- Planerna i `analysplaner/`: `{PLANS['orn']}`, `{PLANS['kk']}`, `{PLANS['3d']}`, `{PLANS['gr1']}`, `{PLANS['huvud']}`, `{PLANS['luckor']}`, `{PLANS['sr']}`, `{PLANS['bb']}`. Planerna för huvudet i utsnitt och luckorna har ingen kontrollsummefil; de lades in i commit `a87beda` (pilot 2 i `609c89c`) respektive `161dae7`.
 - Kodboken: `utdata/nya_ristare/ornamentik/kodbok.md`. Skripten och utfallen i `utdata/nya_ristare/ornamentik/` (kallkontroll.py, kallkontroll_3d.py, djupbild.py, forlorade.py, kombinera.py, m2.py, slutprov3.py) och `utdata/graslund/` (graslund1.py, skrev_ritade.py, budskap_bild.py, huvud/utvardera.py). Resultaten står i `utdata/nya_ristare/resultat.md` §§ 10–14, `utdata/graslund/resultat.md` och `utdata/graslund/skrev_ritade.md`.
 - Koderna per sten finns i Vitkis data. Planscherna i Sveriges runinskrifter och texterna ur dess textband ligger inte i repot.
 - 3D-skanningarna (Laila Kitzler Åhfeldt, för Hälsingland och Medelpad med Henrik Zedig; Riksantikvarieämbetet; Zenodo; CC BY 4.0): Södermanland doi:{DOIS['sodermanland']}, Västergötland doi:{DOIS['vastergotland']}, gravmonument i Östergötland och Småland doi:{DOIS['gravmonument_og_sm']}, Åsmund doi:{DOIS['asmund']}, Hälsingland doi:{DOIS['halsingland']}, Medelpad doi:{DOIS['medelpad']}. Djupbilden i Figur 2 är beräknad ur filen {SCAN_FILE}, använd som den är publicerad.
@@ -559,13 +563,13 @@ body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially t
 **Material.** The plate photographs in Sveriges runinskrifter ({num(N_PLANSCH, True)} of {num(N_KORPUS, True)} Swedish Viking Age runestones in Rundata), free photographs, drawings of the 1600s and 1700s and open 3D scans.
 **Method.** Two independent readers answered a codebook of 17 questions about the rune animal. A feature got a value only when both answered alike, and a field was used only with Cohen's kappa ≥ 0.40 and coverage ≥ 30 percent. Every new kind of picture was tested against the photographs, and the codes were set in locked tests against the text, the style groups and groups of stones by the same hand.
 **Results.** The readers agreed with kappa {kv(min(KAP.values()), True)}–{kv(max(KAP.values()), True)} on {len(KAP)} fields; the register covers {num(N_REG, True)} stones, of which {len(FL)} are lost. On {KK['teckningar']} surviving stones the drawings agreed with the photographs on the head, the neck lappet and the koppel (kappa {kv(KT['huvud_vy'], True)}–{kv(KT['nackflik'], True)}), but not demonstrably on lip lappet and feet, and the depth images did not agree on the head. Faith and cross go together in the codes on {BB['stenar']} independent stones. Spelling does not follow the ornament beyond district and style group (Spearman's ρ = {dec(P1['rho'], 3, True)} against {dec(P1['omblandning_medel'], 3, True)} under shuffling, p = {dec(P1['p'], 2, True)}).
-**Conclusion.** The rune animal's main features can be measured reliably, also on lost stones, but not the head's details, on which Gräslund's fine division rests. Whether the weak coupling of writing and image reflects a division of labour or weak traces of the hand, the register cannot decide.
+**Conclusion.** The rune animal's main features can be measured reliably, also on lost stones, but not the head's details, on which Gräslund's fine division rests. Whether the weak coupling of writing and image reflects a division of labour or weak traces of the hand cannot be decided.
 
 ## 1. Introduction
 
 Anne-Sofie Gräslund (1991, 1992, 2006) ordered the rune animals on the late Viking Age runestones into style groups: RAK, where the ends of the rune band are straight without an animal head; Fp, where the head is seen from above; and Pr1–Pr5, profile heads in five steps. The groups rest on single features – the head's view, the eye, lappets at neck and lips, the tail, the feet, the koppel that binds the animals together – and are used to date the stones (Gräslund 2006, 2015). The images, the crosses and the carvers have been studied by Stern (2013), Lager (2002), Källström (2007) and Kitzler Åhfeldt (2002, 2017), among others.
 
-The features, however, have not been measured across the whole material; Rundata has the style group but not the features. Many stones survive only in drawings: Bautil's woodcuts, cut in the 1600s and printed in 1750, Johannes Rhezelius's drawings from the 1630s and Johan Peringskiöld's from around 1700. The editors of Sveriges runinskrifter have judged the drawings stone by stone. As far as we know, they have not been tested feature by feature against photographs across a larger material.
+The features, however, have not been measured across the whole material; Rundata has the style group but not the features. Many stones survive only in drawings: Bautil's woodcuts, cut in the 1600s and printed in 1750, Johannes Rhezelius's drawings from the 1630s and Johan Peringskiöld's from around 1700. The editors of Sveriges runinskrifter judged them stone by stone. As far as we know, they have not been tested feature by feature against photographs across a larger material.
 
 The contribution here is the measurement: a register in which the ornament is coded independently of the text, so that how the text is written and how the animal is drawn can be set against each other. Four tests show what the register carries: an expected link between text and image, the spelling, Gräslund's style groups and groups of stones by the same hand.
 
@@ -581,18 +585,18 @@ The work followed eight plans, locked in the project's version control before wh
 - **The drawings fill gaps** ({S['luckor']}): descriptive.
 - **Message and image** ({S['bb']}), a confirmatory test on independent stones: "B1 holds if ρ > 0 and one-sided p < 0.05".
 
-The link between message and image had been seen in a first sample; that is why it was tested on other stones. What is called exploratory below was in no plan.
+The link between message and image had been seen in a first sample; that is why it was tested on other stones. The plans for the crops and the gaps concern instrument and procedure; they were committed to version control before running but not locked with a checksum (the sums above are computed on the commit that added them). What is called exploratory below was in no plan.
 
 ## 3. Material
 
 - **The stones:** Scandinavian Runic-text Database (Rundata) 3.1, frozen for the analysis: {num(N_KORPUS, True)} Swedish Viking Age runestones with coordinates and Rundata's style groups.
 - **The pictures:** the plate photographs in Sveriges runinskrifter ({num(N_PLANSCH, True)} stones; protected by copyright, read but not shown), the plates of Gotland and Öland, free photographs of the painted stones in Hälsingland and Medelpad, Bautil in the Umeå University Library copy, other drawings as Sveriges runinskrifter reproduces them, and Laila Kitzler Åhfeldt's and Henrik Zedig's open 3D scans (CC BY 4.0).
-- **The text:** the spelling, categorical language traits (such as the type of word divider) and twelve categories for what the text says, coded per stone from Rundata.
+- **The text:** the spelling, categorical language traits and twelve categories for what the text says, coded per stone from Rundata.
 
 ## 4. Method
 
 ### 4.1 The codebook and the readers
-- **The codebook** has 17 questions about the rune animal (animal head, number of animals, the head's view, eye, neck and lip lappet, mouth, tail, feet, koppel, interlace, cross and more), always with the answer "uncertain". Head, tail and band ends must be enlarged before they are coded. Two pilots on 12 and 20 stones outside the test material preceded the lock.
+- **The codebook** has 17 questions about the rune animal (animal head, number of animals, the head's view, eye, neck and lip lappet, mouth, tail, feet, koppel, interlace, cross and more), always with the answer "uncertain". Head, tail and band ends must be enlarged before they are coded. Two pilots (12 and 20 stones outside the test material) preceded the lock.
 - **The readers** were two separate runs of Anthropic's language model Claude (Claude Opus). They saw only the picture and the signum, five stones at a time in opposite order, and were asked not to use knowledge of the stone or the literature.
 - **The value** is what both give; otherwise it is missing.
 - **Cohen's kappa** (Cohen 1960) is the share of equal answers with the contribution of chance removed: 1 is full agreement, 0 no better than chance. **The coverage** is the share of stones where both gave a value.
@@ -601,7 +605,7 @@ The link between message and image had been seen in a first sample; that is why 
 - **The principle:** a new kind of picture is tested against the plate photograph on surviving stones present in both, with new readers. The measure is whether two renderings of the same stone say the same thing.
 - **The drawings:** at random 40 from Bautil, 40 by Rhezelius, 30 by Peringskiöld and 30 by other draughtsmen.
 - **The depth images:** the surface minus the same surface smoothed over 12 mm, so that carved lines turn dark, on {K3['källkontroll_stenar']} scanned stones.
-- **The head in crops:** two pilots on 30 stones where the neck lappet lacked a value, with cut-out heads, two readers and a third on disagreement; in pilot 2 with a schematic drawing of a profile head and crops enlarged to at least 1,000 pixels.
+- **The head in crops:** two pilots on 30 stones where the neck lappet lacked a value: cut-out heads, two readers and a third on disagreement, in pilot 2 with a schematic profile head and crops enlarged to at least 1,000 pixels.
 - **Gaps and lost stones:** drawings were coded for 141 surviving stones lacking a neck lappet and for {len(FB)} lost stones, only in approved fields and labelled with the draughtsman. A plate value was never replaced.
 
 ### 4.3 The tests
@@ -614,7 +618,7 @@ The link between message and image had been seen in a first sample; that is why 
 - **The source check:** the sample drew 140 drawings, but some stones came in under several types; the comparison covers {KK['teckningar']} stones ({PT['bautil']} Bautil, {PT['rhezelius']} Rhezelius, {PT['peringskiold']} Peringskiöld, {PT['ovrig']} others).
 - **The crops:** pilot 2, with a changed codebook and an addition for fields where one value dominates, was added after pilot 1's outcome.
 - **Writing and drawing:** the plan's secondary measure, "the language traits", in practice measured the message, since the categorical traits became zero as numbers; its value (ρ = {dec(SPD['rho'], 2, True)} against {dec(SPD['omblandning_medel'], 2, True)}) thus concerns the message. The language traits were recomputed correctly outside the plan.
-- **Message and image:** the plan counted on 456 stones but included fields that are not approved; with approved fields only there were {BB['stenar']} stones and {num(B1['par'], True)} pairs. The exploratory value in the first sample is given in the plan as ρ = 0.23 against 0.07 and in the result as 0.19 against 0.08; the difference has not been resolved.
+- **Message and image:** the plan counted on 456 stones but included fields that are not approved; with approved fields only there were {BB['stenar']} stones and {num(B1['par'], True)} pairs. In the first sample the twelve message columns gave ρ = 0.23 against 0.07 (p = 0.002) and the four linguistic markers 0.08 against 0.05 (p = 0.036); the result's 0.19 against 0.08 concerns both together.
 - **The gaps:** {KB['teckningar_kodade']} of 141 drawings got an agreed value.
 - **Otherwise** no deviations.
 
@@ -639,7 +643,7 @@ In plain words: two readers who do not see each other give the same answer about
 
 ### 5.3 Depth images, crops and gaps
 - **The depth images did not hold.** Against the photograph the animal head agreed with kappa {kv(D3['djurhuvud']['kappa'], True)}, the head's view {kv(D3['huvud_vy']['kappa'], True)}, the eye {kv(D3['oga']['kappa'], True)} and the number of animals {kv(D3['antal_djur']['kappa'], True)}; the tail could not be read, and the readers were less sure among themselves (kappa {kv(min(L3), True)}–{kv(max(L3), True)}). Only the extra serpent reached 15 comparable stones and may be read. The computation shows weathering and cracks as clearly as shallow lines (Figure 2); this applies to the computation, not to the scans.
-- **The crops did not hold.** Neck and lip lappet got a value on {pc(P1H['täckning']['nackflik'])} and {pc(P1H['täckning']['lappflik'])} percent of the stones in pilot 1 and {pc(P2H['täckning']['nackflik'])} and {pc(P2H['täckning']['lappflik'])} percent in pilot 2, against the requirement of 60, although the eye reached kappa {kv(P2H['läsare1_mot_2']['oga']['kappa'], True)}. Reading lappets in crops was abandoned.
+- **The crops did not hold.** Neck and lip lappet got a value on {pc(P1H['täckning']['nackflik'])} and {pc(P1H['täckning']['lappflik'])} percent of the stones in pilot 1 and {pc(P2H['täckning']['nackflik'])} and {pc(P2H['täckning']['lappflik'])} percent in pilot 2, against the requirement of 60. Reading lappets in crops was abandoned.
 - **The drawings filled {sum(FILL.values())} gaps**, mostly eye ({FILL['oga']}) and neck lappet ({FILL['nackflik']}). The share of stones with an animal head that have a neck lappet, percent before → after: {NHEAD}; the eye in Pr4 {pc(CV['Pr4']['oga']['före'])} → {pc(CV['Pr4']['oga']['efter'])}.
 
 {FIG2_EN}
@@ -647,7 +651,7 @@ In plain words: two readers who do not see each other give the same answer about
 ### 5.4 Validation: message and image
 - **The test held.** On {BB['stenar']} independent stones ({BB['källor']['plansch']} plate stones without a style group, {BB['källor']['teckning']} lost, {BB['källor']['utvidgning']} from Gotland, Öland, Hälsingland and Medelpad) and {num(B1['par'], True)} pairs, ρ = {dec(B1['rho'], 2, True)} between message and ornament, against {dec(B1['omblandning_medel'], 3, True)} under shuffling; none of 999 shuffles reached it (p = {dec(B1['p'], 3, True)}). It held for plate stones (ρ = {dec(PK['plansch']['rho'], 2, True)}) and drawings ({dec(PK['teckning']['rho'], 2, True)}), both p = {dec(PK['plansch']['p'], 3, True)}; within the same style group there were only {SS['par']} pairs (ρ = {dec(SS['rho'], 2, True)}, p = {dec(SS['p'], 2, True)}).
 - **What carries it:** without the category "the text lacks religious markers", ρ falls to {dec(UK['pm_neutral'], 3, True)}; every other category left out gives {dec(min(UK_OVR), 2, True)}–{dec(max(UK_OVR), 2, True)}. Exploratory: with the cross removed from the ornament, ρ = 0.062 (p = 0.007), without both the cross and that category 0.040 (p = 0.14).
-- **The reading:** this is the expected link between faith and cross. The readers coded only the picture, and the codes capture it; that validates the register but is not a new finding.
+- **The reading:** the expected link between faith and cross; the readers coded only the picture, so it validates the register but is not a new finding.
 
 ### 5.5 Writing and drawing
 - **The main test did not hold.** On {SR['stenar']} stones and {num(P1['par'], True)} pairs in the same style group within 30 km, ρ = {dec(P1['rho'], 3, True)} between spelling and ornament, against {dec(P1['omblandning_medel'], 3, True)} under shuffling (p = {dec(P1['p'], 2, True)}); without pairs from the same parish {dec(SU['rho'], 3, True)} (p = {dec(SU['p'], 2, True)}); within Pr4 ({num(P3['par'], True)} pairs) {dec(P3['rho'], 3, True)} against {dec(P3['omblandning_medel'], 3, True)} (p = {dec(P3['p'], 2, True)}).
@@ -656,7 +660,7 @@ In plain words: two readers who do not see each other give the same answer about
 - **The carvers as units** could not be tested: only {P2['ristare']} signing carvers (Öpir, Balle, Åsmund, Visäte) have at least five stones with both measures; the plan required eight.
 
 ### 5.6 Gräslund's style groups
-- **The features carry the style group.** On {F1['stenar']} stones ({', '.join(f'{s} {N_STIL[s]}' for s in STYLES)}) the model put {pc(F1['träffsäkerhet'])} percent in the right group, against {pc(F1['vanligaste_gruppen'])} for always guessing Pr4 and {pc(F1['omblandning_medel'])} with shuffled groups (p = {dec(F1['p'], 3, True)}). Pr1–Pr3 are recognised on 22–41 percent and Pr5 not at all; all but four become Pr4.
+- **The features carry the style group.** On {F1['stenar']} stones ({', '.join(f'{s} {N_STIL[s]}' for s in STYLES)}) the model put {pc(F1['träffsäkerhet'])} percent in the right group, against {pc(F1['vanligaste_gruppen'])} for always guessing Pr4 and {pc(F1['omblandning_medel'])} with shuffled groups (p = {dec(F1['p'], 3, True)}). Pr5 is not recognised at all; all but four become Pr4.
 - **The Pr groups are an ordered sequence.** Of {F2['fel_inom_Pr']} errors within Pr, {F2['avstånd']['1']} landed one step away, {F2['avstånd']['2']} two and {F2['avstånd']['3']} three: {pc(F2['andel_till_granne'])} percent with the neighbour, against {pc(F2['omblandning_medel'])} under shuffling (p = {dec(F2['p'], 3, True)}).
 - **The features themselves** form three classes: no animal head (191 stones, mostly RAK), a simple animal without lappets (134, mostly Fp and Pr1–Pr3) and a profile head with a koppel (295, mostly Pr4 and Pr3). Adjusted Rand index against Rundata: {dec(F3['ARI_mot_rundata'], 2, True)}.
 - **Between provinces:** trained on Uppland the model hit {pc(F4['inom_uppland_cv'])} percent there but {pc(F4['Sö']['träffsäkerhet'])} in Södermanland.
@@ -670,7 +674,7 @@ In plain words: two readers who do not see each other give the same answer about
 
 ## 6. Discussion
 
-The contribution is the measurement: with two independent measures of the same stone, questions that were tried stone by stone can be asked across the whole material, and the negative outcomes show where the measurement ends. The newest part is the source check, which makes the lost stones measurable in the rune animal's main features.
+The contribution is the measurement: with two independent measures of the same stone, questions that were tried stone by stone can be asked across the whole material. The newest part is the source check, which makes the lost stones measurable in the rune animal's main features.
 
 **What the report does not answer.**
 1. **The division of labour.** That spelling does not follow the ornament may mean that text and image had different makers while message and image were decided together, perhaps by the commissioner. It may also mean that both measures carry the hand so weakly that their shared part does not show. We claim neither. An answer needs at least eight signing carvers with both measures, a finer ornament measure and preferably physical evidence, such as the carving technique in runes and ornament on the same stone.
@@ -680,8 +684,8 @@ The contribution is the measurement: with two independent measures of the same s
 1. **The readers are the same language model** and may share blind spots. The source checks guard in part; a hand-coded control sample is missing.
 2. **The plate photograph is not the truth.** It is often painted in, and agreement can hide a shared error.
 3. **The lappets' numbers are small** in the source check ({len(NP)} and {len(LP)} stones, {NP_FLIK} and {LP_FLIK} with a lappet).
-4. **The readers may recognise well-known stones** despite the instruction.
-5. **The missing values follow the picture,** whose quality may vary with province and time; {N_PL_LOST} plate stones are lost and depicted after older originals.
+4. **The readers may recognise well-known stones.**
+5. **The missing values follow the picture,** whose quality may vary with province and time. {N_PL_LOST} plate stones are lost; {N_PL_TECKN} of the {N_PL_LOST} are shown on the plate through an older drawing, and for the other {N_PL_LOST - N_PL_TECKN} the source is not given in our index.
 6. **Rundata's style group is not the truth,** the style test was expected to hold, and Uppland dominates the tests.
 
 **Where the method should not be used:** for lip lappet and feet from drawings, for the head's features from depth images, and for attributing or dating a single stone on the codes alone.
@@ -690,12 +694,12 @@ The contribution is the measurement: with two independent measures of the same s
 
 ## 7. Conclusion
 
-The rune animal's main features can be coded reliably across the whole material, also from the drawings of lost stones made in the 1600s and 1700s. The register captures the link between faith and cross, shows that spelling does not follow the image beyond district and time, and carries Gräslund's main lines. The fine division and the division of labour need better pictures of the head and more signed stones.
+The rune animal's main features can be coded reliably across the whole material, also from the drawings of lost stones made in the 1600s and 1700s. The register shows that spelling does not follow the image beyond district and time, and it carries Gräslund's main lines. The fine division and the division of labour need better pictures of the head and more signed stones.
 
 ## Data and code
 
 - The analysis was made on the Rundata corpus with the version key {FP}, in Vitki {APP_VERSION}. Code and plans: https://github.com/Precatio/runes (CC BY 4.0).
-- The plans in `analysplaner/`: `{PLANS['orn']}`, `{PLANS['kk']}`, `{PLANS['3d']}`, `{PLANS['gr1']}`, `{PLANS['huvud']}`, `{PLANS['luckor']}`, `{PLANS['sr']}`, `{PLANS['bb']}`. The plans for the head in crops and for the gaps have no checksum file of their own; their sums above are computed on the file in commit `a87beda` (pilot 2 in `609c89c`) and `161dae7` respectively, where they were locked.
+- The plans in `analysplaner/`: `{PLANS['orn']}`, `{PLANS['kk']}`, `{PLANS['3d']}`, `{PLANS['gr1']}`, `{PLANS['huvud']}`, `{PLANS['luckor']}`, `{PLANS['sr']}`, `{PLANS['bb']}`. The plans for the head in crops and for the gaps have no checksum file; they were added in commit `a87beda` (pilot 2 in `609c89c`) and `161dae7` respectively.
 - The codebook: `utdata/nya_ristare/ornamentik/kodbok.md`. The scripts and outcomes in `utdata/nya_ristare/ornamentik/` (kallkontroll.py, kallkontroll_3d.py, djupbild.py, forlorade.py, kombinera.py, m2.py, slutprov3.py) and `utdata/graslund/` (graslund1.py, skrev_ritade.py, budskap_bild.py, huvud/utvardera.py). The results are in `utdata/nya_ristare/resultat.md` §§ 10–14, `utdata/graslund/resultat.md` and `utdata/graslund/skrev_ritade.md`.
 - The codes per stone are in Vitki's data. The plates of Sveriges runinskrifter and the texts of its text volumes are not in the repository.
 - The 3D scans (Laila Kitzler Åhfeldt, for Hälsingland and Medelpad with Henrik Zedig; Swedish National Heritage Board; Zenodo; CC BY 4.0): Södermanland doi:{DOIS['sodermanland']}, Västergötland doi:{DOIS['vastergotland']}, grave monuments in Östergötland and Småland doi:{DOIS['gravmonument_og_sm']}, Åsmund doi:{DOIS['asmund']}, Hälsingland doi:{DOIS['halsingland']}, Medelpad doi:{DOIS['medelpad']}. The depth image in Figure 2 is computed from the file {SCAN_FILE}, used as published.
