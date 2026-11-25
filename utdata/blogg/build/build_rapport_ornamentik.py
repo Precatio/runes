@@ -366,13 +366,14 @@ CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report (methods repor
 TL_SV = ("planen för ornamentiken och kodboken låstes 2026-11-24; planschfotona kodades och grinden och slutprovet för "
          "grupperna av stenar med samma hand kördes 2026-11-25; planerna för källkontrollen av teckningarna och för "
          "stilgrupperna låstes och kördes 2026-11-25; de försvunna stenarna kodades ur teckningar 2026-11-25; planerna för "
-         "djupbilderna, för huvudet i utsnitt och för skrift och bild låstes och kördes 2026-11-25; planen för luckorna och "
-         "planen för budskap och bild låstes och kördes 2026-11-25")
+         "djupbilderna och för skrift och bild låstes och kördes 2026-11-25; planerna för huvudet i utsnitt och för luckorna "
+         "lades in och kördes 2026-11-25; planen för budskap och bild låstes och kördes 2026-11-25")
 TL_EN = ("the plan for the ornament and the codebook were locked 2026-11-24; the plate photos were coded and the gate and the "
          "final test for the groups of stones by the same hand were run 2026-11-25; the plans for the source check of the "
          "drawings and for the style groups were locked and run 2026-11-25; the lost stones were coded from drawings "
-         "2026-11-25; the plans for the depth images, for the head in crops and for writing and drawing were locked and run "
-         "2026-11-25; the plan for the gaps and the plan for message and image were locked and run 2026-11-25")
+         "2026-11-25; the plans for the depth images and for writing and drawing were locked and run 2026-11-25; the plans "
+         "for the head in crops and for the gaps were committed and run 2026-11-25; the plan for message and image was "
+         "locked and run 2026-11-25")
 S = {k: f"`{v[:8]}…`" for k, v in SHA.items()}
 NHEAD = ", ".join(f"{g} {pc(a)} → {pc(b)}" for g, (a, b) in NFC.items())
 
@@ -397,7 +398,7 @@ Bidraget här är mätningen: ett register där ornamentiken kodas oberoende av 
 
 ## 2. Förregistrering
 
-Arbetet följde åtta planer, låsta i projektets versionshantering innan det de gällde räknades, den första 2026-11-24 och de övriga 2026-11-25 (SHA-256 är filens kontrollsumma):
+Arbetet följde åtta planer, lagda i projektets versionshantering innan det de gällde räknades, den första 2026-11-24 och de övriga 2026-11-25 (SHA-256 är filens kontrollsumma):
 - **Ornamentiken och grupperna av stenar med samma hand** ({S['orn']}): kodbok version 2 (`97cf9214…`), regeln för fälten, en grind och ett slutprov som håller, ordagrant, ”om p < 0,05 och medelskillnaden > 0”.
 - **Källkontrollen av teckningarna** ({S['kk']}), låst innan någon teckning kodades. Ett fält får läsas ”{Q_KK}”.
 - **Stilgrupperna** ({S['gr1']}): bär dragen stilgruppen, och är Pr-grupperna en ordnad följd? Planen säger att det första väntas hålla och att ”det intressanta är mönstret i felen”.
@@ -575,7 +576,7 @@ The contribution here is the measurement: a register in which the ornament is co
 
 ## 2. Preregistration
 
-The work followed eight plans, locked in the project's version control before what they concerned was computed, the first on 2026-11-24 and the others on 2026-11-25 (SHA-256 is the file's checksum):
+The work followed eight plans, committed to the project's version control before what they concerned was computed, the first on 2026-11-24 and the others on 2026-11-25 (SHA-256 is the file's checksum):
 - **The ornament and the groups of stones by the same hand** ({S['orn']}): codebook version 2 (`97cf9214…`), the rule for the fields, a gate and a final test that holds, verbatim, "if p < 0.05 and the mean difference > 0".
 - **The source check of the drawings** ({S['kk']}), locked before any drawing was coded. A field may be read "when kappa against the plate is ≥ 0.40 and at least 15 stones can be compared".
 - **The style groups** ({S['gr1']}): do the features carry the style group, and are the Pr groups an ordered sequence? The plan says the first is expected to hold and that "the interesting thing is the pattern in the errors".
