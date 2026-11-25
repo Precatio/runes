@@ -24,3 +24,17 @@ Annars ändras kodboken eller utsnittsmetoden och en ny pilot görs på nya sten
 
 ## Utdata
 `utdata/graslund/huvud/` (skript, sammanfattning); utsnitt och koder i `data/cache/hander/huvud/` (utanför git).
+
+## Pilot 1 – utfall (2026-11-25): regeln höll inte
+- Täckning: nackflik 0,37 och läppflik 0,40 (krav 0,6).
+- Kappa: huvud_vy 0,0 trots 96 % lika (nästan alla i profil); öga 0,52; nackflik 0,67; läppflik 0,71.
+- Öga mot v2: 0,33, eftersom det nya värdet `droppe` tog över från `mandel`. Det är ett fel i kodboken.
+- Utsnitten var små (cirka 200–400 px), så flikarna syns men är svåra att tolka.
+
+## Pilot 2 (bestämd före körningen)
+- **Ändringar:**
+  - Kodbok 3b: `droppe` borta (räknas som mandel), schematisk bild av ett profilhuvud, ögat hittas först.
+  - Utsnitten förstoras till minst 1 000 px på den längsta sidan (LANCZOS) innan de läses.
+- **Stenarna:** 30 nya stenar ur samma kandidatmängd, slumpvis (frö 20261126). Pilot 1:s stenar ingår inte.
+- **Regeln:** samma som för pilot 1, med ett tillägg för fält där ett värde dominerar. Om minst 90 % av läsarnas par har
+  samma värde räcker det att andelen lika är ≥ 0,9 i stället för kappa ≥ 0,6. Annars blir kappa meningslös.
