@@ -1,0 +1,103 @@
+{
+ "plan": "2026-11-25-skrev-och-ritade.md",
+ "stenar": 580,
+ "P1": {
+  "par": 6387,
+  "rho": 0.022,
+  "omblandning_medel": 0.0105,
+  "omblandning_95": 0.045,
+  "p": 0.291,
+  "håller": false
+ },
+ "P2": {
+  "ristare": 4,
+  "stenar": {
+   "Balle": 13,
+   "Visäte": 5,
+   "Åsmund": 8,
+   "Öpir 1": 21
+  },
+  "partiell_mantel_rho": 0.832,
+  "p": 0.2437,
+  "håller": false,
+  "bara_beskrivande": true,
+  "avvikare": [
+   {
+    "ristare": "Åsmund",
+    "rang_stavning": 3,
+    "rang_ornamentik": 1
+   },
+   {
+    "ristare": "Öpir 1",
+    "rang_stavning": 1,
+    "rang_ornamentik": 3
+   },
+   {
+    "ristare": "Balle",
+    "rang_stavning": 4,
+    "rang_ornamentik": 4
+   },
+   {
+    "ristare": "Visäte",
+    "rang_stavning": 2,
+    "rang_ornamentik": 2
+   }
+  ]
+ },
+ "P3": {
+  "par": 3485,
+  "rho": 0.0304,
+  "omblandning_medel": 0.026,
+  "omblandning_95": 0.0836,
+  "p": 0.463,
+  "håller": false
+ },
+ "beskrivande": {
+  "P1_språkdrag": {
+   "par": 6387,
+   "rho": 0.289,
+   "omblandning_medel": 0.0972,
+   "omblandning_95": 0.1328,
+   "p": 0.001,
+   "håller": true
+  },
+  "P1_utan_samma_socken": {
+   "par": 6148,
+   "rho": 0.0216,
+   "omblandning_medel": 0.0084,
+   "omblandning_95": 0.0439,
+   "p": 0.271,
+   "håller": false
+  },
+  "per_stilgrupp": {
+   "Fp": {
+    "par": 518,
+    "rho": 0.147
+   },
+   "Pr1": {
+    "par": 109,
+    "rho": 0.3
+   },
+   "Pr2": {
+    "par": 407,
+    "rho": 0.099
+   },
+   "Pr3": {
+    "par": 962,
+    "rho": 0.038
+   },
+   "Pr4": {
+    "par": 3485,
+    "rho": 0.03
+   },
+   "Pr5": {
+    "par": 108,
+    "rho": -0.123
+   },
+   "RAK": {
+    "par": 798,
+    "rho": -0.1
+   }
+  }
+ }
+}
