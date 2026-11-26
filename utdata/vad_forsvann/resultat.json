@@ -1,0 +1,117 @@
+{
+  "plan": "2026-11-26-vad-forsvann.md",
+  "huvudprov": {
+    "U1": {
+      "n": 181,
+      "n_forlorade": 102,
+      "n_bevarade": 79,
+      "andel_forlorade": 0.55882,
+      "andel_bevarade": 0.73418,
+      "or": 0.41178,
+      "ci": [0.17804, 0.95238],
+      "p": 0.03808,
+      "metod": "glmer",
+      "p_holm": 0.05355,
+      "skiljer": false
+    },
+    "U2": {
+      "n": 271,
+      "n_forlorade": 157,
+      "n_bevarade": 114,
+      "andel_forlorade": 0.43949,
+      "andel_bevarade": 0.62281,
+      "or": 0.39115,
+      "ci": [0.20992, 0.72883],
+      "p": 0.00311,
+      "metod": "glmer",
+      "p_holm": 0.00934,
+      "skiljer": true
+    },
+    "U3": {
+      "n": 260,
+      "n_forlorade": 151,
+      "n_bevarade": 109,
+      "andel_forlorade": 0.4106,
+      "andel_bevarade": 0.56881,
+      "or": 0.41466,
+      "ci": [0.19027, 0.9037],
+      "p": 0.02678,
+      "metod": "glmer",
+      "p_holm": 0.05355,
+      "skiljer": false
+    }
+  },
+  "uppland": {
+    "U1": {
+      "n": 123,
+      "n_forlorade": 66,
+      "n_bevarade": 57,
+      "andel_forlorade": 0.72727,
+      "andel_bevarade": 0.85965,
+      "or": 0.38183,
+      "ci": [0.12989, 1.12248],
+      "p": 0.08012,
+      "metod": "glmer"
+    },
+    "U2": {
+      "n": 202,
+      "n_forlorade": 113,
+      "n_bevarade": 89,
+      "andel_forlorade": 0.45133,
+      "andel_bevarade": 0.65169,
+      "or": 0.34632,
+      "ci": [0.16663, 0.71978],
+      "p": 0.0045,
+      "metod": "glmer"
+    },
+    "U3": {
+      "n": 183,
+      "n_forlorade": 101,
+      "n_bevarade": 82,
+      "andel_forlorade": 0.56436,
+      "andel_bevarade": 0.64634,
+      "or": 0.53052,
+      "ci": [0.22313, 1.26138],
+      "p": 0.15142,
+      "metod": "glmer"
+    }
+  },
+  "beskrivande_foto": {
+    "U1": {
+      "forlorade_teckning": 0.55882,
+      "n_f": 102,
+      "bevarade_foto": 0.78868,
+      "n_b": 265
+    },
+    "U2": {
+      "forlorade_teckning": 0.43949,
+      "n_f": 157,
+      "bevarade_foto": 0.64553,
+      "n_b": 347
+    },
+    "U3": {
+      "forlorade_teckning": 0.4106,
+      "n_f": 151,
+      "bevarade_foto": 0.59375,
+      "n_b": 320
+    }
+  },
+  "per_typ": {
+    "Bautil": [
+      [0.58108, 0.41379, 0.42727],
+      [0.66667, 0.76471, 0.51515]
+    ],
+    "Rhezelius": [
+      [0.625, 0.54545, 0.6],
+      [0.86364, 0.53125, 0.71875]
+    ],
+    "Peringskiöld": [
+      [0.58333, 0.47619, 0.3],
+      [0.64706, 0.59259, 0.6]
+    ],
+    "övrig": [
+      [0.25, 0.55556, 0.27273],
+      [0.75, 0.57143, 0.41667]
+    ]
+  }
+}
