@@ -22,3 +22,14 @@ avsnittet ”Det som är osäkert” (`utdata/blogg/build/build_palm_jordar.py`,
 
 **Kvar som begränsning:** invändning 6, om gårdarna flyttade under yngre järnåldern, kan inte prövas utan 1600-talets
 kartor och fosfat (D8 i publiceringsplanen). Strandlinjen ±1–3 m väntar på höjdmodellen (D2).
+
+## Tillägg 2026-11-26: K2 och K3 med stenarna i grupp som enhet – håller
+Plan `analysplaner/2026-11-26-lerkanten-grupper.md`, låst före räkningen. Skript `grupper.py` och `grupper.R`, utfall
+`grupper.json`.
+- **Underlaget:** 707 stenar i 496 grupper (1 km-länkning, största gruppen 8 stenar).
+- **G-K2** (kanten med sand och grus i modellen): oddskvot 1,70. Det klusterrobusta standardfelet är 0,099, mot 0,081 utan
+  grupper. Ensidigt p = 5·10⁻⁸. **Håller.**
+- **G-K3** (även torv och gyttja): oddskvot 1,70, ensidigt p = 4·10⁻⁸. **Håller.**
+- **Beskrivande, en slumpvis sten per grupp** (1 000 dragningar): medianoddskvot 1,77 i både K2 och K3. Alla dragningar har
+  ensidigt p < 0,05.
+- **Följden:** lerkanten står också med grupperna som enhet. Att stenar ligger tätt förklarar inte resultatet.
