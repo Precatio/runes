@@ -743,6 +743,20 @@
   },
   {
    "date": "2026-12-02",
+   "slug": "stenar-med-samma-hand",
+   "en": true,
+   "text": "New research report: a model groups runestones that may share a carver – also where no named carver fits. In a locked final test, 42 % of the runologists' own same-hand pairs landed in the same group, against 7 % for neighbouring stones.",
+   "tags": [
+    "runology",
+    "Skystorians",
+    "runestones",
+    "VikingAge",
+    "Vikings"
+   ],
+   "artikel": true
+  },
+  {
+   "date": "2026-12-02",
    "en": true,
    "slug": "ristarforslag-blindprov",
    "tags": [
@@ -851,6 +865,20 @@
     "VikingAge"
    ],
    "text": "New series, The old lands. In the Viking Age Södertörn was an island, Tören. Its outer half around AD 1000: farms in forest clearings, a grave field by every village, hillforts on the heights, an assembly site by the sea."
+  },
+  {
+   "date": "2026-12-08",
+   "slug": "upptacktsmotorn",
+   "en": true,
+   "text": "New research report: a discovery engine that searches one half of the runestones for unexpected associations, freezes the list and tests it on the other half. Of 28 associations found in the first half, 14 held in the second.",
+   "tags": [
+    "runology",
+    "Skystorians",
+    "runestones",
+    "VikingAge",
+    "Vikings"
+   ],
+   "artikel": true
   },
   {
    "date": "2026-12-08",
@@ -969,6 +997,20 @@
     "runology",
     "Skystorians",
     "OldNorse",
+    "VikingAge",
+    "Vikings"
+   ],
+   "artikel": true
+  },
+  {
+   "date": "2026-12-22",
+   "slug": "skrivmiljoer-utan-namn",
+   "en": true,
+   "text": "New research report: runestones without a carver grouped by how they are written. Tested on known carvers, a group is on average 86 % the same carver, against 71 % for nearby stones – but that the unsigned groups are one hand is not shown.",
+   "tags": [
+    "runology",
+    "Skystorians",
+    "runestones",
     "VikingAge",
     "Vikings"
    ],

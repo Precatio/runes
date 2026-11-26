@@ -668,6 +668,60 @@
     ]
    },
    "godkand": "2026-11-25T19:29:12+01:00"
+  },
+  {
+   "datum": "2026-12-02",
+   "tid": "07:00",
+   "id": "I1dPXmYO2i9GD9a5Q8mn",
+   "titel": "Runstenar med samma hand",
+   "spar": "F",
+   "bluesky": {
+    "text": "New research report: a model groups runestones that may share a carver – also where no named carver fits. In a locked final test, 42 % of the runologists' own same-hand pairs landed in the same group, against 7 % for neighbouring stones.",
+    "tags": [
+     "runology",
+     "Skystorians",
+     "runestones",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-26T16:46:13+01:00"
+  },
+  {
+   "datum": "2026-12-08",
+   "tid": "07:00",
+   "id": "HnnsXBY4zhbwPZqNEuj0",
+   "titel": "En upptäcktsmotor för runstenarna",
+   "spar": "F",
+   "bluesky": {
+    "text": "New research report: a discovery engine that searches one half of the runestones for unexpected associations, freezes the list and tests it on the other half. Of 28 associations found in the first half, 14 held in the second.",
+    "tags": [
+     "runology",
+     "Skystorians",
+     "runestones",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-26T16:46:13+01:00"
+  },
+  {
+   "datum": "2026-12-22",
+   "tid": "07:00",
+   "id": "vjDfELe4xiHBZmDIMrfw",
+   "titel": "Skrivmiljöer utan namn",
+   "spar": "F",
+   "bluesky": {
+    "text": "New research report: runestones without a carver grouped by how they are written. Tested on known carvers, a group is on average 86 % the same carver, against 71 % for nearby stones – but that the unsigned groups are one hand is not shown.",
+    "tags": [
+     "runology",
+     "Skystorians",
+     "runestones",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-26T16:46:14+01:00"
   }
  ]
 }
