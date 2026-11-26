@@ -414,7 +414,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapp
 
 Anne-Sofie Gräslund (1991, 1992, 2006) ordnade rundjuren på de sena vikingatida runstenarna i stilgrupper: RAK, där runbandets ändar är raka utan djurhuvud, Fp, där huvudet ses ovanifrån, och Pr1–Pr5, profilhuvuden i fem steg. Grupperna bygger på enskilda drag – huvudets vy, ögat, flikar vid nacke och läppar, svansen, fötterna, kopplet – och används för att datera stenarna (Gräslund 2006, 2015). Bilderna, korsen och ristarna har studerats av bland andra Stern (2013), Lager (2002), Källström (2007) och Kitzler Åhfeldt (2002, 2017).
 
-Dragen har däremot inte mätts över hela materialet. Många stenar finns bara kvar i teckningar: Bautils träsnitt, skurna på 1600-talet och tryckta 1750, Johannes Rhezelius teckningar från 1630-talet och Johan Peringskiölds från omkring 1700. Utgivarna av Sveriges runinskrifter bedömde dem sten för sten. Såvitt vi vet har de inte prövats drag för drag mot fotografier över ett större material.
+Dragen har däremot inte mätts över hela materialet. Många stenar finns bara kvar i teckningar: Bautils träsnitt, skurna på 1600-talet och tryckta 1750, Johannes Rhezelius teckningar från 1630-talet och Johan Peringskiölds från omkring 1700. Enskilda fall är granskade: Peringskiöld och Rhezelius kunde ändra ornamentiken, ibland med påhittade huvuden (Källström 2025a, 2025b), och huvudet går inte alltid att klassificera ur teckningarna (Källström 2010). Såvitt vi vet har de inte prövats drag för drag mot fotografier över ett större material.
 
 Bidraget här är mätningen: ett register där ornamentiken kodas oberoende av texten, så att hur texten är skriven och hur djuret är ritat kan ställas mot varandra. Fyra prov visar vad registret bär.
 
@@ -523,8 +523,8 @@ I klartext: två läsare som inte ser varandra ger samma svar om rundjurets huvu
 Bidraget är mätningen, och mest nytt är källkontrollen, som gör de försvunna stenarna mätbara i rundjurets huvuddrag.
 
 **Vad rapporten inte besvarar.**
-1. **Arbetsdelningen.** Att stavningen inte följer ornamentiken kan betyda att text och bild hade olika upphov medan budskap och bild bestämdes tillsammans, kanske av beställaren. Det kan också betyda att båda måtten bär handen så svagt att deras gemensamma del inte syns. Vi hävdar ingetdera. Ett svar kräver minst åtta signerade ristare med båda måtten, ett finare ornamentmått och gärna fysiska belägg, som huggtekniken i runor och ornamentik på samma sten.
-2. **Gräslunds finindelning.** Huvudlinjerna syns: band utan djur, huvud ovanifrån och en ordnad följd av profilhuvuden. Om Pr1–Pr5 är fem grupper eller ett kontinuum kan inte prövas utan flikarna. Det kräver bättre bilder (högupplösta fria foton, eller släpljus från flera håll ur 3D-skanningarna under en ny låst källkontroll), ett exempelblad och en tredje läsare, och sedan ett prov mot dateringar som inte bygger på stil. Resultaten prövar och förfinar indelningen; de underkänner den inte.
+1. **Arbetsdelningen.** Att stavningen inte följer ornamentiken kan betyda att text och bild hade olika upphov. Det kan också betyda att båda måtten bär handen så svagt att deras gemensamma del inte syns. Vi hävdar ingetdera. Ett svar kräver minst åtta signerade ristare med båda måtten, ett finare ornamentmått och gärna huggtekniken i runor och ornamentik på samma sten.
+2. **Gräslunds finindelning.** Huvudlinjerna syns: band utan djur, huvud ovanifrån och en ordnad följd av profilhuvuden. Om Pr1–Pr5 är fem grupper eller ett kontinuum kan inte prövas utan flikarna. Det kräver bättre bilder (högupplösta fria foton eller släpljus ur 3D-skanningarna, källkontrollerade), ett exempelblad och en tredje läsare, och sedan ett prov mot dateringar som inte bygger på stil. Resultaten prövar och förfinar indelningen; de underkänner den inte.
 
 **Svagheter, i ordning efter vikt:**
 1. **Läsarna är samma språkmodell** och kan göra samma fel, som på Sö 112; då fångar regeln om enighet det inte, och källkontrollerna bara delvis.
@@ -556,15 +556,18 @@ Rundjurets huvuddrag kan kodas tillförlitligt över hela materialet, också ur 
 
 - Cohen, J. 1960. A coefficient of agreement for nominal scales. *Educational and Psychological Measurement* 20 (1), s. 37–46.
 - Göransson, J. 1750. *Bautil*. Stockholm. Umeå universitetsbiblioteks exemplar.
-- Gräslund, A.-S. 1991. Runstenar – om ornamentik och datering. *Tor* 23, s. 113–140.
+- Gräslund, A.-S. 1991. Runstenar – om ornamentik och datering. *Tor* 23 (1990–1991), s. 113–140.
 - Gräslund, A.-S. 1992. Runstenar – om ornamentik och datering II. *Tor* 24, s. 177–201.
 - Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. I: M. Stoklund m.fl. (red.), *Runes and their Secrets: Studies in Runology*. Köpenhamn: Museum Tusculanum Press, s. 117–139.
 - Gräslund, A.-S. 2015. The Late Viking Age Runestones of Västergötland: On Ornamentation and Chronology. *Lund Archaeological Review* 20 (2014), s. 39–53.
 - Kitzler Åhfeldt, L. 2002. *Work and Worship: Laser Scanner Analysis of Viking Age Rune Stones*. Theses and Papers in Scientific Archaeology B:9. Stockholm: Stockholms universitet.
 - Kitzler Åhfeldt, L. 2017. *Runristare och mobilitet i Södermanland*. Stockholm: Riksantikvarieämbetet.
 - Kitzler Åhfeldt, L. 2024. *3D-data Runstenar i Södermanland* [Dataset]. Riksantikvarieämbetet. https://doi.org/{DOIS['sodermanland']}
-- Kvant, V. 2026. Runstenar med samma hand, också utan namn. Metodrapport, rapportversion 1, 2026-11-24 (opublicerad).
+- Kvant, V. 2026. Runstenar med samma hand. Metodrapport, rapportversion 1, 2026-11-25.
 - Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden*. Stockholm Studies in Scandinavian Philology, New Series 43. Stockholm: Stockholms universitet.
+- Källström, M. 2010. Some Thoughts on the Rune-Carver ØpiR: A Revaluation of the Storvreta Stone (U 1022) and Some Related Carvings. *Futhark* 1, s. 143–160.
+- Källström, M. 2025a. Peringskiöld med rödpennan. *Meddelanden från RiViH-projektet* 5 (2025), s. 30–39.
+- Källström, M. 2025b. Runstenen U 597 vid Hökhuvuds prästgård: Ett runstenspussel i papper och sten. *Futhark* 14–15 (2023–2024), s. 105–116.
 - Lager, L. 2002. *Den synliga tron. Runstenskors som en spegling av kristnandet i Sverige*. Occasional Papers in Archaeology 31. Uppsala: Uppsala universitet.
 - Riksantikvarieämbetet. *Sveriges runinskrifter*. Planscher och textband, lästa men inte återgivna.
 - Samnordisk runtextdatabas (Rundata) 3.1. Institutionen för nordiska språk, Uppsala universitet.
@@ -594,7 +597,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially t
 
 Anne-Sofie Gräslund (1991, 1992, 2006) ordered the rune animals on the late Viking Age runestones into style groups: RAK, where the ends of the rune band are straight without an animal head; Fp, where the head is seen from above; and Pr1–Pr5, profile heads in five steps. The groups rest on single features – the head's view, the eye, lappets at neck and lips, the tail, the feet, the koppel that binds the animals together – and are used to date the stones (Gräslund 2006, 2015). The images, the crosses and the carvers have been studied by Stern (2013), Lager (2002), Källström (2007) and Kitzler Åhfeldt (2002, 2017), among others.
 
-The features, however, have not been measured across the whole material; Rundata has the style group but not the features. Many stones survive only in drawings: Bautil's woodcuts, cut in the 1600s and printed in 1750, Johannes Rhezelius's drawings from the 1630s and Johan Peringskiöld's from around 1700. The editors of Sveriges runinskrifter judged them stone by stone. As far as we know, they have not been tested feature by feature against photographs across a larger material.
+The features, however, have not been measured across the whole material; Rundata has the style group but not the features. Many stones survive only in drawings: Bautil's woodcuts, cut in the 1600s and printed in 1750, Johannes Rhezelius's drawings from the 1630s and Johan Peringskiöld's from around 1700. Single cases have been examined: Peringskiöld and Rhezelius could alter the ornament, sometimes with invented heads (Källström 2025a, 2025b), and the head cannot always be classified from the drawings (Källström 2010). As far as we know, they have not been tested feature by feature against photographs across a larger material.
 
 The contribution here is the measurement: a register in which the ornament is coded independently of the text, so that how the text is written and how the animal is drawn can be set against each other. Four tests show what the register carries: an expected link between text and image, the spelling, Gräslund's style groups and groups of stones by the same hand.
 
@@ -703,8 +706,8 @@ In plain words: two readers who do not see each other give the same answer about
 The contribution is the measurement, and the newest part is the source check, which makes the lost stones measurable in the rune animal's main features.
 
 **What the report does not answer.**
-1. **The division of labour.** That spelling does not follow the ornament may mean that text and image had different makers while message and image were decided together, perhaps by the commissioner. It may also mean that both measures carry the hand so weakly that their shared part does not show. We claim neither. An answer needs at least eight signing carvers with both measures, a finer ornament measure and preferably physical evidence, such as the carving technique in runes and ornament on the same stone.
-2. **Gräslund's fine division.** The main lines show: bands without animals, heads from above and an ordered sequence of profile heads. Whether Pr1–Pr5 are five groups or a continuum cannot be tested without the lappets. That needs better pictures (high-resolution photographs under a free licence, or raking light from several directions computed from the 3D scans under a new locked source check), an example sheet and a third reader, and then a test against dates that do not rest on style. The results test and refine the division; they do not reject it.
+1. **The division of labour.** That spelling does not follow the ornament may mean that text and image had different makers. It may also mean that both measures carry the hand so weakly that their shared part does not show. We claim neither. An answer needs at least eight signing carvers with both measures, a finer ornament measure and preferably the carving technique in runes and ornament on the same stone.
+2. **Gräslund's fine division.** The main lines show: bands without animals, heads from above and an ordered sequence of profile heads. Whether Pr1–Pr5 are five groups or a continuum cannot be tested without the lappets. That needs better pictures (high-resolution photographs under a free licence, or raking light from the 3D scans, source-checked), an example sheet and a third reader, and then a test against dates that do not rest on style. The results test and refine the division; they do not reject it.
 
 **Weaknesses, in order of importance:**
 1. **The readers are the same language model** and can make the same error, as on Sö 112; the agreement rule then does not catch it, and the source checks only in part.
@@ -736,15 +739,18 @@ The rune animal's main features can be coded reliably across the whole material,
 
 - Cohen, J. 1960. A coefficient of agreement for nominal scales. *Educational and Psychological Measurement* 20 (1), pp. 37–46.
 - Göransson, J. 1750. *Bautil*. Stockholm. Umeå University Library copy.
-- Gräslund, A.-S. 1991. Runstenar – om ornamentik och datering [Runestones – on ornament and dating]. *Tor* 23, pp. 113–140.
+- Gräslund, A.-S. 1991. Runstenar – om ornamentik och datering [Runestones – on ornament and dating]. *Tor* 23 (1990–1991), pp. 113–140.
 - Gräslund, A.-S. 1992. Runstenar – om ornamentik och datering II [Runestones – on ornament and dating II]. *Tor* 24, pp. 177–201.
 - Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. In: M. Stoklund et al. (eds), *Runes and their Secrets: Studies in Runology*. Copenhagen: Museum Tusculanum Press, pp. 117–139.
 - Gräslund, A.-S. 2015. The Late Viking Age Runestones of Västergötland: On Ornamentation and Chronology. *Lund Archaeological Review* 20 (2014), pp. 39–53.
 - Kitzler Åhfeldt, L. 2002. *Work and Worship: Laser Scanner Analysis of Viking Age Rune Stones*. Theses and Papers in Scientific Archaeology B:9. Stockholm: Stockholm University.
 - Kitzler Åhfeldt, L. 2017. *Runristare och mobilitet i Södermanland* [Rune carvers and mobility in Södermanland]. Stockholm: Swedish National Heritage Board.
 - Kitzler Åhfeldt, L. 2024. *3D-data Runstenar i Södermanland / Runestones in Södermanland* [Dataset]. Swedish National Heritage Board. https://doi.org/{DOIS['sodermanland']}
-- Kvant, V. 2026. Runestones by the same hand, also without a name. Methods report, report version 1, 2026-11-24 (unpublished).
+- Kvant, V. 2026. Runestones by the same hand. Methods report, report version 1, 2026-11-25.
 - Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden* [Masters and memorials]. Stockholm Studies in Scandinavian Philology, New Series 43. Stockholm: Stockholm University.
+- Källström, M. 2010. Some Thoughts on the Rune-Carver ØpiR: A Revaluation of the Storvreta Stone (U 1022) and Some Related Carvings. *Futhark* 1, pp. 143–160.
+- Källström, M. 2025a. Peringskiöld med rödpennan [Peringskiöld with the red pen]. *Meddelanden från RiViH-projektet* 5 (2025), pp. 30–39.
+- Källström, M. 2025b. Runstenen U 597 vid Hökhuvuds prästgård: Ett runstenspussel i papper och sten [The runestone U 597 at Hökhuvud vicarage]. *Futhark* 14–15 (2023–2024), pp. 105–116.
 - Lager, L. 2002. *Den synliga tron. Runstenskors som en spegling av kristnandet i Sverige* [The visible faith]. Occasional Papers in Archaeology 31. Uppsala: Uppsala University.
 - Scandinavian Runic-text Database (Rundata) 3.1. Department of Scandinavian Languages, Uppsala University.
 - Stern, M. 2013. *Runestone Images and Visual Communication in Viking Age Scandinavia*. PhD thesis, University of Nottingham.
