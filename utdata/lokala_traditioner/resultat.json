@@ -1,0 +1,191 @@
+{
+  "plan": "2026-11-26-lokala-ornamenttraditioner.md",
+  "stenar": 620,
+  "harader": 98,
+  "drag": {
+    "D1": "koppel",
+    "D2": "huvud ovanifrån",
+    "D3": "mandelöga",
+    "D4": "flätverk",
+    "D5": "extra orm",
+    "D6": "kors",
+    "D7": "två eller fler djur",
+    "D8": "svans i spiral"
+  },
+  "ornamentik": {
+    "D1": {
+      "n": 297,
+      "harader": 88,
+      "andel": 0.29966,
+      "icc": 0.30301,
+      "lrt": 4.45696,
+      "p": 0.01738,
+      "sockenterm": true,
+      "provad": true,
+      "p_holm": 0.10428,
+      "lokal_tradition": false
+    },
+    "D2": {
+      "n": 286,
+      "harader": 58,
+      "andel": 0.12937,
+      "icc": 0,
+      "lrt": 9.44422e-08,
+      "p": 0.49988,
+      "sockenterm": true,
+      "provad": true,
+      "p_holm": 1,
+      "lokal_tradition": false
+    },
+    "D3": {
+      "n": 191,
+      "harader": 54,
+      "andel": 0.58115,
+      "icc": 0.02481,
+      "lrt": 0.03143,
+      "p": 0.42964,
+      "sockenterm": true,
+      "provad": true,
+      "p_holm": 1,
+      "lokal_tradition": false
+    },
+    "D4": {
+      "n": 434,
+      "harader": 93,
+      "andel": 0.58525,
+      "icc": 0.15246,
+      "lrt": 1.13658,
+      "p": 0.14319,
+      "sockenterm": true,
+      "provad": true,
+      "p_holm": 0.69228,
+      "lokal_tradition": false
+    },
+    "D5": {
+      "n": 420,
+      "harader": 90,
+      "andel": 0.3619,
+      "icc": 0.04371,
+      "lrt": 21.16763,
+      "p": 2.10406e-06,
+      "sockenterm": true,
+      "provad": true,
+      "p_holm": 0.00002,
+      "lokal_tradition": true,
+      "icc_95": [1.08829e-10, 0.03248],
+      "avvikande_harader": {
+        "Vallentuna hd": -1.67,
+        "Håbo hd": -1.44,
+        "Lagunda hd": -1.41,
+        "Rönö hd": 1.38,
+        "Seminghundra hd": -1.35
+      }
+    },
+    "D6": {
+      "n": 534,
+      "harader": 95,
+      "andel": 0.58989,
+      "icc": 0.11064,
+      "lrt": 10.36089,
+      "p": 0.00064,
+      "sockenterm": true,
+      "provad": true,
+      "p_holm": 0.0045,
+      "lokal_tradition": true,
+      "icc_95": [0, 0.17575],
+      "avvikande_harader": {
+        "Trögds hd": -1.33,
+        "Åsunda hd": -1,
+        "Norunda hd": 0.87,
+        "Lyhundra hd": -0.79,
+        "Håbo hd": 0.73
+      }
+    },
+    "D7": {
+      "n": 180,
+      "harader": 55,
+      "andel": 0.35556,
+      "icc": 8.85746e-16,
+      "lrt": 3.17701e-07,
+      "p": 0.49978,
+      "sockenterm": true,
+      "provad": true,
+      "p_holm": 1,
+      "lokal_tradition": false
+    },
+    "D8": {
+      "n": 184,
+      "harader": 60,
+      "andel": 0.75543,
+      "icc": 0.16433,
+      "lrt": 1.18218,
+      "p": 0.13846,
+      "sockenterm": true,
+      "provad": true,
+      "p_holm": 0.69228,
+      "lokal_tradition": false
+    }
+  },
+  "sprakdrag_jamforelse": {
+    "S_skiljetecken": {
+      "n": 590,
+      "harader": 97,
+      "andel": 0.2339,
+      "icc": 0.02804,
+      "lrt": 0.28941,
+      "p": 0.2953,
+      "sockenterm": true,
+      "provad": true
+    },
+    "S_preposition": {
+      "n": 545,
+      "harader": 95,
+      "andel": 0.70092,
+      "icc": 0.0729,
+      "lrt": 4.00695,
+      "p": 0.02266,
+      "sockenterm": true,
+      "provad": true
+    },
+    "S_stungna": {
+      "n": 516,
+      "harader": 91,
+      "andel": 0.59302,
+      "icc": 0.05509,
+      "lrt": 2.42404,
+      "p": 0.05974,
+      "sockenterm": true,
+      "provad": true
+    },
+    "S_bon": {
+      "n": 516,
+      "harader": 91,
+      "andel": 0.77519,
+      "icc": 0,
+      "lrt": 6.0679e-07,
+      "p": 0.49969,
+      "sockenterm": true,
+      "provad": true
+    },
+    "S_sjal": {
+      "n": 516,
+      "harader": 91,
+      "andel": 0.78876,
+      "icc": 0.04586,
+      "lrt": 0.47247,
+      "p": 0.24593,
+      "sockenterm": true,
+      "provad": true
+    },
+    "S_signatur": {
+      "n": 516,
+      "harader": 91,
+      "andel": 0.8314,
+      "icc": 4.63713e-38,
+      "lrt": 5.64269e-07,
+      "p": 0.4997,
+      "sockenterm": true,
+      "provad": true
+    }
+  }
+}
