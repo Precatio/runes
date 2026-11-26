@@ -1,0 +1,26 @@
+{
+  "plan": "2026-11-26-thennsa-grupper.md",
+  "cirkel": {
+    "centrum": "Sö 190",
+    "radie_m": 21026.703331
+  },
+  "TG_halva_B": {
+    "stenar_inne": 27,
+    "grupper_inne": 19,
+    "stenar_med_formen": 7,
+    "grupper_med_formen": 6,
+    "vantat_grupper": 2.170826,
+    "p": 0.0149,
+    "grupper_storlek_max": 4
+  },
+  "TG_haller": true,
+  "beskrivande_halva_A": {
+    "stenar_inne": 24,
+    "grupper_inne": 20,
+    "stenar_med_formen": 10,
+    "grupper_med_formen": 10,
+    "vantat_grupper": 2.635697,
+    "p": 0.0001,
+    "grupper_storlek_max": 2
+  }
+}

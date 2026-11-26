@@ -24,7 +24,7 @@ gruppdrag). Siffror `upptackt.json` (del 1) och `lokala.json` (del 2–3). Fryst
   Sex av dem har en tillskriven ristare, och alla sex har olika: Äskil 2, Balle, Åsgöt, Traen (en felläst grupp enligt
   Sö 131-revisionen), Torbjörn 2 och Torbjörn skald – en bygdens form snarare än en ristares vana.
   Rättat 2026-11-26: tidigare stod ristarna för alla 52 stenar i cirkeln (där bl.a. Brune och Öpir finns) och 128 drag
-  och 630/600 stenar; rätt är 124 drag och 619/611 stenar (lokala.json). Ett prov med grupper som enhet återstår.
+  och 630/600 stenar; rätt är 124 drag och 619/611 stenar (lokala.json). Prövat med grupper som enhet 2026-11-26 (plan analysplaner/2026-11-26-thennsa-grupper.md, r/discovery_lokal_grupper.R, thennsa_grupper.json): i halva B har 6 av 19 grupper (1 km) innanför cirkeln formen mot 2,2 väntade, p = 0,015 – **håller**; att stenarna ligger tätt förklarar inte fyndet.
   Ordmodulen (words.json) har den inte som landskapssignal; den syns först när man ser under landskapsnivån.
 - **Mönster att pröva: *stæina* (plural, ’stenarna’) kring Täby–Vallentuna–Fresta** (7 km runt U 133): A 17 mot 3,9
   (4,4×), B 3 mot 0,7 (4,3×, p 0,03, Holm 0,27). Jarlabankes och grannfamiljernas bygd, där man reste flera stenar
