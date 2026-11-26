@@ -2,7 +2,7 @@
 
 Plan: `analysplaner/2026-10-29-upptacktsmotorn-v2.md` (6cda482, SHA-256 kontrollerad före körning). Kod
 `src/discovery_v2.py`, `r/discovery_v2.R` (del 1), `r/discovery_lokal.R` (del 2–3). Data: korpus 3f58e9339191761e,
-1 739 svenska runstenar med minst fyra läsbara ord, 128 drag (v1:s 59 + 56 ordformer + 4 material + 5 ortnamns- och
+1 739 svenska runstenar med minst fyra läsbara ord, 124 drag (v1:s 59 + 56 ordformer + 4 material + 5 ortnamns- och
 gruppdrag). Siffror `upptackt.json` (del 1) och `lokala.json` (del 2–3). Frysta listor: `kandidater_A_till_B.json`
 (7b1b0939…), `kandidater_B_till_A.json` (d41bb06c…), `lokala_kandidater.json` (fc0707cb…).
 
@@ -17,11 +17,14 @@ gruppdrag). Siffror `upptackt.json` (del 1) och `lokala.json` (del 2–3). Fryst
   ortnamnsmiljö tillförde inga par som höll.
 
 ## Del 2: lokala avvikelser – en bekräftad bygd, ett mönster att pröva
-63 drag skannade i halva A (630 stenar), 10 kandidater; prövade i samma cirkel i halva B (600 stenar):
+63 drag skannade i halva A (619 stenar), 10 kandidater; prövade i samma cirkel i halva B (611 stenar):
 - **Bekräftad: formen *þennsa* (’denna’, ackusativ) kring södra Mälaren.** Cirkel 21 km runt Sö 190 (Ytterenhörna):
   halva A 11 mot 2,7 väntat (4,0×), halva B 7 mot 2,2 (3,1×, p 0,005, Holm 0,047). Formen går över landskapsgränsen
-  (Sö 179, 183, 184, 187, 190, 283–305, 345, 350 och U 19, 25, 35, 37 på Mälaröarna) och används av många ristare
-  (Balle, Åsgöt, Brune, Öpir, Torbjörn skald, Traen m.fl.) – en bygdens form snarare än en ristares vana.
+  (Sö 179, 183, 184, 187, 190, 283, 288, 291, 293, 304, 305, 345, 350 och U 19, 25, 30, 35, 37 på Mälaröarna; 18 stenar).
+  Sex av dem har en tillskriven ristare, och alla sex har olika: Äskil 2, Balle, Åsgöt, Traen (en felläst grupp enligt
+  Sö 131-revisionen), Torbjörn 2 och Torbjörn skald – en bygdens form snarare än en ristares vana.
+  Rättat 2026-11-26: tidigare stod ristarna för alla 52 stenar i cirkeln (där bl.a. Brune och Öpir finns) och 128 drag
+  och 630/600 stenar; rätt är 124 drag och 619/611 stenar (lokala.json). Ett prov med grupper som enhet återstår.
   Ordmodulen (words.json) har den inte som landskapssignal; den syns först när man ser under landskapsnivån.
 - **Mönster att pröva: *stæina* (plural, ’stenarna’) kring Täby–Vallentuna–Fresta** (7 km runt U 133): A 17 mot 3,9
   (4,4×), B 3 mot 0,7 (4,3×, p 0,03, Holm 0,27). Jarlabankes och grannfamiljernas bygd, där man reste flera stenar
