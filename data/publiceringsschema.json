@@ -722,6 +722,24 @@
     ]
    },
    "godkand": "2026-11-26T16:46:14+01:00"
+  },
+  {
+   "datum": "2027-01-07",
+   "tid": "07:00",
+   "id": "4zloUTTKPEaevSXCjGWz",
+   "titel": "Släktlänkar mellan runstenar",
+   "spar": "F",
+   "bluesky": {
+    "text": "New research report: an open model links runestones that share names, tested against chance at the same distance. It recovers 40 % of the stones runologists have tied together in families, and 92 % of its 61 links stand in their list.",
+    "tags": [
+     "runology",
+     "Skystorians",
+     "runestones",
+     "VikingAge",
+     "Vikings"
+    ]
+   },
+   "godkand": "2026-11-27T15:30:06+01:00"
   }
  ]
 }

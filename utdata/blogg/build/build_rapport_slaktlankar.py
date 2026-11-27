@@ -153,7 +153,7 @@ Sambanden används för datering och för frågor om arv: Birgit Sawyer (2000) l
 
 **Efter steg 1.** I känslighetsanalysen gav samma avståndsband med nollmodellen inom landskapet bäst utfall ({M2['n_sure']} länkar, {pc(M2['W1']['share'])} procents täckning, 6 av 10 Jarlabankepar). Det är den modell som rapporten gäller. Också den skulle ha fallit på planens krav att alla tio Jarlabankepar blir säkra. Den valdes efter att ha sett Williams förteckning och kan därför inte prövas mot den. Petersons anmärkningar kunde inte ersätta den: {PV['n_in_williams']} av hennes {PV['n_pairs']} svenska släktpar står redan hos Williams.
 
-**Steg 1b, det blinda handprovet** (plan låst 2026-11-01, SHA-256 `{SHA['2026-11-01-slaktnatverket-steg1b']}…`). 25 par drogs med ett fast slumpfrö: de 5 länkar utanför Williams förteckning, 5 av hans säkra par och 15 namnpar som modellen inte länkar. De blandades och visades för bedömaren, Viktor Kvant, utan signum. Gränserna: minst 3 av 5 nya bedömda som samma släkt, fler sådana bedömningar bland de nya än bland namnparen (Fishers exakta test, p under 0,05), och minst 4 av 5 kända länkar igenkända. Annars är provet inte avgörande. Svaren checkades in innan nyckeln öppnades.
+**Steg 1b, det blinda handprovet** (plan låst 2026-11-01, SHA-256 `{SHA['2026-11-01-slaktnatverket-steg1b']}…`). 25 par drogs med ett fast slumpfrö: de 5 länkar utanför Williams förteckning, 5 av hans säkra par och 15 namnpar som modellen inte länkar. De blandades och visades för bedömaren, Viktor Kvant, utan signum; han dubbelkollade sina bedömningar med en språkmodell. Gränserna: minst 3 av 5 nya bedömda som samma släkt, fler sådana bedömningar bland de nya än bland namnparen (Fishers exakta test, p under 0,05), och minst 4 av 5 kända länkar igenkända. Annars är provet inte avgörande. Svaren checkades in innan nyckeln öppnades.
 
 ## 3. Material
 
@@ -213,7 +213,7 @@ Häradsmodellen var för sträng mot stora släkter: sju av Jarlabankes nio sten
 **Svagheter, i ordning efter vikt.**
 
 1. **Efterhandsvalet.** Räknesättet valdes efter att ha sett den främsta måttstocken, och det blinda provet var inte avgörande.
-2. **Handprovet är litet** och har en enda bedömare. De fem nya länkarna är för få för en säker andel.
+2. **Handprovet är litet** och har en enda bedömare, som stämde av med en språkmodell; den kan ha påverkat svaren. De fem nya länkarna är för få för en säker andel.
 3. **Facit är inte oberoende av texterna.** Williams samband bygger på samma inskrifter, ibland på sådant modellen inte ser.
 4. **Reglerna som läser personerna** missar en del av släktbanden, och det sänker täckningen.
 
@@ -277,7 +277,7 @@ The ties are used for dating and for questions of inheritance: Birgit Sawyer (20
 
 **After step 1.** In the sensitivity analysis the same distance bands with the null model within the province did best ({M2['n_sure']} links, {pc(M2['W1']['share'])} per cent coverage, 6 of 10 Jarlabanke pairs). That is the model this report concerns. It too would have failed the plan's demand that all ten Jarlabanke pairs become sure. It was chosen after seeing Williams's list and cannot therefore be tested against it. Peterson's notes could not replace it: {PV['n_in_williams']} of her {PV['n_pairs']} Swedish family pairs already stand in Williams.
 
-**Step 1b, the blind hand test** (plan locked 2026-11-01, SHA-256 `{SHA['2026-11-01-slaktnatverket-steg1b']}…`). 25 pairs were drawn with a fixed seed: the 5 links outside Williams's list, 5 of his sure pairs and 15 name pairs the model does not link. They were shuffled and shown to the judge, Viktor Kvant, without signa. The limits: at least 3 of 5 new links judged the same family, more such judgements among the new than among the name pairs (Fisher's exact test, p below 0.05), and at least 4 of 5 known links recognised. Otherwise the test is not decisive. The answers were committed before the key was opened.
+**Step 1b, the blind hand test** (plan locked 2026-11-01, SHA-256 `{SHA['2026-11-01-slaktnatverket-steg1b']}…`). 25 pairs were drawn with a fixed seed: the 5 links outside Williams's list, 5 of his sure pairs and 15 name pairs the model does not link. They were shuffled and shown to the judge, Viktor Kvant, without signa; he double-checked his judgements with a language model. The limits: at least 3 of 5 new links judged the same family, more such judgements among the new than among the name pairs (Fisher's exact test, p below 0.05), and at least 4 of 5 known links recognised. Otherwise the test is not decisive. The answers were committed before the key was opened.
 
 ## 3. Material
 
@@ -337,7 +337,7 @@ The hundred model was too strict on large families: seven of Jarlabanke's nine s
 **Weaknesses, in order of importance.**
 
 1. **The post-hoc choice.** The way of counting was chosen after seeing the main yardstick, and the blind test was not decisive.
-2. **The hand test is small** and has a single judge. The five new links are too few for a firm share.
+2. **The hand test is small** and has a single judge, who checked with a language model; it may have influenced the answers. The five new links are too few for a firm share.
 3. **The yardstick is not independent of the texts.** Williams's ties rest on the same inscriptions, sometimes on things the model does not see.
 4. **The rules that read the persons** miss some kin ties, which lowers the coverage.
 
