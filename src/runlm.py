@@ -706,11 +706,109 @@ def name_sites(recs):
     return [(r["signum"], float(r["lat"]), float(r["lon"]), nm, ck) for r in recs
             if r.get("lat") is not None and r.get("lon") is not None for nm, ck in name_pairs(r)]
 
+# ---- the inflection layer (textmodel-24 candidate, analysplaner/2026-11-27-bojningsmodellen-tm24.md) ----------------
+INFL_FORM = re.compile(r"[a-zþðæøåöäąǫœáéíóúýęR]+")
+
+
+def ending_alternations(forms, lemma, max_end=4, min_stem=2):
+    """Ending alternations learned from normalized forms that `lemma` counts as one word: for each pair of distinct
+    forms of one lemma the stem is their longest common prefix (at least min_stem letters, and each form at most
+    max_end letters longer than it), and the rest of each form is its ending (possibly empty). Returns
+    ({ending: Counter(other ending)}, counted both ways, and {form: {(stem, ending)}})."""
+    groups = defaultdict(list)
+    for w in sorted(forms):
+        if INFL_FORM.fullmatch(w):
+            groups[lemma(w)].append(w)
+    alt, stems = defaultdict(Counter), defaultdict(set)
+    for ws in groups.values():
+        for i, a in enumerate(ws):
+            for b in ws[i + 1:]:
+                s = os.path.commonprefix([a, b])
+                if len(s) < min_stem or len(a) - len(s) > max_end or len(b) - len(s) > max_end:
+                    continue
+                ea, eb = a[len(s):], b[len(s):]
+                alt[ea][eb] += 1
+                alt[eb][ea] += 1
+                stems[a].add((s, ea))
+                stems[b].add((s, eb))
+    return dict(alt), dict(stems)
+
+
+def p_ending(alt, e, e2, k=0.5, smooth="all"):
+    """P(ending e2 | ending e), add-k smoothed. smooth="all": over every ending of the table (len(alt)), so that an
+    alternation seen once stays improbable; "observed": over the endings e has been seen to alternate with only (an
+    alternation seen once is then certain when e has no other). Alternations never seen get 0 (no form is made)."""
+    seen = alt.get(e)
+    if not seen or e2 not in seen:
+        return 0.0
+    return (seen[e2] + k) / (sum(seen.values()) + k * (len(alt) if smooth == "all" else len(seen)))
+
+
+def inflection_gap(word, forms, form_keys, endings, min_stem=2):
+    """A böjningslucka (the plan's main measure): the word is not among the training forms, but its lemma is (another
+    normalization of a training form: the same key, or the key of a training form's lemma), or its stem is (word =
+    stem + ending, and stem + another ending is a training form, the endings being those of the ending table).
+    forms: the training forms; form_keys: their keys and lemma keys; endings: the endings of the table."""
+    if not word or word in forms:
+        return False
+    if key(word) in form_keys:
+        return True
+    for e2 in endings:
+        if word.endswith(e2) and len(word) - len(e2) >= min_stem:
+            s = word[:len(word) - len(e2)]
+            if any(s + e in forms for e in endings if e != e2):
+                return True
+    return False
+
+
+class CharKN:
+    """Interpolated Kneser–Ney over letters of normalized forms (order 5, with start and end marks): how plausible a
+    form the inflection layer made is as a word of the language."""
+    def __init__(self, words, order=5, D=0.75):
+        self.n, self.D = order, D
+        self.c = [Counter() for _ in range(order + 1)]      # c[k][(context, ch)]: counts (highest order) or continuations
+        self.h = [Counter() for _ in range(order + 1)]      # totals per context
+        self.f = [Counter() for _ in range(order + 1)]      # distinct followers per context
+        seen = [set() for _ in range(order + 1)]
+        self.alpha = sorted({ch for w in words for ch in w} | {"$"})
+        for w in words:
+            s = "^" * (order - 1) + w + "$"
+            for i in range(order - 1, len(s)):
+                for k in range(1, order + 1):
+                    ctx, ch = s[i - k + 1:i], s[i]
+                    if k == order:
+                        self.c[k][(ctx, ch)] += 1
+                    else:  # lower orders count the contexts a letter continues (Kneser–Ney)
+                        ext = s[i - k:i + 1]
+                        if ext in seen[k]:
+                            continue
+                        seen[k].add(ext)
+                        self.c[k][(ctx, ch)] += 1
+        for k in range(1, order + 1):
+            for (ctx, _), x in self.c[k].items():
+                self.h[k][ctx] += x
+                self.f[k][ctx] += 1
+
+    def logp(self, w):
+        s = "^" * (self.n - 1) + w + "$"
+        lp = 0.0
+        for i in range(self.n - 1, len(s)):
+            p = 1.0 / len(self.alpha)
+            for k in range(1, self.n + 1):
+                ctx, ch = s[i - k + 1:i], s[i]
+                h = self.h[k].get(ctx, 0)
+                if h:
+                    p = max(self.c[k].get((ctx, ch), 0) - self.D, 0) / h + self.D * self.f[k][ctx] / h * p
+            lp += math.log(max(p, 1e-12))
+        return lp
+
+
 class Model:
     def __init__(self, recs, edda_tokens=(), lam_edda=0.03, lam_unk=0.01, D=0.75, d=None, kappa=2.0, exclude=(),
                  aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=(), lam_name=0.0,
                  cv_chars=False, lam_doc=0.0, area_lm=False, area_beta=200.0, lam_class=0.0, n_classes=200,
-                 tolerance=0.0, tol_max_rules=2, lit_tokens=None, lam_lit=0.0, lex_words=None, lam_lex=0.0, extra_names=()):
+                 tolerance=0.0, tol_max_rules=2, lit_tokens=None, lam_lit=0.0, lex_words=None, lam_lex=0.0, extra_names=(),
+                 lam_infl=0.0, infl_min=0.05, infl_mu=0.0, infl_top=6, infl_k=0.5, infl_smooth="all", infl_pool=False):
         """recs: Viking-Age inscriptions for the language and spelling. aligned: also use sections whose word counts
         differ (step 2). contexts: spelling by era, epoch, area, region and carver, and word sequences by epoch (step 3);
         alpha is how many observations a level needs to outweigh the level above it. spelling_recs: further inscriptions
@@ -725,7 +823,18 @@ class Model:
         Swedish literature ({word: count}) and a dictionary's headwords ({word: 1}), each mixed into P(word) with its
         own weight exactly as the Edda list is, their spellings derived by the rules; a list with weight 0 is not
         loaded, so the vocabulary is unchanged. extra_names: normalized names from a name lexicon (Peterson 2007),
-        added to the name model with one attestation each where the texts do not know them."""
+        added to the name model with one attestation each where the texts do not know them.
+        lam_infl (textmodel-24 candidate, analysplaner/2026-11-27-bojningsmodellen-tm24.md): the inflection layer,
+        stem + ending. Ending alternations are learned from the training forms that the model counts as one word
+        (ending_alternations), and each training form w = stem + e gets the new forms stem + e′ with P(e′ | e) ≥
+        infl_min (at most infl_top per form) that the vocabulary does not have; their spellings come from the rules.
+        P(e′ | e) is add-infl_k smoothed over all endings of the table (infl_smooth="all") or over those seen with e.
+        A new form is a word of its own (its own key as lemma, as the masking test judges it, and beside a composed
+        name of the same letters); infl_pool=True makes it the same word as the form it was made from instead.
+        P(w′ | prev) = lam_infl · Σ_w P(w | prev) · P(e′ | e) / Z_w, Z_w over the new forms of w, optionally times
+        (P_char(w′) / P_char(w))^infl_mu with a letter Kneser–Ney model of order 5 over the training forms (CharKN).
+        Built only from the training records, so no form of a held-out stone leaks in; lam_infl = 0 (default) builds
+        nothing and leaves the model as it was."""
         # Vitki's own fillings of lost runes (src/vitki_fills.py) must never become training or test data: the model
         # would learn, and be scored on, its own answers
         recs, spelling_recs = list(recs), list(spelling_recs)
@@ -896,9 +1005,13 @@ class Model:
             for s, p in ps.items():
                 if p > 1e-4:
                     self.index[s][w] = p
-        self.tolerance, self.tol_variants = tolerance, {}
+        self.tolerance, self.tol_variants, self.tol_max_rules = tolerance, {}, tol_max_rules
         if tolerance > 0:
             self._widen_index(tolerance, tol_max_rules)
+        self.lam_infl, self.infl_src, self.infl_base, self.infl_stats = lam_infl, {}, {}, {}
+        self.infl_pool = infl_pool
+        if lam_infl > 0:
+            self._build_inflection(infl_min, infl_mu, infl_top, infl_k, infl_smooth)
         self.maxlen = max(len(s) for s in self.index)
         self.keys_by_len = defaultdict(list)
         for k_ in self.index:
@@ -996,8 +1109,78 @@ class Model:
         return ({k: v / tot for k, v in out.items()} if tot else {}), spell
 
     def lemma(self, w):
-        """The word behind a normalized form (forms the data shows to be the same word share one key)."""
+        """The word behind a normalized form (forms the data shows to be the same word share one key). A form the
+        inflection layer made is a word of its own, or with infl_pool the word of the form it was made from."""
+        return self.lemma_base(self.infl_base.get(w, w)) if (self.infl_pool and self.infl_base) else self.lemma_base(w)
+
+    def lemma_base(self, w):
+        """lemma() without the inflection layer: the training forms' lemmas only. The masking test judges a reading
+        right with this, so that the layer cannot make a wrong form right by calling it the same word."""
         return key(self.lemma_of.get(w.lstrip("§"), w.lstrip("§"))) if w != "<unk>" else w
+
+    def _edda(self, w):
+        """Is w spelled as a word known only from the Icelandic texts (no carved form of its own)? The inflection
+        layer's forms are runic normalizations and are spelled as such."""
+        return w not in self.uni and w not in self.infl_src
+
+    def _build_inflection(self, min_p, mu, top, k, smooth="all"):
+        """The inflection layer's new forms (see __init__): self.infl_src {w′: {w: share}}, the shares of each w summing
+        to one over its new forms; self.infl_base {w′: the w with the largest share}; their spellings in the index."""
+        forms = [w for w in sorted(self.uni) if INFL_FORM.fullmatch(w)]
+        alt, stems = ending_alternations(forms, self.lemma_base)
+        # the alternations that pass the threshold, per ending
+        usable = {e: [(e2, p_ending(alt, e, e2, k, smooth)) for e2 in sorted(alt[e])] for e in alt}
+        usable = {e: [(e2, q) for e2, q in v if q >= min_p] for e, v in usable.items()}
+        usable = {e: v for e, v in usable.items() if v}
+        endings = sorted(usable, key=lambda e: (-len(e), e))
+        vocab_keys = {key(w) for w in set(self.uni) | set(self.pe) | set(self.pl) | set(self.px)}
+        char = CharKN(forms) if mu else None
+        made = defaultdict(dict)  # w′ → {w: share}
+        n_alt = 0
+        for w in forms:
+            # the stems the lemma groups give w; otherwise the longest ending of the table (one with an alternation
+            # that passes the threshold) that w ends in
+            st = stems.get(w) or next(({(w[:len(w) - len(e)], e)} for e in endings
+                                       if w.endswith(e) and len(w) - len(e) >= 2), set())
+            best = {}
+            for s_, e in sorted(st):
+                for e2, q in usable.get(e, ()):
+                    w2 = s_ + e2
+                    if len(w2) < 2 or not INFL_FORM.fullmatch(w2):
+                        continue
+                    k2 = key(w2)
+                    if k2 in vocab_keys:  # the form, or another normalization of it, is already a word of the model
+                        continue
+                    if k2 not in best or q > best[k2][1]:
+                        best[k2] = (w2, q)
+            chosen = sorted(best.values(), key=lambda t: (-t[1], t[0]))[:top]
+            if not chosen:
+                continue
+            if char is not None:
+                lw = char.logp(w)
+                chosen = [(w2, q * math.exp(mu * (char.logp(w2) - lw))) for w2, q in chosen]
+            z = sum(q for _, q in chosen)
+            for w2, q in chosen:
+                made[w2][w] = q / z
+            n_alt += len(chosen)
+        self.infl_src = dict(made)
+        self.infl_base = {w2: max(src, key=lambda b: (src[b], b)) for w2, src in made.items()}
+        n_keys, spelled = 0, defaultdict(list)
+        for w2 in sorted(made):
+            rule, self.rule_z[w2] = self.spell.expand(w2, edda=False, mass=True)
+            for s_, p in rule.items():
+                if p > 1e-4:
+                    n_keys += s_ not in self.index
+                    self.index[s_][w2] = p
+                    spelled[s_].append(w2)
+        # spelled as the known forms are: with the tolerance layer on, its variants of the new forms' spellings too
+        n_var = self._widen_index(self.tolerance, self.tol_max_rules, only=spelled) if self.tolerance > 0 else 0
+        self.infl_alt = alt
+        self.infl_stats = {"endings": len(alt), "alternations": sum(len(v) for v in alt.values()),
+                           "alternations_used": sum(len(v) for v in usable.values()),
+                           "forms_with_stems": len(stems), "bases": len({b for src in made.values() for b in src}),
+                           "new_forms": len(made), "base_to_form_links": n_alt, "new_spellings": n_keys,
+                           "tolerance_variants": n_var}
 
     def p_word3(self, w, u, v):
         """P(w | u v) for three-word sequences, backing off to P(w | v)."""
@@ -1005,7 +1188,7 @@ class Model:
         h = self.hist2.get((u, v), 0)
         if not h:
             return p2
-        lr = 1 - self.lam_edda - self.lam_unk - self.lam_lit - self.lam_lex
+        lr = 1 - self.lam_edda - self.lam_unk - self.lam_lit - self.lam_lex - self.lam_infl
         gam = self.D * self.fol3[(u, v)] / h
         return lr * max(self.big3.get((u, v, w), 0) - self.D, 0) / h + gam * p2
 
@@ -1021,8 +1204,11 @@ class Model:
 
     def p_word(self, w, prev, ep=None, doc=None, cache=None, area=None):
         """P(w | prev) for a lexicon word (the unknown word is handled separately); with an epoch, the epoch's own
-        word sequences back off to those of its phase, and those to the whole Viking Age."""
-        lr = 1 - self.lam_edda - self.lam_unk - self.lam_lit - self.lam_lex
+        word sequences back off to those of its phase, and those to the whole Viking Age. A form the inflection
+        layer made takes the place of the forms it was made from: lam_infl · Σ_w P(w | prev) · share."""
+        if self.infl_src and w in self.infl_src:
+            return self.lam_infl * sum(self.p_word(b, prev, ep, doc, cache, area) * q for b, q in self.infl_src[w].items())
+        lr = 1 - self.lam_edda - self.lam_unk - self.lam_lit - self.lam_lex - self.lam_infl
         pc = self.pc.get(w, 0.0)
         if prev in self.hist:
             pk = max(self.big.get((prev, w), 0) - self.D, 0) / self.hist[prev] + self.gamma[prev] * pc
@@ -1128,12 +1314,15 @@ class Model:
         found.pop(s, None)
         return found
 
-    def _widen_index(self, lam, max_rules, min_p=0.05):
+    def _widen_index(self, lam, max_rules, min_p=0.05, only=None):
         """Add the variants of every spelling with P(runes | word) ≥ min_p, at the penalty lam per rule. Variants keep a
-        pointer to their source spelling, so that candidates() can score them with the context's spelling too."""
+        pointer to their source spelling, so that candidates() can score them with the context's spelling too.
+        only: {spelling: [words]} to widen instead of the whole index (the inflection layer's forms)."""
         added = 0
-        for s in list(self.index):
+        for s in (sorted(only) if only is not None else list(self.index)):
             for w, p in list(self.index[s].items()):
+                if only is not None and w not in only[s]:
+                    continue
                 if p < min_p or len(s) < 3:
                     continue
                 for v, k in self.spelling_variants(s, max_rules).items():
@@ -1143,16 +1332,18 @@ class Model:
                     self.index[v][w] = q
                     self.tol_variants.setdefault(v, {})[w] = (s, k)
                     added += 1
-        self.tol_added = added
+        if only is None:
+            self.tol_added = added
+        return added
 
     def derivations(self, w, s):
         k = (w, s)
         if k not in self._deriv:
-            self._deriv[k] = [path for _, path in self.spell._derivations(w, s, edda=(w not in self.uni))]
+            self._deriv[k] = [path for _, path in self.spell._derivations(w, s, edda=self._edda(w))]
         return self._deriv[k]
 
     def rule_prob(self, w, s, table):
-        edda = w not in self.uni
+        edda = self._edda(w)
         us = units(w)
         tot = 0.0
         for path in self.derivations(w, s):
@@ -1195,7 +1386,7 @@ class Model:
         """Add names composed of name elements (marked §) that the vocabulary does not have."""
         if self.names is not None and len(s) >= 3:
             for w, p in self.names.candidates(s).items():
-                if w not in out:
+                if w not in out or w in self.infl_src:  # a form of the inflection layer does not stand in for a name
                     out["§" + w] = p
         return out
 
@@ -1517,7 +1708,7 @@ def adapt_counts(model, post, text, ctx, floor=0.05):
     for (i, j, w), p in post.items():
         if w == "<unk>" or p < floor:
             continue
-        exp = [(math.prod(choice_table(ctx.table, units(w), k, w not in model.uni).get(c, 0.0) for u, c, k in path), path)
+        exp = [(math.prod(choice_table(ctx.table, units(w), k, model._edda(w)).get(c, 0.0) for u, c, k in path), path)
                for path in model.derivations(w, text[i:j])]
         tot = sum(x for x, _ in exp)
         if tot <= 0:

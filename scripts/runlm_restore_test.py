@@ -14,8 +14,9 @@ import time
 from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.runlm import (by_object, print_by_object, stone_divider_rate, Model, carved_groups, context, decode, edda_tokens, is_runes, key, load_rundata, norm_words,  # noqa: E402
-                       normtok, restore, runekey, sections, translit_words, viking)
+from src.runlm import (INFL_FORM, by_object, print_by_object, stone_divider_rate, Model, carved_groups, context, decode, edda_tokens,  # noqa: E402
+                       ending_alternations, inflection_gap, is_runes, key, load_rundata, norm_words, normtok, restore, runekey,
+                       sections, translit_words, viking)
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--folds", type=int, nargs="*", default=None)
@@ -53,6 +54,13 @@ ap.add_argument("--hard", action="store_true", help="bara ord som inte är bland
 ap.add_argument("--lit", type=float, default=0.0, help="litteraturens ordlista (data/cache/literature/lexikon/litteratur.json), vikt (0 = av; textmodel-22-kandidat)")
 ap.add_argument("--lex", type=float, default=0.0, help="Zoëgas uppslagsord (lexikon.json), vikt (0 = av)")
 ap.add_argument("--names_lit", action="store_true", help="Petersons runnamn (namn.json) i namnmodellen; namn vars belägg citerar en provsten utesluts i det vecket")
+ap.add_argument("--infl", type=float, default=0.0, help="böjningslagret: vikt λ_böj (0 = av; textmodel-24-kandidat, "
+                                                        "analysplaner/2026-11-27-bojningsmodellen-tm24.md)")
+ap.add_argument("--infl_min", type=float, default=0.05, help="böjningslagret: tröskel för P(ändelse′ | ändelse)")
+ap.add_argument("--infl_mu", type=float, default=0.0, help="böjningslagret: vikt μ för teckenmodellen (ordning 5) över formerna (0 = av)")
+ap.add_argument("--infl_smooth", default="all", choices=["all", "observed"],
+                help="utjämningen av P(ändelse′ | ändelse): över alla ändelser i tabellen eller bara de sedda")
+ap.add_argument("--max_stones", type=int, default=0, help="bara så många provstenar per veck (snabbprov; 0 = alla)")
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
 
@@ -111,10 +119,10 @@ def words_of(res, wd, gword, k=6):
         w = wd.get(f)
         if not w or w == "<unk>":
             continue
-        lm = m.lemma(w)
+        lm = m.lemma_base(w)  # the training forms' lemmas: a form the inflection layer made is a word of its own here
         tot[lm] = tot.get(lm, 0.0) + q
         show.setdefault(lm, w)
-    gl = m.lemma(normtok(gword))
+    gl = m.lemma_base(normtok(gword))
     return [(show[lm], round(p, 6), lm == gl) for lm, p in sorted(tot.items(), key=lambda kv: -kv[1])[:k]]
 
 
@@ -142,6 +150,7 @@ def locate(groups, start, end):
 
 
 rows = []
+INFL_STATS = {}
 t0 = time.time()
 for k in folds:
     test = cands[k::K]
@@ -150,9 +159,17 @@ for k in folds:
     xnames = [n["name"] for n in NAMES_LIT if not any(re.sub(r"\s+", "", x) in tnorm for x in n["signa"])]  # no name whose entry cites a test stone
     m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class, tolerance=args.tolerance,
               lam_doc=args.lam_doc, area_lm=args.area_lm, lit_tokens=LIT, lam_lit=args.lit, lex_words=LEX, lam_lex=args.lex, extra_names=xnames,
+              lam_infl=args.infl, infl_min=args.infl_min, infl_mu=args.infl_mu, infl_smooth=args.infl_smooth,
               **(dict(contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0) if args.contexts else {}))
     m.near_scale = args.near_scale
-    for i_, (r, (groups, gw)) in enumerate(test, 1):
+    # böjningsluckor (the plan's main measure), from this fold's training forms whether the layer is on or not
+    tforms = {w for w in m.uni if INFL_FORM.fullmatch(w)}
+    tkeys = {key(w) for w in tforms} | {m.lemma_base(w) for w in tforms}
+    tends = sorted(ending_alternations(tforms, m.lemma_base)[0])
+    if args.infl:
+        INFL_STATS[k] = m.infl_stats
+        print(f"veck {k}: böjningslagret {m.infl_stats}", file=sys.stderr, flush=True)
+    for i_, (r, (groups, gw)) in enumerate(test[:args.max_stones] if args.max_stones else test, 1):
         if i_ == 1 or i_ % 10 == 0 or i_ == len(test):  # progress: the fold runs for hours and wrote nothing until done (tm21)
             print(f"veck {k}: sten {i_} av {len(test)} ({r['signum']}), {time.time() - t0:.0f} s", file=sys.stderr, flush=True)
         for kind in ("inne i ord", "helt ord"):
@@ -202,7 +219,7 @@ for k in folds:
                 _, path, _, _ = decode(m, filled, d=dr)
                 at = sum(len(x) for x in groups[:gi]) + g0
                 w_ = next((w for a_, b_, w, _ in path if a_ <= at < b_), None)
-                word_ok = bool(w_) and w_ != "<unk>" and m.lemma(w_) == m.lemma(normtok(gword))
+                word_ok = bool(w_) and w_ != "<unk>" and m.lemma_base(w_) == m.lemma_base(normtok(gword))
             rows.append({"sig": r["signum"], "kind": kind, "n": g1 - g0, "truth": truth, "top": fills[0] if fills else None,
                          "p_top": res[0][1] if res else 0.0, "rank": fills.index(truth) + 1 if truth in fills else None,
                          "p_truth": p.get(truth, 0.0), "word_ok": word_ok, "gold_word": normtok(gword),
@@ -214,10 +231,18 @@ for k in folds:
                          "p_word": (sum(q for f, q in res if wd.get(f) and wd.get(fills[0]) and
                                         m.lemma(wd[f]) == m.lemma(wd[fills[0]])) if fills else 0.0),
                          # the gap's words over all its fillings (by lemma), best first, and whether each is the hidden word
-                         "words": words_of(res, wd, gword)})
+                         "words": words_of(res, wd, gword),
+                         # böjningslucka: the hidden word is not a training form of this fold, but its lemma or stem is
+                         "infl_gap": inflection_gap(normtok(gword), tforms, tkeys, tends),
+                         # the inflection layer: is the hidden word one of its forms, did a filling give it, is the
+                         # word read one of its forms
+                         "gold_infl_form": normtok(gword) in m.infl_src,
+                         "reached": any(w and w != "<unk>" and key(w) == key(normtok(gword)) for w in wd.values()),
+                         "word_infl": bool(w_) and w_ in m.infl_src})
     print(f"del {k + 1} klar efter {time.time() - t0:.0f} s; {len(rows)} luckor", flush=True)
 
-out = {"n": len(rows)}
+out = {"n": len(rows), "infl": {"lam": args.infl, "min": args.infl_min, "mu": args.infl_mu, "smooth": args.infl_smooth,
+                                 "stats": INFL_STATS}, "args": vars(args)}
 for kind in ("inne i ord", "helt ord"):
     xs = [x for x in rows if x["kind"] == kind]
     by_n = {}
