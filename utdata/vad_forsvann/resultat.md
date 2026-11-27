@@ -28,8 +28,10 @@ Modellen är glmer med socken som slumpeffekt och teckningens typ och Uppland so
   - kors 44 mot 65 %;
   - utarbetad 41 mot 59 %.
   - Källan skiljer sig här, men riktningen är densamma.
-- **Per typ av teckning** (`per_typ` i resultat.json): de förlorade har färre kors än de bevarade hos Bautil, Rhezelius
-  och Peringskiöld. Hos övriga tecknare är andelarna lika.
+- **Per typ av teckning** (`per_typ` i resultat.json; rättat 2026-11-27): skillnaden i kors bärs främst av Bautil
+  (förlorade 41 % av 116 mot bevarade 76 % av 34) och delvis Peringskiöld (48 mot 59 %); hos Rhezelius (55 mot 53 %) och
+  övriga tecknare (56 mot 57 %) är andelarna lika. Rundjur och utarbetad ornamentik är lägre hos de förlorade i alla typer.
+  Bautils utsnitt kontrolleras därför bild för bild (ett utsnitt, U 1038, visade fel träsnitt).
 
 ## Vad det betyder och inte betyder
 - **De runstenar som försvann efter 1600-talet hade mer sällan kors** än de som finns kvar, i samma slags källa och med
