@@ -43,3 +43,27 @@ Modellen är glmer med socken som slumpeffekt och teckningens typ och Uppland so
   Det kan vara var de stod, eller att stenar utan kors oftare användes som byggnadssten. Tiden kunde inte hållas konstant,
   eftersom de flesta förlorade stenarna saknar stilgrupp.
 - **Urvalet är litet.** Intervallen är breda, och teckningarna själva kan vara ett urval.
+
+## Kontroll av Bautils utsnitt (2026-11-27, utforskande)
+
+### Granskningen
+- **Underlaget:** alla 441 Bautil-utsnitt som användes i kodningen (förlorade stenar, källkontroll och luckor), granskade
+  bild för bild.
+- **Utfall:**
+  - 380 rätt;
+  - 40 där även ett grannträsnitt syns men rätt träsnitt finns helt;
+  - 11 med fel nummer;
+  - 10 ofullständiga.
+- **Av de 11 med fel nummer** är bilden rätt i 5 fall; där är bara det registrerade numret ett skrivfel (till exempel B 591
+  angivet som 691).
+- **Verkliga fel:** 6 utsnitt visar fel träsnitt: U 1038, U 731, U 952, U 988, U 652 och U 237.
+- **Listan** över berörda stenar finns i `felaktiga_utsnitt.json`.
+
+### Känslighetskontrollen
+Huvudprovet räknades om utan de 10 berörda stenar som ingår i analysen:
+- **kors:** 43 mot 61 %, oddskvot 0,43 (0,23–0,80), p = 0,008;
+- **rundjur:** oddskvot 0,41, p = 0,04;
+- **utarbetad ornamentik:** oddskvot 0,43, p = 0,03.
+
+**Slutsatsen om korset står sig.** Felen i utsnitten förklarar inte skillnaden. De felaktiga utsnitten bör göras om innan
+registret används vidare.
