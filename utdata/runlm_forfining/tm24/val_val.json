@@ -1,0 +1,645 @@
+{
+ "plan": "analysplaner/2026-11-27-bojningsmodellen-tm24.md (sha 1656a0bf)",
+ "jamfort_med": "app_f0.json",
+ "regel": "flest vunna minus förlorade böjningsluckor utan nya säkra fel (≥ 95 %); lika → minsta λ_böj, sedan högsta tröskel, minsta μ",
+ "vald": null,
+ "stopp": true,
+ "tabell": [
+  {
+   "lam": 0.003,
+   "min": 0.02,
+   "mu": 0.0,
+   "fil": "val_0.003_0.02_0_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 57,
+     "forms_with_stems": 481,
+     "bases": 2609,
+     "new_forms": 4817,
+     "base_to_form_links": 5010,
+     "new_spellings": 46125,
+     "tolerance_variants": 152355
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     79,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.003,
+   "min": 0.02,
+   "mu": 0.5,
+   "fil": "val_0.003_0.02_0.5_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 57,
+     "forms_with_stems": 481,
+     "bases": 2609,
+     "new_forms": 4817,
+     "base_to_form_links": 5010,
+     "new_spellings": 46125,
+     "tolerance_variants": 152355
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     79,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.003,
+   "min": 0.05,
+   "mu": 0.0,
+   "fil": "val_0.003_0.05_0_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 17,
+     "forms_with_stems": 481,
+     "bases": 2969,
+     "new_forms": 6695,
+     "base_to_form_links": 6703,
+     "new_spellings": 67474,
+     "tolerance_variants": 218716
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     78,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.003,
+   "min": 0.05,
+   "mu": 0.5,
+   "fil": "val_0.003_0.05_0.5_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 17,
+     "forms_with_stems": 481,
+     "bases": 2969,
+     "new_forms": 6695,
+     "base_to_form_links": 6703,
+     "new_spellings": 67474,
+     "tolerance_variants": 218716
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     78,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.01,
+   "min": 0.02,
+   "mu": 0.0,
+   "fil": "val_0.01_0.02_0_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 57,
+     "forms_with_stems": 481,
+     "bases": 2609,
+     "new_forms": 4817,
+     "base_to_form_links": 5010,
+     "new_spellings": 46125,
+     "tolerance_variants": 152355
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     78,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.01,
+   "min": 0.02,
+   "mu": 0.5,
+   "fil": "val_0.01_0.02_0.5_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 57,
+     "forms_with_stems": 481,
+     "bases": 2609,
+     "new_forms": 4817,
+     "base_to_form_links": 5010,
+     "new_spellings": 46125,
+     "tolerance_variants": 152355
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     78,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.01,
+   "min": 0.05,
+   "mu": 0.0,
+   "fil": "val_0.01_0.05_0_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 17,
+     "forms_with_stems": 481,
+     "bases": 2969,
+     "new_forms": 6695,
+     "base_to_form_links": 6703,
+     "new_spellings": 67474,
+     "tolerance_variants": 218716
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     78,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.01,
+   "min": 0.05,
+   "mu": 0.5,
+   "fil": "val_0.01_0.05_0.5_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 17,
+     "forms_with_stems": 481,
+     "bases": 2969,
+     "new_forms": 6695,
+     "base_to_form_links": 6703,
+     "new_spellings": 67474,
+     "tolerance_variants": 218716
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     78,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.03,
+   "min": 0.02,
+   "mu": 0.0,
+   "fil": "val_0.03_0.02_0_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 57,
+     "forms_with_stems": 481,
+     "bases": 2609,
+     "new_forms": 4817,
+     "base_to_form_links": 5010,
+     "new_spellings": 46125,
+     "tolerance_variants": 152355
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     77,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.03,
+   "min": 0.02,
+   "mu": 0.5,
+   "fil": "val_0.03_0.02_0.5_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 57,
+     "forms_with_stems": 481,
+     "bases": 2609,
+     "new_forms": 4817,
+     "base_to_form_links": 5010,
+     "new_spellings": 46125,
+     "tolerance_variants": 152355
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     77,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.03,
+   "min": 0.05,
+   "mu": 0.0,
+   "fil": "val_0.03_0.05_0_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 17,
+     "forms_with_stems": 481,
+     "bases": 2969,
+     "new_forms": 6695,
+     "base_to_form_links": 6703,
+     "new_spellings": 67474,
+     "tolerance_variants": 218716
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     77,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  },
+  {
+   "lam": 0.03,
+   "min": 0.05,
+   "mu": 0.5,
+   "fil": "val_0.03_0.05_0.5_f0.json",
+   "stats": {
+    "0": {
+     "endings": 164,
+     "alternations": 286,
+     "alternations_used": 17,
+     "forms_with_stems": 481,
+     "bases": 2969,
+     "new_forms": 6695,
+     "base_to_form_links": 6703,
+     "new_spellings": 67474,
+     "tolerance_variants": 218716
+    }
+   },
+   "infl": {
+    "won": 0,
+    "lost": 0,
+    "n": 7,
+    "ok_base": 1,
+    "ok_new": 1,
+    "reached_new": 4,
+    "gold_is_layer_form": 0,
+    "won_with_layer_form": 0
+   },
+   "netto": 0,
+   "alla": {
+    "won": 0,
+    "lost": 0,
+    "n": 278,
+    "ok_base": 206,
+    "ok_new": 206
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     77,
+     3
+    ],
+    "new_sure_errors": 0
+   },
+   "short": {
+    "new_right": 0,
+    "new_errors": 0
+   },
+   "godkand": true
+  }
+ ]
+}
