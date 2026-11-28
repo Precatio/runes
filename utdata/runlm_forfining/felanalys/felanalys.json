@@ -1,0 +1,405 @@
+{
+ "luckor": 1396,
+ "fel": 448,
+ "andel_rätt": 0.679,
+ "feltyp": {
+  "rätt ord bland förslagen, fel valt": 169,
+  "rätt ord inte bland förslagen": 254,
+  "rätt runor, fel ord (normalisering?)": 24,
+  "inget ord (okänt)": 1
+ },
+ "per_slag": {
+  "helt ord": {
+   "luckor": 698,
+   "fel": 285,
+   "andel_fel": 0.408
+  },
+  "inne i ord": {
+   "luckor": 698,
+   "fel": 163,
+   "andel_fel": 0.234
+  }
+ },
+ "per_längd": {
+  "1–2": {
+   "luckor": 536,
+   "fel": 101,
+   "andel_fel": 0.188
+  },
+  "3–4": {
+   "luckor": 560,
+   "fel": 204,
+   "andel_fel": 0.364
+  },
+  "5+": {
+   "luckor": 300,
+   "fel": 143,
+   "andel_fel": 0.477
+  }
+ },
+ "per_slag_och_längd": {
+  "helt ord 1–2": {
+   "luckor": 48,
+   "fel": 18,
+   "andel_fel": 0.375
+  },
+  "helt ord 3–4": {
+   "luckor": 350,
+   "fel": 124,
+   "andel_fel": 0.354
+  },
+  "helt ord 5+": {
+   "luckor": 300,
+   "fel": 143,
+   "andel_fel": 0.477
+  },
+  "inne i ord 1–2": {
+   "luckor": 488,
+   "fel": 83,
+   "andel_fel": 0.17
+  },
+  "inne i ord 3–4": {
+   "luckor": 210,
+   "fel": 80,
+   "andel_fel": 0.381
+  }
+ },
+ "namn_eller_ord": {
+  "namn": {
+   "luckor": 281,
+   "fel": 171,
+   "andel_fel": 0.609
+  },
+  "ord": {
+   "luckor": 1115,
+   "fel": 277,
+   "andel_fel": 0.248
+  }
+ },
+ "per_frekvens": {
+  "formelord (≥200)": {
+   "luckor": 701,
+   "fel": 102,
+   "andel_fel": 0.146
+  },
+  "ovanligt (2–19)": {
+   "luckor": 167,
+   "fel": 106,
+   "andel_fel": 0.635
+  },
+  "unikt (0–1)": {
+   "luckor": 339,
+   "fel": 146,
+   "andel_fel": 0.431
+  },
+  "vanligt (20–199)": {
+   "luckor": 189,
+   "fel": 94,
+   "andel_fel": 0.497
+  }
+ },
+ "säkra_svar": {
+  "antal": 342,
+  "fel": 15
+ },
+ "andel_av_felen": {
+  "namn": 0.382,
+  "korta 1–2": 0.225,
+  "helt ord": 0.636
+ },
+ "exempel_fel_valt": [
+  {
+   "sig": "U 921",
+   "rätt": "sægæiRR",
+   "valt": "§siggæiRr",
+   "p": 0.523,
+   "förslag": [
+    "§siggæiRr",
+    "sun",
+    "§stygæiRr",
+    "§sægæiRr"
+   ]
+  },
+  {
+   "sig": "Ög 131",
+   "rätt": "ræisþi",
+   "valt": "gærþu",
+   "p": 0.639,
+   "förslag": [
+    "gærþu",
+    "gærþi",
+    "resþi",
+    "ræistu"
+   ]
+  },
+  {
+   "sig": "U 430",
+   "rätt": "guðlaug",
+   "valt": "gillaug",
+   "p": 0.238,
+   "förslag": [
+    "gillaug",
+    "guðlaug",
+    "sinn",
+    "ulfR"
+   ]
+  },
+  {
+   "sig": "U 430",
+   "rätt": "ræistu",
+   "valt": "þorstæinn",
+   "p": 0.423,
+   "förslag": [
+    "þorstæinn",
+    "ræisti",
+    "ræistu",
+    "þorfast"
+   ]
+  },
+  {
+   "sig": "U 304",
+   "rätt": "haggva",
+   "valt": "ræisa",
+   "p": 0.56,
+   "förslag": [
+    "ræisa",
+    "retta",
+    "haggva",
+    "gæra"
+   ]
+  },
+  {
+   "sig": "U 304",
+   "rätt": "æftiR",
+   "valt": "syniR",
+   "p": 0.232,
+   "förslag": [
+    "syniR",
+    "æftiR",
+    "ræistu",
+    "minnum"
+   ]
+  },
+  {
+   "sig": "Sm 69",
+   "rätt": "satti",
+   "valt": "retti",
+   "p": 0.216,
+   "förslag": [
+    "retti",
+    "satti",
+    "letu",
+    "ræisa"
+   ]
+  },
+  {
+   "sig": "Vg 18",
+   "rätt": "stæin",
+   "valt": "sten",
+   "p": 0.968,
+   "förslag": [
+    "sten",
+    "svæin",
+    "óðinn",
+    "kvæn"
+   ]
+  },
+  {
+   "sig": "Ög 109",
+   "rätt": "stæin",
+   "valt": "sten",
+   "p": 1.0,
+   "förslag": [
+    "sten",
+    "stæin",
+    "þenna",
+    "lettin"
+   ]
+  },
+  {
+   "sig": "DR 390",
+   "rätt": "goþan",
+   "valt": "harþa",
+   "p": 0.409,
+   "förslag": [
+    "harþa",
+    "goþan",
+    "faður",
+    "barni"
+   ]
+  },
+  {
+   "sig": "U 269",
+   "rätt": "ok",
+   "valt": "þessa",
+   "p": 0.254,
+   "förslag": [
+    "þessa",
+    "ok",
+    "tva",
+    "dan"
+   ]
+  },
+  {
+   "sig": "Ög 93",
+   "rätt": "eR",
+   "valt": "hann",
+   "p": 0.564,
+   "förslag": [
+    "hann",
+    "es",
+    "eR",
+    "sa"
+   ]
+  },
+  {
+   "sig": "Vg 127",
+   "rätt": "gunnar",
+   "valt": "svæin",
+   "p": 0.16,
+   "förslag": [
+    "svæin",
+    "tosta",
+    "gunnar",
+    "æskel"
+   ]
+  },
+  {
+   "sig": "Sm 122",
+   "rätt": "aslak",
+   "valt": "osyrg",
+   "p": 0.381,
+   "förslag": [
+    "osyrg",
+    "ospak",
+    "aslak",
+    "aslæik"
+   ]
+  },
+  {
+   "sig": "Vg 30",
+   "rätt": "bro",
+   "valt": "ok",
+   "p": 0.376,
+   "förslag": [
+    "ok",
+    "kumbl",
+    "bro",
+    "let"
+   ]
+  }
+ ],
+ "exempel_ej_bland_förslagen": [
+  {
+   "sig": "DR 218",
+   "rätt": "spærlu",
+   "valt": "elef",
+   "namn": true,
+   "n": 6
+  },
+  {
+   "sig": "Vg 18",
+   "rätt": "bonda",
+   "valt": "hiogg",
+   "namn": false,
+   "n": 4
+  },
+  {
+   "sig": "U 873",
+   "rätt": "boanda",
+   "valt": "siionum",
+   "namn": false,
+   "n": 6
+  },
+  {
+   "sig": "Ög 119",
+   "rätt": "sigdan",
+   "valt": "anundr",
+   "namn": true,
+   "n": 6
+  },
+  {
+   "sig": "DR 149",
+   "rätt": "lefa",
+   "valt": "letu",
+   "namn": true,
+   "n": 3
+  },
+  {
+   "sig": "DR 149",
+   "rätt": "staþ",
+   "valt": "stæin",
+   "namn": false,
+   "n": 4
+  },
+  {
+   "sig": "U 1107",
+   "rätt": "vel",
+   "valt": "þessa",
+   "namn": false,
+   "n": 3
+  },
+  {
+   "sig": "Vg 45",
+   "rätt": "serla",
+   "valt": "svæin",
+   "namn": true,
+   "n": 5
+  },
+  {
+   "sig": "Ög 67",
+   "rätt": "gæiRna/karna",
+   "valt": "faður",
+   "namn": false,
+   "n": 5
+  },
+  {
+   "sig": "U 160",
+   "rätt": "ok",
+   "valt": "kviks",
+   "namn": false,
+   "n": 2
+  },
+  {
+   "sig": "U 297",
+   "rätt": "sygbiorn",
+   "valt": "sigbiarn",
+   "namn": true,
+   "n": 2
+  },
+  {
+   "sig": "U 361",
+   "rätt": "atla",
+   "valt": "faður",
+   "namn": true,
+   "n": 5
+  },
+  {
+   "sig": "DR 291",
+   "rätt": "bæztr",
+   "valt": "halfan",
+   "namn": false,
+   "n": 5
+  },
+  {
+   "sig": "Sm 96",
+   "rätt": "æftiR",
+   "valt": "agautr",
+   "namn": false,
+   "n": 4
+  },
+  {
+   "sig": "Vg 73",
+   "rätt": "kali",
+   "valt": "þæiR",
+   "namn": true,
+   "n": 4
+  }
+ ],
+ "namnfel": {
+  "rätt ord bland förslagen, fel valt": 30,
+  "rätt ord inte bland förslagen": 133,
+  "rätt runor, fel ord (normalisering?)": 7,
+  "inget ord (okänt)": 1
+ }
+}
